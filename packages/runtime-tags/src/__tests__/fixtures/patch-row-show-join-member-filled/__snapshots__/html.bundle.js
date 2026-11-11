@@ -5,7 +5,7 @@ _shells({
 	a1: "a1; ;<div>shown</div>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_items__OR__input_id = _write_guard($scope0_reason, 0), $wg__input_id = _write_guard($scope0_reason, 2), $cg__input_id = _client_guard($scope0_reason, 2), $wi__input_id = _write_if($scope0_reason, 2), $fg__input_id = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_items__OR__input_id = _write_guard($scope0_reason, 0), $wg__input_id = _write_guard($scope0_reason, 2), $wi__input_id = _write_if($scope0_reason, 2), $cg__input_id = _client_guard($scope0_reason, 2), $fg__input_id = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_id__closures = /* @__PURE__ */ new Set();
 	_for_of(input.items, (item) => {
@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 		_show_end($scope1_id, "a", $show, 1, $wg__input_items__OR__input_id, "</div>", 0, 1, $scope0_reason, 0);
 		_patch_render($scope1_id, "a0", ((_filled_guard($scope0_reason, 2) ? " >f" : "") + ($fg__input_items ? " d" : "")).slice(1), $scope0_reason, 0);
 		_scope($scope1_id, {
-			d: _unfilled_if($scope0_reason, 0) && item?.on,
+			d: $wi__input_id && _unfilled_if($scope0_reason, 0) && item?.on,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
 		});
 	}, "k", $scope0_id, "a", 1, 1, 1, 0, 0, "a1", $scope0_reason, 1);

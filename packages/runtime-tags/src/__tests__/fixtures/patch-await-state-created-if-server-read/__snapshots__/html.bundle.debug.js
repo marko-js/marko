@@ -9,7 +9,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_n#0:6/setup;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 1), $ui__input_label = _unfilled_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 1), $ui__input_label = _unfilled_if($scope0_reason, 2), $wi__input_label = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	let n = 0;
@@ -29,9 +29,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
-		input_label: ($ui__input_show || $ui__input_label) && input.label,
+		input_label: _write_if($scope0_reason, 1) && ($ui__input_show || $ui__input_label) && input.label,
 		n,
-		"ClosureScopes:input_label/7": _write_if($scope0_reason, 2) && ($ui__input_label || $ui__input_show) && $input_label__closures
+		"ClosureScopes:input_label/7": $wi__input_label && $wi__input_label && ($ui__input_label || $ui__input_show) && $input_label__closures
 	}, "__tests__/template.marko", 0, {
 		input_label: ["input.label"],
 		n: "1:6"

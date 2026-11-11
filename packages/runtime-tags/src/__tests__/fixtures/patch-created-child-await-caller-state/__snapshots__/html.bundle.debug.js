@@ -53,7 +53,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_p && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/template.marko_1_input_p#0:5/setup", "input_p");
 	_scope($scope0_id, {
-		input_p: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.p,
+		input_p: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.p,
 		n
 	}, "__tests__/template.marko", 0, {
 		input_p: ["input.p"],

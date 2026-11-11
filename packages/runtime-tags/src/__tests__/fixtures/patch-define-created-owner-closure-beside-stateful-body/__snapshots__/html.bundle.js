@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id, "a", 1, $wg__isOpen, 1, 0, 0, ["a2"], $scope1_reason, 0);
 		$fg__label && _client_guard($scope1_reason, 0) && _patch_render($scope1_id, "a1", "e");
 		_scope($scope1_id, {
-			e: ($ui__isOpen || _unfilled_if($scope1_reason, 1)) && label,
+			e: _write_if($scope1_reason, 0) && ($ui__isOpen || _unfilled_if($scope1_reason, 1)) && label,
 			_: _scope_with_id($scope0_id)
 		}) || $fg__label && $ui__isOpen && _patch_write($scope1_id, "xe", label, !_server_guard($scope1_reason, 1));
 	}, $scope0_id) };
@@ -70,7 +70,7 @@ var template_default = _template("a", (input) => {
 	_patch_render($scope0_id, "a10", (($fg__input_label ? " f" : "") + ($fg__input_other ? " m" : "")).slice(1));
 	_scope($scope0_id, {
 		f: input.label,
-		h: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.open,
+		h: _write_if($scope0_reason, 2) && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.open,
 		j: open,
 		k: _unfilled_if($scope0_reason, 4) && Panel,
 		m: Tag,

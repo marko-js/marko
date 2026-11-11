@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	_html(`</section>${_el_mark($scope0_id, "c", _updates_from($scope0_reason, 2))}`);
 	_script($scope0_id, "a2");
 	_scope($scope0_id, {
-		g: ($ui__input_on || _unfilled_if($scope0_reason, 1)) && input.rec?.name,
+		g: _write_if($scope0_reason, 2) && ($ui__input_on || _unfilled_if($scope0_reason, 1)) && input.rec?.name,
 		i: n,
 		k: $ui__input_on && frag.content,
 		m: _write_if($scope0_reason, 1) && $input_rec_name__closures

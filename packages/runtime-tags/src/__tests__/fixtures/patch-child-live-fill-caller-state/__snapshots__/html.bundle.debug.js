@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/child.marko_1*shell": "__tests__/tags/child.marko_1*shell; ; "
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $ui__input_suffix = _unfilled_if($scope0_reason, 0), $sg__input_suffix = _server_guard($scope0_reason, 0), $fg__input_suffix = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $ui__input_suffix = _unfilled_if($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 1), $sg__input_suffix = _server_guard($scope0_reason, 0), $fg__input_suffix = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	$fg__input_suffix && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_suffix", input.suffix, !$sg__input_suffix);
 	const fmt = _bind_resume((v) => v + input.suffix, "__tests__/tags/child.marko_0/fmt", $scope0_id);
@@ -22,8 +22,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 1);
 	$fg__input_suffix && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/tags/child.marko_1_fmt#0:5/setup", "fmt input_suffix");
 	_scope($scope0_id, {
-		input_suffix: ($ui__input_show || $ui__input_suffix) && input.suffix,
-		fmt: ($ui__input_show || $ui__input_suffix) && fmt
+		input_suffix: $wi__input_show && ($ui__input_show || $ui__input_suffix) && input.suffix,
+		fmt: $wi__input_show && ($ui__input_show || $ui__input_suffix) && fmt
 	}, "__tests__/tags/child.marko", 0, {
 		input_suffix: ["input.suffix"],
 		fmt: "1:8"

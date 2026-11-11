@@ -97,6 +97,7 @@ import {
   buildComposedGroupValue,
   buildGroupsValue,
   buildGroupMask,
+  getExprIfWritten,
   getGroupArgs,
   getGroupsConstant,
   getOrShareGroupCheck,
@@ -750,7 +751,7 @@ function buildUnfilledIfWritten(
 ) {
   const ownReason = mapBodyParams(section, reason);
   if (structure === false || !isDynamicWriteGuard(section, ownReason)) return;
-  return andGuard(
+  const unfilled = andGuard(
     getUnfilledGuard(
       section,
       ownReason.param,
@@ -760,6 +761,17 @@ function buildUnfilledIfWritten(
     ),
     expr,
   );
+  // A caller param past the write reason's leaves a read unfilled only where main writes it.
+  return some(structure, (sources) =>
+    some(
+      sources.param,
+      (param) =>
+        isCallerParamAt(param, section) &&
+        !bindingUtil.has(ownReason.param, param),
+    ),
+  )
+    ? getExprIfWritten(section, reason, unfilled)
+    : unfilled;
 }
 
 interface OwnParamGroup {

@@ -48,7 +48,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `D0${_w0}&%l`)($walks)};${((_w0) => `<main>${_w0}<!></main>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_note = _client_guard($scope0_reason, 1), $wg__input_on = _write_guard($scope0_reason, 0), $ui__input_on = _unfilled_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_note = _client_guard($scope0_reason, 1), $wg__input_on = _write_guard($scope0_reason, 0), $wi__input_on = _write_if($scope0_reason, 0), $ui__input_on = _unfilled_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const $v__closures = /* @__PURE__ */ new Set();
@@ -69,8 +69,8 @@ var template_default = _template("a", (input) => {
 	}] : []), 0, $wg__input_on, $scope0_reason, 0, 0, void 0, 0, 0, "a1");
 	_html("</main>");
 	_scope($scope0_id, {
-		g: ($ui__input_on || _unfilled_if($scope0_reason, 1)) && input.note,
-		h: _write_if($scope0_reason, 0) && v,
+		g: $wi__input_on && ($ui__input_on || _unfilled_if($scope0_reason, 1)) && input.note,
+		h: $wi__input_on && v,
 		a: _existing_scope($childScope),
 		i: _write_if($scope0_reason, 1) && $input_note__closures,
 		j: $v__closures

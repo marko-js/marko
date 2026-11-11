@@ -66,7 +66,7 @@ var rowsx_default = _template("b", (input) => {
 	$fg__input_open && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "b5", "f");
 	_patch_fill($scope0_id, "vb8", suffix, 1);
 	_scope($scope0_id, {
-		f: ($ui__input_items || _unfilled_if($scope0_reason, 1)) && input.open,
+		f: _write_if($scope0_reason, 0) && ($ui__input_items || _unfilled_if($scope0_reason, 1)) && input.open,
 		g: suffix
 	}) || $fg__input_open && $ui__input_items && _patch_write($scope0_id, "xf", input.open, !_server_guard($scope0_reason, 1));
 });
@@ -77,7 +77,7 @@ _shells({
 	a2: `a2${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&`)($walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_open = _filled_guard($scope0_reason, 2), $fg__input_items = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $fg__input_open = _filled_guard($scope0_reason, 2), $fg__input_items = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -101,7 +101,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_open && $cg__input_show && _patch_render($scope0_id, "a0", "e");
 	$fg__input_items && $cg__input_show && _patch_render($scope0_id, "a1", "f");
 	_scope($scope0_id, {
-		e: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
-		f: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.items
+		e: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
+		f: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.items
 	}) || ($fg__input_open && $ui__input_show && _patch_write($scope0_id, "xe", input.open, !_server_guard($scope0_reason, 2)), $fg__input_items && $ui__input_show && _patch_write($scope0_id, "xf", input.items, !_server_guard($scope0_reason, 3)));
 }, 1);

@@ -11,7 +11,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_promise = _write_if($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 1), $ui__input_promise2 = _unfilled_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_promise = _write_if($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 1), $ui__input_promise2 = _unfilled_if($scope0_reason, 3), $wi__input_promise = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	const $input_promise__closures = new Set();
@@ -44,10 +44,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		input_title: input.title,
-		input_promise: ($ui__input_show || $ui__input_promise2) && input.promise,
+		input_promise: _write_if($scope0_reason, 1) && ($ui__input_show || $ui__input_promise2) && input.promise,
 		count,
 		"ClosureScopes:input_title/9": _write_if($scope0_reason, 2) && $input_title__closures,
-		"ClosureScopes:input_promise/10": _write_if($scope0_reason, 3) && ($ui__input_promise2 || $ui__input_show) && $input_promise__closures
+		"ClosureScopes:input_promise/10": $wi__input_promise && $wi__input_promise && ($ui__input_promise2 || $ui__input_show) && $input_promise__closures
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		input_promise: ["input.promise"],

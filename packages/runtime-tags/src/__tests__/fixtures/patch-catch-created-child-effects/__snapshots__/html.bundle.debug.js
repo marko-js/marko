@@ -35,7 +35,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l%;<button> </button><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_msg = _client_guard($scope0_reason, 1), $ui__input_msg__OR__input_fail = _unfilled_if($scope0_reason, 0), $wi__input_msg = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_msg = _client_guard($scope0_reason, 1), $ui__input_msg__OR__input_fail = _unfilled_if($scope0_reason, 0), $wi__input_msg = _write_if($scope0_reason, 1), $wi__input_fail = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_msg__closures = new Set();
 	const $count__closures = new Set();
@@ -74,11 +74,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		input_msg: input.msg,
-		input_fail: $ui__input_msg__OR__input_fail && input.fail,
+		input_fail: $wi__input_msg && $ui__input_msg__OR__input_fail && input.fail,
 		count,
 		"ClosureScopes:input_msg/8": $wi__input_msg && $input_msg__closures,
 		"ClosureScopes:count/10": $count__closures,
-		"ClosureScopes:input_fail/9": _write_if($scope0_reason, 2) && $ui__input_msg__OR__input_fail && $input_fail__closures
+		"ClosureScopes:input_fail/9": $wi__input_fail && $wi__input_fail && $ui__input_msg__OR__input_fail && $input_fail__closures
 	}, "__tests__/template.marko", 0, {
 		input_msg: ["input.msg"],
 		input_fail: ["input.fail"],

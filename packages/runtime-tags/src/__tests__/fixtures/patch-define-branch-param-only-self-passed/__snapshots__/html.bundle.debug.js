@@ -72,7 +72,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		}
 	}, $scope0_id, "#text/1", 1, $wg__input_on, 1, 0, 0, ["__tests__/tags/child.marko_4*shell"], $scope0_reason, 2);
 	_scope($scope0_id, {
-		input_v: ($ui__input_on || _unfilled_if($scope0_reason, 1)) && input.v,
+		input_v: $wi__input_on && ($ui__input_on || _unfilled_if($scope0_reason, 1)) && input.v,
 		"ClosureScopes:input_v/6": _write_if($scope0_reason, 1) && $input_v__closures,
 		"#childScope/0": _existing_scope($childScope2)
 	}, "__tests__/tags/child.marko", 0, { input_v: ["input.v"] }) || _filled_guard($scope0_reason, 1) && $ui__input_on && _patch_write($scope0_id, "PatchMarkedWrite:input_v", input.v, !_server_guard($scope0_reason, 1)) && _client_guard($scope0_reason, 2) && _patch_subscribers($scope0_id, "__tests__/tags/child.marko_0_input_v#4/subscribers", "input_v");

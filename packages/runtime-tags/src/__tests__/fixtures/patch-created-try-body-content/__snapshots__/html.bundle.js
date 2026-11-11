@@ -92,7 +92,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_alt && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "a8", "h");
 	_scope($scope0_id, {
 		f: input.label,
-		h: ($ui__input_show || $ui__input_alt) && input.alt,
+		h: _write_if($scope0_reason, 2) && ($ui__input_show || $ui__input_alt) && input.alt,
 		i: count,
 		j: ($ui__input_show__OR__input_alt || $ui__input_alt) && A,
 		k: ($ui__input_show__OR__input_alt || $ui__input_alt) && B,

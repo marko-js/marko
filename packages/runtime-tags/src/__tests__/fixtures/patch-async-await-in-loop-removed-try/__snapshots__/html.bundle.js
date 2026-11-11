@@ -23,7 +23,7 @@ var rows_default = _template("b", (input) => {
 		_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "b2", $scope0_reason, 1);
 	$fg__input_promise && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "b3", "e");
-	_scope($scope0_id, { e: ($ui__input_items || _unfilled_if($scope0_reason, 2)) && input.promise }) || $fg__input_promise && $ui__input_items && _patch_write($scope0_id, "xe", input.promise, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { e: _write_if($scope0_reason, 1) && ($ui__input_items || _unfilled_if($scope0_reason, 2)) && input.promise }) || $fg__input_promise && $ui__input_items && _patch_write($scope0_id, "xe", input.promise, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

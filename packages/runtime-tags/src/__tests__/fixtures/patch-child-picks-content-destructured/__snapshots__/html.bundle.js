@@ -8,9 +8,9 @@ var pick_default = _template("b", (input) => {
 	_dynamic_tag($scope0_id, "a", input.on ? input.a : input.b, {}, 2, 0, 0, $wg__input_a__OR__input_b__OR__input_on, $scope0_reason, 3);
 	_patch_render($scope0_id, "b0", (($fg__input_a ? " d" : "") + ($fg__input_b ? " e" : "") + ($fg__input_on ? " f" : "")).slice(1), $scope0_reason, 3);
 	_scope($scope0_id, {
-		d: $ui__input_a__OR__input_b__OR__input_on && input.a,
-		e: $ui__input_a__OR__input_b__OR__input_on && input.b,
-		f: $ui__input_a__OR__input_b__OR__input_on && input.on
+		d: _write_if($scope0_reason, 2) && $ui__input_a__OR__input_b__OR__input_on && input.a,
+		e: _write_if($scope0_reason, 1) && $ui__input_a__OR__input_b__OR__input_on && input.b,
+		f: _write_if($scope0_reason, 0) && $ui__input_a__OR__input_b__OR__input_on && input.on
 	}) || ($fg__input_a && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.a, !_server_guard($scope0_reason, 4)), $fg__input_b && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.b, !_server_guard($scope0_reason, 5)), $fg__input_on && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.on, !_server_guard($scope0_reason, 6)));
 });
 
@@ -49,7 +49,7 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_script($scope0_id, "a4");
 	_scope($scope0_id, {
-		f: ($ui__input_on || _unfilled_if($scope0_reason, 2)) && input.x,
+		f: _write_if($scope0_reason, 1) && ($ui__input_on || _unfilled_if($scope0_reason, 2)) && input.x,
 		g: s,
 		h: _write_if($scope0_reason, 2) && $input_x__closures,
 		i: $s__closures,

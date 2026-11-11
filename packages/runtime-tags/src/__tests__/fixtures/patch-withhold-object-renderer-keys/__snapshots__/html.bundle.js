@@ -74,7 +74,7 @@ var template_default = _template("a", (input) => {
 	_patch_render($scope0_id, "a4", $fg__input_mode && "f");
 	_scope($scope0_id, {
 		f: input.mode,
-		h: ($ui__input_on || _unfilled_if($scope0_reason, 3)) && input.note,
+		h: _write_if($scope0_reason, 2) && ($ui__input_on || _unfilled_if($scope0_reason, 3)) && input.note,
 		i: m,
 		a: _existing_scope($childScope),
 		k: _write_if($scope0_reason, 3) && $input_note__closures

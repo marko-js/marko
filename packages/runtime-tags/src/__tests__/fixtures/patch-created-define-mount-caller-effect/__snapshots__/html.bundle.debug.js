@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_2_input_label#0:8/setup", "input_label");
 	_scope($scope0_id, {
 		input_page: input.page,
-		input_label: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.label,
+		input_label: _write_if($scope0_reason, 2) && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.label,
 		count,
 		"ClosureScopes:input_page/10": $wi__input_page && $input_page__closures,
 		"#childScope/2": _existing_scope($childScope)

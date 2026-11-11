@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_attr_content("#section/0", $scope0_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 2);
 	_html(`</section>${_el_mark($scope0_id, "#section/0", _updates_from($scope0_reason, 2))}<p>${_text_mark($scope0_id, "#text/1", input.note, 1, $scope0_reason, 1)}</p></main>`);
 	_scope($scope0_id, {
-		input_note: ($ui__input_mode || _unfilled_if($scope0_reason, 1)) && input.note,
+		input_note: _write_if($scope0_reason, 2) && ($ui__input_mode || _unfilled_if($scope0_reason, 1)) && input.note,
 		frag_content: $ui__input_mode && frag.content,
 		"ClosureScopes:input_note/9": _write_if($scope0_reason, 1) && $input_note__closures
 	}, "__tests__/template.marko", 0, {

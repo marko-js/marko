@@ -25,5 +25,5 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a4"], $scope0_reason, 1);
 	$fg__input_promise && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "a5", "e");
-	_scope($scope0_id, { e: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.promise }) || $fg__input_promise && $ui__input_show && _patch_write($scope0_id, "xe", input.promise, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { e: _write_if($scope0_reason, 1) && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.promise }) || $fg__input_promise && $ui__input_show && _patch_write($scope0_id, "xe", input.promise, !_server_guard($scope0_reason, 2));
 }, 1);

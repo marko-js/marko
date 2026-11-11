@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_title && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/template.marko_1_input_title#0:5/setup", "input_title");
 	_scope($scope0_id, {
-		input_title: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.title,
+		input_title: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.title,
 		count
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],

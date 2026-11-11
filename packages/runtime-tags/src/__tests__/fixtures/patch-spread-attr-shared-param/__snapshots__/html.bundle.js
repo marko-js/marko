@@ -13,9 +13,9 @@ var template_default = _template("a", (input) => {
 	_patch_render($scope0_id, "a1", (($fg__input_url ? " e" : "") + ($fg__input_title ? " f" : "") + ($fg__input_cls ? " g" : "")).slice(1), $scope0_reason, 3);
 	_patch_render($scope0_id, "a2", (($fg__input_url ? " e" : "") + ($fg__input_width ? " i" : "")).slice(1), $scope0_reason, 2);
 	_scope($scope0_id, {
-		e: ($ui__input_title__OR__input_cls__OR__input_width || $ui__input_url__OR__input_width || $ui__input_url__OR__input_title__OR__input_cls) && input.url,
-		f: $ui__input_url__OR__input_title__OR__input_cls && input.title,
-		g: $ui__input_url__OR__input_title__OR__input_cls && input.cls,
-		i: $ui__input_url__OR__input_width && input.width
+		e: _write_if($scope0_reason, 4) && ($ui__input_title__OR__input_cls__OR__input_width || $ui__input_url__OR__input_width || $ui__input_url__OR__input_title__OR__input_cls) && input.url,
+		f: _write_if($scope0_reason, 1) && $ui__input_url__OR__input_title__OR__input_cls && input.title,
+		g: _write_if($scope0_reason, 0) && $ui__input_url__OR__input_title__OR__input_cls && input.cls,
+		i: _write_if($scope0_reason, 5) && $ui__input_url__OR__input_width && input.width
 	}) || ($fg__input_url && $ui__input_title__OR__input_cls__OR__input_width && _patch_write($scope0_id, "xe", input.url, !_server_guard($scope0_reason, 5)), $fg__input_title && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.title, !_server_guard($scope0_reason, 6)), $fg__input_cls && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.cls, !_server_guard($scope0_reason, 7)), $fg__input_width && _unfilled_if($scope0_reason, 5) && _patch_write($scope0_id, "xi", input.width, !_server_guard($scope0_reason, 8)));
 }, 1);

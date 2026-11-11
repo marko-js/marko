@@ -52,10 +52,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_user && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "__tests__/template.marko_1_input_user#0:6/setup", "input_user");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_tag#8_input_cls#9/setup", (($fg__input_tag ? " input_tag" : "") + ($fg__input_cls ? " input_cls" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_user: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.user,
-		input_tag: $ui__input_tag__OR__input_cls && input.tag,
-		input_cls: $ui__input_tag__OR__input_cls && input.cls,
-		input_user3_name: ($ui__input_tag__OR__input_cls || _unfilled_if($scope0_reason, 7)) && input.user3?.name,
+		input_user: _write_if($scope0_reason, 2) && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.user,
+		input_tag: _write_if($scope0_reason, 6) && $ui__input_tag__OR__input_cls && input.tag,
+		input_cls: _write_if($scope0_reason, 5) && $ui__input_tag__OR__input_cls && input.cls,
+		input_user3_name: _write_if($scope0_reason, 0) && ($ui__input_tag__OR__input_cls || _unfilled_if($scope0_reason, 7)) && input.user3?.name,
 		"#childScope/1": _existing_scope($childScope2),
 		"ClosureScopes:input_user3_name/14": _write_if($scope0_reason, 7) && $input_user3_name__closures
 	}, "__tests__/template.marko", 0, {

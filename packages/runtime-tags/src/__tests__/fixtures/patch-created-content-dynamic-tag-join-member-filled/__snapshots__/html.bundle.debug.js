@@ -45,7 +45,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/wrap.marko_1*shell"], $scope0_reason, 1);
 	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/tags/wrap.marko_1_input_content#0:4/setup", "input_content");
-	_scope($scope0_id, { input_content: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.content }, "__tests__/tags/wrap.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { input_content: _write_if($scope0_reason, 1) && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.content }, "__tests__/tags/wrap.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko
@@ -58,7 +58,7 @@ _shells({
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_id = _write_guard($scope0_reason, 4), $wi__input_id = _write_if($scope0_reason, 4), $cg__input_id = _client_guard($scope0_reason, 4), $wg__input_which__OR__input_id = _write_guard($scope0_reason, 1), $uf__input_show = _updates_from($scope0_reason, 2), $ui__input_show__OR__input_id = _unfilled_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_id = _write_guard($scope0_reason, 4), $wi__input_id = _write_if($scope0_reason, 4), $cg__input_id = _client_guard($scope0_reason, 4), $wg__input_which__OR__input_id = _write_guard($scope0_reason, 1), $uf__input_show = _updates_from($scope0_reason, 2), $wi__input_show__OR__input_id = _write_if($scope0_reason, 0), $ui__input_show__OR__input_id = _unfilled_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_id__closures = new Set();
 	const $input_which__closures = new Set();
@@ -76,7 +76,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html(`<p>${_text_mark($scope3_id, "#text/0", input.id, 1, $scope0_reason, 4)}</p>`);
 				_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_input_id#0:5/subscribe", $cg__input_id);
 				_subscribe(_unfilled_if($scope0_reason, 4) && $input_id__closures, _scope($scope3_id, {
-					_: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id),
+					_: $wi__input_show__OR__input_id && _scope_with_id($scope1_id),
 					"ClosureSignalIndex:input_id/7": $wi__input_id && 2
 				}, "__tests__/template.marko", "5:4"), $cg__input_id && "__tests__/template.marko_3_input_id#0:5/subscribe");
 			}, () => {
@@ -98,7 +98,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_patch_child_end();
 	_scope($scope0_id, {
-		input_which: ($ui__input_show__OR__input_id || _unfilled_if($scope0_reason, 1)) && input.which,
+		input_which: $wi__input_show__OR__input_id && ($ui__input_show__OR__input_id || _unfilled_if($scope0_reason, 1)) && input.which,
 		input_id: input.id,
 		"ClosureScopes:input_id/7": $wi__input_id && $input_id__closures,
 		"ClosureScopes:input_which/6": _write_if($scope0_reason, 3) && $input_which__closures,

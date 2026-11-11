@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 	let open = false;
 	const Panel = { content: _content_resume("a3", ({ isOpen, label }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $ui__isOpen = _unfilled_if($scope2_reason, 0);
+		const $scope2_reason = _scope_reason(), $wi__isOpen = _write_if($scope2_reason, 0), $ui__isOpen = _unfilled_if($scope2_reason, 0);
 		let n = 1;
 		_html(`<span>${_text_mark($scope2_id, "a", "c")}</span>`);
 		_if(() => {
@@ -28,8 +28,8 @@ var template_default = _template("a", (input) => {
 		$ui__isOpen && _patch_write($scope2_id, "wf", label, 1);
 		_patch_fill($scope2_id, "va4", n, 1);
 		_subscribe($open__closures, _scope($scope2_id, {
-			f: ($ui__isOpen || _unfilled_if($scope2_reason, 1)) && label,
-			g: _write_if($scope2_reason, 0) && n,
+			f: $wi__isOpen && ($ui__isOpen || _unfilled_if($scope2_reason, 1)) && label,
+			g: $wi__isOpen && n,
 			_: _scope_with_id($scope0_id)
 		}), "a5");
 	}, $scope0_id) };
@@ -62,7 +62,7 @@ var template_default = _template("a", (input) => {
 	_patch_render($scope0_id, "a8", $fg__input_other && "h", $scope0_reason, 3);
 	_patch_render($scope0_id, "a9", $fg__input_other && "l");
 	_scope($scope0_id, {
-		g: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.label,
+		g: _write_if($scope0_reason, 1) && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.label,
 		i: open,
 		j: _unfilled_if($scope0_reason, 3) && Panel,
 		l: Tag,

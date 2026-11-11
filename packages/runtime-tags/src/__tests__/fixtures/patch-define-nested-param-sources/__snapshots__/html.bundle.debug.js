@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<p>${_text_mark($scope2_id, "#text/0", input.label + x + z, 1, (1 | ($uf__input_label | $uf__x)) << 1, 0)}</p>`);
 			_patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:4_x#1:3_z#3/setup", ((_filled_guard($scope0_reason, 0) ? " >>input_label" : "") + (_filled_guard($scope1_reason, 1) ? " >x" : "")).slice(1), (1 | ($uf__input_label | $uf__x)) << 1, 0);
 			_subscribe(_unfilled_if((1 | $uf__x) << 1, 0) && $wi__x && $Outer_content__x__closures, _subscribe(_unfilled_if((1 | ($uf__input_label | $uf__x)) << 1, 0) && $wi__input_label && $input_label__closures, _scope($scope2_id, {
-				z,
+				z: ($wi__input_label || $wi__x) && z,
 				_: ($wi__input_label || $wi__x || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)
 			}, "__tests__/template.marko", "3:4", { z: "3:19" }), _client_guard((1 | ($uf__input_label | $uf__x)) << 1, 0) && "__tests__/template.marko_2_input_label#0:4/subscribe"), _client_guard((1 | $uf__x) << 1, 0) && "__tests__/template.marko_2_x#1:3/subscribe");
 		}, $scope1_id) };
@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		Inner.content({ z: y });
 		_patch_child_end();
 		_scope($scope1_id, {
-			x,
+			x: ($wi__input_label || _write_if($scope1_reason, 2)) && x,
 			_: ($wi__input_label || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id),
 			"ClosureScopes:x/8": $wi__x && $Outer_content__x__closures,
 			"#childScope/0": _existing_scope($childScope)

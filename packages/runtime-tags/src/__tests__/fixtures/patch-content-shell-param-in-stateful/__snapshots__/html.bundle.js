@@ -19,8 +19,8 @@ var wrap_default = _template("c", (input) => {
 	_html("</section>");
 	_patch_render($scope0_id, "c0", (($fg__input_content ? " d" : "") + ($fg__input_label ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: $ui__input_content__OR__input_label && input.content,
-		e: $ui__input_content__OR__input_label && input.label
+		d: _write_if($scope0_reason, 2) && $ui__input_content__OR__input_label && input.content,
+		e: _write_if($scope0_reason, 1) && $ui__input_content__OR__input_label && input.label
 	}) || ($fg__input_content && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.content, !_server_guard($scope0_reason, 1)), $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 2)));
 });
 
@@ -77,5 +77,5 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a5"], $scope0_reason, 0);
 	$fg__input_label && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a4", "e");
-	_scope($scope0_id, { e: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label }) || $fg__input_label && $ui__input_show && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { e: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label }) || $fg__input_label && $ui__input_show && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 1));
 }, 1);

@@ -12,7 +12,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;E lD%lD%l Db%;<main><h1> </h1><section><!></section><footer><!></footer><button>Count <!></button></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_related__OR__input_slow = _unfilled_if($scope0_reason, 0), $wi__input_related__OR__input_slow = _write_if($scope0_reason, 0), $ui__input_slow__OR__input_note = _unfilled_if($scope0_reason, 2), $ui__input_related__OR__input_note = _unfilled_if($scope0_reason, 1), $ui__input_slow = _unfilled_if($scope0_reason, 5), $fg__input_slow = _filled_guard($scope0_reason, 5), $fg__input_note = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $ui__input_related__OR__input_slow = _unfilled_if($scope0_reason, 0), $wi__input_related__OR__input_slow = _write_if($scope0_reason, 0), $ui__input_slow__OR__input_note = _unfilled_if($scope0_reason, 2), $wi__input_slow = _write_if($scope0_reason, 5), $ui__input_related__OR__input_note = _unfilled_if($scope0_reason, 1), $ui__input_slow = _unfilled_if($scope0_reason, 5), $fg__input_slow = _filled_guard($scope0_reason, 5), $fg__input_note = _filled_guard($scope0_reason, 6), $wi__input_related = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_related__closures = new Set();
 	const $input_slow__closures = new Set();
@@ -46,12 +46,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_slow#9_input_note#10/setup", (($fg__input_slow ? " input_slow" : "") + ($fg__input_note ? " input_note" : "")).slice(1), $scope0_reason, 2);
 	_scope($scope0_id, {
-		input_related: $ui__input_related__OR__input_slow && input.related,
-		input_slow: ($ui__input_related__OR__input_note || $ui__input_related__OR__input_slow || $ui__input_slow__OR__input_note) && input.slow,
-		input_note: $ui__input_slow__OR__input_note && input.note,
+		input_related: $wi__input_slow && $ui__input_related__OR__input_slow && input.related,
+		input_slow: _write_if($scope0_reason, 1) && ($ui__input_related__OR__input_note || $ui__input_related__OR__input_slow || $ui__input_slow__OR__input_note) && input.slow,
+		input_note: $wi__input_slow && $ui__input_slow__OR__input_note && input.note,
 		count,
-		"ClosureScopes:input_related/13": _write_if($scope0_reason, 4) && $ui__input_related__OR__input_slow && $input_related__closures,
-		"ClosureScopes:input_slow/14": _write_if($scope0_reason, 5) && ($ui__input_related__OR__input_slow || $ui__input_slow__OR__input_note) && $input_slow__closures
+		"ClosureScopes:input_related/13": $wi__input_related && $wi__input_related && $ui__input_related__OR__input_slow && $input_related__closures,
+		"ClosureScopes:input_slow/14": $wi__input_slow && $wi__input_slow && ($ui__input_related__OR__input_slow || $ui__input_slow__OR__input_note) && $input_slow__closures
 	}, "__tests__/template.marko", 0, {
 		input_related: ["input.related"],
 		input_slow: ["input.slow"],

@@ -36,8 +36,8 @@ var template_default = _template("a", (input) => {
 	$fg__input_useA && $cg__input_show && _patch_render($scope0_id, "a4", "e");
 	$fg__input_record && $cg__input_show && _patch_render($scope0_id, "a5", "f");
 	_scope($scope0_id, {
-		e: ($ui__input_show__OR__input_record || $ui__input_useA__OR__input_record) && input.useA,
-		f: ($ui__input_show__OR__input_useA || $ui__input_useA__OR__input_record) && input.record,
+		e: _write_if($scope0_reason, 1) && ($ui__input_show__OR__input_record || $ui__input_useA__OR__input_record) && input.useA,
+		f: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_useA || $ui__input_useA__OR__input_record) && input.record,
 		g: ($ui__input_show__OR__input_useA__OR__input_record || $ui__input_useA__OR__input_record) && Card,
 		h: ($ui__input_show__OR__input_useA__OR__input_record || $ui__input_useA__OR__input_record) && Other
 	}) || ($fg__input_useA && $ui__input_show__OR__input_record && _patch_write($scope0_id, "xe", input.useA, !_server_guard($scope0_reason, 5)), $fg__input_record && $ui__input_show__OR__input_useA && _patch_write($scope0_id, "xf", input.record, !_server_guard($scope0_reason, 6)));

@@ -16,10 +16,7 @@ var template_default = _template("a", (input) => {
 		_script($scope1_id, "a2");
 		_script($scope1_id, "a3");
 		_patch_render($scope1_id, "a4", ((_filled_guard($scope1_reason, 1) ? " d" : "") + ($fg__valueChange ? " e" : "")).slice(1), $scope1_reason, 0);
-		_scope($scope1_id, {
-			d: $ui__value__OR__valueChange && value,
-			e: $ui__value__OR__valueChange && valueChange
-		}) || $fg__valueChange && $ui__value__OR__valueChange && _patch_write($scope1_id, "xe", valueChange, 1);
+		_scope($scope1_id, { e: $ui__value__OR__valueChange && valueChange }) || $fg__valueChange && $ui__value__OR__valueChange && _patch_write($scope1_id, "xe", valueChange, 1);
 	}, $scope0_id) };
 	_set_scope_reason($uf__input_v << 1 | $uf__input_v << 3 | _updates_from($scope0_reason, 0) << 7);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);

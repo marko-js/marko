@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/child.marko_2*shell": "__tests__/tags/child.marko_2*shell;D ;<span> </span>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_on = _write_guard($scope0_reason, 4), $cg__input_v = _client_guard($scope0_reason, 3), $cg__input_on = _client_guard($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2), $sg__input_v = _server_guard($scope0_reason, 3), $fg__input_v2 = _filled_guard($scope0_reason, 3), $fg__input_on = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_on = _write_guard($scope0_reason, 4), $cg__input_v = _client_guard($scope0_reason, 3), $cg__input_on = _client_guard($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2), $wi__input_show = _write_if($scope0_reason, 2), $sg__input_v = _server_guard($scope0_reason, 3), $fg__input_v2 = _filled_guard($scope0_reason, 3), $fg__input_on = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -28,7 +28,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			$cg__input_v && _patch_render($scope1_id, "__tests__/tags/child.marko_1_input_v#0:4/setup");
 			$cg__input_on && _patch_render($scope1_id, "__tests__/tags/child.marko_1_input_on#0:5/setup");
 			_write_if($scope0_reason, 1) && _scope($scope1_id, {
-				v: ($ui__input_on || _unfilled_if($scope0_reason, 3)) && v,
+				v: _write_if($scope0_reason, 4) && ($ui__input_on || _unfilled_if($scope0_reason, 3)) && v,
 				_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
 			}, "__tests__/tags/child.marko", "1:2", { v: "2:10" });
 			return 0;
@@ -37,8 +37,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	$fg__input_v2 && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_v#0:4/setup", "input_v");
 	$fg__input_on && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_on#0:5/setup", "input_on");
 	_scope($scope0_id, {
-		input_v: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.v,
-		input_on: ($ui__input_show || _unfilled_if($scope0_reason, 4)) && input.on
+		input_v: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.v,
+		input_on: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 4)) && input.on
 	}, "__tests__/tags/child.marko", 0, {
 		input_v: ["input.v"],
 		input_on: ["input.on"]

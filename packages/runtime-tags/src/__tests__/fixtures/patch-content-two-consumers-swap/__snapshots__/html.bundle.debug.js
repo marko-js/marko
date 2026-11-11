@@ -22,7 +22,7 @@ _shells({
 	"__tests__/template.marko_2*shell": `__tests__/template.marko_2*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 3), $wi__input_note = _write_if($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 4), $ui__input_show = _unfilled_if($scope0_reason, 4), $ui__input_note = _unfilled_if($scope0_reason, 3), $fg__input_t = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $wi__input_note = _write_if($scope0_reason, 3), $cg__input_note = _client_guard($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 4), $ui__input_show = _unfilled_if($scope0_reason, 4), $ui__input_note = _unfilled_if($scope0_reason, 3), $wi__input_show = _write_if($scope0_reason, 4), $fg__input_t = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	_html("<main>");
@@ -68,9 +68,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("</main>");
 	$fg__input_t && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_2_input_t2#0:7/setup", "input_t2");
 	_scope($scope0_id, {
-		input_note: ($ui__input_show || $ui__input_note) && input.note,
-		input_t2: ($ui__input_show || _unfilled_if($scope0_reason, 5)) && input.t2,
-		"ClosureScopes:input_note/8": $wi__input_note && ($ui__input_note || $ui__input_show) && $input_note__closures,
+		input_note: $wi__input_show && ($ui__input_show || $ui__input_note) && input.note,
+		input_t2: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 5)) && input.t2,
+		"ClosureScopes:input_note/8": $wi__input_note && $wi__input_note && ($ui__input_note || $ui__input_show) && $input_note__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {
 		input_note: ["input.note"],

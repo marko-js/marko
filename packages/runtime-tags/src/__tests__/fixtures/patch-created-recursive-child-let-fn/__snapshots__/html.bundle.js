@@ -48,7 +48,7 @@ const $content = (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_depth, 1, 0, 0, ["c2"], $scope0_reason, 1);
 	$fg__input_fn && $cg__input_depth && _patch_render($scope0_id, "c1", "e");
-	_scope($scope0_id, { e: ($ui__input_depth || _unfilled_if($scope0_reason, 2)) && input.fn }) || $fg__input_fn && $ui__input_depth && _patch_write($scope0_id, "xe", input.fn, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { e: _write_if($scope0_reason, 1) && ($ui__input_depth || _unfilled_if($scope0_reason, 2)) && input.fn }) || $fg__input_fn && $ui__input_depth && _patch_write($scope0_id, "xe", input.fn, !_server_guard($scope0_reason, 2));
 };
 var tree_default = _template("c", $content);
 

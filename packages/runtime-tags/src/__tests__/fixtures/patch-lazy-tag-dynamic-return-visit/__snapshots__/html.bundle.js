@@ -20,8 +20,8 @@ var template_default = _template("b", (input) => {
 	_script($scope0_id, "b0");
 	_patch_render($scope0_id, "b1", (($fg__input_show ? " f" : "") + ($fg__input_label ? " g" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		f: $ui__input_show__OR__input_label && input.show,
-		g: $ui__input_show__OR__input_label && input.label,
+		f: _write_if($scope0_reason, 2) && $ui__input_show__OR__input_label && input.show,
+		g: _write_if($scope0_reason, 1) && $ui__input_show__OR__input_label && input.label,
 		i: n
 	}) || ($fg__input_show && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.show, !_server_guard($scope0_reason, 1)), $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 2)));
 }, 1);

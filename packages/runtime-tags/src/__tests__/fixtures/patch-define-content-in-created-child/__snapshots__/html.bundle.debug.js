@@ -70,7 +70,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_label#0:4/setup", "input_label");
 	_scope($scope0_id, {
-		input_label: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label,
+		input_label: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label,
 		Row: $ui__input_show && Row
 	}, "__tests__/template.marko", 0, {
 		input_label: ["input.label"],

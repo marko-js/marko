@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a4");
 	$fg__input_img && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "a1", "k");
 	_scope($scope0_id, {
-		k: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.img,
+		k: _write_if($scope0_reason, 2) && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.img,
 		l: count
 	}) || $fg__input_img && $ui__input_show && _patch_write($scope0_id, "xk", input.img, !_server_guard($scope0_reason, 3));
 }, 1);

@@ -43,7 +43,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	$fg__input_b2 && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_b#0:6/setup", "input_b");
 	_scope($scope0_id, {
 		input_a: input.a,
-		input_b: ($ui__input_show__OR__input_a || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 4)) && input.b
+		input_b: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_a || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 4)) && input.b
 	}, "__tests__/tags/child.marko", 0, {
 		input_a: ["input.a"],
 		input_b: ["input.b"]

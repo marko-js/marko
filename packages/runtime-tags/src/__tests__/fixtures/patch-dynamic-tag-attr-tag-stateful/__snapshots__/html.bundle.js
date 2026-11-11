@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, ($scope) => $scope0_page ? [{ e: input.note }] : []) }) }, 17, 0, 0, $wg__input_on, $scope0_reason, 1, 0, void 0, 0, 0, "a6");
 	_html("</main>");
 	_scope($scope0_id, {
-		e: ($ui__input_on || _unfilled_if($scope0_reason, 2)) && input.note,
+		e: _write_if($scope0_reason, 1) && ($ui__input_on || _unfilled_if($scope0_reason, 2)) && input.note,
 		f: $ui__input_on && Wrap,
 		g: $ui__input_on && Plain,
 		i: _write_if($scope0_reason, 2) && $input_note__closures

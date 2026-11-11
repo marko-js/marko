@@ -37,8 +37,8 @@ var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
 		$fg__fmt && $cg__isOpen && _patch_render($scope1_id, "__tests__/tags/rowsx.marko_2_fmt#1:4/setup", "fmt");
 		$fg__label && $cg__isOpen && _patch_render($scope1_id, "__tests__/tags/rowsx.marko_2_label#1:5/setup", "label");
 		_write_if($scope1_reason, 3) && _scope($scope1_id, {
-			fmt: ($ui__isOpen__OR__label || $ui__fmt__OR__label) && fmt,
-			label: ($ui__isOpen__OR__fmt || $ui__fmt__OR__label) && label
+			fmt: _write_if($scope1_reason, 1) && ($ui__isOpen__OR__label || $ui__fmt__OR__label) && fmt,
+			label: _write_if($scope1_reason, 0) && ($ui__isOpen__OR__fmt || $ui__fmt__OR__label) && label
 		}, "__tests__/tags/rowsx.marko", "2:2", {
 			fmt: "2:25",
 			label: "2:30"
@@ -89,7 +89,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_open && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/template.marko_1_input_open#0:5/setup", "input_open");
 	_scope($scope0_id, {
-		input_open: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.open,
+		input_open: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.open,
 		l
 	}, "__tests__/template.marko", 0, {
 		input_open: ["input.open"],

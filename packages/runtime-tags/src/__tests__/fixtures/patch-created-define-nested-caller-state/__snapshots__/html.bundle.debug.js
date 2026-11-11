@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	const Inner = { content: _content("__tests__/template.marko_1*content", ({ v, show }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__show = _write_guard($scope1_reason, 1);
+		const $scope1_reason = _scope_reason(), $wg__show = _write_guard($scope1_reason, 1), $wi__show = _write_if($scope1_reason, 1);
 		_if(() => {
 			if (show) {
 				const $scope3_id = _scope_id();
@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, $wg__show, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope1_reason, 1);
-		_write_if($scope1_reason, 1) && _scope($scope1_id, { v }, "__tests__/template.marko", "2:2", { v: "2:17" });
+		$wi__show && _scope($scope1_id, { v: $wi__show && v }, "__tests__/template.marko", "2:2", { v: "2:17" });
 	}, $scope0_id) };
 	const Outer = { content: _content("__tests__/template.marko_2*content", ({ v, show }) => {
 		const $scope2_id = _scope_id();

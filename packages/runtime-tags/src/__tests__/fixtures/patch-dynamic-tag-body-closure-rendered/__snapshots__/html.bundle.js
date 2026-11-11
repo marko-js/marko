@@ -36,7 +36,7 @@ var heading_default = _template("c", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_depth__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), $cg__input_depth && "c1");
 	}, $scope0_id, ($scope) => $scope0_page ? [{ e: input.depth }] : []), 0, $wg__input_type, $scope0_reason, 1, 0, void 0, 0, 0, "c0");
 	_scope($scope0_id, {
-		e: ($ui__input_type || _unfilled_if($scope0_reason, 2)) && input.depth,
+		e: _write_if($scope0_reason, 1) && ($ui__input_type || _unfilled_if($scope0_reason, 2)) && input.depth,
 		f: _write_if($scope0_reason, 2) && $input_depth__closures
 	}) || _filled_guard($scope0_reason, 2) && (_client_branch_if("c0", $scope0_id) || $ui__input_type) && _patch_write($scope0_id, "xe", input.depth, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "c2", "e");
 });

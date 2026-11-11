@@ -34,9 +34,9 @@ var host_default = _template("b", (input) => {
 	$fg__input_wrap && $cg__input_show && _patch_render($scope0_id, "b5", "e");
 	$fg__input_items && $cg__input_show && _patch_render($scope0_id, "b6", "f");
 	_scope($scope0_id, {
-		e: ($ui__input_show__OR__input_items || $ui__input_wrap__OR__input_items) && input.wrap,
-		f: ($ui__input_show__OR__input_wrap || $ui__input_wrap__OR__input_items) && input.items,
-		g: ($ui__input_show__OR__input_wrap__OR__input_items || _unfilled_if($scope0_reason, 8)) && input.label,
+		e: _write_if($scope0_reason, 1) && ($ui__input_show__OR__input_items || $ui__input_wrap__OR__input_items) && input.wrap,
+		f: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_wrap || $ui__input_wrap__OR__input_items) && input.items,
+		g: _write_if($scope0_reason, 3) && ($ui__input_show__OR__input_wrap__OR__input_items || _unfilled_if($scope0_reason, 8)) && input.label,
 		j: _write_if($scope0_reason, 8) && $input_label__closures
 	}) || ($fg__input_wrap && $ui__input_show__OR__input_items && _patch_write($scope0_id, "xe", input.wrap, !_server_guard($scope0_reason, 6)), $fg__input_items && $ui__input_show__OR__input_wrap && _patch_write($scope0_id, "xf", input.items, !_server_guard($scope0_reason, 7)), _filled_guard($scope0_reason, 8) && (_client_branch_if("b1", $scope0_id) || $ui__input_show__OR__input_wrap__OR__input_items) && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 8)) && _patch_subscribers($scope0_id, "b4", "g"));
 });

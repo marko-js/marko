@@ -78,7 +78,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_html("</main>");
 	_scope($scope0_id, {
-		input_note: ($ui__input_on || _unfilled_if($scope0_reason, 1)) && input.note,
+		input_note: $wi__input_on && ($ui__input_on || _unfilled_if($scope0_reason, 1)) && input.note,
 		"ClosureScopes:input_note/6": _write_if($scope0_reason, 1) && $input_note__closures,
 		"ClosureScopes:input_on/7": $wi__input_on && $input_on__closures,
 		"#childScope/0": _existing_scope($childScope2),

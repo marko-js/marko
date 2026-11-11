@@ -27,8 +27,8 @@ var picker_default = _template("b", (input) => {
 	_patch_let_change($scope0_id, "vb3", refreshing, "wi", $refreshingChange, $scope0_reason, 0);
 	_patch_fill($scope0_id, "vb4", catalog, 1);
 	_scope($scope0_id, {
-		e: $ui__input_refreshing__OR__input_refreshingChange && input.refreshing,
-		f: $ui__input_refreshing__OR__input_refreshingChange && input.refreshingChange,
+		e: _write_if($scope0_reason, 2) && $ui__input_refreshing__OR__input_refreshingChange && input.refreshing,
+		f: _write_if($scope0_reason, 1) && $ui__input_refreshing__OR__input_refreshingChange && input.refreshingChange,
 		k: load,
 		i: $refreshingChange
 	}) || ($fg__input_refreshing && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.refreshing, !_server_guard($scope0_reason, 1)), $fg__input_refreshingChange && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.refreshingChange, !_server_guard($scope0_reason, 2)));

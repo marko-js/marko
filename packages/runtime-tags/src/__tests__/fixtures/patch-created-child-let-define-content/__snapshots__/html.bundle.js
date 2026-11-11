@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a2"], $scope0_reason, 2);
 	_scope($scope0_id, {
-		d: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label,
+		d: _write_if($scope0_reason, 2) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label,
 		g: $ui__input_show && Body.content,
 		h: _write_if($scope0_reason, 1) && $input_label__closures
 	}) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a3", "d");

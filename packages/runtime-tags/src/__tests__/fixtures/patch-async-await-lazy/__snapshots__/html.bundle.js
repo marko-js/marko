@@ -9,7 +9,7 @@ _shells({
 	a: "a !a9;E lD%lD%l Db%;<main><h1> </h1><section><!></section><footer><!></footer><button>Count <!></button></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_related__OR__input_slow = _unfilled_if($scope0_reason, 0), $wi__input_related__OR__input_slow = _write_if($scope0_reason, 0), $ui__input_slow__OR__input_note = _unfilled_if($scope0_reason, 2), $ui__input_related__OR__input_note = _unfilled_if($scope0_reason, 1), $ui__input_slow = _unfilled_if($scope0_reason, 5), $fg__input_slow = _filled_guard($scope0_reason, 5), $fg__input_note = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $ui__input_related__OR__input_slow = _unfilled_if($scope0_reason, 0), $wi__input_related__OR__input_slow = _write_if($scope0_reason, 0), $ui__input_slow__OR__input_note = _unfilled_if($scope0_reason, 2), $wi__input_slow = _write_if($scope0_reason, 5), $ui__input_related__OR__input_note = _unfilled_if($scope0_reason, 1), $ui__input_slow = _unfilled_if($scope0_reason, 5), $fg__input_slow = _filled_guard($scope0_reason, 5), $fg__input_note = _filled_guard($scope0_reason, 6), $wi__input_related = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_related__closures = /* @__PURE__ */ new Set();
 	const $input_slow__closures = /* @__PURE__ */ new Set();
@@ -43,11 +43,11 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a9");
 	_patch_render($scope0_id, "a10", (($fg__input_slow ? " j" : "") + ($fg__input_note ? " k" : "")).slice(1), $scope0_reason, 2);
 	_scope($scope0_id, {
-		i: $ui__input_related__OR__input_slow && input.related,
-		j: ($ui__input_related__OR__input_note || $ui__input_related__OR__input_slow || $ui__input_slow__OR__input_note) && input.slow,
-		k: $ui__input_slow__OR__input_note && input.note,
+		i: $wi__input_slow && $ui__input_related__OR__input_slow && input.related,
+		j: _write_if($scope0_reason, 1) && ($ui__input_related__OR__input_note || $ui__input_related__OR__input_slow || $ui__input_slow__OR__input_note) && input.slow,
+		k: $wi__input_slow && $ui__input_slow__OR__input_note && input.note,
 		m: count,
-		n: _write_if($scope0_reason, 4) && $ui__input_related__OR__input_slow && $input_related__closures,
-		o: _write_if($scope0_reason, 5) && ($ui__input_related__OR__input_slow || $ui__input_slow__OR__input_note) && $input_slow__closures
+		n: $wi__input_related && $wi__input_related && $ui__input_related__OR__input_slow && $input_related__closures,
+		o: $wi__input_slow && $wi__input_slow && ($ui__input_related__OR__input_slow || $ui__input_slow__OR__input_note) && $input_slow__closures
 	}) || (_filled_guard($scope0_reason, 4) && $ui__input_slow && _patch_write($scope0_id, "xi", input.related, !_server_guard($scope0_reason, 4)), $fg__input_slow && $ui__input_related__OR__input_note && _patch_write($scope0_id, "xj", input.slow, !_server_guard($scope0_reason, 5)), $fg__input_note && $ui__input_slow && _patch_write($scope0_id, "xk", input.note, !_server_guard($scope0_reason, 6)));
 }, 1);

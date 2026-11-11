@@ -7,7 +7,7 @@ _shells({
 	b5: "b5 b9;D lD lD ;<p> </p><p> </p><em> </em>"
 });
 var panel_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 1), $sg__input_x = _server_guard($scope0_reason, 2), $sg__input_y = _server_guard($scope0_reason, 3), $fg__input_x2 = _filled_guard($scope0_reason, 2), $fg__input_y2 = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $sg__input_x = _server_guard($scope0_reason, 2), $sg__input_y = _server_guard($scope0_reason, 3), $fg__input_x2 = _filled_guard($scope0_reason, 2), $fg__input_y2 = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_if(() => {
@@ -37,8 +37,8 @@ var panel_default = _template("b", (input) => {
 	$fg__input_y2 && $cg__input_show && _patch_render($scope0_id, "b1", "g");
 	_patch_fill($scope0_id, "vb7", count, 1);
 	_scope($scope0_id, {
-		f: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.x,
-		g: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.y,
+		f: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.x,
+		g: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.y,
 		h: count
 	}) || ($fg__input_x2 && $ui__input_show && _patch_write($scope0_id, "xf", input.x, !$sg__input_x), $fg__input_y2 && $ui__input_show && _patch_write($scope0_id, "xg", input.y, !$sg__input_y));
 });

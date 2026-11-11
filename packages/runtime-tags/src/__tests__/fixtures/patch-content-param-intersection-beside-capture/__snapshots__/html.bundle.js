@@ -18,8 +18,8 @@ var pass_on_default = _template("b", (input) => {
 	_dynamic_tag($scope0_id, "a", input.content, [input.obj.x], 1, 0, 1, $wg__input_content__OR__input_obj_x, $scope0_reason, 0, 0, 1);
 	_patch_render($scope0_id, "b0", (($fg__input_content ? " d" : "") + ($fg__input_obj_x ? " f" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: $ui__input_content__OR__input_obj_x && input.content,
-		f: $ui__input_content__OR__input_obj_x && input.obj?.x
+		d: _write_if($scope0_reason, 2) && $ui__input_content__OR__input_obj_x && input.content,
+		f: _write_if($scope0_reason, 1) && $ui__input_content__OR__input_obj_x && input.obj?.x
 	}) || ($fg__input_content && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.content, !_server_guard($scope0_reason, 1)), $fg__input_obj_x && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.obj?.x, !_server_guard($scope0_reason, 2)));
 });
 
@@ -54,7 +54,7 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_scope($scope0_id, {
-		e: ($ui__input_obj || _unfilled_if($scope0_reason, 2)) && input.a,
+		e: _write_if($scope0_reason, 1) && ($ui__input_obj || _unfilled_if($scope0_reason, 2)) && input.a,
 		f: _write_if($scope0_reason, 2) && $input_a__closures,
 		a: _existing_scope($childScope2)
 	}) || _filled_guard($scope0_reason, 2) && $ui__input_obj && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "a4", "e");

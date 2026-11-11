@@ -38,9 +38,9 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 4);
 	$fg__input_mode && _client_guard($scope0_reason, 4) && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_mode#0:6/setup", "input_mode");
 	_scope($scope0_id, {
-		input_a: ($ui__input_show__OR__input_b__OR__input_mode || $ui__input_a__OR__input_b) && input.a,
-		input_b: ($ui__input_show__OR__input_a__OR__input_mode || $ui__input_a__OR__input_b) && input.b,
-		input_mode: ($ui__input_show || _unfilled_if($scope0_reason, 7)) && input.mode,
+		input_a: _write_if($scope0_reason, 2) && ($ui__input_show__OR__input_b__OR__input_mode || $ui__input_a__OR__input_b) && input.a,
+		input_b: _write_if($scope0_reason, 1) && ($ui__input_show__OR__input_a__OR__input_mode || $ui__input_a__OR__input_b) && input.b,
+		input_mode: _write_if($scope0_reason, 4) && ($ui__input_show || _unfilled_if($scope0_reason, 7)) && input.mode,
 		"ClosureScopes:input_a/7": _write_if($scope0_reason, 5) && $input_a__closures,
 		"ClosureScopes:input_b/8": _write_if($scope0_reason, 6) && $input_b__closures
 	}, "__tests__/tags/child.marko", 0, {

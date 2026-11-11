@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_link && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/template.marko_1_input_link#0:9/setup", "input_link");
 	_scope($scope0_id, {
-		input_link: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.link,
+		input_link: _write_if($scope0_reason, 1) && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.link,
 		n
 	}, "__tests__/template.marko", 0, {
 		input_link: ["input.link"],

@@ -19,7 +19,7 @@ var toggle_if_default = _template("__tests__/tags/toggle-if.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_open, 1, 0, 0, ["__tests__/tags/toggle-if.marko_1*shell"], $scope0_reason, 1);
 	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/tags/toggle-if.marko_1_input_content#0:4/setup", "input_content");
-	_scope($scope0_id, { input_content: ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.content }, "__tests__/tags/toggle-if.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && $ui__input_open && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { input_content: _write_if($scope0_reason, 1) && ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.content }, "__tests__/tags/toggle-if.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && $ui__input_open && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // tags/toggle-for.marko
@@ -40,7 +40,7 @@ var toggle_for_default = _template("__tests__/tags/toggle-for.marko", (input) =>
 		_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/tags/toggle-for.marko", "1:2");
 	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/toggle-for.marko_1*shell", $scope0_reason, 1);
 	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/tags/toggle-for.marko_1_input_content#0:4/setup", "input_content");
-	_scope($scope0_id, { input_content: ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.content }, "__tests__/tags/toggle-for.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && $ui__input_open && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { input_content: _write_if($scope0_reason, 1) && ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.content }, "__tests__/tags/toggle-for.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && $ui__input_open && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // tags/toggle-tag.marko
@@ -64,7 +64,7 @@ var toggle_tag_default = _template("__tests__/tags/toggle-tag.marko", (input) =>
 		$wg__input_content || $wi__input_open__OR__input_content && _resume_branch($scope1_id);
 	}, $scope0_id, 0), 0, $wg__input_open, $scope0_reason, 1);
 	_scope($scope0_id, {
-		input_content: ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.content,
+		input_content: _write_if($scope0_reason, 1) && ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.content,
 		"ClosureScopes:input_content/5": _write_if($scope0_reason, 2) && $input_content__closures
 	}, "__tests__/tags/toggle-tag.marko", 0, { input_content: ["input.content"] }) || _filled_guard($scope0_reason, 2) && $ui__input_open && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2)) && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "__tests__/tags/toggle-tag.marko_0_input_content#4/subscribers", "input_content");
 });
@@ -140,7 +140,7 @@ var param_host_default = _template("__tests__/tags/param-host.marko", (input) =>
 		}, "__tests__/tags/param-host.marko", "10:4"), $cg__input_label && "__tests__/tags/param-host.marko_4_input_label#0:7/subscribe");
 	}, $scope0_id, 0), 0, $wg__input_open, $scope0_reason, 1);
 	_scope($scope0_id, {
-		input_label: ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.label,
+		input_label: _write_if($scope0_reason, 1) && ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.label,
 		"ClosureScopes:input_label/8": $wi__input_label && $input_label__closures,
 		"#childScope/0": _existing_scope($childScope),
 		"#childScope/1": _existing_scope($childScope2),
@@ -254,7 +254,7 @@ var define_host_default = _template("__tests__/tags/define-host.marko", (input) 
 	Sel.content({ open: input.open });
 	_patch_child_end();
 	_scope($scope0_id, {
-		input_label: ($ui__input_open || _unfilled_if($scope0_reason, 0)) && input.label,
+		input_label: _write_if($scope0_reason, 1) && ($ui__input_open || _unfilled_if($scope0_reason, 0)) && input.label,
 		"ClosureScopes:input_label/5": $wi__input_label && $input_label__closures,
 		"#childScope/0": _existing_scope($childScope4)
 	}, "__tests__/tags/define-host.marko", 0, { input_label: ["input.label"] }) || _filled_guard($scope0_reason, 0) && $ui__input_open && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "__tests__/tags/define-host.marko_0_input_label#3/subscribers", "input_label");

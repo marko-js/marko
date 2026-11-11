@@ -36,8 +36,8 @@ var panel_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b4"], $scope0_reason, 6);
 	_scope($scope0_id, {
-		d: ($ui__input_b__OR__input_show || $ui__input_a__OR__input_b) && input.a,
-		e: ($ui__input_a__OR__input_show || $ui__input_a__OR__input_b) && input.b,
+		d: _write_if($scope0_reason, 2) && ($ui__input_b__OR__input_show || $ui__input_a__OR__input_b) && input.a,
+		e: _write_if($scope0_reason, 1) && ($ui__input_a__OR__input_show || $ui__input_a__OR__input_b) && input.b,
 		g: _write_if($scope0_reason, 4) && $input_a__closures,
 		h: _write_if($scope0_reason, 5) && $input_b__closures
 	}) || (_filled_guard($scope0_reason, 4) && $ui__input_b__OR__input_show && _patch_write($scope0_id, "xd", input.a, !_server_guard($scope0_reason, 4)) && $cg__input_show && _patch_subscribers($scope0_id, "b5", "d"), _filled_guard($scope0_reason, 5) && $ui__input_a__OR__input_show && _patch_write($scope0_id, "xe", input.b, !_server_guard($scope0_reason, 5)) && $cg__input_show && _patch_subscribers($scope0_id, "b6", "e"));

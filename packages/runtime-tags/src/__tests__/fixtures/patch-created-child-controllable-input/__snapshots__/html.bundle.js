@@ -13,8 +13,8 @@ var demo_card_default = _template("b", (input) => {
 	const $selectedChange = input.tabChange || void 0;
 	_patch_let_change($scope0_id, "vb2", selected, "wi", $selectedChange, $scope0_reason, 0);
 	_scope($scope0_id, {
-		e: $ui__input_tab__OR__input_tabChange && input.tab,
-		f: $ui__input_tab__OR__input_tabChange && input.tabChange,
+		e: _write_if($scope0_reason, 2) && $ui__input_tab__OR__input_tabChange && input.tab,
+		f: _write_if($scope0_reason, 1) && $ui__input_tab__OR__input_tabChange && input.tabChange,
 		h: selected,
 		i: $selectedChange
 	}) || ($fg__input_tab && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.tab, !_server_guard($scope0_reason, 1)), $fg__input_tabChange && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.tabChange, !_server_guard($scope0_reason, 2)));

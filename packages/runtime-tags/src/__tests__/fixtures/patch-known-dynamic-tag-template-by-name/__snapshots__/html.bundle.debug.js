@@ -23,8 +23,8 @@ var frame_default = _template("__tests__/tags/frame.marko", (input) => {
 	_html("</section>");
 	_patch_render($scope0_id, "__tests__/tags/frame.marko_0_input_item#3_input_label#4/setup", (($fg__input_item ? " input_item" : "") + ($fg__input_label ? " input_label" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_item: $ui__input_item__OR__input_label && input.item,
-		input_label: $ui__input_item__OR__input_label && input.label
+		input_item: _write_if($scope0_reason, 2) && $ui__input_item__OR__input_label && input.item,
+		input_label: _write_if($scope0_reason, 1) && $ui__input_item__OR__input_label && input.label
 	}, "__tests__/tags/frame.marko", 0, {
 		input_item: ["input.item"],
 		input_label: ["input.label"]
@@ -48,8 +48,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_framed#5_input_label#6/setup", (($fg__input_framed ? " input_framed" : "") + ($fg__input_label ? " input_label" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_framed: $ui__input_framed__OR__input_label && input.framed,
-		input_label: $ui__input_framed__OR__input_label && input.label,
+		input_framed: _write_if($scope0_reason, 2) && $ui__input_framed__OR__input_label && input.framed,
+		input_label: _write_if($scope0_reason, 1) && $ui__input_framed__OR__input_label && input.label,
 		n
 	}, "__tests__/template.marko", 0, {
 		input_framed: ["input.framed"],

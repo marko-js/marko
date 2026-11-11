@@ -83,8 +83,8 @@ var template_default = _template("a", (input) => {
 	_html(`</main>${_el_mark($scope0_id, "a", $wg__input_show)}`);
 	$fg__input_on && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "a4", "e");
 	_scope($scope0_id, {
-		e: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.on,
-		f: ($ui__input_show__OR__input_on || _unfilled_if($scope0_reason, 4)) && input.note,
+		e: _write_if($scope0_reason, 2) && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.on,
+		f: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_on || _unfilled_if($scope0_reason, 4)) && input.note,
 		h: _write_if($scope0_reason, 4) && $input_note__closures
 	}) || ($fg__input_on && $ui__input_show && _patch_write($scope0_id, "xe", input.on, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && (_client_branch_if("a1", $scope0_id) || $ui__input_show__OR__input_on) && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 4)) && _patch_subscribers($scope0_id, "a6", "f"));
 }, 1);

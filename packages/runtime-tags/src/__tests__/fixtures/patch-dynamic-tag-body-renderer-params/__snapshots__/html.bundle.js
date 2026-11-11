@@ -38,8 +38,8 @@ var host_default = _template("b", (input) => {
 	_patch_fill($scope0_id, "vb9", flag, 1);
 	_scope($scope0_id, {
 		f: input.wrap,
-		h: ($ui__input_wrap__OR__input_show || _unfilled_if($scope0_reason, 1)) && input.native,
-		i: ($ui__input_wrap__OR__input_show__OR__input_native || _unfilled_if($scope0_reason, 7)) && input.label,
+		h: _write_if($scope0_reason, 0) && ($ui__input_wrap__OR__input_show || _unfilled_if($scope0_reason, 1)) && input.native,
+		i: _write_if($scope0_reason, 2) && ($ui__input_wrap__OR__input_show__OR__input_native || _unfilled_if($scope0_reason, 7)) && input.label,
 		j: flag,
 		m: _write_if($scope0_reason, 7) && $input_label__closures
 	}) || ($fg__input_wrap && _patch_write($scope0_id, "xf", input.wrap, !_server_guard($scope0_reason, 4)), $fg__input_native && $ui__input_wrap__OR__input_show && _patch_write($scope0_id, "xh", input.native, !_server_guard($scope0_reason, 6)), _filled_guard($scope0_reason, 7) && (_client_branch_if("b1", $scope0_id) || $ui__input_wrap__OR__input_show__OR__input_native) && _patch_write($scope0_id, "xi", input.label, !_server_guard($scope0_reason, 7)) && _patch_subscribers($scope0_id, "b6", "i"));

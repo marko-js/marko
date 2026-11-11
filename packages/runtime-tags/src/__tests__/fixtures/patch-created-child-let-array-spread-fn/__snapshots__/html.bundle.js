@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_items && $cg__input_show && _patch_render($scope0_id, "a2", "e");
 	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "a3", "f");
 	_scope($scope0_id, {
-		e: ($ui__input_show__OR__input_label || _unfilled_if($scope0_reason, 2)) && input.items,
+		e: _write_if($scope0_reason, 1) && ($ui__input_show__OR__input_label || _unfilled_if($scope0_reason, 2)) && input.items,
 		f: _write_if($scope0_reason, 0) && input.label
 	}) || ($fg__input_items && $ui__input_show__OR__input_label && _patch_write($scope0_id, "xe", input.items, !_server_guard($scope0_reason, 5)), $fg__input_label && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 6)));
 }, 1);

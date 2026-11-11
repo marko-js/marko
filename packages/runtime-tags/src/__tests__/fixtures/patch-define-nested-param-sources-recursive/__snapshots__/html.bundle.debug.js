@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_unfilled_if(($uf__x | $uf__z) << 1, 0) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_x#1:3/subscribe");
 			_patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:4_x#1:3_z#3/setup", ((_filled_guard($scope0_reason, 0) ? " >>input_label" : "") + (_filled_guard($scope1_reason, 1) ? " >x" : "") + ($fg__z ? " z" : "")).slice(1), ($uf__input_label | $uf__x | $uf__z) << 1, 0);
 			_subscribe(_unfilled_if(($uf__x | $uf__z) << 1, 0) && $wi__x && $Outer_content__x__closures, _subscribe(_unfilled_if(($uf__input_label | $uf__x | $uf__z) << 1, 0) && $wi__input_label && $input_label__closures, _scope($scope2_id, {
-				z: ($ui__input_label || $ui__x || _unfilled_if($scope2_reason, 0)) && z,
+				z: ($wi__input_label || $wi__x) && ($ui__input_label || $ui__x || _unfilled_if($scope2_reason, 0)) && z,
 				_: ($wi__input_label || $wi__x || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)
 			}, "__tests__/template.marko", "3:4", { z: "3:19" }), _client_guard(($uf__input_label | $uf__x | $uf__z) << 1, 0) && "__tests__/template.marko_2_input_label#0:4/subscribe"), _client_guard(($uf__x | $uf__z) << 1, 0) && "__tests__/template.marko_2_x#1:3/subscribe") || $fg__z && ($ui__input_label || $ui__x) && _patch_write($scope2_id, "PatchMarkedWrite:z", z, !_server_guard($scope2_reason, 0));
 		}, $scope1_id) };
@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		Inner.content({ z: y });
 		_patch_child_end();
 		_scope($scope1_id, {
-			x: ($ui__input_label2 || $ui__y || _unfilled_if($scope1_reason, 1)) && x,
+			x: ($wi__input_label || _write_if($scope1_reason, 2)) && ($ui__input_label2 || $ui__y || _unfilled_if($scope1_reason, 1)) && x,
 			_: ($wi__input_label || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id),
 			"ClosureScopes:x/8": $wi__x && $Outer_content__x__closures,
 			"#childScope/0": _existing_scope($childScope)
@@ -46,7 +46,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	const Wrapper = { content: _content("__tests__/template.marko_3*content", ({ a, b, depth }) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason(), $uf__a__OR__b = _updates_from($scope3_reason, 0), $uf__b = _updates_from($scope3_reason, 3), $uf__a = _updates_from($scope3_reason, 2), $wg__depth = _write_guard($scope3_reason, 4), $ui__depth = _unfilled_if($scope3_reason, 4);
+		const $scope3_reason = _scope_reason(), $uf__a__OR__b = _updates_from($scope3_reason, 0), $uf__b = _updates_from($scope3_reason, 3), $uf__a = _updates_from($scope3_reason, 2), $wg__depth = _write_guard($scope3_reason, 4), $ui__depth = _unfilled_if($scope3_reason, 4), $wi__depth = _write_if($scope3_reason, 4);
 		_set_scope_reason($uf__a__OR__b << 1 | $uf__a << 3 | $uf__b << 5);
 		const $childScope2 = _peek_scope_id($scope3_id, "#childScope/0", 1, 0, $scope0_id);
 		Outer.content({
@@ -75,9 +75,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope3_id, "#text/1", 1, $wg__depth, 1, 0, 0, ["__tests__/template.marko_4*shell"], $scope3_reason, 4);
 		_scope($scope3_id, {
-			a: ($ui__depth || _unfilled_if($scope3_reason, 2)) && a,
-			b: ($ui__depth || _unfilled_if($scope3_reason, 3)) && b,
-			_: _write_if($scope3_reason, 4) && _scope_with_id($scope0_id),
+			a: $wi__depth && ($ui__depth || _unfilled_if($scope3_reason, 2)) && a,
+			b: $wi__depth && ($ui__depth || _unfilled_if($scope3_reason, 3)) && b,
+			_: $wi__depth && _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope2)
 		}, "__tests__/template.marko", "8:2", {
 			a: "8:19",

@@ -15,12 +15,12 @@ var my_for_default = _template("__tests__/tags/my-for.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", input.content, [...args], 1, 0, 1, $wg__input_to__OR__input_content, $scope0_reason, 0, 0, 2);
 		_patch_render($scope1_id, "__tests__/tags/my-for.marko_1_input_content#0:4_args#1/setup", ((_filled_guard($scope0_reason, 2) ? " >input_content" : "") + ($fg__input_to ? " args" : "")).slice(1), $scope0_reason, 0);
 		_write_if($scope0_reason, 0) && _scope($scope1_id, {
-			args: _unfilled_if($scope0_reason, 0) && args,
+			args: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 0) && args,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/tags/my-for.marko", "1:2", { args: "1:6" });
 	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/my-for.marko_1*shell", $scope0_reason, 1);
 	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/tags/my-for.marko_1_input_content#0:4/setup", "input_content");
-	_scope($scope0_id, { input_content: _unfilled_if($scope0_reason, 0) && input.content }, "__tests__/tags/my-for.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { input_content: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 0) && input.content }, "__tests__/tags/my-for.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

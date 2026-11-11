@@ -29,7 +29,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_card = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 3), $scope0_page = _page_render(), $wi__input_tag__OR__input_boxed = _write_if($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 3), $ui__input_card2 = _unfilled_if($scope0_reason, 5), $ui__input_tag = _unfilled_if($scope0_reason, 6), $fg__input_user = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_card = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 3), $scope0_page = _page_render(), $wi__input_tag__OR__input_boxed = _write_if($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 3), $ui__input_card2 = _unfilled_if($scope0_reason, 5), $wi__input_show = _write_if($scope0_reason, 3), $ui__input_tag = _unfilled_if($scope0_reason, 6), $fg__input_user = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 3), $wi__input_card = _write_if($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const $input_card__closures = new Set();
 	const $input_boxed__closures = new Set();
@@ -90,11 +90,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_user && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_user#0:8/setup", "input_user");
 	_scope($scope0_id, {
-		input_user: ($ui__input_show || _unfilled_if($scope0_reason, 4)) && input.user,
-		input_card: ($ui__input_show || $ui__input_card2) && input.card,
-		input_boxed: ($ui__input_tag || _unfilled_if($scope0_reason, 7)) && input.boxed,
+		input_user: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 4)) && input.user,
+		input_card: $wi__input_show && ($ui__input_show || $ui__input_card2) && input.card,
+		input_boxed: _write_if($scope0_reason, 6) && ($ui__input_tag || _unfilled_if($scope0_reason, 7)) && input.boxed,
 		n,
-		"ClosureScopes:input_card/14": _write_if($scope0_reason, 5) && ($ui__input_card2 || $ui__input_show) && $input_card__closures,
+		"ClosureScopes:input_card/14": $wi__input_card && $wi__input_card && ($ui__input_card2 || $ui__input_show) && $input_card__closures,
 		"ClosureScopes:input_boxed/15": _write_if($scope0_reason, 7) && $input_boxed__closures
 	}, "__tests__/template.marko", 0, {
 		input_user: ["input.user"],

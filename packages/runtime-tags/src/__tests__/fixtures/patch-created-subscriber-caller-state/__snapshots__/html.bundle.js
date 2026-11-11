@@ -7,7 +7,7 @@ _shells({
 	b1: "b1;D ;<em> </em>"
 });
 var panel_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1), $wi__input_show__OR__input_n = _write_if($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 1), $ui__input_n = _unfilled_if($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1), $wi__input_show__OR__input_n = _write_if($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 1), $ui__input_n = _unfilled_if($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1), $wi__input_n = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_n__closures = /* @__PURE__ */ new Set();
 	_if(() => {
@@ -30,8 +30,8 @@ var panel_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b2"], $scope0_reason, 1);
 	_scope($scope0_id, {
-		e: ($ui__input_show || $ui__input_n) && input.n,
-		g: _write_if($scope0_reason, 2) && ($ui__input_n || $ui__input_show) && $input_n__closures
+		e: _write_if($scope0_reason, 1) && ($ui__input_show || $ui__input_n) && input.n,
+		g: $wi__input_n && $wi__input_n && ($ui__input_n || $ui__input_show) && $input_n__closures
 	}) || _filled_guard($scope0_reason, 2) && $ui__input_show && _patch_write($scope0_id, "xe", input.n, !_server_guard($scope0_reason, 2)) && $cg__input_show && _patch_subscribers($scope0_id, "b4", "e");
 });
 

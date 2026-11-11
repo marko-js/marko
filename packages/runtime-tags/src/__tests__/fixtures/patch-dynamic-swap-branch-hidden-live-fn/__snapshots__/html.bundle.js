@@ -81,8 +81,8 @@ var w_default = _template("c", (input) => {
 	_patch_render($scope0_id, "c10", (($fg__input_flag ? " f" : "") + ($fg__input_x ? " g" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		e: input.show,
-		f: $ui__input_flag__OR__input_x && input.flag,
-		g: $ui__input_flag__OR__input_x && input.x,
+		f: _write_if($scope0_reason, 4) && $ui__input_flag__OR__input_x && input.flag,
+		g: _write_if($scope0_reason, 3) && $ui__input_flag__OR__input_x && input.x,
 		h: $ui__input_flag__OR__input_x && A,
 		i: $ui__input_flag__OR__input_x && B,
 		k: $wi__input_show && $input_show__closures,

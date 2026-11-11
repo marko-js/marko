@@ -47,7 +47,7 @@ var template_default = _template("b", (input) => {
 	_script($scope0_id, "b2");
 	$fg__input_user && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "b0", "j");
 	_scope($scope0_id, {
-		j: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.user2,
+		j: _write_if($scope0_reason, 1) && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.user2,
 		k: n,
 		d: _existing_scope($childScope)
 	}) || $fg__input_user && $ui__input_show && _patch_write($scope0_id, "xj", input.user2, !_server_guard($scope0_reason, 2));

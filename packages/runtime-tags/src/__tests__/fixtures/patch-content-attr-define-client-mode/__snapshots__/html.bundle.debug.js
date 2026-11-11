@@ -23,7 +23,7 @@ var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
 	$ui__input_mode && _patch_write($scope0_id, "PatchWrite:frag_content", frag.content, 1);
 	_client_guard($scope0_reason, 2) && _patch_render($scope0_id, "__tests__/tags/frag-host.marko_0_input_mode#4_frag_content#6/setup");
 	_scope($scope0_id, {
-		input_note: ($ui__input_mode || _unfilled_if($scope0_reason, 1)) && input.note,
+		input_note: _write_if($scope0_reason, 2) && ($ui__input_mode || _unfilled_if($scope0_reason, 1)) && input.note,
 		frag_content: $ui__input_mode && frag.content,
 		"ClosureScopes:input_note/8": _write_if($scope0_reason, 1) && $input_note__closures
 	}, "__tests__/tags/frag-host.marko", 0, {

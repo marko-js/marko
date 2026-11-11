@@ -69,7 +69,7 @@ var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
 	$fg__input_open && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/tags/rowsx.marko_1_input_open#0:5/setup", "input_open");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/rowsx.marko_0_suffix#6/fill", suffix, 1);
 	_scope($scope0_id, {
-		input_open: ($ui__input_items || _unfilled_if($scope0_reason, 1)) && input.open,
+		input_open: _write_if($scope0_reason, 0) && ($ui__input_items || _unfilled_if($scope0_reason, 1)) && input.open,
 		suffix
 	}, "__tests__/tags/rowsx.marko", 0, {
 		input_open: ["input.open"],
@@ -86,7 +86,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&`)($walks$1)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_open = _filled_guard($scope0_reason, 2), $fg__input_items = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $fg__input_open = _filled_guard($scope0_reason, 2), $fg__input_items = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -110,8 +110,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_open && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_open#0:4/setup", "input_open");
 	$fg__input_items && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_items#0:5/setup", "input_items");
 	_scope($scope0_id, {
-		input_open: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
-		input_items: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.items
+		input_open: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
+		input_items: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.items
 	}, "__tests__/template.marko", 0, {
 		input_open: ["input.open"],
 		input_items: ["input.items"]

@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 	const Inner = { content: _content("a3", ({ v, show }) => {
 		const $scope1_id = _scope_id();
 		const $Inner_content__v__closures = /* @__PURE__ */ new Set();
-		const $scope1_reason = _scope_reason(), $wi__v__OR__show = _write_if($scope1_reason, 0), $wg__show = _write_guard($scope1_reason, 2);
+		const $scope1_reason = _scope_reason(), $wi__v__OR__show = _write_if($scope1_reason, 0), $wg__show = _write_guard($scope1_reason, 2), $wi__v = _write_if($scope1_reason, 1);
 		_if(() => {
 			if (show) {
 				const $scope3_id = _scope_id();
@@ -30,8 +30,8 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope1_id, "a", 1, $wg__show, 1, 0, 0, ["a2"], $scope1_reason, 2);
 		$wi__v__OR__show && _scope($scope1_id, {
-			d: v,
-			f: _write_if($scope1_reason, 1) && $Inner_content__v__closures
+			d: _write_if($scope1_reason, 2) && v,
+			f: $wi__v && $wi__v && $Inner_content__v__closures
 		});
 	}, $scope0_id) };
 	const Outer = { content: _content("a4", ({ v, show }) => {

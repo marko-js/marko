@@ -48,7 +48,7 @@ const $content = (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_depth, 1, 0, 0, ["__tests__/tags/tree.marko_1*shell"], $scope0_reason, 1);
 	$fg__input_fn && $cg__input_depth && _patch_render($scope0_id, "__tests__/tags/tree.marko_1_input_fn#0:4/setup", "input_fn");
-	_scope($scope0_id, { input_fn: ($ui__input_depth || _unfilled_if($scope0_reason, 2)) && input.fn }, "__tests__/tags/tree.marko", 0, { input_fn: ["input.fn"] }) || $fg__input_fn && $ui__input_depth && _patch_write($scope0_id, "PatchMarkedWrite:input_fn", input.fn, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { input_fn: _write_if($scope0_reason, 1) && ($ui__input_depth || _unfilled_if($scope0_reason, 2)) && input.fn }, "__tests__/tags/tree.marko", 0, { input_fn: ["input.fn"] }) || $fg__input_fn && $ui__input_depth && _patch_write($scope0_id, "PatchMarkedWrite:input_fn", input.fn, !_server_guard($scope0_reason, 2));
 };
 var tree_default = _template("__tests__/tags/tree.marko", $content);
 

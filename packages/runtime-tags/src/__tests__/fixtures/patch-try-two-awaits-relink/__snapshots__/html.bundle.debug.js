@@ -13,7 +13,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_fast = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_fast__OR__input_slow = _write_if($scope0_reason, 1), $ui__input_fast2 = _unfilled_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_fast = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_fast__OR__input_slow = _write_if($scope0_reason, 1), $ui__input_fast2 = _unfilled_if($scope0_reason, 3), $wi__input_fast = _write_if($scope0_reason, 3), $wi__input_show = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_fast__closures = new Set();
 	const $input_show__closures = new Set();
@@ -55,9 +55,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>x</button>${_el_mark($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
-		input_fast: ($ui__input_show || $ui__input_fast2) && input.fast,
-		"ClosureScopes:input_fast/8": _write_if($scope0_reason, 3) && ($ui__input_fast2 || $ui__input_show) && $input_fast__closures,
-		"ClosureScopes:input_show/7": _write_if($scope0_reason, 2) && $ui__input_show && $input_show__closures,
+		input_fast: $wi__input_show && ($ui__input_show || $ui__input_fast2) && input.fast,
+		"ClosureScopes:input_fast/8": $wi__input_fast && $wi__input_fast && ($ui__input_fast2 || $ui__input_show) && $input_fast__closures,
+		"ClosureScopes:input_show/7": $wi__input_show && $ui__input_show && $input_show__closures,
 		"ClosureScopes:input_slow/9": _write_if($scope0_reason, 4) && _unfilled_if($scope0_reason, 4) && $input_slow__closures
 	}, "__tests__/template.marko", 0, { input_fast: ["input.fast"] }) || _filled_guard($scope0_reason, 3) && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_fast", input.fast, !_server_guard($scope0_reason, 3)) && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_fast#5/subscribers", "input_fast");
 }, 1);

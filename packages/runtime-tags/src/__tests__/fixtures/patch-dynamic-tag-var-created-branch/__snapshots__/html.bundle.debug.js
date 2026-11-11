@@ -52,8 +52,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_which && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_which#0:4/setup", "input_which");
 	$fg__input_a && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_a#0:5/setup", "input_a");
 	_scope($scope0_id, {
-		input_which: ($ui__input_show__OR__input_a || $ui__input_which__OR__input_a) && input.which,
-		input_a: ($ui__input_show__OR__input_which || $ui__input_which__OR__input_a) && input.a
+		input_which: _write_if($scope0_reason, 1) && ($ui__input_show__OR__input_a || $ui__input_which__OR__input_a) && input.which,
+		input_a: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_which || $ui__input_which__OR__input_a) && input.a
 	}, "__tests__/template.marko", 0, {
 		input_which: ["input.which"],
 		input_a: ["input.a"]

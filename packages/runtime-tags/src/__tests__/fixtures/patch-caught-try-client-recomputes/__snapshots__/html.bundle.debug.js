@@ -9,8 +9,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $return = input.label + input.count;
 	_patch_render($scope0_id, "__tests__/tags/child.marko_0_input_label#2_input_count#3/setup", (($fg__input_label ? " input_label" : "") + ($fg__input_count ? " input_count" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_label: $ui__input_label__OR__input_count && input.label,
-		input_count: $ui__input_label__OR__input_count && input.count
+		input_label: _write_if($scope0_reason, 2) && $ui__input_label__OR__input_count && input.label,
+		input_count: _write_if($scope0_reason, 1) && $ui__input_label__OR__input_count && input.count
 	}, "__tests__/tags/child.marko", 0, {
 		input_label: ["input.label"],
 		input_count: ["input.count"]

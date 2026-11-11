@@ -59,7 +59,7 @@ var row_list_default = _template("c", (input) => {
 	_script($scope0_id, "c8");
 	$fg__input_type && $cg__input_tally && _patch_render($scope0_id, "c7", "h");
 	_scope($scope0_id, {
-		h: ($ui__input_tally || _unfilled_if($scope0_reason, 1)) && input.type,
+		h: _write_if($scope0_reason, 0) && ($ui__input_tally || _unfilled_if($scope0_reason, 1)) && input.type,
 		i: input.settled,
 		j: bounty,
 		a: _existing_scope($childScope),

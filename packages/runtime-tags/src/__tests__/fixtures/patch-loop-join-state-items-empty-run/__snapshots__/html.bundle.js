@@ -17,16 +17,16 @@ var child_default = _template("b", (input) => {
 		_patch_render($scope1_id, "b0", ((_filled_guard($scope0_reason, 3) ? " >e" : "") + ($fg__input_items ? " c" : "")).slice(1), $scope0_reason, 0);
 		_patch_render($scope1_id, "b1", ((_filled_guard($scope0_reason, 4) ? " >f" : "") + ($fg__input_items__OR__input_b ? " e" : "")).slice(1), $scope0_reason, 1);
 		_scope($scope1_id, {
-			c: _unfilled_if($scope0_reason, 0) && item,
-			e: _unfilled_if($scope0_reason, 1) && d,
+			c: _write_if($scope0_reason, 3) && _unfilled_if($scope0_reason, 0) && item,
+			e: _write_if($scope0_reason, 4) && _unfilled_if($scope0_reason, 1) && d,
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b2", $scope0_reason, 2);
 	$fg__input_b && $cg__input_items && _patch_render($scope0_id, "b3", "e");
 	$fg__input_a && $cg__input_items && _patch_render($scope0_id, "b4", "f");
 	_scope($scope0_id, {
-		e: $ui__input_items__OR__input_b && input.b,
-		f: _unfilled_if($scope0_reason, 1) && input.a
+		e: _write_if($scope0_reason, 2) && $ui__input_items__OR__input_b && input.b,
+		f: _write_if($scope0_reason, 0) && _unfilled_if($scope0_reason, 1) && input.a
 	}) || ($fg__input_b && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.b, !_server_guard($scope0_reason, 3)), $fg__input_a && $ui__input_items__OR__input_b && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 4)));
 });
 

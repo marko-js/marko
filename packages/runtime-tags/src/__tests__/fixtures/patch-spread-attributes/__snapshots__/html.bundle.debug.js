@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#7");
 	$fg__input_img && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "__tests__/template.marko_1_input_img#0:10/setup", "input_img");
 	_scope($scope0_id, {
-		input_img: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.img,
+		input_img: _write_if($scope0_reason, 2) && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.img,
 		count
 	}, "__tests__/template.marko", 0, {
 		input_img: ["input.img"],

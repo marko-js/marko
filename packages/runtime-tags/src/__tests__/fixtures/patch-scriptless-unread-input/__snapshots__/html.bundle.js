@@ -49,10 +49,10 @@ var template_default = _template("a", (input) => {
 	$fg__input_user && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "a0", "g");
 	_patch_render($scope0_id, "a5", (($fg__input_tag ? " i" : "") + ($fg__input_cls ? " j" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		g: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.user,
-		i: $ui__input_tag__OR__input_cls && input.tag,
-		j: $ui__input_tag__OR__input_cls && input.cls,
-		m: ($ui__input_tag__OR__input_cls || _unfilled_if($scope0_reason, 7)) && input.user3?.name,
+		g: _write_if($scope0_reason, 2) && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.user,
+		i: _write_if($scope0_reason, 6) && $ui__input_tag__OR__input_cls && input.tag,
+		j: _write_if($scope0_reason, 5) && $ui__input_tag__OR__input_cls && input.cls,
+		m: _write_if($scope0_reason, 0) && ($ui__input_tag__OR__input_cls || _unfilled_if($scope0_reason, 7)) && input.user3?.name,
 		b: _existing_scope($childScope2),
 		o: _write_if($scope0_reason, 7) && $input_user3_name__closures
 	}) || ($fg__input_user && $ui__input_show && _patch_write($scope0_id, "xg", input.user, !_server_guard($scope0_reason, 3)), $fg__input_tag && _unfilled_if($scope0_reason, 6) && _patch_write($scope0_id, "xi", input.tag, !_server_guard($scope0_reason, 5)), $fg__input_cls && _unfilled_if($scope0_reason, 5) && _patch_write($scope0_id, "xj", input.cls, !_server_guard($scope0_reason, 6)), _filled_guard($scope0_reason, 7) && (_client_branch_if("a2", $scope0_id) || $ui__input_tag__OR__input_cls) && _patch_write($scope0_id, "xm", input.user3?.name, !_server_guard($scope0_reason, 7)) && _patch_subscribers($scope0_id, "a4", "m"));

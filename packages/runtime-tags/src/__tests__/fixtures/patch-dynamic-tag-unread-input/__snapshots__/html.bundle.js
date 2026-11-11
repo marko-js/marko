@@ -52,15 +52,15 @@ var template_default = _template("c", (input) => {
 	_patch_render($scope0_id, "c5", (($fg__input_none ? " r" : "") + ($fg__input_hidden ? " s" : "")).slice(1), $scope0_reason, 5);
 	_patch_render($scope0_id, "c6", (($fg__input_alt ? " l" : "") + ($fg__input_user2 ? " m" : "")).slice(1), $scope0_reason, 1);
 	_scope($scope0_id, {
-		i: $ui__input_which__OR__input_user && input.which,
-		j: $ui__input_which__OR__input_user && input.user,
-		l: $ui__input_alt__OR__input_user && input.alt,
-		m: $ui__input_alt__OR__input_user && input.user2,
-		n: $ui__input_tag__OR__input_cls__OR__input_title && input.tag,
-		o: $ui__input_tag__OR__input_cls__OR__input_title && input.cls,
-		p: $ui__input_tag__OR__input_cls__OR__input_title && input.title,
-		r: $ui__input_none__OR__input_hidden && input.none,
-		s: $ui__input_none__OR__input_hidden && input.hidden,
+		i: _write_if($scope0_reason, 8) && $ui__input_which__OR__input_user && input.which,
+		j: _write_if($scope0_reason, 7) && $ui__input_which__OR__input_user && input.user,
+		l: _write_if($scope0_reason, 10) && $ui__input_alt__OR__input_user && input.alt,
+		m: _write_if($scope0_reason, 9) && $ui__input_alt__OR__input_user && input.user2,
+		n: _write_if($scope0_reason, 4) && $ui__input_tag__OR__input_cls__OR__input_title && input.tag,
+		o: _write_if($scope0_reason, 3) && $ui__input_tag__OR__input_cls__OR__input_title && input.cls,
+		p: _write_if($scope0_reason, 2) && $ui__input_tag__OR__input_cls__OR__input_title && input.title,
+		r: _write_if($scope0_reason, 15) && $ui__input_none__OR__input_hidden && input.none,
+		s: _write_if($scope0_reason, 14) && $ui__input_none__OR__input_hidden && input.hidden,
 		u: n,
 		v: $ui__input_alt__OR__input_user && Row,
 		w: $ui__input_alt__OR__input_user && Alt

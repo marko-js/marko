@@ -60,7 +60,7 @@ var template_default = _template("c", (input) => {
 	_html(`<button>+</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "c4");
 	_scope($scope0_id, {
-		f: ($ui__input_on || _unfilled_if($scope0_reason, 2)) && input.label,
+		f: _write_if($scope0_reason, 1) && ($ui__input_on || _unfilled_if($scope0_reason, 2)) && input.label,
 		g: count,
 		h: _write_if($scope0_reason, 2) && $input_label__closures,
 		i: $count__closures

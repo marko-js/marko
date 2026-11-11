@@ -64,7 +64,7 @@ var shape_default = _template("__tests__/tags/shape.marko", (input) => {
 	$fg__input_sel && $cg__input_obj && _patch_render($scope0_id, "__tests__/tags/shape.marko_1_input_sel#0:5/setup", "input_sel");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/shape.marko_0_s#7/fill", s, 1);
 	_scope($scope0_id, {
-		input_sel: ($ui__input_obj || _unfilled_if($scope0_reason, 2)) && input.sel,
+		input_sel: _write_if($scope0_reason, 1) && ($ui__input_obj || _unfilled_if($scope0_reason, 2)) && input.sel,
 		input_b: input.b,
 		s,
 		"ClosureScopes:input_b/9": _write_if($scope0_reason, 3) && $input_b__closures,

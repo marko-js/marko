@@ -11,8 +11,8 @@ var tab_editor_default = _template("c", (input) => {
 	_patch_render($scope0_id, "c0", (($fg__input_tab ? " d" : "") + ($fg__input_tabChange ? " e" : "")).slice(1), $scope0_reason, 0);
 	_patch_let_change($scope0_id, "vc1", selected, 0, input.tabChange, $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: $ui__input_tab__OR__input_tabChange && input.tab,
-		e: $ui__input_tab__OR__input_tabChange && input.tabChange
+		d: _write_if($scope0_reason, 2) && $ui__input_tab__OR__input_tabChange && input.tab,
+		e: _write_if($scope0_reason, 1) && $ui__input_tab__OR__input_tabChange && input.tabChange
 	}) || ($fg__input_tab && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.tab, !_server_guard($scope0_reason, 1)), $fg__input_tabChange && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.tabChange, !_server_guard($scope0_reason, 2)));
 });
 

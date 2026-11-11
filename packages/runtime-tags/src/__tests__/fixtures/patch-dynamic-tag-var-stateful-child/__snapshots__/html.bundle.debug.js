@@ -45,8 +45,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0_count#9");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_which#6_input_label#7/setup", (($fg__input_which ? " input_which" : "") + ($fg__input_label ? " input_label" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_which: $ui__input_which__OR__input_label && input.which,
-		input_label: $ui__input_which__OR__input_label && input.label,
+		input_which: _write_if($scope0_reason, 2) && $ui__input_which__OR__input_label && input.which,
+		input_label: _write_if($scope0_reason, 1) && $ui__input_which__OR__input_label && input.label,
 		count
 	}, "__tests__/template.marko", 0, {
 		input_which: ["input.which"],

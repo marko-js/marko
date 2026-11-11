@@ -61,15 +61,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_none#17_input_hidden#18/setup", (($fg__input_none ? " input_none" : "") + ($fg__input_hidden ? " input_hidden" : "")).slice(1), $scope0_reason, 5);
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_alt#11_input_user2#12_Row#21_Alt#22/setup", (($fg__input_alt ? " input_alt" : "") + ($fg__input_user2 ? " input_user2" : "")).slice(1), $scope0_reason, 1);
 	_scope($scope0_id, {
-		input_which: $ui__input_which__OR__input_user && input.which,
-		input_user: $ui__input_which__OR__input_user && input.user,
-		input_alt: $ui__input_alt__OR__input_user && input.alt,
-		input_user2: $ui__input_alt__OR__input_user && input.user2,
-		input_tag: $ui__input_tag__OR__input_cls__OR__input_title && input.tag,
-		input_cls: $ui__input_tag__OR__input_cls__OR__input_title && input.cls,
-		input_title: $ui__input_tag__OR__input_cls__OR__input_title && input.title,
-		input_none: $ui__input_none__OR__input_hidden && input.none,
-		input_hidden: $ui__input_none__OR__input_hidden && input.hidden,
+		input_which: _write_if($scope0_reason, 8) && $ui__input_which__OR__input_user && input.which,
+		input_user: _write_if($scope0_reason, 7) && $ui__input_which__OR__input_user && input.user,
+		input_alt: _write_if($scope0_reason, 10) && $ui__input_alt__OR__input_user && input.alt,
+		input_user2: _write_if($scope0_reason, 9) && $ui__input_alt__OR__input_user && input.user2,
+		input_tag: _write_if($scope0_reason, 4) && $ui__input_tag__OR__input_cls__OR__input_title && input.tag,
+		input_cls: _write_if($scope0_reason, 3) && $ui__input_tag__OR__input_cls__OR__input_title && input.cls,
+		input_title: _write_if($scope0_reason, 2) && $ui__input_tag__OR__input_cls__OR__input_title && input.title,
+		input_none: _write_if($scope0_reason, 15) && $ui__input_none__OR__input_hidden && input.none,
+		input_hidden: _write_if($scope0_reason, 14) && $ui__input_none__OR__input_hidden && input.hidden,
 		n,
 		Row: $ui__input_alt__OR__input_user && Row,
 		Alt: $ui__input_alt__OR__input_user && Alt

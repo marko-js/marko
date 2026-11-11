@@ -16,8 +16,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0_c#8", 1, $fg__input_x__OR__input_y);
 	_patch_render($scope0_id, "__tests__/template.marko_0_a#5_b#6/setup", (($fg__input_y ? " a" : "") + ($fg__input_x ? " b" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		a: $ui__input_x__OR__input_y && a,
-		b: $ui__input_x__OR__input_y && b,
+		a: _write_if($scope0_reason, 1) && $ui__input_x__OR__input_y && a,
+		b: _write_if($scope0_reason, 2) && $ui__input_x__OR__input_y && b,
 		c
 	}, "__tests__/template.marko", 0, {
 		a: "2:8",

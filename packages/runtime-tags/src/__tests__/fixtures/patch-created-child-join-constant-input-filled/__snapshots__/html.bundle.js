@@ -23,7 +23,7 @@ var child_default = _template("b", (input) => {
 	_patch_render($scope0_id, "b2", (($fg__input_a ? " f" : "") + ($fg__input_b ? " g" : "")).slice(1), $scope0_reason, 0);
 	_patch_fill($scope0_id, "vb3", open, 1);
 	_scope($scope0_id, {
-		f: _unfilled_if($scope0_reason, 0) && input.a,
+		f: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 0) && input.a,
 		g: input.b,
 		i: open
 	}) || ($fg__input_a && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 1)), $fg__input_b && _patch_write($scope0_id, "xg", input.b, !_server_guard($scope0_reason, 2)));
@@ -68,7 +68,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a2");
 	$fg__input_y && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a0", "f");
 	_scope($scope0_id, {
-		f: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.y,
+		f: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.y,
 		g: n
 	}) || $fg__input_y && $ui__input_show && _patch_write($scope0_id, "xf", input.y, !_server_guard($scope0_reason, 1));
 }, 1);

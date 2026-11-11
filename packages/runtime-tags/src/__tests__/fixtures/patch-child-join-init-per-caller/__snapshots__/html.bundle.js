@@ -25,7 +25,7 @@ var child_default = _template("b", (input) => {
 	_patch_fill($scope0_id, "vb4", open, 1);
 	_scope($scope0_id, {
 		f: input.a,
-		g: _unfilled_if($scope0_reason, 0) && input.b,
+		g: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 0) && input.b,
 		i: open
 	}) || ($fg__input_a && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 1)), $fg__input_b && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.b, !_server_guard($scope0_reason, 2)));
 });

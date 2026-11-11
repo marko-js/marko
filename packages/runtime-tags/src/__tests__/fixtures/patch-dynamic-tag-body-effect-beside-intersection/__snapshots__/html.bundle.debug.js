@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, ($scope) => $scope0_page ? [{ input_b: input.b }] : []), 0, $wg__input_tag, $scope0_reason, 2, 0, void 0, 0, 0, "__tests__/template.marko_1*content");
 	_scope($scope0_id, {
 		input_a: input.a,
-		input_b: ($ui__input_tag__OR__input_a || _unfilled_if($scope0_reason, 1)) && input.b,
+		input_b: _write_if($scope0_reason, 0) && ($ui__input_tag__OR__input_a || _unfilled_if($scope0_reason, 1)) && input.b,
 		"ClosureScopes:input_a/6": _write_if($scope0_reason, 3) && $input_a__closures,
 		"ClosureScopes:input_b/7": _write_if($scope0_reason, 4) && $input_b__closures
 	}, "__tests__/template.marko", 0, {

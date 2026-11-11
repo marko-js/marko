@@ -50,7 +50,7 @@ var child_default = _template("b", (input) => {
 	list_default({ item: $item });
 	_patch_child_end();
 	_scope($scope0_id, {
-		e: ($ui__input_items || _unfilled_if($scope0_reason, 2)) && input.show,
+		e: _write_if($scope0_reason, 1) && ($ui__input_items || _unfilled_if($scope0_reason, 2)) && input.show,
 		f: $wi__input_show && $input_show__closures,
 		a: _existing_scope($childScope)
 	}) || _filled_guard($scope0_reason, 2) && $ui__input_items && _patch_write($scope0_id, "xe", input.show, !_server_guard($scope0_reason, 2)) && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "b3", "e");

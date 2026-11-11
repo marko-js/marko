@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Inner = { content: _content("__tests__/template.marko_1*content", ({ v, show }) => {
 		const $scope1_id = _scope_id();
 		const $Inner_content__v__closures = new Set();
-		const $scope1_reason = _scope_reason(), $wi__v__OR__show = _write_if($scope1_reason, 0), $wg__show = _write_guard($scope1_reason, 2);
+		const $scope1_reason = _scope_reason(), $wi__v__OR__show = _write_if($scope1_reason, 0), $wg__show = _write_guard($scope1_reason, 2), $wi__v = _write_if($scope1_reason, 1);
 		_if(() => {
 			if (show) {
 				const $scope3_id = _scope_id();
@@ -33,8 +33,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope1_id, "#text/0", 1, $wg__show, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope1_reason, 2);
 		$wi__v__OR__show && _scope($scope1_id, {
-			v,
-			"ClosureScopes:v/5": _write_if($scope1_reason, 1) && $Inner_content__v__closures
+			v: _write_if($scope1_reason, 2) && v,
+			"ClosureScopes:v/5": $wi__v && $wi__v && $Inner_content__v__closures
 		}, "__tests__/template.marko", "2:2", { v: "2:17" });
 	}, $scope0_id) };
 	const Outer = { content: _content("__tests__/template.marko_2*content", ({ v, show }) => {

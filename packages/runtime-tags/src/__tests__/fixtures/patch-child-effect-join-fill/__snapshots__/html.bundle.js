@@ -11,7 +11,7 @@ var child_default = _template("b", (input) => {
 	_patch_render($scope0_id, "b1", (($fg__input_a ? " e" : "") + ($fg__input_b ? " f" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		e: input.a,
-		f: _unfilled_if($scope0_reason, 0) && input.b
+		f: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 0) && input.b
 	}) || ($fg__input_a && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 1)), $fg__input_b && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 2)));
 });
 

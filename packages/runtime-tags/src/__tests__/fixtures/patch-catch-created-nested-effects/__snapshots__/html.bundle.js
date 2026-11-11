@@ -23,7 +23,7 @@ _shells({
 	a7: "a7 !a8;D ;<u> </u>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_v = _client_guard($scope0_reason, 2), $wi__input_v = _write_if($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 3), $cg__input_items = _client_guard($scope0_reason, 4), $ui__input_fail__OR__input_msg = _unfilled_if($scope0_reason, 1), $sg__input_v = _server_guard($scope0_reason, 2), $sg__input_items = _server_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_v = _client_guard($scope0_reason, 2), $wi__input_v = _write_if($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 3), $cg__input_items = _client_guard($scope0_reason, 4), $ui__input_fail__OR__input_msg = _unfilled_if($scope0_reason, 1), $wi__input_msg = _write_if($scope0_reason, 6), $wi__input_fail = _write_if($scope0_reason, 5), $sg__input_v = _server_guard($scope0_reason, 2), $sg__input_items = _server_guard($scope0_reason, 4), $wi__input_show = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_v__closures = /* @__PURE__ */ new Set();
 	const $input_show__closures = /* @__PURE__ */ new Set();
@@ -93,9 +93,9 @@ var template_default = _template("a", (input) => {
 		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "a16", $cg__input_show);
 		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a17", $cg__input_items);
 		_subscribe(_unfilled_if($scope0_reason, 4) && $input_items__closures, _subscribe($ui__input_show && $input_show__closures, _subscribe($ui__input_v2 && $input_v__closures, _scope($scope1_id, {
-			h: ($ui__input_show || $ui__input_v2) && w,
+			h: $wi__input_show && ($ui__input_show || $ui__input_v2) && w,
 			_: _scope_with_id($scope0_id),
-			n: $wi__input_v && ($ui__input_v2 || $ui__input_show) && $catch_content__w__closures,
+			n: $wi__input_v && $wi__input_v && ($ui__input_v2 || $ui__input_show) && $catch_content__w__closures,
 			d: _existing_scope($childScope)
 		}), $cg__input_v && "a15"), $cg__input_show && "a16"), $cg__input_items && "a17");
 	}, 0, "a6", "a4", 1, 1, 1);
@@ -103,12 +103,12 @@ var template_default = _template("a", (input) => {
 		d: input.v,
 		e: input.show,
 		f: input.items,
-		g: $ui__input_fail__OR__input_msg && input.fail,
-		h: $ui__input_fail__OR__input_msg && input.msg,
+		g: $wi__input_msg && $ui__input_fail__OR__input_msg && input.fail,
+		h: $wi__input_fail && $ui__input_fail__OR__input_msg && input.msg,
 		i: $wi__input_v && $input_v__closures,
-		j: _write_if($scope0_reason, 3) && $input_show__closures,
+		j: $wi__input_show && $input_show__closures,
 		k: _write_if($scope0_reason, 4) && $input_items__closures,
-		l: _write_if($scope0_reason, 5) && $ui__input_fail__OR__input_msg && $input_fail__closures,
-		m: _write_if($scope0_reason, 6) && $ui__input_fail__OR__input_msg && $input_msg__closures
+		l: $wi__input_fail && $wi__input_fail && $ui__input_fail__OR__input_msg && $input_fail__closures,
+		m: $wi__input_msg && $wi__input_msg && $ui__input_fail__OR__input_msg && $input_msg__closures
 	}) || (_filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.v, !$sg__input_v) && _patch_subscribers($scope0_id, "a21", "d"), _filled_guard($scope0_reason, 3) && _patch_write($scope0_id, "xe", input.show, !_server_guard($scope0_reason, 3)) && _patch_subscribers($scope0_id, "a22", "e"), _filled_guard($scope0_reason, 4) && _patch_write($scope0_id, "xf", input.items, !$sg__input_items) && _patch_subscribers($scope0_id, "a23", "f"), _filled_guard($scope0_reason, 5) && _unfilled_if($scope0_reason, 6) && _patch_write($scope0_id, "xg", input.fail, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && _unfilled_if($scope0_reason, 5) && _patch_write($scope0_id, "xh", input.msg, !_server_guard($scope0_reason, 6)));
 }, 1);

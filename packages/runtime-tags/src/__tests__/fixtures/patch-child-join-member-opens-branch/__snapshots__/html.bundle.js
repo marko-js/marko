@@ -19,8 +19,8 @@ var child_default = _template("b", (input) => {
 	}, $scope0_id, "a", 1, $wg__input_b, 1, 0, 0, ["b1"], $scope0_reason, 1);
 	$fg__input_a && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "b2", "e");
 	_scope($scope0_id, {
-		d: $ui__input_b__OR__input_a && input.b,
-		e: $ui__input_b__OR__input_a && input.a
+		d: _write_if($scope0_reason, 2) && $ui__input_b__OR__input_a && input.b,
+		e: _write_if($scope0_reason, 1) && $ui__input_b__OR__input_a && input.a
 	}) || (_filled_guard($scope0_reason, 1) && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.b, !_server_guard($scope0_reason, 1)), $fg__input_a && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 2)));
 });
 

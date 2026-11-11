@@ -67,7 +67,7 @@ var template_default = _template("a", (input) => {
 	_patch_render($scope0_id, "a11", $fg__input_other && "i", $scope0_reason, 5);
 	_patch_render($scope0_id, "a12", $fg__input_other && "m");
 	_scope($scope0_id, {
-		g: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.open,
+		g: _write_if($scope0_reason, 2) && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.open,
 		h: input.label,
 		j: open,
 		k: _unfilled_if($scope0_reason, 5) && Panel,

@@ -18,7 +18,7 @@ var leaf_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_flag, 1, 0, 0, ["b1"], $scope0_reason, 0);
 	$fg__input_label && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "b0", "e");
-	_scope($scope0_id, { e: ($ui__input_flag || _unfilled_if($scope0_reason, 1)) && input.label }) || $fg__input_label && $ui__input_flag && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { e: _write_if($scope0_reason, 0) && ($ui__input_flag || _unfilled_if($scope0_reason, 1)) && input.label }) || $fg__input_label && $ui__input_flag && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 1));
 });
 
 // tags/mid.marko
@@ -29,7 +29,7 @@ _shells({
 	c2: `c2${_shell_marker([[], []], ["a>", $setup$2])};${/*@__PURE__*/ ((_w0) => `D/${_w0}&l`)("b%c")};${/*@__PURE__*/ ((_w0) => `<section>${_w0}</section>`)($template$1)}`
 });
 var mid_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_flag = _filled_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $fg__input_flag = _filled_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -55,8 +55,8 @@ var mid_default = _template("c", (input) => {
 	$fg__input_flag && $cg__input_show && _patch_render($scope0_id, "c0", "e");
 	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "c1", "f");
 	_scope($scope0_id, {
-		e: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.flag,
-		f: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.label
+		e: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.flag,
+		f: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.label
 	}) || ($fg__input_flag && $ui__input_show && _patch_write($scope0_id, "xe", input.flag, !_server_guard($scope0_reason, 2)), $fg__input_label && $ui__input_show && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 3)));
 });
 

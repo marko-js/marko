@@ -39,7 +39,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_p = _client_guard($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 1), $ui__input_items = _unfilled_if($scope0_reason, 1), $ui__input_p = _unfilled_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_p = _client_guard($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 1), $ui__input_items = _unfilled_if($scope0_reason, 1), $ui__input_p = _unfilled_if($scope0_reason, 0), $wi__input_items = _write_if($scope0_reason, 1), $wi__input_p = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $count__closures = new Set();
 	const $p_name__closures = new Set();
@@ -65,7 +65,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_patch_child_end();
 		_scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
-			"ClosureScopes:item_id/11": _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $for_content__item_id__closures,
+			"ClosureScopes:item_id/11": $wi__input_items && _unfilled_if($scope0_reason, 1) && $for_content__item_id__closures,
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "4:4");
 	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
@@ -73,9 +73,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		count,
-		p_name: ($ui__input_items || $ui__input_p) && p?.name,
+		p_name: $wi__input_items && ($ui__input_items || $ui__input_p) && p?.name,
 		"ClosureScopes:count/9": $count__closures,
-		"ClosureScopes:p_name/10": _write_if($scope0_reason, 0) && ($ui__input_p || $ui__input_items) && $p_name__closures
+		"ClosureScopes:p_name/10": $wi__input_p && $wi__input_p && ($ui__input_p || $ui__input_items) && $p_name__closures
 	}, "__tests__/template.marko", 0, {
 		count: "1:6",
 		p_name: ["p.name", "2:8"]

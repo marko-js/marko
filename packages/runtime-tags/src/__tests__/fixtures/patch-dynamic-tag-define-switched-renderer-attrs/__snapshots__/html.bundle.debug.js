@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/1", content, { title: input.t }, 1, 0, 0, _write_guard($scope0_reason, 0) || _write_guard($scope1_reason, 1), ($uf__input_t | $uf__content) << 1, 0, 0, 1, $scope1_reason);
 		_patch_render($scope1_id, "__tests__/template.marko_1_input_t#0:3_content#5/setup", ((_filled_guard($scope0_reason, 0) ? " >input_t" : "") + ($fg__content ? " content" : "")).slice(1), ($uf__input_t | $uf__content) << 1, 0);
 		_subscribe(_unfilled_if(($uf__input_t | $uf__content) << 1, 0) && $wi__input_t && $input_t__closures, _scope($scope1_id, {
-			content: ($ui__input_t || _unfilled_if($scope1_reason, 1)) && content,
+			content: $wi__input_t && ($ui__input_t || _unfilled_if($scope1_reason, 1)) && content,
 			_: ($wi__input_t || _write_if($scope1_reason, 1)) && _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "3:2", { content: "3:19" }), _client_guard(($uf__input_t | $uf__content) << 1, 0) && "__tests__/template.marko_1_input_t#0:3/subscribe") || $fg__content && $ui__input_t && _patch_write($scope1_id, "PatchMarkedWrite:content", content, !_server_guard($scope1_reason, 1));
 	}, $scope0_id) };
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_patch_child_end();
 	_scope($scope0_id, {
-		input_t: ($ui__input_x || _unfilled_if($scope0_reason, 0)) && input.t,
+		input_t: _write_if($scope0_reason, 2) && ($ui__input_x || _unfilled_if($scope0_reason, 0)) && input.t,
 		A: $ui__input_x && A,
 		B: $ui__input_x && B,
 		"ClosureScopes:input_t/9": $wi__input_t && $input_t__closures,

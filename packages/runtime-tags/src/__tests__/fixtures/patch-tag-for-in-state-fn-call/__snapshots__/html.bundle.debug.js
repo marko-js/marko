@@ -45,7 +45,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_s#7/fill", s, 1);
 	_scope($scope0_id, {
 		input_prefix: input.prefix,
-		input_sel: ($ui__input_obj || _unfilled_if($scope0_reason, 3)) && input.sel,
+		input_sel: _write_if($scope0_reason, 2) && ($ui__input_obj || _unfilled_if($scope0_reason, 3)) && input.sel,
 		s,
 		fmt,
 		"ClosureScopes:s/10": $s__closures,

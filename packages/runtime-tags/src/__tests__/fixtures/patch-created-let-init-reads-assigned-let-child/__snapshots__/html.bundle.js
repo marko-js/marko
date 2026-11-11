@@ -20,7 +20,7 @@ var child_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["b1"], $scope0_reason, 0);
 	$fg__input_a && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "b0", "f");
-	_scope($scope0_id, { f: ($ui__input_v || _unfilled_if($scope0_reason, 1)) && input.a }) || $fg__input_a && $ui__input_v && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { f: _write_if($scope0_reason, 0) && ($ui__input_v || _unfilled_if($scope0_reason, 1)) && input.a }) || $fg__input_a && $ui__input_v && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

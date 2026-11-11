@@ -30,7 +30,7 @@ var counter_default = _template("__tests__/tags/counter/index.marko", (input) =>
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/counter/index.marko_1*shell"], $scope0_reason, 0);
 	$fg__input_onCount && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/tags/counter/index.marko_1_input_onCount#0:4/setup", "input_onCount");
-	_scope($scope0_id, { input_onCount: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.onCount }, "__tests__/tags/counter/index.marko", 0, { input_onCount: ["input.onCount"] }) || $fg__input_onCount && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_onCount", input.onCount, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { input_onCount: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.onCount }, "__tests__/tags/counter/index.marko", 0, { input_onCount: ["input.onCount"] }) || $fg__input_onCount && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_onCount", input.onCount, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_v && $cg__input_show && _patch_render($scope0_id, "a1", "e");
 	$fg__input_w && $cg__input_show && _patch_render($scope0_id, "a6", "f");
 	_scope($scope0_id, {
-		e: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.v,
+		e: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.v,
 		f: input.w
 	}) || ($fg__input_v && $ui__input_show && _patch_write($scope0_id, "xe", input.v, !_server_guard($scope0_reason, 1)), $fg__input_w && _patch_write($scope0_id, "xf", input.w, !_server_guard($scope0_reason, 2)));
 }, 1);

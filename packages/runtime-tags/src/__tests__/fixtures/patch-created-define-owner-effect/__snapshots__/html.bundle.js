@@ -41,7 +41,7 @@ _shells({
 	a2: `a2${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_on = _write_guard($scope0_reason, 1), $ui__input_on = _unfilled_if($scope0_reason, 1), $fg__input_n = _filled_guard($scope0_reason, 2), $fg__input_w = _filled_guard($scope0_reason, 3), $cg__input_on = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_on = _write_guard($scope0_reason, 1), $ui__input_on = _unfilled_if($scope0_reason, 1), $wi__input_on = _write_if($scope0_reason, 1), $fg__input_n = _filled_guard($scope0_reason, 2), $fg__input_w = _filled_guard($scope0_reason, 3), $cg__input_on = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.on) {
@@ -65,7 +65,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_n && $cg__input_on && _patch_render($scope0_id, "a0", "e");
 	$fg__input_w && $cg__input_on && _patch_render($scope0_id, "a1", "f");
 	_scope($scope0_id, {
-		e: ($ui__input_on || _unfilled_if($scope0_reason, 2)) && input.n,
-		f: ($ui__input_on || _unfilled_if($scope0_reason, 3)) && input.w
+		e: $wi__input_on && ($ui__input_on || _unfilled_if($scope0_reason, 2)) && input.n,
+		f: $wi__input_on && ($ui__input_on || _unfilled_if($scope0_reason, 3)) && input.w
 	}) || ($fg__input_n && $ui__input_on && _patch_write($scope0_id, "xe", input.n, !_server_guard($scope0_reason, 2)), $fg__input_w && $ui__input_on && _patch_write($scope0_id, "xf", input.w, !_server_guard($scope0_reason, 3)));
 }, 1);

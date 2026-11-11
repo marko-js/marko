@@ -36,8 +36,8 @@ var code_block_default = _template("b", (input) => {
 	_filled_guard((2 | $uf__input_cursor) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "b9", ((_filled_guard((2 | $uf__input_cursor) << 1, 0) ? " g" : "") + ($fg__input_cursor ? " d" : "")).slice(1));
 	_scope($scope0_id, {
 		d: $ui__input_cursor__OR__input_text && input.cursor,
-		e: ($ui__input_cursor__OR__input_text || _unfilled_if()) && input.text,
-		g: $ui__input_cursor__OR__input_text && highlight
+		e: ($scope0_page || _write_if($scope0_reason, 1)) && ($ui__input_cursor__OR__input_text || _unfilled_if()) && input.text,
+		g: _write_if($scope0_reason, 2) && $ui__input_cursor__OR__input_text && highlight
 	}) || ($fg__input_text && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.text, !_server_guard($scope0_reason, 2)), _filled_guard((2 | $uf__input_cursor) << 1, 0) && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xg", highlight, !_server_guard((2 | $uf__input_cursor) << 1, 0)));
 });
 

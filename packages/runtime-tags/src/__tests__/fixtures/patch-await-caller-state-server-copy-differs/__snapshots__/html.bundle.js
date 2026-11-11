@@ -19,7 +19,7 @@ _shells({
 	c0: "c0,<em>long</em>"
 });
 var show_await_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $uf__input_promise = _updates_from($scope0_reason, 1), $cg__input_label = _client_guard($scope0_reason, 2), $ui__input_promise__OR__input_label = _unfilled_if($scope0_reason, 0), $ui__input_promise = _unfilled_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $uf__input_promise = _updates_from($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 2), $cg__input_label = _client_guard($scope0_reason, 2), $ui__input_promise__OR__input_label = _unfilled_if($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 1), $ui__input_promise = _unfilled_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	_await($scope0_id, "a", input.promise, (x) => {
@@ -31,7 +31,7 @@ var show_await_default = _template("c", (input) => {
 			if (x.length > 6) {
 				const $scope2_id = _scope_id();
 				_html("<em>long</em>");
-				_write_if($scope0_reason, 1) && _scope($scope2_id, {});
+				$wi__input_promise && _scope($scope2_id, {});
 				return 0;
 			}
 		}, $scope1_id, "f", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["c0"], $scope0_reason, 1);
@@ -42,13 +42,13 @@ var show_await_default = _template("c", (input) => {
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "c3", $cg__input_label);
 		_patch_render($scope1_id, "c4", ((_filled_guard($scope0_reason, 2) ? " >e" : "") + ($fg__input_promise ? " i" : "")).slice(1), $scope0_reason, 0);
 		_subscribe($ui__input_label && $input_label__closures, _scope($scope1_id, {
-			i: _unfilled_if($scope0_reason, 0) && x,
+			i: $wi__input_label && _unfilled_if($scope0_reason, 0) && x,
 			g: _existing_scope($childScope)
 		}), $cg__input_label && "c3");
 	}, 1, "c1", $ui__input_promise, 1);
 	_scope($scope0_id, {
-		e: ($ui__input_promise__OR__input_label || _unfilled_if($scope0_reason, 2)) && input.label,
-		f: _write_if($scope0_reason, 2) && $ui__input_promise__OR__input_label && $input_label__closures
+		e: $wi__input_promise && ($ui__input_promise__OR__input_label || _unfilled_if($scope0_reason, 2)) && input.label,
+		f: $wi__input_label && $wi__input_label && $ui__input_promise__OR__input_label && $input_label__closures
 	}) || _filled_guard($scope0_reason, 2) && $ui__input_promise && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 2));
 });
 

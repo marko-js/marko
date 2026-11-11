@@ -10,7 +10,7 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell;D ;<em> </em>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_open = _filled_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $fg__input_open = _filled_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	let open = false;
 	const Panel = { content: _content_resume("__tests__/template.marko_2*content", ({ isOpen, label }) => {
@@ -68,8 +68,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_other#8_Panel#10/setup", $fg__input_other && "input_other", $scope0_reason, 4);
 	_patch_render($scope0_id, "__tests__/template.marko_0_open#9_Tag#12/setup", $fg__input_other && "Tag");
 	_scope($scope0_id, {
-		input_open: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
-		input_label: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.label,
+		input_open: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
+		input_label: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.label,
 		open,
 		Panel: _unfilled_if($scope0_reason, 4) && Panel,
 		Tag

@@ -18,7 +18,7 @@ var child_default = _template("b", (input) => {
 			_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "b0");
 			_patch_render($scope1_id, "b1", ((_filled_guard($scope0_reason, 3) ? " >g" : "") + ($fg__input_b ? " b" : "")).slice(1), $scope0_reason, 0);
 			_scope($scope1_id, {
-				b: _unfilled_if($scope0_reason, 0) && c,
+				b: _write_if($scope0_reason, 3) && _unfilled_if($scope0_reason, 0) && c,
 				_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
 			});
 			return 0;
@@ -29,7 +29,7 @@ var child_default = _template("b", (input) => {
 	$fg__input_b2 && $cg__input_show && _patch_render($scope0_id, "b0", "f");
 	$fg__input_a && $cg__input_show && _patch_render($scope0_id, "b4", "g");
 	_scope($scope0_id, {
-		f: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.b,
+		f: _write_if($scope0_reason, 1) && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.b,
 		g: input.a
 	}) || ($fg__input_b2 && $ui__input_show && _patch_write($scope0_id, "xf", input.b, !$sg__input_b), $fg__input_a && _patch_write($scope0_id, "xg", input.a, !_server_guard($scope0_reason, 3)));
 });

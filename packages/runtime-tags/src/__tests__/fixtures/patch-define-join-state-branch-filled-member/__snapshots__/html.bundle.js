@@ -53,7 +53,7 @@ var panel_default = _template("b", (input) => {
 	_patch_fill($scope0_id, "vb10", open, 1);
 	_scope($scope0_id, {
 		f: input.a,
-		g: ($ui__input_a__OR__input_show || _unfilled_if($scope0_reason, 0)) && input.b,
+		g: _write_if($scope0_reason, 1) && ($ui__input_a__OR__input_show || _unfilled_if($scope0_reason, 0)) && input.b,
 		i: open,
 		j: _write_if($scope0_reason, 3) && $input_a__closures,
 		k: _write_if($scope0_reason, 4) && $input_b__closures

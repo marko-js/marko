@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 	_attr_content("a", $scope0_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 2);
 	_html(`</section>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 2))}<p>${_text_mark($scope0_id, "b", input.note, 1, $scope0_reason, 1)}</p></main>`);
 	_scope($scope0_id, {
-		e: ($ui__input_mode || _unfilled_if($scope0_reason, 1)) && input.note,
+		e: _write_if($scope0_reason, 2) && ($ui__input_mode || _unfilled_if($scope0_reason, 1)) && input.note,
 		h: $ui__input_mode && frag.content,
 		j: _write_if($scope0_reason, 1) && $input_note__closures
 	}) || _filled_guard($scope0_reason, 1) && $ui__input_mode && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a2", "e");

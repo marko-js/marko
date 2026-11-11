@@ -31,8 +31,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", input.show ? child_default : null, { x: input.a }, 1, 0, 0, $wg__input_show__OR__input_a, $scope0_reason, 0);
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_show#3_input_a#4/setup", (($fg__input_show ? " input_show" : "") + ($fg__input_a ? " input_a" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_show: $ui__input_show__OR__input_a && input.show,
-		input_a: $ui__input_show__OR__input_a && input.a
+		input_show: _write_if($scope0_reason, 2) && $ui__input_show__OR__input_a && input.show,
+		input_a: _write_if($scope0_reason, 1) && $ui__input_show__OR__input_a && input.a
 	}, "__tests__/template.marko", 0, {
 		input_show: ["input.show"],
 		input_a: ["input.a"]

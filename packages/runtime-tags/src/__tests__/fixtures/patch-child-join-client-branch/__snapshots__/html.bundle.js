@@ -20,8 +20,8 @@ var panel_default = _template("b", (input) => {
 	$fg__input_a && $cg__input_show && _patch_render($scope0_id, "b2", "e");
 	$fg__input_b && $cg__input_show && _patch_render($scope0_id, "b3", "f");
 	_scope($scope0_id, {
-		e: ($ui__input_show__OR__input_b || $ui__input_a__OR__input_b) && input.a,
-		f: ($ui__input_show__OR__input_a || $ui__input_a__OR__input_b) && input.b
+		e: _write_if($scope0_reason, 1) && ($ui__input_show__OR__input_b || $ui__input_a__OR__input_b) && input.a,
+		f: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_a || $ui__input_a__OR__input_b) && input.b
 	}) || ($fg__input_a && $ui__input_show__OR__input_b && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 5)), $fg__input_b && $ui__input_show__OR__input_a && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 6)));
 });
 

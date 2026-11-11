@@ -4,7 +4,7 @@ _shells({
 	a5: "a5 !a2; b ;<input class=b><input type=checkbox class=c>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_value = _filled_guard($scope0_reason, 2), $fg__input_flag = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $fg__input_value = _filled_guard($scope0_reason, 2), $fg__input_flag = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=inc>${_text_mark($scope0_id, "b", n)}</button>${_el_mark($scope0_id, "a")}`);
@@ -27,8 +27,8 @@ var template_default = _template("a", (input) => {
 	$fg__input_value && $cg__input_show && _patch_render($scope0_id, "a3", "g");
 	$fg__input_flag && $cg__input_show && _patch_render($scope0_id, "a4", "h");
 	_scope($scope0_id, {
-		g: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.value,
-		h: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.flag,
+		g: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.value,
+		h: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.flag,
 		i: n
 	}) || ($fg__input_value && $ui__input_show && _patch_write($scope0_id, "xg", input.value, !_server_guard($scope0_reason, 2)), $fg__input_flag && $ui__input_show && _patch_write($scope0_id, "xh", input.flag, !_server_guard($scope0_reason, 3)));
 }, 1);

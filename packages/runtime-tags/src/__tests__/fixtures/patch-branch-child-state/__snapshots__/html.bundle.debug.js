@@ -22,7 +22,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 2), $fg__input_start = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 2), $fg__input_start = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_if(() => {
@@ -48,8 +48,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_title && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_title#0:4/setup", "input_title");
 	$fg__input_start && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_start#0:5/setup", "input_start");
 	_scope($scope0_id, {
-		input_title: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.title,
-		input_start: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.start
+		input_title: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.title,
+		input_start: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.start
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		input_start: ["input.start"]

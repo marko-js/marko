@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/0", 1, $wg__input_on, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	$fg__input_n && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/template.marko_1_input_n#0:4/setup", "input_n");
 	_scope($scope0_id, {
-		input_n: ($ui__input_on || _unfilled_if($scope0_reason, 2)) && input.n,
+		input_n: _write_if($scope0_reason, 1) && ($ui__input_on || _unfilled_if($scope0_reason, 2)) && input.n,
 		input_w: input.w,
 		"ClosureScopes:input_w/7": $wi__input_w && $input_w__closures
 	}, "__tests__/template.marko", 0, {

@@ -24,8 +24,8 @@ var template_default = _template("a", (input) => {
 	$fg__input_x && $cg__input_show && _patch_render($scope0_id, "a5", "f");
 	$fg__input_suffix2 && $cg__input_show && _patch_render($scope0_id, "a6", "g");
 	_scope($scope0_id, {
-		e: ($ui__input_show__OR__input_x || $ui__input_prefix__OR__input_x) && input.prefix,
-		f: ($ui__input_show__OR__input_prefix || $ui__input_prefix__OR__input_x) && input.x,
+		e: _write_if($scope0_reason, 1) && ($ui__input_show__OR__input_x || $ui__input_prefix__OR__input_x) && input.prefix,
+		f: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_prefix || $ui__input_prefix__OR__input_x) && input.x,
 		g: input.suffix
 	}) || ($fg__input_prefix && $ui__input_show__OR__input_x && _patch_write($scope0_id, "xe", input.prefix, !_server_guard($scope0_reason, 5)), $fg__input_x && $ui__input_show__OR__input_prefix && _patch_write($scope0_id, "xf", input.x, !_server_guard($scope0_reason, 6)), $fg__input_suffix2 && _patch_write($scope0_id, "xg", input.suffix, !_server_guard($scope0_reason, 7)));
 }, 1);

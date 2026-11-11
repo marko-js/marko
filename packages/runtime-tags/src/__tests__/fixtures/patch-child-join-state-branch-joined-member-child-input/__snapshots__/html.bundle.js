@@ -38,9 +38,9 @@ var child_default = _template("c", (input) => {
 	$fg__input_b && $cg__input_show && _patch_render($scope0_id, "c3", "i");
 	_patch_render($scope0_id, "c4", (($fg__input_a ? " e" : "") + ($fg__input_d ? " f" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		e: ($ui__input_d__OR__input_show__OR__input_b || $ui__input_a__OR__input_d || $ui__input_a__OR__input_b) && input.a,
-		f: $ui__input_a__OR__input_d && input.d,
-		i: ($ui__input_a__OR__input_show || $ui__input_a__OR__input_b) && input.b,
+		e: _write_if($scope0_reason, 3) && ($ui__input_d__OR__input_show__OR__input_b || $ui__input_a__OR__input_d || $ui__input_a__OR__input_b) && input.a,
+		f: _write_if($scope0_reason, 4) && $ui__input_a__OR__input_d && input.d,
+		i: _write_if($scope0_reason, 1) && ($ui__input_a__OR__input_show || $ui__input_a__OR__input_b) && input.b,
 		b: _existing_scope($childScope)
 	}) || ($fg__input_a && $ui__input_d__OR__input_show__OR__input_b && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 4)), $fg__input_d && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "xf", input.d, !_server_guard($scope0_reason, 5)), $fg__input_b && $ui__input_a__OR__input_show && _patch_write($scope0_id, "xi", input.b, !_server_guard($scope0_reason, 7)));
 });

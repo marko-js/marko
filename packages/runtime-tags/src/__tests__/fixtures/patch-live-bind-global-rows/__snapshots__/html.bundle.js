@@ -17,8 +17,8 @@ var stepper_default = _template("b", (input) => {
 	_patch_let_change($scope0_id, "vb5", current, "wj", $currentChange, $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: input.max,
-		e: $ui__input_value__OR__input_valueChange && input.value,
-		f: $ui__input_value__OR__input_valueChange && input.valueChange,
+		e: _write_if($scope0_reason, 3) && $ui__input_value__OR__input_valueChange && input.value,
+		f: _write_if($scope0_reason, 2) && $ui__input_value__OR__input_valueChange && input.valueChange,
 		h: clamp,
 		i: _write_if($scope0_reason, 1) && current,
 		j: $currentChange

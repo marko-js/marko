@@ -26,10 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const Tag = on ? "p" : "div";
 		_dynamic_tag($scope3_id, "#text/0", Tag, { content }, 1, 0, 0, $wg__on__OR__content, $scope3_reason, 0);
 		_patch_render($scope3_id, "__tests__/template.marko_3_content#4_Tag#5/setup", (($fg__content ? " content" : "") + (_filled_guard($scope3_reason, 1) ? " Tag" : "")).slice(1), $scope3_reason, 0);
-		_write_if($scope3_reason, 0) && _scope($scope3_id, {
-			content: $ui__on__OR__content && content,
-			Tag: $ui__on__OR__content && Tag
-		}, "__tests__/template.marko", "2:2", {
+		_write_if($scope3_reason, 0) && _scope($scope3_id, { content: _write_if($scope3_reason, 1) && $ui__on__OR__content && content }, "__tests__/template.marko", "2:2", {
 			content: "2:20",
 			Tag: "3:10"
 		}) || $fg__content && _unfilled_if($scope3_reason, 1) && _patch_write($scope3_id, "PatchMarkedWrite:content", content, 1);

@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a2");
 	$fg__input_heading && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "a0", "l");
 	_scope($scope0_id, {
-		l: ($ui__input_items || _unfilled_if($scope0_reason, 0)) && heading,
+		l: _write_if($scope0_reason, 1) && ($ui__input_items || _unfilled_if($scope0_reason, 0)) && heading,
 		n: local
 	}) || $fg__input_heading && $ui__input_items && _patch_write($scope0_id, "xl", heading, !_server_guard($scope0_reason, 0));
 }, 1);

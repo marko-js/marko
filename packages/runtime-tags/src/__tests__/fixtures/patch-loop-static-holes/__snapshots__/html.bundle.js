@@ -7,7 +7,7 @@ _shells({
 	a4: "a4;D ;<li> </li>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 1), $wi__input_note__OR__input_show = _write_if($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 2), $ui__input_note = _unfilled_if($scope0_reason, 1), $wi__input_note = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wi__input_note = _write_if($scope0_reason, 1), $cg__input_note = _client_guard($scope0_reason, 1), $wi__input_note__OR__input_show = _write_if($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 2), $ui__input_note = _unfilled_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_html("<ul>");
@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["a2"], $scope0_reason, 2);
 	_scope($scope0_id, {
-		f: ($ui__input_show || $ui__input_note) && input.note,
-		h: $wi__input_note && ($ui__input_note || $ui__input_show) && $input_note__closures
+		f: _write_if($scope0_reason, 2) && ($ui__input_show || $ui__input_note) && input.note,
+		h: $wi__input_note && $wi__input_note && ($ui__input_note || $ui__input_show) && $input_note__closures
 	}) || _filled_guard($scope0_reason, 1) && $ui__input_show && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 1)) && _client_guard($scope0_reason, 2) && _patch_subscribers($scope0_id, "a6", "f");
 }, 1);

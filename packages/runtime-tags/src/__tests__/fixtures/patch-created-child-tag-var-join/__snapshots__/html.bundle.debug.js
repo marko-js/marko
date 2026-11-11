@@ -35,8 +35,8 @@ var file_tabs_default = _template("__tests__/tags/file-tabs.marko", (input) => {
 	const $tabsChange = input.filesChange || void 0;
 	_patch_let_change($scope0_id, "PatchFill:__tests__/tags/file-tabs.marko_0_tabs#7/fill", tabs, "PatchWrite:TagVariableChange:tabs", $tabsChange, $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_files: $ui__input_files__OR__input_filesChange && input.files,
-		input_filesChange: $ui__input_files__OR__input_filesChange && input.filesChange,
+		input_files: _write_if($scope0_reason, 2) && $ui__input_files__OR__input_filesChange && input.files,
+		input_filesChange: _write_if($scope0_reason, 1) && $ui__input_files__OR__input_filesChange && input.filesChange,
 		tabs,
 		"TagVariableChange:tabs": $tabsChange
 	}, "__tests__/tags/file-tabs.marko", 0, {

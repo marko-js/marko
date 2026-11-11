@@ -49,7 +49,7 @@ var template_default = _template("a", (input) => {
 	}, 1, "a2", _unfilled_if($scope0_reason, 3) && 2, 1);
 	_html("</main>");
 	_scope($scope0_id, {
-		f: ($ui__input_on || _unfilled_if($scope0_reason, 2)) && input.note,
+		f: _write_if($scope0_reason, 1) && ($ui__input_on || _unfilled_if($scope0_reason, 2)) && input.note,
 		h: _write_if($scope0_reason, 2) && $input_note__closures
 	}) || _filled_guard($scope0_reason, 2) && (_client_branch_if("a0", $scope0_id) || $ui__input_on) && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "a4", "f");
 }, 1);

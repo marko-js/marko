@@ -56,8 +56,8 @@ var template_default = _template("c", (input) => {
 	_patch_child_end();
 	_patch_render($scope0_id, "c0", (($fg__input_which ? " e" : "") + ($fg__input_label ? " f" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		e: $ui__input_which__OR__input_label && input.which,
-		f: $ui__input_which__OR__input_label && input.label,
+		e: _write_if($scope0_reason, 2) && $ui__input_which__OR__input_label && input.which,
+		f: _write_if($scope0_reason, 1) && $ui__input_which__OR__input_label && input.label,
 		b: _existing_scope($childScope)
 	}) || ($fg__input_which && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.which, !_server_guard($scope0_reason, 1)), $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 2)));
 }, 1);

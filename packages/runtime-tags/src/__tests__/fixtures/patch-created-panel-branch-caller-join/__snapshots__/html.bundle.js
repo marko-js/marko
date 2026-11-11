@@ -20,8 +20,8 @@ var panel_default = _template("b", (input) => {
 	$fg__input_a && $cg__input_show && _patch_render($scope0_id, "b2", "e");
 	$fg__input_b && $cg__input_show && _patch_render($scope0_id, "b3", "f");
 	_scope($scope0_id, {
-		e: ($ui__input_show__OR__input_b || $ui__input_a__OR__input_b) && input.a,
-		f: ($ui__input_show__OR__input_a || $ui__input_a__OR__input_b) && input.b
+		e: _write_if($scope0_reason, 1) && ($ui__input_show__OR__input_b || $ui__input_a__OR__input_b) && input.a,
+		f: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_a || $ui__input_a__OR__input_b) && input.b
 	}) || ($fg__input_a && $ui__input_show__OR__input_b && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 5)), $fg__input_b && $ui__input_show__OR__input_a && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 6)));
 });
 
@@ -31,7 +31,7 @@ _shells({
 	a2: `a2${_shell_marker([["a5"], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_outer = _unfilled_if($scope0_reason, 1), $fg__input_x = _filled_guard($scope0_reason, 2), $fg__input_show = _filled_guard($scope0_reason, 3), $cg__input_outer = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $ui__input_outer = _unfilled_if($scope0_reason, 1), $wi__input_outer = _write_if($scope0_reason, 1), $fg__input_x = _filled_guard($scope0_reason, 2), $fg__input_show = _filled_guard($scope0_reason, 3), $cg__input_outer = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_if(() => {
@@ -59,8 +59,8 @@ var template_default = _template("a", (input) => {
 	$fg__input_x && $cg__input_outer && _patch_render($scope0_id, "a0", "f");
 	$fg__input_show && $cg__input_outer && _patch_render($scope0_id, "a1", "g");
 	_scope($scope0_id, {
-		f: ($ui__input_outer || _unfilled_if($scope0_reason, 2)) && input.x,
-		g: ($ui__input_outer || _unfilled_if($scope0_reason, 3)) && input.show,
+		f: $wi__input_outer && ($ui__input_outer || _unfilled_if($scope0_reason, 2)) && input.x,
+		g: $wi__input_outer && ($ui__input_outer || _unfilled_if($scope0_reason, 3)) && input.show,
 		h: count
 	}) || ($fg__input_x && $ui__input_outer && _patch_write($scope0_id, "xf", input.x, !_server_guard($scope0_reason, 2)), $fg__input_show && $ui__input_outer && _patch_write($scope0_id, "xg", input.show, !_server_guard($scope0_reason, 3)));
 }, 1);

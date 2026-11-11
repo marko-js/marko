@@ -24,10 +24,7 @@ var template_default = _template("a", (input) => {
 		const $scope3_reason = _scope_reason(), $fg__fmt = _filled_guard($scope3_reason, 1);
 		_html(`<em>${_text_mark($scope3_id, "a", fmt(label), 1, $scope3_reason, 0)}</em>`);
 		_patch_render($scope3_id, "a1", (($fg__fmt ? " d" : "") + (_filled_guard($scope3_reason, 2) ? " e" : "")).slice(1), $scope3_reason, 0);
-		_scope($scope3_id, {
-			d: _unfilled_if($scope3_reason, 0, 1) && fmt,
-			e: _unfilled_if($scope3_reason, 0) && label
-		}) || $fg__fmt && _unfilled_if($scope3_reason, 2) && _patch_write($scope3_id, "xd", fmt, 1);
+		_scope($scope3_id, { d: _write_if($scope3_reason, 2) && _unfilled_if($scope3_reason, 0, 1) && fmt }) || $fg__fmt && _unfilled_if($scope3_reason, 2) && _patch_write($scope3_id, "xd", fmt, 1);
 	}, $scope0_id) };
 	_if(() => {
 		{

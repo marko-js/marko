@@ -24,8 +24,8 @@ var layout_default = _template("__tests__/layout.marko", (input) => {
 	$fg__input_a && $cg__input_show && _patch_render($scope0_id, "__tests__/layout.marko_1_input_a#0:5/setup", "input_a");
 	$fg__input_b && $cg__input_show && _patch_render($scope0_id, "__tests__/layout.marko_1_input_b#0:6/setup", "input_b");
 	_scope($scope0_id, {
-		input_a: ($ui__input_show__OR__input_b || $ui__input_a__OR__input_b) && input.a,
-		input_b: ($ui__input_show__OR__input_a || $ui__input_a__OR__input_b) && input.b
+		input_a: _write_if($scope0_reason, 1) && ($ui__input_show__OR__input_b || $ui__input_a__OR__input_b) && input.a,
+		input_b: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_a || $ui__input_a__OR__input_b) && input.b
 	}, "__tests__/layout.marko", 0, {
 		input_a: ["input.a"],
 		input_b: ["input.b"]

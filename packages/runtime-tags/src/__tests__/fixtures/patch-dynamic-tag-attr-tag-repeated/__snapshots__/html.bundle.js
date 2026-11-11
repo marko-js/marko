@@ -8,7 +8,7 @@ _shells({
 	a4: "a4;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 4), $cg__input_b = _client_guard($scope0_reason, 5), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $ui__input_on = _unfilled_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 4), $cg__input_b = _client_guard($scope0_reason, 5), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $ui__input_on = _unfilled_if($scope0_reason, 3), $wi__input_on = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	const $input_b__closures = /* @__PURE__ */ new Set();
@@ -64,8 +64,8 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, ($scope2) => $scope0_page ? [{ f: input.b }] : []) }) }, 17, 0, 0, $wg__input_on, $scope0_reason, 3, 0, void 0, 0, 0, ["a7", "a6"]);
 	_html("</main>");
 	_scope($scope0_id, {
-		e: ($ui__input_on || _unfilled_if($scope0_reason, 4)) && input.a,
-		f: ($ui__input_on || _unfilled_if($scope0_reason, 5)) && input.b,
+		e: $wi__input_on && ($ui__input_on || _unfilled_if($scope0_reason, 4)) && input.a,
+		f: $wi__input_on && ($ui__input_on || _unfilled_if($scope0_reason, 5)) && input.b,
 		g: $ui__input_on && Wrap,
 		h: $ui__input_on && Plain,
 		j: _write_if($scope0_reason, 4) && $input_a__closures,

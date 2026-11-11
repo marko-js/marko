@@ -49,7 +49,7 @@ var template_default = _template("c", (input) => {
 	_html("</main>");
 	_patch_render($scope0_id, "c0", (($fg__input_page ? " d" : "") + ($fg__input_promise ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: $ui__input_page__OR__input_promise && input.page,
-		e: $ui__input_page__OR__input_promise && input.promise
+		d: _write_if($scope0_reason, 2) && $ui__input_page__OR__input_promise && input.page,
+		e: _write_if($scope0_reason, 1) && $ui__input_page__OR__input_promise && input.promise
 	}) || ($fg__input_page && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.page, !_server_guard($scope0_reason, 1)), $fg__input_promise && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.promise, !_server_guard($scope0_reason, 2)));
 }, 1);

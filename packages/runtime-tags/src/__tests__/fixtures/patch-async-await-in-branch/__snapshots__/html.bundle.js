@@ -7,7 +7,7 @@ _shells({
 	a3: "a3,<em>closed</em>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 2), $fg__input_promise = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wi__input_show = _write_if($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2), $fg__input_promise = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<main><h1>${_text_mark($scope0_id, "a", input.title, 1, $scope0_reason, 1)}</h1>`);
@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		} else {
 			const $scope2_id = _scope_id();
 			_html("<em>closed</em>");
-			_write_if($scope0_reason, 2) && _scope($scope2_id, {});
+			$wi__input_show && _scope($scope2_id, {});
 			return 1;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["a2", "a3"], $scope0_reason, 2);
@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a5");
 	$fg__input_promise && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "a4", "i");
 	_scope($scope0_id, {
-		i: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.promise,
+		i: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.promise,
 		j: count
 	}) || $fg__input_promise && $ui__input_show && _patch_write($scope0_id, "xi", input.promise, !_server_guard($scope0_reason, 3));
 }, 1);

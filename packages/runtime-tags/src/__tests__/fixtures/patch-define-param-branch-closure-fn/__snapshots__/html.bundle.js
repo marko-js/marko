@@ -22,7 +22,7 @@ _shells({
 	a2: "a2;D ;<span> </span>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 0), $wi__input_a = _write_if($scope0_reason, 0), $ui__input_x = _unfilled_if($scope0_reason, 1), $ui__input_a = _unfilled_if($scope0_reason, 0), $sg__input_a = _server_guard($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 0), $wi__input_a = _write_if($scope0_reason, 0), $ui__input_x = _unfilled_if($scope0_reason, 1), $ui__input_a = _unfilled_if($scope0_reason, 0), $wi__input_x = _write_if($scope0_reason, 1), $sg__input_a = _server_guard($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $f2__closures = /* @__PURE__ */ new Set();
 	$fg__input_a && $ui__input_x && _patch_write($scope0_id, "xe", input.a, !$sg__input_a);
@@ -51,8 +51,8 @@ var template_default = _template("a", (input) => {
 	counter_default({});
 	_patch_child_end();
 	_scope($scope0_id, {
-		e: ($ui__input_x || $ui__input_a) && input.a,
-		g: ($ui__input_x || $ui__input_a) && f,
+		e: $wi__input_x && ($ui__input_x || $ui__input_a) && input.a,
+		g: $wi__input_x && ($ui__input_x || $ui__input_a) && f,
 		h: $wi__input_a && $f2__closures,
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2)

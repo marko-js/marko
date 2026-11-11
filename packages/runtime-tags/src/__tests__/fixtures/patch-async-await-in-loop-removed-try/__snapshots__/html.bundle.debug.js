@@ -24,7 +24,7 @@ var rows_default = _template("__tests__/tags/rows.marko", (input) => {
 		_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/tags/rows.marko", "1:2");
 	}, "id", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/rows.marko_1*shell", $scope0_reason, 1);
 	$fg__input_promise && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/tags/rows.marko_1_input_promise#0:4/setup", "input_promise");
-	_scope($scope0_id, { input_promise: ($ui__input_items || _unfilled_if($scope0_reason, 2)) && input.promise }, "__tests__/tags/rows.marko", 0, { input_promise: ["input.promise"] }) || $fg__input_promise && $ui__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_promise", input.promise, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { input_promise: _write_if($scope0_reason, 1) && ($ui__input_items || _unfilled_if($scope0_reason, 2)) && input.promise }, "__tests__/tags/rows.marko", 0, { input_promise: ["input.promise"] }) || $fg__input_promise && $ui__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_promise", input.promise, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

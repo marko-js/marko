@@ -34,8 +34,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("</main>");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_on#3_input_n#4/setup", (($fg__input_on ? " input_on" : "") + ($fg__input_n ? " input_n" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_on: $ui__input_on__OR__input_n && input.on,
-		input_n: $ui__input_on__OR__input_n && input.n
+		input_on: _write_if($scope0_reason, 2) && $ui__input_on__OR__input_n && input.on,
+		input_n: _write_if($scope0_reason, 1) && $ui__input_on__OR__input_n && input.n
 	}, "__tests__/template.marko", 0, {
 		input_on: ["input.on"],
 		input_n: ["input.n"]

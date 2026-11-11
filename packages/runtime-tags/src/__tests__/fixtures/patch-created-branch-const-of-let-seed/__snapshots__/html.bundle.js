@@ -6,7 +6,7 @@ _shells({
 	b4: "b4 b6!b0;D l ;<span> </span><button>+</button>"
 });
 var view_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_x = _filled_guard($scope0_reason, 2), $fg__input_y = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $fg__input_x = _filled_guard($scope0_reason, 2), $fg__input_y = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -30,8 +30,8 @@ var view_default = _template("b", (input) => {
 	$fg__input_x && $cg__input_show && _patch_render($scope0_id, "b1", "e");
 	$fg__input_y && $cg__input_show && _patch_render($scope0_id, "b2", "f");
 	_scope($scope0_id, {
-		e: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.x,
-		f: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.y
+		e: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.x,
+		f: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.y
 	}) || ($fg__input_x && $ui__input_show && _patch_write($scope0_id, "xe", input.x, !_server_guard($scope0_reason, 2)), $fg__input_y && $ui__input_show && _patch_write($scope0_id, "xf", input.y, !_server_guard($scope0_reason, 3)));
 });
 

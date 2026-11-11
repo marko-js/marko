@@ -66,9 +66,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_flag#4_input_title#5/setup", (($fg__input_flag ? " input_flag" : "") + ($fg__input_title ? " input_title" : "")).slice(1), $scope0_reason, 0);
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_title#5_input_alt#7/setup", (($fg__input_title ? " input_title" : "") + ($fg__input_alt ? " input_alt" : "")).slice(1), $scope0_reason, 1);
 	_scope($scope0_id, {
-		input_flag: _unfilled_if($scope0_reason, 0) && input.flag,
+		input_flag: $wi__input_title && _unfilled_if($scope0_reason, 0) && input.flag,
 		input_title: input.title,
-		input_alt: _unfilled_if($scope0_reason, 1) && input.alt,
+		input_alt: $wi__input_title && _unfilled_if($scope0_reason, 1) && input.alt,
 		fmt,
 		alt,
 		last,

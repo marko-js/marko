@@ -50,8 +50,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<output>${_text_mark($scope0_id, "#text/1", picked)}</output></main>`);
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_useA#4_input_user#5_Card#7_Other#8/setup", (($fg__input_useA ? " input_useA" : "") + ($fg__input_user ? " input_user" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_useA: $ui__input_useA__OR__input_user && input.useA,
-		input_user: $ui__input_useA__OR__input_user && input.user,
+		input_useA: _write_if($scope0_reason, 2) && $ui__input_useA__OR__input_user && input.useA,
+		input_user: _write_if($scope0_reason, 1) && $ui__input_useA__OR__input_user && input.user,
 		Card: $ui__input_useA__OR__input_user && Card,
 		Other: $ui__input_useA__OR__input_user && Other
 	}, "__tests__/template.marko", 0, {

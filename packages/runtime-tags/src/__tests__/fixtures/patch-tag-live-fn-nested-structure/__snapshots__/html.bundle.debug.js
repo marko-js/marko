@@ -44,7 +44,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	$fg__input_y && $cg__input_x && _patch_render($scope0_id, "__tests__/tags/panel.marko_1_input_y#0:6/setup", "input_y");
 	_scope($scope0_id, {
 		input_a: input.a,
-		input_y: ($ui__input_x || _unfilled_if($scope0_reason, 2)) && input.y
+		input_y: _write_if($scope0_reason, 0) && ($ui__input_x || _unfilled_if($scope0_reason, 2)) && input.y
 	}, "__tests__/tags/panel.marko", 0, {
 		input_a: ["input.a"],
 		input_y: ["input.y"]

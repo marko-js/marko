@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, 0), 0, $wg__input_mode, $scope0_reason, 1);
 	_html("</main>");
 	_scope($scope0_id, {
-		input_text: ($ui__input_mode || _unfilled_if($scope0_reason, 2)) && input.text,
+		input_text: _write_if($scope0_reason, 1) && ($ui__input_mode || _unfilled_if($scope0_reason, 2)) && input.text,
 		"ClosureScopes:input_text/5": _write_if($scope0_reason, 2) && $input_text__closures
 	}, "__tests__/template.marko", 0, { input_text: ["input.text"] }) || _filled_guard($scope0_reason, 2) && $ui__input_mode && _patch_write($scope0_id, "PatchMarkedWrite:input_text", input.text, !_server_guard($scope0_reason, 2)) && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_text#4/subscribers", "input_text");
 }, 1);

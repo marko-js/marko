@@ -9,8 +9,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_html(`<p>${_text_mark($scope0_id, "#text/0", input.a + input.b, 1, $scope0_reason, 0)}</p>`);
 	_patch_render($scope0_id, "__tests__/tags/child.marko_0_input_a#3_input_b#4/setup", (($fg__input_a ? " input_a" : "") + ($fg__input_b ? " input_b" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_a: $ui__input_a__OR__input_b && input.a,
-		input_b: $ui__input_a__OR__input_b && input.b
+		input_a: _write_if($scope0_reason, 2) && $ui__input_a__OR__input_b && input.a,
+		input_b: _write_if($scope0_reason, 1) && $ui__input_a__OR__input_b && input.b
 	}, "__tests__/tags/child.marko", 0, {
 		input_a: ["input.a"],
 		input_b: ["input.b"]
@@ -59,7 +59,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_y && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/template.marko_1_input_y#0:5/setup", "input_y");
 	_scope($scope0_id, {
-		input_y: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.y,
+		input_y: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.y,
 		n
 	}, "__tests__/template.marko", 0, {
 		input_y: ["input.y"],

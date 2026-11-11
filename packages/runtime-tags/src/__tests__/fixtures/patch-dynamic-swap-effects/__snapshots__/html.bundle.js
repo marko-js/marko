@@ -29,7 +29,7 @@ var template_default = _template("c", (input) => {
 	_html("</main>");
 	_patch_render($scope0_id, "c0", (($fg__input_mode ? " d" : "") + ($fg__input_label ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: $ui__input_mode__OR__input_label && input.mode,
-		e: $ui__input_mode__OR__input_label && input.label
+		d: _write_if($scope0_reason, 2) && $ui__input_mode__OR__input_label && input.mode,
+		e: _write_if($scope0_reason, 1) && $ui__input_mode__OR__input_label && input.label
 	}) || ($fg__input_mode && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.mode, !_server_guard($scope0_reason, 1)), $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 2)));
 }, 1);

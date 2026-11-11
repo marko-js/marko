@@ -27,8 +27,8 @@ var template_default = _template("a", (input) => {
 	const $selectedChange = input.selectedChange || void 0;
 	_patch_let_change($scope0_id, "va2", selected, "wj", $selectedChange, $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: $ui__input_selected__OR__input_selectedChange && input.selected,
-		e: $ui__input_selected__OR__input_selectedChange && input.selectedChange,
+		d: _write_if($scope0_reason, 2) && $ui__input_selected__OR__input_selectedChange && input.selected,
+		e: _write_if($scope0_reason, 1) && $ui__input_selected__OR__input_selectedChange && input.selectedChange,
 		i: selected,
 		j: $selectedChange
 	}) || ($fg__input_selected && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.selected, !_server_guard($scope0_reason, 1)), $fg__input_selectedChange && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.selectedChange, !_server_guard($scope0_reason, 2)));

@@ -9,8 +9,8 @@ var pass_on_default = _template("__tests__/tags/pass-on.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", input.content, [input.obj.x], 1, 0, 1, $wg__input_content__OR__input_obj_x, $scope0_reason, 0, 0, 1);
 	_patch_render($scope0_id, "__tests__/tags/pass-on.marko_0_input_content#3_input_obj_x#5/setup", (($fg__input_content ? " input_content" : "") + ($fg__input_obj_x ? " input_obj_x" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_content: $ui__input_content__OR__input_obj_x && input.content,
-		input_obj_x: $ui__input_content__OR__input_obj_x && input.obj?.x
+		input_content: _write_if($scope0_reason, 2) && $ui__input_content__OR__input_obj_x && input.content,
+		input_obj_x: _write_if($scope0_reason, 1) && $ui__input_content__OR__input_obj_x && input.obj?.x
 	}, "__tests__/tags/pass-on.marko", 0, {
 		input_content: ["input.content"],
 		input_obj_x: ["input.obj.x"]
@@ -23,7 +23,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
 const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/0>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$1)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $uf__input_a = _updates_from($scope0_reason, 3), $cg__input_b = _client_guard($scope0_reason, 2), $uf__input_obj = _updates_from($scope0_reason, 1), $ui__input_obj = _unfilled_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $uf__input_a = _updates_from($scope0_reason, 3), $cg__input_b = _client_guard($scope0_reason, 2), $uf__input_obj = _updates_from($scope0_reason, 1), $ui__input_obj = _unfilled_if($scope0_reason, 1), $wi__input_obj = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_b__closures = new Set();
 	const $input_a__closures = new Set();
@@ -47,8 +47,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_script($scope0_id, "__tests__/template.marko_0", 0);
 	_scope($scope0_id, {
-		input_b: ($ui__input_obj || _unfilled_if($scope0_reason, 2)) && input.b,
-		input_a: ($ui__input_obj || _unfilled_if($scope0_reason, 3)) && input.a,
+		input_b: $wi__input_obj && ($ui__input_obj || _unfilled_if($scope0_reason, 2)) && input.b,
+		input_a: $wi__input_obj && ($ui__input_obj || _unfilled_if($scope0_reason, 3)) && input.a,
 		"ClosureScopes:input_b/6": _write_if($scope0_reason, 2) && $input_b__closures,
 		"ClosureScopes:input_a/7": _write_if($scope0_reason, 3) && $input_a__closures,
 		"#childScope/0": _existing_scope($childScope)

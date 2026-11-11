@@ -15,11 +15,11 @@ var code_block_default = _template("b", (input) => {
 	_patch_render($scope0_id, "b1", (($fg__input_a ? " d" : "") + ($fg__input_b ? " e" : "") + ($fg__input_c ? " f" : "")).slice(1), $scope0_reason, 0);
 	_patch_render($scope0_id, "b2", (($fg__input_d ? " h" : "") + ($fg__input_a__OR__input_b__OR__input_c ? " i" : "") + ($fg__input_a ? " d" : "") + ($fg__input_b ? " e" : "") + ($fg__input_c ? " f" : "")).slice(1), $scope0_reason, 4);
 	_scope($scope0_id, {
-		d: ($ui__input_a__OR__input_b__OR__input_c || $ui__input_a__OR__input_b__OR__input_c__OR__input_d) && input.a,
-		e: ($ui__input_a__OR__input_b__OR__input_c || $ui__input_a__OR__input_b__OR__input_c__OR__input_d) && input.b,
-		f: ($ui__input_a__OR__input_b__OR__input_c || $ui__input_a__OR__input_b__OR__input_c__OR__input_d) && input.c,
-		h: $ui__input_a__OR__input_b__OR__input_c__OR__input_d && input.d,
-		i: $ui__input_a__OR__input_b__OR__input_c__OR__input_d && f
+		d: _write_if($scope0_reason, 3) && ($ui__input_a__OR__input_b__OR__input_c || $ui__input_a__OR__input_b__OR__input_c__OR__input_d) && input.a,
+		e: _write_if($scope0_reason, 2) && ($ui__input_a__OR__input_b__OR__input_c || $ui__input_a__OR__input_b__OR__input_c__OR__input_d) && input.b,
+		f: _write_if($scope0_reason, 1) && ($ui__input_a__OR__input_b__OR__input_c || $ui__input_a__OR__input_b__OR__input_c__OR__input_d) && input.c,
+		h: _write_if($scope0_reason, 0) && $ui__input_a__OR__input_b__OR__input_c__OR__input_d && input.d,
+		i: _write_if($scope0_reason, 8) && $ui__input_a__OR__input_b__OR__input_c__OR__input_d && f
 	}) || ($fg__input_d && $ui__input_a__OR__input_b__OR__input_c && _patch_write($scope0_id, "xh", input.d, !_server_guard($scope0_reason, 8)), $fg__input_a__OR__input_b__OR__input_c && _unfilled_if($scope0_reason, 8) && _patch_write($scope0_id, "xi", f, !_server_guard($scope0_reason, 0)));
 });
 

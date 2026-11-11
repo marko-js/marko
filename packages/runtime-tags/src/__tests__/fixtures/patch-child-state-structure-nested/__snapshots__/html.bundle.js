@@ -7,7 +7,7 @@ _shells({
 	b1: "b1;D ;<em> </em>"
 });
 var panel_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 4), $wg__input_inner = _write_guard($scope0_reason, 3), $wi__input_show__OR__input_inner__OR__input_title = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2), $ui__input_inner = _unfilled_if($scope0_reason, 3), $ui__input_title = _unfilled_if($scope0_reason, 4), $ui__input_show__OR__input_inner = _unfilled_if($scope0_reason, 0), $cg__input_inner = _client_guard($scope0_reason, 3), $fg__input_inner = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 4), $wg__input_inner = _write_guard($scope0_reason, 3), $wi__input_show__OR__input_inner__OR__input_title = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2), $ui__input_inner = _unfilled_if($scope0_reason, 3), $ui__input_title = _unfilled_if($scope0_reason, 4), $ui__input_show__OR__input_inner = _unfilled_if($scope0_reason, 0), $cg__input_inner = _client_guard($scope0_reason, 3), $fg__input_inner = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_title = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	_if(() => {
@@ -31,9 +31,9 @@ var panel_default = _template("b", (input) => {
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b2"], $scope0_reason, 2);
 	$fg__input_inner && $cg__input_show && _patch_render($scope0_id, "b3", "e");
 	_scope($scope0_id, {
-		e: ($ui__input_show || $ui__input_inner) && input.inner,
-		f: ($ui__input_show__OR__input_inner || $ui__input_title) && input.title,
-		h: _write_if($scope0_reason, 4) && ($ui__input_title || $ui__input_show || $ui__input_inner) && $input_title__closures
+		e: _write_if($scope0_reason, 2) && ($ui__input_show || $ui__input_inner) && input.inner,
+		f: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_inner || $ui__input_title) && input.title,
+		h: $wi__input_title && $wi__input_title && ($ui__input_title || $ui__input_show || $ui__input_inner) && $input_title__closures
 	}) || ($fg__input_inner && $ui__input_show && _patch_write($scope0_id, "xe", input.inner, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && $ui__input_show__OR__input_inner && _patch_write($scope0_id, "xf", input.title, !_server_guard($scope0_reason, 4)) && ($cg__input_show || $cg__input_inner) && _patch_subscribers($scope0_id, "b4", "f"));
 });
 

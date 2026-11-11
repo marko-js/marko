@@ -66,8 +66,8 @@ var template_default = _template("a", (input) => {
 	}] : []), 0, $wg__input_on, $scope0_reason, 2, 0, void 0, 0, 0, "a2");
 	_html("</main>");
 	_scope($scope0_id, {
-		e: ($ui__input_on || _unfilled_if($scope0_reason, 3)) && input.p,
-		f: ($ui__input_on__OR__input_p || _unfilled_if($scope0_reason, 4)) && input.note,
+		e: _write_if($scope0_reason, 2) && ($ui__input_on || _unfilled_if($scope0_reason, 3)) && input.p,
+		f: _write_if($scope0_reason, 0) && ($ui__input_on__OR__input_p || _unfilled_if($scope0_reason, 4)) && input.note,
 		h: _write_if($scope0_reason, 4) && $input_note__closures,
 		g: _write_if($scope0_reason, 3) && $input_p__closures
 	}) || (_filled_guard($scope0_reason, 3) && (_client_branch_if("a2", $scope0_id) || $ui__input_on) && _patch_write($scope0_id, "xe", input.p, !_server_guard($scope0_reason, 3)) && _patch_subscribers($scope0_id, "a4", "e"), _filled_guard($scope0_reason, 4) && (_client_branch_if("a2", $scope0_id) || _client_branch_if("a0", $scope0_id) || $ui__input_on__OR__input_p) && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 4)) && _patch_subscribers($scope0_id, "a5", "f"));

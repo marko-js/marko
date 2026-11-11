@@ -9,8 +9,8 @@ var combo_default = _template("__tests__/tags/combo/index.marko", (input) => {
 	_html(`<p>${_text_mark($scope0_id, "#text/0", input.label + input.qty, 1, $scope0_reason, 0)}</p>`);
 	_patch_render($scope0_id, "__tests__/tags/combo/index.marko_0_input_label#3_input_qty#4/setup", (($fg__input_label ? " input_label" : "") + ($fg__input_qty ? " input_qty" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_label: $ui__input_label__OR__input_qty && input.label,
-		input_qty: $ui__input_label__OR__input_qty && input.qty
+		input_label: _write_if($scope0_reason, 2) && $ui__input_label__OR__input_qty && input.label,
+		input_qty: _write_if($scope0_reason, 1) && $ui__input_label__OR__input_qty && input.qty
 	}, "__tests__/tags/combo/index.marko", 0, {
 		input_label: ["input.label"],
 		input_qty: ["input.qty"]

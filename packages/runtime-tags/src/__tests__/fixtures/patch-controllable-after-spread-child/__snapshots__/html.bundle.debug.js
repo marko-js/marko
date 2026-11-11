@@ -15,7 +15,7 @@ var text_field_default = _template("__tests__/tags/text-field.marko", (input) =>
 	_script($scope0_id, "__tests__/tags/text-field.marko_0");
 	_patch_render($scope0_id, "__tests__/tags/text-field.marko_0_value#3_valueChange#4/setup", (($fg__input_value ? " value" : "") + ($fg__input_valueChange ? " valueChange" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		value: $ui__input_value__OR__input_valueChange && value,
+		value: _write_if($scope0_reason, 2) && $ui__input_value__OR__input_valueChange && value,
 		valueChange: $ui__input_value__OR__input_valueChange && valueChange
 	}, "__tests__/tags/text-field.marko", 0, {
 		value: "1:10",

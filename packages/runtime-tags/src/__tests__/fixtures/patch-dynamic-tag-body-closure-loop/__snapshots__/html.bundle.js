@@ -45,7 +45,7 @@ _shells({
 	c: `c${_shell_marker($setup$1)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$1)}`
 });
 var heading_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 1), $wg__input_type = _write_guard($scope0_reason, 2), $wi__input_n__OR__input_type = _write_if($scope0_reason, 0), $cg__input_type = _client_guard($scope0_reason, 2), $ui__input_n = _unfilled_if($scope0_reason, 1), $ui__input_type2 = _unfilled_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 1), $wg__input_type = _write_guard($scope0_reason, 2), $wi__input_n__OR__input_type = _write_if($scope0_reason, 0), $cg__input_type = _client_guard($scope0_reason, 2), $ui__input_n = _unfilled_if($scope0_reason, 1), $ui__input_type2 = _unfilled_if($scope0_reason, 2), $wi__input_n = _write_if($scope0_reason, 1), $wi__input_type = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_n__closures = /* @__PURE__ */ new Set();
 	const $input_type__closures = /* @__PURE__ */ new Set();
@@ -79,10 +79,10 @@ var heading_default = _template("c", (input) => {
 	list_default({ item: $item });
 	_patch_child_end();
 	_scope($scope0_id, {
-		d: ($ui__input_type2 || $ui__input_n) && input.n,
-		e: ($ui__input_n || $ui__input_type2) && input.type,
-		f: _write_if($scope0_reason, 1) && $input_n__closures,
-		g: _write_if($scope0_reason, 2) && $input_type__closures,
+		d: $wi__input_type && ($ui__input_type2 || $ui__input_n) && input.n,
+		e: $wi__input_n && ($ui__input_n || $ui__input_type2) && input.type,
+		f: $wi__input_n && $input_n__closures,
+		g: $wi__input_type && $input_type__closures,
 		a: _existing_scope($childScope)
 	}) || (_filled_guard($scope0_reason, 1) && (_client_branch_if("c0", $scope0_id) || $ui__input_type2) && _patch_write($scope0_id, "xd", input.n, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "c6", "d"), _filled_guard($scope0_reason, 2) && $ui__input_n && _patch_write($scope0_id, "xe", input.type, !_server_guard($scope0_reason, 2)) && $cg__input_n && _patch_subscribers($scope0_id, "c7", "e"));
 });

@@ -7,7 +7,7 @@ _shells({
 	b1: "b1;D ;<b> </b>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_on = _write_guard($scope0_reason, 4), $cg__input_v = _client_guard($scope0_reason, 3), $cg__input_on = _client_guard($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2), $sg__input_v = _server_guard($scope0_reason, 3), $fg__input_v2 = _filled_guard($scope0_reason, 3), $fg__input_on = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_on = _write_guard($scope0_reason, 4), $cg__input_v = _client_guard($scope0_reason, 3), $cg__input_on = _client_guard($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2), $wi__input_show = _write_if($scope0_reason, 2), $sg__input_v = _server_guard($scope0_reason, 3), $fg__input_v2 = _filled_guard($scope0_reason, 3), $fg__input_on = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -27,7 +27,7 @@ var child_default = _template("b", (input) => {
 			$cg__input_v && _patch_render($scope1_id, "b3");
 			$cg__input_on && _patch_render($scope1_id, "b4");
 			_write_if($scope0_reason, 1) && _scope($scope1_id, {
-				b: ($ui__input_on || _unfilled_if($scope0_reason, 3)) && v,
+				b: _write_if($scope0_reason, 4) && ($ui__input_on || _unfilled_if($scope0_reason, 3)) && v,
 				_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
 			});
 			return 0;
@@ -36,8 +36,8 @@ var child_default = _template("b", (input) => {
 	$fg__input_v2 && $cg__input_show && _patch_render($scope0_id, "b3", "e");
 	$fg__input_on && $cg__input_show && _patch_render($scope0_id, "b4", "f");
 	_scope($scope0_id, {
-		e: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.v,
-		f: ($ui__input_show || _unfilled_if($scope0_reason, 4)) && input.on
+		e: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.v,
+		f: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 4)) && input.on
 	}) || ($fg__input_v2 && $ui__input_show && _patch_write($scope0_id, "xe", input.v, !$sg__input_v), $fg__input_on && $ui__input_show && _patch_write($scope0_id, "xf", input.on, !_server_guard($scope0_reason, 4)));
 });
 

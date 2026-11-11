@@ -9,7 +9,7 @@ _shells({
 	"__tests__/tags/panel.marko_3*shell": "__tests__/tags/panel.marko_3*shell;D ;<em> </em>"
 });
 var panel_default = _template("__tests__/tags/panel.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 4), $cg__input_b = _client_guard($scope0_reason, 5), $wi__input_show__OR__input_b__OR__input_a = _write_if($scope0_reason, 3), $ui__input_show = _unfilled_if($scope0_reason, 4), $ui__input_b__OR__input_a = _unfilled_if($scope0_reason, 2), $sg__input_b = _server_guard($scope0_reason, 5), $ui__input_show__OR__input_b = _unfilled_if($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 4), $fg__input_b = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 4), $cg__input_b = _client_guard($scope0_reason, 5), $wi__input_show__OR__input_b__OR__input_a = _write_if($scope0_reason, 3), $ui__input_show = _unfilled_if($scope0_reason, 4), $ui__input_b__OR__input_a = _unfilled_if($scope0_reason, 2), $sg__input_b = _server_guard($scope0_reason, 5), $ui__input_show__OR__input_b = _unfilled_if($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 4), $fg__input_b = _filled_guard($scope0_reason, 5), $wi__input_a = _write_if($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	_if(() => {
@@ -42,7 +42,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 			$cg__input_show && _patch_render($scope1_id, "__tests__/tags/panel.marko_1_input_show#0:3/setup");
 			$cg__input_b && _patch_render($scope1_id, "__tests__/tags/panel.marko_1_input_b#0:4/setup");
 			$wi__input_show__OR__input_b__OR__input_a && _scope($scope1_id, {
-				b: ($ui__input_show__OR__input_a || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 5)) && b,
+				b: _write_if($scope0_reason, 1) && ($ui__input_show__OR__input_a || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 5)) && b,
 				_: _scope_with_id($scope0_id)
 			}, "__tests__/tags/panel.marko", "1:2", { b: "2:10" });
 			return 0;
@@ -50,9 +50,9 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/panel.marko_1*shell"], $scope0_reason, 4);
 	$fg__input_b && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/panel.marko_1_input_b#0:4/setup", "input_b");
 	_scope($scope0_id, {
-		input_b: ($ui__input_show || _unfilled_if($scope0_reason, 5)) && input.b,
-		input_a: ($ui__input_show__OR__input_b || $ui__input_b__OR__input_a) && input.a,
-		"ClosureScopes:input_a/8": _write_if($scope0_reason, 6) && ($ui__input_b__OR__input_a || $ui__input_show) && $input_a__closures
+		input_b: _write_if($scope0_reason, 4) && ($ui__input_show || _unfilled_if($scope0_reason, 5)) && input.b,
+		input_a: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_b || $ui__input_b__OR__input_a) && input.a,
+		"ClosureScopes:input_a/8": $wi__input_a && $wi__input_a && ($ui__input_b__OR__input_a || $ui__input_show) && $input_a__closures
 	}, "__tests__/tags/panel.marko", 0, {
 		input_b: ["input.b"],
 		input_a: ["input.a"]

@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a6");
 	$fg__input_flag && $cg__input_items && _patch_render($scope0_id, "a5", "f");
 	_scope($scope0_id, {
-		f: ($ui__input_items || _unfilled_if($scope0_reason, 1)) && input.flag,
+		f: _write_if($scope0_reason, 0) && ($ui__input_items || _unfilled_if($scope0_reason, 1)) && input.flag,
 		g: input.suffix,
 		h: count,
 		j: _write_if($scope0_reason, 2) && $input_suffix__closures,

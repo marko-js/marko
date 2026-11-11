@@ -12,9 +12,9 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	}, 1, 0, 0, $wg__input_content__OR__input_label__OR__input_items, $scope0_reason, 3, 0, 4);
 	_patch_render($scope0_id, "__tests__/tags/panel.marko_0_input_content#3_input_label#4_input_items#5/setup", (($fg__input_content ? " input_content" : "") + ($fg__input_label ? " input_label" : "") + ($fg__input_items ? " input_items" : "")).slice(1), $scope0_reason, 3);
 	_scope($scope0_id, {
-		input_content: $ui__input_content__OR__input_label__OR__input_items && input.content,
-		input_label: $ui__input_content__OR__input_label__OR__input_items && input.label,
-		input_items: $ui__input_content__OR__input_label__OR__input_items && input.items
+		input_content: _write_if($scope0_reason, 2) && $ui__input_content__OR__input_label__OR__input_items && input.content,
+		input_label: _write_if($scope0_reason, 1) && $ui__input_content__OR__input_label__OR__input_items && input.label,
+		input_items: _write_if($scope0_reason, 0) && $ui__input_content__OR__input_label__OR__input_items && input.items
 	}, "__tests__/tags/panel.marko", 0, {
 		input_content: ["input.content"],
 		input_label: ["input.label"],

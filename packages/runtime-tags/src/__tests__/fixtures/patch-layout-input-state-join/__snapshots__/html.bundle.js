@@ -24,8 +24,8 @@ var layout_default = _template("a", (input) => {
 	$fg__input_a && $cg__input_show && _patch_render($scope0_id, "a2", "f");
 	$fg__input_b && $cg__input_show && _patch_render($scope0_id, "a3", "g");
 	_scope($scope0_id, {
-		f: ($ui__input_show__OR__input_b || $ui__input_a__OR__input_b) && input.a,
-		g: ($ui__input_show__OR__input_a || $ui__input_a__OR__input_b) && input.b
+		f: _write_if($scope0_reason, 1) && ($ui__input_show__OR__input_b || $ui__input_a__OR__input_b) && input.a,
+		g: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_a || $ui__input_a__OR__input_b) && input.b
 	}) || ($fg__input_a && $ui__input_show__OR__input_b && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 5)), $fg__input_b && $ui__input_show__OR__input_a && _patch_write($scope0_id, "xg", input.b, !_server_guard($scope0_reason, 6)));
 }, 1);
 

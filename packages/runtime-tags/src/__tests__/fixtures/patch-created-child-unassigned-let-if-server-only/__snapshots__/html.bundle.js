@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 	_html("</main>");
 	_patch_render($scope0_id, "a0", (($fg__input_on ? " d" : "") + ($fg__input_n ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: $ui__input_on__OR__input_n && input.on,
-		e: $ui__input_on__OR__input_n && input.n
+		d: _write_if($scope0_reason, 2) && $ui__input_on__OR__input_n && input.on,
+		e: _write_if($scope0_reason, 1) && $ui__input_on__OR__input_n && input.n
 	}) || ($fg__input_on && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.on, !_server_guard($scope0_reason, 1)), $fg__input_n && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.n, !_server_guard($scope0_reason, 2)));
 }, 1);

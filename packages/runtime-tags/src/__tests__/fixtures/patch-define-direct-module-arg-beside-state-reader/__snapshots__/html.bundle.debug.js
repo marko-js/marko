@@ -37,8 +37,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$fg__fmt && $cg__isOpen && _patch_render($scope2_id, "__tests__/template.marko_3_fmt#2:4/setup", "fmt");
 		$fg__label && $cg__isOpen && _patch_render($scope2_id, "__tests__/template.marko_3_label#2:5/setup", "label");
 		_write_if($scope2_reason, 3) && _scope($scope2_id, {
-			fmt: ($ui__isOpen__OR__label || $ui__fmt__OR__label) && fmt,
-			label: ($ui__isOpen__OR__fmt || $ui__fmt__OR__label) && label
+			fmt: _write_if($scope2_reason, 1) && ($ui__isOpen__OR__label || $ui__fmt__OR__label) && fmt,
+			label: _write_if($scope2_reason, 0) && ($ui__isOpen__OR__fmt || $ui__fmt__OR__label) && label
 		}, "__tests__/template.marko", "3:2", {
 			fmt: "3:25",
 			label: "3:30"

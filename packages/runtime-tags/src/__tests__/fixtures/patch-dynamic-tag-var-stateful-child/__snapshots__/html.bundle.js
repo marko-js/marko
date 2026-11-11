@@ -36,8 +36,8 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a1");
 	_patch_render($scope0_id, "a2", (($fg__input_which ? " g" : "") + ($fg__input_label ? " h" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		g: $ui__input_which__OR__input_label && input.which,
-		h: $ui__input_which__OR__input_label && input.label,
+		g: _write_if($scope0_reason, 2) && $ui__input_which__OR__input_label && input.which,
+		h: _write_if($scope0_reason, 1) && $ui__input_which__OR__input_label && input.label,
 		j: count
 	}) || ($fg__input_which && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xg", input.which, !_server_guard($scope0_reason, 1)), $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 2)));
 }, 1);

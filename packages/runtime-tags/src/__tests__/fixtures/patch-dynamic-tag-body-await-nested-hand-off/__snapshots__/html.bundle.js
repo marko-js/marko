@@ -32,7 +32,7 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_p__OR__input_content = _write_guard($scope0_reason, 0), $ui__input_p__OR__input_content2 = _unfilled_if($scope0_reason, 0), $sg__input_p = _server_guard($scope0_reason, 1), $wi__input_p__OR__input_content = _write_if($scope0_reason, 0), $ui__input_p2 = _unfilled_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_p__OR__input_content = _write_guard($scope0_reason, 0), $ui__input_p__OR__input_content2 = _unfilled_if($scope0_reason, 0), $wi__input_content = _write_if($scope0_reason, 2), $wi__input_p = _write_if($scope0_reason, 1), $sg__input_p = _server_guard($scope0_reason, 1), $wi__input_p__OR__input_content = _write_if($scope0_reason, 0), $ui__input_p2 = _unfilled_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_p__closures = /* @__PURE__ */ new Set();
 	const $input_content__closures = /* @__PURE__ */ new Set();
@@ -54,16 +54,16 @@ var card_default = _template("b", (input) => {
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b7");
 		_patch_render($scope1_id, "b8", ((_filled_guard($scope0_reason, 2) ? " >e" : "") + ($fg__input_p2 ? " c" : "")).slice(1), $scope0_reason, 0);
 		$wi__input_p__OR__input_content && _subscribe($ui__input_content && $input_content__closures, _subscribe($ui__input_p && $input_p__closures, _scope($scope1_id, {
-			c: $ui__input_p__OR__input_content3 && x,
-			e: $ui__input_p__OR__input_content3 && c,
+			c: $wi__input_content && $ui__input_p__OR__input_content3 && x,
+			e: $wi__input_p && $ui__input_p__OR__input_content3 && c,
 			h: $ui__input_p__OR__input_content3 && $await_content__c__closures
 		}), _client_guard($scope0_reason, 1) && "b6", 0), _client_guard($scope0_reason, 2) && "b7", 0);
 		$wi__input_p__OR__input_content && _resume_branch($scope1_id);
 	}, 1, "b4", $ui__input_p2, 1, 1);
 	_scope($scope0_id, {
-		e: $ui__input_p__OR__input_content2 && input.content,
-		f: _write_if($scope0_reason, 1) && $ui__input_p__OR__input_content2 && $input_p__closures,
-		g: _write_if($scope0_reason, 2) && $ui__input_p__OR__input_content2 && $input_content__closures
+		e: $wi__input_p && $ui__input_p__OR__input_content2 && input.content,
+		f: $wi__input_p && $wi__input_p && $ui__input_p__OR__input_content2 && $input_p__closures,
+		g: $wi__input_content && $wi__input_content && $ui__input_p__OR__input_content2 && $input_content__closures
 	}) || _filled_guard($scope0_reason, 2) && $ui__input_p2 && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
 });
 
@@ -87,9 +87,9 @@ var template_default = _template("a", (input) => {
 	_html("</main>");
 	_patch_render($scope0_id, "a3", (($fg__input_on ? " d" : "") + ($fg__input_p ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: $ui__input_on__OR__input_p && input.on,
-		e: $ui__input_on__OR__input_p && input.p,
-		g: ($ui__input_on__OR__input_p || _unfilled_if($scope0_reason, 4)) && input.note,
+		d: _write_if($scope0_reason, 3) && $ui__input_on__OR__input_p && input.on,
+		e: _write_if($scope0_reason, 2) && $ui__input_on__OR__input_p && input.p,
+		g: _write_if($scope0_reason, 0) && ($ui__input_on__OR__input_p || _unfilled_if($scope0_reason, 4)) && input.note,
 		h: _write_if($scope0_reason, 4) && $input_note__closures
 	}) || ($fg__input_on && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xd", input.on, !_server_guard($scope0_reason, 2)), $fg__input_p && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.p, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && (_client_branch_if("a0", $scope0_id) || $ui__input_on__OR__input_p) && _patch_write($scope0_id, "xg", input.note, !_server_guard($scope0_reason, 4)) && _patch_subscribers($scope0_id, "a2", "g"));
 }, 1);

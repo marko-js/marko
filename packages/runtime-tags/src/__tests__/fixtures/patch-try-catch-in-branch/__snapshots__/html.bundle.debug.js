@@ -12,7 +12,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 1), $cg__input_message = _client_guard($scope0_reason, 2), $cg__input_boom = _client_guard($scope0_reason, 3), $wi__input_show__OR__input_message__OR__input_boom = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_message = _unfilled_if($scope0_reason, 2), $ui__input_boom = _unfilled_if($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 1), $cg__input_message = _client_guard($scope0_reason, 2), $cg__input_boom = _client_guard($scope0_reason, 3), $wi__input_show__OR__input_message__OR__input_boom = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_message = _unfilled_if($scope0_reason, 2), $ui__input_boom = _unfilled_if($scope0_reason, 3), $wi__input_show = _write_if($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1), $wi__input_message = _write_if($scope0_reason, 2), $wi__input_boom = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_message__closures = new Set();
 	const $input_boom__closures = new Set();
@@ -39,10 +39,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#main/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html(`</main>${_el_mark($scope0_id, "#main/0", $wg__input_show)}`);
 	_scope($scope0_id, {
-		input_message: ($ui__input_show || $ui__input_message) && input.message,
-		input_boom: ($ui__input_show || $ui__input_boom) && input.boom,
-		"ClosureScopes:input_message/6": _write_if($scope0_reason, 2) && ($ui__input_message || $ui__input_show) && $input_message__closures,
-		"ClosureScopes:input_boom/7": _write_if($scope0_reason, 3) && ($ui__input_boom || $ui__input_show) && $input_boom__closures
+		input_message: $wi__input_show && ($ui__input_show || $ui__input_message) && input.message,
+		input_boom: $wi__input_show && ($ui__input_show || $ui__input_boom) && input.boom,
+		"ClosureScopes:input_message/6": $wi__input_message && $wi__input_message && ($ui__input_message || $ui__input_show) && $input_message__closures,
+		"ClosureScopes:input_boom/7": $wi__input_boom && $wi__input_boom && ($ui__input_boom || $ui__input_show) && $input_boom__closures
 	}, "__tests__/template.marko", 0, {
 		input_message: ["input.message"],
 		input_boom: ["input.boom"]

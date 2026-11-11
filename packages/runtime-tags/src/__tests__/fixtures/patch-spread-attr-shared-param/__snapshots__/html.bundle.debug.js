@@ -16,10 +16,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_url#4_input_title#5_input_cls#6/setup", (($fg__input_url ? " input_url" : "") + ($fg__input_title ? " input_title" : "") + ($fg__input_cls ? " input_cls" : "")).slice(1), $scope0_reason, 3);
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_url#4_input_width#8/setup", (($fg__input_url ? " input_url" : "") + ($fg__input_width ? " input_width" : "")).slice(1), $scope0_reason, 2);
 	_scope($scope0_id, {
-		input_url: ($ui__input_title__OR__input_cls__OR__input_width || $ui__input_url__OR__input_width || $ui__input_url__OR__input_title__OR__input_cls) && input.url,
-		input_title: $ui__input_url__OR__input_title__OR__input_cls && input.title,
-		input_cls: $ui__input_url__OR__input_title__OR__input_cls && input.cls,
-		input_width: $ui__input_url__OR__input_width && input.width
+		input_url: _write_if($scope0_reason, 4) && ($ui__input_title__OR__input_cls__OR__input_width || $ui__input_url__OR__input_width || $ui__input_url__OR__input_title__OR__input_cls) && input.url,
+		input_title: _write_if($scope0_reason, 1) && $ui__input_url__OR__input_title__OR__input_cls && input.title,
+		input_cls: _write_if($scope0_reason, 0) && $ui__input_url__OR__input_title__OR__input_cls && input.cls,
+		input_width: _write_if($scope0_reason, 5) && $ui__input_url__OR__input_width && input.width
 	}, "__tests__/template.marko", 0, {
 		input_url: ["input.url"],
 		input_title: ["input.title"],

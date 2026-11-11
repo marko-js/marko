@@ -83,7 +83,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_mode#5_m#8/setup", $fg__input_mode && "input_mode");
 	_scope($scope0_id, {
 		input_mode: input.mode,
-		input_note: ($ui__input_on || _unfilled_if($scope0_reason, 3)) && input.note,
+		input_note: _write_if($scope0_reason, 2) && ($ui__input_on || _unfilled_if($scope0_reason, 3)) && input.note,
 		m,
 		"#childScope/0": _existing_scope($childScope),
 		"ClosureScopes:input_note/10": _write_if($scope0_reason, 3) && $input_note__closures

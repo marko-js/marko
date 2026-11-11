@@ -11,7 +11,7 @@ _shells({
 	"__tests__/template.marko_7*shell": "__tests__/template.marko_7*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 4), $cg__input_b = _client_guard($scope0_reason, 5), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $ui__input_on = _unfilled_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 4), $cg__input_b = _client_guard($scope0_reason, 5), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $ui__input_on = _unfilled_if($scope0_reason, 3), $wi__input_on = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	const $input_b__closures = new Set();
@@ -70,8 +70,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, ($scope2) => $scope0_page ? [{ input_b: input.b }] : []) }) }, 17, 0, 0, $wg__input_on, $scope0_reason, 3, 0, void 0, 0, 0, ["__tests__/template.marko_1*content", "__tests__/template.marko_2*content"]);
 	_html("</main>");
 	_scope($scope0_id, {
-		input_a: ($ui__input_on || _unfilled_if($scope0_reason, 4)) && input.a,
-		input_b: ($ui__input_on || _unfilled_if($scope0_reason, 5)) && input.b,
+		input_a: $wi__input_on && ($ui__input_on || _unfilled_if($scope0_reason, 4)) && input.a,
+		input_b: $wi__input_on && ($ui__input_on || _unfilled_if($scope0_reason, 5)) && input.b,
 		Wrap: $ui__input_on && Wrap,
 		Plain: $ui__input_on && Plain,
 		"ClosureScopes:input_a/9": _write_if($scope0_reason, 4) && $input_a__closures,

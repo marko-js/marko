@@ -56,7 +56,7 @@ _shells({
 	"__tests__/template.marko_8*shell": "__tests__/template.marko_8*shell,"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 4), $scope0_page = _page_render(), $ui__input_show = _unfilled_if($scope0_reason, 3), $fg__input_items4 = _filled_guard($scope0_reason, 4), $fg__input_nested = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_tag = _filled_guard($scope0_reason, 6), $wi__input_items = _write_if($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 4), $scope0_page = _page_render(), $ui__input_show = _unfilled_if($scope0_reason, 3), $wi__input_show = _write_if($scope0_reason, 3), $fg__input_items4 = _filled_guard($scope0_reason, 4), $fg__input_nested = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_tag = _filled_guard($scope0_reason, 6), $wi__input_items = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_items__closures = new Set();
 	let count = 0;
@@ -149,8 +149,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_tag && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_tag#0:8/setup", "input_tag");
 	_scope($scope0_id, {
 		input_items: _write_if($scope0_reason, 1) && input.items,
-		input_nested: ($ui__input_show || _unfilled_if($scope0_reason, 5)) && input.nested,
-		input_tag: ($ui__input_show || _unfilled_if($scope0_reason, 6)) && input.tag,
+		input_nested: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 5)) && input.nested,
+		input_tag: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 6)) && input.tag,
 		count,
 		"ClosureScopes:input_items/10": $wi__input_items && $input_items__closures
 	}, "__tests__/template.marko", 0, {

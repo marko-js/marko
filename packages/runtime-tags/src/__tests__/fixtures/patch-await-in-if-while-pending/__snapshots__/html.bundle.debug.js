@@ -11,7 +11,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_msg = _client_guard($scope0_reason, 4), $ui__input_show = _unfilled_if($scope0_reason, 2), $wi__input_show__OR__input_promise__OR__input_msg = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $ui__input_promise2 = _unfilled_if($scope0_reason, 3), $ui__input_msg = _unfilled_if($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_msg = _client_guard($scope0_reason, 4), $ui__input_show = _unfilled_if($scope0_reason, 2), $wi__input_show__OR__input_promise__OR__input_msg = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $ui__input_promise2 = _unfilled_if($scope0_reason, 3), $ui__input_msg = _unfilled_if($scope0_reason, 4), $wi__input_show = _write_if($scope0_reason, 2), $wi__input_msg = _write_if($scope0_reason, 4), $wi__input_promise = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_msg__closures = new Set();
 	const $input_promise__closures = new Set();
@@ -48,12 +48,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, void 0, "__tests__/template.marko_4*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
-		input_promise: ($ui__input_show || $ui__input_promise2) && input.promise,
-		input_msg: ($ui__input_show || $ui__input_msg) && input.msg,
+		input_promise: $wi__input_show && ($ui__input_show || $ui__input_promise2) && input.promise,
+		input_msg: $wi__input_show && ($ui__input_show || $ui__input_msg) && input.msg,
 		count,
-		"ClosureScopes:input_msg/11": _write_if($scope0_reason, 4) && ($ui__input_msg || $ui__input_show) && $input_msg__closures,
-		"ClosureScopes:input_promise/10": _write_if($scope0_reason, 3) && ($ui__input_promise2 || $ui__input_show) && $input_promise__closures,
-		"ClosureScopes:input_show/9": _write_if($scope0_reason, 2) && $ui__input_show && $input_show__closures
+		"ClosureScopes:input_msg/11": $wi__input_msg && $wi__input_msg && ($ui__input_msg || $ui__input_show) && $input_msg__closures,
+		"ClosureScopes:input_promise/10": $wi__input_promise && $wi__input_promise && ($ui__input_promise2 || $ui__input_show) && $input_promise__closures,
+		"ClosureScopes:input_show/9": $wi__input_show && $ui__input_show && $input_show__closures
 	}, "__tests__/template.marko", 0, {
 		input_promise: ["input.promise"],
 		input_msg: ["input.msg"],

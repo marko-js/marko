@@ -24,7 +24,7 @@ var child_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b3"], $scope0_reason, 0);
 	$fg__input_data && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "b1", "e");
-	_scope($scope0_id, { e: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.data }) || $fg__input_data && $ui__input_show && _patch_write($scope0_id, "xe", input.data, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { e: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.data }) || $fg__input_data && $ui__input_show && _patch_write($scope0_id, "xe", input.data, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

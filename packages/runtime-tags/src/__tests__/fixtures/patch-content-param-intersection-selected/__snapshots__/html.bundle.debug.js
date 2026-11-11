@@ -9,8 +9,8 @@ var pass_on_default = _template("__tests__/tags/pass-on.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", input.content, [input.x], 1, 0, 1, $wg__input_content__OR__input_x, $scope0_reason, 0, 0, 1);
 	_patch_render($scope0_id, "__tests__/tags/pass-on.marko_0_input_content#3_input_x#4/setup", (($fg__input_content ? " input_content" : "") + ($fg__input_x ? " input_x" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_content: $ui__input_content__OR__input_x && input.content,
-		input_x: $ui__input_content__OR__input_x && input.x
+		input_content: _write_if($scope0_reason, 2) && $ui__input_content__OR__input_x && input.content,
+		input_x: _write_if($scope0_reason, 1) && $ui__input_content__OR__input_x && input.x
 	}, "__tests__/tags/pass-on.marko", 0, {
 		input_content: ["input.content"],
 		input_x: ["input.x"]
@@ -61,8 +61,8 @@ var owner_default = _template("__tests__/tags/owner.marko", (input) => {
 	_patch_child_end();
 	_script($scope0_id, "__tests__/tags/owner.marko_0", 0);
 	_scope($scope0_id, {
-		input_show: ($ui__input_x || _unfilled_if($scope0_reason, 4)) && input.show,
-		input_a: ($ui__input_x__OR__input_show || _unfilled_if($scope0_reason, 5)) && input.a,
+		input_show: _write_if($scope0_reason, 3) && ($ui__input_x || _unfilled_if($scope0_reason, 4)) && input.show,
+		input_a: _write_if($scope0_reason, 0) && ($ui__input_x__OR__input_show || _unfilled_if($scope0_reason, 5)) && input.a,
 		"ClosureScopes:input_a/7": _write_if($scope0_reason, 5) && $input_a__closures,
 		"ClosureScopes:input_show/6": _write_if($scope0_reason, 4) && $input_show__closures,
 		"#childScope/0": _existing_scope($childScope)

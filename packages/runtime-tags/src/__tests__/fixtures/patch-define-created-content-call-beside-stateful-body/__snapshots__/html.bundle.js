@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 	let open = false;
 	const Panel = { content: _content_resume("a4", ({ isOpen, label }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__isOpen = _write_guard($scope2_reason, 0), $ui__isOpen = _unfilled_if($scope2_reason, 0);
+		const $scope2_reason = _scope_reason(), $wg__isOpen = _write_guard($scope2_reason, 0), $ui__isOpen = _unfilled_if($scope2_reason, 0), $wi__isOpen = _write_if($scope2_reason, 0);
 		_if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope2_id, "a", 1, $wg__isOpen, 1, 0, 0, ["a1"], $scope2_reason, 0);
 		$ui__isOpen && _patch_write($scope2_id, "we", label, 1);
-		_write_if($scope2_reason, 0) && _scope($scope2_id, { e: ($ui__isOpen || _unfilled_if($scope2_reason, 1)) && label });
+		$wi__isOpen && _scope($scope2_id, { e: $wi__isOpen && ($ui__isOpen || _unfilled_if($scope2_reason, 1)) && label });
 	}, $scope0_id) };
 	const Wrap = { content: _content("a5", ({ show, content }) => {
 		const $scope4_id = _scope_id();
@@ -74,7 +74,7 @@ var template_default = _template("a", (input) => {
 	_patch_render($scope0_id, "a10", $fg__input_other && "h", $scope0_reason, 3);
 	_patch_render($scope0_id, "a11", $fg__input_other && "l");
 	_scope($scope0_id, {
-		g: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.label,
+		g: _write_if($scope0_reason, 1) && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.label,
 		i: open,
 		j: _unfilled_if($scope0_reason, 3) && Panel,
 		l: Tag,

@@ -9,8 +9,8 @@ var one_default = _template("__tests__/tags/one.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", input.content, input.attrs, 1, 0, 0, $wg__input_content__OR__input_attrs, $scope0_reason, 0, 0, 1);
 	_patch_render($scope0_id, "__tests__/tags/one.marko_0_input_content#3_input_attrs#4/setup", (($fg__input_content ? " input_content" : "") + ($fg__input_attrs ? " input_attrs" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_content: $ui__input_content__OR__input_attrs && input.content,
-		input_attrs: $ui__input_content__OR__input_attrs && input.attrs
+		input_content: _write_if($scope0_reason, 2) && $ui__input_content__OR__input_attrs && input.content,
+		input_attrs: _write_if($scope0_reason, 1) && $ui__input_content__OR__input_attrs && input.attrs
 	}, "__tests__/tags/one.marko", 0, {
 		input_content: ["input.content"],
 		input_attrs: ["input.attrs"]

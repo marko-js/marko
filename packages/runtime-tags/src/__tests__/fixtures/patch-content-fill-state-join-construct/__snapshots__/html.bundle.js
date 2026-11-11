@@ -35,7 +35,7 @@ _shells({
 	a4: `a4${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_p = _client_guard($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 1), $ui__input_items = _unfilled_if($scope0_reason, 1), $ui__input_p = _unfilled_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_p = _client_guard($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 1), $ui__input_items = _unfilled_if($scope0_reason, 1), $ui__input_p = _unfilled_if($scope0_reason, 0), $wi__input_items = _write_if($scope0_reason, 1), $wi__input_p = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $count__closures = /* @__PURE__ */ new Set();
 	const $p_name__closures = /* @__PURE__ */ new Set();
@@ -61,7 +61,7 @@ var template_default = _template("a", (input) => {
 		_patch_child_end();
 		_scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
-			l: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $for_content__item_id__closures,
+			l: $wi__input_items && _unfilled_if($scope0_reason, 1) && $for_content__item_id__closures,
 			a: _existing_scope($childScope)
 		});
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a4", $scope0_reason, 1);
@@ -69,8 +69,8 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a5");
 	_scope($scope0_id, {
 		g: count,
-		i: ($ui__input_items || $ui__input_p) && p?.name,
+		i: $wi__input_items && ($ui__input_items || $ui__input_p) && p?.name,
 		j: $count__closures,
-		k: _write_if($scope0_reason, 0) && ($ui__input_p || $ui__input_items) && $p_name__closures
+		k: $wi__input_p && $wi__input_p && ($ui__input_p || $ui__input_items) && $p_name__closures
 	}) || _filled_guard($scope0_reason, 0) && $ui__input_items && _patch_write($scope0_id, "xi", p?.name, !_server_guard($scope0_reason, 0)) && $cg__input_items && _patch_subscribers($scope0_id, "a6", "i");
 }, 1);

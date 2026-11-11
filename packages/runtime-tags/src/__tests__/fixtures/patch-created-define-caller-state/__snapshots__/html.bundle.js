@@ -9,7 +9,7 @@ _shells({
 	b2: `b2 >a>;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($Info_content__walks)};${$Info_content__template}`
 });
 var panel_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 2), $wi__input_show = _write_if($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_n__closures = /* @__PURE__ */ new Set();
 	const Info = { content: _content("b0", ({ id }) => {
@@ -27,14 +27,14 @@ var panel_default = _template("b", (input) => {
 			Info.content({ id: "x" });
 			_patch_child_end();
 			_scope($scope2_id, {
-				_: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id),
+				_: $wi__input_show && _scope_with_id($scope0_id),
 				a: _existing_scope($childScope)
 			});
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b2"], $scope0_reason, 2);
 	_scope($scope0_id, {
-		d: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.n,
+		d: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.n,
 		f: _write_if($scope0_reason, 1) && $input_n__closures
 	}) || _filled_guard($scope0_reason, 1) && $ui__input_show && _patch_write($scope0_id, "xd", input.n, !_server_guard($scope0_reason, 1)) && _client_guard($scope0_reason, 2) && _patch_subscribers($scope0_id, "b3", "d");
 });

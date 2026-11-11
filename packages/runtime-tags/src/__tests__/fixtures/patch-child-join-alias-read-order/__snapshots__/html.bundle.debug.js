@@ -24,7 +24,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_0_open#8/fill", open, 1);
 	_scope($scope0_id, {
 		input_a: input.a,
-		input_b: _unfilled_if($scope0_reason, 0) && input.b,
+		input_b: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 0) && input.b,
 		open
 	}, "__tests__/tags/child.marko", 0, {
 		input_a: ["input.a"],

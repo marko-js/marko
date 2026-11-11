@@ -9,8 +9,8 @@ var tabs_default = _template("__tests__/tags/tabs.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", [...input.tab].find((t) => t.id === input.selected)?.content, {}, 2, 0, 0, $wg__input_tab__OR__input_selected, $scope0_reason, 0);
 	_patch_render($scope0_id, "__tests__/tags/tabs.marko_0_input_tab#3_input_selected#4/setup", (($fg__input_tab ? " input_tab" : "") + ($fg__input_selected ? " input_selected" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_tab: $ui__input_tab__OR__input_selected && input.tab,
-		input_selected: $ui__input_tab__OR__input_selected && input.selected
+		input_tab: _write_if($scope0_reason, 2) && $ui__input_tab__OR__input_selected && input.tab,
+		input_selected: _write_if($scope0_reason, 1) && $ui__input_tab__OR__input_selected && input.selected
 	}, "__tests__/tags/tabs.marko", 0, {
 		input_tab: ["input.tab"],
 		input_selected: ["input.selected"]
@@ -59,7 +59,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
-		input_y: ($ui__input_x || _unfilled_if($scope0_reason, 2)) && input.y,
+		input_y: _write_if($scope0_reason, 1) && ($ui__input_x || _unfilled_if($scope0_reason, 2)) && input.y,
 		s,
 		"ClosureScopes:input_y/7": _write_if($scope0_reason, 2) && $input_y__closures,
 		"ClosureScopes:s/8": $s__closures,

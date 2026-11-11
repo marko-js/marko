@@ -39,7 +39,7 @@ var template_default = _template("c", (input) => {
 	}, $scope0_id, 0), 0, $wg__input_mode, $scope0_reason, 1);
 	_html("</main>");
 	_scope($scope0_id, {
-		e: ($ui__input_mode || _unfilled_if($scope0_reason, 2)) && input.text,
+		e: _write_if($scope0_reason, 1) && ($ui__input_mode || _unfilled_if($scope0_reason, 2)) && input.text,
 		f: _write_if($scope0_reason, 2) && $input_text__closures
 	}) || _filled_guard($scope0_reason, 2) && $ui__input_mode && _patch_write($scope0_id, "xe", input.text, !_server_guard($scope0_reason, 2)) && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "c2", "e");
 }, 1);

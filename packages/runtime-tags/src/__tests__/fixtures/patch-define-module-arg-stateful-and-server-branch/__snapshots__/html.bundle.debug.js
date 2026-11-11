@@ -27,10 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_reason = _scope_reason(), $fg__fmt = _filled_guard($scope3_reason, 1);
 		_html(`<em>${_text_mark($scope3_id, "#text/0", fmt(label), 1, $scope3_reason, 0)}</em>`);
 		_patch_render($scope3_id, "__tests__/template.marko_3_fmt#3_label#4/setup", (($fg__fmt ? " fmt" : "") + (_filled_guard($scope3_reason, 2) ? " label" : "")).slice(1), $scope3_reason, 0);
-		_scope($scope3_id, {
-			fmt: _unfilled_if($scope3_reason, 0, 1) && fmt,
-			label: _unfilled_if($scope3_reason, 0) && label
-		}, "__tests__/template.marko", "3:2", {
+		_scope($scope3_id, { fmt: _write_if($scope3_reason, 2) && _unfilled_if($scope3_reason, 0, 1) && fmt }, "__tests__/template.marko", "3:2", {
 			fmt: "3:17",
 			label: "3:22"
 		}) || $fg__fmt && _unfilled_if($scope3_reason, 2) && _patch_write($scope3_id, "PatchMarkedWrite:fmt", fmt, 1);

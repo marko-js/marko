@@ -10,10 +10,10 @@ var rows_default = _template("__tests__/tags/rows.marko", (input) => {
 	_patch_render($scope0_id, "__tests__/tags/rows.marko_0_input_a#4_input_b#5_input_c#6/setup", (($fg__input_a ? " input_a" : "") + ($fg__input_b ? " input_b" : "") + ($fg__input_c ? " input_c" : "")).slice(1), $scope0_reason, 3);
 	_patch_render($scope0_id, "__tests__/tags/rows.marko_0_input_a#4_input_d#8/setup", (($fg__input_a ? " input_a" : "") + ($fg__input_d ? " input_d" : "")).slice(1), $scope0_reason, 2);
 	_scope($scope0_id, {
-		input_a: ($ui__input_b__OR__input_c__OR__input_d || $ui__input_a__OR__input_d || $ui__input_a__OR__input_b__OR__input_c) && input.a,
-		input_b: $ui__input_a__OR__input_b__OR__input_c && input.b,
-		input_c: $ui__input_a__OR__input_b__OR__input_c && input.c,
-		input_d: $ui__input_a__OR__input_d && input.d
+		input_a: _write_if($scope0_reason, 4) && ($ui__input_b__OR__input_c__OR__input_d || $ui__input_a__OR__input_d || $ui__input_a__OR__input_b__OR__input_c) && input.a,
+		input_b: _write_if($scope0_reason, 1) && $ui__input_a__OR__input_b__OR__input_c && input.b,
+		input_c: _write_if($scope0_reason, 0) && $ui__input_a__OR__input_b__OR__input_c && input.c,
+		input_d: _write_if($scope0_reason, 5) && $ui__input_a__OR__input_d && input.d
 	}, "__tests__/tags/rows.marko", 0, {
 		input_a: ["input.a"],
 		input_b: ["input.b"],

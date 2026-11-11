@@ -81,7 +81,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", input.on ? card_default : plain_default, { header: H }, 1, 0, 0, $wg__input_on, $scope0_reason, 2, 0, void 0, 0, 0, "__tests__/template.marko_1*content");
 	_html("</main>");
 	_scope($scope0_id, {
-		input_note: ($ui__input_on || _unfilled_if($scope0_reason, 1)) && input.note,
+		input_note: _write_if($scope0_reason, 2) && ($ui__input_on || _unfilled_if($scope0_reason, 1)) && input.note,
 		H: $ui__input_on && H,
 		"ClosureScopes:input_note/7": _write_if($scope0_reason, 1) && $input_note__closures
 	}, "__tests__/template.marko", 0, {

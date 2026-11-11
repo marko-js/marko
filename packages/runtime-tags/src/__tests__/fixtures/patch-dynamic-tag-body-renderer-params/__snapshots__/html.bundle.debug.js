@@ -44,8 +44,8 @@ var host_default = _template("__tests__/tags/host.marko", (input) => {
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/host.marko_0_flag#9/fill", flag, 1);
 	_scope($scope0_id, {
 		input_wrap: input.wrap,
-		input_native: ($ui__input_wrap__OR__input_show || _unfilled_if($scope0_reason, 1)) && input.native,
-		input_label: ($ui__input_wrap__OR__input_show__OR__input_native || _unfilled_if($scope0_reason, 7)) && input.label,
+		input_native: _write_if($scope0_reason, 0) && ($ui__input_wrap__OR__input_show || _unfilled_if($scope0_reason, 1)) && input.native,
+		input_label: _write_if($scope0_reason, 2) && ($ui__input_wrap__OR__input_show__OR__input_native || _unfilled_if($scope0_reason, 7)) && input.label,
 		flag,
 		"ClosureScopes:input_label/12": _write_if($scope0_reason, 7) && $input_label__closures
 	}, "__tests__/tags/host.marko", 0, {

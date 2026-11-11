@@ -37,7 +37,7 @@ var child_default = _template("b", (input) => {
 	_patch_fill($scope0_id, "vb7", open, 1);
 	_scope($scope0_id, {
 		g: input.a,
-		h: ($ui__input_show__OR__input_a || _unfilled_if($scope0_reason, 1)) && input.b,
+		h: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_a || _unfilled_if($scope0_reason, 1)) && input.b,
 		i: open
 	}) || ($fg__input_a && _patch_write($scope0_id, "xg", input.a, !_server_guard($scope0_reason, 3)), $fg__input_b && $ui__input_show__OR__input_a && _patch_write($scope0_id, "xh", input.b, !_server_guard($scope0_reason, 4)));
 });

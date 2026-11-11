@@ -44,7 +44,7 @@ var panel_default = _template("b", (input) => {
 	$fg__input_y && $cg__input_x && _patch_render($scope0_id, "b6", "g");
 	_scope($scope0_id, {
 		f: input.a,
-		g: ($ui__input_x || _unfilled_if($scope0_reason, 2)) && input.y
+		g: _write_if($scope0_reason, 0) && ($ui__input_x || _unfilled_if($scope0_reason, 2)) && input.y
 	}) || $fg__input_y && $ui__input_x && _patch_write($scope0_id, "xg", input.y, !_server_guard($scope0_reason, 2));
 });
 

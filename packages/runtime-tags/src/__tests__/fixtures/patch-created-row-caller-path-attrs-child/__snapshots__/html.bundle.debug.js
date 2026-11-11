@@ -35,7 +35,7 @@ var navx_default = _template("__tests__/tags/navx.marko", (input) => {
 		_html(`<span>${_text_mark($scope1_id, "#text/2", item.label, 1, $scope0_reason, 1)}</span></a>${_el_mark($scope1_id, "#a/0", _updates_from($scope0_reason, 0) || $uf__input_items)}`);
 		_patch_render($scope1_id, "__tests__/tags/navx.marko_1_input_path#0:5_item_href#5/setup", ((_filled_guard($scope0_reason, 2) ? " >input_path" : "") + ($fg__input_items ? " item_href" : "")).slice(1), $scope0_reason, 0);
 		_scope($scope1_id, {
-			item_href: _unfilled_if($scope0_reason, 0) && item?.href,
+			item_href: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 0) && item?.href,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			"#childScope/1": _existing_scope($childScope)
 		}, "__tests__/tags/navx.marko", "2:4", { item_href: ["item.href", "2:8"] });
@@ -52,7 +52,7 @@ var navx_default = _template("__tests__/tags/navx.marko", (input) => {
 	}, $scope0_id, "#main/1", 1, $wg__input_page, 1, 0, 0, ["__tests__/tags/navx.marko_2*shell"], $scope0_reason, 3);
 	_html(`</main>${_el_mark($scope0_id, "#main/1", $wg__input_page)}`);
 	$fg__input_path && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/tags/navx.marko_1_input_path#0:5/setup", "input_path");
-	_scope($scope0_id, { input_path: _unfilled_if($scope0_reason, 0) && input.path }, "__tests__/tags/navx.marko", 0, { input_path: ["input.path"] }) || $fg__input_path && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_path", input.path, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { input_path: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 0) && input.path }, "__tests__/tags/navx.marko", 0, { input_path: ["input.path"] }) || $fg__input_path && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_path", input.path, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko
@@ -64,7 +64,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([["__tests__/template.marko_1_path#0:7/setup"], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_items = _filled_guard($scope0_reason, 1), $fg__input_page = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0), $fg__input_items = _filled_guard($scope0_reason, 1), $fg__input_page = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let path = "/a";
 	_if(() => {
@@ -92,8 +92,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_items && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_items#0:5/setup", "input_items");
 	$fg__input_page && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_page#0:6/setup", "input_page");
 	_scope($scope0_id, {
-		input_items: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.items,
-		input_page: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.page,
+		input_items: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.items,
+		input_page: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.page,
 		path
 	}, "__tests__/template.marko", 0, {
 		input_items: ["input.items"],

@@ -13,8 +13,8 @@ var demo_card_default = _template("__tests__/tags/demo-card.marko", (input) => {
 	const $selectedChange = input.tabChange || void 0;
 	_patch_let_change($scope0_id, "PatchFill:__tests__/tags/demo-card.marko_0_selected#7/fill", selected, "PatchWrite:TagVariableChange:selected", $selectedChange, $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_tab: $ui__input_tab__OR__input_tabChange && input.tab,
-		input_tabChange: $ui__input_tab__OR__input_tabChange && input.tabChange,
+		input_tab: _write_if($scope0_reason, 2) && $ui__input_tab__OR__input_tabChange && input.tab,
+		input_tabChange: _write_if($scope0_reason, 1) && $ui__input_tab__OR__input_tabChange && input.tabChange,
 		selected,
 		"TagVariableChange:selected": $selectedChange
 	}, "__tests__/tags/demo-card.marko", 0, {

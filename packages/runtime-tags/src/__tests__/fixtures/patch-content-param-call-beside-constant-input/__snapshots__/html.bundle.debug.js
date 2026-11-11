@@ -27,12 +27,12 @@ var each_default = _template("__tests__/tags/each.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", input.content, { label: item.label }, 1, 0, 0, $wg__input_items__OR__input_content, $scope0_reason, 0, 0, 2);
 		_patch_render($scope1_id, "__tests__/tags/each.marko_1_input_content#0:4_item_label#3/setup", ((_filled_guard($scope0_reason, 2) ? " >input_content" : "") + ($fg__input_items ? " item_label" : "")).slice(1), $scope0_reason, 0);
 		_write_if($scope0_reason, 0) && _scope($scope1_id, {
-			item_label: _unfilled_if($scope0_reason, 0) && item?.label,
+			item_label: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 0) && item?.label,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/tags/each.marko", "1:2", { item_label: ["item.label", "1:6"] });
 	}, "id", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/each.marko_1*shell", $scope0_reason, 1);
 	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/tags/each.marko_1_input_content#0:4/setup", "input_content");
-	_scope($scope0_id, { input_content: _unfilled_if($scope0_reason, 0) && input.content }, "__tests__/tags/each.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { input_content: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 0) && input.content }, "__tests__/tags/each.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // tags/list.marko
@@ -71,7 +71,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 	});
 	_patch_child_end();
 	_scope($scope0_id, {
-		input_q: ($ui__input_items || _unfilled_if($scope0_reason, 2)) && input.q,
+		input_q: _write_if($scope0_reason, 1) && ($ui__input_items || _unfilled_if($scope0_reason, 2)) && input.q,
 		"ClosureScopes:input_q/5": _write_if($scope0_reason, 2) && $input_q__closures,
 		"#childScope/0": _existing_scope($childScope2)
 	}, "__tests__/tags/list.marko", 0, { input_q: ["input.q"] }) || _filled_guard($scope0_reason, 2) && $ui__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_q", input.q, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "__tests__/tags/list.marko_0_input_q#4/subscribers", "input_q");

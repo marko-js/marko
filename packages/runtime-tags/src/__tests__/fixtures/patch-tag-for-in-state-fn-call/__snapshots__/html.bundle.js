@@ -42,7 +42,7 @@ var card_default = _template("b", (input) => {
 	_patch_fill($scope0_id, "vb10", s, 1);
 	_scope($scope0_id, {
 		e: input.prefix,
-		g: ($ui__input_obj || _unfilled_if($scope0_reason, 3)) && input.sel,
+		g: _write_if($scope0_reason, 2) && ($ui__input_obj || _unfilled_if($scope0_reason, 3)) && input.sel,
 		h: s,
 		i: fmt,
 		k: $s__closures,

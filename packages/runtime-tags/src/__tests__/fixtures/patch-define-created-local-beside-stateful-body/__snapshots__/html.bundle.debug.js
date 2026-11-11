@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/0")}`);
 	const Panel = { content: _content_resume("__tests__/template.marko_2*content", ({ isOpen, label }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__isOpen = _write_guard($scope2_reason, 0), $ui__isOpen = _unfilled_if($scope2_reason, 0), $fg__label = _filled_guard($scope2_reason, 1);
+		const $scope2_reason = _scope_reason(), $wg__isOpen = _write_guard($scope2_reason, 0), $ui__isOpen = _unfilled_if($scope2_reason, 0), $fg__label = _filled_guard($scope2_reason, 1), $wi__isOpen = _write_if($scope2_reason, 0);
 		_if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope2_id, "#text/0", 1, $wg__isOpen, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope2_reason, 0);
 		$fg__label && _client_guard($scope2_reason, 0) && _patch_render($scope2_id, "__tests__/template.marko_3_label#2:4/setup", "label");
-		_write_if($scope2_reason, 0) && _scope($scope2_id, { label: ($ui__isOpen || _unfilled_if($scope2_reason, 1)) && label }, "__tests__/template.marko", "3:2", { label: "3:25" }) || $fg__label && $ui__isOpen && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !_server_guard($scope2_reason, 1));
+		$wi__isOpen && _scope($scope2_id, { label: $wi__isOpen && ($ui__isOpen || _unfilled_if($scope2_reason, 1)) && label }, "__tests__/template.marko", "3:2", { label: "3:25" }) || $fg__label && $ui__isOpen && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !_server_guard($scope2_reason, 1));
 	}, $scope0_id) };
 	_if(() => {
 		if (input.show) {
@@ -74,7 +74,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_label#6_open#9_Tag#12/setup", (($fg__input_label ? " input_label" : "") + ($fg__input_other ? " Tag" : "")).slice(1));
 	_scope($scope0_id, {
 		input_label: input.label,
-		input_open: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.open,
+		input_open: _write_if($scope0_reason, 1) && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.open,
 		open,
 		Panel: _unfilled_if($scope0_reason, 4) && Panel,
 		Tag

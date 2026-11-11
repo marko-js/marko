@@ -12,8 +12,8 @@ var layout_default = _template("a", (input) => {
 	_html("</main>"), _trailers("</body></html>");
 	_patch_render($scope0_id, "a0", (($fg__input_nav ? " e" : "") + ($fg__input_label ? " f" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		e: $ui__input_nav__OR__input_label && input.nav,
-		f: $ui__input_nav__OR__input_label && input.label
+		e: _write_if($scope0_reason, 3) && $ui__input_nav__OR__input_label && input.nav,
+		f: _write_if($scope0_reason, 2) && $ui__input_nav__OR__input_label && input.label
 	}) || ($fg__input_nav && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xe", input.nav, !_server_guard($scope0_reason, 2)), $fg__input_label && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 3)));
 }, 1);
 

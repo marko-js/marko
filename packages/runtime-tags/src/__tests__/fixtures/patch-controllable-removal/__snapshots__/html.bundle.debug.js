@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_value#5_input_wire#6_handler#7/setup", (($fg__input_value ? " input_value" : "") + ($fg__input_wire ? " input_wire" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_value: $ui__input_value__OR__input_wire && input.value,
+		input_value: _write_if($scope0_reason, 3) && $ui__input_value__OR__input_wire && input.value,
 		input_wire: $ui__input_value__OR__input_wire && input.wire,
 		handler: $ui__input_value__OR__input_wire && handler
 	}, "__tests__/template.marko", 0, {

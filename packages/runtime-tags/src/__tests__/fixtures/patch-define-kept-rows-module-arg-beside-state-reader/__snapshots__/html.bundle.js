@@ -35,8 +35,8 @@ var template_default = _template("a", (input) => {
 		$fg__fmt && $cg__isOpen && _patch_render($scope3_id, "a4", "e");
 		$fg__label && $cg__isOpen && _patch_render($scope3_id, "a5", "f");
 		_write_if($scope3_reason, 3) && _scope($scope3_id, {
-			e: ($ui__isOpen__OR__label || $ui__fmt__OR__label) && fmt,
-			f: ($ui__isOpen__OR__fmt || $ui__fmt__OR__label) && label
+			e: _write_if($scope3_reason, 1) && ($ui__isOpen__OR__label || $ui__fmt__OR__label) && fmt,
+			f: _write_if($scope3_reason, 0) && ($ui__isOpen__OR__fmt || $ui__fmt__OR__label) && label
 		}) || ($fg__fmt && $ui__isOpen__OR__label && _patch_write($scope3_id, "xe", fmt, 1), $fg__label && $ui__isOpen__OR__fmt && _patch_write($scope3_id, "xf", label, !_server_guard($scope3_reason, 6)));
 	}, $scope0_id) };
 	_for_of([1, 2], (x) => {

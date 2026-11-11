@@ -32,7 +32,7 @@ _shells({
 	a: "a;D%b%;<main><!><!></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_note = _client_guard($scope0_reason, 4), $cg__input_v = _client_guard($scope0_reason, 2), $wg__input_on = _write_guard($scope0_reason, 3), $cg__input_on = _client_guard($scope0_reason, 3), $wi__input_v__OR__input_on__OR__input_note = _write_if($scope0_reason, 1), $ui__input_on2 = _unfilled_if($scope0_reason, 3), $wi__input_note = _write_if($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_note = _client_guard($scope0_reason, 4), $cg__input_v = _client_guard($scope0_reason, 2), $wg__input_on = _write_guard($scope0_reason, 3), $cg__input_on = _client_guard($scope0_reason, 3), $wi__input_v__OR__input_on__OR__input_note = _write_if($scope0_reason, 1), $ui__input_on2 = _unfilled_if($scope0_reason, 3), $wi__input_on = _write_if($scope0_reason, 3), $wi__input_note = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const $input_on__closures = /* @__PURE__ */ new Set();
@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 		}] : []), 0, $wg__input_on, $scope0_reason, 3, 0, void 0, 0, 0, "a0");
 		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "a3", $cg__input_on);
 		$wi__input_v__OR__input_on__OR__input_note && _subscribe($ui__input_on && $input_on__closures, _scope($scope1_id, {
-			c: ($ui__input_on || _unfilled_if($scope0_reason, 2)) && v,
+			c: $wi__input_on && ($ui__input_on || _unfilled_if($scope0_reason, 2)) && v,
 			j: _write_if($scope0_reason, 2) && $await_content__v__closures
 		}), $cg__input_on && "a3", $wg__input_on);
 		_filled_guard($scope0_reason, 2) && (_client_branch_if("a0", $scope1_id) || $ui__input_on) && _patch_write($scope1_id, "xc", v, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope1_id, "a4", "c");
@@ -71,8 +71,8 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, ($scope2) => $scope0_page ? [{ g: input.note }] : []), 0, $wg__input_on, $scope0_reason, 3, 0, void 0, 0, 0, "a5");
 	_html("</main>");
 	_scope($scope0_id, {
-		g: ($ui__input_on2 || _unfilled_if($scope0_reason, 4)) && input.note,
+		g: $wi__input_on && ($ui__input_on2 || _unfilled_if($scope0_reason, 4)) && input.note,
 		i: $wi__input_note && $input_note__closures,
-		h: _write_if($scope0_reason, 3) && $ui__input_on2 && $input_on__closures
+		h: $wi__input_on && $ui__input_on2 && $input_on__closures
 	}) || _filled_guard($scope0_reason, 4) && (_client_branch_if("a0", $scope0_id) || _client_branch_if("a5", $scope0_id) || $ui__input_on2) && _patch_write($scope0_id, "xg", input.note, !_server_guard($scope0_reason, 4)) && _patch_subscribers($scope0_id, "a9", "g");
 }, 1);

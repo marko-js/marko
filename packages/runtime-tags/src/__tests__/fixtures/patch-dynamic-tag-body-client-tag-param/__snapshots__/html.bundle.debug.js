@@ -18,7 +18,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "1:4"), $cg__input_note && "__tests__/tags/child.marko_1_input_note#0:4/subscribe");
 	}, $scope0_id, ($scope) => $scope0_page ? [{ input_note: input.note }] : []), 0, $wg__input_tag, $scope0_reason, 1, 0, void 0, 0, 0, "__tests__/tags/child.marko_1*content");
 	_scope($scope0_id, {
-		input_note: ($ui__input_tag || _unfilled_if($scope0_reason, 2)) && input.note,
+		input_note: _write_if($scope0_reason, 1) && ($ui__input_tag || _unfilled_if($scope0_reason, 2)) && input.note,
 		"ClosureScopes:input_note/5": _write_if($scope0_reason, 2) && $input_note__closures
 	}, "__tests__/tags/child.marko", 0, { input_note: ["input.note"] }) || _filled_guard($scope0_reason, 2) && (_client_branch_if("__tests__/tags/child.marko_1*content", $scope0_id) || $ui__input_tag) && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "__tests__/tags/child.marko_0_input_note#4/subscribers", "input_note");
 });

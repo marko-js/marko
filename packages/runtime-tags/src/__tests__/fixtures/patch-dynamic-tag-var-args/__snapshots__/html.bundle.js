@@ -31,7 +31,7 @@ var template_default = _template("b", (input) => {
 	_html(`<p>${_text_mark($scope0_id, "c", n)}</p></main>`);
 	_patch_render($scope0_id, "b1", (($fg__input_on ? " f" : "") + ($fg__input_start ? " g" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		f: $ui__input_on__OR__input_start && input.on,
-		g: $ui__input_on__OR__input_start && input.start
+		f: _write_if($scope0_reason, 2) && $ui__input_on__OR__input_start && input.on,
+		g: _write_if($scope0_reason, 1) && $ui__input_on__OR__input_start && input.start
 	}) || ($fg__input_on && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.on, !_server_guard($scope0_reason, 1)), $fg__input_start && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.start, !_server_guard($scope0_reason, 2)));
 }, 1);

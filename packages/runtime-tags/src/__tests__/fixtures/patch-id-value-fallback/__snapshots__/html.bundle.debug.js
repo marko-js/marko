@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_heading && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/template.marko_1_heading#0:11/setup", "heading");
 	_scope($scope0_id, {
-		heading: ($ui__input_items || _unfilled_if($scope0_reason, 0)) && heading,
+		heading: _write_if($scope0_reason, 1) && ($ui__input_items || _unfilled_if($scope0_reason, 0)) && heading,
 		local
 	}, "__tests__/template.marko", 0, {
 		heading: "1:5",

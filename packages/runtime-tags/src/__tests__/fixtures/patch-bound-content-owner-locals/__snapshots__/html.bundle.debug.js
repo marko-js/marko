@@ -35,9 +35,9 @@ var host_default = _template("__tests__/tags/host.marko", (input) => {
 	$fg__input_wrap && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/host.marko_1_input_wrap#0:4/setup", "input_wrap");
 	$fg__input_items && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/host.marko_1_input_items#0:5/setup", "input_items");
 	_scope($scope0_id, {
-		input_wrap: ($ui__input_show__OR__input_items || $ui__input_wrap__OR__input_items) && input.wrap,
-		input_items: ($ui__input_show__OR__input_wrap || $ui__input_wrap__OR__input_items) && input.items,
-		input_label: ($ui__input_show__OR__input_wrap__OR__input_items || _unfilled_if($scope0_reason, 8)) && input.label,
+		input_wrap: _write_if($scope0_reason, 1) && ($ui__input_show__OR__input_items || $ui__input_wrap__OR__input_items) && input.wrap,
+		input_items: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_wrap || $ui__input_wrap__OR__input_items) && input.items,
+		input_label: _write_if($scope0_reason, 3) && ($ui__input_show__OR__input_wrap__OR__input_items || _unfilled_if($scope0_reason, 8)) && input.label,
 		"ClosureScopes:input_label/9": _write_if($scope0_reason, 8) && $input_label__closures
 	}, "__tests__/tags/host.marko", 0, {
 		input_wrap: ["input.wrap"],

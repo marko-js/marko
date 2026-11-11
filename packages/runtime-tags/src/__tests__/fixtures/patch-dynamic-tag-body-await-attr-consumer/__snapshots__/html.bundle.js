@@ -31,7 +31,7 @@ _shells({
 	b4: "b4;b%;<!><!><!>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_p__OR__input_content = _write_guard($scope0_reason, 0), $wi__input_p__OR__input_content = _write_if($scope0_reason, 0), $wg__input_p = _write_guard($scope0_reason, 1), $ui__input_p__OR__input_content = _unfilled_if($scope0_reason, 0), $ui__input_p = _unfilled_if($scope0_reason, 1), $cg__input_p = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_p__OR__input_content = _write_guard($scope0_reason, 0), $wi__input_content = _write_if($scope0_reason, 2), $wi__input_p__OR__input_content = _write_if($scope0_reason, 0), $wg__input_p = _write_guard($scope0_reason, 1), $ui__input_p__OR__input_content = _unfilled_if($scope0_reason, 0), $ui__input_p = _unfilled_if($scope0_reason, 1), $cg__input_p = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
 	_if(() => {
@@ -43,7 +43,7 @@ var card_default = _template("b", (input) => {
 				_dynamic_tag($scope2_id, "a", x ? keeper_default : "div", { content: input.content }, 1, 0, 0, $wg__input_p__OR__input_content, $scope0_reason, 0);
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "b0");
 				_patch_render($scope2_id, "b1", ((_filled_guard($scope0_reason, 2) ? " >>e" : "") + ($fg__input_p ? " c" : "")).slice(1), $scope0_reason, 0);
-				$wi__input_p__OR__input_content && _subscribe($ui__input_content && $input_content__closures, _scope($scope2_id, { c: _unfilled_if($scope0_reason, 0) && x }), _client_guard($scope0_reason, 2) && "b0", $wg__input_p__OR__input_content);
+				$wi__input_p__OR__input_content && _subscribe($ui__input_content && $input_content__closures, _scope($scope2_id, { c: $wi__input_content && _unfilled_if($scope0_reason, 0) && x }), _client_guard($scope0_reason, 2) && "b0", $wg__input_p__OR__input_content);
 			}, 1, "b2", _unfilled_if($scope0_reason, 1), 0, 1);
 			$cg__input_p && _patch_render($scope1_id, "b5");
 			$wi__input_p__OR__input_content && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
@@ -51,8 +51,8 @@ var card_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_p, 1, 0, 0, ["b4"], $scope0_reason, 1);
 	_scope($scope0_id, {
-		e: $ui__input_p__OR__input_content && input.content,
-		g: _write_if($scope0_reason, 2) && ($ui__input_p__OR__input_content || $ui__input_p) && $input_content__closures
+		e: _write_if($scope0_reason, 1) && $ui__input_p__OR__input_content && input.content,
+		g: $wi__input_content && $wi__input_content && ($ui__input_p__OR__input_content || $ui__input_p) && $input_content__closures
 	}) || _filled_guard($scope0_reason, 2) && $ui__input_p && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2)) && $cg__input_p && _patch_subscribers($scope0_id, "b6", "e");
 });
 
@@ -76,9 +76,9 @@ var template_default = _template("a", (input) => {
 	_html("</main>");
 	_patch_render($scope0_id, "a3", (($fg__input_on ? " d" : "") + ($fg__input_p ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: $ui__input_on__OR__input_p && input.on,
-		e: $ui__input_on__OR__input_p && input.p,
-		g: ($ui__input_on__OR__input_p || _unfilled_if($scope0_reason, 4)) && input.note,
+		d: _write_if($scope0_reason, 3) && $ui__input_on__OR__input_p && input.on,
+		e: _write_if($scope0_reason, 2) && $ui__input_on__OR__input_p && input.p,
+		g: _write_if($scope0_reason, 0) && ($ui__input_on__OR__input_p || _unfilled_if($scope0_reason, 4)) && input.note,
 		h: _write_if($scope0_reason, 4) && $input_note__closures
 	}) || ($fg__input_on && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xd", input.on, !_server_guard($scope0_reason, 2)), $fg__input_p && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.p, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && (_client_branch_if("a0", $scope0_id) || $ui__input_on__OR__input_p) && _patch_write($scope0_id, "xg", input.note, !_server_guard($scope0_reason, 4)) && _patch_subscribers($scope0_id, "a2", "g"));
 }, 1);

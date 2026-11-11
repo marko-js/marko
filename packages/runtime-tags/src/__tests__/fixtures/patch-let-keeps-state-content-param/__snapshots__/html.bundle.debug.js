@@ -11,8 +11,8 @@ var boxp_default = _template("__tests__/tags/boxp.marko", (input) => {
 	_html("</div>");
 	_patch_render($scope0_id, "__tests__/tags/boxp.marko_0_input_content#3_input_x#4/setup", (($fg__input_content ? " input_content" : "") + ($fg__input_x ? " input_x" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_content: $ui__input_content__OR__input_x && input.content,
-		input_x: $ui__input_content__OR__input_x && input.x
+		input_content: _write_if($scope0_reason, 2) && $ui__input_content__OR__input_x && input.content,
+		input_x: _write_if($scope0_reason, 1) && $ui__input_content__OR__input_x && input.x
 	}, "__tests__/tags/boxp.marko", 0, {
 		input_content: ["input.content"],
 		input_x: ["input.x"]

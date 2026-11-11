@@ -35,8 +35,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	$fg__input_b && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_b#0:6/setup", "input_b");
 	_client_guard($scope0_reason, 7) && _patch_render($scope0_id, "__tests__/tags/child.marko_0_input_mode#7_frag_content#9/setup");
 	_scope($scope0_id, {
-		input_a: ($ui__input_show__OR__input_b__OR__input_mode || $ui__input_a__OR__input_b || _unfilled_if($scope0_reason, 5)) && input.a,
-		input_b: ($ui__input_show__OR__input_a || $ui__input_a__OR__input_b) && input.b,
+		input_a: _write_if($scope0_reason, 3) && ($ui__input_show__OR__input_b__OR__input_mode || $ui__input_a__OR__input_b || _unfilled_if($scope0_reason, 5)) && input.a,
+		input_b: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_a || $ui__input_a__OR__input_b) && input.b,
 		frag_content: $ui__input_mode && frag.content,
 		"ClosureScopes:input_a/11": _write_if($scope0_reason, 5) && $input_a__closures
 	}, "__tests__/tags/child.marko", 0, {

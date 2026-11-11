@@ -25,7 +25,7 @@ _shells({
 	a1: `a1${_shell_marker([["a4"], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wi__input_show = _write_if($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_html(`<button class=prefix>prefix</button>${_el_mark($scope0_id, "a")}`);
 	_if(() => {}, $scope0_id, "b");
@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a2");
 	$fg__input_label && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "a0", "i");
 	_scope($scope0_id, {
-		i: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.label,
-		k: _write_if($scope0_reason, 1) && p
+		i: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.label,
+		k: $wi__input_show && p
 	}) || $fg__input_label && $ui__input_show && _patch_write($scope0_id, "xi", input.label, !_server_guard($scope0_reason, 2));
 }, 1);

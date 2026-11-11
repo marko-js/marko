@@ -28,8 +28,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_alt#4_fn#5/setup", (($fg__input_alt ? " input_alt" : "") + ($fg__input_title ? " fn" : "") + ($fg__input_title ? " input_title" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_title: input.title,
-		input_alt: $ui__input_title__OR__input_alt && input.alt,
-		fn: $ui__input_title__OR__input_alt && fn
+		input_alt: _write_if($scope0_reason, 1) && $ui__input_title__OR__input_alt && input.alt,
+		fn: _write_if($scope0_reason, 2) && $ui__input_title__OR__input_alt && fn
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		input_alt: ["input.alt"],

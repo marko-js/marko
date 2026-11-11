@@ -11,7 +11,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_patch_render($scope0_id, "__tests__/tags/child.marko_0_input_a#4_input_b#5/setup", (($fg__input_a ? " input_a" : "") + ($fg__input_b ? " input_b" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_a: input.a,
-		input_b: _unfilled_if($scope0_reason, 0) && input.b
+		input_b: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 0) && input.b
 	}, "__tests__/tags/child.marko", 0, {
 		input_a: ["input.a"],
 		input_b: ["input.b"]

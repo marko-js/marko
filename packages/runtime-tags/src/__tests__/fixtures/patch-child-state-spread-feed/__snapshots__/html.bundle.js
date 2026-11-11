@@ -5,7 +5,7 @@ _shells({
 	b2: "b2,<span>b</span>"
 });
 var tabs_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_tab = _write_guard($scope0_reason, 0), $ui__input_tab = _unfilled_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_tab = _write_guard($scope0_reason, 0), $wi__input_tab = _write_if($scope0_reason, 0), $ui__input_tab = _unfilled_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.tab) {
@@ -17,12 +17,12 @@ var tabs_default = _template("b", (input) => {
 		} else {
 			const $scope2_id = _scope_id();
 			_html("<span>b</span>");
-			_write_if($scope0_reason, 0) && _scope($scope2_id, {});
+			$wi__input_tab && _scope($scope2_id, {});
 			return 1;
 		}
 	}, $scope0_id, "a", 1, $wg__input_tab, 1, 0, 0, ["b1", "b2"], $scope0_reason, 0);
 	$ui__input_tab && _patch_write($scope0_id, "we", input.tab?.on, 1);
-	_scope($scope0_id, { e: ($ui__input_tab || _unfilled_if($scope0_reason, 1)) && input.tab?.on });
+	_scope($scope0_id, { e: $wi__input_tab && ($ui__input_tab || _unfilled_if($scope0_reason, 1)) && input.tab?.on });
 });
 
 // template.marko

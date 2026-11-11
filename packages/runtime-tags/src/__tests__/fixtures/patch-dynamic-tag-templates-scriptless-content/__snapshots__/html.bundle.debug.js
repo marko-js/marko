@@ -49,8 +49,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_bold: input.bold
 	}] : []), 0, $wg__input_tag, $scope0_reason, 4, 0, void 0, 0, 0, "__tests__/template.marko_1*content");
 	_scope($scope0_id, {
-		input_bold: ($ui__input_tag__OR__input_label || $ui__input_bold__OR__input_label) && input.bold,
-		input_label: ($ui__input_tag__OR__input_bold || $ui__input_bold__OR__input_label) && input.label,
+		input_bold: _write_if($scope0_reason, 1) && ($ui__input_tag__OR__input_label || $ui__input_bold__OR__input_label) && input.bold,
+		input_label: _write_if($scope0_reason, 0) && ($ui__input_tag__OR__input_bold || $ui__input_bold__OR__input_label) && input.label,
 		"ClosureScopes:input_bold/6": _write_if($scope0_reason, 5) && $input_bold__closures,
 		"ClosureScopes:input_label/7": _write_if($scope0_reason, 6) && $input_label__closures
 	}, "__tests__/template.marko", 0, {

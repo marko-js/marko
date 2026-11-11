@@ -48,7 +48,7 @@ _shells({
 	a1: "a1; b D ;<input><label> </label>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1), $wi__input_show__OR__input_label = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1), $wi__input_show__OR__input_label = _write_if($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_show__closures = /* @__PURE__ */ new Set();
@@ -73,9 +73,9 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, 1) });
 	_patch_child_end();
 	_scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.label,
+		e: $wi__input_show && (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.label,
 		g: _write_if($scope0_reason, 2) && $input_label__closures,
-		f: _write_if($scope0_reason, 1) && $input_show__closures,
+		f: $wi__input_show && $input_show__closures,
 		a: _existing_scope($childScope)
 	}) || _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 2)) && $cg__input_show && _patch_subscribers($scope0_id, "a4", "e");
 }, 1);

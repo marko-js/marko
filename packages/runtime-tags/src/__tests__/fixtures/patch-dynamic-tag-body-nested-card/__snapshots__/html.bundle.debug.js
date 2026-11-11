@@ -63,8 +63,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}] : []), 0, $wg__input_on, $scope0_reason, 2, 0, void 0, 0, 0, "__tests__/template.marko_1*content");
 	_html("</main>");
 	_scope($scope0_id, {
-		input_p: ($ui__input_on || _unfilled_if($scope0_reason, 3)) && input.p,
-		input_note: ($ui__input_on__OR__input_p || _unfilled_if($scope0_reason, 4)) && input.note,
+		input_p: _write_if($scope0_reason, 2) && ($ui__input_on || _unfilled_if($scope0_reason, 3)) && input.p,
+		input_note: _write_if($scope0_reason, 0) && ($ui__input_on__OR__input_p || _unfilled_if($scope0_reason, 4)) && input.note,
 		"ClosureScopes:input_note/7": _write_if($scope0_reason, 4) && $input_note__closures,
 		"ClosureScopes:input_p/6": _write_if($scope0_reason, 3) && $input_p__closures
 	}, "__tests__/template.marko", 0, {

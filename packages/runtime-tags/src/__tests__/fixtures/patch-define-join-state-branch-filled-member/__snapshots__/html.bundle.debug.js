@@ -53,7 +53,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/panel.marko_0_open#8/fill", open, 1);
 	_scope($scope0_id, {
 		input_a: input.a,
-		input_b: ($ui__input_a__OR__input_show || _unfilled_if($scope0_reason, 0)) && input.b,
+		input_b: _write_if($scope0_reason, 1) && ($ui__input_a__OR__input_show || _unfilled_if($scope0_reason, 0)) && input.b,
 		open,
 		"ClosureScopes:input_a/9": _write_if($scope0_reason, 3) && $input_a__closures,
 		"ClosureScopes:input_b/10": _write_if($scope0_reason, 4) && $input_b__closures

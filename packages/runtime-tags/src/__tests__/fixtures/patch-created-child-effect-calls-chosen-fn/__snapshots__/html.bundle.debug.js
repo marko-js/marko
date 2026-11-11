@@ -20,7 +20,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l")};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_show__OR__input_pick = _client_guard($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 2), $ui__input_pick = _unfilled_if($scope0_reason, 4), $ui__input_show__OR__input_pick = _unfilled_if($scope0_reason, 0), $fg__input_x = _filled_guard($scope0_reason, 3), $fg__input_pick = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_show__OR__input_pick = _client_guard($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 2), $wi__input_show = _write_if($scope0_reason, 2), $ui__input_pick = _unfilled_if($scope0_reason, 4), $ui__input_show__OR__input_pick = _unfilled_if($scope0_reason, 0), $fg__input_x = _filled_guard($scope0_reason, 3), $fg__input_pick = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let flag = 0;
 	const fa = _resume(function() {
@@ -59,8 +59,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_x && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_x#0:5/setup", "input_x");
 	$fg__input_pick && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_pick#0:6/setup", "input_pick");
 	_scope($scope0_id, {
-		input_x: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.x,
-		input_pick: ($ui__input_show || $ui__input_pick) && input.pick,
+		input_x: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.x,
+		input_pick: $wi__input_show && ($ui__input_show || $ui__input_pick) && input.pick,
 		fa: ($ui__input_show__OR__input_pick || $ui__input_pick) && fa,
 		fb: ($ui__input_show__OR__input_pick || $ui__input_pick) && fb
 	}, "__tests__/template.marko", 0, {

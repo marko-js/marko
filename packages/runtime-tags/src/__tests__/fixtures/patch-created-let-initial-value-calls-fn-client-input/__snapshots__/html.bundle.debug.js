@@ -35,7 +35,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	$fg__input_v && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_v#0:4/setup", "input_v");
 	$fg__input_w && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_w#0:5/setup", "input_w");
 	_scope($scope0_id, {
-		input_v: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.v,
+		input_v: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.v,
 		input_w: input.w
 	}, "__tests__/tags/child.marko", 0, {
 		input_v: ["input.v"],

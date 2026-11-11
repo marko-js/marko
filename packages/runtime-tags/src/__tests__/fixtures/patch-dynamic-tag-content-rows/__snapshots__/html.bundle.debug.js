@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/layout.marko_2*shell": "__tests__/tags/layout.marko_2*shell;D%b%;<li><!><!></li>"
 });
 var layout_default = _template("__tests__/tags/layout.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 1), $ui__input_rows = _unfilled_if($scope0_reason, 3), $fg__input_content = _filled_guard($scope0_reason, 1), $fg__input_row = _filled_guard($scope0_reason, 4), $cg__input_rows = _client_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 1), $ui__input_rows = _unfilled_if($scope0_reason, 3), $wi__input_rows = _write_if($scope0_reason, 3), $fg__input_content = _filled_guard($scope0_reason, 1), $fg__input_row = _filled_guard($scope0_reason, 4), $cg__input_rows = _client_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	_html(`<main><h1>${_text_mark($scope0_id, "#text/0", input.title, 1, $scope0_reason, 0)}</h1>`);
 	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 2, 0, 0, $wg__input_content, $scope0_reason, 1);
@@ -36,8 +36,8 @@ var layout_default = _template("__tests__/tags/layout.marko", (input) => {
 	$fg__input_content && $cg__input_rows && _patch_render($scope0_id, "__tests__/tags/layout.marko_2_input_content#0:8/setup", "input_content");
 	$fg__input_row && $cg__input_rows && _patch_render($scope0_id, "__tests__/tags/layout.marko_1_input_row#0:11/setup", "input_row");
 	_scope($scope0_id, {
-		input_content: ($ui__input_rows || _unfilled_if($scope0_reason, 1)) && input.content,
-		input_row: ($ui__input_rows || _unfilled_if($scope0_reason, 4)) && input.row
+		input_content: $wi__input_rows && ($ui__input_rows || _unfilled_if($scope0_reason, 1)) && input.content,
+		input_row: $wi__input_rows && ($ui__input_rows || _unfilled_if($scope0_reason, 4)) && input.row
 	}, "__tests__/tags/layout.marko", 0, {
 		input_content: ["input.content"],
 		input_row: ["input.row"]
@@ -91,7 +91,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_patch_child_end();
 	_scope($scope0_id, {
-		input_text: ($ui__input_rows || _unfilled_if($scope0_reason, 3)) && input.text,
+		input_text: _write_if($scope0_reason, 2) && ($ui__input_rows || _unfilled_if($scope0_reason, 3)) && input.text,
 		"ClosureScopes:input_text/6": $wi__input_text && $input_text__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { input_text: ["input.text"] }) || _filled_guard($scope0_reason, 3) && $ui__input_rows && _patch_write($scope0_id, "PatchMarkedWrite:input_text", input.text, !_server_guard($scope0_reason, 3)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_text#5/subscribers", "input_text");

@@ -19,7 +19,7 @@ _shells({
 	a3: `a3${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2), $ui__input_note = _unfilled_if($scope0_reason, 4), $fg__input_title = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2), $ui__input_note = _unfilled_if($scope0_reason, 4), $wi__input_show = _write_if($scope0_reason, 2), $fg__input_title = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_note = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -50,8 +50,8 @@ var template_default = _template("a", (input) => {
 	_html(`</main>${_el_mark($scope0_id, "a", $wg__input_show)}`);
 	$fg__input_title && $cg__input_show && _patch_render($scope0_id, "a2", "e");
 	_scope($scope0_id, {
-		e: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.title,
-		f: ($ui__input_show || $ui__input_note) && input.note,
-		h: _write_if($scope0_reason, 4) && ($ui__input_note || $ui__input_show) && $input_note__closures
+		e: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.title,
+		f: $wi__input_show && ($ui__input_show || $ui__input_note) && input.note,
+		h: $wi__input_note && $wi__input_note && ($ui__input_note || $ui__input_show) && $input_note__closures
 	}) || ($fg__input_title && $ui__input_show && _patch_write($scope0_id, "xe", input.title, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && $ui__input_show && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 4)) && $cg__input_show && _patch_subscribers($scope0_id, "a4", "f"));
 }, 1);

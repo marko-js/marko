@@ -37,9 +37,9 @@ var child_default = _template("b", (input) => {
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b5"], $scope0_reason, 4);
 	$fg__input_mode && _client_guard($scope0_reason, 4) && _patch_render($scope0_id, "b8", "g");
 	_scope($scope0_id, {
-		e: ($ui__input_show__OR__input_b__OR__input_mode || $ui__input_a__OR__input_b) && input.a,
-		f: ($ui__input_show__OR__input_a__OR__input_mode || $ui__input_a__OR__input_b) && input.b,
-		g: ($ui__input_show || _unfilled_if($scope0_reason, 7)) && input.mode,
+		e: _write_if($scope0_reason, 2) && ($ui__input_show__OR__input_b__OR__input_mode || $ui__input_a__OR__input_b) && input.a,
+		f: _write_if($scope0_reason, 1) && ($ui__input_show__OR__input_a__OR__input_mode || $ui__input_a__OR__input_b) && input.b,
+		g: _write_if($scope0_reason, 4) && ($ui__input_show || _unfilled_if($scope0_reason, 7)) && input.mode,
 		h: _write_if($scope0_reason, 5) && $input_a__closures,
 		i: _write_if($scope0_reason, 6) && $input_b__closures
 	}) || (_filled_guard($scope0_reason, 5) && $ui__input_show__OR__input_b__OR__input_mode && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 5)) && _patch_subscribers($scope0_id, "b6", "e"), _filled_guard($scope0_reason, 6) && $ui__input_show__OR__input_a__OR__input_mode && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 6)) && _patch_subscribers($scope0_id, "b7", "f"), $fg__input_mode && $ui__input_show && _patch_write($scope0_id, "xg", input.mode, !_server_guard($scope0_reason, 7)));

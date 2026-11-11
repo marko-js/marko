@@ -26,8 +26,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	$ui__input_mode && _patch_write($scope0_id, "PatchWrite:frag_content", frag.content, 1);
 	_client_guard($scope0_reason, 6) && _patch_render($scope0_id, "__tests__/tags/child.marko_0_input_mode#5_frag_content#7/setup");
 	_scope($scope0_id, {
-		input_a: ($ui__input_b__OR__input_mode || $ui__input_a__OR__input_b) && input.a,
-		input_b: ($ui__input_a__OR__input_mode || $ui__input_a__OR__input_b) && input.b,
+		input_a: _write_if($scope0_reason, 2) && ($ui__input_b__OR__input_mode || $ui__input_a__OR__input_b) && input.a,
+		input_b: _write_if($scope0_reason, 1) && ($ui__input_a__OR__input_mode || $ui__input_a__OR__input_b) && input.b,
 		frag_content: $ui__input_mode && frag.content,
 		"ClosureScopes:input_a/9": _write_if($scope0_reason, 4) && $input_a__closures,
 		"ClosureScopes:input_b/10": _write_if($scope0_reason, 5) && $input_b__closures

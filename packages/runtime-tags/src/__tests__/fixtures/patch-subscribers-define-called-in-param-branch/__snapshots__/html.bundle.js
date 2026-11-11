@@ -8,8 +8,8 @@ var frame_default = _template("b", (input) => {
 	_dynamic_tag($scope0_id, "a", input.content, [input.x], 1, 0, 1, $wg__input_content__OR__input_x, $scope0_reason, 0, 0, 1);
 	_patch_render($scope0_id, "b0", (($fg__input_content ? " d" : "") + ($fg__input_x ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: $ui__input_content__OR__input_x && input.content,
-		e: $ui__input_content__OR__input_x && input.x
+		d: _write_if($scope0_reason, 2) && $ui__input_content__OR__input_x && input.content,
+		e: _write_if($scope0_reason, 1) && $ui__input_content__OR__input_x && input.x
 	}) || ($fg__input_content && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.content, !_server_guard($scope0_reason, 1)), $fg__input_x && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.x, !_server_guard($scope0_reason, 2)));
 });
 

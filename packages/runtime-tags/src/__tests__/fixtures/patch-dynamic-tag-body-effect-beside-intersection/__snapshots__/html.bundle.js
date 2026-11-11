@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, ($scope) => $scope0_page ? [{ f: input.b }] : []), 0, $wg__input_tag, $scope0_reason, 2, 0, void 0, 0, 0, "a0");
 	_scope($scope0_id, {
 		e: input.a,
-		f: ($ui__input_tag__OR__input_a || _unfilled_if($scope0_reason, 1)) && input.b,
+		f: _write_if($scope0_reason, 0) && ($ui__input_tag__OR__input_a || _unfilled_if($scope0_reason, 1)) && input.b,
 		g: _write_if($scope0_reason, 3) && $input_a__closures,
 		h: _write_if($scope0_reason, 4) && $input_b__closures
 	}) || (_filled_guard($scope0_reason, 3) && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 3)) && _patch_subscribers($scope0_id, "a8", "e"), _filled_guard($scope0_reason, 4) && (_client_branch_if("a0", $scope0_id) || $ui__input_tag__OR__input_a) && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 4)) && _patch_subscribers($scope0_id, "a9", "f"));

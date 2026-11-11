@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 	}, "a0", $scope0_id) }, 1, 0, 0, $wg__input_hide__OR__input_title, $scope0_reason, 0);
 	_patch_render($scope0_id, "a1", (($fg__input_hide ? " d" : "") + ($fg__input_title ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: _unfilled_if($scope0_reason, 0) && input.hide,
+		d: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 0) && input.hide,
 		e: input.title
 	}) || $fg__input_hide && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.hide, !_server_guard($scope0_reason, 1));
 }, 1);

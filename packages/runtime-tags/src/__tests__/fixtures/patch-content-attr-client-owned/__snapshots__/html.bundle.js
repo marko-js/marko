@@ -29,7 +29,7 @@ var frag_host_default = _template("b", (input) => {
 	$ui__input_mode && _patch_write($scope0_id, "wg", two, 1);
 	_client_guard($scope0_reason, 2) && _patch_render($scope0_id, "b4");
 	_scope($scope0_id, {
-		d: ($ui__input_mode || _unfilled_if($scope0_reason, 1)) && input.b,
+		d: _write_if($scope0_reason, 2) && ($ui__input_mode || _unfilled_if($scope0_reason, 1)) && input.b,
 		f: $ui__input_mode && one,
 		g: $ui__input_mode && two,
 		i: _write_if($scope0_reason, 1) && $input_b__closures

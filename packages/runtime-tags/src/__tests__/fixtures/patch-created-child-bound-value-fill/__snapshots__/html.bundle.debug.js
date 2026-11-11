@@ -10,7 +10,7 @@ var text_area_default = _template("__tests__/tags/text-area.marko", (input) => {
 	_script($scope0_id, "__tests__/tags/text-area.marko_0");
 	_patch_render($scope0_id, "__tests__/tags/text-area.marko_0_input_value#3_input_valueChange#4/setup", (($fg__input_value ? " input_value" : "") + ($fg__input_valueChange ? " input_valueChange" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_value: $ui__input_value__OR__input_valueChange && input.value,
+		input_value: _write_if($scope0_reason, 2) && $ui__input_value__OR__input_valueChange && input.value,
 		input_valueChange: $ui__input_value__OR__input_valueChange && input.valueChange
 	}, "__tests__/tags/text-area.marko", 0, {
 		input_value: ["input.value"],

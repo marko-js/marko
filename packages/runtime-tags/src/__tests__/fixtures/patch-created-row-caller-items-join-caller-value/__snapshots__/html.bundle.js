@@ -26,7 +26,7 @@ var child_default = _template("b", (input) => {
 		_html(`<p>${_text_mark($scope2_id, "a", d, 1, $scope0_reason, 0)}</p>`);
 		_patch_render($scope2_id, "b1", ((_filled_guard($scope0_reason, 1) ? " >f" : "") + ($fg__input_items ? " c" : "")).slice(1), $scope0_reason, 0);
 		_scope($scope2_id, {
-			c: _unfilled_if($scope0_reason, 0) && item,
+			c: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 0) && item,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "b", 1, 1, 1, 0, 0, "b2", $scope0_reason, 2);

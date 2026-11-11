@@ -32,7 +32,7 @@ _shells({
 	a6: "a6;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 3), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 6), $cg__input_on = _client_guard($scope0_reason, 6), $wi__input_show__OR__input_on = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 4), $ui__input_show = _unfilled_if($scope0_reason, 4), $ui__input_on = _unfilled_if($scope0_reason, 6), $ui__input_show__OR__input_on = _unfilled_if($scope0_reason, 0), $fg__input_v = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 3), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 6), $cg__input_on = _client_guard($scope0_reason, 6), $wi__input_show__OR__input_on = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 4), $ui__input_show = _unfilled_if($scope0_reason, 4), $ui__input_on = _unfilled_if($scope0_reason, 6), $wi__input_show = _write_if($scope0_reason, 4), $ui__input_show__OR__input_on = _unfilled_if($scope0_reason, 0), $fg__input_v = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 4), $wi__input_on = _write_if($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const $input_on__closures = /* @__PURE__ */ new Set();
@@ -76,10 +76,10 @@ var template_default = _template("a", (input) => {
 	_html(`</main>${_el_mark($scope0_id, "a", $wg__input_show)}`);
 	$fg__input_v && $cg__input_show && _patch_render($scope0_id, "a7", "f");
 	_scope($scope0_id, {
-		d: ($ui__input_show__OR__input_on || _unfilled_if($scope0_reason, 3)) && input.note,
-		f: ($ui__input_show || _unfilled_if($scope0_reason, 5)) && input.v,
-		g: ($ui__input_show || $ui__input_on) && input.on,
+		d: $wi__input_show__OR__input_on && ($ui__input_show__OR__input_on || _unfilled_if($scope0_reason, 3)) && input.note,
+		f: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 5)) && input.v,
+		g: $wi__input_show && ($ui__input_show || $ui__input_on) && input.on,
 		h: _write_if($scope0_reason, 3) && $input_note__closures,
-		j: _write_if($scope0_reason, 6) && ($ui__input_on || $ui__input_show) && $input_on__closures
+		j: $wi__input_on && $wi__input_on && ($ui__input_on || $ui__input_show) && $input_on__closures
 	}) || (_filled_guard($scope0_reason, 3) && (_client_branch_if("a2", $scope0_id) || $ui__input_show__OR__input_on) && _patch_write($scope0_id, "xd", input.note, !_server_guard($scope0_reason, 3)) && _patch_subscribers($scope0_id, "a8", "d"), $fg__input_v && $ui__input_show && _patch_write($scope0_id, "xf", input.v, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && $ui__input_show && _patch_write($scope0_id, "xg", input.on, !_server_guard($scope0_reason, 6)) && $cg__input_show && _patch_subscribers($scope0_id, "a9", "g"));
 }, 1);

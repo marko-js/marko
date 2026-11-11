@@ -28,5 +28,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>interactive</button>${_el_mark($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_promise && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/template.marko_1_input_promise#0:5/setup", "input_promise");
-	_scope($scope0_id, { input_promise: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.promise }, "__tests__/template.marko", 0, { input_promise: ["input.promise"] }) || $fg__input_promise && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_promise", input.promise, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { input_promise: _write_if($scope0_reason, 1) && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.promise }, "__tests__/template.marko", 0, { input_promise: ["input.promise"] }) || $fg__input_promise && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_promise", input.promise, !_server_guard($scope0_reason, 2));
 }, 1);

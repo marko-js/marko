@@ -28,7 +28,7 @@ _shells({
 	"__tests__/template.marko_5*shell": "__tests__/template.marko_5*shell;D ;<i> </i>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_a__OR__input_items = _server_guard($scope0_reason, 0), $cg__input_x = _client_guard($scope0_reason, 4), $cg__input_a = _client_guard($scope0_reason, 2), $wg__input_x = _write_guard($scope0_reason, 4), $ui__input_a = _unfilled_if($scope0_reason, 2), $ui__input_items = _unfilled_if($scope0_reason, 3), $sg__input_a = _server_guard($scope0_reason, 2), $fg__input_a = _filled_guard($scope0_reason, 2), $fg__input_x = _filled_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 3), $wi__input_x = _write_if($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $sg__input_a__OR__input_items = _server_guard($scope0_reason, 0), $wi__input_x = _write_if($scope0_reason, 4), $cg__input_x = _client_guard($scope0_reason, 4), $wi__input_a = _write_if($scope0_reason, 2), $cg__input_a = _client_guard($scope0_reason, 2), $wg__input_x = _write_guard($scope0_reason, 4), $ui__input_a = _unfilled_if($scope0_reason, 2), $ui__input_items = _unfilled_if($scope0_reason, 3), $wi__input_items = _write_if($scope0_reason, 3), $sg__input_a = _server_guard($scope0_reason, 2), $fg__input_a = _filled_guard($scope0_reason, 2), $fg__input_x = _filled_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $f2__closures = new Set();
 	const $input_x__closures = new Set();
@@ -60,9 +60,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$cg__input_a && _patch_render($scope1_id, "__tests__/template.marko_1_f#0:10/setup");
 		_patch_render($scope1_id, "__tests__/template.marko_1_input_a#0:6_item#3/setup", ((_filled_guard($scope0_reason, 2) ? " >input_a" : "") + ($fg__input_items ? " item" : "")).slice(1), $scope0_reason, 0);
 		_scope($scope1_id, {
-			item: $ui__input_a__OR__input_items && item,
-			v: ($ui__input_x || $ui__input_a__OR__input_items) && v,
-			g: ($ui__input_x || $ui__input_a__OR__input_items) && g,
+			item: $wi__input_a && $ui__input_a__OR__input_items && item,
+			v: $wi__input_x && ($ui__input_x || $ui__input_a__OR__input_items) && v,
+			g: $wi__input_x && ($ui__input_x || $ui__input_a__OR__input_items) && g,
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "2:2", {
 			item: "2:6",
@@ -94,8 +94,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope2_id, "#text/0", 1, $wg__input_x, 1, 0, 0, ["__tests__/template.marko_5*shell"], $scope0_reason, 4);
 		$fg__v && $cg__input_x && _patch_render($scope2_id, "__tests__/template.marko_5_h#2:4/setup", "h v");
 		$wi__input_x && _subscribe($ui__input_x2 && $input_x__closures, _scope($scope2_id, {
-			v: ($ui__input_x2 || $ui__v) && v,
-			h: ($ui__input_x2 || $ui__v) && h,
+			v: $wi__input_x && ($ui__input_x2 || $ui__v) && v,
+			h: $wi__input_x && ($ui__input_x2 || $ui__v) && h,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "9:2", {
 			v: "9:16",
@@ -113,10 +113,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_x && $cg__input_items && _patch_render($scope0_id, "__tests__/template.marko_1_input_x#0:8/setup", "input_x");
 	$fg__input_a && $cg__input_items && _patch_render($scope0_id, "__tests__/template.marko_1_f#0:10/setup", "f input_a");
 	_scope($scope0_id, {
-		input_a: (_unfilled_if($scope0_reason, 0) || $ui__input_a) && input.a,
-		input_x: ($ui__input_items || _unfilled_if($scope0_reason, 4)) && input.x,
-		f: ($ui__input_items || $ui__input_a) && f,
-		"ClosureScopes:f/13": _write_if($scope0_reason, 2) && ($ui__input_a || $ui__input_items) && $f2__closures,
+		input_a: $wi__input_items && (_unfilled_if($scope0_reason, 0) || $ui__input_a) && input.a,
+		input_x: $wi__input_items && ($ui__input_items || _unfilled_if($scope0_reason, 4)) && input.x,
+		f: $wi__input_items && ($ui__input_items || $ui__input_a) && f,
+		"ClosureScopes:f/13": $wi__input_a && $wi__input_a && ($ui__input_a || $ui__input_items) && $f2__closures,
 		"ClosureScopes:input_x/12": $wi__input_x && $input_x__closures,
 		"#childScope/2": _existing_scope($childScope),
 		"#childScope/3": _existing_scope($childScope2)

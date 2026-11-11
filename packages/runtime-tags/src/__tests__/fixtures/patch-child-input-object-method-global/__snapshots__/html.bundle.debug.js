@@ -37,8 +37,8 @@ var code_block_default = _template("__tests__/tags/code-block.marko", (input) =>
 	_filled_guard((2 | $uf__input_cursor) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "__tests__/tags/code-block.marko_2_highlight#0:6/setup", ((_filled_guard((2 | $uf__input_cursor) << 1, 0) ? " highlight" : "") + ($fg__input_cursor ? " input_cursor" : "")).slice(1));
 	_scope($scope0_id, {
 		input_cursor: $ui__input_cursor__OR__input_text && input.cursor,
-		input_text: ($ui__input_cursor__OR__input_text || _unfilled_if()) && input.text,
-		highlight: $ui__input_cursor__OR__input_text && highlight
+		input_text: ($scope0_page || _write_if($scope0_reason, 1)) && ($ui__input_cursor__OR__input_text || _unfilled_if()) && input.text,
+		highlight: _write_if($scope0_reason, 2) && $ui__input_cursor__OR__input_text && highlight
 	}, "__tests__/tags/code-block.marko", 0, {
 		input_cursor: ["input.cursor"],
 		input_text: ["input.text"],

@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 	let open = false;
 	const Panel = { content: _content_resume("a3", ({ isOpen, label }, extra) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__isOpen = _write_guard($scope2_reason, 1), $ui__isOpen = _unfilled_if($scope2_reason, 1), $fg__label = _filled_guard($scope2_reason, 2), $fg__extra = _filled_guard($scope2_reason, 3), $cg__isOpen = _client_guard($scope2_reason, 1);
+		const $scope2_reason = _scope_reason(), $wg__isOpen = _write_guard($scope2_reason, 1), $ui__isOpen = _unfilled_if($scope2_reason, 1), $fg__label = _filled_guard($scope2_reason, 2), $fg__extra = _filled_guard($scope2_reason, 3), $cg__isOpen = _client_guard($scope2_reason, 1), $wi__isOpen = _write_if($scope2_reason, 1);
 		_if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
@@ -24,8 +24,8 @@ var template_default = _template("a", (input) => {
 		}, $scope2_id, "a", 1, $wg__isOpen, 1, 0, 0, ["a1"], $scope2_reason, 1);
 		$fg__label && $cg__isOpen && _patch_render($scope2_id, "a0", "e");
 		$fg__extra && $cg__isOpen && _patch_render($scope2_id, "a4", "f");
-		_write_if($scope2_reason, 1) && _scope($scope2_id, {
-			e: ($ui__isOpen || _unfilled_if($scope2_reason, 2)) && label,
+		$wi__isOpen && _scope($scope2_id, {
+			e: $wi__isOpen && ($ui__isOpen || _unfilled_if($scope2_reason, 2)) && label,
 			f: $ui__isOpen && extra
 		}) || ($fg__label && $ui__isOpen && _patch_write($scope2_id, "xe", label, !_server_guard($scope2_reason, 2)), $fg__extra && $ui__isOpen && _patch_write($scope2_id, "xf", extra, !_server_guard($scope2_reason, 3)));
 	}, $scope0_id) };
@@ -60,7 +60,7 @@ var template_default = _template("a", (input) => {
 	_patch_render($scope0_id, "a8", $fg__input_other && "i", $scope0_reason, 4);
 	_patch_render($scope0_id, "a9", (($fg__input_label ? " h" : "") + ($fg__input_other ? " m" : "")).slice(1));
 	_scope($scope0_id, {
-		g: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
+		g: _write_if($scope0_reason, 1) && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
 		h: input.label,
 		j: open,
 		k: _unfilled_if($scope0_reason, 4) && Panel,

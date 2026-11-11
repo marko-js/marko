@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_which && $cg__input_show && _patch_render($scope0_id, "a3", "e");
 	$fg__input_a && $cg__input_show && _patch_render($scope0_id, "a4", "f");
 	_scope($scope0_id, {
-		e: ($ui__input_show__OR__input_a || $ui__input_which__OR__input_a) && input.which,
-		f: ($ui__input_show__OR__input_which || $ui__input_which__OR__input_a) && input.a
+		e: _write_if($scope0_reason, 1) && ($ui__input_show__OR__input_a || $ui__input_which__OR__input_a) && input.which,
+		f: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_which || $ui__input_which__OR__input_a) && input.a
 	}) || ($fg__input_which && $ui__input_show__OR__input_a && _patch_write($scope0_id, "xe", input.which, !_server_guard($scope0_reason, 5)), $fg__input_a && $ui__input_show__OR__input_which && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 6)));
 }, 1);

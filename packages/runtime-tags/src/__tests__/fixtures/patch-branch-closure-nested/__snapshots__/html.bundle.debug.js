@@ -36,5 +36,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html("</main>");
 	$fg__input_inner && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/template.marko_1_input_inner#0:6/setup", "input_inner");
-	_scope($scope0_id, { input_inner: ($ui__input_outer || _unfilled_if($scope0_reason, 2)) && input.inner }, "__tests__/template.marko", 0, { input_inner: ["input.inner"] }) || $fg__input_inner && $ui__input_outer && _patch_write($scope0_id, "PatchMarkedWrite:input_inner", input.inner, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { input_inner: _write_if($scope0_reason, 1) && ($ui__input_outer || _unfilled_if($scope0_reason, 2)) && input.inner }, "__tests__/template.marko", 0, { input_inner: ["input.inner"] }) || $fg__input_inner && $ui__input_outer && _patch_write($scope0_id, "PatchMarkedWrite:input_inner", input.inner, !_server_guard($scope0_reason, 2));
 }, 1);

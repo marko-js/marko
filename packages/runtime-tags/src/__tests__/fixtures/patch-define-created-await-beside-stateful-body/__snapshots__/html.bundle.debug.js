@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let open = false;
 	const Panel = { content: _content_resume("__tests__/template.marko_3*content", ({ isOpen, label }) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason(), $wg__isOpen = _write_guard($scope3_reason, 0), $ui__isOpen = _unfilled_if($scope3_reason, 0);
+		const $scope3_reason = _scope_reason(), $wg__isOpen = _write_guard($scope3_reason, 0), $ui__isOpen = _unfilled_if($scope3_reason, 0), $wi__isOpen = _write_if($scope3_reason, 0);
 		_if(() => {
 			if (isOpen) {
 				const $scope4_id = _scope_id();
@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope3_id, "#text/0", 1, $wg__isOpen, 1, 0, 0, ["__tests__/template.marko_4*shell"], $scope3_reason, 0);
 		$ui__isOpen && _patch_write($scope3_id, "PatchWrite:label", label, 1);
-		_write_if($scope3_reason, 0) && _scope($scope3_id, { label: ($ui__isOpen || _unfilled_if($scope3_reason, 1)) && label }, "__tests__/template.marko", "2:2", { label: "2:25" });
+		$wi__isOpen && _scope($scope3_id, { label: $wi__isOpen && ($ui__isOpen || _unfilled_if($scope3_reason, 1)) && label }, "__tests__/template.marko", "2:2", { label: "2:25" });
 	}, $scope0_id) };
 	_if(() => {
 		if (input.show) {
@@ -73,7 +73,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_other#8_Panel#10/setup", $fg__input_other && "input_other", $scope0_reason, 5);
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_label#7_open#9_Tag#12/setup", (($fg__input_label ? " input_label" : "") + ($fg__input_other ? " Tag" : "")).slice(1));
 	_scope($scope0_id, {
-		input_promise: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.promise,
+		input_promise: _write_if($scope0_reason, 2) && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.promise,
 		input_label: input.label,
 		open,
 		Panel: _unfilled_if($scope0_reason, 5) && Panel,

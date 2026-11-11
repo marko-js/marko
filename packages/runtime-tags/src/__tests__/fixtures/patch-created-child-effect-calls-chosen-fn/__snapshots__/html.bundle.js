@@ -16,7 +16,7 @@ _shells({
 	a4: `a4${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l")};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_show__OR__input_pick = _client_guard($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 2), $ui__input_pick = _unfilled_if($scope0_reason, 4), $ui__input_show__OR__input_pick = _unfilled_if($scope0_reason, 0), $fg__input_x = _filled_guard($scope0_reason, 3), $fg__input_pick = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_show__OR__input_pick = _client_guard($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 2), $wi__input_show = _write_if($scope0_reason, 2), $ui__input_pick = _unfilled_if($scope0_reason, 4), $ui__input_show__OR__input_pick = _unfilled_if($scope0_reason, 0), $fg__input_x = _filled_guard($scope0_reason, 3), $fg__input_pick = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let flag = 0;
 	const fa = _resume(function() {
@@ -55,8 +55,8 @@ var template_default = _template("a", (input) => {
 	$fg__input_x && $cg__input_show && _patch_render($scope0_id, "a2", "f");
 	$fg__input_pick && $cg__input_show && _patch_render($scope0_id, "a5", "g");
 	_scope($scope0_id, {
-		f: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.x,
-		g: ($ui__input_show || $ui__input_pick) && input.pick,
+		f: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.x,
+		g: $wi__input_show && ($ui__input_show || $ui__input_pick) && input.pick,
 		i: ($ui__input_show__OR__input_pick || $ui__input_pick) && fa,
 		j: ($ui__input_show__OR__input_pick || $ui__input_pick) && fb
 	}) || ($fg__input_x && $ui__input_show && _patch_write($scope0_id, "xf", input.x, !_server_guard($scope0_reason, 3)), $fg__input_pick && $ui__input_show && _patch_write($scope0_id, "xg", input.pick, !_server_guard($scope0_reason, 4)));

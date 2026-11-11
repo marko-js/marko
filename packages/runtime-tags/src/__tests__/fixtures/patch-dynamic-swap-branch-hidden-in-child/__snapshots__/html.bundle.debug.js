@@ -61,9 +61,9 @@ var w_default = _template("__tests__/tags/w.marko", (input) => {
 	$ui__input_flag__OR__input_x && _patch_write($scope0_id, "PatchWrite:B", B, 1);
 	_patch_render($scope0_id, "__tests__/tags/w.marko_0_input_flag#4_input_x#5_A#6_B#7/setup", (($fg__input_flag ? " input_flag" : "") + ($fg__input_x ? " input_x" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_show: ($ui__input_flag__OR__input_x || _unfilled_if($scope0_reason, 2)) && input.show,
-		input_flag: $ui__input_flag__OR__input_x && input.flag,
-		input_x: $ui__input_flag__OR__input_x && input.x,
+		input_show: _write_if($scope0_reason, 0) && ($ui__input_flag__OR__input_x || _unfilled_if($scope0_reason, 2)) && input.show,
+		input_flag: _write_if($scope0_reason, 4) && $ui__input_flag__OR__input_x && input.flag,
+		input_x: _write_if($scope0_reason, 3) && $ui__input_flag__OR__input_x && input.x,
 		A: $ui__input_flag__OR__input_x && A,
 		B: $ui__input_flag__OR__input_x && B,
 		"ClosureScopes:input_show/9": $wi__input_show && $input_show__closures

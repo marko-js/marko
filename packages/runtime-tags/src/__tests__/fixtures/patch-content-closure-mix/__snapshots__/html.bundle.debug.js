@@ -22,7 +22,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_prefix = _client_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1), $wi__input_items__OR__input_prefix = _write_if($scope0_reason, 0), $ui__input_items = _unfilled_if($scope0_reason, 1), $ui__input_prefix = _unfilled_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_prefix = _client_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1), $wi__input_items__OR__input_prefix = _write_if($scope0_reason, 0), $ui__input_items = _unfilled_if($scope0_reason, 1), $ui__input_prefix = _unfilled_if($scope0_reason, 2), $wi__input_items = _write_if($scope0_reason, 1), $wi__input_prefix = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_prefix__closures = new Set();
 	const $global$1 = $global();
@@ -44,13 +44,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_patch_child_end();
 		_scope($scope1_id, {
 			_: $wi__input_items__OR__input_prefix && _scope_with_id($scope0_id),
-			"ClosureScopes:item/6": _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $for_content__item__closures,
+			"ClosureScopes:item/6": $wi__input_items && _unfilled_if($scope0_reason, 1) && $for_content__item__closures,
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "2:4");
 	}, 0, $scope0_id, "#main/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
 	_html(`</main>${_el_mark($scope0_id, "#main/0")}`);
 	_scope($scope0_id, {
-		input_prefix: ($ui__input_items || $ui__input_prefix) && input.prefix,
-		"ClosureScopes:input_prefix/5": _write_if($scope0_reason, 2) && ($ui__input_prefix || $ui__input_items) && $input_prefix__closures
+		input_prefix: $wi__input_items && ($ui__input_items || $ui__input_prefix) && input.prefix,
+		"ClosureScopes:input_prefix/5": $wi__input_prefix && $wi__input_prefix && ($ui__input_prefix || $ui__input_items) && $input_prefix__closures
 	}, "__tests__/template.marko", 0, { input_prefix: ["input.prefix"] }) || _filled_guard($scope0_reason, 2) && $ui__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_prefix", input.prefix, !_server_guard($scope0_reason, 2)) && $cg__input_items && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_prefix#4/subscribers", "input_prefix");
 }, 1);

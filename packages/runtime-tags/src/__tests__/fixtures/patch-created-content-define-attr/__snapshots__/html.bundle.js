@@ -57,8 +57,8 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a5"], $scope0_reason, 5);
 	_scope($scope0_id, {
-		d: ($ui__input_tag__OR__input_show || _unfilled_if($scope0_reason, 3)) && input.label,
-		e: ($ui__input_show || $ui__input_tag) && input.tag,
+		d: $wi__input_tag__OR__input_show && ($ui__input_tag__OR__input_show || _unfilled_if($scope0_reason, 3)) && input.label,
+		e: _write_if($scope0_reason, 5) && ($ui__input_show || $ui__input_tag) && input.tag,
 		g: ($ui__input_tag__OR__input_show || $ui__input_tag) && Inner,
 		i: $ui__input_show && Body.content,
 		j: _write_if($scope0_reason, 3) && $input_label__closures,

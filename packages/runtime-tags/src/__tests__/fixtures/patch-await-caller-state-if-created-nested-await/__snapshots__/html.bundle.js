@@ -32,7 +32,7 @@ _shells({
 	a1: `a1${_shell_marker([["a4"], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wi__input_show = _write_if($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let p = Promise.resolve(0);
 	let resolve = void 0;
@@ -58,8 +58,8 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a2");
 	$fg__input_label && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a0", "g");
 	_scope($scope0_id, {
-		g: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label,
-		h: _write_if($scope0_reason, 0) && p,
+		g: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label,
+		h: $wi__input_show && p,
 		i: resolve
 	}) || $fg__input_label && $ui__input_show && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 1));
 }, 1);

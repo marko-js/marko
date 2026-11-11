@@ -72,8 +72,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$ui__input_on && _patch_write($scope1_id, "PatchWrite:X", X, 1);
 		_patch_render($scope1_id, "__tests__/template.marko_1_input_on#0:5_prev#5/setup", ((_filled_guard($scope0_reason, 0) ? " >input_on" : "") + ($fg__prev ? " prev" : "")).slice(1), $uf__input_on << 1, 0);
 		($wi__input_on || _write_if($scope1_reason, 0)) && _subscribe(_unfilled_if($uf__input_on << 1, 0) && $wi__input_on && $input_on__closures, _scope($scope1_id, {
-			label: ($ui__input_on || _unfilled_if($scope1_reason, 1)) && label,
-			prev: $ui__input_on && prev,
+			label: $wi__input_on && ($ui__input_on || _unfilled_if($scope1_reason, 1)) && label,
+			prev: $wi__input_on && $ui__input_on && prev,
 			X: $ui__input_on && X,
 			_: $wi__input_on && _scope_with_id($scope0_id),
 			"ClosureScopes:label/10": $wi__label && $D_content__label__closures

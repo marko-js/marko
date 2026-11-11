@@ -21,7 +21,7 @@ _shells({
 	"__tests__/tags/card.marko_4*shell": "__tests__/tags/card.marko_4*shell;D ;<em> </em>"
 });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 7), $cg__input_label = _client_guard($scope0_reason, 7), $ui__input_show = _unfilled_if($scope0_reason, 4), $fg__input_open = _filled_guard($scope0_reason, 5), $fg__input_fmt = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 4), $fg__input_label = _filled_guard($scope0_reason, 7);
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 7), $cg__input_label = _client_guard($scope0_reason, 7), $ui__input_show = _unfilled_if($scope0_reason, 4), $wi__input_show = _write_if($scope0_reason, 4), $fg__input_open = _filled_guard($scope0_reason, 5), $fg__input_fmt = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 4), $fg__input_label = _filled_guard($scope0_reason, 7);
 	const $scope0_id = _scope_id();
 	let open = true;
 	const Panel = { content: _content("__tests__/tags/card.marko_3*content", ({ isOpen, fmt, label }) => {
@@ -39,8 +39,8 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		$fg__fmt && $cg__isOpen && _patch_render($scope3_id, "__tests__/tags/card.marko_4_fmt#3:4/setup", "fmt");
 		$fg__label && $cg__isOpen && _patch_render($scope3_id, "__tests__/tags/card.marko_4_label#3:5/setup", "label");
 		_write_if($scope3_reason, 3) && _scope($scope3_id, {
-			fmt: ($ui__isOpen__OR__label || $ui__fmt__OR__label) && fmt,
-			label: ($ui__isOpen__OR__fmt || $ui__fmt__OR__label) && label
+			fmt: _write_if($scope3_reason, 1) && ($ui__isOpen__OR__label || $ui__fmt__OR__label) && fmt,
+			label: _write_if($scope3_reason, 0) && ($ui__isOpen__OR__fmt || $ui__fmt__OR__label) && label
 		}, "__tests__/tags/card.marko", "2:2", {
 			fmt: "2:25",
 			label: "2:30"
@@ -84,8 +84,8 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	$fg__input_label && _patch_render($scope0_id, "__tests__/tags/card.marko_2_input_label#0:8/setup", "input_label");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_open#9/fill", open, 1);
 	_scope($scope0_id, {
-		input_open: ($ui__input_show || _unfilled_if($scope0_reason, 5)) && input.open,
-		input_fmt: ($ui__input_show || _unfilled_if($scope0_reason, 6)) && input.fmt,
+		input_open: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 5)) && input.open,
+		input_fmt: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 6)) && input.fmt,
 		input_label: input.label,
 		open
 	}, "__tests__/tags/card.marko", 0, {

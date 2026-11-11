@@ -4,7 +4,7 @@ _shells({
 	a3: "a3; D ;<a> </a>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 2), $fg__input_href = _filled_guard($scope0_reason, 3), $fg__input_hidden = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 2), $wi__input_show = _write_if($scope0_reason, 2), $fg__input_href = _filled_guard($scope0_reason, 3), $fg__input_hidden = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	_html(`<main><h1>${_text_mark($scope0_id, "a", input.title, 1, $scope0_reason, 1)}</h1>`);
 	_if(() => {
@@ -23,8 +23,8 @@ var template_default = _template("a", (input) => {
 	$fg__input_hidden && $cg__input_show && _patch_render($scope0_id, "a1", "h");
 	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "a2", "i");
 	_scope($scope0_id, {
-		g: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.href,
-		h: ($ui__input_show || _unfilled_if($scope0_reason, 4)) && input.hidden,
-		i: ($ui__input_show || _unfilled_if($scope0_reason, 5)) && input.label
+		g: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.href,
+		h: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 4)) && input.hidden,
+		i: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 5)) && input.label
 	}) || ($fg__input_href && $ui__input_show && _patch_write($scope0_id, "xg", input.href, !_server_guard($scope0_reason, 3)), $fg__input_hidden && $ui__input_show && _patch_write($scope0_id, "xh", input.hidden, !_server_guard($scope0_reason, 4)), $fg__input_label && $ui__input_show && _patch_write($scope0_id, "xi", input.label, !_server_guard($scope0_reason, 5)));
 }, 1);

@@ -39,8 +39,8 @@ var rowsx_default = _template("b", (input) => {
 		$fg__fmt && $cg__isOpen && _patch_render($scope3_id, "b5", "e");
 		$fg__label && $cg__isOpen && _patch_render($scope3_id, "b6", "f");
 		_write_if($scope3_reason, 3) && _scope($scope3_id, {
-			e: ($ui__isOpen__OR__label || $ui__fmt__OR__label) && fmt,
-			f: ($ui__isOpen__OR__fmt || $ui__fmt__OR__label) && label
+			e: _write_if($scope3_reason, 1) && ($ui__isOpen__OR__label || $ui__fmt__OR__label) && fmt,
+			f: _write_if($scope3_reason, 0) && ($ui__isOpen__OR__fmt || $ui__fmt__OR__label) && label
 		}) || ($fg__fmt && $ui__isOpen__OR__label && _patch_write($scope3_id, "xe", fmt, 1), $fg__label && $ui__isOpen__OR__fmt && _patch_write($scope3_id, "xf", label, !_server_guard($scope3_reason, 6)));
 	}, $scope0_id, 0) };
 	_for_of(input.items, (x) => {
@@ -57,7 +57,7 @@ var rowsx_default = _template("b", (input) => {
 		_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "b7");
 		_patch_render($scope1_id, "b8", ((_filled_guard($scope0_reason, 4) ? " >h" : "") + ($fg__input_items ? " c" : "")).slice(1), $scope0_reason, 0);
 		_scope($scope1_id, {
-			c: _unfilled_if($scope0_reason, 0) && x,
+			c: _write_if($scope0_reason, 4) && _unfilled_if($scope0_reason, 0) && x,
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		});
@@ -78,7 +78,7 @@ var rowsx_default = _template("b", (input) => {
 	$fg__input_label && _patch_render($scope0_id, "b9", "h");
 	_patch_fill($scope0_id, "vb12", open, 1);
 	_scope($scope0_id, {
-		g: ($ui__input_items || _unfilled_if($scope0_reason, 3)) && input.open,
+		g: _write_if($scope0_reason, 2) && ($ui__input_items || _unfilled_if($scope0_reason, 3)) && input.open,
 		h: input.label,
 		i: open
 	}) || ($fg__input_open && $ui__input_items && _patch_write($scope0_id, "xg", input.open, !_server_guard($scope0_reason, 3)), $fg__input_label && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 4)));
@@ -117,7 +117,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a2");
 	$fg__input_items && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a0", "g");
 	_scope($scope0_id, {
-		g: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.items,
+		g: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.items,
 		h: l,
 		i: o
 	}) || $fg__input_items && $ui__input_show && _patch_write($scope0_id, "xg", input.items, !_server_guard($scope0_reason, 1));

@@ -61,7 +61,7 @@ var shape_default = _template("c", (input) => {
 	$fg__input_sel && $cg__input_obj && _patch_render($scope0_id, "c6", "f");
 	_patch_fill($scope0_id, "vc9", s, 1);
 	_scope($scope0_id, {
-		f: ($ui__input_obj || _unfilled_if($scope0_reason, 2)) && input.sel,
+		f: _write_if($scope0_reason, 1) && ($ui__input_obj || _unfilled_if($scope0_reason, 2)) && input.sel,
 		g: input.b,
 		h: s,
 		j: _write_if($scope0_reason, 3) && $input_b__closures,

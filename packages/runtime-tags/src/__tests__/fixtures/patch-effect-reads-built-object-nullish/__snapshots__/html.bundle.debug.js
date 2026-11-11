@@ -11,8 +11,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0_item#6", 1, $fg__input_obj__OR__input_title);
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_obj#3_input_title#4/setup", (($fg__input_obj ? " input_obj" : "") + ($fg__input_title ? " input_title" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_obj: $ui__input_obj__OR__input_title && input.obj,
-		input_title: $ui__input_obj__OR__input_title && input.title,
+		input_obj: _write_if($scope0_reason, 2) && $ui__input_obj__OR__input_title && input.obj,
+		input_title: _write_if($scope0_reason, 1) && $ui__input_obj__OR__input_title && input.title,
 		item
 	}, "__tests__/template.marko", 0, {
 		input_obj: ["input.obj"],

@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a6");
 	$fg__input_inner && $cg__input_show && _patch_render($scope0_id, "a5", "h");
 	_scope($scope0_id, {
-		h: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.inner,
+		h: _write_if($scope0_reason, 1) && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.inner,
 		i: input.title,
 		j: count,
 		l: _write_if($scope0_reason, 3) && $input_title__closures,

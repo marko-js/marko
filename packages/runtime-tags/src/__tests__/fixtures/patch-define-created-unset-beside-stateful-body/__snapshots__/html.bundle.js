@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 	let open = false;
 	const Panel = { content: _content_resume("a3", ({ isOpen, label, hidden }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__isOpen__OR__hidden = _write_guard($scope2_reason, 0), $ui__isOpen__OR__hidden = _unfilled_if($scope2_reason, 0), $fg__label = _filled_guard($scope2_reason, 2), $fg__isOpen = _filled_guard($scope2_reason, 1), $fg__hidden = _filled_guard($scope2_reason, 3);
+		const $scope2_reason = _scope_reason(), $wg__isOpen__OR__hidden = _write_guard($scope2_reason, 0), $ui__isOpen__OR__hidden = _unfilled_if($scope2_reason, 0), $fg__label = _filled_guard($scope2_reason, 2), $fg__isOpen = _filled_guard($scope2_reason, 1), $fg__hidden = _filled_guard($scope2_reason, 3), $wi__isOpen__OR__hidden = _write_if($scope2_reason, 0);
 		_if(() => {
 			if (isOpen && !hidden) {
 				const $scope3_id = _scope_id();
@@ -24,10 +24,10 @@ var template_default = _template("a", (input) => {
 		}, $scope2_id, "a", 1, $wg__isOpen__OR__hidden, 1, 0, 0, ["a1"], $scope2_reason, 0);
 		$fg__label && _client_guard($scope2_reason, 0) && _patch_render($scope2_id, "a0", "e");
 		_patch_render($scope2_id, "a4", (($fg__isOpen ? " d" : "") + ($fg__hidden ? " f" : "")).slice(1), $scope2_reason, 0);
-		_write_if($scope2_reason, 0) && _scope($scope2_id, {
-			d: $ui__isOpen__OR__hidden && isOpen,
-			e: ($ui__isOpen__OR__hidden || _unfilled_if($scope2_reason, 2)) && label,
-			f: $ui__isOpen__OR__hidden && hidden
+		$wi__isOpen__OR__hidden && _scope($scope2_id, {
+			d: _write_if($scope2_reason, 3) && $ui__isOpen__OR__hidden && isOpen,
+			e: $wi__isOpen__OR__hidden && ($ui__isOpen__OR__hidden || _unfilled_if($scope2_reason, 2)) && label,
+			f: _write_if($scope2_reason, 1) && $ui__isOpen__OR__hidden && hidden
 		}) || ($fg__isOpen && _unfilled_if($scope2_reason, 3) && _patch_write($scope2_id, "xd", isOpen, !_server_guard($scope2_reason, 1)), $fg__label && $ui__isOpen__OR__hidden && _patch_write($scope2_id, "xe", label, !_server_guard($scope2_reason, 2)), $fg__hidden && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "xf", hidden, !_server_guard($scope2_reason, 3)));
 	}, $scope0_id) };
 	_if(() => {
@@ -62,7 +62,7 @@ var template_default = _template("a", (input) => {
 	_patch_render($scope0_id, "a8", $fg__input_other && "i", $scope0_reason, 4);
 	_patch_render($scope0_id, "a9", (($fg__input_label ? " h" : "") + ($fg__input_hidden ? " j" : "") + ($fg__input_other ? " n" : "")).slice(1));
 	_scope($scope0_id, {
-		g: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
+		g: _write_if($scope0_reason, 1) && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
 		h: input.label,
 		j: input.hidden,
 		k: open,

@@ -37,8 +37,8 @@ var rowsx_default = _template("b", (input) => {
 		$fg__fmt && $cg__isOpen && _patch_render($scope1_id, "b4", "e");
 		$fg__label && $cg__isOpen && _patch_render($scope1_id, "b5", "f");
 		_write_if($scope1_reason, 3) && _scope($scope1_id, {
-			e: ($ui__isOpen__OR__label || $ui__fmt__OR__label) && fmt,
-			f: ($ui__isOpen__OR__fmt || $ui__fmt__OR__label) && label
+			e: _write_if($scope1_reason, 1) && ($ui__isOpen__OR__label || $ui__fmt__OR__label) && fmt,
+			f: _write_if($scope1_reason, 0) && ($ui__isOpen__OR__fmt || $ui__fmt__OR__label) && label
 		}) || ($fg__fmt && $ui__isOpen__OR__label && _patch_write($scope1_id, "xe", fmt, 1), $fg__label && $ui__isOpen__OR__fmt && _patch_write($scope1_id, "xf", label, !_server_guard($scope1_reason, 6)));
 	}, $scope0_id, 0) };
 	_set_scope_reason($uf__input_open << 1 | $uf__input_open__OR__input_label << 3 | $uf__input_label << 5 | $uf__input_open__OR__input_label << 7 | $uf__input_open << 9 | $uf__input_label << 13);
@@ -83,7 +83,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a2");
 	$fg__input_open && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a0", "f");
 	_scope($scope0_id, {
-		f: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.open,
+		f: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.open,
 		g: l
 	}) || $fg__input_open && $ui__input_show && _patch_write($scope0_id, "xf", input.open, !_server_guard($scope0_reason, 1));
 }, 1);

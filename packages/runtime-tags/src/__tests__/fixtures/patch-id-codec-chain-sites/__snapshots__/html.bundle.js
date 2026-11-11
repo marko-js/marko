@@ -104,7 +104,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "d", 1, $wg__input_other, 1, 0, 0, ["a4"], $scope0_reason, 2);
 	$fg__input_nested && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a5", "h");
 	_scope($scope0_id, {
-		h: ($ui__input_mode || _unfilled_if($scope0_reason, 1)) && input.nested,
+		h: _write_if($scope0_reason, 0) && ($ui__input_mode || _unfilled_if($scope0_reason, 1)) && input.nested,
 		b: _existing_scope($childScope9),
 		c: _existing_scope($childScope10)
 	}) || $fg__input_nested && $ui__input_mode && _patch_write($scope0_id, "xh", input.nested, !_server_guard($scope0_reason, 1));

@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<em>${_text_mark($scope0_id, "#text/1", count)}</em></main>`);
 	$fg__input_attrs && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/template.marko_1_input_attrs#0:5/setup", "input_attrs");
 	_scope($scope0_id, {
-		input_attrs: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.attrs,
+		input_attrs: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.attrs,
 		count
 	}, "__tests__/template.marko", 0, {
 		input_attrs: ["input.attrs"],

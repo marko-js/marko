@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id, "#text/0", 1, $wg__isOpen, 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope1_reason, 0);
 		$fg__label && _client_guard($scope1_reason, 0) && _patch_render($scope1_id, "__tests__/template.marko_2_label#1:4/setup", "label");
 		_scope($scope1_id, {
-			label: ($ui__isOpen || _unfilled_if($scope1_reason, 1)) && label,
+			label: _write_if($scope1_reason, 0) && ($ui__isOpen || _unfilled_if($scope1_reason, 1)) && label,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "2:2", { label: "2:25" }) || $fg__label && $ui__isOpen && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !_server_guard($scope1_reason, 1));
 	}, $scope0_id) };
@@ -73,7 +73,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_label#5_open#9_Tag#12/setup", (($fg__input_label ? " input_label" : "") + ($fg__input_other ? " Tag" : "")).slice(1));
 	_scope($scope0_id, {
 		input_label: input.label,
-		input_open: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.open,
+		input_open: _write_if($scope0_reason, 2) && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.open,
 		open,
 		Panel: _unfilled_if($scope0_reason, 4) && Panel,
 		Tag,

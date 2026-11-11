@@ -34,7 +34,7 @@ var navx_default = _template("c", (input) => {
 		_html(`<span>${_text_mark($scope1_id, "c", item.label, 1, $scope0_reason, 1)}</span></a>${_el_mark($scope1_id, "a", _updates_from($scope0_reason, 0) || $uf__input_items)}`);
 		_patch_render($scope1_id, "c0", ((_filled_guard($scope0_reason, 2) ? " >f" : "") + ($fg__input_items ? " f" : "")).slice(1), $scope0_reason, 0);
 		_scope($scope1_id, {
-			f: _unfilled_if($scope0_reason, 0) && item?.href,
+			f: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 0) && item?.href,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			b: _existing_scope($childScope)
 		});
@@ -51,7 +51,7 @@ var navx_default = _template("c", (input) => {
 	}, $scope0_id, "b", 1, $wg__input_page, 1, 0, 0, ["c2"], $scope0_reason, 3);
 	_html(`</main>${_el_mark($scope0_id, "b", $wg__input_page)}`);
 	$fg__input_path && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "c4", "f");
-	_scope($scope0_id, { f: _unfilled_if($scope0_reason, 0) && input.path }) || $fg__input_path && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.path, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { f: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 0) && input.path }) || $fg__input_path && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.path, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko
@@ -60,7 +60,7 @@ _shells({
 	a2: `a2${_shell_marker([["a5"], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_items = _filled_guard($scope0_reason, 1), $fg__input_page = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0), $fg__input_items = _filled_guard($scope0_reason, 1), $fg__input_page = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let path = "/a";
 	_if(() => {
@@ -88,8 +88,8 @@ var template_default = _template("a", (input) => {
 	$fg__input_items && $cg__input_show && _patch_render($scope0_id, "a0", "f");
 	$fg__input_page && $cg__input_show && _patch_render($scope0_id, "a1", "g");
 	_scope($scope0_id, {
-		f: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.items,
-		g: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.page,
+		f: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.items,
+		g: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.page,
 		h: path
 	}) || ($fg__input_items && $ui__input_show && _patch_write($scope0_id, "xf", input.items, !_server_guard($scope0_reason, 1)), $fg__input_page && $ui__input_show && _patch_write($scope0_id, "xg", input.page, !_server_guard($scope0_reason, 2)));
 }, 1);

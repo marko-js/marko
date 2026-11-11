@@ -43,5 +43,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#main/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_html(`</main>${_el_mark($scope0_id, "#main/0", $wg__input_show)}`);
 	$fg__input_user && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/template.marko_1_input_user#0:4/setup", "input_user");
-	_scope($scope0_id, { input_user: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.user }, "__tests__/template.marko", 0, { input_user: ["input.user"] }) || $fg__input_user && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_user", input.user, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { input_user: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.user }, "__tests__/template.marko", 0, { input_user: ["input.user"] }) || $fg__input_user && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_user", input.user, !_server_guard($scope0_reason, 1));
 }, 1);

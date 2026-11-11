@@ -90,7 +90,7 @@ var child_default = _template("b", (input) => {
 	$fg__input_show && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "b6", "f");
 	_patch_fill($scope0_id, "vb8", items, 1);
 	_scope($scope0_id, {
-		f: ($ui__input_on || _unfilled_if($scope0_reason, 1)) && input.show,
+		f: _write_if($scope0_reason, 0) && ($ui__input_on || _unfilled_if($scope0_reason, 1)) && input.show,
 		g: items
 	}) || $fg__input_show && $ui__input_on && _patch_write($scope0_id, "xf", input.show, !$sg__input_show);
 });

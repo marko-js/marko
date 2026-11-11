@@ -27,8 +27,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_x && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_x#0:5/setup", "input_x");
 	$fg__input_suffix2 && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_suffix#0:6/setup", "input_suffix");
 	_scope($scope0_id, {
-		input_prefix: ($ui__input_show__OR__input_x || $ui__input_prefix__OR__input_x) && input.prefix,
-		input_x: ($ui__input_show__OR__input_prefix || $ui__input_prefix__OR__input_x) && input.x,
+		input_prefix: _write_if($scope0_reason, 1) && ($ui__input_show__OR__input_x || $ui__input_prefix__OR__input_x) && input.prefix,
+		input_x: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_prefix || $ui__input_prefix__OR__input_x) && input.x,
 		input_suffix: input.suffix
 	}, "__tests__/template.marko", 0, {
 		input_prefix: ["input.prefix"],

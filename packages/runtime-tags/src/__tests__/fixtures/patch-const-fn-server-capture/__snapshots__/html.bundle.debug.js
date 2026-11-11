@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;D ;<p> </p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 5), $ui__input_decor__OR__input_text = _unfilled_if($scope0_reason, 1), $ui__input_show__OR__input_text = _unfilled_if($scope0_reason, 2), $ui__input_decor__OR__input_show = _unfilled_if($scope0_reason, 0), $sg__input_decor = _server_guard($scope0_reason, 4), $fg__input_decor2 = _filled_guard($scope0_reason, 4), $fg__input_text = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 5), $ui__input_decor__OR__input_text = _unfilled_if($scope0_reason, 1), $ui__input_show__OR__input_text = _unfilled_if($scope0_reason, 2), $wi__input_show__OR__input_text = _write_if($scope0_reason, 2), $ui__input_decor__OR__input_show = _unfilled_if($scope0_reason, 0), $sg__input_decor = _server_guard($scope0_reason, 4), $fg__input_decor2 = _filled_guard($scope0_reason, 4), $fg__input_text = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	$fg__input_decor2 && $ui__input_show__OR__input_text && _patch_write($scope0_id, "PatchMarkedWrite:input_decor", input.decor, !$sg__input_decor);
 	const fmt = _bind_resume(function(text) {
@@ -25,9 +25,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_text && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_text#0:5/setup", "input_text");
 	$fg__input_decor2 && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_fmt#0:6/setup", "fmt input_decor");
 	_scope($scope0_id, {
-		input_decor: ($ui__input_show__OR__input_text || $ui__input_decor__OR__input_text) && input.decor,
-		input_text: ($ui__input_decor__OR__input_show || $ui__input_decor__OR__input_text) && input.text,
-		fmt: ($ui__input_show__OR__input_text || $ui__input_decor__OR__input_text) && fmt
+		input_decor: $wi__input_show__OR__input_text && ($ui__input_show__OR__input_text || $ui__input_decor__OR__input_text) && input.decor,
+		input_text: _write_if($scope0_reason, 0) && ($ui__input_decor__OR__input_show || $ui__input_decor__OR__input_text) && input.text,
+		fmt: $wi__input_show__OR__input_text && ($ui__input_show__OR__input_text || $ui__input_decor__OR__input_text) && fmt
 	}, "__tests__/template.marko", 0, {
 		input_decor: ["input.decor"],
 		input_text: ["input.text"],

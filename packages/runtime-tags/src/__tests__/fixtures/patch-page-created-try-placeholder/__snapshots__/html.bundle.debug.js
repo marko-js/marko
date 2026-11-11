@@ -58,8 +58,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("</main>");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_page#3_input_promise#4/setup", (($fg__input_page ? " input_page" : "") + ($fg__input_promise ? " input_promise" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_page: $ui__input_page__OR__input_promise && input.page,
-		input_promise: $ui__input_page__OR__input_promise && input.promise
+		input_page: _write_if($scope0_reason, 2) && $ui__input_page__OR__input_promise && input.page,
+		input_promise: _write_if($scope0_reason, 1) && $ui__input_page__OR__input_promise && input.promise
 	}, "__tests__/template.marko", 0, {
 		input_page: ["input.page"],
 		input_promise: ["input.promise"]

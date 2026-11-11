@@ -9,10 +9,10 @@ var pick_default = _template("__tests__/tags/pick.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", input.on ? input.a : input.b, { title: input.title }, 1, 0, 0, $wg__input_on__OR__input_a__OR__input_b__OR__input_title, $scope0_reason, 4);
 	_patch_render($scope0_id, "__tests__/tags/pick.marko_0_input_on#3_input_a#4_input_b#5_input_title#6/setup", (($fg__input_on ? " input_on" : "") + ($fg__input_a ? " input_a" : "") + ($fg__input_b ? " input_b" : "") + ($fg__input_title ? " input_title" : "")).slice(1), $scope0_reason, 4);
 	_scope($scope0_id, {
-		input_on: $ui__input_on__OR__input_a__OR__input_b__OR__input_title && input.on,
-		input_a: $ui__input_on__OR__input_a__OR__input_b__OR__input_title && input.a,
-		input_b: $ui__input_on__OR__input_a__OR__input_b__OR__input_title && input.b,
-		input_title: $ui__input_on__OR__input_a__OR__input_b__OR__input_title && input.title
+		input_on: _write_if($scope0_reason, 3) && $ui__input_on__OR__input_a__OR__input_b__OR__input_title && input.on,
+		input_a: _write_if($scope0_reason, 2) && $ui__input_on__OR__input_a__OR__input_b__OR__input_title && input.a,
+		input_b: _write_if($scope0_reason, 1) && $ui__input_on__OR__input_a__OR__input_b__OR__input_title && input.b,
+		input_title: _write_if($scope0_reason, 0) && $ui__input_on__OR__input_a__OR__input_b__OR__input_title && input.title
 	}, "__tests__/tags/pick.marko", 0, {
 		input_on: ["input.on"],
 		input_a: ["input.a"],
@@ -59,7 +59,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
-		input_x: ($ui__input_on__OR__input_title || _unfilled_if($scope0_reason, 3)) && input.x,
+		input_x: _write_if($scope0_reason, 0) && ($ui__input_on__OR__input_title || _unfilled_if($scope0_reason, 3)) && input.x,
 		s,
 		"ClosureScopes:input_x/8": _write_if($scope0_reason, 3) && $input_x__closures,
 		"ClosureScopes:s/9": $s__closures,

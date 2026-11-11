@@ -66,7 +66,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>interactive</button>${_el_mark($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a7");
 	_scope($scope0_id, {
-		g: ($ui__input_as || _unfilled_if($scope0_reason, 2)) && input.p,
+		g: _write_if($scope0_reason, 1) && ($ui__input_as || _unfilled_if($scope0_reason, 2)) && input.p,
 		h: input.q,
 		i: _write_if($scope0_reason, 2) && $input_p__closures,
 		j: _write_if($scope0_reason, 3) && $input_q__closures,

@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let open = false;
 	const Panel = { content: _content_resume("__tests__/template.marko_2*content", ({ isOpen, label, hidden }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__isOpen__OR__hidden = _write_guard($scope2_reason, 0), $ui__isOpen__OR__hidden = _unfilled_if($scope2_reason, 0), $fg__label = _filled_guard($scope2_reason, 2), $fg__isOpen = _filled_guard($scope2_reason, 1), $fg__hidden = _filled_guard($scope2_reason, 3);
+		const $scope2_reason = _scope_reason(), $wg__isOpen__OR__hidden = _write_guard($scope2_reason, 0), $ui__isOpen__OR__hidden = _unfilled_if($scope2_reason, 0), $fg__label = _filled_guard($scope2_reason, 2), $fg__isOpen = _filled_guard($scope2_reason, 1), $fg__hidden = _filled_guard($scope2_reason, 3), $wi__isOpen__OR__hidden = _write_if($scope2_reason, 0);
 		_if(() => {
 			if (isOpen && !hidden) {
 				const $scope3_id = _scope_id();
@@ -27,10 +27,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope2_id, "#text/0", 1, $wg__isOpen__OR__hidden, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope2_reason, 0);
 		$fg__label && _client_guard($scope2_reason, 0) && _patch_render($scope2_id, "__tests__/template.marko_3_label#2:4/setup", "label");
 		_patch_render($scope2_id, "__tests__/template.marko_2_isOpen#3_hidden#5/setup", (($fg__isOpen ? " isOpen" : "") + ($fg__hidden ? " hidden" : "")).slice(1), $scope2_reason, 0);
-		_write_if($scope2_reason, 0) && _scope($scope2_id, {
-			isOpen: $ui__isOpen__OR__hidden && isOpen,
-			label: ($ui__isOpen__OR__hidden || _unfilled_if($scope2_reason, 2)) && label,
-			hidden: $ui__isOpen__OR__hidden && hidden
+		$wi__isOpen__OR__hidden && _scope($scope2_id, {
+			isOpen: _write_if($scope2_reason, 3) && $ui__isOpen__OR__hidden && isOpen,
+			label: $wi__isOpen__OR__hidden && ($ui__isOpen__OR__hidden || _unfilled_if($scope2_reason, 2)) && label,
+			hidden: _write_if($scope2_reason, 1) && $ui__isOpen__OR__hidden && hidden
 		}, "__tests__/template.marko", "2:2", {
 			isOpen: "2:17",
 			label: "2:25",
@@ -69,7 +69,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_other#8_Panel#11/setup", $fg__input_other && "input_other", $scope0_reason, 4);
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_label#7_input_hidden#9_open#10_Tag#13/setup", (($fg__input_label ? " input_label" : "") + ($fg__input_hidden ? " input_hidden" : "") + ($fg__input_other ? " Tag" : "")).slice(1));
 	_scope($scope0_id, {
-		input_open: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
+		input_open: _write_if($scope0_reason, 1) && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
 		input_label: input.label,
 		input_hidden: input.hidden,
 		open,

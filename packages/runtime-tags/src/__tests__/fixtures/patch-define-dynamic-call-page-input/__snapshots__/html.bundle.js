@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 	let open = false;
 	const Panel = { content: _content_resume("a3", ({ isOpen, label }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__isOpen = _write_guard($scope1_reason, 0), $ui__isOpen = _unfilled_if($scope1_reason, 0), $fg__label = _filled_guard($scope1_reason, 1);
+		const $scope1_reason = _scope_reason(), $wg__isOpen = _write_guard($scope1_reason, 0), $ui__isOpen = _unfilled_if($scope1_reason, 0), $fg__label = _filled_guard($scope1_reason, 1), $wi__isOpen = _write_if($scope1_reason, 0);
 		_if(() => {
 			if (isOpen) {
 				const $scope2_id = _scope_id();
@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope1_id, "a", 1, $wg__isOpen, 1, 0, 0, ["a1"], $scope1_reason, 0);
 		$fg__label && _client_guard($scope1_reason, 0) && _patch_render($scope1_id, "a0", "e");
-		_write_if($scope1_reason, 0) && _scope($scope1_id, { e: ($ui__isOpen || _unfilled_if($scope1_reason, 1)) && label }) || $fg__label && $ui__isOpen && _patch_write($scope1_id, "xe", label, !_server_guard($scope1_reason, 1));
+		$wi__isOpen && _scope($scope1_id, { e: $wi__isOpen && ($ui__isOpen || _unfilled_if($scope1_reason, 1)) && label }) || $fg__label && $ui__isOpen && _patch_write($scope1_id, "xe", label, !_server_guard($scope1_reason, 1));
 	}, $scope0_id) };
 	const Other = { content: _content_resume("a2", ({ label }) => {
 		const $scope3_id = _scope_id();
@@ -48,12 +48,12 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a4");
 	_patch_render($scope0_id, "a5", (($fg__input_label ? " f" : "") + ($fg__input_show ? " h" : "") + ($fg__input_other ? " m" : "")).slice(1), $scope0_reason, 3);
 	_scope($scope0_id, {
-		f: $ui__input_label__OR__input_other__OR__input_show && input.label,
-		h: $ui__input_label__OR__input_other__OR__input_show && input.show,
+		f: _write_if($scope0_reason, 2) && $ui__input_label__OR__input_other__OR__input_show && input.label,
+		h: _write_if($scope0_reason, 0) && $ui__input_label__OR__input_other__OR__input_show && input.show,
 		i: open,
 		j: $ui__input_other && Panel,
 		k: $ui__input_other && Other,
-		m: $ui__input_label__OR__input_other__OR__input_show && Tag,
+		m: _write_if($scope0_reason, 1) && $ui__input_label__OR__input_other__OR__input_show && Tag,
 		a: _existing_scope($childScope)
 	}) || ($fg__input_label && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 4)), $fg__input_show && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xh", input.show, !_server_guard($scope0_reason, 6)), $fg__input_other && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xm", Tag, !_server_guard($scope0_reason, 5)));
 }, 1);

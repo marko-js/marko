@@ -18,8 +18,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_b#0:4_item#2/setup", ((_filled_guard($scope0_reason, 3) ? " >input_b" : "") + ($fg__input_items ? " item" : "")).slice(1), $scope0_reason, 0);
 		_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_a#0:5_d#4/setup", ((_filled_guard($scope0_reason, 4) ? " >input_a" : "") + ($fg__input_items__OR__input_b ? " d" : "")).slice(1), $scope0_reason, 1);
 		_scope($scope1_id, {
-			item: _unfilled_if($scope0_reason, 0) && item,
-			d: _unfilled_if($scope0_reason, 1) && d,
+			item: _write_if($scope0_reason, 3) && _unfilled_if($scope0_reason, 0) && item,
+			d: _write_if($scope0_reason, 4) && _unfilled_if($scope0_reason, 1) && d,
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id)
 		}, "__tests__/tags/child.marko", "1:2", {
 			item: "1:6",
@@ -29,8 +29,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	$fg__input_b && $cg__input_items && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_b#0:4/setup", "input_b");
 	$fg__input_a && $cg__input_items && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_a#0:5/setup", "input_a");
 	_scope($scope0_id, {
-		input_b: $ui__input_items__OR__input_b && input.b,
-		input_a: _unfilled_if($scope0_reason, 1) && input.a
+		input_b: _write_if($scope0_reason, 2) && $ui__input_items__OR__input_b && input.b,
+		input_a: _write_if($scope0_reason, 0) && _unfilled_if($scope0_reason, 1) && input.a
 	}, "__tests__/tags/child.marko", 0, {
 		input_b: ["input.b"],
 		input_a: ["input.a"]

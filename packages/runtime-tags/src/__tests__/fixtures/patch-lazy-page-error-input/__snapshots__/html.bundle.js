@@ -58,5 +58,5 @@ var template_default = _template("c", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_page, 1, 0, 0, ["c1", "c2"], $scope0_reason, 0);
 	$fg__input_error && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "c0", "e");
-	_scope($scope0_id, { e: ($ui__input_page || _unfilled_if($scope0_reason, 1)) && input.error }) || $fg__input_error && $ui__input_page && _patch_write($scope0_id, "xe", input.error, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { e: _write_if($scope0_reason, 0) && ($ui__input_page || _unfilled_if($scope0_reason, 1)) && input.error }) || $fg__input_error && $ui__input_page && _patch_write($scope0_id, "xe", input.error, !_server_guard($scope0_reason, 1));
 }, 1);

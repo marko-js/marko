@@ -9,7 +9,7 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell,<p>shown</p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_inner = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 0), $cg__input_inner = _client_guard($scope0_reason, 1), $fg__input_inner = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_inner = _write_guard($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 0), $cg__input_inner = _client_guard($scope0_reason, 1), $fg__input_inner = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	const $count__closures = new Set();
@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope3_id = _scope_id();
 			_html("<p>shown</p>");
-			_write_if($scope0_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "3:4");
+			$wi__input_show && _scope($scope3_id, {}, "__tests__/template.marko", "3:4");
 			return 0;
 		} else {
 			const $scope1_id = _scope_id();
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_inner && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_inner#0:5/setup", "input_inner");
 	_scope($scope0_id, {
-		input_inner: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.inner,
+		input_inner: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.inner,
 		input_title: input.title,
 		count,
 		"ClosureScopes:input_title/9": _write_if($scope0_reason, 2) && $input_title__closures,

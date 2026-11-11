@@ -45,7 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("</main>");
 	$fg__input_note && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/template.marko_1_input_note#0:5/setup", "input_note");
 	_scope($scope0_id, {
-		input_note: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.note,
+		input_note: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.note,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { input_note: ["input.note"] }) || $fg__input_note && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 1));
 }, 1);

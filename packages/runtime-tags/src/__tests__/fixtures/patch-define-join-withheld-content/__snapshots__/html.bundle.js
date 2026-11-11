@@ -25,8 +25,8 @@ var child_default = _template("b", (input) => {
 	$ui__input_mode && _patch_write($scope0_id, "wh", frag.content, 1);
 	_client_guard($scope0_reason, 6) && _patch_render($scope0_id, "b6");
 	_scope($scope0_id, {
-		d: ($ui__input_b__OR__input_mode || $ui__input_a__OR__input_b) && input.a,
-		e: ($ui__input_a__OR__input_mode || $ui__input_a__OR__input_b) && input.b,
+		d: _write_if($scope0_reason, 2) && ($ui__input_b__OR__input_mode || $ui__input_a__OR__input_b) && input.a,
+		e: _write_if($scope0_reason, 1) && ($ui__input_a__OR__input_mode || $ui__input_a__OR__input_b) && input.b,
 		h: $ui__input_mode && frag.content,
 		j: _write_if($scope0_reason, 4) && $input_a__closures,
 		k: _write_if($scope0_reason, 5) && $input_b__closures

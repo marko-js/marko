@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b%b D ;<!><!><button> </button>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $ui__input_on__OR__input_label = _unfilled_if($scope0_reason, 0), $ui__input_label = _unfilled_if($scope0_reason, 2), $fg__input_on = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $ui__input_on__OR__input_label = _unfilled_if($scope0_reason, 0), $ui__input_label = _unfilled_if($scope0_reason, 2), $fg__input_on = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2), $wi__input_label = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	let count = 0;
@@ -22,10 +22,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_on#5_input_label#6/setup", (($fg__input_on ? " input_on" : "") + ($fg__input_label ? " input_label" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_on: $ui__input_on__OR__input_label && input.on,
-		input_label: ($ui__input_on__OR__input_label || $ui__input_label) && input.label,
+		input_on: $wi__input_label && $ui__input_on__OR__input_label && input.on,
+		input_label: _write_if($scope0_reason, 1) && ($ui__input_on__OR__input_label || $ui__input_label) && input.label,
 		count,
-		"ClosureScopes:input_label/9": _write_if($scope0_reason, 2) && $input_label__closures
+		"ClosureScopes:input_label/9": $wi__input_label && $input_label__closures
 	}, "__tests__/template.marko", 0, {
 		input_on: ["input.on"],
 		input_label: ["input.label"],

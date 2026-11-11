@@ -54,7 +54,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_label && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/template.marko_1_input_label#0:5/setup", "input_label");
 	_scope($scope0_id, {
-		input_label: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label,
+		input_label: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label,
 		n
 	}, "__tests__/template.marko", 0, {
 		input_label: ["input.label"],

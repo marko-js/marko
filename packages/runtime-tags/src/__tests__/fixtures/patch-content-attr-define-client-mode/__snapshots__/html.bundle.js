@@ -22,7 +22,7 @@ var frag_host_default = _template("b", (input) => {
 	$ui__input_mode && _patch_write($scope0_id, "wg", frag.content, 1);
 	_client_guard($scope0_reason, 2) && _patch_render($scope0_id, "b3");
 	_scope($scope0_id, {
-		d: ($ui__input_mode || _unfilled_if($scope0_reason, 1)) && input.note,
+		d: _write_if($scope0_reason, 2) && ($ui__input_mode || _unfilled_if($scope0_reason, 1)) && input.note,
 		g: $ui__input_mode && frag.content,
 		i: _write_if($scope0_reason, 1) && $input_note__closures
 	}) || _filled_guard($scope0_reason, 1) && $ui__input_mode && _patch_write($scope0_id, "xd", input.note, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "b2", "d");

@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, ($scope) => $scope0_page ? [{ input_a: input.a }] : []), 0, _write_guard($scope0_reason, 1), $scope0_reason, 1, 0, void 0, 0, 0, "__tests__/template.marko_1*content");
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
-		input_a: ($ui__input_tag || _unfilled_if($scope0_reason, 2)) && input.a,
+		input_a: _write_if($scope0_reason, 1) && ($ui__input_tag || _unfilled_if($scope0_reason, 2)) && input.a,
 		n,
 		"ClosureScopes:input_a/8": _write_if($scope0_reason, 2) && $input_a__closures
 	}, "__tests__/template.marko", 0, {

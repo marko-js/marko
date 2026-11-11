@@ -39,8 +39,8 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		$fg__fmt && $cg__isOpen && _patch_render($scope3_id, "__tests__/tags/card.marko_4_fmt#3:4/setup", "fmt");
 		$fg__label && $cg__isOpen && _patch_render($scope3_id, "__tests__/tags/card.marko_4_label#3:5/setup", "label");
 		_write_if($scope3_reason, 3) && _scope($scope3_id, {
-			fmt: (_unfilled_if($scope3_reason, 1, 5) || _unfilled_if($scope3_reason, 2, 5)) && fmt,
-			label: ($ui__isOpen__OR__fmt || _unfilled_if($scope3_reason, 2)) && label
+			fmt: _write_if($scope3_reason, 1) && (_unfilled_if($scope3_reason, 1, 5) || _unfilled_if($scope3_reason, 2, 5)) && fmt,
+			label: _write_if($scope3_reason, 0) && ($ui__isOpen__OR__fmt || _unfilled_if($scope3_reason, 2)) && label
 		}, "__tests__/tags/card.marko", "3:2", {
 			fmt: "3:25",
 			label: "3:30"
@@ -83,7 +83,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	$fg__input_label && _patch_render($scope0_id, "__tests__/tags/card.marko_2_input_label#0:7/setup", "input_label");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_open#8/fill", open, 1);
 	_scope($scope0_id, {
-		input_open: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
+		input_open: _write_if($scope0_reason, 1) && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
 		input_label: input.label,
 		open
 	}, "__tests__/tags/card.marko", 0, {

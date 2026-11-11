@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`</section>${_el_mark($scope0_id, "#section/2", _updates_from($scope0_reason, 2))}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
-		input_rec_name: ($ui__input_on || _unfilled_if($scope0_reason, 1)) && input.rec?.name,
+		input_rec_name: _write_if($scope0_reason, 2) && ($ui__input_on || _unfilled_if($scope0_reason, 1)) && input.rec?.name,
 		n,
 		frag_content: $ui__input_on && frag.content,
 		"ClosureScopes:input_rec_name/12": _write_if($scope0_reason, 1) && $input_rec_name__closures

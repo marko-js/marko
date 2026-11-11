@@ -112,7 +112,7 @@ var template_default = _template("d", (input) => {
 	_trailers("</body></html>");
 	$fg__input_list && $cg__input_page && _patch_render($scope0_id, "d6", "e");
 	_scope($scope0_id, {
-		e: ($ui__input_page || _unfilled_if($scope0_reason, 2)) && input.list,
+		e: $wi__input_page && ($ui__input_page || _unfilled_if($scope0_reason, 2)) && input.list,
 		f: $wi__input_page && $ui__input_page && $input_page__closures
 	}) || $fg__input_list && $ui__input_page && _patch_write($scope0_id, "xe", input.list, !_server_guard($scope0_reason, 2));
 }, 1);

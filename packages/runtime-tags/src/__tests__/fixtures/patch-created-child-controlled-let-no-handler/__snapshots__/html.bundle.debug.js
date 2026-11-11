@@ -30,7 +30,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 0);
 	$fg__input_on && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_on#0:4/setup", "input_on");
-	_scope($scope0_id, { input_on: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.on }, "__tests__/tags/child.marko", 0, { input_on: ["input.on"] }) || $fg__input_on && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_on", input.on, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { input_on: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.on }, "__tests__/tags/child.marko", 0, { input_on: ["input.on"] }) || $fg__input_on && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_on", input.on, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

@@ -16,11 +16,11 @@ var code_block_default = _template("__tests__/tags/code-block.marko", (input) =>
 	_patch_render($scope0_id, "__tests__/tags/code-block.marko_0_input_a#3_input_b#4_input_c#5/setup", (($fg__input_a ? " input_a" : "") + ($fg__input_b ? " input_b" : "") + ($fg__input_c ? " input_c" : "")).slice(1), $scope0_reason, 0);
 	_patch_render($scope0_id, "__tests__/tags/code-block.marko_0_input_d#7_f#8/setup", (($fg__input_d ? " input_d" : "") + ($fg__input_a__OR__input_b__OR__input_c ? " f" : "") + ($fg__input_a ? " input_a" : "") + ($fg__input_b ? " input_b" : "") + ($fg__input_c ? " input_c" : "")).slice(1), $scope0_reason, 4);
 	_scope($scope0_id, {
-		input_a: ($ui__input_a__OR__input_b__OR__input_c || $ui__input_a__OR__input_b__OR__input_c__OR__input_d) && input.a,
-		input_b: ($ui__input_a__OR__input_b__OR__input_c || $ui__input_a__OR__input_b__OR__input_c__OR__input_d) && input.b,
-		input_c: ($ui__input_a__OR__input_b__OR__input_c || $ui__input_a__OR__input_b__OR__input_c__OR__input_d) && input.c,
-		input_d: $ui__input_a__OR__input_b__OR__input_c__OR__input_d && input.d,
-		f: $ui__input_a__OR__input_b__OR__input_c__OR__input_d && f
+		input_a: _write_if($scope0_reason, 3) && ($ui__input_a__OR__input_b__OR__input_c || $ui__input_a__OR__input_b__OR__input_c__OR__input_d) && input.a,
+		input_b: _write_if($scope0_reason, 2) && ($ui__input_a__OR__input_b__OR__input_c || $ui__input_a__OR__input_b__OR__input_c__OR__input_d) && input.b,
+		input_c: _write_if($scope0_reason, 1) && ($ui__input_a__OR__input_b__OR__input_c || $ui__input_a__OR__input_b__OR__input_c__OR__input_d) && input.c,
+		input_d: _write_if($scope0_reason, 0) && $ui__input_a__OR__input_b__OR__input_c__OR__input_d && input.d,
+		f: _write_if($scope0_reason, 8) && $ui__input_a__OR__input_b__OR__input_c__OR__input_d && f
 	}, "__tests__/tags/code-block.marko", 0, {
 		input_a: ["input.a"],
 		input_b: ["input.b"],

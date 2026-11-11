@@ -58,7 +58,7 @@ _shells({
 	"__tests__/tags/heading.marko": `__tests__/tags/heading.marko${_shell_marker($setup$1)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$2)}`
 });
 var heading_default = _template("__tests__/tags/heading.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 1), $wg__input_type = _write_guard($scope0_reason, 2), $wi__input_n__OR__input_type = _write_if($scope0_reason, 0), $cg__input_type = _client_guard($scope0_reason, 2), $ui__input_n = _unfilled_if($scope0_reason, 1), $ui__input_type2 = _unfilled_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 1), $wg__input_type = _write_guard($scope0_reason, 2), $wi__input_n__OR__input_type = _write_if($scope0_reason, 0), $cg__input_type = _client_guard($scope0_reason, 2), $ui__input_n = _unfilled_if($scope0_reason, 1), $ui__input_type2 = _unfilled_if($scope0_reason, 2), $wi__input_n = _write_if($scope0_reason, 1), $wi__input_type = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_n__closures = new Set();
 	const $input_type__closures = new Set();
@@ -92,10 +92,10 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 	list_default({ item: $item });
 	_patch_child_end();
 	_scope($scope0_id, {
-		input_n: ($ui__input_type2 || $ui__input_n) && input.n,
-		input_type: ($ui__input_n || $ui__input_type2) && input.type,
-		"ClosureScopes:input_n/5": _write_if($scope0_reason, 1) && $input_n__closures,
-		"ClosureScopes:input_type/6": _write_if($scope0_reason, 2) && $input_type__closures,
+		input_n: $wi__input_type && ($ui__input_type2 || $ui__input_n) && input.n,
+		input_type: $wi__input_n && ($ui__input_n || $ui__input_type2) && input.type,
+		"ClosureScopes:input_n/5": $wi__input_n && $input_n__closures,
+		"ClosureScopes:input_type/6": $wi__input_type && $input_type__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/tags/heading.marko", 0, {
 		input_n: ["input.n"],

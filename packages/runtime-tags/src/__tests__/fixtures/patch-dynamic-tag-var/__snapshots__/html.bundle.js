@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 	_html(`<p>${_text_mark($scope0_id, "c", x)}</p>`);
 	_patch_render($scope0_id, "a1", (($fg__input_which ? " f" : "") + ($fg__input_a ? " g" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		f: $ui__input_which__OR__input_a && input.which,
-		g: $ui__input_which__OR__input_a && input.a
+		f: _write_if($scope0_reason, 2) && $ui__input_which__OR__input_a && input.which,
+		g: _write_if($scope0_reason, 1) && $ui__input_which__OR__input_a && input.a
 	}) || ($fg__input_which && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.which, !_server_guard($scope0_reason, 1)), $fg__input_a && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.a, !_server_guard($scope0_reason, 2)));
 }, 1);

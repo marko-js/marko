@@ -49,7 +49,7 @@ var wrap_default = _template("c", (input) => {
 	_patch_child_end();
 	_script($scope0_id, "c3", 0);
 	_scope($scope0_id, {
-		e: ($ui__input_items || _unfilled_if($scope0_reason, 2)) && input.label,
+		e: _write_if($scope0_reason, 1) && ($ui__input_items || _unfilled_if($scope0_reason, 2)) && input.label,
 		f: _write_if($scope0_reason, 2) && $input_label__closures,
 		a: _existing_scope($childScope)
 	}) || _filled_guard($scope0_reason, 2) && $ui__input_items && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 2)) && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "c4", "e");

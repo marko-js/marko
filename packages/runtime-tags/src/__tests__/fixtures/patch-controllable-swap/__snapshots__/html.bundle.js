@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a2");
 	_patch_render($scope0_id, "a3", (($fg__input_value ? " f" : "") + ($fg__input_big ? " g" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		f: $ui__input_value__OR__input_big && input.value,
+		f: _write_if($scope0_reason, 3) && $ui__input_value__OR__input_big && input.value,
 		g: $ui__input_value__OR__input_big && input.big,
 		h: $ui__input_value__OR__input_big && plain,
 		i: $ui__input_value__OR__input_big && loud

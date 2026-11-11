@@ -23,9 +23,9 @@ var label_view_default = _template("__tests__/tags/label-view.marko", (input) =>
 	_patch_render($scope0_id, "__tests__/tags/label-view.marko_0_input_flag#4_input_a#5_input_b#6/setup", (($fg__input_flag ? " input_flag" : "") + ($fg__input_a ? " input_a" : "") + ($fg__input_b ? " input_b" : "")).slice(1), $scope0_reason, 3);
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/label-view.marko_0_open#8/fill", open, 1);
 	_scope($scope0_id, {
-		input_flag: $ui__input_flag__OR__input_a__OR__input_b && input.flag,
-		input_a: $ui__input_flag__OR__input_a__OR__input_b && input.a,
-		input_b: $ui__input_flag__OR__input_a__OR__input_b && input.b,
+		input_flag: _write_if($scope0_reason, 2) && $ui__input_flag__OR__input_a__OR__input_b && input.flag,
+		input_a: _write_if($scope0_reason, 1) && $ui__input_flag__OR__input_a__OR__input_b && input.a,
+		input_b: _write_if($scope0_reason, 0) && $ui__input_flag__OR__input_a__OR__input_b && input.b,
 		open,
 		get
 	}, "__tests__/tags/label-view.marko", 0, {

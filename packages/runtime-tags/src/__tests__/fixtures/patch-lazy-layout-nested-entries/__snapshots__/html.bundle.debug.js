@@ -93,7 +93,7 @@ _shells({
 	"__tests__/template.marko_5*shell": "__tests__/template.marko_5*shell,<p>home</p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_page = _unfilled_if($scope0_reason, 2), $cg__input_wide = _client_guard($scope0_reason, 4), $cg__input_note = _client_guard($scope0_reason, 5), $uf__input_note = _updates_from($scope0_reason, 5), $uf__input_wide = _updates_from($scope0_reason, 4), $wi__input_page__OR__input_wide__OR__input_note = _write_if($scope0_reason, 0), $wg__input_page = _write_guard($scope0_reason, 2), $cg__input_page = _client_guard($scope0_reason, 2), $ui__input_wide = _unfilled_if($scope0_reason, 4), $ui__input_note = _unfilled_if($scope0_reason, 5), $fg__input_list = _filled_guard($scope0_reason, 3), $wi__input_wide = _write_if($scope0_reason, 4), $wi__input_note = _write_if($scope0_reason, 5), $wi__input_page = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_page = _unfilled_if($scope0_reason, 2), $cg__input_wide = _client_guard($scope0_reason, 4), $cg__input_note = _client_guard($scope0_reason, 5), $uf__input_note = _updates_from($scope0_reason, 5), $uf__input_wide = _updates_from($scope0_reason, 4), $wi__input_page__OR__input_wide__OR__input_note = _write_if($scope0_reason, 0), $wi__input_wide = _write_if($scope0_reason, 4), $wi__input_note = _write_if($scope0_reason, 5), $wg__input_page = _write_guard($scope0_reason, 2), $cg__input_page = _client_guard($scope0_reason, 2), $wi__input_page = _write_if($scope0_reason, 2), $ui__input_wide = _unfilled_if($scope0_reason, 4), $ui__input_note = _unfilled_if($scope0_reason, 5), $fg__input_list = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_wide__closures = new Set();
 	const $input_note__closures = new Set();
@@ -170,11 +170,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_trailers("</body></html>");
 	$fg__input_list && $cg__input_page && _patch_render($scope0_id, "__tests__/template.marko_1_input_list#0:4/setup", "input_list");
 	_scope($scope0_id, {
-		input_list: ($ui__input_page || _unfilled_if($scope0_reason, 3)) && input.list,
-		input_wide: ($ui__input_page || $ui__input_wide) && input.wide,
-		input_note: ($ui__input_page || $ui__input_note) && input.note,
-		"ClosureScopes:input_wide/9": $wi__input_wide && ($ui__input_wide || $ui__input_page) && $input_wide__closures,
-		"ClosureScopes:input_note/10": $wi__input_note && ($ui__input_note || $ui__input_page) && $input_note__closures,
+		input_list: $wi__input_page && ($ui__input_page || _unfilled_if($scope0_reason, 3)) && input.list,
+		input_wide: $wi__input_page && ($ui__input_page || $ui__input_wide) && input.wide,
+		input_note: $wi__input_page && ($ui__input_page || $ui__input_note) && input.note,
+		"ClosureScopes:input_wide/9": $wi__input_wide && $wi__input_wide && ($ui__input_wide || $ui__input_page) && $input_wide__closures,
+		"ClosureScopes:input_note/10": $wi__input_note && $wi__input_note && ($ui__input_note || $ui__input_page) && $input_note__closures,
 		"ClosureScopes:input_page/7": $wi__input_page && $ui__input_page && $input_page__closures
 	}, "__tests__/template.marko", 0, {
 		input_list: ["input.list"],

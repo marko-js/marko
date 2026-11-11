@@ -9,7 +9,7 @@ _shells({
 	a4: "a4;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 1), $cg__input_message = _client_guard($scope0_reason, 2), $cg__input_boom = _client_guard($scope0_reason, 3), $wi__input_show__OR__input_message__OR__input_boom = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_message = _unfilled_if($scope0_reason, 2), $ui__input_boom = _unfilled_if($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 1), $cg__input_message = _client_guard($scope0_reason, 2), $cg__input_boom = _client_guard($scope0_reason, 3), $wi__input_show__OR__input_message__OR__input_boom = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_message = _unfilled_if($scope0_reason, 2), $ui__input_boom = _unfilled_if($scope0_reason, 3), $wi__input_show = _write_if($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1), $wi__input_message = _write_if($scope0_reason, 2), $wi__input_boom = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_message__closures = /* @__PURE__ */ new Set();
 	const $input_boom__closures = /* @__PURE__ */ new Set();
@@ -36,9 +36,9 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a4"], $scope0_reason, 1);
 	_html(`</main>${_el_mark($scope0_id, "a", $wg__input_show)}`);
 	_scope($scope0_id, {
-		e: ($ui__input_show || $ui__input_message) && input.message,
-		f: ($ui__input_show || $ui__input_boom) && input.boom,
-		g: _write_if($scope0_reason, 2) && ($ui__input_message || $ui__input_show) && $input_message__closures,
-		h: _write_if($scope0_reason, 3) && ($ui__input_boom || $ui__input_show) && $input_boom__closures
+		e: $wi__input_show && ($ui__input_show || $ui__input_message) && input.message,
+		f: $wi__input_show && ($ui__input_show || $ui__input_boom) && input.boom,
+		g: $wi__input_message && $wi__input_message && ($ui__input_message || $ui__input_show) && $input_message__closures,
+		h: $wi__input_boom && $wi__input_boom && ($ui__input_boom || $ui__input_show) && $input_boom__closures
 	}) || (_filled_guard($scope0_reason, 2) && $ui__input_show && _patch_write($scope0_id, "xe", input.message, !_server_guard($scope0_reason, 2)) && $cg__input_show && _patch_subscribers($scope0_id, "a5", "e"), _filled_guard($scope0_reason, 3) && $ui__input_show && _patch_write($scope0_id, "xf", input.boom, !_server_guard($scope0_reason, 3)) && $cg__input_show && _patch_subscribers($scope0_id, "a6", "f"));
 }, 1);

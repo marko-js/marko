@@ -51,7 +51,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	list_default({ item: $item });
 	_patch_child_end();
 	_scope($scope0_id, {
-		input_show: ($ui__input_items || _unfilled_if($scope0_reason, 2)) && input.show,
+		input_show: _write_if($scope0_reason, 1) && ($ui__input_items || _unfilled_if($scope0_reason, 2)) && input.show,
 		"ClosureScopes:input_show/5": $wi__input_show && $input_show__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/tags/child.marko", 0, { input_show: ["input.show"] }) || _filled_guard($scope0_reason, 2) && $ui__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 2)) && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "__tests__/tags/child.marko_0_input_show#4/subscribers", "input_show");

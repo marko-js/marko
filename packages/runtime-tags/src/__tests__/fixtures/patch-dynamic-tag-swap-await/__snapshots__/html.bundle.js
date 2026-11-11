@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>interactive</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a4");
 	_scope($scope0_id, {
-		f: ($ui__input_as || _unfilled_if($scope0_reason, 2)) && input.p,
+		f: _write_if($scope0_reason, 1) && ($ui__input_as || _unfilled_if($scope0_reason, 2)) && input.p,
 		g: _write_if($scope0_reason, 2) && $input_p__closures
 	}) || _filled_guard($scope0_reason, 2) && (_client_branch_if("a2", $scope0_id) || $ui__input_as) && _patch_write($scope0_id, "xf", input.p, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "a5", "f");
 }, 1);

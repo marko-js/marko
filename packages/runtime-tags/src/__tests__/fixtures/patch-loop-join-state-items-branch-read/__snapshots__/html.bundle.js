@@ -8,14 +8,14 @@ _shells({
 	b2: "b2;D ;<p> </p>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_show__OR__input_items = _unfilled_if($scope0_reason, 0), $fg__input_b = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wi__input_b = _write_if($scope0_reason, 3), $ui__input_show__OR__input_items = _unfilled_if($scope0_reason, 0), $fg__input_b = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html(`<i>${_text_mark($scope1_id, "a", input.b, 1, $scope0_reason, 3)}</i>`);
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "b0");
-			_scope($scope1_id, { _: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id) });
+			_scope($scope1_id, { _: $wi__input_b && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["b1"], $scope0_reason, 2);
@@ -26,13 +26,13 @@ var child_default = _template("b", (input) => {
 		_html(`<p>${_text_mark($scope2_id, "a", d, 1, $scope0_reason, 1)}</p>`);
 		_patch_render($scope2_id, "b3", ((_filled_guard($scope0_reason, 3) ? " >f" : "") + ($fg__input_items ? " c" : "")).slice(1), $scope0_reason, 1);
 		_scope($scope2_id, {
-			c: _unfilled_if($scope0_reason, 1) && item,
+			c: $wi__input_b && _unfilled_if($scope0_reason, 1) && item,
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "b", 1, 1, 1, 0, 0, "b2", $scope0_reason, 4);
 	$fg__input_b && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "b0", "f");
 	$fg__input_b && _client_guard($scope0_reason, 4) && _patch_render($scope0_id, "b4", "f");
-	_scope($scope0_id, { f: ($ui__input_show__OR__input_items || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.b }) || $fg__input_b && $ui__input_show__OR__input_items && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 3));
+	_scope($scope0_id, { f: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_items || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.b }) || $fg__input_b && $ui__input_show__OR__input_items && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 3));
 });
 
 // template.marko

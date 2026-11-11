@@ -12,7 +12,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko;D%;<main><!></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_promise = _write_if($scope0_reason, 1), $ui__input_promise2 = _unfilled_if($scope0_reason, 1), $cg__input = _client_guard($scope0_reason, 0), $wi__input = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_promise = _write_if($scope0_reason, 1), $ui__input_promise2 = _unfilled_if($scope0_reason, 1), $wi__input = _write_if($scope0_reason, 0), $cg__input = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_promise__closures = new Set();
 	const $input__closures = new Set();
@@ -49,6 +49,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("</main>");
 	_scope($scope0_id, {
 		"ClosureScopes:input_promise/5": $wi__input_promise && $ui__input_promise2 && $input_promise__closures,
-		"ClosureScopes:input/4": $wi__input && (_unfilled_if($scope0_reason, 0) || $ui__input_promise2) && $input__closures
+		"ClosureScopes:input/4": $wi__input && $wi__input && (_unfilled_if($scope0_reason, 0) || $ui__input_promise2) && $input__closures
 	}, "__tests__/template.marko", 0);
 }, 1);

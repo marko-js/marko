@@ -8,8 +8,8 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a0", 1, $fg__input_obj__OR__input_title);
 	_patch_render($scope0_id, "a1", (($fg__input_obj ? " d" : "") + ($fg__input_title ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: $ui__input_obj__OR__input_title && input.obj,
-		e: $ui__input_obj__OR__input_title && input.title,
+		d: _write_if($scope0_reason, 2) && $ui__input_obj__OR__input_title && input.obj,
+		e: _write_if($scope0_reason, 1) && $ui__input_obj__OR__input_title && input.title,
 		g: item
 	}) || ($fg__input_obj && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.obj, !_server_guard($scope0_reason, 1)), $fg__input_title && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.title, !_server_guard($scope0_reason, 2)), $fg__input_obj__OR__input_title && _patch_write($scope0_id, "xg", item, !_server_guard($scope0_reason, 0)));
 }, 1);

@@ -48,7 +48,7 @@ _shells({
 	a4: `a4${_shell_marker([[], []], ["a>", $setup$1], ["b>", $setup])};${/*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)("D l", $walks)};${/*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$1, $template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $uf__input_other = _updates_from($scope0_reason, 5), $ui__input_admin = _unfilled_if($scope0_reason, 1), $ui__input_more = _unfilled_if($scope0_reason, 4), $fg__input_adminData = _filled_guard($scope0_reason, 2), $fg__input_user = _filled_guard($scope0_reason, 3), $cg__input_admin = _client_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 5), $fg__input_props_user = _filled_guard($scope0_reason, 6), $cg__input_more = _client_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $uf__input_other = _updates_from($scope0_reason, 5), $ui__input_admin = _unfilled_if($scope0_reason, 1), $wi__input_admin = _write_if($scope0_reason, 1), $ui__input_more = _unfilled_if($scope0_reason, 4), $wi__input_more = _write_if($scope0_reason, 4), $fg__input_adminData = _filled_guard($scope0_reason, 2), $fg__input_user = _filled_guard($scope0_reason, 3), $cg__input_admin = _client_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 5), $fg__input_props_user = _filled_guard($scope0_reason, 6), $cg__input_more = _client_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=inc>${_text_mark($scope0_id, "b", n)}</button>${_el_mark($scope0_id, "a")}`);
@@ -106,10 +106,10 @@ var template_default = _template("a", (input) => {
 	$fg__input_other && $cg__input_more && _patch_render($scope0_id, "a5", "l");
 	$fg__input_props_user && $cg__input_more && _patch_render($scope0_id, "a6", "n");
 	_scope($scope0_id, {
-		h: ($ui__input_admin || _unfilled_if($scope0_reason, 2)) && input.adminData,
-		i: ($ui__input_admin || _unfilled_if($scope0_reason, 3)) && input.user,
-		l: ($ui__input_more || _unfilled_if($scope0_reason, 5)) && input.other,
+		h: $wi__input_admin && ($ui__input_admin || _unfilled_if($scope0_reason, 2)) && input.adminData,
+		i: $wi__input_admin && ($ui__input_admin || _unfilled_if($scope0_reason, 3)) && input.user,
+		l: $wi__input_more && ($ui__input_more || _unfilled_if($scope0_reason, 5)) && input.other,
 		m: n,
-		n: ($ui__input_more || _unfilled_if($scope0_reason, 6)) && input.props?.user
+		n: $wi__input_more && ($ui__input_more || _unfilled_if($scope0_reason, 6)) && input.props?.user
 	}) || ($fg__input_adminData && $ui__input_admin && _patch_write($scope0_id, "xh", input.adminData, !_server_guard($scope0_reason, 2)), $fg__input_user && $ui__input_admin && _patch_write($scope0_id, "xi", input.user, !_server_guard($scope0_reason, 3)), $fg__input_other && $ui__input_more && _patch_write($scope0_id, "xl", input.other, !_server_guard($scope0_reason, 5)), $fg__input_props_user && $ui__input_more && _patch_write($scope0_id, "xn", input.props?.user, !_server_guard($scope0_reason, 6)));
 }, 1);

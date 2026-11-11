@@ -39,8 +39,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_useA && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_useA#0:4/setup", "input_useA");
 	$fg__input_record && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_record#0:5/setup", "input_record");
 	_scope($scope0_id, {
-		input_useA: ($ui__input_show__OR__input_record || $ui__input_useA__OR__input_record) && input.useA,
-		input_record: ($ui__input_show__OR__input_useA || $ui__input_useA__OR__input_record) && input.record,
+		input_useA: _write_if($scope0_reason, 1) && ($ui__input_show__OR__input_record || $ui__input_useA__OR__input_record) && input.useA,
+		input_record: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_useA || $ui__input_useA__OR__input_record) && input.record,
 		Card: ($ui__input_show__OR__input_useA__OR__input_record || $ui__input_useA__OR__input_record) && Card,
 		Other: ($ui__input_show__OR__input_useA__OR__input_record || $ui__input_useA__OR__input_record) && Other
 	}, "__tests__/template.marko", 0, {

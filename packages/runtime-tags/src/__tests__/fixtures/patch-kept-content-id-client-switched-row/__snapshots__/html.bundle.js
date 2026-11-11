@@ -31,7 +31,7 @@ _shells({
 	a1: "a1; b D ;<input><label> </label>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 3), $ui__input_show = _unfilled_if($scope0_reason, 3), $ui__input_rows = _unfilled_if($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 3), $wi__input_rows__OR__input_show__OR__input_label = _write_if($scope0_reason, 1), $ui__input_label = _unfilled_if($scope0_reason, 4), $cg__input_rows = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 3), $ui__input_show = _unfilled_if($scope0_reason, 3), $ui__input_rows = _unfilled_if($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 3), $wi__input_rows__OR__input_show__OR__input_label = _write_if($scope0_reason, 1), $ui__input_label = _unfilled_if($scope0_reason, 4), $cg__input_rows = _client_guard($scope0_reason, 2), $wi__input_label = _write_if($scope0_reason, 4), $wi__input_show = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_show__closures = /* @__PURE__ */ new Set();
@@ -63,9 +63,9 @@ var template_default = _template("a", (input) => {
 		});
 	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a3", $scope0_reason, 2);
 	_scope($scope0_id, {
-		e: ($ui__input_rows || $ui__input_show) && input.show,
-		f: (_unfilled_if($scope0_reason, 0) || $ui__input_label) && input.label,
-		h: _write_if($scope0_reason, 4) && ($ui__input_label || $ui__input_rows || $ui__input_show) && $input_label__closures,
-		g: _write_if($scope0_reason, 3) && ($ui__input_show || $ui__input_rows) && $input_show__closures
+		e: _write_if($scope0_reason, 2) && ($ui__input_rows || $ui__input_show) && input.show,
+		f: _write_if($scope0_reason, 0) && (_unfilled_if($scope0_reason, 0) || $ui__input_label) && input.label,
+		h: $wi__input_label && $wi__input_label && ($ui__input_label || $ui__input_rows || $ui__input_show) && $input_label__closures,
+		g: $wi__input_show && $wi__input_show && ($ui__input_show || $ui__input_rows) && $input_show__closures
 	}) || (_filled_guard($scope0_reason, 3) && _patch_write($scope0_id, "xe", input.show, !_server_guard($scope0_reason, 3)) && $cg__input_rows && _patch_subscribers($scope0_id, "a5", "e"), _filled_guard($scope0_reason, 4) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 4)) && ($cg__input_rows || $cg__input_show) && _patch_subscribers($scope0_id, "a6", "f"));
 }, 1);

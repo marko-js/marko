@@ -33,5 +33,5 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a1"], $scope0_reason, 1);
 	_html("</main>");
 	$fg__input_inner && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "a3", "g");
-	_scope($scope0_id, { g: ($ui__input_outer || _unfilled_if($scope0_reason, 2)) && input.inner }) || $fg__input_inner && $ui__input_outer && _patch_write($scope0_id, "xg", input.inner, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { g: _write_if($scope0_reason, 1) && ($ui__input_outer || _unfilled_if($scope0_reason, 2)) && input.inner }) || $fg__input_inner && $ui__input_outer && _patch_write($scope0_id, "xg", input.inner, !_server_guard($scope0_reason, 2));
 }, 1);

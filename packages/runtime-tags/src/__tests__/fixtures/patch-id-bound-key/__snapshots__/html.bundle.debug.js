@@ -29,7 +29,7 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell __tests__/template.marko_3_store_set#1:11/subscribe!__tests__/template.marko_3;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_keys__OR__input_show = _write_if($scope0_reason, 0), $ui__input_keys = _unfilled_if($scope0_reason, 1), $ui__input_show2 = _unfilled_if($scope0_reason, 2), $cg__input_keys = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_keys__OR__input_show = _write_if($scope0_reason, 0), $ui__input_keys = _unfilled_if($scope0_reason, 1), $ui__input_show2 = _unfilled_if($scope0_reason, 2), $cg__input_keys = _client_guard($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = new Set();
 	_for_of(input.keys, (name) => {
@@ -82,7 +82,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 	}, (n) => n, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
 	_scope($scope0_id, {
-		input_show: ($ui__input_keys || $ui__input_show2) && input.show,
-		"ClosureScopes:input_show/6": _write_if($scope0_reason, 2) && ($ui__input_show2 || $ui__input_keys) && $input_show__closures
+		input_show: _write_if($scope0_reason, 1) && ($ui__input_keys || $ui__input_show2) && input.show,
+		"ClosureScopes:input_show/6": $wi__input_show && $wi__input_show && ($ui__input_show2 || $ui__input_keys) && $input_show__closures
 	}, "__tests__/template.marko", 0, { input_show: ["input.show"] }) || _filled_guard($scope0_reason, 2) && $ui__input_keys && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 2)) && $cg__input_keys && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_show#4/subscribers", "input_show");
 }, 1);

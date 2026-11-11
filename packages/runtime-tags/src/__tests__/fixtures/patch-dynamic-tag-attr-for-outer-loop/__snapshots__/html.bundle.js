@@ -66,7 +66,7 @@ var template_default = _template("a", (input) => {
 		_dynamic_tag($scope1_id, "a", input.on ? list_default : list2_default, { item: $item }, 1, 0, 0, $wg__input_on__OR__input_bs, $scope0_reason, 2);
 		_patch_render($scope1_id, "a4", ((_filled_guard($scope0_reason, 6) ? " >g" : "") + (_filled_guard($scope0_reason, 7) ? " >h" : "")).slice(1), $scope0_reason, 2);
 		$wi__input_as__OR__input_on__OR__input_bs__OR__input_note && _scope($scope1_id, {
-			d: ($ui__input_on__OR__input_bs || _unfilled_if($scope0_reason, 5)) && a,
+			d: _write_if($scope0_reason, 2) && ($ui__input_on__OR__input_bs || _unfilled_if($scope0_reason, 5)) && a,
 			_: _scope_with_id($scope0_id),
 			n: _write_if($scope0_reason, 5) && $for_content__a__closures
 		});
@@ -75,9 +75,9 @@ var template_default = _template("a", (input) => {
 	$fg__input_on && $cg__input_as && _patch_render($scope0_id, "a8", "g");
 	$fg__input_bs && $cg__input_as && _patch_render($scope0_id, "a9", "h");
 	_scope($scope0_id, {
-		g: ($ui__input_as__OR__input_bs || $ui__input_on__OR__input_bs2) && input.on,
-		h: ($ui__input_as__OR__input_on || $ui__input_on__OR__input_bs2) && input.bs,
-		i: ($ui__input_as__OR__input_on__OR__input_bs || _unfilled_if($scope0_reason, 8)) && input.note,
+		g: _write_if($scope0_reason, 1) && ($ui__input_as__OR__input_bs || $ui__input_on__OR__input_bs2) && input.on,
+		h: _write_if($scope0_reason, 0) && ($ui__input_as__OR__input_on || $ui__input_on__OR__input_bs2) && input.bs,
+		i: _write_if($scope0_reason, 3) && ($ui__input_as__OR__input_on__OR__input_bs || _unfilled_if($scope0_reason, 8)) && input.note,
 		j: n,
 		m: _write_if($scope0_reason, 8) && $input_note__closures
 	}) || ($fg__input_on && $ui__input_as__OR__input_bs && _patch_write($scope0_id, "xg", input.on, !_server_guard($scope0_reason, 6)), $fg__input_bs && $ui__input_as__OR__input_on && _patch_write($scope0_id, "xh", input.bs, !_server_guard($scope0_reason, 7)), _filled_guard($scope0_reason, 8) && $ui__input_as__OR__input_on__OR__input_bs && _patch_write($scope0_id, "xi", input.note, !_server_guard($scope0_reason, 8)) && _patch_subscribers($scope0_id, "a7", "i"));

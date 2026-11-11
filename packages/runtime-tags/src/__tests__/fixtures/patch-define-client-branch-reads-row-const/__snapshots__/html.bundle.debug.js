@@ -11,7 +11,7 @@ _shells({
 	"__tests__/tags/child.marko_3*shell": "__tests__/tags/child.marko_3*shell;D ;<span> </span>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_items__OR__input_v = _client_guard($scope0_reason, 0), $wi__input_items__OR__input_v = _write_if($scope0_reason, 0), $cg__input_on = _client_guard($scope0_reason, 4), $ui__input_items = _unfilled_if($scope0_reason, 2), $fg__input_v = _filled_guard($scope0_reason, 3), $fg__input_on = _filled_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_items__OR__input_v = _client_guard($scope0_reason, 0), $wi__input_items__OR__input_v = _write_if($scope0_reason, 0), $cg__input_on = _client_guard($scope0_reason, 4), $wi__input_items = _write_if($scope0_reason, 2), $ui__input_items = _unfilled_if($scope0_reason, 2), $fg__input_v = _filled_guard($scope0_reason, 3), $fg__input_on = _filled_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id(), $ui__input_on = _unfilled_if($scope0_reason, 4), $ui__input_items__OR__input_v = _unfilled_if($scope0_reason, 0), $fg__input_items = _filled_guard($scope0_reason, 2);
@@ -40,8 +40,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		$cg__input_on && _patch_render($scope1_id, "__tests__/tags/child.marko_1_input_on#0:5/setup");
 		_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_v#0:4_item#2/setup", ((_filled_guard($scope0_reason, 3) ? " >input_v" : "") + ($fg__input_items ? " item" : "")).slice(1), $scope0_reason, 0);
 		_scope($scope1_id, {
-			item: $ui__input_items__OR__input_v && item,
-			v: ($ui__input_on || $ui__input_items__OR__input_v) && v,
+			item: _write_if($scope0_reason, 3) && $ui__input_items__OR__input_v && item,
+			v: _write_if($scope0_reason, 4) && ($ui__input_on || $ui__input_items__OR__input_v) && v,
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
 			"ClosureScopes:v/8": $wi__input_items__OR__input_v && $for_content__v__closures,
 			"#childScope/0": _existing_scope($childScope)
@@ -53,8 +53,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	$fg__input_v && $cg__input_items && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_v#0:4/setup", "input_v");
 	$fg__input_on && $cg__input_items && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_on#0:5/setup", "input_on");
 	_scope($scope0_id, {
-		input_v: _unfilled_if($scope0_reason, 0) && input.v,
-		input_on: ($ui__input_items || _unfilled_if($scope0_reason, 4)) && input.on
+		input_v: $wi__input_items && _unfilled_if($scope0_reason, 0) && input.v,
+		input_on: $wi__input_items && ($ui__input_items || _unfilled_if($scope0_reason, 4)) && input.on
 	}, "__tests__/tags/child.marko", 0, {
 		input_v: ["input.v"],
 		input_on: ["input.on"]

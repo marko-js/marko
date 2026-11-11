@@ -61,7 +61,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>${_text_mark($scope0_id, "#text/2", n)}</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
-		input_show: ($ui__input_labels || _unfilled_if($scope0_reason, 1)) && input.show,
+		input_show: _write_if($scope0_reason, 0) && ($ui__input_labels || _unfilled_if($scope0_reason, 1)) && input.show,
 		n,
 		"ClosureScopes:input_show/8": _write_if($scope0_reason, 1) && $input_show__closures,
 		"ClosureScopes:n/9": $n__closures,

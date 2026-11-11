@@ -39,9 +39,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, 0), 0, $wg__input_wrap, $scope0_reason, 5);
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_tag#4_input_cls#5/setup", (($fg__input_tag ? " input_tag" : "") + ($fg__input_cls ? " input_cls" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_tag: $ui__input_tag__OR__input_cls && input.tag,
-		input_cls: $ui__input_tag__OR__input_cls && input.cls,
-		input_note: ($ui__input_wrap || _unfilled_if($scope0_reason, 6)) && input.note,
+		input_tag: _write_if($scope0_reason, 4) && $ui__input_tag__OR__input_cls && input.tag,
+		input_cls: _write_if($scope0_reason, 3) && $ui__input_tag__OR__input_cls && input.cls,
+		input_note: _write_if($scope0_reason, 5) && ($ui__input_wrap || _unfilled_if($scope0_reason, 6)) && input.note,
 		"ClosureScopes:input_note/9": _write_if($scope0_reason, 6) && $input_note__closures
 	}, "__tests__/template.marko", 0, {
 		input_tag: ["input.tag"],

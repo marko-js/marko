@@ -24,10 +24,7 @@ var field_default = _template("__tests__/tags/field.marko", (input) => {
 		_script($scope1_id, "__tests__/tags/field.marko_1_attrs#6");
 		_script($scope1_id, "__tests__/tags/field.marko_1");
 		_patch_render($scope1_id, "__tests__/tags/field.marko_1_value#3_valueChange#4/setup", ((_filled_guard($scope1_reason, 1) ? " value" : "") + ($fg__valueChange ? " valueChange" : "")).slice(1), $scope1_reason, 0);
-		_scope($scope1_id, {
-			value: $ui__value__OR__valueChange && value,
-			valueChange: $ui__value__OR__valueChange && valueChange
-		}, "__tests__/tags/field.marko", "1:2", {
+		_scope($scope1_id, { valueChange: $ui__value__OR__valueChange && valueChange }, "__tests__/tags/field.marko", "1:2", {
 			value: "2:12",
 			valueChange: "2:19",
 			"ControlledHandler:#input/0": ["valueChange", "3:31"]

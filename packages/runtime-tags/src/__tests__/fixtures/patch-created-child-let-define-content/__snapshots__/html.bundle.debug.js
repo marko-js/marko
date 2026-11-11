@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 2);
 	_scope($scope0_id, {
-		input_label: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label,
+		input_label: _write_if($scope0_reason, 2) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label,
 		Body_content: $ui__input_show && Body.content,
 		"ClosureScopes:input_label/7": _write_if($scope0_reason, 1) && $input_label__closures
 	}, "__tests__/template.marko", 0, {

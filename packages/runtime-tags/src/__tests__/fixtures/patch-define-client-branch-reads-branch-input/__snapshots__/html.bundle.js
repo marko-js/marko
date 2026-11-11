@@ -44,8 +44,8 @@ var child_default = _template("b", (input) => {
 	}, $scope0_id, "a", 1, $wg__input_v, 1, 0, 0, ["b3"], $scope0_reason, 1);
 	$fg__input_on && $cg__input_v && _patch_render($scope0_id, "b4", "e");
 	_scope($scope0_id, {
-		d: ($ui__input_on || $ui__input_v) && input.v,
-		e: ($ui__input_v || $ui__input_on) && input.on,
+		d: _write_if($scope0_reason, 2) && ($ui__input_on || $ui__input_v) && input.v,
+		e: $wi__input_v && ($ui__input_v || $ui__input_on) && input.on,
 		f: $wi__input_v && $input_v__closures
 	}) || (_filled_guard($scope0_reason, 1) && $ui__input_on && _patch_write($scope0_id, "xd", input.v, !_server_guard($scope0_reason, 1)) && $cg__input_on && _patch_subscribers($scope0_id, "b5", "d"), $fg__input_on && $ui__input_v && _patch_write($scope0_id, "xe", input.on, !_server_guard($scope0_reason, 2)));
 });

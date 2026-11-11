@@ -25,12 +25,12 @@ var each_default = _template("b", (input) => {
 		_dynamic_tag($scope1_id, "a", input.content, { label: item.label }, 1, 0, 0, $wg__input_items__OR__input_content, $scope0_reason, 0, 0, 2);
 		_patch_render($scope1_id, "b0", ((_filled_guard($scope0_reason, 2) ? " >e" : "") + ($fg__input_items ? " d" : "")).slice(1), $scope0_reason, 0);
 		_write_if($scope0_reason, 0) && _scope($scope1_id, {
-			d: _unfilled_if($scope0_reason, 0) && item?.label,
+			d: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 0) && item?.label,
 			_: _scope_with_id($scope0_id)
 		});
 	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "b1", $scope0_reason, 1);
 	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "b2", "e");
-	_scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && input.content }) || $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { e: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 0) && input.content }) || $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // tags/list.marko
@@ -69,7 +69,7 @@ var list_default = _template("c", (input) => {
 	});
 	_patch_child_end();
 	_scope($scope0_id, {
-		e: ($ui__input_items || _unfilled_if($scope0_reason, 2)) && input.q,
+		e: _write_if($scope0_reason, 1) && ($ui__input_items || _unfilled_if($scope0_reason, 2)) && input.q,
 		f: _write_if($scope0_reason, 2) && $input_q__closures,
 		a: _existing_scope($childScope2)
 	}) || _filled_guard($scope0_reason, 2) && $ui__input_items && _patch_write($scope0_id, "xe", input.q, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "c3", "e");

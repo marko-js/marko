@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>interactive</button>${_el_mark($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
-		input_p: ($ui__input_as || _unfilled_if($scope0_reason, 2)) && input.p,
+		input_p: _write_if($scope0_reason, 1) && ($ui__input_as || _unfilled_if($scope0_reason, 2)) && input.p,
 		"ClosureScopes:input_p/6": _write_if($scope0_reason, 2) && $input_p__closures
 	}, "__tests__/template.marko", 0, { input_p: ["input.p"] }) || _filled_guard($scope0_reason, 2) && (_client_branch_if("__tests__/template.marko_1*content", $scope0_id) || $ui__input_as) && _patch_write($scope0_id, "PatchMarkedWrite:input_p", input.p, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_p#5/subscribers", "input_p");
 }, 1);

@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button class=n>+</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a4");
 	_scope($scope0_id, {
-		e: ($ui__input_x || _unfilled_if($scope0_reason, 1)) && input.y,
+		e: _write_if($scope0_reason, 2) && ($ui__input_x || _unfilled_if($scope0_reason, 1)) && input.y,
 		h: n,
 		i: $wi__input_y && $input_y__closures,
 		a: _existing_scope($childScope)

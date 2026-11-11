@@ -16,7 +16,7 @@ _shells({
 	a2: `a2${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l")};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $sg__input_label = _server_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $sg__input_label = _server_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	$fg__input_label && $ui__input_show && _patch_write($scope0_id, "xd", input.label, !$sg__input_label);
 	const opts = { fn: _bind_resume(function() {
@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a2"], $scope0_reason, 1);
 	$fg__input_label && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "a1", "f");
 	_scope($scope0_id, {
-		d: _write_if($scope0_reason, 1) && input.label,
-		f: ($ui__input_show || _unfilled_if($scope0_reason, 0)) && opts
+		d: $wi__input_show && input.label,
+		f: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 0)) && opts
 	}) || $fg__input_label && $ui__input_show && _patch_write($scope0_id, "xf", opts, !$sg__input_label);
 }, 1);

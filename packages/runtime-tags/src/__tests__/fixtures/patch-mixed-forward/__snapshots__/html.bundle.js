@@ -8,8 +8,8 @@ var kid_default = _template("b", (input) => {
 	_html(`<span>${_text_mark($scope0_id, "a", input.a + input.b, 1, $scope0_reason, 0)}</span>`);
 	_patch_render($scope0_id, "b0", (($fg__input_a ? " d" : "") + ($fg__input_b ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: $ui__input_a__OR__input_b && input.a,
-		e: $ui__input_a__OR__input_b && input.b
+		d: _write_if($scope0_reason, 2) && $ui__input_a__OR__input_b && input.a,
+		e: _write_if($scope0_reason, 1) && $ui__input_a__OR__input_b && input.b
 	}) || ($fg__input_a && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.a, !_server_guard($scope0_reason, 1)), $fg__input_b && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.b, !_server_guard($scope0_reason, 2)));
 });
 

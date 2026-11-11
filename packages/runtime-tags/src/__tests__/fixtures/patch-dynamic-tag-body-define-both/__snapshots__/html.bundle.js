@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "b", input.on ? card_default : "div", { content: Label }, 9, 0, 0, $wg__input_on, $scope0_reason, 4, 0, void 0, 0, 0, "a0");
 	_html("</main>");
 	_scope($scope0_id, {
-		e: ($ui__input_x__OR__input_on || _unfilled_if($scope0_reason, 2)) && input.note,
+		e: _write_if($scope0_reason, 0) && ($ui__input_x__OR__input_on || _unfilled_if($scope0_reason, 2)) && input.note,
 		h: ($ui__input_x__OR__input_on || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4)) && Label,
 		k: _write_if($scope0_reason, 2) && $input_note__closures
 	}) || _filled_guard($scope0_reason, 2) && (_client_branch_if("a0", $scope0_id) || _client_guard($scope0_reason, 0) || $ui__input_x__OR__input_on) && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "a2", "e");

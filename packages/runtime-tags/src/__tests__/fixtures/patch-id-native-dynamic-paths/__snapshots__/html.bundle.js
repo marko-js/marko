@@ -20,13 +20,9 @@ var template_default = _template("a", (input) => {
 	const Wrap = { content: _content("a1", ({ on, content }) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason(), $wg__on__OR__content = _write_guard($scope3_reason, 0), $ui__on__OR__content = _unfilled_if($scope3_reason, 0), $fg__content = _filled_guard($scope3_reason, 2);
-		const Tag = on ? "p" : "div";
-		_dynamic_tag($scope3_id, "a", Tag, { content }, 1, 0, 0, $wg__on__OR__content, $scope3_reason, 0);
+		_dynamic_tag($scope3_id, "a", on ? "p" : "div", { content }, 1, 0, 0, $wg__on__OR__content, $scope3_reason, 0);
 		_patch_render($scope3_id, "a2", (($fg__content ? " e" : "") + (_filled_guard($scope3_reason, 1) ? " f" : "")).slice(1), $scope3_reason, 0);
-		_write_if($scope3_reason, 0) && _scope($scope3_id, {
-			e: $ui__on__OR__content && content,
-			f: $ui__on__OR__content && Tag
-		}) || $fg__content && _unfilled_if($scope3_reason, 1) && _patch_write($scope3_id, "xe", content, 1);
+		_write_if($scope3_reason, 0) && _scope($scope3_id, { e: _write_if($scope3_reason, 1) && $ui__on__OR__content && content }) || $fg__content && _unfilled_if($scope3_reason, 1) && _patch_write($scope3_id, "xe", content, 1);
 	}, $scope0_id) };
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();

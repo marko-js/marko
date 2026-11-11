@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a2");
 	_patch_render($scope0_id, "a3", (($fg__input_attrs ? " f" : "") + ($fg__input_on ? " g" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		f: $ui__input_attrs__OR__input_on && input.attrs,
-		g: $ui__input_attrs__OR__input_on && input.on
+		f: _write_if($scope0_reason, 2) && $ui__input_attrs__OR__input_on && input.attrs,
+		g: _write_if($scope0_reason, 1) && $ui__input_attrs__OR__input_on && input.on
 	}) || ($fg__input_attrs && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.attrs, !_server_guard($scope0_reason, 1)), $fg__input_on && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.on, !_server_guard($scope0_reason, 2)));
 }, 1);

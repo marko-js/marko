@@ -37,8 +37,8 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/panel.marko_2*shell"], $scope0_reason, 6);
 	_scope($scope0_id, {
-		input_a: ($ui__input_b__OR__input_show || $ui__input_a__OR__input_b) && input.a,
-		input_b: ($ui__input_a__OR__input_show || $ui__input_a__OR__input_b) && input.b,
+		input_a: _write_if($scope0_reason, 2) && ($ui__input_b__OR__input_show || $ui__input_a__OR__input_b) && input.a,
+		input_b: _write_if($scope0_reason, 1) && ($ui__input_a__OR__input_show || $ui__input_a__OR__input_b) && input.b,
 		"ClosureScopes:input_a/6": _write_if($scope0_reason, 4) && $input_a__closures,
 		"ClosureScopes:input_b/7": _write_if($scope0_reason, 5) && $input_b__closures
 	}, "__tests__/tags/panel.marko", 0, {

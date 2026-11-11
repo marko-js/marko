@@ -58,7 +58,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	$fg__input_items && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/template.marko_1_input_items#0:5/setup", "input_items");
 	_scope($scope0_id, {
-		input_items: ($ui__input_visible || _unfilled_if($scope0_reason, 2)) && input.items,
+		input_items: _write_if($scope0_reason, 1) && ($ui__input_visible || _unfilled_if($scope0_reason, 2)) && input.items,
 		headingId: _unfilled_if($scope0_reason, 0) && headingId
 	}, "__tests__/template.marko", 0, {
 		input_items: ["input.items"],

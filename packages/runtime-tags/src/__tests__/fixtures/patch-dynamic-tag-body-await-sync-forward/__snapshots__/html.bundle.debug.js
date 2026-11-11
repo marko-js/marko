@@ -56,7 +56,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		$wi__input_p__OR__input_content && _scope($scope1_id, {}, "__tests__/tags/card.marko", "2:2");
 	}, 1, "__tests__/tags/card.marko_1*content", $ui__input_p && 2, 1, 1);
 	_scope($scope0_id, {
-		input_content: ($ui__input_p || _unfilled_if($scope0_reason, 2)) && input.content,
+		input_content: _write_if($scope0_reason, 1) && ($ui__input_p || _unfilled_if($scope0_reason, 2)) && input.content,
 		"ClosureScopes:input_content/5": _write_if($scope0_reason, 2) && $input_content__closures
 	}, "__tests__/tags/card.marko", 0, { input_content: ["input.content"] }) || _filled_guard($scope0_reason, 2) && (_client_branch_if("__tests__/tags/card.marko_2*content", $scope0_id) || $ui__input_p) && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "__tests__/tags/card.marko_0_input_content#4/subscribers", "input_content");
 });
@@ -84,9 +84,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("</main>");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_on#3_input_p#4/setup", (($fg__input_on ? " input_on" : "") + ($fg__input_p ? " input_p" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_on: $ui__input_on__OR__input_p && input.on,
-		input_p: $ui__input_on__OR__input_p && input.p,
-		input_note: ($ui__input_on__OR__input_p || _unfilled_if($scope0_reason, 4)) && input.note,
+		input_on: _write_if($scope0_reason, 3) && $ui__input_on__OR__input_p && input.on,
+		input_p: _write_if($scope0_reason, 2) && $ui__input_on__OR__input_p && input.p,
+		input_note: _write_if($scope0_reason, 0) && ($ui__input_on__OR__input_p || _unfilled_if($scope0_reason, 4)) && input.note,
 		"ClosureScopes:input_note/7": _write_if($scope0_reason, 4) && $input_note__closures
 	}, "__tests__/template.marko", 0, {
 		input_on: ["input.on"],

@@ -85,7 +85,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id, "#text/1", 1, _write_guard($scope1_reason, 0), 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope1_reason, 0);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_note#0:3/subscribe", $cg__input_note);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, {
-			depth: ($ui__input_on || _unfilled_if($scope1_reason, 0)) && depth,
+			depth: $wi__input_on && ($ui__input_on || _unfilled_if($scope1_reason, 0)) && depth,
 			_: (_write_if($scope0_reason, 0) || $wi__depth) && _scope_with_id($scope0_id),
 			"ClosureScopes:depth/7": $wi__depth && $Tree_content__depth__closures
 		}, "__tests__/template.marko", "2:2", { depth: "2:16" }), $cg__input_note && "__tests__/template.marko_1_input_note#0:3/subscribe") || _filled_guard($scope1_reason, 0) && (_client_branch_if("__tests__/template.marko_3*content", $scope1_id) || $ui__input_on) && _patch_write($scope1_id, "PatchMarkedWrite:depth", depth, !_server_guard($scope1_reason, 0)) && _patch_subscribers($scope1_id, "__tests__/template.marko_1_depth#4/subscribers", "depth");
@@ -97,7 +97,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_html("</main>");
 	_scope($scope0_id, {
-		input_note: ($ui__input_on2 || _unfilled_if($scope0_reason, 1)) && input.note,
+		input_note: $wi__input_on && ($ui__input_on2 || _unfilled_if($scope0_reason, 1)) && input.note,
 		"ClosureScopes:input_on/6": $wi__input_on && $input_on__closures,
 		"ClosureScopes:input_note/5": _write_if($scope0_reason, 1) && $input_note__closures,
 		"#childScope/0": _existing_scope($childScope2)

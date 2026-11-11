@@ -30,8 +30,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $selectedChange = input.selectedChange || void 0;
 	_patch_let_change($scope0_id, "PatchFill:__tests__/template.marko_0_selected#8/fill", selected, "PatchWrite:TagVariableChange:selected", $selectedChange, $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_selected: $ui__input_selected__OR__input_selectedChange && input.selected,
-		input_selectedChange: $ui__input_selected__OR__input_selectedChange && input.selectedChange,
+		input_selected: _write_if($scope0_reason, 2) && $ui__input_selected__OR__input_selectedChange && input.selected,
+		input_selectedChange: _write_if($scope0_reason, 1) && $ui__input_selected__OR__input_selectedChange && input.selectedChange,
 		selected,
 		"TagVariableChange:selected": $selectedChange
 	}, "__tests__/template.marko", 0, {

@@ -21,7 +21,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;D ;<em> </em>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2), $wi__input_show__OR__input_note = _write_if($scope0_reason, 0), $ui__input_note = _unfilled_if($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2), $wi__input_show__OR__input_note = _write_if($scope0_reason, 0), $ui__input_note = _unfilled_if($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_note = _write_if($scope0_reason, 3), $wi__input_show = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	const $input_show__closures = new Set();
@@ -49,9 +49,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_html("</main>");
 	_scope($scope0_id, {
-		input_note: ($ui__input_show || $ui__input_note) && input.note,
-		"ClosureScopes:input_note/7": _write_if($scope0_reason, 3) && ($ui__input_note || $ui__input_show) && $input_note__closures,
-		"ClosureScopes:input_show/6": _write_if($scope0_reason, 2) && $ui__input_show && $input_show__closures,
+		input_note: $wi__input_show && ($ui__input_show || $ui__input_note) && input.note,
+		"ClosureScopes:input_note/7": $wi__input_note && $wi__input_note && ($ui__input_note || $ui__input_show) && $input_note__closures,
+		"ClosureScopes:input_show/6": $wi__input_show && $ui__input_show && $input_show__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { input_note: ["input.note"] }) || _filled_guard($scope0_reason, 3) && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 3)) && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#5/subscribers", "input_note");
 }, 1);

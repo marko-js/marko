@@ -18,7 +18,7 @@ var wrap_default = _template("d", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["d1"], $scope0_reason, 1);
 	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "d0", "e");
-	_scope($scope0_id, { e: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.content }) || $fg__input_content && $ui__input_show && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { e: _write_if($scope0_reason, 1) && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.content }) || $fg__input_content && $ui__input_show && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // tags/tree-b.marko
@@ -31,7 +31,7 @@ _shells({
 	c3: "c3;b%;<!><!><!>"
 });
 var tree_b_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_depth = _client_guard($scope0_reason, 2), $uf__input_show = _updates_from($scope0_reason, 1), $wg__input_show__OR__input_depth = _write_guard($scope0_reason, 0), $wi__input_show__OR__input_depth = _write_if($scope0_reason, 0), $wg__input_depth = _write_guard($scope0_reason, 2), $ui__input_show__OR__input_depth = _unfilled_if($scope0_reason, 0), $ui__input_depth = _unfilled_if($scope0_reason, 2), $fg__input_show = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_depth = _client_guard($scope0_reason, 2), $uf__input_show = _updates_from($scope0_reason, 1), $wg__input_show__OR__input_depth = _write_guard($scope0_reason, 0), $wi__input_show__OR__input_depth = _write_if($scope0_reason, 0), $wg__input_depth = _write_guard($scope0_reason, 2), $ui__input_show__OR__input_depth = _unfilled_if($scope0_reason, 0), $ui__input_depth = _unfilled_if($scope0_reason, 2), $fg__input_show = _filled_guard($scope0_reason, 1), $wi__input_depth = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_depth__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason($uf__input_show << 1 | $uf__input_show << 3);
@@ -61,9 +61,9 @@ var tree_b_default = _template("c", (input) => {
 	}, $scope0_id, "b", 1, $wg__input_depth, 1, 0, 0, ["c3"], $scope0_reason, 2);
 	$fg__input_show && $cg__input_depth && _patch_render($scope0_id, "c5", "e");
 	_scope($scope0_id, {
-		e: $ui__input_show__OR__input_depth && input.show,
-		f: ($ui__input_show__OR__input_depth || $ui__input_depth) && input.depth,
-		h: _write_if($scope0_reason, 2) && $input_depth__closures,
+		e: $wi__input_depth && $ui__input_show__OR__input_depth && input.show,
+		f: _write_if($scope0_reason, 1) && ($ui__input_show__OR__input_depth || $ui__input_depth) && input.depth,
+		h: $wi__input_depth && $input_depth__closures,
 		a: _existing_scope($childScope)
 	}) || ($fg__input_show && $ui__input_depth && _patch_write($scope0_id, "xe", input.show, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.depth, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "c4", "f"));
 });

@@ -35,5 +35,5 @@ var template_default = _template("a", (input) => {
 	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a2", $scope0_reason, 0);
 	_html(`</ul>${_el_mark($scope0_id, "a")}`);
 	$fg__input_show && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a3", "e");
-	_scope($scope0_id, { e: ($ui__input_items || _unfilled_if($scope0_reason, 1)) && input.show }) || $fg__input_show && $ui__input_items && _patch_write($scope0_id, "xe", input.show, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { e: _write_if($scope0_reason, 0) && ($ui__input_items || _unfilled_if($scope0_reason, 1)) && input.show }) || $fg__input_show && $ui__input_items && _patch_write($scope0_id, "xe", input.show, !_server_guard($scope0_reason, 1));
 }, 1);

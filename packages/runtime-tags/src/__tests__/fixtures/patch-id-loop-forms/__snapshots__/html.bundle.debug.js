@@ -129,8 +129,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, (i) => "until-" + i, $scope0_id, "#text/8", 1, 1, 1, 0, 0, "__tests__/template.marko_8*shell", $scope0_reason, 0);
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_end#13_input_start#14/setup", (($fg__input_end ? " input_end" : "") + ($fg__input_start ? " input_start" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_end: $ui__input_end__OR__input_start && input.end,
-		input_start: $ui__input_end__OR__input_start && input.start,
+		input_end: _write_if($scope0_reason, 5) && $ui__input_end__OR__input_start && input.end,
+		input_start: _write_if($scope0_reason, 4) && $ui__input_end__OR__input_start && input.start,
 		heading: _unfilled_if($scope0_reason, 1) && heading
 	}, "__tests__/template.marko", 0, {
 		input_end: ["input.end"],

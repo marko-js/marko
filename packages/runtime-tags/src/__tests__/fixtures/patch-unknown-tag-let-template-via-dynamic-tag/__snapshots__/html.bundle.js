@@ -18,9 +18,9 @@ var host_default = _template("c", (input) => {
 	}, 1, 0, 0, $wg__input_frame__OR__input_item__OR__input_label, $scope0_reason, 3, 0, 4);
 	_patch_render($scope0_id, "c0", (($fg__input_frame ? " d" : "") + ($fg__input_item ? " e" : "") + ($fg__input_label ? " f" : "")).slice(1), $scope0_reason, 3);
 	_scope($scope0_id, {
-		d: $ui__input_frame__OR__input_item__OR__input_label && input.frame,
-		e: $ui__input_frame__OR__input_item__OR__input_label && input.item,
-		f: $ui__input_frame__OR__input_item__OR__input_label && input.label
+		d: _write_if($scope0_reason, 2) && $ui__input_frame__OR__input_item__OR__input_label && input.frame,
+		e: _write_if($scope0_reason, 1) && $ui__input_frame__OR__input_item__OR__input_label && input.item,
+		f: _write_if($scope0_reason, 0) && $ui__input_frame__OR__input_item__OR__input_label && input.label
 	}) || ($fg__input_frame && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.frame, !_server_guard($scope0_reason, 4)), $fg__input_item && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.item, !_server_guard($scope0_reason, 5)), $fg__input_label && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 6)));
 });
 
@@ -54,7 +54,7 @@ var template_default = _template("a", (input) => {
 	}, 1, 0, 0, $wg__input_framed__OR__input_label, $scope0_reason, 0);
 	_patch_render($scope0_id, "a0", (($fg__input_framed ? " d" : "") + ($fg__input_label ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: $ui__input_framed__OR__input_label && input.framed,
-		e: $ui__input_framed__OR__input_label && input.label
+		d: _write_if($scope0_reason, 2) && $ui__input_framed__OR__input_label && input.framed,
+		e: _write_if($scope0_reason, 1) && $ui__input_framed__OR__input_label && input.label
 	}) || ($fg__input_framed && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.framed, !_server_guard($scope0_reason, 1)), $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 2)));
 }, 1);

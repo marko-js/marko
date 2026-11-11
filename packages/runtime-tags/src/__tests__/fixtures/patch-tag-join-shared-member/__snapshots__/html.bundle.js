@@ -10,10 +10,10 @@ var rows_default = _template("b", (input) => {
 	_patch_render($scope0_id, "b0", (($fg__input_a ? " e" : "") + ($fg__input_b ? " f" : "") + ($fg__input_c ? " g" : "")).slice(1), $scope0_reason, 3);
 	_patch_render($scope0_id, "b1", (($fg__input_a ? " e" : "") + ($fg__input_d ? " i" : "")).slice(1), $scope0_reason, 2);
 	_scope($scope0_id, {
-		e: ($ui__input_b__OR__input_c__OR__input_d || $ui__input_a__OR__input_d || $ui__input_a__OR__input_b__OR__input_c) && input.a,
-		f: $ui__input_a__OR__input_b__OR__input_c && input.b,
-		g: $ui__input_a__OR__input_b__OR__input_c && input.c,
-		i: $ui__input_a__OR__input_d && input.d
+		e: _write_if($scope0_reason, 4) && ($ui__input_b__OR__input_c__OR__input_d || $ui__input_a__OR__input_d || $ui__input_a__OR__input_b__OR__input_c) && input.a,
+		f: _write_if($scope0_reason, 1) && $ui__input_a__OR__input_b__OR__input_c && input.b,
+		g: _write_if($scope0_reason, 0) && $ui__input_a__OR__input_b__OR__input_c && input.c,
+		i: _write_if($scope0_reason, 5) && $ui__input_a__OR__input_d && input.d
 	}) || ($fg__input_a && $ui__input_b__OR__input_c__OR__input_d && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 5)), $fg__input_b && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 6)), $fg__input_c && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.c, !_server_guard($scope0_reason, 7)), $fg__input_d && _unfilled_if($scope0_reason, 5) && _patch_write($scope0_id, "xi", input.d, !_server_guard($scope0_reason, 8)));
 });
 

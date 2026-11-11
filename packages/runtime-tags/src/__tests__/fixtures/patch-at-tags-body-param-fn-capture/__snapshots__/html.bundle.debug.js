@@ -22,8 +22,8 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", input.then, { x: input.x }, 1, 0, 0, $wg__input_then__OR__input_x, $scope0_reason, 0, 0, 1);
 	_patch_render($scope0_id, "__tests__/tags/wrap.marko_0_input_then#3_input_x#4/setup", (($fg__input_then ? " input_then" : "") + ($fg__input_x ? " input_x" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_then: $ui__input_then__OR__input_x && input.then,
-		input_x: $ui__input_then__OR__input_x && input.x
+		input_then: _write_if($scope0_reason, 2) && $ui__input_then__OR__input_x && input.then,
+		input_x: _write_if($scope0_reason, 1) && $ui__input_then__OR__input_x && input.x
 	}, "__tests__/tags/wrap.marko", 0, {
 		input_then: ["input.then"],
 		input_x: ["input.x"]

@@ -40,7 +40,7 @@ var host_default = _template("__tests__/tags/host/index.marko", (input) => {
 	}, $scope0_id, "#section/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/host/index.marko_1*shell"], $scope0_reason, 0);
 	_html(`</section>${_el_mark($scope0_id, "#section/0", $wg__input_show)}`);
 	$fg__input_label && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/tags/host/index.marko_1_input_label#0:4/setup", "input_label");
-	_scope($scope0_id, { input_label: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label }, "__tests__/tags/host/index.marko", 0, { input_label: ["input.label"] }) || $fg__input_label && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { input_label: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label }, "__tests__/tags/host/index.marko", 0, { input_label: ["input.label"] }) || $fg__input_label && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

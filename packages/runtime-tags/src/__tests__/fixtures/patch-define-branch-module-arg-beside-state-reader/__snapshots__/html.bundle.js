@@ -35,8 +35,8 @@ var template_default = _template("a", (input) => {
 		$fg__fmt && $cg__isOpen && _patch_render($scope3_id, "a4", "e");
 		$fg__label && $cg__isOpen && _patch_render($scope3_id, "a5", "f");
 		_write_if($scope3_reason, 3) && _scope($scope3_id, {
-			e: (_unfilled_if($scope3_reason, 1, 5) || _unfilled_if($scope3_reason, 2, 5)) && fmt,
-			f: ($ui__isOpen__OR__fmt || _unfilled_if($scope3_reason, 2)) && label
+			e: _write_if($scope3_reason, 1) && (_unfilled_if($scope3_reason, 1, 5) || _unfilled_if($scope3_reason, 2, 5)) && fmt,
+			f: _write_if($scope3_reason, 0) && ($ui__isOpen__OR__fmt || _unfilled_if($scope3_reason, 2)) && label
 		}) || ($fg__fmt && _unfilled_if($scope3_reason, 1) && _patch_write($scope3_id, "xe", fmt, 1), $fg__label && $ui__isOpen__OR__fmt && _patch_write($scope3_id, "xf", label, !_server_guard($scope3_reason, 6)));
 	}, $scope0_id) };
 	_if(() => {
@@ -74,7 +74,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "a7", "h");
 	$fg__input_label && _patch_render($scope0_id, "a8", "h");
 	_scope($scope0_id, {
-		g: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
+		g: _write_if($scope0_reason, 1) && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
 		h: input.label,
 		i: open
 	}) || ($fg__input_open && $ui__input_show && _patch_write($scope0_id, "xg", input.open, !_server_guard($scope0_reason, 2)), $fg__input_label && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 3)));

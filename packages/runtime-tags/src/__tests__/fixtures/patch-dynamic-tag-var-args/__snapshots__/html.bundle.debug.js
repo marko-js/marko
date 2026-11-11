@@ -37,8 +37,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<p>${_text_mark($scope0_id, "#text/2", n)}</p></main>`);
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_on#5_input_start#6/setup", (($fg__input_on ? " input_on" : "") + ($fg__input_start ? " input_start" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_on: $ui__input_on__OR__input_start && input.on,
-		input_start: $ui__input_on__OR__input_start && input.start
+		input_on: _write_if($scope0_reason, 2) && $ui__input_on__OR__input_start && input.on,
+		input_start: _write_if($scope0_reason, 1) && $ui__input_on__OR__input_start && input.start
 	}, "__tests__/template.marko", 0, {
 		input_on: ["input.on"],
 		input_start: ["input.start"]

@@ -56,7 +56,7 @@ var template_default = _template("b", (input) => {
 	_script($scope0_id, "b2");
 	$fg__input_label && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "b0", "h");
 	_scope($scope0_id, {
-		h: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label,
+		h: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label,
 		i: n
 	}) || $fg__input_label && $ui__input_show && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 1));
 }, 1);

@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a2");
 	$fg__input_title && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a0", "f");
 	_scope($scope0_id, {
-		f: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.title,
+		f: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.title,
 		g: count
 	}) || $fg__input_title && $ui__input_show && _patch_write($scope0_id, "xf", input.title, !_server_guard($scope0_reason, 1));
 }, 1);

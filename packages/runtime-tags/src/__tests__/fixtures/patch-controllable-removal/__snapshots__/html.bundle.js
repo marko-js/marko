@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a1");
 	_patch_render($scope0_id, "a2", (($fg__input_value ? " f" : "") + ($fg__input_wire ? " g" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		f: $ui__input_value__OR__input_wire && input.value,
+		f: _write_if($scope0_reason, 3) && $ui__input_value__OR__input_wire && input.value,
 		g: $ui__input_value__OR__input_wire && input.wire,
 		h: $ui__input_value__OR__input_wire && handler
 	}) || ($fg__input_value && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xf", input.value, !_server_guard($scope0_reason, 2)), $fg__input_wire && $ui__input_value__OR__input_wire && _patch_write($scope0_id, "xg", input.wire, !_server_guard($scope0_reason, 3)));

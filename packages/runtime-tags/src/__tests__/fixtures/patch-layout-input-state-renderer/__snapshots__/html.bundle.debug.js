@@ -12,8 +12,8 @@ var layout_default = _template("__tests__/layout.marko", (input) => {
 	_html("</main>"), _trailers("</body></html>");
 	_patch_render($scope0_id, "__tests__/layout.marko_0_input_nav#4_input_label#5/setup", (($fg__input_nav ? " input_nav" : "") + ($fg__input_label ? " input_label" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_nav: $ui__input_nav__OR__input_label && input.nav,
-		input_label: $ui__input_nav__OR__input_label && input.label
+		input_nav: _write_if($scope0_reason, 3) && $ui__input_nav__OR__input_label && input.nav,
+		input_label: _write_if($scope0_reason, 2) && $ui__input_nav__OR__input_label && input.label
 	}, "__tests__/layout.marko", 0, {
 		input_nav: ["input.nav"],
 		input_label: ["input.label"]

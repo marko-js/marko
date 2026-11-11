@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell; D ;<a> </a>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 2), $fg__input_href = _filled_guard($scope0_reason, 3), $fg__input_hidden = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 2), $wi__input_show = _write_if($scope0_reason, 2), $fg__input_href = _filled_guard($scope0_reason, 3), $fg__input_hidden = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	_html(`<main><h1>${_text_mark($scope0_id, "#text/0", input.title, 1, $scope0_reason, 1)}</h1>`);
 	_if(() => {
@@ -26,9 +26,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_hidden && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_hidden#0:7/setup", "input_hidden");
 	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_label#0:8/setup", "input_label");
 	_scope($scope0_id, {
-		input_href: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.href,
-		input_hidden: ($ui__input_show || _unfilled_if($scope0_reason, 4)) && input.hidden,
-		input_label: ($ui__input_show || _unfilled_if($scope0_reason, 5)) && input.label
+		input_href: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.href,
+		input_hidden: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 4)) && input.hidden,
+		input_label: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 5)) && input.label
 	}, "__tests__/template.marko", 0, {
 		input_href: ["input.href"],
 		input_hidden: ["input.hidden"],

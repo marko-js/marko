@@ -21,7 +21,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/wrap.marko_1*shell"], $scope0_reason, 1);
 	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/tags/wrap.marko_1_input_content#0:4/setup", "input_content");
-	_scope($scope0_id, { input_content: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.content }, "__tests__/tags/wrap.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { input_content: _write_if($scope0_reason, 1) && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.content }, "__tests__/tags/wrap.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // tags/tree-b.marko
@@ -119,8 +119,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("</ul>");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_deep#3_input_node#4_Card#5/setup", (($fg__input_deep ? " input_deep" : "") + ($fg__input_node ? " input_node" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_deep: $ui__input_deep__OR__input_node && input.deep,
-		input_node: $ui__input_deep__OR__input_node && input.node,
+		input_deep: _write_if($scope0_reason, 2) && $ui__input_deep__OR__input_node && input.deep,
+		input_node: _write_if($scope0_reason, 1) && $ui__input_deep__OR__input_node && input.node,
 		Card: $ui__input_deep__OR__input_node && Card
 	}, "__tests__/template.marko", 0, {
 		input_deep: ["input.deep"],

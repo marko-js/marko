@@ -21,7 +21,7 @@ _shells({
 	c3: `c3${_shell_marker([["c7"], ["c0"]], ["b>", $setup$2])};${/*@__PURE__*/ ((_w0) => ` D/${_w0}&l`)($walks)};${/*@__PURE__*/ ((_w0) => `<li>${_w0}</li>`)($template$1)}`
 });
 var feed_list_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_data = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wi__input_items = _write_if($scope0_reason, 1), $fg__input_data = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let hovered = void 0;
 	_html("<ul>");
@@ -50,8 +50,8 @@ var feed_list_default = _template("c", (input) => {
 	$fg__input_data && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "c4", "e");
 	_patch_fill($scope0_id, "vc5", hovered, 1);
 	_scope($scope0_id, {
-		e: _unfilled_if($scope0_reason, 0) && input.data,
-		f: _write_if($scope0_reason, 1) && hovered
+		e: $wi__input_items && _unfilled_if($scope0_reason, 0) && input.data,
+		f: $wi__input_items && hovered
 	}) || $fg__input_data && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.data, !_server_guard($scope0_reason, 2));
 });
 

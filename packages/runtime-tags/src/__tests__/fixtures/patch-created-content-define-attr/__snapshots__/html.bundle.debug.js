@@ -60,8 +60,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope0_reason, 5);
 	_scope($scope0_id, {
-		input_label: ($ui__input_tag__OR__input_show || _unfilled_if($scope0_reason, 3)) && input.label,
-		input_tag: ($ui__input_show || $ui__input_tag) && input.tag,
+		input_label: $wi__input_tag__OR__input_show && ($ui__input_tag__OR__input_show || _unfilled_if($scope0_reason, 3)) && input.label,
+		input_tag: _write_if($scope0_reason, 5) && ($ui__input_show || $ui__input_tag) && input.tag,
 		Inner: ($ui__input_tag__OR__input_show || $ui__input_tag) && Inner,
 		Body_content: $ui__input_show && Body.content,
 		"ClosureScopes:input_label/9": _write_if($scope0_reason, 3) && $input_label__closures,

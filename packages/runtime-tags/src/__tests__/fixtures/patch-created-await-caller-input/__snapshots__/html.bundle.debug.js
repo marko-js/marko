@@ -74,7 +74,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_first = _filled_guard($scope0_reason, 2), $fg__input_second = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $fg__input_first = _filled_guard($scope0_reason, 2), $fg__input_second = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -98,8 +98,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_first && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_first#0:4/setup", "input_first");
 	$fg__input_second && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_second#0:5/setup", "input_second");
 	_scope($scope0_id, {
-		input_first: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.first,
-		input_second: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.second
+		input_first: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.first,
+		input_second: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.second
 	}, "__tests__/template.marko", 0, {
 		input_first: ["input.first"],
 		input_second: ["input.second"]

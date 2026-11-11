@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_x__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), $cg__input_x && "__tests__/template.marko_1_input_x#0:4/subscribe");
 	}, $scope0_id, ($scope) => $scope0_page ? [{ input_x: input.x }] : []), 0, $wg__input_wrap, $scope0_reason, 1, 0, void 0, 0, 0, "__tests__/template.marko_1*content");
 	_scope($scope0_id, {
-		input_x: ($ui__input_wrap || _unfilled_if($scope0_reason, 2)) && input.x,
+		input_x: _write_if($scope0_reason, 1) && ($ui__input_wrap || _unfilled_if($scope0_reason, 2)) && input.x,
 		"ClosureScopes:input_x/5": _write_if($scope0_reason, 2) && $input_x__closures
 	}, "__tests__/template.marko", 0, { input_x: ["input.x"] }) || _filled_guard($scope0_reason, 2) && (_client_branch_if("__tests__/template.marko_1*content", $scope0_id) || $ui__input_wrap) && _patch_write($scope0_id, "PatchMarkedWrite:input_x", input.x, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_x#4/subscribers", "input_x");
 }, 1);

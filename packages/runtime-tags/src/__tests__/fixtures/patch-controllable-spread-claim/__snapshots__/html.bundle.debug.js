@@ -15,8 +15,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#4_input_on#5");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_attrs#4_input_on#5/setup", (($fg__input_attrs ? " input_attrs" : "") + ($fg__input_on ? " input_on" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_attrs: $ui__input_attrs__OR__input_on && input.attrs,
-		input_on: $ui__input_attrs__OR__input_on && input.on
+		input_attrs: _write_if($scope0_reason, 2) && $ui__input_attrs__OR__input_on && input.attrs,
+		input_on: _write_if($scope0_reason, 1) && $ui__input_attrs__OR__input_on && input.on
 	}, "__tests__/template.marko", 0, {
 		input_attrs: ["input.attrs"],
 		input_on: ["input.on"],

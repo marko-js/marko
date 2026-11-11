@@ -31,7 +31,7 @@ var child_default = _template("b", (input) => {
 	$fg__input_label2 && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "b0", "f");
 	_patch_fill($scope0_id, "vb4", c, 1);
 	_scope($scope0_id, {
-		f: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label,
+		f: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label,
 		g: c
 	}) || $fg__input_label2 && $ui__input_show && _patch_write($scope0_id, "xf", input.label, !$sg__input_label);
 });

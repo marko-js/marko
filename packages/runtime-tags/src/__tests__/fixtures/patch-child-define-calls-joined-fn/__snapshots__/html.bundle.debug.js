@@ -19,9 +19,9 @@ var label_view_default = _template("__tests__/tags/label-view.marko", (input) =>
 		_script($scope1_id, "__tests__/tags/label-view.marko_1_get#7", 1, $fg__a__OR__b__OR__flag);
 		_patch_render($scope1_id, "__tests__/tags/label-view.marko_1_a#3_b#4_flag#5/setup", (($fg__a ? " a" : "") + ($fg__b ? " b" : "") + ($fg__flag ? " flag" : "")).slice(1), $scope1_reason, 3);
 		_scope($scope1_id, {
-			a: $ui__a__OR__b__OR__flag && a,
-			b: $ui__a__OR__b__OR__flag && b,
-			flag: $ui__a__OR__b__OR__flag && flag,
+			a: _write_if($scope1_reason, 2) && $ui__a__OR__b__OR__flag && a,
+			b: _write_if($scope1_reason, 1) && $ui__a__OR__b__OR__flag && b,
+			flag: _write_if($scope1_reason, 0) && $ui__a__OR__b__OR__flag && flag,
 			get
 		}, "__tests__/tags/label-view.marko", "1:2", {
 			a: "1:16",

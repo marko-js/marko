@@ -76,7 +76,7 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id, "b", 1, _write_guard($scope1_reason, 0), 1, 0, 0, ["a3"], $scope1_reason, 0);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a6", $cg__input_note);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, {
-			e: ($ui__input_on || _unfilled_if($scope1_reason, 0)) && depth,
+			e: $wi__input_on && ($ui__input_on || _unfilled_if($scope1_reason, 0)) && depth,
 			_: (_write_if($scope0_reason, 0) || $wi__depth) && _scope_with_id($scope0_id),
 			h: $wi__depth && $Tree_content__depth__closures
 		}), $cg__input_note && "a6") || _filled_guard($scope1_reason, 0) && (_client_branch_if("a0", $scope1_id) || $ui__input_on) && _patch_write($scope1_id, "xe", depth, !_server_guard($scope1_reason, 0)) && _patch_subscribers($scope1_id, "a5", "e");
@@ -88,7 +88,7 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_html("</main>");
 	_scope($scope0_id, {
-		d: ($ui__input_on2 || _unfilled_if($scope0_reason, 1)) && input.note,
+		d: $wi__input_on && ($ui__input_on2 || _unfilled_if($scope0_reason, 1)) && input.note,
 		g: $wi__input_on && $input_on__closures,
 		f: _write_if($scope0_reason, 1) && $input_note__closures,
 		a: _existing_scope($childScope2)

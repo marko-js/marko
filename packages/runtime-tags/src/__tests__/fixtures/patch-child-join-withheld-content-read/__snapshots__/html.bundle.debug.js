@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/child.marko_2*shell": "__tests__/tags/child.marko_2*shell;D ;<p> </p>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 3), $ui__input_a__OR__input_b = _unfilled_if($scope0_reason, 1), $ui__input_mode__OR__input_b = _unfilled_if($scope0_reason, 2), $ui__input_a = _unfilled_if($scope0_reason, 3), $ui__input_mode = _unfilled_if($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 3), $ui__input_a__OR__input_b = _unfilled_if($scope0_reason, 1), $ui__input_mode__OR__input_b = _unfilled_if($scope0_reason, 2), $ui__input_a = _unfilled_if($scope0_reason, 3), $ui__input_mode = _unfilled_if($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 3), $wi__input_a = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	const frag = { content: _content_resume("__tests__/tags/child.marko_1*content", () => {
@@ -34,10 +34,10 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	$fg__input_a && _client_guard($scope0_reason, 5) && _patch_render($scope0_id, "__tests__/tags/child.marko_2_input_a#0:4/setup", "input_a");
 	_client_guard($scope0_reason, 4) && _patch_render($scope0_id, "__tests__/tags/child.marko_0_input_mode#5_frag_content#8/setup");
 	_scope($scope0_id, {
-		input_a: ($ui__input_mode__OR__input_b || $ui__input_a__OR__input_b || $ui__input_a) && input.a,
-		input_b: $ui__input_a__OR__input_b && input.b,
+		input_a: _write_if($scope0_reason, 2) && ($ui__input_mode__OR__input_b || $ui__input_a__OR__input_b || $ui__input_a) && input.a,
+		input_b: $wi__input_a && $ui__input_a__OR__input_b && input.b,
 		frag_content: $ui__input_mode && frag.content,
-		"ClosureScopes:input_a/10": _write_if($scope0_reason, 3) && $input_a__closures
+		"ClosureScopes:input_a/10": $wi__input_a && $input_a__closures
 	}, "__tests__/tags/child.marko", 0, {
 		input_a: ["input.a"],
 		input_b: ["input.b"],

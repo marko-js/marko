@@ -20,11 +20,7 @@ var template_default = _template("a", (input) => {
 		_html(`<em>${_text_mark($scope2_id, "a", fmt(a), 1, $scope2_reason, 0)} ${_text_mark($scope2_id, "b", fmt(b), 2, $scope2_reason, 1)}</em>`);
 		_patch_render($scope2_id, "a1", (($fg__fmt ? " e" : "") + (_filled_guard($scope2_reason, 4) ? " f" : "")).slice(1), $scope2_reason, 0);
 		_patch_render($scope2_id, "a2", (($fg__fmt ? " e" : "") + (_filled_guard($scope2_reason, 5) ? " h" : "")).slice(1), $scope2_reason, 1);
-		_scope($scope2_id, {
-			e: (_unfilled_if($scope2_reason, 2, 3) || _unfilled_if($scope2_reason, 0, 3) || _unfilled_if($scope2_reason, 1, 3)) && fmt,
-			f: _unfilled_if($scope2_reason, 0) && a,
-			h: _unfilled_if($scope2_reason, 1) && b
-		}) || $fg__fmt && _unfilled_if($scope2_reason, 2) && _patch_write($scope2_id, "xe", fmt, 1);
+		_scope($scope2_id, { e: _write_if($scope2_reason, 2) && (_unfilled_if($scope2_reason, 2, 3) || _unfilled_if($scope2_reason, 0, 3) || _unfilled_if($scope2_reason, 1, 3)) && fmt }) || $fg__fmt && _unfilled_if($scope2_reason, 2) && _patch_write($scope2_id, "xe", fmt, 1);
 	}, $scope0_id) };
 	_if(() => {
 		{

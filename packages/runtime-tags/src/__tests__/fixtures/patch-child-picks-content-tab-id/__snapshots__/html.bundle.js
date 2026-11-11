@@ -8,8 +8,8 @@ var tabs_default = _template("b", (input) => {
 	_dynamic_tag($scope0_id, "a", [...input.tab].find((t) => t.id === input.selected)?.content, {}, 2, 0, 0, $wg__input_tab__OR__input_selected, $scope0_reason, 0);
 	_patch_render($scope0_id, "b0", (($fg__input_tab ? " d" : "") + ($fg__input_selected ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: $ui__input_tab__OR__input_selected && input.tab,
-		e: $ui__input_tab__OR__input_selected && input.selected
+		d: _write_if($scope0_reason, 2) && $ui__input_tab__OR__input_selected && input.tab,
+		e: _write_if($scope0_reason, 1) && $ui__input_tab__OR__input_selected && input.selected
 	}) || ($fg__input_tab && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.tab, !_server_guard($scope0_reason, 1)), $fg__input_selected && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.selected, !_server_guard($scope0_reason, 2)));
 });
 
@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_script($scope0_id, "a4");
 	_scope($scope0_id, {
-		f: ($ui__input_x || _unfilled_if($scope0_reason, 2)) && input.y,
+		f: _write_if($scope0_reason, 1) && ($ui__input_x || _unfilled_if($scope0_reason, 2)) && input.y,
 		g: s,
 		h: _write_if($scope0_reason, 2) && $input_y__closures,
 		i: $s__closures,

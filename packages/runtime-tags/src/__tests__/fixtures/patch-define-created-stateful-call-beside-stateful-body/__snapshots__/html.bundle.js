@@ -55,7 +55,7 @@ var template_default = _template("a", (input) => {
 		}, $scope3_id, "b", 1, $wg__on, 1, 0, 0, ["a3"], $scope3_reason, 0);
 		$ui__on && _patch_write($scope3_id, "wf", label, 1);
 		_scope($scope3_id, {
-			f: ($ui__on || _unfilled_if($scope3_reason, 1)) && label,
+			f: _write_if($scope3_reason, 0) && ($ui__on || _unfilled_if($scope3_reason, 1)) && label,
 			a: _existing_scope($childScope)
 		});
 	}, $scope0_id) };
@@ -89,7 +89,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a10");
 	$fg__input_label && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a9", "h");
 	_scope($scope0_id, {
-		h: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label,
+		h: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label,
 		i: open,
 		j: Inner,
 		l: Outer

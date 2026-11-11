@@ -25,8 +25,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_flag#3_input_title#4/setup", (($fg__input_flag ? " input_flag" : "") + ($fg__input_title ? " input_title" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_flag: $ui__input_flag__OR__input_title && input.flag,
-		input_title: $ui__input_flag__OR__input_title && input.title,
+		input_flag: _write_if($scope0_reason, 2) && $ui__input_flag__OR__input_title && input.flag,
+		input_title: _write_if($scope0_reason, 1) && $ui__input_flag__OR__input_title && input.title,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {
 		input_flag: ["input.flag"],

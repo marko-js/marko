@@ -24,8 +24,8 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "a", input.flag ? B : A, { x: input.a }, 1, 0, 0, $wg__input_flag__OR__input_a, $scope0_reason, 0);
 	_patch_render($scope0_id, "a4", (($fg__input_flag ? " d" : "") + ($fg__input_a ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: $ui__input_flag__OR__input_a && input.flag,
-		e: $ui__input_flag__OR__input_a && input.a,
+		d: _write_if($scope0_reason, 2) && $ui__input_flag__OR__input_a && input.flag,
+		e: _write_if($scope0_reason, 1) && $ui__input_flag__OR__input_a && input.a,
 		f: $ui__input_flag__OR__input_a && A,
 		g: $ui__input_flag__OR__input_a && B
 	}) || ($fg__input_flag && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.flag, !_server_guard($scope0_reason, 1)), $fg__input_a && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 2)));

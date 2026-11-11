@@ -43,7 +43,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko;D%;<main><!></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 7), $cg__input_w = _client_guard($scope0_reason, 5), $cg__input_inner = _client_guard($scope0_reason, 6), $scope0_page = _page_render(), $wi__input_outer__OR__input_w__OR__input_inner__OR__input_note = _write_if($scope0_reason, 2), $wg__input_outer = _write_guard($scope0_reason, 4), $cg__input_outer = _client_guard($scope0_reason, 4), $ui__input_outer = _unfilled_if($scope0_reason, 4), $sg__input_w = _server_guard($scope0_reason, 5), $ui__input_outer__OR__input_inner = _unfilled_if($scope0_reason, 0), $wi__input_w = _write_if($scope0_reason, 5), $wi__input_outer = _write_if($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 7), $cg__input_w = _client_guard($scope0_reason, 5), $cg__input_inner = _client_guard($scope0_reason, 6), $scope0_page = _page_render(), $wi__input_outer__OR__input_w__OR__input_inner__OR__input_note = _write_if($scope0_reason, 2), $wg__input_outer = _write_guard($scope0_reason, 4), $cg__input_outer = _client_guard($scope0_reason, 4), $ui__input_outer = _unfilled_if($scope0_reason, 4), $wi__input_outer = _write_if($scope0_reason, 4), $sg__input_w = _server_guard($scope0_reason, 5), $ui__input_outer__OR__input_inner = _unfilled_if($scope0_reason, 0), $wi__input_w = _write_if($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	const $input_inner__closures = new Set();
@@ -95,8 +95,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("</main>");
 	_scope($scope0_id, {
 		input_w: $wi__input_outer && input.w,
-		input_inner: ($ui__input_outer || _unfilled_if($scope0_reason, 6)) && input.inner,
-		input_note: ($ui__input_outer__OR__input_inner || _unfilled_if($scope0_reason, 7)) && input.note,
+		input_inner: $wi__input_outer && ($ui__input_outer || _unfilled_if($scope0_reason, 6)) && input.inner,
+		input_note: _write_if($scope0_reason, 0) && ($ui__input_outer__OR__input_inner || _unfilled_if($scope0_reason, 7)) && input.note,
 		"ClosureScopes:input_note/11": _write_if($scope0_reason, 7) && $input_note__closures,
 		"ClosureScopes:input_inner/10": _write_if($scope0_reason, 6) && $input_inner__closures,
 		"ClosureScopes:input_w/9": $wi__input_w && $input_w__closures,

@@ -20,7 +20,7 @@ _shells({
 	a5: `a5${_shell_marker([[], []], ["a>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 3), $wi__input_note = _write_if($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 4), $ui__input_show = _unfilled_if($scope0_reason, 4), $ui__input_note = _unfilled_if($scope0_reason, 3), $fg__input_t = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $wi__input_note = _write_if($scope0_reason, 3), $cg__input_note = _client_guard($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 4), $ui__input_show = _unfilled_if($scope0_reason, 4), $ui__input_note = _unfilled_if($scope0_reason, 3), $wi__input_show = _write_if($scope0_reason, 4), $fg__input_t = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -66,9 +66,9 @@ var template_default = _template("a", (input) => {
 	_html("</main>");
 	$fg__input_t && $cg__input_show && _patch_render($scope0_id, "a4", "h");
 	_scope($scope0_id, {
-		f: ($ui__input_show || $ui__input_note) && input.note,
-		h: ($ui__input_show || _unfilled_if($scope0_reason, 5)) && input.t2,
-		i: $wi__input_note && ($ui__input_note || $ui__input_show) && $input_note__closures,
+		f: $wi__input_show && ($ui__input_show || $ui__input_note) && input.note,
+		h: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 5)) && input.t2,
+		i: $wi__input_note && $wi__input_note && ($ui__input_note || $ui__input_show) && $input_note__closures,
 		a: _existing_scope($childScope)
 	}) || (_filled_guard($scope0_reason, 3) && $ui__input_show && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 3)) && $cg__input_show && _patch_subscribers($scope0_id, "a6", "f"), $fg__input_t && $ui__input_show && _patch_write($scope0_id, "xh", input.t2, !_server_guard($scope0_reason, 5)));
 }, 1);

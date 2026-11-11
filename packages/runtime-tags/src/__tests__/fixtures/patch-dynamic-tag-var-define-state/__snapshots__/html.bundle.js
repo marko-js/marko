@@ -6,7 +6,7 @@ _shells({
 });
 _stateful_return("a0");
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wi__input_label__OR__input_which = _write_if($scope0_reason, 0), $ui__input_label__OR__input_which = _unfilled_if($scope0_reason, 0), $ui__input_label = _unfilled_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_which = _filled_guard($scope0_reason, 2), $wi__input_label = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wi__input_label__OR__input_which = _write_if($scope0_reason, 0), $ui__input_label__OR__input_which = _unfilled_if($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 1), $ui__input_label = _unfilled_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_which = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const Counter = { content: _content_resume("a0", () => {
@@ -42,8 +42,8 @@ var template_default = _template("a", (input) => {
 	_html(`<p>${_text_mark($scope0_id, "c", count)}</p>`);
 	_patch_render($scope0_id, "a8", (($fg__input_label ? " f" : "") + ($fg__input_which ? " g" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		f: ($ui__input_label__OR__input_which || $ui__input_label) && input.label,
-		g: $ui__input_label__OR__input_which && input.which,
+		f: _write_if($scope0_reason, 2) && ($ui__input_label__OR__input_which || $ui__input_label) && input.label,
+		g: $wi__input_label && $ui__input_label__OR__input_which && input.which,
 		h: $ui__input_label__OR__input_which && Counter,
 		i: $ui__input_label__OR__input_which && Other,
 		l: $wi__input_label && $input_label__closures

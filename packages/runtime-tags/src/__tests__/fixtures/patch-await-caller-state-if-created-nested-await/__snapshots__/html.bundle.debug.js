@@ -36,7 +36,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([["__tests__/template.marko_1_p#0:7/setup"], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wi__input_show = _write_if($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let p = Promise.resolve(0);
 	let resolve = void 0;
@@ -62,8 +62,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_label && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/template.marko_1_input_label#0:6/setup", "input_label");
 	_scope($scope0_id, {
-		input_label: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label,
-		p: _write_if($scope0_reason, 0) && p,
+		input_label: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label,
+		p: $wi__input_show && p,
 		resolve
 	}, "__tests__/template.marko", 0, {
 		input_label: ["input.label"],

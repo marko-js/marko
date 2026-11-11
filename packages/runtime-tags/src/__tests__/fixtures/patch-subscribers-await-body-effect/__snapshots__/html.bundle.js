@@ -7,7 +7,7 @@ _shells({
 	a: "a;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 3), $cg__input_p = _client_guard($scope0_reason, 2), $ui__input_n__OR__input_m = _unfilled_if($scope0_reason, 1), $sg__input_n = _server_guard($scope0_reason, 3), $wi__input_n = _write_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 3), $cg__input_p = _client_guard($scope0_reason, 2), $ui__input_n__OR__input_m = _unfilled_if($scope0_reason, 1), $wi__input_n = _write_if($scope0_reason, 3), $sg__input_n = _server_guard($scope0_reason, 3), $wi__input_m = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_n__closures = /* @__PURE__ */ new Set();
 	const $input_m__closures = /* @__PURE__ */ new Set();
@@ -44,8 +44,8 @@ var template_default = _template("a", (input) => {
 	}, 1, "a8", _unfilled_if($scope0_reason, 2), 1);
 	_scope($scope0_id, {
 		e: input.n,
-		f: $ui__input_n__OR__input_m && input.m,
+		f: $wi__input_n && $ui__input_n__OR__input_m && input.m,
 		g: $wi__input_n && $input_n__closures,
-		h: _write_if($scope0_reason, 4) && $ui__input_n__OR__input_m && $input_m__closures
+		h: $wi__input_m && $wi__input_m && $ui__input_n__OR__input_m && $input_m__closures
 	}) || (_filled_guard($scope0_reason, 3) && _patch_write($scope0_id, "xe", input.n, !$sg__input_n), _filled_guard($scope0_reason, 4) && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xf", input.m, !_server_guard($scope0_reason, 4)));
 }, 1);

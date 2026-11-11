@@ -72,7 +72,7 @@ var child_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "b", 1, $wg__input_on, 1, 0, 0, ["b4"], $scope0_reason, 2);
 	_scope($scope0_id, {
-		e: ($ui__input_on || _unfilled_if($scope0_reason, 1)) && input.v,
+		e: $wi__input_on && ($ui__input_on || _unfilled_if($scope0_reason, 1)) && input.v,
 		g: _write_if($scope0_reason, 1) && $input_v__closures,
 		a: _existing_scope($childScope2)
 	}) || _filled_guard($scope0_reason, 1) && $ui__input_on && _patch_write($scope0_id, "xe", input.v, !_server_guard($scope0_reason, 1)) && _client_guard($scope0_reason, 2) && _patch_subscribers($scope0_id, "b5", "e");

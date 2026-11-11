@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a1");
 	_patch_render($scope0_id, "a2", (($fg__input_tag ? " f" : "") + ($fg__input_title ? " g" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		f: _unfilled_if($scope0_reason, 0) && input.tag,
+		f: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 0) && input.tag,
 		g: input.title,
 		i: n
 	}) || $fg__input_tag && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.tag, !_server_guard($scope0_reason, 1));

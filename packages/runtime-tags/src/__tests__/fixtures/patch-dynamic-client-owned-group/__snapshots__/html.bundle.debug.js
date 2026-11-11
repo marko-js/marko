@@ -23,8 +23,8 @@ var picker_default = _template("__tests__/tags/picker/index.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", input.on ? card_default : null, { label: input.label }, 1, 0, 0, $wg__input_on__OR__input_label, $scope0_reason, 0);
 	_patch_render($scope0_id, "__tests__/tags/picker/index.marko_0_input_on#3_input_label#4/setup", (($fg__input_on ? " input_on" : "") + ($fg__input_label ? " input_label" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_on: $ui__input_on__OR__input_label && input.on,
-		input_label: $ui__input_on__OR__input_label && input.label
+		input_on: _write_if($scope0_reason, 2) && $ui__input_on__OR__input_label && input.on,
+		input_label: _write_if($scope0_reason, 1) && $ui__input_on__OR__input_label && input.label
 	}, "__tests__/tags/picker/index.marko", 0, {
 		input_on: ["input.on"],
 		input_label: ["input.label"]

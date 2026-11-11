@@ -27,8 +27,8 @@ var child_default = _template("b", (input) => {
 	$fg__input_b2 && $cg__input_show && _patch_render($scope0_id, "b1", "e");
 	$fg__input_a && $cg__input_show && _patch_render($scope0_id, "b4", "f");
 	_scope($scope0_id, {
-		e: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.b,
-		f: ($ui__input_show__OR__input_b || _unfilled_if($scope0_reason, 1)) && input.a
+		e: _write_if($scope0_reason, 2) && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.b,
+		f: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_b || _unfilled_if($scope0_reason, 1)) && input.a
 	}) || ($fg__input_b2 && $ui__input_show && _patch_write($scope0_id, "xe", input.b, !$sg__input_b), $fg__input_a && $ui__input_show__OR__input_b && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 4)));
 });
 

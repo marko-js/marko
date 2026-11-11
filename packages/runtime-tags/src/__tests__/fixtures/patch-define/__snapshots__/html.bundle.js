@@ -19,8 +19,8 @@ var template_default = _template("a", (input) => {
 	_html(`<div${_attr_class([input.cls, { on: input.on }], $scope0_id, "b", $scope0_reason, 0)}${_attr_style({ color: input.color }, $scope0_id, "b", $scope0_reason, 5)}>x</div>${_el_mark($scope0_id, "b", _updates_from($scope0_reason, 0) || _updates_from($scope0_reason, 5))}`);
 	_patch_render($scope0_id, "a2", (($fg__input_cls ? " g" : "") + ($fg__input_on ? " h" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		g: $ui__input_cls__OR__input_on && input.cls,
-		h: $ui__input_cls__OR__input_on && input.on,
+		g: _write_if($scope0_reason, 4) && $ui__input_cls__OR__input_on && input.cls,
+		h: _write_if($scope0_reason, 3) && $ui__input_cls__OR__input_on && input.on,
 		k: $wi__input_title && $input_title__closures,
 		a: _existing_scope($childScope)
 	}) || ($fg__input_cls && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "xg", input.cls, !_server_guard($scope0_reason, 3)), $fg__input_on && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xh", input.on, !_server_guard($scope0_reason, 4)));

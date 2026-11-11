@@ -70,7 +70,7 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_html("</main>");
 	_scope($scope0_id, {
-		e: ($ui__input_on || _unfilled_if($scope0_reason, 1)) && input.note,
+		e: $wi__input_on && ($ui__input_on || _unfilled_if($scope0_reason, 1)) && input.note,
 		g: _write_if($scope0_reason, 1) && $input_note__closures,
 		h: $wi__input_on && $input_on__closures,
 		a: _existing_scope($childScope2),

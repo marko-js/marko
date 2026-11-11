@@ -8,8 +8,8 @@ var one_default = _template("b", (input) => {
 	_dynamic_tag($scope0_id, "a", input.content, input.attrs, 1, 0, 0, $wg__input_content__OR__input_attrs, $scope0_reason, 0, 0, 1);
 	_patch_render($scope0_id, "b0", (($fg__input_content ? " d" : "") + ($fg__input_attrs ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: $ui__input_content__OR__input_attrs && input.content,
-		e: $ui__input_content__OR__input_attrs && input.attrs
+		d: _write_if($scope0_reason, 2) && $ui__input_content__OR__input_attrs && input.content,
+		e: _write_if($scope0_reason, 1) && $ui__input_content__OR__input_attrs && input.attrs
 	}) || ($fg__input_content && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.content, !_server_guard($scope0_reason, 1)), $fg__input_attrs && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.attrs, !_server_guard($scope0_reason, 2)));
 });
 

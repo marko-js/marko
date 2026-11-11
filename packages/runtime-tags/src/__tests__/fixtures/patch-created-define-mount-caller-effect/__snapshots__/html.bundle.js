@@ -46,7 +46,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "a4", "i");
 	_scope($scope0_id, {
 		g: input.page,
-		i: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.label,
+		i: _write_if($scope0_reason, 2) && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.label,
 		j: count,
 		k: $wi__input_page && $input_page__closures,
 		c: _existing_scope($childScope)

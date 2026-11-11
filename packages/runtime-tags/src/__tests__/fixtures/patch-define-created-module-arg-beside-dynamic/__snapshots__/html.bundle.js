@@ -35,8 +35,8 @@ var template_default = _template("a", (input) => {
 		$fg__fmt && $cg__isOpen && _patch_render($scope2_id, "a5", "e");
 		$fg__label && $cg__isOpen && _patch_render($scope2_id, "a6", "f");
 		_write_if($scope2_reason, 3) && _scope($scope2_id, {
-			e: (_unfilled_if($scope2_reason, 1, 5) || _unfilled_if($scope2_reason, 2, 5)) && fmt,
-			f: ($ui__isOpen__OR__fmt || _unfilled_if($scope2_reason, 2)) && label
+			e: _write_if($scope2_reason, 1) && (_unfilled_if($scope2_reason, 1, 5) || _unfilled_if($scope2_reason, 2, 5)) && fmt,
+			f: _write_if($scope2_reason, 0) && ($ui__isOpen__OR__fmt || _unfilled_if($scope2_reason, 2)) && label
 		}) || ($fg__fmt && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "xe", fmt, !_server_guard($scope2_reason, 5)), $fg__label && $ui__isOpen__OR__fmt && _patch_write($scope2_id, "xf", label, !_server_guard($scope2_reason, 6)));
 	}, $scope0_id) };
 	_if(() => {
@@ -72,7 +72,7 @@ var template_default = _template("a", (input) => {
 	_patch_render($scope0_id, "a10", $fg__input_other && "i", $scope0_reason, 4);
 	_patch_render($scope0_id, "a11", (($fg__input_label ? " h" : "") + ($fg__input_other ? " m" : "")).slice(1));
 	_scope($scope0_id, {
-		g: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
+		g: _write_if($scope0_reason, 1) && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
 		h: input.label,
 		j: open,
 		k: _unfilled_if($scope0_reason, 4) && Panel,

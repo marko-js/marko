@@ -117,7 +117,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_trailers("</body></html>");
 	$fg__input_list && $cg__input_page && _patch_render($scope0_id, "__tests__/template.marko_1_input_list#0:4/setup", "input_list");
 	_scope($scope0_id, {
-		input_list: ($ui__input_page || _unfilled_if($scope0_reason, 2)) && input.list,
+		input_list: $wi__input_page && ($ui__input_page || _unfilled_if($scope0_reason, 2)) && input.list,
 		"ClosureScopes:input_page/5": $wi__input_page && $ui__input_page && $input_page__closures
 	}, "__tests__/template.marko", 0, { input_list: ["input.list"] }) || $fg__input_list && $ui__input_page && _patch_write($scope0_id, "PatchMarkedWrite:input_list", input.list, !_server_guard($scope0_reason, 2));
 }, 1);

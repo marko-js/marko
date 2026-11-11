@@ -6,7 +6,7 @@ _shells({
 	b2: "b2; D lD ;<h2> </h2><p> </p>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	_if(() => {
@@ -23,8 +23,8 @@ var card_default = _template("b", (input) => {
 	$fg__input_title && $cg__input_show && _patch_render($scope0_id, "b0", "e");
 	$fg__input_note && $cg__input_show && _patch_render($scope0_id, "b1", "f");
 	_scope($scope0_id, {
-		e: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.title,
-		f: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.note
+		e: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.title,
+		f: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.note
 	}) || ($fg__input_title && $ui__input_show && _patch_write($scope0_id, "xe", input.title, !_server_guard($scope0_reason, 2)), $fg__input_note && $ui__input_show && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 3)));
 });
 

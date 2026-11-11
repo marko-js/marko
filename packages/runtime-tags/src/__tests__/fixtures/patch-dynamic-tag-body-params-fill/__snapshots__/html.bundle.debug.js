@@ -50,9 +50,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, 9, 0, 0, $wg__input_card__OR__input_tag, $scope0_reason, 0, 0, void 0, 0, 0, "__tests__/template.marko_1*content");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_card#4_input_tag#5_Card#6_Label#7/setup", (($fg__input_card ? " input_card" : "") + ($fg__input_tag ? " input_tag" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_label: ($ui__input_card__OR__input_tag || _unfilled_if($scope0_reason, 2)) && input.label,
-		input_card: $ui__input_card__OR__input_tag && input.card,
-		input_tag: $ui__input_card__OR__input_tag && input.tag,
+		input_label: _write_if($scope0_reason, 0) && ($ui__input_card__OR__input_tag || _unfilled_if($scope0_reason, 2)) && input.label,
+		input_card: _write_if($scope0_reason, 4) && $ui__input_card__OR__input_tag && input.card,
+		input_tag: _write_if($scope0_reason, 3) && $ui__input_card__OR__input_tag && input.tag,
 		Card: $ui__input_card__OR__input_tag && Card,
 		Label: $ui__input_card__OR__input_tag && Label,
 		"ClosureScopes:input_label/9": _write_if($scope0_reason, 2) && $input_label__closures

@@ -24,7 +24,7 @@ _shells({
 	"__tests__/template.marko_4*shell": "__tests__/template.marko_4*shell;Db%;<strong>B:<!></strong>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 6), $wi__input_show__OR__input_alt__OR__input_note = _write_if($scope0_reason, 1), $wg__input_alt = _write_guard($scope0_reason, 5), $ui__input_alt = _unfilled_if($scope0_reason, 5), $ui__input_show = _unfilled_if($scope0_reason, 3), $cg__input_alt = _client_guard($scope0_reason, 5), $wg__input_show = _write_guard($scope0_reason, 3), $ui__input_note = _unfilled_if($scope0_reason, 6), $ui__input_show__OR__input_alt = _unfilled_if($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_title = _filled_guard($scope0_reason, 4), $wi__input_note = _write_if($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 6), $wi__input_show__OR__input_alt__OR__input_note = _write_if($scope0_reason, 1), $wi__input_note = _write_if($scope0_reason, 6), $wg__input_alt = _write_guard($scope0_reason, 5), $ui__input_alt = _unfilled_if($scope0_reason, 5), $ui__input_show = _unfilled_if($scope0_reason, 3), $cg__input_alt = _client_guard($scope0_reason, 5), $wg__input_show = _write_guard($scope0_reason, 3), $wi__input_show = _write_if($scope0_reason, 3), $ui__input_note = _unfilled_if($scope0_reason, 6), $ui__input_show__OR__input_alt = _unfilled_if($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_title = _filled_guard($scope0_reason, 4), $wi__input_alt = _write_if($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	const $input_alt__closures = new Set();
@@ -74,11 +74,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`</main>${_el_mark($scope0_id, "#main/0", $wg__input_show)}`);
 	$fg__input_title && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_title#0:4/setup", "input_title");
 	_scope($scope0_id, {
-		input_title: ($ui__input_show || _unfilled_if($scope0_reason, 4)) && input.title,
-		input_alt: ($ui__input_show || $ui__input_alt) && input.alt,
-		input_note: ($ui__input_show__OR__input_alt || $ui__input_note) && input.note,
-		"ClosureScopes:input_note/9": $wi__input_note && ($ui__input_note || $ui__input_show || $ui__input_alt) && $input_note__closures,
-		"ClosureScopes:input_alt/8": _write_if($scope0_reason, 5) && ($ui__input_alt || $ui__input_show) && $input_alt__closures
+		input_title: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 4)) && input.title,
+		input_alt: $wi__input_show && ($ui__input_show || $ui__input_alt) && input.alt,
+		input_note: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_alt || $ui__input_note) && input.note,
+		"ClosureScopes:input_note/9": $wi__input_note && $wi__input_note && ($ui__input_note || $ui__input_show || $ui__input_alt) && $input_note__closures,
+		"ClosureScopes:input_alt/8": $wi__input_alt && $wi__input_alt && ($ui__input_alt || $ui__input_show) && $input_alt__closures
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		input_alt: ["input.alt"],

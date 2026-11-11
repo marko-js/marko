@@ -13,8 +13,8 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a0", 1, $fg__input_x__OR__input_y);
 	_patch_render($scope0_id, "a1", (($fg__input_y ? " f" : "") + ($fg__input_x ? " g" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		f: $ui__input_x__OR__input_y && a,
-		g: $ui__input_x__OR__input_y && b,
+		f: _write_if($scope0_reason, 1) && $ui__input_x__OR__input_y && a,
+		g: _write_if($scope0_reason, 2) && $ui__input_x__OR__input_y && b,
 		i: c
 	}) || ($fg__input_y && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", a, !_server_guard($scope0_reason, 2)), $fg__input_x && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xg", b, !_server_guard($scope0_reason, 1)), $fg__input_x__OR__input_y && _patch_write($scope0_id, "xi", c, !_server_guard($scope0_reason, 0)));
 }, 1);

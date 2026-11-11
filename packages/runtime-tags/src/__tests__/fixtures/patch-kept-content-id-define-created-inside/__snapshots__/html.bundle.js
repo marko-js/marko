@@ -21,7 +21,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}&b`)($walks)};${((_w0) => `${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_on = _write_guard($scope0_reason, 2), $wi__input_label__OR__input_on = _write_if($scope0_reason, 0), $ui__input_on2 = _unfilled_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_on = _write_guard($scope0_reason, 2), $wi__input_label__OR__input_on = _write_if($scope0_reason, 0), $ui__input_on2 = _unfilled_if($scope0_reason, 2), $wi__input_on = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_on__closures = /* @__PURE__ */ new Set();
@@ -47,9 +47,9 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, 1) });
 	_patch_child_end();
 	_scope($scope0_id, {
-		d: ($ui__input_on2 || _unfilled_if($scope0_reason, 1)) && input.label,
+		d: $wi__input_on && ($ui__input_on2 || _unfilled_if($scope0_reason, 1)) && input.label,
 		f: _write_if($scope0_reason, 1) && $input_label__closures,
-		g: _write_if($scope0_reason, 2) && $ui__input_on2 && $input_on__closures,
+		g: $wi__input_on && $ui__input_on2 && $input_on__closures,
 		a: _existing_scope($childScope)
 	}) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a4", "d");
 }, 1);

@@ -18,7 +18,7 @@ var toggle_if_default = _template("e", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_open, 1, 0, 0, ["e1"], $scope0_reason, 1);
 	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "e0", "e");
-	_scope($scope0_id, { e: ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.content }) || $fg__input_content && $ui__input_open && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { e: _write_if($scope0_reason, 1) && ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.content }) || $fg__input_content && $ui__input_open && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // tags/toggle-for.marko
@@ -38,7 +38,7 @@ var toggle_for_default = _template("d", (input) => {
 		_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "d1", $scope0_reason, 1);
 	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "d0", "e");
-	_scope($scope0_id, { e: ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.content }) || $fg__input_content && $ui__input_open && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { e: _write_if($scope0_reason, 1) && ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.content }) || $fg__input_content && $ui__input_open && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // tags/toggle-tag.marko
@@ -61,7 +61,7 @@ var toggle_tag_default = _template("f", (input) => {
 		$wg__input_content || $wi__input_open__OR__input_content && _resume_branch($scope1_id);
 	}, $scope0_id, 0), 0, $wg__input_open, $scope0_reason, 1);
 	_scope($scope0_id, {
-		e: ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.content,
+		e: _write_if($scope0_reason, 1) && ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.content,
 		f: _write_if($scope0_reason, 2) && $input_content__closures
 	}) || _filled_guard($scope0_reason, 2) && $ui__input_open && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2)) && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "f2", "e");
 });
@@ -137,7 +137,7 @@ var param_host_default = _template("c", (input) => {
 		}), $cg__input_label && "c7");
 	}, $scope0_id, 0), 0, $wg__input_open, $scope0_reason, 1);
 	_scope($scope0_id, {
-		h: ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.label,
+		h: _write_if($scope0_reason, 1) && ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.label,
 		i: $wi__input_label && $input_label__closures,
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2),
@@ -217,7 +217,7 @@ var const_host_default = _template("b", (input) => {
 		}), $cg__input_label && "b7");
 	}, $scope0_id, 0), 0, $wg__input_open, $scope0_reason, 1);
 	_scope($scope0_id, {
-		h: ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.label,
+		h: _write_if($scope0_reason, 1) && ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.label,
 		j: $wi__input_label && $input_label__closures,
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2),

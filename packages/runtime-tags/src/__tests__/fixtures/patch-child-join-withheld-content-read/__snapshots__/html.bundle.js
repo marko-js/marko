@@ -8,7 +8,7 @@ _shells({
 	b3: "b3;D ;<p> </p>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 3), $ui__input_a__OR__input_b = _unfilled_if($scope0_reason, 1), $ui__input_mode__OR__input_b = _unfilled_if($scope0_reason, 2), $ui__input_a = _unfilled_if($scope0_reason, 3), $ui__input_mode = _unfilled_if($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 3), $ui__input_a__OR__input_b = _unfilled_if($scope0_reason, 1), $ui__input_mode__OR__input_b = _unfilled_if($scope0_reason, 2), $ui__input_a = _unfilled_if($scope0_reason, 3), $ui__input_mode = _unfilled_if($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 3), $wi__input_a = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	const frag = { content: _content_resume("b0", () => {
@@ -34,10 +34,10 @@ var child_default = _template("b", (input) => {
 	$fg__input_a && _client_guard($scope0_reason, 5) && _patch_render($scope0_id, "b5", "e");
 	_client_guard($scope0_reason, 4) && _patch_render($scope0_id, "b6");
 	_scope($scope0_id, {
-		e: ($ui__input_mode__OR__input_b || $ui__input_a__OR__input_b || $ui__input_a) && input.a,
-		g: $ui__input_a__OR__input_b && input.b,
+		e: _write_if($scope0_reason, 2) && ($ui__input_mode__OR__input_b || $ui__input_a__OR__input_b || $ui__input_a) && input.a,
+		g: $wi__input_a && $ui__input_a__OR__input_b && input.b,
 		i: $ui__input_mode && frag.content,
-		k: _write_if($scope0_reason, 3) && $input_a__closures
+		k: $wi__input_a && $input_a__closures
 	}) || ($fg__input_a && $ui__input_mode__OR__input_b && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 3)) && _patch_subscribers($scope0_id, "b4", "e"), _filled_guard($scope0_reason, 5) && $ui__input_a && _patch_write($scope0_id, "xg", input.b, !_server_guard($scope0_reason, 5)));
 });
 

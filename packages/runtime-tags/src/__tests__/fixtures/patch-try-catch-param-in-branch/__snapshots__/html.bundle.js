@@ -8,7 +8,7 @@ _shells({
 	a5: "a5;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_promise = _write_if($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 1), $ui__input_promise2 = _unfilled_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_promise = _write_if($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 1), $ui__input_promise2 = _unfilled_if($scope0_reason, 3), $wi__input_promise = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
@@ -41,9 +41,9 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a7");
 	_scope($scope0_id, {
 		g: input.title,
-		h: ($ui__input_show || $ui__input_promise2) && input.promise,
+		h: _write_if($scope0_reason, 1) && ($ui__input_show || $ui__input_promise2) && input.promise,
 		i: count,
 		j: _write_if($scope0_reason, 2) && $input_title__closures,
-		k: _write_if($scope0_reason, 3) && ($ui__input_promise2 || $ui__input_show) && $input_promise__closures
+		k: $wi__input_promise && $wi__input_promise && ($ui__input_promise2 || $ui__input_show) && $input_promise__closures
 	}) || (_filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "xg", input.title, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "a8", "g"), _filled_guard($scope0_reason, 3) && $ui__input_show && _patch_write($scope0_id, "xh", input.promise, !_server_guard($scope0_reason, 3)) && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "a9", "h"));
 }, 1);

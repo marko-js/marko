@@ -39,9 +39,9 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	$fg__input_b && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_b#0:8/setup", "input_b");
 	_patch_render($scope0_id, "__tests__/tags/child.marko_0_input_a#4_input_d#5/setup", (($fg__input_a ? " input_a" : "") + ($fg__input_d ? " input_d" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_a: ($ui__input_d__OR__input_show__OR__input_b || $ui__input_a__OR__input_d || $ui__input_a__OR__input_b) && input.a,
-		input_d: $ui__input_a__OR__input_d && input.d,
-		input_b: ($ui__input_a__OR__input_show || $ui__input_a__OR__input_b) && input.b,
+		input_a: _write_if($scope0_reason, 3) && ($ui__input_d__OR__input_show__OR__input_b || $ui__input_a__OR__input_d || $ui__input_a__OR__input_b) && input.a,
+		input_d: _write_if($scope0_reason, 4) && $ui__input_a__OR__input_d && input.d,
+		input_b: _write_if($scope0_reason, 1) && ($ui__input_a__OR__input_show || $ui__input_a__OR__input_b) && input.b,
 		"#childScope/1": _existing_scope($childScope)
 	}, "__tests__/tags/child.marko", 0, {
 		input_a: ["input.a"],

@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_html("</main>");
 	_scope($scope0_id, {
-		e: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.note,
+		e: _write_if($scope0_reason, 1) && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.note,
 		f: _write_if($scope0_reason, 2) && $input_note__closures,
 		a: _existing_scope($childScope)
 	}) || _filled_guard($scope0_reason, 2) && $ui__input_show && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "a5", "e");

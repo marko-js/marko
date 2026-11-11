@@ -20,7 +20,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell,<em>closed</em>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wi__input_show = _write_if($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		} else {
 			const $scope2_id = _scope_id();
 			_html("<em>closed</em>");
-			_write_if($scope0_reason, 1) && _scope($scope2_id, {}, "__tests__/template.marko", "6:4");
+			$wi__input_show && _scope($scope2_id, {}, "__tests__/template.marko", "6:4");
 			return 1;
 		}
 	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/template.marko_1*shell", "__tests__/template.marko_2*shell"], $scope0_reason, 1);
@@ -53,8 +53,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_title && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_title#0:6/setup", "input_title");
 	$fg__input_note && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_note#0:7/setup", "input_note");
 	_scope($scope0_id, {
-		input_title: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.title,
-		input_note: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.note,
+		input_title: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.title,
+		input_note: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.note,
 		count
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],

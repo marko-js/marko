@@ -19,9 +19,9 @@ var label_view_default = _template("b", (input) => {
 		_script($scope1_id, "b1", 1, $fg__a__OR__b__OR__flag);
 		_patch_render($scope1_id, "b2", (($fg__a ? " d" : "") + ($fg__b ? " e" : "") + ($fg__flag ? " f" : "")).slice(1), $scope1_reason, 3);
 		_scope($scope1_id, {
-			d: $ui__a__OR__b__OR__flag && a,
-			e: $ui__a__OR__b__OR__flag && b,
-			f: $ui__a__OR__b__OR__flag && flag,
+			d: _write_if($scope1_reason, 2) && $ui__a__OR__b__OR__flag && a,
+			e: _write_if($scope1_reason, 1) && $ui__a__OR__b__OR__flag && b,
+			f: _write_if($scope1_reason, 0) && $ui__a__OR__b__OR__flag && flag,
 			h: get
 		}) || ($fg__a && _unfilled_if($scope1_reason, 2) && _patch_write($scope1_id, "xd", a, !_server_guard($scope1_reason, 4)), $fg__b && _unfilled_if($scope1_reason, 1) && _patch_write($scope1_id, "xe", b, !_server_guard($scope1_reason, 5)), $fg__flag && _unfilled_if($scope1_reason, 0) && _patch_write($scope1_id, "xf", flag, !_server_guard($scope1_reason, 6)), $fg__a__OR__b__OR__flag && _patch_write($scope1_id, "xh", get, !_server_guard($scope1_reason, 3)));
 	}, $scope0_id, 0) };

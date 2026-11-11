@@ -45,8 +45,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	}, $scope0_id, "#text/0", 1, $wg__input_on, 1, 0, 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 1);
 	$fg__input_y && $cg__input_on && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_y#0:4/setup", "input_y");
 	_scope($scope0_id, {
-		input_on: ($ui__input_y || $ui__input_on) && input.on,
-		input_y: ($ui__input_on || $ui__input_y) && input.y,
+		input_on: _write_if($scope0_reason, 2) && ($ui__input_y || $ui__input_on) && input.on,
+		input_y: $wi__input_on && ($ui__input_on || $ui__input_y) && input.y,
 		"ClosureScopes:input_on/5": $wi__input_on && $input_on__closures
 	}, "__tests__/tags/child.marko", 0, {
 		input_on: ["input.on"],

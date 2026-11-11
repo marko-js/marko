@@ -58,7 +58,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>${_text_mark($scope0_id, "c", n)}</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a6");
 	_scope($scope0_id, {
-		g: ($ui__input_labels || _unfilled_if($scope0_reason, 1)) && input.show,
+		g: _write_if($scope0_reason, 0) && ($ui__input_labels || _unfilled_if($scope0_reason, 1)) && input.show,
 		h: n,
 		i: _write_if($scope0_reason, 1) && $input_show__closures,
 		j: $n__closures,

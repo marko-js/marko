@@ -20,7 +20,7 @@ _shells({
 	b3: `b3${_shell_marker([[], ["b0"]], ["c>", $setup])};${/*@__PURE__*/ ((_w0) => ` b%b/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `<div>x</div><!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_attrs = _filled_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $fg__input_attrs = _filled_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_if(() => {
@@ -45,7 +45,7 @@ var template_default = _template("b", (input) => {
 	$fg__input_attrs && $cg__input_show && _patch_render($scope0_id, "b1", "e");
 	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "b2", "f");
 	_scope($scope0_id, {
-		e: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.attrs,
-		f: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.label
+		e: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.attrs,
+		f: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.label
 	}) || ($fg__input_attrs && $ui__input_show && _patch_write($scope0_id, "xe", input.attrs, !_server_guard($scope0_reason, 2)), $fg__input_label && $ui__input_show && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 3)));
 }, 1);

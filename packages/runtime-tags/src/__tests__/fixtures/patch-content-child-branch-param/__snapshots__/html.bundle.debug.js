@@ -23,8 +23,8 @@ var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 	$fg__input_content && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/card/index.marko_1_input_content#0:4/setup", "input_content");
 	$fg__input_item && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/card/index.marko_1_input_item#0:5/setup", "input_item");
 	_scope($scope0_id, {
-		input_content: ($ui__input_show__OR__input_item || $ui__input_content__OR__input_item) && input.content,
-		input_item: ($ui__input_show__OR__input_content || $ui__input_content__OR__input_item) && input.item
+		input_content: _write_if($scope0_reason, 1) && ($ui__input_show__OR__input_item || $ui__input_content__OR__input_item) && input.content,
+		input_item: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_content || $ui__input_content__OR__input_item) && input.item
 	}, "__tests__/tags/card/index.marko", 0, {
 		input_content: ["input.content"],
 		input_item: ["input.item"]

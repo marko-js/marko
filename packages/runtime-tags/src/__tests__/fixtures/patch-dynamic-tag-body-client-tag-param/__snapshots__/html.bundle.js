@@ -17,7 +17,7 @@ var child_default = _template("b", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), $cg__input_note && "b1");
 	}, $scope0_id, ($scope) => $scope0_page ? [{ e: input.note }] : []), 0, $wg__input_tag, $scope0_reason, 1, 0, void 0, 0, 0, "b0");
 	_scope($scope0_id, {
-		e: ($ui__input_tag || _unfilled_if($scope0_reason, 2)) && input.note,
+		e: _write_if($scope0_reason, 1) && ($ui__input_tag || _unfilled_if($scope0_reason, 2)) && input.note,
 		f: _write_if($scope0_reason, 2) && $input_note__closures
 	}) || _filled_guard($scope0_reason, 2) && (_client_branch_if("b0", $scope0_id) || $ui__input_tag) && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "b2", "e");
 });

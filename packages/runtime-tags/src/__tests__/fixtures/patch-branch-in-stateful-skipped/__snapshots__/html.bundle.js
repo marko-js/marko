@@ -11,9 +11,9 @@ var panel_default = _template("b", (input) => {
 	}, 1, 0, 0, $wg__input_content__OR__input_label__OR__input_items, $scope0_reason, 3, 0, 4);
 	_patch_render($scope0_id, "b0", (($fg__input_content ? " d" : "") + ($fg__input_label ? " e" : "") + ($fg__input_items ? " f" : "")).slice(1), $scope0_reason, 3);
 	_scope($scope0_id, {
-		d: $ui__input_content__OR__input_label__OR__input_items && input.content,
-		e: $ui__input_content__OR__input_label__OR__input_items && input.label,
-		f: $ui__input_content__OR__input_label__OR__input_items && input.items
+		d: _write_if($scope0_reason, 2) && $ui__input_content__OR__input_label__OR__input_items && input.content,
+		e: _write_if($scope0_reason, 1) && $ui__input_content__OR__input_label__OR__input_items && input.label,
+		f: _write_if($scope0_reason, 0) && $ui__input_content__OR__input_label__OR__input_items && input.items
 	}) || ($fg__input_content && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.content, !_server_guard($scope0_reason, 4)), $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 5)), $fg__input_items && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.items, !_server_guard($scope0_reason, 6)));
 });
 

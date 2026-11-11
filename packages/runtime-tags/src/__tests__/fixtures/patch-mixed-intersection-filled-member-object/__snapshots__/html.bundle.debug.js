@@ -9,7 +9,7 @@ _shells({
 	"__tests__/tags/panel.marko_3*shell": "__tests__/tags/panel.marko_3*shell;D ;<em> </em>"
 });
 var panel_default = _template("__tests__/tags/panel.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_b = _client_guard($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 5), $ui__input_b__OR__input_a = _unfilled_if($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 5), $wi__input_b__OR__input_show__OR__input_a = _write_if($scope0_reason, 3), $ui__input_b__OR__input_show = _unfilled_if($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 5), $ui__input_show__OR__input_a = _unfilled_if($scope0_reason, 2), $wi__input_b = _write_if($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $wi__input_b = _write_if($scope0_reason, 4), $cg__input_b = _client_guard($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 5), $ui__input_b__OR__input_a = _unfilled_if($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 5), $wi__input_b__OR__input_show__OR__input_a = _write_if($scope0_reason, 3), $wi__input_b__OR__input_show = _write_if($scope0_reason, 0), $ui__input_b__OR__input_show = _unfilled_if($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 5), $ui__input_show__OR__input_a = _unfilled_if($scope0_reason, 2), $wi__input_a = _write_if($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $b__closures = new Set();
 	const $input_a__closures = new Set();
@@ -24,7 +24,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 					_html(`<em>${_text_mark($scope3_id, "#text/0", JSON.stringify(b), 1, $scope0_reason, 4)}</em>`);
 					_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope3_id, "__tests__/tags/panel.marko_3_b#0:6/subscribe", $cg__input_b);
 					_subscribe(_unfilled_if($scope0_reason, 4) && $b__closures, _scope($scope3_id, {
-						_: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id),
+						_: $wi__input_b__OR__input_show && _scope_with_id($scope1_id),
 						"ClosureSignalIndex:b/9": $wi__input_b && 1
 					}, "__tests__/tags/panel.marko", "4:6"), $cg__input_b && "__tests__/tags/panel.marko_3_b#0:6/subscribe");
 					return 0;
@@ -49,10 +49,10 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/panel.marko_1*shell"], $scope0_reason, 5);
 	_scope($scope0_id, {
-		input_a: ($ui__input_b__OR__input_show || $ui__input_b__OR__input_a) && input.a,
-		b: ($ui__input_show__OR__input_a || $ui__input_b__OR__input_a || _unfilled_if($scope0_reason, 4)) && b,
-		"ClosureScopes:b/9": $wi__input_b && ($ui__input_b__OR__input_a || $ui__input_show) && $b__closures,
-		"ClosureScopes:input_a/8": _write_if($scope0_reason, 6) && ($ui__input_b__OR__input_a || $ui__input_show) && $input_a__closures
+		input_a: $wi__input_b__OR__input_show && ($ui__input_b__OR__input_show || $ui__input_b__OR__input_a) && input.a,
+		b: _write_if($scope0_reason, 2) && ($ui__input_show__OR__input_a || $ui__input_b__OR__input_a || _unfilled_if($scope0_reason, 4)) && b,
+		"ClosureScopes:b/9": $wi__input_b && $wi__input_b && ($ui__input_b__OR__input_a || $ui__input_show) && $b__closures,
+		"ClosureScopes:input_a/8": $wi__input_a && $wi__input_a && ($ui__input_b__OR__input_a || $ui__input_show) && $input_a__closures
 	}, "__tests__/tags/panel.marko", 0, {
 		input_a: ["input.a"],
 		b: "1:8"

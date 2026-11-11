@@ -32,8 +32,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	$fg__input_a && _client_guard($scope0_reason, 7) && _patch_render($scope0_id, "__tests__/tags/child.marko_2_input_a#0:5/setup", "input_a");
 	$fg__input_b && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_b#0:6/setup", "input_b");
 	_scope($scope0_id, {
-		input_a: ($ui__input_show__OR__input_b__OR__input_other || $ui__input_a__OR__input_b || _unfilled_if($scope0_reason, 5)) && input.a,
-		input_b: ($ui__input_show__OR__input_a || $ui__input_a__OR__input_b) && input.b
+		input_a: _write_if($scope0_reason, 2) && ($ui__input_show__OR__input_b__OR__input_other || $ui__input_a__OR__input_b || _unfilled_if($scope0_reason, 5)) && input.a,
+		input_b: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_a || $ui__input_a__OR__input_b) && input.b
 	}, "__tests__/tags/child.marko", 0, {
 		input_a: ["input.a"],
 		input_b: ["input.b"]

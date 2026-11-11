@@ -61,7 +61,7 @@ var row_list_default = _template("__tests__/tags/row-list.marko", (input) => {
 	_script($scope0_id, "__tests__/tags/row-list.marko_0");
 	$fg__input_type && $cg__input_tally && _patch_render($scope0_id, "__tests__/tags/row-list.marko_1_input_type#0:7/setup", "input_type");
 	_scope($scope0_id, {
-		input_type: ($ui__input_tally || _unfilled_if($scope0_reason, 1)) && input.type,
+		input_type: _write_if($scope0_reason, 0) && ($ui__input_tally || _unfilled_if($scope0_reason, 1)) && input.type,
 		input_settled: input.settled,
 		bounty,
 		"#childScope/0": _existing_scope($childScope),

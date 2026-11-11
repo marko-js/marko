@@ -34,7 +34,7 @@ _shells({
 	a: "a;D%;<main><!></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 7), $cg__input_w = _client_guard($scope0_reason, 5), $wg__input_inner = _write_guard($scope0_reason, 6), $cg__input_inner = _client_guard($scope0_reason, 6), $wi__input_outer__OR__input_w__OR__input_inner__OR__input_note = _write_if($scope0_reason, 2), $scope0_page = _page_render(), $wg__input_outer = _write_guard($scope0_reason, 4), $cg__input_outer = _client_guard($scope0_reason, 4), $ui__input_outer = _unfilled_if($scope0_reason, 4), $sg__input_w = _server_guard($scope0_reason, 5), $ui__input_outer__OR__input_inner = _unfilled_if($scope0_reason, 0), $wi__input_w = _write_if($scope0_reason, 5), $wi__input_outer = _write_if($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 7), $cg__input_w = _client_guard($scope0_reason, 5), $wg__input_inner = _write_guard($scope0_reason, 6), $cg__input_inner = _client_guard($scope0_reason, 6), $wi__input_outer__OR__input_w__OR__input_inner__OR__input_note = _write_if($scope0_reason, 2), $scope0_page = _page_render(), $wg__input_outer = _write_guard($scope0_reason, 4), $cg__input_outer = _client_guard($scope0_reason, 4), $ui__input_outer = _unfilled_if($scope0_reason, 4), $wi__input_outer = _write_if($scope0_reason, 4), $sg__input_w = _server_guard($scope0_reason, 5), $ui__input_outer__OR__input_inner = _unfilled_if($scope0_reason, 0), $wi__input_inner = _write_if($scope0_reason, 6), $wi__input_w = _write_if($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const $input_inner__closures = /* @__PURE__ */ new Set();
@@ -68,7 +68,7 @@ var template_default = _template("a", (input) => {
 				] : []), 0, $wg__input_inner, $scope0_reason, 6, 0, void 0, 0, 0, "a0");
 				_unfilled_if($scope0_reason, 6) && _patch_subscribe($scope3_id, "a3", $cg__input_inner);
 				$wi__input_outer__OR__input_w__OR__input_inner__OR__input_note && _subscribe($ui__input_inner && $input_inner__closures, _scope($scope3_id, {
-					c: ($ui__input_inner || _unfilled_if($scope0_reason, 5)) && w,
+					c: $wi__input_inner && ($ui__input_inner || _unfilled_if($scope0_reason, 5)) && w,
 					m: $wi__input_w && $await_content2__w__closures
 				}), $cg__input_inner && "a3", $wg__input_inner);
 				_filled_guard($scope0_reason, 5) && (_client_branch_if("a0", $scope3_id) || $ui__input_inner) && _patch_write($scope3_id, "xc", w, !$sg__input_w) && _patch_subscribers($scope3_id, "a4", "c");
@@ -89,10 +89,10 @@ var template_default = _template("a", (input) => {
 	_html("</main>");
 	_scope($scope0_id, {
 		f: $wi__input_outer && input.w,
-		g: ($ui__input_outer || _unfilled_if($scope0_reason, 6)) && input.inner,
-		h: ($ui__input_outer__OR__input_inner || _unfilled_if($scope0_reason, 7)) && input.note,
+		g: $wi__input_outer && ($ui__input_outer || _unfilled_if($scope0_reason, 6)) && input.inner,
+		h: _write_if($scope0_reason, 0) && ($ui__input_outer__OR__input_inner || _unfilled_if($scope0_reason, 7)) && input.note,
 		l: _write_if($scope0_reason, 7) && $input_note__closures,
-		k: _write_if($scope0_reason, 6) && $input_inner__closures,
+		k: $wi__input_inner && $input_inner__closures,
 		j: $wi__input_w && $input_w__closures,
 		i: $wi__input_outer && $ui__input_outer && $input_outer__closures
 	}) || (_filled_guard($scope0_reason, 5) && (_client_branch_if("a7", $scope0_id) || $ui__input_outer) && _patch_write($scope0_id, "xf", input.w, !$sg__input_w) && _patch_subscribers($scope0_id, "a12", "f"), _filled_guard($scope0_reason, 6) && (_client_branch_if("a7", $scope0_id) || $ui__input_outer) && _patch_write($scope0_id, "xg", input.inner, !_server_guard($scope0_reason, 6)) && _patch_subscribers($scope0_id, "a13", "g"), _filled_guard($scope0_reason, 7) && (_client_branch_if("a7", $scope0_id) || _client_branch_if("a0", $scope0_id) || $ui__input_outer__OR__input_inner) && _patch_write($scope0_id, "xh", input.note, !_server_guard($scope0_reason, 7)) && _patch_subscribers($scope0_id, "a14", "h"));

@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	const Inner = { content: _content("a2", ({ v, show }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__show = _write_guard($scope1_reason, 1);
+		const $scope1_reason = _scope_reason(), $wg__show = _write_guard($scope1_reason, 1), $wi__show = _write_if($scope1_reason, 1);
 		_if(() => {
 			if (show) {
 				const $scope3_id = _scope_id();
@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__show, 1, 0, 0, ["a1"], $scope1_reason, 1);
-		_write_if($scope1_reason, 1) && _scope($scope1_id, { d: v });
+		$wi__show && _scope($scope1_id, { d: $wi__show && v });
 	}, $scope0_id) };
 	const Outer = { content: _content("a3", ({ v, show }) => {
 		const $scope2_id = _scope_id();

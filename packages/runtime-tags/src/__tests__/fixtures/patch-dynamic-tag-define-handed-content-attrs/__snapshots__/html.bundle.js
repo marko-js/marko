@@ -19,7 +19,7 @@ var one_default = _template("b", (input) => {
 		_unfilled_if(($uf__input_content | $uf__t) << 1, 0) && _patch_subscribe($scope1_id, "b1");
 		_patch_render($scope1_id, "b2", ((_filled_guard($scope0_reason, 0) ? " >d" : "") + ($fg__t ? " d" : "")).slice(1), ($uf__input_content | $uf__t) << 1, 0);
 		($wi__input_content || _write_if($scope1_reason, 0)) && _subscribe(_unfilled_if(($uf__input_content | $uf__t) << 1, 0) && $wi__input_content && $input_content__closures, _scope($scope1_id, {
-			d: ($ui__input_content || _unfilled_if($scope1_reason, 0)) && t,
+			d: $wi__input_content && ($ui__input_content || _unfilled_if($scope1_reason, 0)) && t,
 			_: _scope_with_id($scope0_id)
 		}), _client_guard(($uf__input_content | $uf__t) << 1, 0) && "b1", $wg__input_content || $wg__t) || $fg__t && $ui__input_content && _patch_write($scope1_id, "xd", t, !_server_guard($scope1_reason, 0));
 	}, $scope0_id, 0) };
@@ -28,7 +28,7 @@ var one_default = _template("b", (input) => {
 	Wrap.content({ t: input.t });
 	_patch_child_end();
 	_scope($scope0_id, {
-		d: ($ui__input_t || _unfilled_if($scope0_reason, 0)) && input.content,
+		d: _write_if($scope0_reason, 1) && ($ui__input_t || _unfilled_if($scope0_reason, 0)) && input.content,
 		f: $wi__input_content && $input_content__closures,
 		a: _existing_scope($childScope)
 	}) || _filled_guard($scope0_reason, 0) && $ui__input_t && _patch_write($scope0_id, "xd", input.content, !_server_guard($scope0_reason, 0));

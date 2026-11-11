@@ -22,7 +22,7 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell;D%c%;<li><!>:<!></li>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 4), $ui__input_items = _unfilled_if($scope0_reason, 3), $ui__input_on = _unfilled_if($scope0_reason, 2), $wi__input_on__OR__input_items__OR__input_label = _write_if($scope0_reason, 1), $cg__input_items = _client_guard($scope0_reason, 3), $wg__input_on = _write_guard($scope0_reason, 2), $ui__input_label = _unfilled_if($scope0_reason, 4), $cg__input_on = _client_guard($scope0_reason, 2), $ui__input_on__OR__input_items = _unfilled_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 4), $ui__input_items = _unfilled_if($scope0_reason, 3), $ui__input_on = _unfilled_if($scope0_reason, 2), $wi__input_on__OR__input_items__OR__input_label = _write_if($scope0_reason, 1), $cg__input_items = _client_guard($scope0_reason, 3), $wg__input_on = _write_guard($scope0_reason, 2), $ui__input_label = _unfilled_if($scope0_reason, 4), $cg__input_on = _client_guard($scope0_reason, 2), $ui__input_on__OR__input_items = _unfilled_if($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 4), $wi__input_items = _write_if($scope0_reason, 3), $wi__input_on = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $input_items__closures = new Set();
@@ -59,12 +59,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
-		input_items: ($ui__input_on || $ui__input_items) && input.items,
-		input_label: ($ui__input_on__OR__input_items || $ui__input_label) && input.label,
+		input_items: $wi__input_on && ($ui__input_on || $ui__input_items) && input.items,
+		input_label: _write_if($scope0_reason, 0) && ($ui__input_on__OR__input_items || $ui__input_label) && input.label,
 		count,
-		"ClosureScopes:input_label/10": _write_if($scope0_reason, 4) && ($ui__input_label || $ui__input_on || $ui__input_items) && $input_label__closures,
-		"ClosureScopes:input_items/9": _write_if($scope0_reason, 3) && ($ui__input_items || $ui__input_on) && $input_items__closures,
-		"ClosureScopes:input_on/8": _write_if($scope0_reason, 2) && $ui__input_on && $input_on__closures,
+		"ClosureScopes:input_label/10": $wi__input_label && $wi__input_label && ($ui__input_label || $ui__input_on || $ui__input_items) && $input_label__closures,
+		"ClosureScopes:input_items/9": $wi__input_items && $wi__input_items && ($ui__input_items || $ui__input_on) && $input_items__closures,
+		"ClosureScopes:input_on/8": $wi__input_on && $ui__input_on && $input_on__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {
 		input_items: ["input.items"],

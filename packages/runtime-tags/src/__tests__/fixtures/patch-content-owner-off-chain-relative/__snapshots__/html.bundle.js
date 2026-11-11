@@ -52,7 +52,7 @@ _shells({
 	e1: "e1;b%;<!><!><!>"
 });
 var view_default = _template("e", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_tabs = _write_guard($scope0_reason, 1), $wg__input_selected = _write_guard($scope0_reason, 2), $cg__input_selected = _client_guard($scope0_reason, 2), $wi__input_tabs__OR__input_selected = _write_if($scope0_reason, 0), $ui__input_tabs = _unfilled_if($scope0_reason, 1), $fg__input_selected = _filled_guard($scope0_reason, 2), $cg__input_tabs = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_tabs = _write_guard($scope0_reason, 1), $wg__input_selected = _write_guard($scope0_reason, 2), $cg__input_selected = _client_guard($scope0_reason, 2), $wi__input_tabs__OR__input_selected = _write_if($scope0_reason, 0), $wi__input_tabs = _write_if($scope0_reason, 1), $ui__input_tabs = _unfilled_if($scope0_reason, 1), $fg__input_selected = _filled_guard($scope0_reason, 2), $cg__input_tabs = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_for_of(input.tabs, (tab, i) => {
 		const $scope1_id = _scope_id(), $ui__input_selected = _unfilled_if($scope0_reason, 2), $fg__input_tabs = _filled_guard($scope0_reason, 1);
@@ -62,20 +62,20 @@ var view_default = _template("e", (input) => {
 				const $scope2_id = _scope_id();
 				_dynamic_tag($scope2_id, "a", tab.content, {}, 2, 0, 0, $wg__input_tabs, $scope0_reason, 1);
 				$cg__input_tabs && _patch_render($scope2_id, "e0");
-				$wi__input_tabs__OR__input_selected && _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope1_id) });
+				$wi__input_tabs__OR__input_selected && _scope($scope2_id, { _: $wi__input_tabs && _scope_with_id($scope1_id) });
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__input_selected, 1, 0, 0, ["e1"], $scope0_reason, 0);
 		$fg__input_tabs && $cg__input_selected && _patch_render($scope1_id, "e0", "d");
 		$cg__input_selected && _patch_render($scope1_id, "e3");
 		$wi__input_tabs__OR__input_selected && _scope($scope1_id, {
-			d: ($ui__input_selected || _unfilled_if($scope0_reason, 1)) && tab?.content,
+			d: _write_if($scope0_reason, 2) && ($ui__input_selected || _unfilled_if($scope0_reason, 1)) && tab?.content,
 			M: $ui__input_selected && i,
 			_: _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "e2", $scope0_reason, 1);
 	$fg__input_selected && $cg__input_tabs && _patch_render($scope0_id, "e3", "e");
-	_scope($scope0_id, { e: ($ui__input_tabs || _unfilled_if($scope0_reason, 2)) && input.selected }) || $fg__input_selected && $ui__input_tabs && _patch_write($scope0_id, "xe", input.selected, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { e: $wi__input_tabs && ($ui__input_tabs || _unfilled_if($scope0_reason, 2)) && input.selected }) || $fg__input_selected && $ui__input_tabs && _patch_write($scope0_id, "xe", input.selected, !_server_guard($scope0_reason, 2));
 });
 
 // tags/page.marko
@@ -112,7 +112,7 @@ _shells({
 	f2: `f2${_shell_marker([[], []], ["a>", $setup$2])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1)}`
 });
 var wrap_default = _template("f", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_items = _filled_guard($scope0_reason, 2), $fg__input_selected = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $fg__input_items = _filled_guard($scope0_reason, 2), $fg__input_selected = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -136,8 +136,8 @@ var wrap_default = _template("f", (input) => {
 	$fg__input_items && $cg__input_show && _patch_render($scope0_id, "f0", "e");
 	$fg__input_selected && $cg__input_show && _patch_render($scope0_id, "f1", "f");
 	_scope($scope0_id, {
-		e: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.items,
-		f: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.selected
+		e: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.items,
+		f: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.selected
 	}) || ($fg__input_items && $ui__input_show && _patch_write($scope0_id, "xe", input.items, !_server_guard($scope0_reason, 2)), $fg__input_selected && $ui__input_show && _patch_write($scope0_id, "xf", input.selected, !_server_guard($scope0_reason, 3)));
 });
 

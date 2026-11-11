@@ -6,7 +6,7 @@ _shells({
 	a5: `a5 !a>a1;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($Counter_content__walks)};${$Counter_content__template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 2), $fg__input_start = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 2), $fg__input_start = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const Counter = { content: _content("a0", (input) => {
 		const $scope2_id = _scope_id();
@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_title && $cg__input_show && _patch_render($scope0_id, "a3", "e");
 	$fg__input_start && $cg__input_show && _patch_render($scope0_id, "a4", "f");
 	_scope($scope0_id, {
-		e: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.title,
-		f: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.start
+		e: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.title,
+		f: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.start
 	}) || ($fg__input_title && $ui__input_show && _patch_write($scope0_id, "xe", input.title, !_server_guard($scope0_reason, 2)), $fg__input_start && $ui__input_show && _patch_write($scope0_id, "xf", input.start, !_server_guard($scope0_reason, 3)));
 }, 1);

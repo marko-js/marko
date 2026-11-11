@@ -26,7 +26,7 @@ _shells({
 	"__tests__/template.marko_3*shell": `__tests__/template.marko_3*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 4), $wi__input_p__OR__input_label__OR__input_show = _write_if($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 5), $ui__input_show = _unfilled_if($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 4), $wi__input_p__OR__input_label__OR__input_show = _write_if($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 5), $ui__input_show = _unfilled_if($scope0_reason, 5), $wi__input_show = _write_if($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $input_p__closures = new Set();
@@ -56,8 +56,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope0_reason, 5);
 	_scope($scope0_id, {
-		input_p: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.p,
-		input_label: ($ui__input_show || _unfilled_if($scope0_reason, 4)) && input.label,
+		input_p: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.p,
+		input_label: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 4)) && input.label,
 		Body_content: $ui__input_show && Body.content,
 		"ClosureScopes:input_label/9": _write_if($scope0_reason, 4) && $input_label__closures,
 		"ClosureScopes:input_p/8": _write_if($scope0_reason, 3) && $input_p__closures

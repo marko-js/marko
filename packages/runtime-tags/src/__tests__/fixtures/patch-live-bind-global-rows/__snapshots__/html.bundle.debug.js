@@ -18,8 +18,8 @@ var stepper_default = _template("__tests__/tags/stepper.marko", (input) => {
 	_patch_let_change($scope0_id, "PatchFill:__tests__/tags/stepper.marko_0_current#8/fill", current, "PatchWrite:TagVariableChange:current", $currentChange, $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_max: input.max,
-		input_value: $ui__input_value__OR__input_valueChange && input.value,
-		input_valueChange: $ui__input_value__OR__input_valueChange && input.valueChange,
+		input_value: _write_if($scope0_reason, 3) && $ui__input_value__OR__input_valueChange && input.value,
+		input_valueChange: _write_if($scope0_reason, 2) && $ui__input_value__OR__input_valueChange && input.valueChange,
 		clamp,
 		current: _write_if($scope0_reason, 1) && current,
 		"TagVariableChange:current": $currentChange

@@ -1,7 +1,7 @@
 // template.marko
 _shells({ a: "a; ;<output></output>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_title__OR__input_upper = _unfilled_if($scope0_reason, 0), $sg__input_title = _server_guard($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 1), $ui__input_upper = _unfilled_if($scope0_reason, 2), $fg__input_title__OR__input_upper = _filled_guard($scope0_reason, 0), $fg__input_upper = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_title__OR__input_upper = _unfilled_if($scope0_reason, 0), $wi__input_upper = _write_if($scope0_reason, 2), $sg__input_title = _server_guard($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 1), $ui__input_upper = _unfilled_if($scope0_reason, 2), $fg__input_title__OR__input_upper = _filled_guard($scope0_reason, 0), $fg__input_upper = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	$fg__input_title && _patch_write($scope0_id, "xd", input.title, !$sg__input_title);
 	const up = _bind_resume(() => "U" + input.title, "a0", $scope0_id);
@@ -12,9 +12,9 @@ var template_default = _template("a", (input) => {
 	_patch_render($scope0_id, "a3", (($fg__input_upper ? " e" : "") + ($fg__input_title ? " f" : "") + ($fg__input_title ? " d" : "") + ($fg__input_title ? " g" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: input.title,
-		e: $ui__input_title__OR__input_upper && input.upper,
-		f: $ui__input_title__OR__input_upper && up,
-		g: $ui__input_title__OR__input_upper && low,
+		e: _write_if($scope0_reason, 1) && $ui__input_title__OR__input_upper && input.upper,
+		f: $wi__input_upper && $ui__input_title__OR__input_upper && up,
+		g: $wi__input_upper && $ui__input_title__OR__input_upper && low,
 		i: pick
 	}) || ($fg__input_upper && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.upper, !_server_guard($scope0_reason, 2)), $fg__input_title && $ui__input_upper && _patch_write($scope0_id, "xf", up, !$sg__input_title), $fg__input_title && $ui__input_upper && _patch_write($scope0_id, "xg", low, !$sg__input_title), $fg__input_title__OR__input_upper && _patch_write($scope0_id, "xi", pick, !_server_guard($scope0_reason, 0)));
 }, 1);

@@ -31,7 +31,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	$fg__input_label2 && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_label#0:5/setup", "input_label");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_0_c#6/fill", c, 1);
 	_scope($scope0_id, {
-		input_label: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label,
+		input_label: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label,
 		c
 	}, "__tests__/tags/child.marko", 0, {
 		input_label: ["input.label"],

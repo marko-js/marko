@@ -16,7 +16,7 @@ _shells({
 	a3: `a3${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b")};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_title__OR__input_items = _unfilled_if($scope0_reason, 0), $sg__input_title = _server_guard($scope0_reason, 1), $fg__input_title2 = _filled_guard($scope0_reason, 1), $ui__input_items = _unfilled_if($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_title__OR__input_items = _unfilled_if($scope0_reason, 0), $wi__input_items = _write_if($scope0_reason, 2), $sg__input_title = _server_guard($scope0_reason, 1), $fg__input_title2 = _filled_guard($scope0_reason, 1), $ui__input_items = _unfilled_if($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	$fg__input_title2 && _patch_write($scope0_id, "xd", input.title, !$sg__input_title);
 	const up = _bind_resume(() => "U" + input.title, "a0", $scope0_id);
@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 		_patch_child_end();
 		_patch_render($scope1_id, "a2", (($fg__input_title ? " >f" : "") + ($fg__input_title ? " >d" : "") + ($fg__input_title ? " >g" : "") + ($fg__input_items ? " d" : "")).slice(1), $scope0_reason, 0);
 		_scope($scope1_id, {
-			d: _unfilled_if($scope0_reason, 0) && item?.upper,
+			d: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 0) && item?.upper,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		});
@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_title2 && $cg__input_items && _patch_render($scope0_id, "a5", "g d");
 	_scope($scope0_id, {
 		d: input.title,
-		f: $ui__input_title__OR__input_items && up,
-		g: $ui__input_title__OR__input_items && low
+		f: $wi__input_items && $ui__input_title__OR__input_items && up,
+		g: $wi__input_items && $ui__input_title__OR__input_items && low
 	}) || ($fg__input_title2 && $ui__input_items && _patch_write($scope0_id, "xf", up, !$sg__input_title), $fg__input_title2 && $ui__input_items && _patch_write($scope0_id, "xg", low, !$sg__input_title));
 }, 1);

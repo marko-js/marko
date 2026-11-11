@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a4");
 	$fg__input_inner && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "a3", "h");
 	_scope($scope0_id, {
-		h: ($ui__input_outer || _unfilled_if($scope0_reason, 2)) && input.inner,
+		h: _write_if($scope0_reason, 1) && ($ui__input_outer || _unfilled_if($scope0_reason, 2)) && input.inner,
 		i: count,
 		k: $count__closures
 	}) || $fg__input_inner && $ui__input_outer && _patch_write($scope0_id, "xh", input.inner, !_server_guard($scope0_reason, 2));

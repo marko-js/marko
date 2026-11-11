@@ -41,7 +41,7 @@ var outer_default = _template("c", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["c3"], $scope0_reason, 0);
 	$fg__input_content && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "c1", "e");
-	_scope($scope0_id, { e: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.content }) || (_client_branch(input.content), $fg__input_content && $ui__input_show && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 1)));
+	_scope($scope0_id, { e: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.content }) || (_client_branch(input.content), $fg__input_content && $ui__input_show && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 1)));
 });
 
 // template.marko
@@ -65,7 +65,7 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.label,
+		e: _write_if($scope0_reason, 1) && (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.label,
 		f: _write_if($scope0_reason, 2) && $input_label__closures,
 		a: _existing_scope($childScope)
 	}) || _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "a2", "e");

@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell !__tests__/template.marko_1; b ;<input class=b><input type=checkbox class=c>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_value = _filled_guard($scope0_reason, 2), $fg__input_flag = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $fg__input_value = _filled_guard($scope0_reason, 2), $fg__input_flag = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=inc>${_text_mark($scope0_id, "#text/1", n)}</button>${_el_mark($scope0_id, "#button/0")}`);
@@ -33,8 +33,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_value && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_value#0:6/setup", "input_value");
 	$fg__input_flag && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_flag#0:7/setup", "input_flag");
 	_scope($scope0_id, {
-		input_value: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.value,
-		input_flag: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.flag,
+		input_value: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.value,
+		input_flag: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.flag,
 		n
 	}, "__tests__/template.marko", 0, {
 		input_value: ["input.value"],

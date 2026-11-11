@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_flag && $cg__input_items && _patch_render($scope0_id, "__tests__/template.marko_1_input_flag#0:5/setup", "input_flag");
 	_scope($scope0_id, {
-		input_flag: ($ui__input_items || _unfilled_if($scope0_reason, 1)) && input.flag,
+		input_flag: _write_if($scope0_reason, 0) && ($ui__input_items || _unfilled_if($scope0_reason, 1)) && input.flag,
 		input_suffix: input.suffix,
 		count,
 		"ClosureScopes:input_suffix/9": _write_if($scope0_reason, 2) && $input_suffix__closures,

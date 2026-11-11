@@ -37,8 +37,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_mode#5_input_label#6/setup", (($fg__input_mode ? " input_mode" : "") + ($fg__input_label ? " input_label" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_mode: $ui__input_mode__OR__input_label && input.mode,
-		input_label: $ui__input_mode__OR__input_label && input.label,
+		input_mode: _write_if($scope0_reason, 2) && $ui__input_mode__OR__input_label && input.mode,
+		input_label: _write_if($scope0_reason, 1) && $ui__input_mode__OR__input_label && input.label,
 		n
 	}, "__tests__/template.marko", 0, {
 		input_mode: ["input.mode"],

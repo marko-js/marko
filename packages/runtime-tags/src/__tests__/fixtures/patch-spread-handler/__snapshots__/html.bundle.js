@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 	_html(`<em>${_text_mark($scope0_id, "b", count)}</em></main>`);
 	$fg__input_attrs && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a2", "f");
 	_scope($scope0_id, {
-		f: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.attrs,
+		f: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.attrs,
 		g: count
 	}) || $fg__input_attrs && $ui__input_show && _patch_write($scope0_id, "xf", input.attrs, !_server_guard($scope0_reason, 1));
 }, 1);
