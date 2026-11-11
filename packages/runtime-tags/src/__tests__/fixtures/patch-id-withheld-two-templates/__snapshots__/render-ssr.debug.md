@@ -56,18 +56,18 @@ for (const input of document.querySelectorAll("input")) {
   clear
 </button>
 <input
-  id="sM_[2].#childScope/0@0.#childScope/0@0^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/tags/relay.marko_1*content\"].rid"
+  id="sM_[2].#childScope/0@0.#childScope/0@0.#text/1@0.rid"
 />
 <label
-  for="sM_[2].#childScope/0@0.#childScope/0@0^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/tags/relay.marko_1*content\"].rid"
+  for="sM_[2].#childScope/0@0.#childScope/0@0.#text/1@0.rid"
 >
   relay
 </label>
 <input
-  id="sM_[2].#childScope/0@0.#childScope/0@0^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/template.marko_2*content\"].uid"
+  id="sM_[2].#childScope/0@0.#childScope/0@0.#text/2@1.uid"
 />
 <label
-  for="sM_[2].#childScope/0@0.#childScope/0@0^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/template.marko_2*content\"].uid"
+  for="sM_[2].#childScope/0@0.#childScope/0@0.#text/2@1.uid"
 >
   p 2
 </label>
@@ -75,12 +75,12 @@ for (const input of document.querySelectorAll("input")) {
 ## Change
 ```
 INSERT: label:nth-of-type(2) + button
-INSERT: button:nth-of-type(2) + :is(#sM_[2].#childScope/0@0.#childScope/0@0^["packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/tags/relay.marko_1*content"].rid, label)
-INSERT: label:nth-of-type(3) + :is(#sM_[2].#childScope/0@0.#childScope/0@0^["packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/template.marko_2*content"].uid, label)
-UPDATE: #sM_[2].#childScope/0@0.#childScope/0@0^["packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/tags/relay.marko_1*content"].rid[id] null => "sM_[2].#childScope/0@0.#childScope/0@0^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/tags/relay.marko_1*content\"].rid"
-UPDATE: label:nth-of-type(3)[for] null => "sM_[2].#childScope/0@0.#childScope/0@0^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/tags/relay.marko_1*content\"].rid"
-UPDATE: #sM_[2].#childScope/0@0.#childScope/0@0^["packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/template.marko_2*content"].uid[id] null => "sM_[2].#childScope/0@0.#childScope/0@0^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/template.marko_2*content\"].uid"
-UPDATE: label:nth-of-type(4)[for] null => "sM_[2].#childScope/0@0.#childScope/0@0^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/template.marko_2*content\"].uid"
+INSERT: button:nth-of-type(2) + :is(#sM_[2].#childScope/0@0.#childScope/0@0.#text/1@0.rid, label)
+INSERT: label:nth-of-type(3) + :is(#sM_[2].#childScope/0@0.#childScope/0@0.#text/2@1.uid, label)
+UPDATE: #sM_[2].#childScope/0@0.#childScope/0@0.#text/1@0.rid[id] null => "sM_[2].#childScope/0@0.#childScope/0@0.#text/1@0.rid"
+UPDATE: label:nth-of-type(3)[for] null => "sM_[2].#childScope/0@0.#childScope/0@0.#text/1@0.rid"
+UPDATE: #sM_[2].#childScope/0@0.#childScope/0@0.#text/2@1.uid[id] null => "sM_[2].#childScope/0@0.#childScope/0@0.#text/2@1.uid"
+UPDATE: label:nth-of-type(4)[for] null => "sM_[2].#childScope/0@0.#childScope/0@0.#text/2@1.uid"
 UPDATE: label:nth-of-type(4)::text@2 "" => "2"
 ```
 

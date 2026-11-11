@@ -86,10 +86,10 @@ for (const label of document.querySelectorAll("label")) {
   clear
 </button>
 <input
-  id="sM_[2].#childScope/0@2^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_6*content\"].uid~2"
+  id="sM_[2].#childScope/0@2.#text/1@0.uid~2"
 />
 <label
-  for="sM_[2].#childScope/0@2^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_6*content\"].uid~2"
+  for="sM_[2].#childScope/0@2.#text/1@0.uid~2"
 >
   2
 </label>
@@ -103,9 +103,9 @@ INSERT: #sM_["a"].uid + label
 INSERT: #sM_.#text/1@0.uid~1 + label
 INSERT: #sM_.#text/2@1.uid~1 + label
 INSERT: label:nth-of-type(5) + button
-INSERT: button:nth-of-type(2) + :is(#sM_[2].#childScope/0@2^["packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_6*content"].uid~2, label)
-UPDATE: #sM_[2].#childScope/0@2^["packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_6*content"].uid~2[id] null => "sM_[2].#childScope/0@2^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_6*content\"].uid~2"
-UPDATE: label:nth-of-type(6)[for] null => "sM_[2].#childScope/0@2^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_6*content\"].uid~2"
+INSERT: button:nth-of-type(2) + :is(#sM_[2].#childScope/0@2.#text/1@0.uid~2, label)
+UPDATE: #sM_[2].#childScope/0@2.#text/1@0.uid~2[id] null => "sM_[2].#childScope/0@2.#text/1@0.uid~2"
+UPDATE: label:nth-of-type(6)[for] null => "sM_[2].#childScope/0@2.#text/1@0.uid~2"
 UPDATE: label:nth-of-type(6)::text " " => "2"
 ```
 

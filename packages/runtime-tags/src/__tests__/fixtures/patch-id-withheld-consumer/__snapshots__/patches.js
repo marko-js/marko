@@ -7,13 +7,15 @@
         aa$id: "sM_1UA",
         ab$for: "sM_1UA",
         fd: "^^a0"
-      }
+      },
+      Wd: [{
+        s: {
+          aa$id: "sM_1UUA",
+          ab$for: "sM_1UUA"
+        }
+      }, "a0"]
     },
     W2: {
-      s: {
-        aa$id: "sM_1UTha0A",
-        ab$for: "sM_1UTha0A"
-      },
       tc: 1
     }
   }, 2, {
@@ -22,13 +24,15 @@
         aa$id: "sM_2UA",
         ab$for: "sM_2UA",
         fd: "^^a0"
-      }
+      },
+      Wd: [{
+        s: {
+          aa$id: "sM_2UUA",
+          ab$for: "sM_2UUA"
+        }
+      }, "a0"]
     },
     W2: {
-      s: {
-        aa$id: "sM_2UTha0A",
-        ab$for: "sM_2UTha0A"
-      },
       tc: 2
     }
   }, "a1"]

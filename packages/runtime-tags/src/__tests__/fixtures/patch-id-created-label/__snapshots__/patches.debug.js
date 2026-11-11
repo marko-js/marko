@@ -50,26 +50,30 @@
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
         "PatchDynamicTag:#text/1": _.g = "^^packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_6*content"
-      }
+      },
+      "PatchClientBranch:#text/1": [{
+        "PatchSetup:": {
+          "PatchAttr:#input/0 id": _.f = "sM_[1].#childScope/0@2.#text/1@0.uid~2",
+          "PatchAttr:#label/1 for": _.f
+        }
+      }, _.i = "packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_6*content"]
     },
     "PatchClientBranch:6": {
-      "PatchSetup:": {
-        "PatchAttr:#input/0 id": _.f = "sM_[1].#childScope/0@2^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_6*content\"].uid~2",
-        "PatchAttr:#label/1 for": _.f
-      },
       "PatchText:#text/2": 1
     }
   }, 2, {
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
         "PatchDynamicTag:#text/1": _.g
-      }
+      },
+      "PatchClientBranch:#text/1": [{
+        "PatchSetup:": {
+          "PatchAttr:#input/0 id": _.h = "sM_[2].#childScope/0@2.#text/1@0.uid~2",
+          "PatchAttr:#label/1 for": _.h
+        }
+      }, _.i]
     },
     "PatchClientBranch:6": {
-      "PatchSetup:": {
-        "PatchAttr:#input/0 id": _.h = "sM_[2].#childScope/0@2^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_6*content\"].uid~2",
-        "PatchAttr:#label/1 for": _.h
-      },
       "PatchText:#text/2": 2
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_5*shell"]

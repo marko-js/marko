@@ -7,20 +7,22 @@
         "PatchSetup:": {
           "PatchDynamicTag:#text/1": _.c = "^^packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/tags/relay.marko_1*content",
           "PatchDynamicTag:#text/2": _.d = "^^^packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/template.marko_2*content"
-        }
-      },
-      "PatchClientBranch:1": {
-        "PatchSetup:": {
-          "PatchAttr:#input/0 id": _.a = "sM_[1].#childScope/0@0.#childScope/0@0^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/tags/relay.marko_1*content\"].rid",
-          "PatchAttr:#label/1 for": _.a
-        }
+        },
+        "PatchClientBranch:#text/1": [{
+          "PatchSetup:": {
+            "PatchAttr:#input/0 id": _.a = "sM_[1].#childScope/0@0.#childScope/0@0.#text/1@0.rid",
+            "PatchAttr:#label/1 for": _.a
+          }
+        }, _.f = "packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/tags/relay.marko_1*content"],
+        "PatchClientBranch:#text/2": [{
+          "PatchSetup:": {
+            "PatchAttr:#input/0 id": _.b = "sM_[1].#childScope/0@0.#childScope/0@0.#text/2@1.uid",
+            "PatchAttr:#label/1 for": _.b
+          }
+        }, _.h = "packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/template.marko_2*content"]
       }
     },
     "PatchClientBranch:2": {
-      "PatchSetup:": {
-        "PatchAttr:#input/0 id": _.b = "sM_[1].#childScope/0@0.#childScope/0@0^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/template.marko_2*content\"].uid",
-        "PatchAttr:#label/1 for": _.b
-      },
       "PatchText:#text/2": 1
     }
   }, 2, {
@@ -29,20 +31,22 @@
         "PatchSetup:": {
           "PatchDynamicTag:#text/1": _.c,
           "PatchDynamicTag:#text/2": _.d
-        }
-      },
-      "PatchClientBranch:1": {
-        "PatchSetup:": {
-          "PatchAttr:#input/0 id": _.e = "sM_[2].#childScope/0@0.#childScope/0@0^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/tags/relay.marko_1*content\"].rid",
-          "PatchAttr:#label/1 for": _.e
-        }
+        },
+        "PatchClientBranch:#text/1": [{
+          "PatchSetup:": {
+            "PatchAttr:#input/0 id": _.e = "sM_[2].#childScope/0@0.#childScope/0@0.#text/1@0.rid",
+            "PatchAttr:#label/1 for": _.e
+          }
+        }, _.f],
+        "PatchClientBranch:#text/2": [{
+          "PatchSetup:": {
+            "PatchAttr:#input/0 id": _.g = "sM_[2].#childScope/0@0.#childScope/0@0.#text/2@1.uid",
+            "PatchAttr:#label/1 for": _.g
+          }
+        }, _.h]
       }
     },
     "PatchClientBranch:2": {
-      "PatchSetup:": {
-        "PatchAttr:#input/0 id": _.f = "sM_[2].#childScope/0@0.#childScope/0@0^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/template.marko_2*content\"].uid",
-        "PatchAttr:#label/1 for": _.f
-      },
       "PatchText:#text/2": 2
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/template.marko_1*shell"]

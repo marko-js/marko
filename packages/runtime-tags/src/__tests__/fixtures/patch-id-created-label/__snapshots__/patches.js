@@ -50,26 +50,30 @@
     ca: {
       s: {
         fb: "^^a1"
-      }
+      },
+      Wb: [{
+        s: {
+          aa$id: "sM_1WUC",
+          ab$for: "sM_1WUC"
+        }
+      }, "a1"]
     },
     W6: {
-      s: {
-        aa$id: "sM_1WTha1C",
-        ab$for: "sM_1WTha1C"
-      },
       tc: 1
     }
   }, 2, {
     ca: {
       s: {
         fb: "^^a1"
-      }
+      },
+      Wb: [{
+        s: {
+          aa$id: "sM_2WUC",
+          ab$for: "sM_2WUC"
+        }
+      }, "a1"]
     },
     W6: {
-      s: {
-        aa$id: "sM_2WTha1C",
-        ab$for: "sM_2WTha1C"
-      },
       tc: 2
     }
   }, "a5"]

@@ -49,12 +49,14 @@
 }
 `packages/runtime-tags/src/__tests__/fixtures/patch-async-late-nested-loops/template.marko_5*content`
 {
-  "PatchLoopItem:#text/0": [_(2)["PatchLoopItem:#text/0"][0], {
-    "PatchLoopItem:#section/0": [1, {
-      "PatchCatch:#text/0": [{
-        "PatchText:#text/0": "nope"
-      }, _.b]
-    }]
-  }]
+  "PatchLoopItem:#text/0": [
+    [1, "a"], {
+      "PatchLoopItem:#section/0": [1, {
+        "PatchCatch:#text/0": [{
+          "PatchText:#text/0": "nope"
+        }, _.b]
+      }]
+    }
+  ]
 }
 ;D24

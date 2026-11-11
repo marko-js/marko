@@ -7,13 +7,15 @@
         "PatchAttr:#input/0 id": _.a = "sM_[1].#childScope/0@0.own",
         "PatchAttr:#label/1 for": _.a,
         "PatchDynamicTag:#text/3": _.d = "^^packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-consumer/template.marko_2*content"
-      }
+      },
+      "PatchClientBranch:#text/3": [{
+        "PatchSetup:": {
+          "PatchAttr:#input/0 id": _.b = "sM_[1].#childScope/0@0.#text/3@0.uid",
+          "PatchAttr:#label/1 for": _.b
+        }
+      }, _.f = "packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-consumer/template.marko_2*content"]
     },
     "PatchClientBranch:2": {
-      "PatchSetup:": {
-        "PatchAttr:#input/0 id": _.b = "sM_[1].#childScope/0@0^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-consumer/template.marko_2*content\"].uid",
-        "PatchAttr:#label/1 for": _.b
-      },
       "PatchText:#text/2": 1
     }
   }, 2, {
@@ -22,13 +24,15 @@
         "PatchAttr:#input/0 id": _.c = "sM_[2].#childScope/0@0.own",
         "PatchAttr:#label/1 for": _.c,
         "PatchDynamicTag:#text/3": _.d
-      }
+      },
+      "PatchClientBranch:#text/3": [{
+        "PatchSetup:": {
+          "PatchAttr:#input/0 id": _.e = "sM_[2].#childScope/0@0.#text/3@0.uid",
+          "PatchAttr:#label/1 for": _.e
+        }
+      }, _.f]
     },
     "PatchClientBranch:2": {
-      "PatchSetup:": {
-        "PatchAttr:#input/0 id": _.e = "sM_[2].#childScope/0@0^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-consumer/template.marko_2*content\"].uid",
-        "PatchAttr:#label/1 for": _.e
-      },
       "PatchText:#text/2": 2
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-consumer/template.marko_1*shell"]

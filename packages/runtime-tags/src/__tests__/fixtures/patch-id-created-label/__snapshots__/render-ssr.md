@@ -86,10 +86,10 @@ for (const label of document.querySelectorAll("label")) {
   clear
 </button>
 <input
-  id="sM_2WTha1C"
+  id="sM_2WUC"
 />
 <label
-  for="sM_2WTha1C"
+  for="sM_2WUC"
 >
   2
 </label>
@@ -103,9 +103,9 @@ INSERT: #sM_gaA + label
 INSERT: #sM_UB + label
 INSERT: #sM_VB + label
 INSERT: label:nth-of-type(5) + button
-INSERT: button:nth-of-type(2) + :is(#sM_2WTha1C, label)
-UPDATE: #sM_2WTha1C[id] null => "sM_2WTha1C"
-UPDATE: label:nth-of-type(6)[for] null => "sM_2WTha1C"
+INSERT: button:nth-of-type(2) + :is(#sM_2WUC, label)
+UPDATE: #sM_2WUC[id] null => "sM_2WUC"
+UPDATE: label:nth-of-type(6)[for] null => "sM_2WUC"
 UPDATE: label:nth-of-type(6)::text " " => "2"
 ```
 

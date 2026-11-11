@@ -67,10 +67,10 @@ assert.equal(ids.size, document.querySelectorAll("input").length);
   clear
 </button>
 <input
-  id="sM_2UTha0A"
+  id="sM_2UUA"
 />
 <label
-  for="sM_2UTha0A"
+  for="sM_2UUA"
 >
   2
 </label>
@@ -80,9 +80,9 @@ assert.equal(ids.size, document.querySelectorAll("input").length);
 INSERT: label:nth-of-type(2) + :is(#sM_2UA, label, button)
 UPDATE: #sM_2UA[id] null => "sM_2UA"
 UPDATE: label:nth-of-type(3)[for] null => "sM_2UA"
-INSERT: button:nth-of-type(2) + :is(#sM_2UTha0A, label)
-UPDATE: #sM_2UTha0A[id] null => "sM_2UTha0A"
-UPDATE: label:nth-of-type(4)[for] null => "sM_2UTha0A"
+INSERT: button:nth-of-type(2) + :is(#sM_2UUA, label)
+UPDATE: #sM_2UUA[id] null => "sM_2UUA"
+UPDATE: label:nth-of-type(4)[for] null => "sM_2UUA"
 UPDATE: label:nth-of-type(4)::text " " => "2"
 ```
 

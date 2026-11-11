@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	keeper_default({ content: _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		const uid = _id("uid");
+		const uid = _id("uid", 1);
 		_html(`<label${_attr("for", uid)}>${_text_mark($scope1_id, "#text/1", input.prefix + " " + uid, $wg__input_prefix)}</label><input${_attr("id", uid)}${_attr("title", input.prefix + " " + uid)}>${_el_mark($scope1_id, "#input/2", $wg__input_prefix)}`);
 		_subscribe($wi__input_prefix && $input_prefix__closures, _scope($scope1_id, {
 			uid: $wi__input_prefix && uid,
@@ -56,7 +56,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	keeper_default({ content: _content_resume("__tests__/template.marko_2*content", () => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
-		const uid = _id("uid~1");
+		const uid = _id("uid~1", 1);
 		_html(`<label${_attr("for", uid)}>${_text_mark($scope2_id, "#text/1", input.prefix + " " + uid, $wg__input_prefix)}</label><input${_attr("id", uid)}${_attr("title", input.prefix + " " + uid)}>${_el_mark($scope2_id, "#input/2", $wg__input_prefix)}`);
 		_subscribe($wi__input_prefix && $input_prefix__closures, _scope($scope2_id, {
 			uid: $wi__input_prefix && uid,

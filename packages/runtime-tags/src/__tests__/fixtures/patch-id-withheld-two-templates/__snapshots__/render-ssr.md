@@ -56,18 +56,18 @@ for (const input of document.querySelectorAll("input")) {
   clear
 </button>
 <input
-  id="sM_2UUThc0A"
+  id="sM_2UUUA"
 />
 <label
-  for="sM_2UUThc0A"
+  for="sM_2UUUA"
 >
   relay
 </label>
 <input
-  id="sM_2UUTha0A"
+  id="sM_2UUVA"
 />
 <label
-  for="sM_2UUTha0A"
+  for="sM_2UUVA"
 >
   p 2
 </label>
@@ -75,12 +75,12 @@ for (const input of document.querySelectorAll("input")) {
 ## Change
 ```
 INSERT: label:nth-of-type(2) + button
-INSERT: button:nth-of-type(2) + :is(#sM_2UUThc0A, label)
-INSERT: label:nth-of-type(3) + :is(#sM_2UUTha0A, label)
-UPDATE: #sM_2UUThc0A[id] null => "sM_2UUThc0A"
-UPDATE: label:nth-of-type(3)[for] null => "sM_2UUThc0A"
-UPDATE: #sM_2UUTha0A[id] null => "sM_2UUTha0A"
-UPDATE: label:nth-of-type(4)[for] null => "sM_2UUTha0A"
+INSERT: button:nth-of-type(2) + :is(#sM_2UUUA, label)
+INSERT: label:nth-of-type(3) + :is(#sM_2UUVA, label)
+UPDATE: #sM_2UUUA[id] null => "sM_2UUUA"
+UPDATE: label:nth-of-type(3)[for] null => "sM_2UUUA"
+UPDATE: #sM_2UUVA[id] null => "sM_2UUVA"
+UPDATE: label:nth-of-type(4)[for] null => "sM_2UUVA"
 UPDATE: label:nth-of-type(4)::text@2 "" => "2"
 ```
 
