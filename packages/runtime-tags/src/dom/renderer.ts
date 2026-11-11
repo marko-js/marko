@@ -65,16 +65,20 @@ export function setParentBranch(
   branch[AccessorProp.ClosestBranch] = branch;
 }
 
+// Content no tag calls (a native tag's, a falsy-named dynamic tag's body, a
+// placeholder) runs its params with no arguments, as on the server.
 export function createAndSetupBranch(
   $global: Scope[typeof AccessorProp.Global],
   renderer: Renderer,
   parentScope: Scope | undefined,
   parentNode: ParentNode,
 ) {
-  return setupBranch(
+  const branch = setupBranch(
     renderer,
     createBranch($global, renderer, parentScope, parentNode),
   );
+  renderer[RendererProp.Params]?.(branch, []);
+  return branch;
 }
 
 // Setup runs as the branch is created, before its values, as a template mounts;

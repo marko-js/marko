@@ -13,7 +13,7 @@ import {
   rendering,
   runEffects,
 } from "./queue";
-import { _content, createAndSetupBranch, type Renderer } from "./renderer";
+import { _content, createBranch, type Renderer, setupBranch } from "./renderer";
 import { _resumed, getRegisteredWithScope, init } from "./resume";
 import { destroyBranch } from "./scope";
 const classIdToBranch = new Map<string, BranchScope>();
@@ -165,11 +165,14 @@ export const compat = {
         created = 1;
         // The insertion point is still virtual here, so a template rooted at a
         // bare foreign child (`<circle>`, not `<svg>`) clones as XHTML.
-        branch = component.scope = createAndSetupBranch(
-          out.global,
+        branch = component.scope = setupBranch(
           renderer,
-          renderer[RendererProp.Owner],
-          document.body,
+          createBranch(
+            out.global,
+            renderer,
+            renderer[RendererProp.Owner],
+            document.body,
+          ),
         );
       }
 

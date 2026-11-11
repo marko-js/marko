@@ -1,4 +1,4 @@
-// size: 25774 (min) 9604 (brotli)
+// size: 25794 (min) 9610 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -1118,7 +1118,8 @@ function setParentBranch(branch, parentBranch) {
     (branch.F = branch));
 }
 function createAndSetupBranch($global, renderer, parentScope, parentNode) {
-  return setupBranch(renderer, createBranch($global, renderer, parentScope, parentNode));
+  let branch = setupBranch(renderer, createBranch($global, renderer, parentScope, parentNode));
+  return (renderer.d?.(branch, []), branch);
 }
 function setupBranch(renderer, branch) {
   return (renderer.c?.(branch), branch);

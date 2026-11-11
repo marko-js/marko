@@ -1,4 +1,4 @@
-// size: 5706 (min) 2542 (brotli)
+// size: 5726 (min) 2547 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let branchesEnabled;
@@ -361,7 +361,8 @@ function setParentBranch(branch, parentBranch) {
     (branch.F = branch));
 }
 function createAndSetupBranch($global, renderer, parentScope, parentNode) {
-  return setupBranch(renderer, createBranch($global, renderer, parentScope, parentNode));
+  let branch = setupBranch(renderer, createBranch($global, renderer, parentScope, parentNode));
+  return (renderer.d?.(branch, []), branch);
 }
 function setupBranch(renderer, branch) {
   return (renderer.c?.(branch), branch);
