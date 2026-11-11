@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.43.1
+
+### Patch Changes
+
+- [#4679](https://github.com/marko-js/marko/pull/4679) [`398cf89`](https://github.com/marko-js/marko/commit/398cf897a18b19aaac573f238817b0a0b7f46e19) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Depend on `resolve-sync` instead of bundling it, so a browser bundle of the compiler gets its browser defaults instead of Node-only code that threw `process is not defined` when loaded.
+
 ## 5.43.0
 
 ### Minor Changes
