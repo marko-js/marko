@@ -1,12 +1,22 @@
-/** File for types only, not actual implementation **/
+/* File for types only, not actual implementation */
 
 /* `R` is inferred from what `onMount` returns, so a return value read from `this`
    is circular; such a tag passes its type explicitly (`<lifecycle<{ … }>>`). */
+/**
+ * Synchronizes side effects from imperative client APIs. Its attributes are
+ * assigned onto `this` before each call, and what `onMount` returns is merged
+ * onto it.
+ *
+ * [Marko docs](https://markojs.com/docs/reference/core-tag#lifecycle)
+ */
 export type Input<
   T extends object,
   R extends object = {},
 > = T & ThisType<T & R> & {
+  /** Called once this tag is attached to the DOM, and never again. */
   onMount?: () => R | void;
+  /** Called every time a value read by any of this tag's attributes changes. */
   onUpdate?: () => void;
+  /** Called once this tag is removed from the DOM. */
   onDestroy?: () => void;
 };

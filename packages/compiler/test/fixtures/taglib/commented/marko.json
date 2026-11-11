@@ -1,0 +1,5 @@
+{
+  // A registered file allows comments, as a discovered one does.
+  "taglib-id": "taglib-fixture-commented",
+  "<probe-commented>": {}
+}

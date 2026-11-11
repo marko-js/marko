@@ -9,12 +9,4 @@ export default {
     text: true,
     preserveWhitespace: true,
   },
-  autocomplete: [
-    {
-      description:
-        "Use instead of `<script>` to render a native tag directly, without processing by Marko.",
-      descriptionMoreURL:
-        "https://markojs.com/docs/reference/core-tag#html-script--html-style",
-    },
-  ],
 } as Tag;

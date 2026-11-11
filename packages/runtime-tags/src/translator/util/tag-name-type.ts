@@ -427,7 +427,7 @@ function getSimilarTagHint(tagName: string) {
   const lowerTagName = tagName.toLowerCase();
   let closestTag: string | undefined;
   let closestDistance = 4;
-  for (const name in (lookup as any).merged.tags) {
+  for (const { name } of lookup.getTagsSorted()) {
     // Edit distance is at least the length difference.
     const lengthDelta = Math.abs(name.length - tagName.length);
     if (lengthDelta < closestDistance) {

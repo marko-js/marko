@@ -1,8 +1,4 @@
-import {
-  getTagDef,
-  importDefault,
-  isNativeTag,
-} from "@marko/compiler/babel-utils";
+import { importDefault, isNativeTag } from "@marko/compiler/babel-utils";
 
 import directives from "./directives";
 import modifiers from "./modifiers";
@@ -89,18 +85,6 @@ export default {
 
     if (execModifiersAndDirectives("exit", tag, attr, value)) {
       return;
-    }
-
-    const tagDef = getTagDef(tag);
-
-    if (tagDef) {
-      if (!tagDef.html && !tagDef.getAttribute(name)) {
-        throw attr.buildCodeFrameError(
-          `<${
-            tag.get("name.value").node
-          }> does not support the "${name}" attribute.`,
-        );
-      }
     }
 
     if (args && args.length) {

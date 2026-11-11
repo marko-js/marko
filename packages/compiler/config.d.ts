@@ -25,7 +25,10 @@ declare const Config: {
   fileSystem?: Pick<
     typeof import("fs"),
     "statSync" | "readFileSync" | "readdirSync"
-  >;
+  > & {
+    /** Resolves links in an installed package's path; without it, paths are kept as found. */
+    realpathSync?(path: string): string;
+  };
   modules?: "esm" | "cjs";
   resolveVirtualDependency?:
     | ((

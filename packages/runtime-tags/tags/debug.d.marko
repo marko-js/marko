@@ -1,5 +1,11 @@
-/** File for types only, not actual implementation **/
+/* File for types only, not actual implementation */
 
+/**
+ * Runs a `debugger` statement once the tag renders.
+ *
+ * [Marko docs](https://markojs.com/docs/reference/core-tag#debug)
+ */
 export interface Input {
+  /** Runs the `debugger` statement again whenever it changes. */
   value?: any;
 }

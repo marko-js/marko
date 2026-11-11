@@ -38,12 +38,5 @@ export default {
   parseOptions: {
     openTagOnly: true,
   },
-  attributes: {},
-  autocomplete: [
-    {
-      description: "Use to log a value to the console.",
-      descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#log",
-    },
-  ],
   types: runtimeInfo.name + "/tags/log.d.marko",
 } as Tag;

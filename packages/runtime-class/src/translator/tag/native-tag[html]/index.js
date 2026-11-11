@@ -1,5 +1,3 @@
-import { resolve } from "path";
-
 import { types as t } from "@marko/compiler";
 import {
   getTagDef,
@@ -13,8 +11,6 @@ import write from "../../util/html-out-write";
 import { hasUserKey } from "../../util/key-manager";
 import withPreviousLocation from "../../util/with-previous-location";
 import translateAttributes from "./attributes";
-
-const EMPTY_OBJECT = {};
 
 /**
  * Translates the html streaming version of a standard html element.
@@ -33,14 +29,6 @@ export default function (path, isNullable) {
   const tagProperties = (path.node.extra && path.node.extra.properties) || [];
   const tagDef = getTagDef(path);
   const meta = file.metadata.marko;
-
-  if (tagDef) {
-    const { parseOptions = EMPTY_OBJECT } = tagDef;
-    if (parseOptions.import) {
-      // TODO: the taglib should be updated to support this as a top level option.
-      file.metadata.marko.deps.push(resolve(tagDef.dir, parseOptions.import));
-    }
-  }
 
   if (handlers) {
     Object.entries(handlers).forEach(

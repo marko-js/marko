@@ -35,7 +35,7 @@ There are 2 types of configuration files:
 
 ### Attributes
 
-One commonly-used feature of this config file is compile-time checks for attributes.
+Attributes declared in this config file control how they are passed to the tag's `input`.
 
 ```js
 {
@@ -45,9 +45,7 @@ One commonly-used feature of this config file is compile-time checks for attribu
 }
 ```
 
-The above code ensures that the `heading` attribute is the _only_ attribute supplied to this tag.
-
-The `string` value is used as documentation for the custom tag. It may be picked up by tooling, like Marko’s editor plugins, to provide hints to the user.
+The `string` value only documents the attribute. For type checking and editor hints, type the tag's `Input` with TypeScript instead.
 
 The recommended list of attribute types are as follows:
 
@@ -69,11 +67,10 @@ You can also provide an object for an attribute definition’s value for additio
     "heading": {
       "type": "string", // Same as setting "string" above.
       "default-value": 0, // The attribute will default to this value.
-      "required": true, // Error during compilation if this attribute is undefined. (Mutually exclusive with "default-value"
       "preserve-name": true, // By default component attributes are camelCased; this disables that feature.
       "remove-dashes": true, // By default native tag attributes are dash-cased; this disables that feature.
 
-      // The following attributes do nothing, but are picked up by tooling.
+      // The following are ignored.
       "deprecated": true,
       "description": "The component’s heading text" // Describes the attribute’s purpose.
     }

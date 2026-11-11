@@ -63,50 +63,22 @@ describe("compiler/taglib", () => {
   it("refuses a translator that brings no taglibs", () =>
     assert.match(run({ CASE: "invalid-translator" }), /Invalid translator/));
 
-  it('keeps the @-half\'s attribute props through an "@x <x>" shorthand', () =>
-    assert.deepEqual(run({ CASE: "shorthand-attr-merge" }), {
-      type: "string",
-      defaultValue: "L",
-      required: true,
-      autocomplete: true,
-      target: "label",
-    }));
-
   describe("register", () => {
     it("takes a taglib by relative path", () =>
       assert.equal(run({ CASE: "register-by-path" }), true));
+
+    it("takes a taglib file with comments by absolute path", () =>
+      assert.equal(run({ CASE: "register-commented-file" }), true));
 
     it("takes a taglib by module id", () =>
       assert.equal(run({ CASE: "register-by-module" }), true));
   });
 
-  it("re-reads a taglib whose JSON was fixed in the same process", () => {
-    const { firstError, tags } = run({ CASE: "reload-after-parse-error" });
-    assert.match(firstError, /Unable to parse JSON file at path/);
-    assert.deepEqual(tags, ["legacy-panel"]);
-  });
-
-  describe("lookup", () => {
-    it("resolves tags and attributes across a merged taglib", () => {
-      const result = run({ CASE: "lookup" });
-      assert.deepEqual(result.attrs, ["a", "aria-label"]);
-      assert.deepEqual(result.patternAttrs, ["data-*"]);
-      assert.deepEqual(result.missingTagAttrs, []);
-      assert.equal(result.tagByName, true);
-      assert.equal(result.tagByElement, true);
-      assert.equal(result.missingTag, null);
-      assert.equal(result.attrByObjects, "a");
-      assert.equal(result.groupAttr, "aria-label");
-      assert.equal(result.patternAttr, "data-*");
-      assert.equal(result.missingAttr, null);
-      assert.equal(result.sortedIsCached, true);
-      assert.deepEqual(result.sortedNames, [
-        "probe-bare",
-        "probe-pattern",
-        "probe-tag",
-      ]);
-    });
-  });
+  it("extends a native tag with a registered one", () =>
+    assert.deepEqual(run({ CASE: "register-extends-native" }), {
+      html: true,
+      transformers: 1,
+    }));
 
   describe("optional taglibs", () => {
     it("skips one the root package does not depend on", () =>

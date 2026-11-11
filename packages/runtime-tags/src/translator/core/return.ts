@@ -137,12 +137,4 @@ export default {
   parseOptions: {
     openTagOnly: true,
   },
-  autocomplete: [
-    {
-      displayText: "return=<value>",
-      description: "Provides a value for use in a parent template.",
-      snippet: "return=${1:value}",
-      descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#return",
-    },
-  ],
 } as Tag;

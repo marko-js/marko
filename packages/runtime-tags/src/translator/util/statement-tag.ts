@@ -23,7 +23,7 @@ export function parseSingleStatement(tag: t.NodePath<t.MarkoTag>, msg: string) {
   return statements[0];
 }
 
-// `<static>` runs everywhere, so it gets no target and no "on the ..." suffix.
+// `<static>` runs everywhere, so it gets no target.
 export function createStatementTag(keyword: "client" | "server" | "static") {
   const target = keyword === "static" ? undefined : keyword;
   const keywordReg = new RegExp(`^${keyword}\\s*`);
@@ -50,12 +50,5 @@ export function createStatementTag(keyword: "client" | "server" | "static") {
       statement: true,
       rawOpenTag: true,
     },
-    autocomplete: [
-      {
-        displayText: `${keyword} <statement>`,
-        description: `A JavaScript statement which is only evaluated once your template is loaded${target ? ` on the ${target}` : ""}.`,
-        descriptionMoreURL: `https://markojs.com/docs/reference/language#${keyword === "static" ? "static" : "server-and-client"}`,
-      },
-    ],
   } as Tag;
 }

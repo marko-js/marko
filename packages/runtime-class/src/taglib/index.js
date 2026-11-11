@@ -3,6 +3,7 @@
 // eslint-disable-next-line no-constant-binary-expression
 let complain = "MARKO_DEBUG" && require("complain");
 const compiler = require("@marko/compiler");
+const path = require("path");
 
 function clearCache() {
   compiler.taglib.clearCaches();
@@ -12,11 +13,9 @@ function register(taglibProps, taglibPath) {
   return compiler.taglib.register(taglibPath, taglibProps);
 }
 
+// A path relative to the working directory, as it was read before.
 function registerFromFile(taglibPath) {
-  return register(
-    compiler.taglib._loader.loadTaglibFromFile(taglibPath),
-    taglibPath,
-  );
+  return register(undefined, path.resolve(taglibPath));
 }
 
 exports.clearCache = clearCache;
@@ -25,8 +24,6 @@ exports.registerFromFile = registerFromFile;
 exports.buildLookup = compiler.taglib.buildLookup;
 exports.excludeDir = compiler.taglib.excludeDir;
 exports.excludePackage = compiler.taglib.excludePackage;
-exports.loader = compiler.taglib._loader;
-exports.finder = compiler.taglib._finder;
 exports.lookup = {
   buildLookup: function (dir, translator) {
     if (!translator || !Array.isArray(translator.taglibs)) {

@@ -15,13 +15,4 @@ export default {
     statement: true,
     rawOpenTag: true,
   },
-  autocomplete: [
-    {
-      displayText: 'import <scope> from "<path>"',
-      description:
-        "Use to import external modules, follows the same syntax as JavaScript imports.",
-      snippet: 'import ${2} from "${1:path}"',
-      descriptionMoreURL: "https://markojs.com/docs/reference/language#import",
-    },
-  ],
 } as Tag;

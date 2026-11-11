@@ -6,6 +6,8 @@ export const {
   version,
   preferAPI,
   tagDiscoveryDirs,
+  classTaglibs,
+  optionalTaglibs,
   transform,
   analyze,
   translate,

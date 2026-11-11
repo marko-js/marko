@@ -27,11 +27,6 @@ export default {
     statement: true,
     rawOpenTag: true,
   },
-  autocomplete: [
-    {
-      displayText: "export <value>",
-    },
-  ],
 } as Tag;
 
 // `export * from` is not one: it never carries the source's default export.

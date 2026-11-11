@@ -200,13 +200,5 @@ export default {
       }
     },
   },
-  attributes: {},
-  autocomplete: [
-    {
-      description:
-        "Use to create a constant object binding that can be rendered.",
-      descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#define",
-    },
-  ],
   types: runtimeInfo.name + "/tags/define.d.marko",
 } as Tag;

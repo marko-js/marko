@@ -32,43 +32,27 @@ export function getAttrs(path, preserveNames, isAttrTag) {
     const { name, value } = attributes[i];
 
     if (name) {
-      const attrDef = tagDef && tagDef.getAttribute(name);
+      const attrDef = getAttrDef(tagDef, name);
       let targetProperties = properties;
-      let targetProperty = name;
-      let preserveName = preserveNames;
+      let targetProperty;
 
-      if (attrDef) {
-        if (attrDef.targetProperty) {
-          const key = attrDef.targetProperty;
-          preserveName =
-            attrDef.preserveName !== false && attrDef.removeDashes !== true;
+      if (attrDef?.dynamicAttribute && attrDef.targetProperty) {
+        const key = attrDef.targetProperty;
+        let targetObject = targetObjects[key];
 
-          if (attrDef.dynamicAttribute) {
-            let targetObject = targetObjects[key];
-
-            if (!targetObject) {
-              properties.push(
-                t.objectProperty(
-                  t.stringLiteral(key),
-                  (targetObject = targetObjects[key] = t.objectExpression([])),
-                ),
-              );
-            }
-
-            targetProperties = targetObject.properties;
-          } else {
-            targetProperty = key;
-          }
-        } else if (
-          !preserveName &&
-          (attrDef.preserveName === true || attrDef.removeDashes === false)
-        ) {
-          preserveName = true;
+        if (!targetObject) {
+          properties.push(
+            t.objectProperty(
+              t.stringLiteral(key),
+              (targetObject = targetObjects[key] = t.objectExpression([])),
+            ),
+          );
         }
-      }
 
-      if (!preserveName) {
-        targetProperty = camelCase(targetProperty);
+        targetProperties = targetObject.properties;
+        targetProperty = keepsDashes(attrDef) ? name : camelCase(name);
+      } else {
+        targetProperty = getAttrProperty(attrDef, name, preserveNames);
       }
 
       foundProperties[targetProperty] = true;
@@ -95,26 +79,22 @@ export function getAttrs(path, preserveNames, isAttrTag) {
   }
 
   // Default parameters
-  tagDef &&
-    tagDef.forEachAttribute &&
-    tagDef.forEachAttribute((attr) => {
-      if (foundProperties[attr.name] || attr.dynamicAttribute) {
-        return;
+  if (tagDef?.attributes) {
+    for (const name in tagDef.attributes) {
+      const attr = tagDef.attributes[name];
+      if (attr.defaultValue !== undefined && !attr.dynamicAttribute) {
+        const property = getAttrProperty(attr, name, preserveNames);
+        if (!foundProperties[property]) {
+          properties.push(
+            t.objectProperty(
+              t.stringLiteral(property),
+              t.stringLiteral(attr.defaultValue + ""),
+            ),
+          );
+        }
       }
-
-      if (attr.defaultValue !== undefined) {
-        properties.push(
-          t.objectProperty(
-            t.stringLiteral(attr.name),
-            t.stringLiteral(attr.defaultValue + ""),
-          ),
-        );
-      } else if (attr.required) {
-        throw path
-          .get("name")
-          .buildCodeFrameError(`The "${attr.name}" attribute is required.`);
-      }
-    });
+    }
+  }
 
   let attrsObject =
     properties.length === 0
@@ -260,4 +240,35 @@ function findRootTag(tag) {
   }
 
   return cur;
+}
+
+// A declared attribute, else the `*` attribute, else one whose pattern matches.
+function getAttrDef(tagDef, name) {
+  if (!tagDef) return;
+  const attr =
+    tagDef.attributes && (tagDef.attributes[name] || tagDef.attributes["*"]);
+  if (attr || !tagDef.patternAttributes) return attr;
+  for (const patternAttr of tagDef.patternAttributes) {
+    if (patternAttr.pattern.test(name)) return patternAttr;
+  }
+}
+
+// The input property an attribute is passed as: camelCased unless its name is
+// kept, and renamed by a declared target property.
+function getAttrProperty(attrDef, name, preserveNames) {
+  if (!attrDef) return preserveNames ? name : camelCase(name);
+  if (attrDef.targetProperty) {
+    return keepsDashes(attrDef)
+      ? attrDef.targetProperty
+      : camelCase(attrDef.targetProperty);
+  }
+  return preserveNames ||
+    attrDef.preserveName === true ||
+    attrDef.removeDashes === false
+    ? name
+    : camelCase(name);
+}
+
+function keepsDashes(attrDef) {
+  return attrDef.preserveName !== false && attrDef.removeDashes !== true;
 }

@@ -35,17 +35,10 @@ export function analyzeAttributeTags(rootTag) {
         assertNoArgs(child);
         const tagDef = getTagDef(child) || {};
         const name = getFullyResolvedTagName(child);
-        let {
-          targetProperty = child.node.name.value.slice(1),
-          isRepeated = false,
-        } = tagDef;
-
-        const preserveName =
-          tagDef.preserveName === true || tagDef.removeDashes === false;
-
-        if (!preserveName) {
-          targetProperty = removeDashes(targetProperty);
-        }
+        const { isRepeated = false } = tagDef;
+        const targetProperty = removeDashes(
+          tagDef.targetProperty || child.node.name.value.slice(1),
+        );
 
         const attrTagMeta = ((attributeTags ||= {})[name] ||= {
           targetProperty,

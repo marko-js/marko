@@ -1,5 +1,13 @@
-/** File for types only, not actual implementation **/
+/* File for types only, not actual implementation */
 
+/**
+ * Runs its body as code once the template is mounted in the browser, and again
+ * whenever a tag variable or parameter it reads changes. For a native
+ * `<script>` element, use `<html-script>`.
+ *
+ * [Marko docs](https://markojs.com/docs/reference/core-tag#script)
+ */
 export interface Input {
+  /** Run instead of a body, under the same conditions. */
   value?(): unknown;
 }

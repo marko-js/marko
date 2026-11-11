@@ -70,17 +70,16 @@
     "build-babel-types": "node -r ~ts scripts/types"
   },
   "dependencies": {
-    "@luxass/strip-json-comments": "^2.0.2",
     "htmljs-parser": "^5.20.0",
     "jsesc": "^3.1.0",
     "kleur": "^4.1.5",
     "magic-string": "^1.4.5",
-    "raptor-util": "^3.2.0",
     "relative-import-path": "^1.0.1"
   },
   "devDependencies": {
     "entities": "^9.0.0",
-    "marko": "^5.39.51"
+    "marko": "^5.39.51",
+    "resolve-sync": "^1.2.2"
   },
   "engines": {
     "node": ">=22.12.0"

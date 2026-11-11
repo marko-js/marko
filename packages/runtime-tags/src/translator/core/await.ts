@@ -186,12 +186,5 @@ export default {
       },
     },
   }),
-  attributes: {},
-  autocomplete: [
-    {
-      description: "Use to consume asynchronous data.",
-      descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#await",
-    },
-  ],
   types: runtimeInfo.name + "/tags/await.d.marko",
 } as Tag;

@@ -1,5 +1,11 @@
-/** File for types only, not actual implementation **/
+/* File for types only, not actual implementation */
 
+/**
+ * Exposes its `value=` through its tag variable, updated whenever what the
+ * value reads changes.
+ *
+ * [Marko docs](https://markojs.com/docs/reference/core-tag#const)
+ */
 export interface Input<T> {
   value: T;
 }

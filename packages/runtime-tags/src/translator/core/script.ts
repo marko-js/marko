@@ -178,13 +178,6 @@ export default {
     text: true,
     preserveWhitespace: true,
   },
-  autocomplete: [
-    {
-      description:
-        "Use to create side effects. For a native `<script>` element, use `<html-script>`.",
-      descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#script",
-    },
-  ],
   types: runtimeInfo.name + "/tags/script.d.marko",
 } as Tag;
 

@@ -26,12 +26,7 @@ export function isNativeTag(path) {
   }
 
   const tagDef = getTagDef(path);
-  return (
-    tagDef &&
-    tagDef.html &&
-    (tagDef.htmlType === "custom-element" ||
-      (!tagDef.template && !tagDef.renderer))
-  );
+  return tagDef && tagDef.html && !tagDef.template && !tagDef.renderer;
 }
 
 export function isDynamicTag(path) {
