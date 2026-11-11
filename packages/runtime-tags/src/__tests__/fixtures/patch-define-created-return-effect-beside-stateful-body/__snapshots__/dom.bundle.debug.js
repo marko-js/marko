@@ -5,7 +5,7 @@ const $template = "<!><!><!><button id=t>toggle</button>";
 const $walks = "b%b%b b";
 const $if_content2__label = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_3_label#1:4/setup", "#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.label));
 const $if_content2__setup = $if_content2__label;
-const $if_content__r = _var_resume("__tests__/template.marko_2_r#3/var", ($scope, r) => _text($scope["#text/2"], r));
+const $if_content__r = ($scope, r) => _text($scope["#text/2"], r);
 const $if_content__setup = ($scope) => {
 	$Panel_content__isOpen($scope["#childScope/0"], true);
 	$Panel_content__label($scope["#childScope/0"], "k");

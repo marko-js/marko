@@ -11,7 +11,7 @@ const $D_content__walks = /*@__PURE__*/ ((_w0) => `0${_w0}&D l`)("");
 const $D_content__template = /*@__PURE__*/ ((_w0) => `${_w0}<span> </span>`)("");
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<p> </p>`)($D_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&D l`)($D_content__walks);
-const $D_content__r = _var_resume("__tests__/template.marko_1_r#6/var", ($scope, r) => _text($scope["#text/2"], r));
+const $D_content__r = ($scope, r) => _text($scope["#text/2"], r);
 const $D_content__on = ($scope, on) => $input_x($scope["#childScope/0"], on);
 const $D_content__setup = ($scope) => _var($scope, "#childScope/0", $D_content__r);
 const $D_content__$params = ($scope, $params2) => $D_content__$temp($scope, $params2[0]);

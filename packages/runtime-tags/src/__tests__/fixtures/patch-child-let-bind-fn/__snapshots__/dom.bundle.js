@@ -18,7 +18,6 @@ const $busy = _let(4, ($scope) => _text($scope.c, $scope.e ? "busy" : "idle"));
 const $setup__script = _script("a1", ($scope) => _on($scope.d, "click", function() {
 	$scope.f();
 }));
-const $refresh = _var_resume("a3", /*@__PURE__*/ _const(5));
 const $refreshingChange = ($scope) => function(v) {
 	$busy($scope, v);
 };

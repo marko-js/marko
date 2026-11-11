@@ -382,12 +382,6 @@ function assertReturns(tag: t.NodePath<t.MarkoTag>, childSection: Section) {
   }
 }
 
-// The child's scope resumes, and with it any tag variable, which HTML wires
-// with `_var` and DOM registers for.
-function isChildScopeResumed(section: Section, tagExtra: t.MarkoTagExtra) {
-  return isEverWritten(section, getWriteReason(tagExtra.childScopeBinding!));
-}
-
 // Arguments are dropped when a child reads none of them nor the input after
 // them; otherwise a dropped argument holds its place as undefined.
 function getRenderArgs(
@@ -439,7 +433,7 @@ export function knownTagTranslateHTML(
 
   let varStatement: t.Statement | undefined;
   // A patch pairs the child through its scope ref, whatever the reason.
-  if (isChildScopeResumed(section, tagExtra)) {
+  if (isEverWritten(section, getWriteReason(childScopeBinding))) {
     const peekScopeId = generateUidIdentifier(childScopeBinding.name);
     const childScopeSlot = findSlot(childScopeBinding)!;
     const childScopeReason = childScopeSlot.reason;
@@ -581,8 +575,13 @@ export function knownTagTranslateDOM(
   if (node.var) {
     const varBinding = node.var.extra!.binding!;
     const signal = initValue(varBinding);
+    // Registered where HTML wires it, where the client reads the child's scope:
+    // a patch keying that scope is no reason.
+    signal.register = isEverWritten(
+      tagSection,
+      findSlot(childScopeBinding)!.reason,
+    );
     // The `_var` setup call below references the signal.
-    signal.register = isChildScopeResumed(getSection(tag), extra);
     signal.referenced = true;
     signal.buildAssignment = (valueSection, value) =>
       buildVarChange(

@@ -1,7 +1,7 @@
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `0${_w0}&0${_w1}&`)($walks$1, $walks$1);
-const $plain = _var_resume("__tests__/template.marko_0_plain#3/var", ($scope, plain) => {});
+const $plain = ($scope, plain) => {};
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input_a11yText($scope["#childScope/0"]);
@@ -10,7 +10,7 @@ function $setup($scope) {
 	_var($scope, "#childScope/0", $plain);
 	_var($scope, "#childScope/2", $labeled);
 }
-const $labeled = _var_resume("__tests__/template.marko_0_labeled#5/var", ($scope, labeled) => {});
+const $labeled = ($scope, labeled) => {};
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
 
 // tags/wrapper/index.marko

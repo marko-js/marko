@@ -3,7 +3,6 @@ const $Panel_content__walks = "b%c";
 const $Panel_content__template = "<!><!><!>";
 const $if_content2__label = /*@__PURE__*/ _if_closure_patch("a8", 0, 0, ($scope) => _text($scope.a, $scope._.e));
 const $if_content2__setup = $if_content2__label;
-const $if_content__r = _var_resume("a9", ($scope, r) => _text($scope.c, r));
 const $Panel_content__if = /*@__PURE__*/ _if(0, "<em> </em>", "D ", $if_content2__setup);
 const $Panel_content__isOpen__OR__label__script = _script_patch("a3 d e", ($scope) => console.log("effect", $scope.e, $scope.d));
 const $Panel_content__isOpen__OR__label = /*@__PURE__*/ _or(5, $Panel_content__isOpen__OR__label__script);

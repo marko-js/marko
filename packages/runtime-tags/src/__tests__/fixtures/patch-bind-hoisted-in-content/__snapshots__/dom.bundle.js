@@ -11,4 +11,3 @@ const $if_content__setup__script = _script("a2", ($scope) => _on($scope.b, "clic
 	$if_content__count($scope, +$scope.c + 1);
 }));
 const $setLast_getter = _hoist_resume("a0", 2, "B1");
-const $frame_content__setLast = _var_resume("a6", /*@__PURE__*/ _const(2));
