@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope($scope1_id, { content: $ui__label && content }, "__tests__/template.marko", "1:2", { content: "1:23" });
 	}, $scope0_id) };
 	_for_of(input.rows, (row) => {
-		const $scope2_id = _scope_id(), $ui__input_rows = _unfilled_if($scope0_reason, 0), $fg__input_rows = _filled_guard($scope0_reason, 0);
+		const $scope2_id = _scope_id(), $ui__input_rows = _unfilled_if($scope0_reason, 0);
 		const $for_content__row_label__closures = new Set();
 		const $for_content__n__closures = new Set();
 		let n = 0;
@@ -89,7 +89,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_script($scope2_id, "__tests__/template.marko_2");
 		$ui__input_rows && _patch_write($scope2_id, "PatchWrite:Label", Label, 1);
 		!$cg__input_rows && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:Card", Card);
-		$fg__input_rows && _patch_subscribers($scope2_id, "__tests__/template.marko_2_row_label#7/subscribers", "row_label");
 		$cg__input_rows && _patch_render($scope2_id, "__tests__/template.marko_2_Card#0:4_row_card#8/setup");
 		_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_2_n#11/fill", n, 1);
 		_scope($scope2_id, {
@@ -103,7 +102,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			n: "5:8",
 			Label: "6:11"
 		});
-		$fg__input_rows && (_client_branch_if("__tests__/template.marko_5*content", $scope2_id) || $cg__input_rows || _client_branch_if("__tests__/template.marko_7*content", $scope2_id)) && _patch_write($scope2_id, "PatchMarkedWrite:row_label", row?.label, !_server_guard($scope0_reason, 0));
+		_filled_guard($scope0_reason, 0) && (_client_branch_if("__tests__/template.marko_5*content", $scope2_id) || $cg__input_rows || _client_branch_if("__tests__/template.marko_7*content", $scope2_id)) && _patch_write($scope2_id, "PatchMarkedWrite:row_label", row?.label, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope2_id, "__tests__/template.marko_2_row_label#7/subscribers", "row_label");
 	}, "id", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_2*shell", $scope0_reason, 0);
 	_scope($scope0_id, { Card: _unfilled_if($scope0_reason, 0) && Card }, "__tests__/template.marko", 0, { Card: "1:9" });
 }, 1);

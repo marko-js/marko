@@ -44,10 +44,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#main/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html(`</main>${_el_mark($scope0_id, "#main/0", $wg__input_show)}`);
-	$fg__input_value && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_value#4/subscribers", "input_value");
 	$fg__input_value && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_value#0:4/setup", "input_value");
 	_scope($scope0_id, {
 		input_value: ($ui__input_show || $ui__input_value2) && input.value,
 		"ClosureScopes:input_value/5": _write_if($scope0_reason, 2) && ($ui__input_value2 || $ui__input_show) && $input_value__closures
-	}, "__tests__/template.marko", 0, { input_value: ["input.value"] }) || $fg__input_value && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_value", input.value, !_server_guard($scope0_reason, 2));
+	}, "__tests__/template.marko", 0, { input_value: ["input.value"] }) || $fg__input_value && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_value", input.value, !_server_guard($scope0_reason, 2)) && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_value#4/subscribers", "input_value");
 }, 1);

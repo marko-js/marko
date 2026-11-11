@@ -8,8 +8,7 @@
     "PatchChild:BranchScopes:#section/0": {
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-swap-await/template.marko_2*content"
     }
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-swap-await/template.marko_0_input_p#5/subscribers": "input_p"
+  }
 }
 {
   "PatchChild:BranchScopes:#text/0": {

@@ -13,6 +13,6 @@ const $inputonKeeperdiv_content__setup = ($scope) => {
 	$inputonKeeperdiv_content__input_note($scope);
 	$inputonKeeperdiv_content__v($scope);
 };
-const $inputonKeeperdiv_content__v = /*@__PURE__*/ _closure_get_patch("b2", 8, ($scope) => _text($scope.b, $scope._.c), 0, "b3", 0);
+const $inputonKeeperdiv_content__v = /*@__PURE__*/ _closure_get_patch("b2", 8, ($scope) => _text($scope.b, $scope._.c), 0, "b4", 0);
 const $inputonKeeperdiv_content = _content$1("b0", "<em><!> <!></em>", "D%c%", $inputonKeeperdiv_content__setup);
 _content_resume($inputonKeeperdiv_content);

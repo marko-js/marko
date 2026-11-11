@@ -27,7 +27,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;D%;<b><!>!</b>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 1), $ui__input_labels = _unfilled_if($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 1), $ui__input_labels = _unfilled_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = new Set();
 	const $n__closures = new Set();
@@ -60,7 +60,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_html(`<button>${_text_mark($scope0_id, "#text/2", n)}</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$fg__input_show && _client_guard($scope0_reason, 0) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_show#6/subscribers", "input_show");
 	_scope($scope0_id, {
 		input_show: ($ui__input_labels || _unfilled_if($scope0_reason, 1)) && input.show,
 		n,
@@ -70,5 +69,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_show: ["input.show"],
 		n: "1:6"
-	}) || $fg__input_show && $ui__input_labels && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && $ui__input_labels && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 1)) && _client_guard($scope0_reason, 0) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_show#6/subscribers", "input_show");
 }, 1);

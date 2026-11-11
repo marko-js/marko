@@ -8,7 +8,7 @@ _shells({
 	c3: "c3 c2; b bD ;<label>field</label><input><span class=v> </span>"
 });
 var sub_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_items = _write_guard($scope0_reason, 0), $fg__input_n = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_items = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_n__closures = /* @__PURE__ */ new Set();
 	const $g__closures = /* @__PURE__ */ new Set();
@@ -30,14 +30,13 @@ var sub_default = _template("c", (input) => {
 	}, "k", $scope0_id, "a", 1, 1, 1, 0, 0, "c4", $scope0_reason, 0);
 	_html(`<button class=inc>+</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "c5");
-	$fg__input_n && _client_guard($scope0_reason, 0) && _patch_subscribers($scope0_id, "c6", "f");
 	_patch_fill($scope0_id, "vc7", g, 1);
 	_scope($scope0_id, {
 		f: input.n,
 		g,
 		h: _write_if($scope0_reason, 1) && $input_n__closures,
 		i: $g__closures
-	}) || $fg__input_n && _patch_write($scope0_id, "xf", input.n, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.n, !_server_guard($scope0_reason, 1)) && _client_guard($scope0_reason, 0) && _patch_subscribers($scope0_id, "c6", "f");
 });
 
 // tags/route-cl.marko

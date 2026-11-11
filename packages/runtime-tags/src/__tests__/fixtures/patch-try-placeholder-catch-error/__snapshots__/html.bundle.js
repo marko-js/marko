@@ -15,7 +15,7 @@ _shells({
 	a: "a;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_title__OR__input_fail = _write_guard($scope0_reason, 0), $wi__input_slow = _write_if($scope0_reason, 3), $fg__input_title = _filled_guard($scope0_reason, 1), $fg__input_fail = _filled_guard($scope0_reason, 2), $wi__input_title = _write_if($scope0_reason, 1), $wi__input_fail = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_title__OR__input_fail = _write_guard($scope0_reason, 0), $wi__input_slow = _write_if($scope0_reason, 3), $wi__input_title = _write_if($scope0_reason, 1), $wi__input_fail = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	const $input_fail__closures = /* @__PURE__ */ new Set();
@@ -49,13 +49,11 @@ var template_default = _template("a", (input) => {
 		}, 0, "a3", "a4");
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, void 0, "a9", void 0, "a7", 1);
-	$fg__input_title && _patch_subscribers($scope0_id, "a10", "d");
-	$fg__input_fail && _patch_subscribers($scope0_id, "a11", "e");
 	_scope($scope0_id, {
 		d: input.title,
 		e: input.fail,
 		g: $wi__input_title && $input_title__closures,
 		h: $wi__input_fail && $input_fail__closures,
 		i: $wi__input_slow && _unfilled_if($scope0_reason, 3) && $input_slow__closures
-	}) || ($fg__input_title && _patch_write($scope0_id, "xd", input.title, !_server_guard($scope0_reason, 1)), $fg__input_fail && _patch_write($scope0_id, "xe", input.fail, !_server_guard($scope0_reason, 2)));
+	}) || (_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xd", input.title, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a10", "d"), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.fail, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "a11", "e"));
 }, 1);

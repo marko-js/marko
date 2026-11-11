@@ -1,8 +1,8 @@
 // PATCH
 {
   ca: {
-    Sb4: "c",
-    xc: "two"
+    xc: "two",
+    Sb4: "c"
   },
   cAc: {
     tb: "two"

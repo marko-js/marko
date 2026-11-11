@@ -22,7 +22,7 @@ _shells({
 	b5: "b5 b10;b%;<!><!><!>"
 });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	let n = 0;
@@ -50,10 +50,9 @@ var template_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["b5"], $scope0_reason, 0);
 	_script($scope0_id, "b6");
-	$fg__input_label && _client_guard($scope0_reason, 0) && _patch_subscribers($scope0_id, "b7", "f");
 	_scope($scope0_id, {
 		f: input.label,
 		g: n,
 		h: _write_if($scope0_reason, 1) && $input_label__closures
-	}) || $fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)) && _client_guard($scope0_reason, 0) && _patch_subscribers($scope0_id, "b7", "f");
 }, 1);

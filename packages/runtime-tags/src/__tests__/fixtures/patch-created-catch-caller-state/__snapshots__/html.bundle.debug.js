@@ -12,7 +12,7 @@ _shells({
 	"__tests__/tags/detail-view.marko_2*shell": "__tests__/tags/detail-view.marko_2*shell !__tests__/tags/detail-view.marko_2_input_detail#0:3;D ;<i> </i>"
 });
 var detail_view_default = _template("__tests__/tags/detail-view.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_detail = _client_guard($scope0_reason, 0), $cg__input_error = _client_guard($scope0_reason, 1), $fg__input_detail = _filled_guard($scope0_reason, 0), $wi__input_detail = _write_if($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_detail = _client_guard($scope0_reason, 0), $cg__input_error = _client_guard($scope0_reason, 1), $wi__input_detail = _write_if($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_detail__closures = new Set();
 	const $input_error__closures = new Set();
@@ -42,12 +42,11 @@ var detail_view_default = _template("__tests__/tags/detail-view.marko", (input) 
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/tags/detail-view.marko_1_input_detail#0:3/subscribe", $cg__input_detail);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_detail__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/detail-view.marko", "6:4"), $cg__input_detail && "__tests__/tags/detail-view.marko_1_input_detail#0:3/subscribe");
 	}, 0, "__tests__/tags/detail-view.marko_1*content", "__tests__/tags/detail-view.marko_3*content", 1, 1, 1);
-	$fg__input_detail && _patch_subscribers($scope0_id, "__tests__/tags/detail-view.marko_0_input_detail#3/subscribers", "input_detail");
 	_scope($scope0_id, {
 		input_detail: input.detail,
 		"ClosureScopes:input_detail/5": $wi__input_detail && $input_detail__closures,
 		"ClosureScopes:input_error/6": $wi__input_error && _unfilled_if($scope0_reason, 1) && $input_error__closures
-	}, "__tests__/tags/detail-view.marko", 0, { input_detail: ["input.detail"] }) || $fg__input_detail && _patch_write($scope0_id, "PatchMarkedWrite:input_detail", input.detail, !_server_guard($scope0_reason, 0));
+	}, "__tests__/tags/detail-view.marko", 0, { input_detail: ["input.detail"] }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_detail", input.detail, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "__tests__/tags/detail-view.marko_0_input_detail#3/subscribers", "input_detail");
 });
 
 // template.marko

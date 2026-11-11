@@ -27,7 +27,7 @@ _shells({
 	c: `c${_shell_marker($setup$1)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$1)}`
 });
 var wrap_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $uf__input_label = _updates_from($scope0_reason, 2), $ui__input_items = _unfilled_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $uf__input_label = _updates_from($scope0_reason, 2), $ui__input_items = _unfilled_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
@@ -48,12 +48,11 @@ var wrap_default = _template("c", (input) => {
 	my_list_default({ row: $row });
 	_patch_child_end();
 	_script($scope0_id, "c3", 0);
-	$fg__input_label && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "c4", "e");
 	_scope($scope0_id, {
 		e: ($ui__input_items || _unfilled_if($scope0_reason, 2)) && input.label,
 		f: _write_if($scope0_reason, 2) && $input_label__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_label && $ui__input_items && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 2));
+	}) || _filled_guard($scope0_reason, 2) && $ui__input_items && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 2)) && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "c4", "e");
 });
 
 // template.marko

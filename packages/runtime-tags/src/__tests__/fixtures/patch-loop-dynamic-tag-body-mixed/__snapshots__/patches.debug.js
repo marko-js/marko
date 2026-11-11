@@ -10,24 +10,22 @@
       },
       "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-mixed/template.marko_2*content"
     },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-mixed/template.marko_1_row_label#4/subscribers": "row_label",
-    "PatchMarkedWrite:row_label": "d"
+    "PatchMarkedWrite:row_label": "d",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-mixed/template.marko_1_row_label#4/subscribers": "row_label"
   }, 2, {
     "PatchDynamicTag:#text/0": [">div", _.a],
     "PatchChild:BranchScopes:#text/0": {
       "PatchChild:BranchScopes:#div/0": {
         "PatchText:#text/0": "e"
       }
-    },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-mixed/template.marko_1_row_label#4/subscribers": "row_label"
+    }
   }, 3, {
     "PatchDynamicTag:#text/0": [">div", _.a],
     "PatchChild:BranchScopes:#text/0": {
       "PatchChild:BranchScopes:#div/0": {
         "PatchText:#text/0": "f"
       }
-    },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-mixed/template.marko_1_row_label#4/subscribers": "row_label"
+    }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-mixed/template.marko_1*shell"]
 }
 ;CQ0

@@ -29,7 +29,7 @@ _shells({
 	a: "a;D%b%;<main><!><!></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_note = _client_guard($scope0_reason, 2), $wg__input_x = _write_guard($scope0_reason, 3), $wg__input_on = _write_guard($scope0_reason, 4), $ui__input_x__OR__input_on = _unfilled_if($scope0_reason, 0), $fg__input_note = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_note = _client_guard($scope0_reason, 2), $wg__input_x = _write_guard($scope0_reason, 3), $wg__input_on = _write_guard($scope0_reason, 4), $ui__input_x__OR__input_on = _unfilled_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const Label = { content: _content_resume("a0", () => {
@@ -43,10 +43,9 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "a", input.x ? Label : "span", {}, 2, 0, 0, $wg__input_x, $scope0_reason, 3);
 	_dynamic_tag($scope0_id, "b", input.on ? card_default : "div", { content: Label }, 9, 0, 0, $wg__input_on, $scope0_reason, 4, 0, void 0, 0, 0, "a0");
 	_html("</main>");
-	$fg__input_note && _patch_subscribers($scope0_id, "a2", "e");
 	_scope($scope0_id, {
 		e: ($ui__input_x__OR__input_on || _unfilled_if($scope0_reason, 2)) && input.note,
 		h: ($ui__input_x__OR__input_on || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4)) && Label,
 		k: _write_if($scope0_reason, 2) && $input_note__closures
-	}) || $fg__input_note && (_client_branch_if("a0", $scope0_id) || _client_guard($scope0_reason, 0) || $ui__input_x__OR__input_on) && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 2));
+	}) || _filled_guard($scope0_reason, 2) && (_client_branch_if("a0", $scope0_id) || _client_guard($scope0_reason, 0) || $ui__input_x__OR__input_on) && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "a2", "e");
 }, 1);

@@ -2,9 +2,9 @@
 `packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_3*shell >#childScope/0>;/D l&;<p> </p>`
 {
   "PatchChild:#childScope/0": {
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_0_input_a#5/subscribers": "input_a",
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_2_input_a#0:5/setup": "input_a",
-    "PatchMarkedWrite:input_a": "y"
+    "PatchMarkedWrite:input_a": "y",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_0_input_a#5/subscribers": "input_a"
   },
   "PatchChild:#childScope/1": {
     "PatchBranch:#text/0": [{
@@ -21,9 +21,9 @@
 // PATCH holding CAI
 {
   "PatchChild:#childScope/0": {
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_0_input_a#5/subscribers": "input_a",
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_2_input_a#0:5/setup": "input_a",
-    "PatchMarkedWrite:input_a": "z"
+    "PatchMarkedWrite:input_a": "z",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_0_input_a#5/subscribers": "input_a"
   },
   "PatchChild:#childScope/1": {
     "PatchBranch:#text/0": [{

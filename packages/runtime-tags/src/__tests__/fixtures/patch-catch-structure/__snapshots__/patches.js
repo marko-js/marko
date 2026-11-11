@@ -5,15 +5,15 @@
     pa: "a2",
     cAa: {}
   }, "a6"],
-  Sa8: "f",
-  xf: "b"
+  xf: "b",
+  Sa8: "f"
 }
 ;CAE
 
 // PATCH holding CAE
 {
   cAa: 0,
-  Sa8: "f",
   xf: "c",
+  Sa8: "f",
   ka: []
 }

@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 const $setup$1 = [[], []];
 _shells({
-	b0: "b0;D ;<em> </em>",
+	b1: "b1;D ;<em> </em>",
 	b: "b;b%;<!><!><!>",
 	b6: "b6;D l ;<p> </p><section></section>"
 });
@@ -14,20 +14,19 @@ var child_default = _template("b", (input) => {
 			const $scope1_id = _scope_id(), $ui__input_a__OR__input_mode = _unfilled_if($scope0_reason, 3), $ui__input_mode = _unfilled_if($scope0_reason, 8), $fg__input_b = _filled_guard($scope0_reason, 6);
 			const $if_content__c__closures = /* @__PURE__ */ new Set();
 			const c = input.b + "!";
-			$fg__input_b && $ui__input_a__OR__input_mode && _patch_write($scope1_id, "xc", c, !$sg__input_b);
+			$fg__input_b && $ui__input_a__OR__input_mode && _patch_write($scope1_id, "xc", c, !$sg__input_b) && _patch_subscribers($scope1_id, "b0", "c");
 			_html(`<p>${_text_mark($scope1_id, "a", input.a + c, 1, $scope0_reason, 1)}</p>`);
-			const frag = { content: _content_resume("b0", () => {
+			const frag = { content: _content_resume("b1", () => {
 				const $scope2_id = _scope_id();
 				_scope_reason();
 				_html(`<em>${_text_mark($scope2_id, "a", c, 1, $scope0_reason, 6)}</em>`);
-				_unfilled_if($scope0_reason, 6) && _patch_subscribe($scope2_id, "b1", $cg__input_b);
-				_subscribe(_unfilled_if($scope0_reason, 6) && $if_content__c__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope1_id) }), $cg__input_b && "b1");
+				_unfilled_if($scope0_reason, 6) && _patch_subscribe($scope2_id, "b2", $cg__input_b);
+				_subscribe(_unfilled_if($scope0_reason, 6) && $if_content__c__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope1_id) }), $cg__input_b && "b2");
 			}, $scope1_id) };
 			_html("<section>");
 			_attr_content("b", $scope1_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 8);
 			_html(`</section>${_el_mark($scope1_id, "b", _updates_from($scope0_reason, 8))}`);
 			$ui__input_mode && _patch_write($scope1_id, "wf", frag.content, 1);
-			$fg__input_b && _patch_subscribers($scope1_id, "b2", "c");
 			$cg__input_b && _patch_render($scope1_id, "b3");
 			_patch_render($scope1_id, "b4", ((_filled_guard($scope0_reason, 7) ? " >f" : "") + ($fg__input_b ? " c" : "")).slice(1), $scope0_reason, 1);
 			_client_guard($scope0_reason, 8) && _patch_render($scope1_id, "b5");

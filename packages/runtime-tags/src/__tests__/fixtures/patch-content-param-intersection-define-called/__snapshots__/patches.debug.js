@@ -6,8 +6,8 @@
   "PatchChild:BranchScopes:#text/1": {
     "PatchText:#text/0": "a2x2"
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-param-intersection-define-called/template.marko_0_input_a#5/subscribers": "input_a",
-  "PatchMarkedWrite:input_a": "a2"
+  "PatchMarkedWrite:input_a": "a2",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-param-intersection-define-called/template.marko_0_input_a#5/subscribers": "input_a"
 }
 
 // PATCH
@@ -18,6 +18,6 @@
   "PatchChild:BranchScopes:#text/1": {
     "PatchText:#text/0": "a3x3"
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-param-intersection-define-called/template.marko_0_input_a#5/subscribers": "input_a",
-  "PatchMarkedWrite:input_a": "a3"
+  "PatchMarkedWrite:input_a": "a3",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-param-intersection-define-called/template.marko_0_input_a#5/subscribers": "input_a"
 }

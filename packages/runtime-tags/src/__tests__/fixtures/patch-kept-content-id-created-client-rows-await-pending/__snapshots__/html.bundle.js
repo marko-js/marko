@@ -47,7 +47,7 @@ _shells({
 	a3: `a3${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2), $ui__input_label = _unfilled_if($scope0_reason, 4), $fg__input_promise = _filled_guard($scope0_reason, 3), $fg__input_label = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2), $ui__input_label = _unfilled_if($scope0_reason, 4), $fg__input_promise = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	_html("<h1>Rows that wait on a value</h1>");
@@ -77,10 +77,9 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a3"], $scope0_reason, 2);
 	$fg__input_promise && $cg__input_show && _patch_render($scope0_id, "a2", "e");
-	$fg__input_label && $cg__input_show && _patch_subscribers($scope0_id, "a4", "f");
 	_scope($scope0_id, {
 		e: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.promise,
 		f: ($ui__input_show || $ui__input_label) && input.label,
 		h: _write_if($scope0_reason, 4) && ($ui__input_label || $ui__input_show) && $input_label__closures
-	}) || ($fg__input_promise && $ui__input_show && _patch_write($scope0_id, "xe", input.promise, !_server_guard($scope0_reason, 3)), $fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_promise && $ui__input_show && _patch_write($scope0_id, "xe", input.promise, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 4)) && $cg__input_show && _patch_subscribers($scope0_id, "a4", "f"));
 }, 1);

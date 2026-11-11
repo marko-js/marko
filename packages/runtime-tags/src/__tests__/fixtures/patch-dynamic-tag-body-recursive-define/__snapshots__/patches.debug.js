@@ -14,10 +14,10 @@
       }
     }]
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-recursive-define/template.marko_0_input_note#3/subscribers": "input_note",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-recursive-define/template.marko_0_input_on#4/subscribers": "input_on",
   "PatchMarkedWrite:input_note": "b",
-  "PatchMarkedWrite:input_on": !0
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-recursive-define/template.marko_0_input_note#3/subscribers": "input_note",
+  "PatchMarkedWrite:input_on": !0,
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-recursive-define/template.marko_0_input_on#4/subscribers": "input_on"
 }
 ;CQk
 
@@ -36,8 +36,8 @@
       }
     }]
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-recursive-define/template.marko_0_input_note#3/subscribers": "input_note",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-recursive-define/template.marko_0_input_on#4/subscribers": "input_on",
   "PatchMarkedWrite:input_note": "c",
-  "PatchMarkedWrite:input_on": !0
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-recursive-define/template.marko_0_input_note#3/subscribers": "input_note",
+  "PatchMarkedWrite:input_on": !0,
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-recursive-define/template.marko_0_input_on#4/subscribers": "input_on"
 }

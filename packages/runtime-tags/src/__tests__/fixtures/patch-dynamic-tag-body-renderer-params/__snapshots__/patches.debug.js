@@ -12,8 +12,8 @@
         }
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_2*shell"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_0_input_label#8/subscribers": "input_label",
-    "PatchMarkedWrite:input_label": "b"
+    "PatchMarkedWrite:input_label": "b",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_0_input_label#8/subscribers": "input_label"
   }
 }
 ;CxY
@@ -31,8 +31,8 @@
         }
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_2*shell"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_0_input_label#8/subscribers": "input_label",
-    "PatchMarkedWrite:input_label": "c"
+    "PatchMarkedWrite:input_label": "c",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_0_input_label#8/subscribers": "input_label"
   }
 }
 
@@ -46,8 +46,7 @@
           "PatchText:#text/0": "d"
         }
       }
-    }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_2*shell"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_0_input_label#8/subscribers": "input_label"
+    }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_2*shell"]
   }
 }
 
@@ -64,7 +63,7 @@
         }
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_2*shell"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_0_input_label#8/subscribers": "input_label",
-    "PatchMarkedWrite:input_label": "e"
+    "PatchMarkedWrite:input_label": "e",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_0_input_label#8/subscribers": "input_label"
   }
 }

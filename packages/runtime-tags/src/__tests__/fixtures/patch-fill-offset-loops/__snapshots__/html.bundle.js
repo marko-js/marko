@@ -5,7 +5,7 @@ _shells({
 	a3: "a3 a2;D ;<p> </p>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_suffix = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();
@@ -27,11 +27,10 @@ var template_default = _template("a", (input) => {
 	}, (row) => row.id, $scope0_id, "b", 1, 1, 1, 0, 0, "a4", $scope0_reason, 1);
 	_html(`<button>+</button>${_el_mark($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a5");
-	$fg__input_suffix && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "a6", "h");
 	_scope($scope0_id, {
 		h: input.suffix,
 		i: count,
 		j: _write_if($scope0_reason, 2) && $input_suffix__closures,
 		k: $count__closures
-	}) || $fg__input_suffix && _patch_write($scope0_id, "xh", input.suffix, !_server_guard($scope0_reason, 2));
+	}) || _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "xh", input.suffix, !_server_guard($scope0_reason, 2)) && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "a6", "h");
 }, 1);

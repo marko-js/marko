@@ -30,7 +30,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `D/${_w0}&l`)(" b")};${((_w0) => `<main>${_w0}</main>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 2), $uf__input_show = _updates_from($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_note = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 2), $uf__input_show = _updates_from($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -48,10 +48,9 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_html("</main>");
-	$fg__input_note && _patch_subscribers($scope0_id, "a2", "e");
 	_scope($scope0_id, {
 		e: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.note,
 		f: _write_if($scope0_reason, 2) && $input_note__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_note && $ui__input_show && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 2));
+	}) || _filled_guard($scope0_reason, 2) && $ui__input_show && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "a2", "e");
 }, 1);

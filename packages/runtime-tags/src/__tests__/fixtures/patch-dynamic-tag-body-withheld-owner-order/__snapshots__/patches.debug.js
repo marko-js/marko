@@ -20,8 +20,8 @@
       },
       "PatchMarkedWrite:input_content": $
     },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-withheld-owner-order/template.marko_1_label#4/subscribers": "label",
-    "PatchMarkedWrite:label": "a2"
+    "PatchMarkedWrite:label": "a2",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-withheld-owner-order/template.marko_1_label#4/subscribers": "label"
   },
   "PatchChild:#childScope/2": {
     "PatchDynamicTag:#text/0": _.a,
@@ -42,8 +42,8 @@
       },
       "PatchMarkedWrite:input_content": _.c
     },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-withheld-owner-order/template.marko_1_label#4/subscribers": "label",
-    "PatchMarkedWrite:label": "b2"
+    "PatchMarkedWrite:label": "b2",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-withheld-owner-order/template.marko_1_label#4/subscribers": "label"
   }
 }
 ;CAA

@@ -1,7 +1,7 @@
 // template.marko
 _shells({ a: "a !a3; b%;<button>toggle</button><!><!>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_w = _write_guard($scope0_reason, 1), $cg__input_w = _client_guard($scope0_reason, 1), $wi__input_w = _write_if($scope0_reason, 1), $fg__input_v = _filled_guard($scope0_reason, 0), $fg__input_w = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_w = _write_guard($scope0_reason, 1), $cg__input_w = _client_guard($scope0_reason, 1), $wi__input_w = _write_if($scope0_reason, 1), $fg__input_v = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_w__closures = /* @__PURE__ */ new Set();
 	let on = true;
@@ -32,11 +32,10 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "b");
 	_script($scope0_id, "a3");
 	$fg__input_v && _patch_render($scope0_id, "a2", "e");
-	$fg__input_w && _patch_subscribers($scope0_id, "a4", "f");
 	_scope($scope0_id, {
 		e: input.v,
 		f: input.w,
 		g: on,
 		i: $wi__input_w && $input_w__closures
-	}) || ($fg__input_v && _patch_write($scope0_id, "xe", input.v, !_server_guard($scope0_reason, 0)), $fg__input_w && _patch_write($scope0_id, "xf", input.w, !_server_guard($scope0_reason, 1)));
+	}) || ($fg__input_v && _patch_write($scope0_id, "xe", input.v, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.w, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a4", "f"));
 }, 1);

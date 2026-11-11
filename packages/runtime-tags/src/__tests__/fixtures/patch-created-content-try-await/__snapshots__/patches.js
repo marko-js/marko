@@ -11,9 +11,8 @@
       }
     }, "b1"]
   },
-  Sa8: "e",
-  Sa9: "f",
-  xe: "b"
+  xe: "b",
+  Sa8: "e"
 }
 {
   ca: {
@@ -47,9 +46,8 @@
       }
     }, "b1"]
   },
-  Sa8: "e",
-  Sa9: "f",
-  xe: "c"
+  xe: "c",
+  Sa8: "e"
 }
 
 // PATCH holding D1o
@@ -57,9 +55,8 @@
   ca: {
     ba: 0
   },
-  Sa8: "e",
-  Sa9: "f",
-  xe: "d"
+  xe: "d",
+  Sa8: "e"
 }
 
 // PATCH holding D1o
@@ -78,7 +75,6 @@
       }
     }, "b1"]
   },
-  Sa8: "e",
-  Sa9: "f",
-  xe: "e"
+  xe: "e",
+  Sa8: "e"
 }

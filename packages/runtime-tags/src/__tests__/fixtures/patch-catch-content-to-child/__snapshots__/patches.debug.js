@@ -13,8 +13,8 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_1*content"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_0_input_label#5/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "b"
+  "PatchMarkedWrite:input_label": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_0_input_label#5/subscribers": "input_label"
 }
 ;Cww
 
@@ -32,8 +32,8 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_1*content"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_0_input_label#5/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "c"
+  "PatchMarkedWrite:input_label": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_0_input_label#5/subscribers": "input_label"
 }
 
 // PATCH holding Cww
@@ -50,8 +50,8 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_1*content"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_0_input_label#5/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "e"
+  "PatchMarkedWrite:input_label": "e",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_0_input_label#5/subscribers": "input_label"
 }
 
 // PATCH holding Cww
@@ -59,6 +59,6 @@
   "PatchChild:BranchScopes:#text/2": [{
     "PatchText:#text/0": "ok"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_1*content"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_0_input_label#5/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "d"
+  "PatchMarkedWrite:input_label": "d",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_0_input_label#5/subscribers": "input_label"
 }

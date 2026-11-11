@@ -23,7 +23,7 @@ const $walks = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)($Row_content__wa
 const $setup = _shell_setup([[], []], ["#childScope/1>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0, _w1) => `/${_w0}&/${_w1}&`)($Row_content__walks, $walks$1)};${((_w0, _w1) => `${_w0}${_w1}`)($Row_content__template, $template$1)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const Row = { content: _content("__tests__/template.marko_1*content", ({ n }) => {
@@ -41,10 +41,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	card_default({ content: Row });
 	_patch_child_end();
-	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#4/subscribers", "input_label");
 	_scope($scope0_id, {
 		"ClosureScopes:input_label/6": $wi__input_label && $input_label__closures,
 		"#childScope/0": _existing_scope($childScope),
 		"#childScope/1": _existing_scope($childScope2)
-	}, "__tests__/template.marko", 0) || $fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 0));
+	}, "__tests__/template.marko", 0) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#4/subscribers", "input_label");
 }, 1);

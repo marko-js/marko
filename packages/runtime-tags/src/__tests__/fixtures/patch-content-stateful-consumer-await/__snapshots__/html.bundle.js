@@ -27,7 +27,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}&b`)($walks)};${((_w0) => `${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 0), $fg__input_promise = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(0);
@@ -45,10 +45,9 @@ var template_default = _template("a", (input) => {
 		_resume_branch($scope1_id);
 	}, $scope0_id) });
 	_patch_child_end();
-	$fg__input_promise && _patch_subscribers($scope0_id, "a3", "d");
 	_scope($scope0_id, {
 		d: input.promise,
 		e: _write_if($scope0_reason, 0) && $input_promise__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_promise && _patch_write($scope0_id, "xd", input.promise, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.promise, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "a3", "d");
 }, 1);

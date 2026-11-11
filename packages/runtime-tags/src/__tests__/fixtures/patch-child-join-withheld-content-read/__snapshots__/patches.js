@@ -5,13 +5,13 @@
     bb: [{
       ta: "cd"
     }, "b3"],
-    Sb4: "e",
-    xe: "c"
+    xe: "c",
+    Sb4: "e"
   },
   cb: {
-    Sb4: "e",
     ib5: "e",
-    xe: "c"
+    xe: "c",
+    Sb4: "e"
   }
 }
 ;CAM
@@ -22,13 +22,13 @@
     bb: [{
       ta: "ef"
     }, "b3"],
-    Sb4: "e",
-    xe: "e"
+    xe: "e",
+    Sb4: "e"
   },
   cb: {
-    Sb4: "e",
     ib5: "e",
-    xe: "e"
+    xe: "e",
+    Sb4: "e"
   }
 }
 
@@ -38,12 +38,12 @@
     bb: [{
       ta: "gh"
     }, "b3"],
-    Sb4: "e",
-    xe: "g"
+    xe: "g",
+    Sb4: "e"
   },
   cb: {
-    Sb4: "e",
     ib5: "e",
-    xe: "g"
+    xe: "g",
+    Sb4: "e"
   }
 }

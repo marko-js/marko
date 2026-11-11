@@ -100,13 +100,12 @@ var page_default = _template("a", (input) => {
 	}, 0, $scope0_id, "d", 1, 1, 1, 0, 0, "a5", $scope0_reason, 0);
 	_fill_global_subscribe("a6", $scope0_id);
 	_script($scope0_id, "a7");
-	$cg__input_items && _patch_subscribers($scope0_id, "a8", "j");
 	_scope($scope0_id, {
 		h: bonus,
 		j: p?.base,
 		a: _existing_scope($childScope),
 		k: $bonus__closures
-	}) || _patch_write($scope0_id, "xj", p?.base);
+	}) || _patch_write($scope0_id, "xj", p?.base) && $cg__input_items && _patch_subscribers($scope0_id, "a8", "j");
 });
 
 // template.marko

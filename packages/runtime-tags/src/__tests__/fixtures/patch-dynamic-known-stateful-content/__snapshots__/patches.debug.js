@@ -1,17 +1,17 @@
 // PATCH
 {
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-known-stateful-content/template.marko_0_input_label#3/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "two"
+  "PatchMarkedWrite:input_label": "two",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-known-stateful-content/template.marko_0_input_label#3/subscribers": "input_label"
 }
 
 // PATCH
 {
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-known-stateful-content/template.marko_0_input_label#3/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "three"
+  "PatchMarkedWrite:input_label": "three",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-known-stateful-content/template.marko_0_input_label#3/subscribers": "input_label"
 }
 
 // PATCH
 {
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-known-stateful-content/template.marko_0_input_label#3/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "four"
+  "PatchMarkedWrite:input_label": "four",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-known-stateful-content/template.marko_0_input_label#3/subscribers": "input_label"
 }

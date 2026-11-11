@@ -1,15 +1,15 @@
 // PATCH
 {
-  Sa2: "g",
   xg: {
     value: "b"
-  }
+  },
+  Sa2: "g"
 }
 
 // PATCH
 {
-  Sa2: "g",
   xg: {
     value: "c"
-  }
+  },
+  Sa2: "g"
 }

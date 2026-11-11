@@ -22,7 +22,7 @@ _shells({
 	"__tests__/template.marko_2*shell": `__tests__/template.marko_2*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_text = _client_guard($scope0_reason, 6), $ui__input_a = _unfilled_if($scope0_reason, 3), $ui__input_b = _unfilled_if($scope0_reason, 4), $cg__input_label = _client_guard($scope0_reason, 5), $wg__input_b = _write_guard($scope0_reason, 4), $wi__input_a__OR__input_b__OR__input_label__OR__input_text = _write_if($scope0_reason, 2), $wg__input_a = _write_guard($scope0_reason, 3), $ui__input_label = _unfilled_if($scope0_reason, 5), $ui__input_a__OR__input_b = _unfilled_if($scope0_reason, 0), $ui__input_text = _unfilled_if($scope0_reason, 6), $fg__input_b = _filled_guard($scope0_reason, 4), $fg__input_label = _filled_guard($scope0_reason, 5), $cg__input_a = _client_guard($scope0_reason, 3), $cg__input_b = _client_guard($scope0_reason, 4), $fg__input_text = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $cg__input_text = _client_guard($scope0_reason, 6), $ui__input_a = _unfilled_if($scope0_reason, 3), $ui__input_b = _unfilled_if($scope0_reason, 4), $cg__input_label = _client_guard($scope0_reason, 5), $wg__input_b = _write_guard($scope0_reason, 4), $wi__input_a__OR__input_b__OR__input_label__OR__input_text = _write_if($scope0_reason, 2), $wg__input_a = _write_guard($scope0_reason, 3), $ui__input_label = _unfilled_if($scope0_reason, 5), $ui__input_a__OR__input_b = _unfilled_if($scope0_reason, 0), $ui__input_text = _unfilled_if($scope0_reason, 6), $cg__input_b = _client_guard($scope0_reason, 4), $cg__input_a = _client_guard($scope0_reason, 3), $fg__input_b = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_text__closures = new Set();
 	const $input_label__closures = new Set();
@@ -64,8 +64,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#main/0", 1, $wg__input_a, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 3);
 	_html(`</main>${_el_mark($scope0_id, "#main/0", $wg__input_a)}`);
 	$fg__input_b && $cg__input_a && _patch_render($scope0_id, "__tests__/template.marko_1_input_b#0:4/setup", "input_b");
-	$fg__input_label && ($cg__input_a || $cg__input_b) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#5/subscribers", "input_label");
-	$fg__input_text && ($cg__input_a || $cg__input_b) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_text#6/subscribers", "input_text");
 	_scope($scope0_id, {
 		input_b: ($ui__input_a || $ui__input_b) && input.b,
 		input_label: ($ui__input_a__OR__input_b || $ui__input_label) && input.label,
@@ -76,5 +74,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_b: ["input.b"],
 		input_label: ["input.label"],
 		input_text: ["input.text"]
-	}) || ($fg__input_b && $ui__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope0_reason, 4)), $fg__input_label && $ui__input_a__OR__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 5)), $fg__input_text && $ui__input_a__OR__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_text", input.text, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_b && $ui__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 5) && $ui__input_a__OR__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 5)) && ($cg__input_a || $cg__input_b) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#5/subscribers", "input_label"), _filled_guard($scope0_reason, 6) && $ui__input_a__OR__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_text", input.text, !_server_guard($scope0_reason, 6)) && ($cg__input_a || $cg__input_b) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_text#6/subscribers", "input_text"));
 }, 1);

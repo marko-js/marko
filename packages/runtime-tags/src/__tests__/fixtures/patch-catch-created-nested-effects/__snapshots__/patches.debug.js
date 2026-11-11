@@ -33,12 +33,12 @@
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_1_input_items#0:5/subscribe": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_1*content"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_0_input_v#3/subscribers": "input_v",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_0_input_show#4/subscribers": "input_show",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_0_input_items#5/subscribers": "input_items",
   "PatchMarkedWrite:input_v": 1,
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_0_input_v#3/subscribers": "input_v",
   "PatchMarkedWrite:input_show": !0,
-  "PatchMarkedWrite:input_items": [1]
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_0_input_show#4/subscribers": "input_show",
+  "PatchMarkedWrite:input_items": [1],
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_0_input_items#5/subscribers": "input_items"
 }
 ;Dzw
 
@@ -82,12 +82,12 @@
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_1_input_items#0:5/subscribe": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_1*content"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_0_input_v#3/subscribers": "input_v",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_0_input_show#4/subscribers": "input_show",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_0_input_items#5/subscribers": "input_items",
   "PatchMarkedWrite:input_v": 2,
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_0_input_v#3/subscribers": "input_v",
   "PatchMarkedWrite:input_show": !0,
-  "PatchMarkedWrite:input_items": [1, 2]
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_0_input_show#4/subscribers": "input_show",
+  "PatchMarkedWrite:input_items": [1, 2],
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_0_input_items#5/subscribers": "input_items"
 }
 
 // PATCH holding Dzw
@@ -95,10 +95,10 @@
   "PatchChild:BranchScopes:#text/0": [{
     "PatchText:#text/0": "d"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_1*content"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_0_input_v#3/subscribers": "input_v",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_0_input_show#4/subscribers": "input_show",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_0_input_items#5/subscribers": "input_items",
   "PatchMarkedWrite:input_v": 3,
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_0_input_v#3/subscribers": "input_v",
   "PatchMarkedWrite:input_show": !0,
-  "PatchMarkedWrite:input_items": [1]
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_0_input_show#4/subscribers": "input_show",
+  "PatchMarkedWrite:input_items": [1],
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_0_input_items#5/subscribers": "input_items"
 }

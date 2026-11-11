@@ -6,14 +6,14 @@
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-content-stateful-consumer-await/template.marko_2*content"
     }
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-stateful-consumer-await/template.marko_0_input_promise#3/subscribers": "input_promise",
   "PatchMarkedWrite:input_promise": (p => p = new Promise((f, r) => _.a = {
     f,
     r(e) {
       p.catch(_ => 0);
       r(e)
     }
-  }))()
+  }))(),
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-stateful-consumer-await/template.marko_0_input_promise#3/subscribers": "input_promise"
 }
 [{
   "PatchChild:#childScope/0": {

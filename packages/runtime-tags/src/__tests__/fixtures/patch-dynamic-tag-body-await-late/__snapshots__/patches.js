@@ -1,8 +1,8 @@
 // PATCH
 {
   pa: 1,
-  Sa7: "f",
-  xf: "b"
+  xf: "b",
+  Sa7: "f"
 }
 [`b !b1; b%;<button class=toggle>toggle</button><!><!>`, `a0`]
 {
@@ -15,8 +15,8 @@
       },
       de: "^a0"
     },
-    Sa3: "c",
-    xc: "y"
+    xc: "y",
+    Sa4: "c"
   }
 }
 ;CxI
@@ -24,8 +24,8 @@
 // PATCH holding CxI
 {
   pa: 1,
-  Sa7: "f",
-  xf: "c"
+  xf: "c",
+  Sa7: "f"
 }
 {
   cAa: {
@@ -37,16 +37,16 @@
       },
       de: "^a0"
     },
-    Sa3: "c",
-    xc: "z"
+    xc: "z",
+    Sa4: "c"
   }
 }
 
 // PATCH holding CxI
 {
   pa: 1,
-  Sa7: "f",
-  xf: "d"
+  xf: "d",
+  Sa7: "f"
 }
 {
   cAa: {
@@ -56,7 +56,6 @@
         ta: "d",
         tb: "w"
       }
-    },
-    Sa3: "c"
+    }
   }
 }

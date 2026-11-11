@@ -12,8 +12,8 @@ const $get__script = _script_patch("d0 d", ($scope) => {
 
 // tags/child.marko
 const $item_content__if = /*@__PURE__*/ _if(0, "<span>shown</span>");
-const $item_content__s = /*@__PURE__*/ _closure_get_patch("b4", 9, ($scope) => $item_content__if($scope, $scope._.c ? 0 : 1), 0, "b5", 0);
-const $item_content = /*@__PURE__*/ _content$1("b2", "<!><!><!>", "b%", $item_content__s);
+const $item_content__s = /*@__PURE__*/ _closure_get_patch("b5", 9, ($scope) => $item_content__if($scope, $scope._.c ? 0 : 1), 0, "b1", 0);
+const $item_content = /*@__PURE__*/ _content$1("b3", "<!><!><!>", "b%", $item_content__s);
 const $if_content__items = /*@__PURE__*/ _if_closure_patch("b11", 1, 0, ($scope) => {
 	let $item;
 	forOf($scope._.g, (item) => $item = attrTags($item, { content: $item_content($scope) }));

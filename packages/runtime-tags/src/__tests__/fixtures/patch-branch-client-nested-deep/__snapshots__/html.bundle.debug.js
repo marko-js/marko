@@ -4,7 +4,7 @@ const $walks = "D%b l";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>+</button></main>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 1), $wi__input_b = _write_if($scope0_reason, 1), $cg__input_b = _client_guard($scope0_reason, 1), $wg__input_a = _write_guard($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 0), $fg__input_b = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 1), $wi__input_b = _write_if($scope0_reason, 1), $cg__input_b = _client_guard($scope0_reason, 1), $wg__input_a = _write_guard($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_b__closures = new Set();
 	let open = false;
@@ -36,7 +36,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_a && _patch_render($scope0_id, "__tests__/template.marko_1_input_a#0:4/setup", "input_a");
-	$fg__input_b && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_b#5/subscribers", "input_b");
 	_scope($scope0_id, {
 		input_a: input.a,
 		input_b: input.b,
@@ -46,5 +45,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_a: ["input.a"],
 		input_b: ["input.b"],
 		open: "1:6"
-	}) || ($fg__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 0)), $fg__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope0_reason, 1)));
+	}) || ($fg__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_b#5/subscribers", "input_b"));
 }, 1);

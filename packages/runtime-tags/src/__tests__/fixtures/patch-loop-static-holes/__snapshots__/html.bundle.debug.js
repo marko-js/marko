@@ -10,7 +10,7 @@ _shells({
 	"__tests__/template.marko_4*shell": "__tests__/template.marko_4*shell;D ;<li> </li>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 1), $wi__input_note__OR__input_show = _write_if($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 2), $ui__input_note = _unfilled_if($scope0_reason, 1), $fg__input_note = _filled_guard($scope0_reason, 1), $wi__input_note = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 1), $wi__input_note__OR__input_show = _write_if($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 2), $ui__input_note = _unfilled_if($scope0_reason, 1), $wi__input_note = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	_html("<ul>");
@@ -42,9 +42,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/2", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 2);
-	$fg__input_note && _client_guard($scope0_reason, 2) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#5/subscribers", "input_note");
 	_scope($scope0_id, {
 		input_note: ($ui__input_show || $ui__input_note) && input.note,
 		"ClosureScopes:input_note/7": $wi__input_note && ($ui__input_note || $ui__input_show) && $input_note__closures
-	}, "__tests__/template.marko", 0, { input_note: ["input.note"] }) || $fg__input_note && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 1));
+	}, "__tests__/template.marko", 0, { input_note: ["input.note"] }) || _filled_guard($scope0_reason, 1) && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 1)) && _client_guard($scope0_reason, 2) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#5/subscribers", "input_note");
 }, 1);

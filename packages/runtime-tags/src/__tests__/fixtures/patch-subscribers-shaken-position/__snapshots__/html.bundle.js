@@ -17,7 +17,7 @@ var frame_default = _template("b", (input) => {
 const $setup = _shell_setup([[], []], ["b>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0) => `/&b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 1), $uf__input_x = _updates_from($scope0_reason, 2), $sg__input_n = _server_guard($scope0_reason, 1), $fg__input_n2 = _filled_guard($scope0_reason, 1), $wi__input_n = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 1), $uf__input_x = _updates_from($scope0_reason, 2), $sg__input_n = _server_guard($scope0_reason, 1), $wi__input_n = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_n__closures = /* @__PURE__ */ new Set();
 	const Effect = { content: _content("a0", () => {
@@ -50,11 +50,10 @@ var template_default = _template("a", (input) => {
 		}, $scope0_id)
 	});
 	_patch_child_end();
-	$fg__input_n2 && _patch_subscribers($scope0_id, "a5", "e");
 	_scope($scope0_id, {
 		e: input.n,
 		g: $wi__input_n && $input_n__closures,
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2)
-	}) || $fg__input_n2 && _patch_write($scope0_id, "xe", input.n, !$sg__input_n);
+	}) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.n, !$sg__input_n) && _patch_subscribers($scope0_id, "a5", "e");
 }, 1);

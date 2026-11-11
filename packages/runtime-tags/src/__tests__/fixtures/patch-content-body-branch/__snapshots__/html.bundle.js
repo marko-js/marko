@@ -21,7 +21,7 @@ _shells({
 	a5: "a5;Db%;<strong>B:<!></strong>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 6), $wi__input_show__OR__input_alt__OR__input_note = _write_if($scope0_reason, 1), $wg__input_alt = _write_guard($scope0_reason, 5), $ui__input_alt = _unfilled_if($scope0_reason, 5), $ui__input_show = _unfilled_if($scope0_reason, 3), $cg__input_alt = _client_guard($scope0_reason, 5), $wg__input_show = _write_guard($scope0_reason, 3), $ui__input_note = _unfilled_if($scope0_reason, 6), $ui__input_show__OR__input_alt = _unfilled_if($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 4), $fg__input_alt = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_note = _filled_guard($scope0_reason, 6), $wi__input_note = _write_if($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 6), $wi__input_show__OR__input_alt__OR__input_note = _write_if($scope0_reason, 1), $wg__input_alt = _write_guard($scope0_reason, 5), $ui__input_alt = _unfilled_if($scope0_reason, 5), $ui__input_show = _unfilled_if($scope0_reason, 3), $cg__input_alt = _client_guard($scope0_reason, 5), $wg__input_show = _write_guard($scope0_reason, 3), $ui__input_note = _unfilled_if($scope0_reason, 6), $ui__input_show__OR__input_alt = _unfilled_if($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_title = _filled_guard($scope0_reason, 4), $wi__input_note = _write_if($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const $input_alt__closures = /* @__PURE__ */ new Set();
@@ -70,13 +70,11 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a4"], $scope0_reason, 3);
 	_html(`</main>${_el_mark($scope0_id, "a", $wg__input_show)}`);
 	$fg__input_title && $cg__input_show && _patch_render($scope0_id, "a7", "e");
-	$fg__input_alt && $cg__input_show && _patch_subscribers($scope0_id, "a8", "f");
-	$fg__input_note && ($cg__input_show || $cg__input_alt) && _patch_subscribers($scope0_id, "a9", "g");
 	_scope($scope0_id, {
 		e: ($ui__input_show || _unfilled_if($scope0_reason, 4)) && input.title,
 		f: ($ui__input_show || $ui__input_alt) && input.alt,
 		g: ($ui__input_show__OR__input_alt || $ui__input_note) && input.note,
 		j: $wi__input_note && ($ui__input_note || $ui__input_show || $ui__input_alt) && $input_note__closures,
 		i: _write_if($scope0_reason, 5) && ($ui__input_alt || $ui__input_show) && $input_alt__closures
-	}) || ($fg__input_title && $ui__input_show && _patch_write($scope0_id, "xe", input.title, !_server_guard($scope0_reason, 4)), $fg__input_alt && $ui__input_show && _patch_write($scope0_id, "xf", input.alt, !_server_guard($scope0_reason, 5)), $fg__input_note && $ui__input_show__OR__input_alt && _patch_write($scope0_id, "xg", input.note, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_title && $ui__input_show && _patch_write($scope0_id, "xe", input.title, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 5) && $ui__input_show && _patch_write($scope0_id, "xf", input.alt, !_server_guard($scope0_reason, 5)) && $cg__input_show && _patch_subscribers($scope0_id, "a8", "f"), _filled_guard($scope0_reason, 6) && $ui__input_show__OR__input_alt && _patch_write($scope0_id, "xg", input.note, !_server_guard($scope0_reason, 6)) && ($cg__input_show || $cg__input_alt) && _patch_subscribers($scope0_id, "a9", "g"));
 }, 1);

@@ -47,10 +47,10 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-own-define-attr/template.marko_3*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-own-define-attr/template.marko_0_input_label#3/subscribers": "input_label",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-own-define-attr/template.marko_0_input_tag#4/subscribers": "input_tag",
   "PatchMarkedWrite:input_label": "b",
-  "PatchMarkedWrite:input_tag": "span"
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-own-define-attr/template.marko_0_input_label#3/subscribers": "input_label",
+  "PatchMarkedWrite:input_tag": "span",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-own-define-attr/template.marko_0_input_tag#4/subscribers": "input_tag"
 }
 ;CxQ
 
@@ -102,8 +102,8 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-own-define-attr/template.marko_3*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-own-define-attr/template.marko_0_input_label#3/subscribers": "input_label",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-own-define-attr/template.marko_0_input_tag#4/subscribers": "input_tag",
   "PatchMarkedWrite:input_label": "c",
-  "PatchMarkedWrite:input_tag": "i"
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-own-define-attr/template.marko_0_input_label#3/subscribers": "input_label",
+  "PatchMarkedWrite:input_tag": "i",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-own-define-attr/template.marko_0_input_tag#4/subscribers": "input_tag"
 }

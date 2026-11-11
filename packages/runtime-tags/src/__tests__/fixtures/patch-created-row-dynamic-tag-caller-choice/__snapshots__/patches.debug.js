@@ -18,11 +18,11 @@
           content: _(["BranchScopes:#text/0", "#childScope/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-dynamic-tag-caller-choice/tags/rowsy.marko_1*content", 1)
         }
       },
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-dynamic-tag-caller-choice/tags/rowsy.marko_0_input_label#5/subscribers": "input_label",
       "PatchSetupValues:": {
         "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-dynamic-tag-caller-choice/tags/rowsy.marko_0_n#9/fill": 0
       },
-      "PatchMarkedWrite:input_label": "a"
+      "PatchMarkedWrite:input_label": "a",
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-dynamic-tag-caller-choice/tags/rowsy.marko_0_input_label#5/subscribers": "input_label"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-dynamic-tag-caller-choice/template.marko_1*shell"]
 }
@@ -47,11 +47,11 @@
           content: _(["BranchScopes:#text/0", "#childScope/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-dynamic-tag-caller-choice/tags/rowsy.marko_1*content", 1)
         }
       },
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-dynamic-tag-caller-choice/tags/rowsy.marko_0_input_label#5/subscribers": "input_label",
       "PatchSetupValues:": {
         "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-dynamic-tag-caller-choice/tags/rowsy.marko_0_n#9/fill": 0
       },
-      "PatchMarkedWrite:input_label": "b"
+      "PatchMarkedWrite:input_label": "b",
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-dynamic-tag-caller-choice/tags/rowsy.marko_0_input_label#5/subscribers": "input_label"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-dynamic-tag-caller-choice/template.marko_1*shell"]
 }

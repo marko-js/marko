@@ -4,7 +4,7 @@ function check(fail) {
 }
 _shells({ a: "a !a4;D%b ;<main><!><button>Toggle</button></main>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0), $wg__input_fail = _write_guard($scope0_reason, 1), $cg__input_label = _client_guard($scope0_reason, 0), $cg__input_fail = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0), $fg__input_fail = _filled_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 0), $wi__input_fail = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0), $wg__input_fail = _write_guard($scope0_reason, 1), $cg__input_label = _client_guard($scope0_reason, 0), $cg__input_fail = _client_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 0), $wi__input_fail = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_fail__closures = /* @__PURE__ */ new Set();
@@ -31,13 +31,11 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "a");
 	_html(`<button>Toggle</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a4");
-	$fg__input_label && _patch_subscribers($scope0_id, "a5", "e");
-	$fg__input_fail && _patch_subscribers($scope0_id, "a6", "f");
 	_scope($scope0_id, {
 		e: input.label,
 		f: input.fail,
 		g: open,
 		h: $wi__input_label && $input_label__closures,
 		i: $wi__input_fail && $input_fail__closures
-	}) || ($fg__input_label && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 0)), $fg__input_fail && _patch_write($scope0_id, "xf", input.fail, !_server_guard($scope0_reason, 1)));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "a5", "e"), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.fail, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a6", "f"));
 }, 1);

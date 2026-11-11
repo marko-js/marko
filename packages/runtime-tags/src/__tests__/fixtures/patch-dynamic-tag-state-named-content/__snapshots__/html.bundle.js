@@ -21,13 +21,13 @@ _shells({
 	a4: `a4${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 1), $cg__input_bs = _client_guard($scope0_reason, 0), $fg__input_note = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 1), $cg__input_bs = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_for_of(input.bs, (b) => {
-		const $scope1_id = _scope_id(), $fg__input_bs = _filled_guard($scope0_reason, 0);
+		const $scope1_id = _scope_id();
 		const $for_content__b__closures = /* @__PURE__ */ new Set();
-		$fg__input_bs && _patch_write($scope1_id, "xc", b, !_server_guard($scope0_reason, 0));
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xc", b, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope1_id, "a3", "c");
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		keep_default({ content: _content_resume("a2", () => {
@@ -39,7 +39,6 @@ var template_default = _template("a", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__b__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_note && "a0"), $cg__input_bs && "a1");
 		}, $scope1_id) });
 		_patch_child_end();
-		$fg__input_bs && _patch_subscribers($scope1_id, "a3", "c");
 		_scope($scope1_id, {
 			c: b,
 			_: _scope_with_id($scope0_id),
@@ -47,9 +46,8 @@ var template_default = _template("a", (input) => {
 			a: _existing_scope($childScope)
 		});
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a4", $scope0_reason, 0);
-	$fg__input_note && _patch_subscribers($scope0_id, "a5", "e");
 	_scope($scope0_id, {
 		e: input.note,
 		f: _write_if($scope0_reason, 1) && $input_note__closures
-	}) || $fg__input_note && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a5", "e");
 }, 1);

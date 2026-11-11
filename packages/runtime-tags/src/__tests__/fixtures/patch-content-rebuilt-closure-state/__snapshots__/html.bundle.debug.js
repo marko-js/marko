@@ -27,7 +27,7 @@ _shells({
 	"__tests__/tags/child.marko_2*shell": "__tests__/tags/child.marko_2*shell,<span>shown</span>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = new Set();
 	let items = [1, 2];
@@ -53,7 +53,6 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	list_default({ item: $item });
 	_patch_child_end();
 	_script($scope0_id, "__tests__/tags/child.marko_0");
-	$fg__input_show && _patch_subscribers($scope0_id, "__tests__/tags/child.marko_0_input_show#4/subscribers", "input_show");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_0_items#5/fill", items, 1);
 	_scope($scope0_id, {
 		input_show: input.show,
@@ -63,7 +62,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	}, "__tests__/tags/child.marko", 0, {
 		input_show: ["input.show"],
 		items: "1:6"
-	}) || $fg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "__tests__/tags/child.marko_0_input_show#4/subscribers", "input_show");
 });
 
 // template.marko

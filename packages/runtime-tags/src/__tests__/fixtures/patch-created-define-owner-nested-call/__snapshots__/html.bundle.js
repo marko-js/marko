@@ -10,7 +10,7 @@ _shells({
 	b2: `b2 >a> b8;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template)}`
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_w = _write_guard($scope0_reason, 1), $cg__input_w = _client_guard($scope0_reason, 1), $wi__input_w = _write_if($scope0_reason, 1), $fg__input_w = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_w = _write_guard($scope0_reason, 1), $cg__input_w = _client_guard($scope0_reason, 1), $wi__input_w = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_w__closures = /* @__PURE__ */ new Set();
 	let k = input.n;
@@ -45,13 +45,12 @@ var card_default = _template("b", (input) => {
 	}, $scope0_id, "a", 1, $wg__input_w, 1, 0, 0, ["b2"], $scope0_reason, 1);
 	_html(`</div>${_el_mark($scope0_id, "a", $wg__input_w)}<button>x</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "b3");
-	$fg__input_w && _patch_subscribers($scope0_id, "b4", "f");
 	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb5", k, 1);
 	_scope($scope0_id, {
 		f: input.w,
 		g: $wi__input_w && k,
 		h: $wi__input_w && $input_w__closures
-	}) || $fg__input_w && _patch_write($scope0_id, "xf", input.w, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.w, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "b4", "f");
 });
 
 // template.marko

@@ -1,15 +1,15 @@
 // PATCH
 {
   ia2: "e",
-  Sa4: "f",
   xe: "b",
-  xf: "y"
+  xf: "y",
+  Sa4: "f"
 }
 
 // PATCH
 {
   ia2: "e",
-  Sa4: "f",
   xe: "c",
-  xf: "z"
+  xf: "z",
+  Sa4: "f"
 }

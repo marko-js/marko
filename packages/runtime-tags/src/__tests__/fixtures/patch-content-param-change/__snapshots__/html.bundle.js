@@ -33,7 +33,7 @@ var wrapper_default = _template("c", (input) => {
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0) => `b/${_w0}&`)($walks)};${((_w0) => `<!>${_w0}`)($template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_suffix = _write_guard($scope0_reason, 0), $wi__input_suffix = _write_if($scope0_reason, 0), $uf__input_suffix = _updates_from($scope0_reason, 0), $fg__input_suffix = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_suffix = _write_guard($scope0_reason, 0), $wi__input_suffix = _write_if($scope0_reason, 0), $uf__input_suffix = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(0);
@@ -56,10 +56,9 @@ var template_default = _template("a", (input) => {
 		$wg__input_suffix || $wg__value || $wg__input_suffix && _resume_branch($scope1_id);
 	}, $scope0_id) });
 	_patch_child_end();
-	$fg__input_suffix && _patch_subscribers($scope0_id, "a4", "d");
 	_scope($scope0_id, {
 		d: input.suffix,
 		e: $wi__input_suffix && $input_suffix__closures,
 		a: _existing_scope($childScope2)
-	}) || $fg__input_suffix && _patch_write($scope0_id, "xd", input.suffix, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.suffix, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "a4", "d");
 }, 1);

@@ -16,8 +16,8 @@
   "PatchChild:BranchScopes:#section/1": {
     "PatchText:#text/0": "b"
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-spread/template.marko_0_input_title#6/subscribers": "input_title",
-  "PatchMarkedWrite:input_title": "b"
+  "PatchMarkedWrite:input_title": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-spread/template.marko_0_input_title#6/subscribers": "input_title"
 }
 ;BAE
 
@@ -36,6 +36,6 @@
   "PatchChild:BranchScopes:#section/1": {
     "PatchText:#text/0": "c"
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-spread/template.marko_0_input_title#6/subscribers": "input_title",
-  "PatchMarkedWrite:input_title": "c"
+  "PatchMarkedWrite:input_title": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-spread/template.marko_0_input_title#6/subscribers": "input_title"
 }

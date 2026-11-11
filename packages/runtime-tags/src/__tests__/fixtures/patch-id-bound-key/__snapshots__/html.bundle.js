@@ -24,7 +24,7 @@ _shells({
 	a4: "a4 a3!a1;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_keys__OR__input_show = _write_if($scope0_reason, 0), $ui__input_keys = _unfilled_if($scope0_reason, 1), $ui__input_show2 = _unfilled_if($scope0_reason, 2), $fg__input_show = _filled_guard($scope0_reason, 2), $cg__input_keys = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_keys__OR__input_show = _write_if($scope0_reason, 0), $ui__input_keys = _unfilled_if($scope0_reason, 1), $ui__input_show2 = _unfilled_if($scope0_reason, 2), $cg__input_keys = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = /* @__PURE__ */ new Set();
 	_for_of(input.keys, (name) => {
@@ -70,9 +70,8 @@ var template_default = _template("a", (input) => {
 			n: $for_content__store_set__closures
 		});
 	}, (n) => n, $scope0_id, "a", 1, 1, 1, 0, 0, "a5", $scope0_reason, 1);
-	$fg__input_show && $cg__input_keys && _patch_subscribers($scope0_id, "a9", "e");
 	_scope($scope0_id, {
 		e: ($ui__input_keys || $ui__input_show2) && input.show,
 		g: _write_if($scope0_reason, 2) && ($ui__input_show2 || $ui__input_keys) && $input_show__closures
-	}) || $fg__input_show && $ui__input_keys && _patch_write($scope0_id, "xe", input.show, !_server_guard($scope0_reason, 2));
+	}) || _filled_guard($scope0_reason, 2) && $ui__input_keys && _patch_write($scope0_id, "xe", input.show, !_server_guard($scope0_reason, 2)) && $cg__input_keys && _patch_subscribers($scope0_id, "a9", "e");
 }, 1);

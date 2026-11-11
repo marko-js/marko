@@ -33,7 +33,7 @@ _shells({
 	"__tests__/tags/child.marko": `__tests__/tags/child.marko${_shell_marker($setup$1)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$2)}`
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_count = _client_guard($scope0_reason, 1), $uf__input_show = _updates_from($scope0_reason, 0), $fg__input_count = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_count = _client_guard($scope0_reason, 1), $uf__input_show = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_count__closures = new Set();
 	_set_scope_reason($uf__input_show << 1 | $uf__input_show << 3);
@@ -51,12 +51,11 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		}, $scope0_id) })
 	});
 	_patch_child_end();
-	$fg__input_count && _patch_subscribers($scope0_id, "__tests__/tags/child.marko_0_input_count#4/subscribers", "input_count");
 	_scope($scope0_id, {
 		input_count: input.count,
 		"ClosureScopes:input_count/5": _write_if($scope0_reason, 1) && $input_count__closures,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/tags/child.marko", 0, { input_count: ["input.count"] }) || $fg__input_count && _patch_write($scope0_id, "PatchMarkedWrite:input_count", input.count, !_server_guard($scope0_reason, 1));
+	}, "__tests__/tags/child.marko", 0, { input_count: ["input.count"] }) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_count", input.count, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "__tests__/tags/child.marko_0_input_count#4/subscribers", "input_count");
 });
 
 // template.marko

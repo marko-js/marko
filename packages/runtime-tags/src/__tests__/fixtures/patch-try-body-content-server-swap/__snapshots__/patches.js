@@ -7,13 +7,13 @@
         ta: "b"
       }
     }, "b3"],
-    Sb5: "d",
     xd: {
       content: _([], "a0", 1)
-    }
+    },
+    Sb5: "d"
   },
-  Sa5: "f",
-  xf: "b"
+  xf: "b",
+  Sa5: "f"
 }
 
 // PATCH
@@ -25,13 +25,13 @@
         ta: "c"
       }
     }, "b3"],
-    Sb5: "d",
     xd: {
       content: _([], "a2", 1)
-    }
+    },
+    Sb5: "d"
   },
-  Sa5: "f",
-  xf: "c"
+  xf: "c",
+  Sa5: "f"
 }
 
 // PATCH
@@ -43,11 +43,11 @@
         ta: "d"
       }
     }, "b3"],
-    Sb5: "d",
     xd: {
       content: _([], "a0", 1)
-    }
+    },
+    Sb5: "d"
   },
-  Sa5: "f",
-  xf: "d"
+  xf: "d",
+  Sa5: "f"
 }

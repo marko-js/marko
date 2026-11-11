@@ -14,8 +14,8 @@
         "PatchText:#text/1": 2
       }
     },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-subscribers-define-called-in-client-branch/tags/panel.marko_0_input_n#4/subscribers": "input_n",
-    "PatchMarkedWrite:input_n": 2
+    "PatchMarkedWrite:input_n": 2,
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-subscribers-define-called-in-client-branch/tags/panel.marko_0_input_n#4/subscribers": "input_n"
   },
   "PatchChild:#childScope/1": {
     "PatchChild:#childScope/1": {
@@ -24,8 +24,8 @@
         "PatchText:#text/1": 2
       }
     },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-subscribers-define-called-in-client-branch/tags/panel.marko_0_input_n#4/subscribers": "input_n",
-    "PatchMarkedWrite:input_n": 2
+    "PatchMarkedWrite:input_n": 2,
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-subscribers-define-called-in-client-branch/tags/panel.marko_0_input_n#4/subscribers": "input_n"
   }
 }
 ;DAQ
@@ -45,8 +45,8 @@
         "PatchText:#text/1": 3
       }
     },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-subscribers-define-called-in-client-branch/tags/panel.marko_0_input_n#4/subscribers": "input_n",
-    "PatchMarkedWrite:input_n": 3
+    "PatchMarkedWrite:input_n": 3,
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-subscribers-define-called-in-client-branch/tags/panel.marko_0_input_n#4/subscribers": "input_n"
   },
   "PatchChild:#childScope/1": {
     "PatchChild:#childScope/1": {
@@ -55,7 +55,7 @@
         "PatchText:#text/1": 3
       }
     },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-subscribers-define-called-in-client-branch/tags/panel.marko_0_input_n#4/subscribers": "input_n",
-    "PatchMarkedWrite:input_n": 3
+    "PatchMarkedWrite:input_n": 3,
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-subscribers-define-called-in-client-branch/tags/panel.marko_0_input_n#4/subscribers": "input_n"
   }
 }

@@ -32,7 +32,7 @@ var card_default = _template("a", (input) => {
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({ b: `b${_shell_marker($setup)};${((_w0) => `/${_w0}&b`)($walks)};${((_w0) => `${_w0}<!>`)($template)}` });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(0);
@@ -45,10 +45,9 @@ var template_default = _template("b", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_label && "b0");
 	}, $scope0_id) });
 	_patch_child_end();
-	$fg__input_label && _patch_subscribers($scope0_id, "b2", "d");
 	_scope($scope0_id, {
 		d: input.label,
 		e: _write_if($scope0_reason, 0) && $input_label__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_label && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "b2", "d");
 }, 1);

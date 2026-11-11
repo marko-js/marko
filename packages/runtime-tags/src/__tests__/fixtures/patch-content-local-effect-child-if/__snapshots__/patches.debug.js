@@ -9,8 +9,7 @@
         "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-content-local-effect-child-if/template.marko_1_inner#1"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-local-effect-child-if/tags/wrap.marko_1*shell"]
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-local-effect-child-if/template.marko_0_input_prefix#4/subscribers": "input_prefix"
+  }
 }
 ;CQo
 
@@ -18,8 +17,7 @@
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": 0
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-local-effect-child-if/template.marko_0_input_prefix#4/subscribers": "input_prefix"
+  }
 }
 
 // PATCH holding CQo
@@ -32,8 +30,7 @@
         "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-content-local-effect-child-if/template.marko_1_inner#1"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-local-effect-child-if/tags/wrap.marko_1*shell"]
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-local-effect-child-if/template.marko_0_input_prefix#4/subscribers": "input_prefix"
+  }
 }
 
 // PATCH holding CQo
@@ -46,6 +43,5 @@
         "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-content-local-effect-child-if/template.marko_1_inner#1"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-local-effect-child-if/tags/wrap.marko_1*shell"]
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-local-effect-child-if/template.marko_0_input_prefix#4/subscribers": "input_prefix"
+  }
 }

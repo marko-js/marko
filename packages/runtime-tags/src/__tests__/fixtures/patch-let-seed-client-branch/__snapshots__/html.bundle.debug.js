@@ -4,7 +4,7 @@ const $walks = " b%c";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; b%;<button>toggle</button><!><!>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_w = _write_guard($scope0_reason, 1), $cg__input_w = _client_guard($scope0_reason, 1), $wi__input_w = _write_if($scope0_reason, 1), $fg__input_v = _filled_guard($scope0_reason, 0), $fg__input_w = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_w = _write_guard($scope0_reason, 1), $cg__input_w = _client_guard($scope0_reason, 1), $wi__input_w = _write_if($scope0_reason, 1), $fg__input_v = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_w__closures = new Set();
 	let on = true;
@@ -35,7 +35,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/1");
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_v && _patch_render($scope0_id, "__tests__/template.marko_1_input_v#0:4/setup", "input_v");
-	$fg__input_w && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_w#5/subscribers", "input_w");
 	_scope($scope0_id, {
 		input_v: input.v,
 		input_w: input.w,
@@ -45,5 +44,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_v: ["input.v"],
 		input_w: ["input.w"],
 		on: "1:6"
-	}) || ($fg__input_v && _patch_write($scope0_id, "PatchMarkedWrite:input_v", input.v, !_server_guard($scope0_reason, 0)), $fg__input_w && _patch_write($scope0_id, "PatchMarkedWrite:input_w", input.w, !_server_guard($scope0_reason, 1)));
+	}) || ($fg__input_v && _patch_write($scope0_id, "PatchMarkedWrite:input_v", input.v, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_w", input.w, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_w#5/subscribers", "input_w"));
 }, 1);

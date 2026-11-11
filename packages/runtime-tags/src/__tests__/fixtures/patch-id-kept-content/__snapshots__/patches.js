@@ -1,11 +1,11 @@
 // PATCH
 {
-  Sa2: "d",
-  xd: "next"
+  xd: "next",
+  Sa2: "d"
 }
 
 // PATCH
 {
-  Sa2: "d",
-  xd: "after"
+  xd: "after",
+  Sa2: "d"
 }

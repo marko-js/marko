@@ -38,10 +38,9 @@ var template_default = _template("a", (input) => {
 		$cg__input_id && _patch_render($scope2_id, "a3");
 		_subscribe($wi__input_id && $input_id__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), $cg__input_id && "a3", $wg__input_id);
 	}, void 0, "a5", void 0, "a2", 1);
-	$fg__input_id && _patch_subscribers($scope0_id, "a6", "f");
 	$fg__input_id && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "a7", "f");
 	_scope($scope0_id, {
 		f: input.id,
 		g: $wi__input_id && $input_id__closures
-	}) || $fg__input_id && _patch_write($scope0_id, "xf", input.id, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_id && _patch_write($scope0_id, "xf", input.id, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "a6", "f");
 }, 1);

@@ -14,8 +14,8 @@
         "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-catch-caller-state/tags/detail-view.marko_1_input_detail#0:3/subscribe": 0
       }
     }, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-created-catch-caller-state/tags/detail-view.marko_1*content"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-catch-caller-state/tags/detail-view.marko_0_input_detail#3/subscribers": "input_detail",
-    "PatchMarkedWrite:input_detail": "b"
+    "PatchMarkedWrite:input_detail": "b",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-catch-caller-state/tags/detail-view.marko_0_input_detail#3/subscribers": "input_detail"
   },
   "PatchChild:#childScope/1": {
     "PatchCatch:#text/0": [{
@@ -38,8 +38,8 @@
         "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-catch-caller-state/tags/detail-view.marko_1_input_detail#0:3/subscribe": 0
       }
     }, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-created-catch-caller-state/tags/detail-view.marko_1*content"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-catch-caller-state/tags/detail-view.marko_0_input_detail#3/subscribers": "input_detail",
-    "PatchMarkedWrite:input_detail": ""
+    "PatchMarkedWrite:input_detail": "",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-catch-caller-state/tags/detail-view.marko_0_input_detail#3/subscribers": "input_detail"
   },
   "PatchChild:#childScope/1": {
     "PatchCatch:#text/0": [{
@@ -66,8 +66,8 @@
         "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-catch-caller-state/tags/detail-view.marko_1_input_detail#0:3/subscribe": 0
       }
     }, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-created-catch-caller-state/tags/detail-view.marko_1*content"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-catch-caller-state/tags/detail-view.marko_0_input_detail#3/subscribers": "input_detail",
-    "PatchMarkedWrite:input_detail": "c"
+    "PatchMarkedWrite:input_detail": "c",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-catch-caller-state/tags/detail-view.marko_0_input_detail#3/subscribers": "input_detail"
   },
   "PatchChild:#childScope/1": {
     "PatchCatch:#text/0": [{

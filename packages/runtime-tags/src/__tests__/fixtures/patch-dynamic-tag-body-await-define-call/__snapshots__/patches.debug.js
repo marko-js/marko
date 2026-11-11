@@ -14,8 +14,8 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-define-call/template.marko_2*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-define-call/template.marko_0_input_note#3/subscribers": "input_note",
-  "PatchMarkedWrite:input_note": "b"
+  "PatchMarkedWrite:input_note": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-define-call/template.marko_0_input_note#3/subscribers": "input_note"
 }
 ;DTU
 
@@ -34,6 +34,6 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-define-call/template.marko_2*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-define-call/template.marko_0_input_note#3/subscribers": "input_note",
-  "PatchMarkedWrite:input_note": "c"
+  "PatchMarkedWrite:input_note": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-define-call/template.marko_0_input_note#3/subscribers": "input_note"
 }

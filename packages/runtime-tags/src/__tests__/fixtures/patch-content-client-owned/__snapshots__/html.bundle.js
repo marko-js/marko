@@ -12,7 +12,7 @@ var card_default = _template("b", (input) => {
 // template.marko
 _shells({ a: "a !a3;D%b ;<main><!><button>+</button></main>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_note = _write_guard($scope0_reason, 2), $cg__input_note = _client_guard($scope0_reason, 2), $fg__input_title = _filled_guard($scope0_reason, 1), $fg__input_note = _filled_guard($scope0_reason, 2), $wi__input_note = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_note = _write_guard($scope0_reason, 2), $cg__input_note = _client_guard($scope0_reason, 2), $fg__input_title = _filled_guard($scope0_reason, 1), $wi__input_note = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	let open = input.open;
@@ -41,11 +41,10 @@ var template_default = _template("a", (input) => {
 	_html(`<button>+</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a3");
 	$fg__input_title && _patch_render($scope0_id, "a2", "f");
-	$fg__input_note && _patch_subscribers($scope0_id, "a4", "g");
 	_scope($scope0_id, {
 		f: input.title,
 		g: input.note,
 		h: open,
 		j: $wi__input_note && $input_note__closures
-	}) || ($fg__input_title && _patch_write($scope0_id, "xf", input.title, !_server_guard($scope0_reason, 1)), $fg__input_note && _patch_write($scope0_id, "xg", input.note, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_title && _patch_write($scope0_id, "xf", input.title, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "xg", input.note, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "a4", "g"));
 }, 1);

@@ -105,7 +105,6 @@ var page_default = _template("__tests__/page.marko", (input) => {
 	}, 0, $scope0_id, "#text/3", 1, 1, 1, 0, 0, "__tests__/page.marko_1*shell", $scope0_reason, 0);
 	_fill_global_subscribe("__tests__/page.marko_0_$global_data#8", $scope0_id);
 	_script($scope0_id, "__tests__/page.marko_0");
-	$cg__input_items && _patch_subscribers($scope0_id, "__tests__/page.marko_0_p_base#9/subscribers", "p_base");
 	_scope($scope0_id, {
 		bonus,
 		p_base: p?.base,
@@ -114,7 +113,7 @@ var page_default = _template("__tests__/page.marko", (input) => {
 	}, "__tests__/page.marko", 0, {
 		bonus: "1:6",
 		p_base: ["p.base", "2:8"]
-	}) || _patch_write($scope0_id, "PatchMarkedWrite:p_base", p?.base);
+	}) || _patch_write($scope0_id, "PatchMarkedWrite:p_base", p?.base) && $cg__input_items && _patch_subscribers($scope0_id, "__tests__/page.marko_0_p_base#9/subscribers", "p_base");
 });
 
 // template.marko

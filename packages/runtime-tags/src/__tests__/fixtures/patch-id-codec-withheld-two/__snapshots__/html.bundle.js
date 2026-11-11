@@ -30,7 +30,7 @@ var keeper_default = _template("b", (input) => {
 const $setup = _shell_setup([[], []], ["a>", $setup$1], ["b>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0, _w1) => `/${_w0}&/${_w1}&b`)($walks, $walks)};${((_w0, _w1) => `${_w0}${_w1}<!>`)($template, $template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_prefix = _write_guard($scope0_reason, 0), $wi__input_prefix = _write_if($scope0_reason, 0), $cg__input_prefix = _client_guard($scope0_reason, 0), $fg__input_prefix = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_prefix = _write_guard($scope0_reason, 0), $wi__input_prefix = _write_if($scope0_reason, 0), $cg__input_prefix = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_prefix__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(0);
@@ -60,11 +60,10 @@ var template_default = _template("a", (input) => {
 		}), $cg__input_prefix && "a2", $wg__input_prefix);
 	}, $scope0_id) });
 	_patch_child_end();
-	$fg__input_prefix && _patch_subscribers($scope0_id, "a4", "e");
 	_scope($scope0_id, {
 		e: input.prefix,
 		f: $wi__input_prefix && $input_prefix__closures,
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2)
-	}) || $fg__input_prefix && _patch_write($scope0_id, "xe", input.prefix, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.prefix, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "a4", "e");
 }, 1);

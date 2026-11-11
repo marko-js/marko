@@ -41,7 +41,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_wrap = _client_guard($scope0_reason, 4), $ui__input_selected__OR__input_items = _unfilled_if($scope0_reason, 0), $fg__input_wrap = _filled_guard($scope0_reason, 4), $wi__input_wrap = _write_if($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_wrap = _client_guard($scope0_reason, 4), $ui__input_selected__OR__input_items = _unfilled_if($scope0_reason, 0), $wi__input_wrap = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_wrap__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 3) << 3 | _updates_from($scope0_reason, 2) << 5);
@@ -58,14 +58,13 @@ var template_default = _template("a", (input) => {
 			_unfilled_if() && _patch_subscribe($scope2_id, "a1");
 			_subscribe(_unfilled_if() && $wi__t && $tab_content__t__closures, _scope($scope2_id, { _: ($wi__input_wrap || $wi__t) && _scope_with_id($scope1_id) }), "a1");
 		}, $scope1_id, ($scope) => $scope1_page ? [{ c: t }] : []), 0, _write_guard($scope0_reason, 4), $scope0_reason, 4, 0, void 0, 0, 0, "a0");
-		_patch_subscribers($scope1_id, "a2", "c");
-		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a3", $cg__input_wrap);
+		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a2", $cg__input_wrap);
 		_subscribe($ui__input_wrap && $input_wrap__closures, _scope($scope1_id, {
 			c: $ui__input_wrap && t,
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
 			h: $wi__t && $tab_content__t__closures
-		}), $cg__input_wrap && "a3");
-		(_client_branch_if("a0", $scope1_id) || $ui__input_wrap) && _patch_write($scope1_id, "xc", t);
+		}), $cg__input_wrap && "a2");
+		(_client_branch_if("a0", $scope1_id) || $ui__input_wrap) && _patch_write($scope1_id, "xc", t) && _patch_subscribers($scope1_id, "a3", "c");
 	}, $scope0_id, () => [{ 2: t }]) }));
 	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	tabs_default({
@@ -73,10 +72,9 @@ var template_default = _template("a", (input) => {
 		tab: $tab
 	});
 	_patch_child_end();
-	$fg__input_wrap && _patch_subscribers($scope0_id, "a5", "f");
 	_scope($scope0_id, {
 		f: ($ui__input_selected__OR__input_items || _unfilled_if($scope0_reason, 4)) && input.wrap,
 		g: $wi__input_wrap && $input_wrap__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_wrap && $ui__input_selected__OR__input_items && _patch_write($scope0_id, "xf", input.wrap, !_server_guard($scope0_reason, 4));
+	}) || _filled_guard($scope0_reason, 4) && $ui__input_selected__OR__input_items && _patch_write($scope0_id, "xf", input.wrap, !_server_guard($scope0_reason, 4)) && _patch_subscribers($scope0_id, "a5", "f");
 }, 1);

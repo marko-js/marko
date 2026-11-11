@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $Info_content__id__closures = /* @__PURE__ */ new Set();
 		const $Info_content__value__closures = /* @__PURE__ */ new Set();
-		const $scope1_reason = _scope_reason(), $wg__id = _write_guard($scope1_reason, 0), $wi__id = _write_if($scope1_reason, 0), $cg__id = _client_guard($scope1_reason, 0), $cg__value = _client_guard($scope1_reason, 1), $fg__id = _filled_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $wg__id = _write_guard($scope1_reason, 0), $wi__id = _write_if($scope1_reason, 0), $cg__id = _client_guard($scope1_reason, 0), $cg__value = _client_guard($scope1_reason, 1);
 		_try($scope1_id, "a", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id(), $ui__value = _unfilled_if($scope1_reason, 1);
@@ -39,13 +39,12 @@ var template_default = _template("a", (input) => {
 				Ci: $wi__id && 1
 			}), $cg__id && "a0", $wg__id);
 		}, void 0, "a7", void 0, "a5");
-		$fg__id && _patch_subscribers($scope1_id, "a9", "d");
 		_scope($scope1_id, {
 			d: id,
 			_: _scope_with_id($scope0_id),
 			i: $wi__id && $Info_content__id__closures,
 			j: _write_if($scope1_reason, 1) && _unfilled_if($scope1_reason, 1) && $Info_content__value__closures
-		}) || $fg__id && _patch_write($scope1_id, "xd", id, !_server_guard($scope1_reason, 0));
+		}) || _filled_guard($scope1_reason, 0) && _patch_write($scope1_id, "xd", id, !_server_guard($scope1_reason, 0)) && _patch_subscribers($scope1_id, "a9", "d");
 	}, $scope0_id) };
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);

@@ -16,8 +16,8 @@
           }
         }
       }, _.a],
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-created-owner/tags/child.marko_0_input_label#3/subscribers": "input_label",
-      "PatchMarkedWrite:input_label": "a"
+      "PatchMarkedWrite:input_label": "a",
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-created-owner/tags/child.marko_0_input_label#3/subscribers": "input_label"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-created-owner/template.marko_1*shell"]
 }
@@ -40,8 +40,8 @@
           }
         }
       }, _.a],
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-created-owner/tags/child.marko_0_input_label#3/subscribers": "input_label",
-      "PatchMarkedWrite:input_label": "b"
+      "PatchMarkedWrite:input_label": "b",
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-created-owner/tags/child.marko_0_input_label#3/subscribers": "input_label"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-created-owner/template.marko_1*shell"]
 }
@@ -53,8 +53,8 @@
       "PatchChild:BranchScopes:#text/0": [{
         "PatchText:#text/0": "ok"
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-created-owner/tags/child.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-created-owner/tags/child.marko_3*content"],
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-created-owner/tags/child.marko_0_input_label#3/subscribers": "input_label",
-      "PatchMarkedWrite:input_label": "c"
+      "PatchMarkedWrite:input_label": "c",
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-created-owner/tags/child.marko_0_input_label#3/subscribers": "input_label"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-created-owner/template.marko_1*shell"]
 }

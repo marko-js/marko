@@ -19,7 +19,7 @@ _shells({
 	a1: "a1,<b>A</b>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_kind = _write_if($scope0_reason, 0), $cg__input_kind = _client_guard($scope0_reason, 0), $wg__input_kind = _write_guard($scope0_reason, 0), $wg__input_inner = _write_guard($scope0_reason, 1), $wi__input_inner = _write_if($scope0_reason, 1), $cg__input_inner = _client_guard($scope0_reason, 1), $fg__input_inner = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wi__input_kind = _write_if($scope0_reason, 0), $cg__input_kind = _client_guard($scope0_reason, 0), $wg__input_kind = _write_guard($scope0_reason, 0), $wg__input_inner = _write_guard($scope0_reason, 1), $wi__input_inner = _write_if($scope0_reason, 1), $cg__input_inner = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_kind__closures = /* @__PURE__ */ new Set();
 	const $input_inner__closures = /* @__PURE__ */ new Set();
@@ -85,12 +85,11 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "b", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_mark($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a8");
-	$fg__input_inner && _patch_subscribers($scope0_id, "a9", "g");
 	_scope($scope0_id, {
 		g: input.inner,
 		h: open,
 		i: $wi__input_kind && _unfilled_if($scope0_reason, 0) && $input_kind__closures,
 		a: _existing_scope($childScope),
 		j: $wi__input_inner && $input_inner__closures
-	}) || $fg__input_inner && _patch_write($scope0_id, "xg", input.inner, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.inner, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a9", "g");
 }, 1);

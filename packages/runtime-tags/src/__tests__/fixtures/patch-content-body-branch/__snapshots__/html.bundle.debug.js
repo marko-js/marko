@@ -24,7 +24,7 @@ _shells({
 	"__tests__/template.marko_4*shell": "__tests__/template.marko_4*shell;Db%;<strong>B:<!></strong>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 6), $wi__input_show__OR__input_alt__OR__input_note = _write_if($scope0_reason, 1), $wg__input_alt = _write_guard($scope0_reason, 5), $ui__input_alt = _unfilled_if($scope0_reason, 5), $ui__input_show = _unfilled_if($scope0_reason, 3), $cg__input_alt = _client_guard($scope0_reason, 5), $wg__input_show = _write_guard($scope0_reason, 3), $ui__input_note = _unfilled_if($scope0_reason, 6), $ui__input_show__OR__input_alt = _unfilled_if($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 4), $fg__input_alt = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_note = _filled_guard($scope0_reason, 6), $wi__input_note = _write_if($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 6), $wi__input_show__OR__input_alt__OR__input_note = _write_if($scope0_reason, 1), $wg__input_alt = _write_guard($scope0_reason, 5), $ui__input_alt = _unfilled_if($scope0_reason, 5), $ui__input_show = _unfilled_if($scope0_reason, 3), $cg__input_alt = _client_guard($scope0_reason, 5), $wg__input_show = _write_guard($scope0_reason, 3), $ui__input_note = _unfilled_if($scope0_reason, 6), $ui__input_show__OR__input_alt = _unfilled_if($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_title = _filled_guard($scope0_reason, 4), $wi__input_note = _write_if($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	const $input_alt__closures = new Set();
@@ -73,8 +73,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#main/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 3);
 	_html(`</main>${_el_mark($scope0_id, "#main/0", $wg__input_show)}`);
 	$fg__input_title && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_title#0:4/setup", "input_title");
-	$fg__input_alt && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_alt#5/subscribers", "input_alt");
-	$fg__input_note && ($cg__input_show || $cg__input_alt) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#6/subscribers", "input_note");
 	_scope($scope0_id, {
 		input_title: ($ui__input_show || _unfilled_if($scope0_reason, 4)) && input.title,
 		input_alt: ($ui__input_show || $ui__input_alt) && input.alt,
@@ -85,5 +83,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_title: ["input.title"],
 		input_alt: ["input.alt"],
 		input_note: ["input.note"]
-	}) || ($fg__input_title && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !_server_guard($scope0_reason, 4)), $fg__input_alt && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_alt", input.alt, !_server_guard($scope0_reason, 5)), $fg__input_note && $ui__input_show__OR__input_alt && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_title && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 5) && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_alt", input.alt, !_server_guard($scope0_reason, 5)) && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_alt#5/subscribers", "input_alt"), _filled_guard($scope0_reason, 6) && $ui__input_show__OR__input_alt && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 6)) && ($cg__input_show || $cg__input_alt) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#6/subscribers", "input_note"));
 }, 1);

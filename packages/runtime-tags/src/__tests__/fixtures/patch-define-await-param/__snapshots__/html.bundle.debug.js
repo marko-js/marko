@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $Info_content__id__closures = new Set();
 		const $Info_content__value__closures = new Set();
-		const $scope1_reason = _scope_reason(), $wg__id = _write_guard($scope1_reason, 0), $wi__id = _write_if($scope1_reason, 0), $cg__id = _client_guard($scope1_reason, 0), $cg__value = _client_guard($scope1_reason, 1), $fg__id = _filled_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $wg__id = _write_guard($scope1_reason, 0), $wi__id = _write_if($scope1_reason, 0), $cg__id = _client_guard($scope1_reason, 0), $cg__value = _client_guard($scope1_reason, 1);
 		_try($scope1_id, "#text/0", () => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id(), $ui__value = _unfilled_if($scope1_reason, 1);
@@ -42,13 +42,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				"ClosureSignalIndex:id/8": $wi__id && 1
 			}, "__tests__/template.marko", "7:6"), $cg__id && "__tests__/template.marko_4_id#1:3/subscribe", $wg__id);
 		}, void 0, "__tests__/template.marko_4*content", void 0, "__tests__/template.marko_2*content");
-		$fg__id && _patch_subscribers($scope1_id, "__tests__/template.marko_1_id#3/subscribers", "id");
 		_scope($scope1_id, {
 			id,
 			_: _scope_with_id($scope0_id),
 			"ClosureScopes:id/8": $wi__id && $Info_content__id__closures,
 			"ClosureScopes:value/9": _write_if($scope1_reason, 1) && _unfilled_if($scope1_reason, 1) && $Info_content__value__closures
-		}, "__tests__/template.marko", "2:2", { id: "2:16" }) || $fg__id && _patch_write($scope1_id, "PatchMarkedWrite:id", id, !_server_guard($scope1_reason, 0));
+		}, "__tests__/template.marko", "2:2", { id: "2:16" }) || _filled_guard($scope1_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:id", id, !_server_guard($scope1_reason, 0)) && _patch_subscribers($scope1_id, "__tests__/template.marko_1_id#3/subscribers", "id");
 	}, $scope0_id) };
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);

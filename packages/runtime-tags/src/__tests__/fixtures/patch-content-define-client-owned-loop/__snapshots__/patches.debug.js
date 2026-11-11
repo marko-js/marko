@@ -15,8 +15,8 @@
       "PatchText:#text/1": "2"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-define-client-owned-loop/template.marko_2*shell"]
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-define-client-owned-loop/template.marko_0_input_suffix#5/subscribers": "input_suffix",
-  "PatchMarkedWrite:input_suffix": "2"
+  "PatchMarkedWrite:input_suffix": "2",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-define-client-owned-loop/template.marko_0_input_suffix#5/subscribers": "input_suffix"
 }
 ;BAE
 
@@ -33,8 +33,8 @@
       "PatchText:#text/1": "3"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-define-client-owned-loop/template.marko_2*shell"]
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-define-client-owned-loop/template.marko_0_input_suffix#5/subscribers": "input_suffix",
-  "PatchMarkedWrite:input_suffix": "3"
+  "PatchMarkedWrite:input_suffix": "3",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-define-client-owned-loop/template.marko_0_input_suffix#5/subscribers": "input_suffix"
 }
 
 // PATCH holding BAE
@@ -50,6 +50,6 @@
       "PatchText:#text/1": "4"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-define-client-owned-loop/template.marko_2*shell"]
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-define-client-owned-loop/template.marko_0_input_suffix#5/subscribers": "input_suffix",
-  "PatchMarkedWrite:input_suffix": "4"
+  "PatchMarkedWrite:input_suffix": "4",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-define-client-owned-loop/template.marko_0_input_suffix#5/subscribers": "input_suffix"
 }

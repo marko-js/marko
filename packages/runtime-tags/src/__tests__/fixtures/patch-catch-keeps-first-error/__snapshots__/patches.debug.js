@@ -10,8 +10,8 @@
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-keeps-first-error/template.marko_1_input_label#0:5/subscribe": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-keeps-first-error/template.marko_1*content"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-keeps-first-error/template.marko_0_input_label#5/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "L2"
+  "PatchMarkedWrite:input_label": "L2",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-keeps-first-error/template.marko_0_input_label#5/subscribers": "input_label"
 }
 ;CAI
 
@@ -26,8 +26,8 @@
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-keeps-first-error/template.marko_1_input_label#0:5/subscribe": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-keeps-first-error/template.marko_1*content"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-keeps-first-error/template.marko_0_input_label#5/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "L3"
+  "PatchMarkedWrite:input_label": "L3",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-keeps-first-error/template.marko_0_input_label#5/subscribers": "input_label"
 }
 
 // PATCH holding CAI
@@ -35,6 +35,6 @@
   "PatchChild:BranchScopes:#text/2": [{
     "PatchText:#text/0": "ok"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-keeps-first-error/template.marko_1*content"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-keeps-first-error/template.marko_0_input_label#5/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "L4"
+  "PatchMarkedWrite:input_label": "L4",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-keeps-first-error/template.marko_0_input_label#5/subscribers": "input_label"
 }

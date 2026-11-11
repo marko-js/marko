@@ -85,7 +85,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0, _w1) => ` D l/${_w0}&/${_w1}&`)("b%c", " b")};${((_w0, _w1) => `<button class=inc> </button>${_w0}${_w1}`)($template$1, $template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_rows = _client_guard($scope0_reason, 4), $cg__input_guestText = _client_guard($scope0_reason, 5), $uf__input_admin = _updates_from($scope0_reason, 3), $cg__input_bodyText = _client_guard($scope0_reason, 7), $uf__input_showBody = _updates_from($scope0_reason, 6), $ui__input_admin = _unfilled_if($scope0_reason, 3), $ui__input_showBody = _unfilled_if($scope0_reason, 6), $fg__input_rows = _filled_guard($scope0_reason, 4), $fg__input_guestText = _filled_guard($scope0_reason, 5), $fg__input_bodyText = _filled_guard($scope0_reason, 7);
+	const $scope0_reason = _scope_reason(), $cg__input_rows = _client_guard($scope0_reason, 4), $cg__input_guestText = _client_guard($scope0_reason, 5), $uf__input_admin = _updates_from($scope0_reason, 3), $cg__input_bodyText = _client_guard($scope0_reason, 7), $uf__input_showBody = _updates_from($scope0_reason, 6), $ui__input_admin = _unfilled_if($scope0_reason, 3), $ui__input_showBody = _unfilled_if($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_rows__closures = /* @__PURE__ */ new Set();
 	const $input_guestText__closures = /* @__PURE__ */ new Set();
@@ -133,9 +133,6 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_script($scope0_id, "a6");
-	$fg__input_rows && _patch_subscribers($scope0_id, "a7", "h");
-	$fg__input_guestText && _patch_subscribers($scope0_id, "a8", "i");
-	$fg__input_bodyText && _patch_subscribers($scope0_id, "a9", "k");
 	_scope($scope0_id, {
 		h: ($ui__input_admin || _unfilled_if($scope0_reason, 4)) && input.rows,
 		i: ($ui__input_admin || _unfilled_if($scope0_reason, 5)) && input.guestText,
@@ -146,5 +143,5 @@ var template_default = _template("a", (input) => {
 		c: _existing_scope($childScope2),
 		o: _write_if($scope0_reason, 7) && $input_bodyText__closures,
 		d: _existing_scope($childScope3)
-	}) || ($fg__input_rows && $ui__input_admin && _patch_write($scope0_id, "xh", input.rows, !_server_guard($scope0_reason, 4)), $fg__input_guestText && $ui__input_admin && _patch_write($scope0_id, "xi", input.guestText, !_server_guard($scope0_reason, 5)), $fg__input_bodyText && $ui__input_showBody && _patch_write($scope0_id, "xk", input.bodyText, !_server_guard($scope0_reason, 7)));
+	}) || (_filled_guard($scope0_reason, 4) && $ui__input_admin && _patch_write($scope0_id, "xh", input.rows, !_server_guard($scope0_reason, 4)) && _patch_subscribers($scope0_id, "a7", "h"), _filled_guard($scope0_reason, 5) && $ui__input_admin && _patch_write($scope0_id, "xi", input.guestText, !_server_guard($scope0_reason, 5)) && _patch_subscribers($scope0_id, "a8", "i"), _filled_guard($scope0_reason, 7) && $ui__input_showBody && _patch_write($scope0_id, "xk", input.bodyText, !_server_guard($scope0_reason, 7)) && _patch_subscribers($scope0_id, "a9", "k"));
 }, 1);

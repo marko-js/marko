@@ -36,7 +36,7 @@ _shells({
 	c5: `c5${_shell_marker([[], []], ["a>", $setup$1])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template)}`
 });
 const $content = (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_n = _write_guard($scope0_reason, 0), $fg__input_n = _filled_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_n = _write_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_n__closures = /* @__PURE__ */ new Set();
 	const $input_label__closures = /* @__PURE__ */ new Set();
@@ -71,8 +71,6 @@ const $content = (input) => {
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	keeper_default({ content: input.content });
 	_patch_child_end();
-	$fg__input_n && _patch_subscribers($scope0_id, "c6", "e");
-	$fg__input_label && _patch_subscribers($scope0_id, "c7", "f");
 	$fg__input_label && $cg__input_n && _patch_render($scope0_id, "c4", "f");
 	_scope($scope0_id, {
 		e: input.n,
@@ -80,7 +78,7 @@ const $content = (input) => {
 		h: _write_if($scope0_reason, 0) && $input_n__closures,
 		i: _write_if($scope0_reason, 1) && $input_label__closures,
 		b: _existing_scope($childScope2)
-	}) || ($fg__input_n && _patch_write($scope0_id, "xe", input.n, !_server_guard($scope0_reason, 0)), $fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.n, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "c6", "e"), $fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "c7", "f"));
 };
 var level_default = _template("c", $content);
 

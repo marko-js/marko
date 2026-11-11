@@ -1,15 +1,15 @@
 // tags/child.marko
-const $frag_content__input_a__OR__c = /*@__PURE__*/ _or_patch("b3", 2, ($scope) => _text($scope.a, $scope._._.f + $scope._.b));
-const $frag_content__input_a = /*@__PURE__*/ _closure_get_patch("b1", 8, $frag_content__input_a__OR__c, ($scope) => $scope._._, "b8", 0);
+const $frag_content__input_a__OR__c = /*@__PURE__*/ _or_patch("b4", 2, ($scope) => _text($scope.a, $scope._._.f + $scope._.b));
+const $frag_content__input_a = /*@__PURE__*/ _closure_get_patch("b2", 8, $frag_content__input_a__OR__c, ($scope) => $scope._._, "b8", 0);
 const $frag_content__setup = ($scope) => {
 	$frag_content__input_a($scope);
 	$frag_content__c($scope);
 };
-const $frag_content__c = /*@__PURE__*/ _closure_get_patch("b2", 10, ($scope) => {
+const $frag_content__c = /*@__PURE__*/ _closure_get_patch("b3", 10, ($scope) => {
 	_text($scope.b, $scope._.b);
 	$frag_content__input_a__OR__c($scope);
-}, 0, "b4", 0);
-const $frag_content = _content$1("b0", "<em> </em><i> </i>", "D lD ", $frag_content__setup);
+}, 0, "b0", 0);
+const $frag_content = _content$1("b1", "<em> </em><i> </i>", "D lD ", $frag_content__setup);
 const $if_content__input_mode__OR__frag_content = /*@__PURE__*/ _or_patch("b6", 4, ($scope) => _attr_content($scope, "a", $scope._.g ? $scope.d : null));
 const $if_content__input_mode = /*@__PURE__*/ _if_closure_patch("b9", 0, 0, $if_content__input_mode__OR__frag_content);
 const $input_a__closure = /*@__PURE__*/ _closure($frag_content__input_a);

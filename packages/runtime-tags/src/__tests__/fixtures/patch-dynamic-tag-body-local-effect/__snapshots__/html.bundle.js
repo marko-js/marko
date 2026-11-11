@@ -25,7 +25,7 @@ var card_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a0: "a0",
+	a1: "a1",
 	a: "a; ;<main></main>",
 	a6: "a6; b%;<div></div><!><!>"
 });
@@ -38,17 +38,16 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id(), $fg__input_note = _filled_guard($scope0_reason, 2);
 			const $if_content__x__closures = /* @__PURE__ */ new Set();
 			const x = input.note + "!";
-			$fg__input_note && _patch_write($scope1_id, "xc", x, !$sg__input_note);
+			$fg__input_note && _patch_write($scope1_id, "xc", x, !$sg__input_note) && _patch_subscribers($scope1_id, "a0", "c");
 			_html(`<div></div>${_el_mark($scope1_id, "a")}`);
-			_dynamic_tag($scope1_id, "b", input.on ? card_default : "div", {}, 2, _content_resume("a0", () => {
+			_dynamic_tag($scope1_id, "b", input.on ? card_default : "div", {}, 2, _content_resume("a1", () => {
 				const $scope2_id = _scope_id();
 				_scope_reason();
 				_html(`<em>${_text_mark($scope2_id, "a", x, 1, $scope0_reason, 2)}</em>`);
-				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a1", $cg__input_note);
-				_subscribe(_unfilled_if($scope0_reason, 2) && $if_content__x__closures, _scope($scope2_id, { _: $wi__input_note__OR__input_on && _scope_with_id($scope1_id) }), $cg__input_note && "a1");
+				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a2", $cg__input_note);
+				_subscribe(_unfilled_if($scope0_reason, 2) && $if_content__x__closures, _scope($scope2_id, { _: $wi__input_note__OR__input_on && _scope_with_id($scope1_id) }), $cg__input_note && "a2");
 			}, $scope1_id), 0, _write_guard($scope0_reason, 3), $scope0_reason, 3);
-			_script($scope1_id, "a2", 1, $fg__input_note);
-			$fg__input_note && _patch_subscribers($scope1_id, "a3", "c");
+			_script($scope1_id, "a3", 1, $fg__input_note);
 			$cg__input_note && _patch_render($scope1_id, "a4");
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "a5");
 			_scope($scope1_id, {

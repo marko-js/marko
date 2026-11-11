@@ -7,8 +7,8 @@
       "PatchChild:BranchScopes:#text/0": {}
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_2*content", "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_3*content"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_1*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_0_input_title#6/subscribers": "input_title",
-  "PatchMarkedWrite:input_title": "b"
+  "PatchMarkedWrite:input_title": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_0_input_title#6/subscribers": "input_title"
 }
 ;DSo
 
@@ -25,7 +25,7 @@
       }
     }, _.a]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_1*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_0_input_title#6/subscribers": "input_title",
-  "PatchMarkedWrite:input_title": "c"
+  "PatchMarkedWrite:input_title": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_0_input_title#6/subscribers": "input_title"
 }
 ;DS4

@@ -13,8 +13,8 @@
       }
     }
   }, "a5"],
-  Sa8: "f",
-  xf: "b"
+  xf: "b",
+  Sa8: "f"
 }
 ;CwY
 
@@ -32,8 +32,8 @@
       }
     }
   }, "a5"],
-  Sa8: "f",
-  xf: "c"
+  xf: "c",
+  Sa8: "f"
 }
 
 // PATCH holding CwY
@@ -50,8 +50,8 @@
       }
     }
   }, "a5"],
-  Sa8: "f",
-  xf: "e"
+  xf: "e",
+  Sa8: "f"
 }
 
 // PATCH holding CwY
@@ -59,6 +59,6 @@
   cAc: [{
     ta: "ok"
   }, "a5"],
-  Sa8: "f",
-  xf: "d"
+  xf: "d",
+  Sa8: "f"
 }

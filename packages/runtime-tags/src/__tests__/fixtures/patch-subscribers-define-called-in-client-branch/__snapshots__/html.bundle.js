@@ -24,7 +24,7 @@ _shells({
 	c4: "c4 >a>;/&;"
 });
 var panel_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 1), $uf__input_x = _updates_from($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 2), $sg__input_n = _server_guard($scope0_reason, 1), $fg__input_n2 = _filled_guard($scope0_reason, 1), $wi__input_n = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 1), $uf__input_x = _updates_from($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 2), $sg__input_n = _server_guard($scope0_reason, 1), $wi__input_n = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_n__closures = /* @__PURE__ */ new Set();
 	const Info = { content: _content("c0", () => {
@@ -69,12 +69,11 @@ var panel_default = _template("c", (input) => {
 		}, $scope0_id)
 	});
 	_patch_child_end();
-	$fg__input_n2 && _patch_subscribers($scope0_id, "c7", "e");
 	_scope($scope0_id, {
 		e: input.n,
 		h: $wi__input_n && $input_n__closures,
 		b: _existing_scope($childScope2)
-	}) || $fg__input_n2 && _patch_write($scope0_id, "xe", input.n, !$sg__input_n);
+	}) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.n, !$sg__input_n) && _patch_subscribers($scope0_id, "c7", "e");
 });
 
 // template.marko

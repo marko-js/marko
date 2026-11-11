@@ -17,7 +17,6 @@
       }
     },
     "PatchChild:BranchScopes:#text/1": 0,
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-off-branch-path/tags/card.marko_0_input_other#6/subscribers": "input_other",
     "PatchMarkedWrite:input_other": (p => p = new Promise((f, r) => _.a = {
       f,
       r(e) {
@@ -25,12 +24,13 @@
         r(e)
       }
     }))(),
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-off-branch-path/tags/card.marko_0_input_other#6/subscribers": "input_other",
     "PatchCatch:#text/1": []
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-off-branch-path/template.marko_0_input_label#6/subscribers": "input_label",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-off-branch-path/template.marko_0_brand#10/subscribers": "brand",
   "PatchMarkedWrite:input_label": "b",
-  "PatchMarkedWrite:brand": "bmce!"
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-off-branch-path/template.marko_0_input_label#6/subscribers": "input_label",
+  "PatchMarkedWrite:brand": "bmce!",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-off-branch-path/template.marko_0_brand#10/subscribers": "brand"
 }
 (_.a.f("o2"), 0)
 
@@ -53,7 +53,6 @@
       }
     },
     "PatchChild:BranchScopes:#text/1": 0,
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-off-branch-path/tags/card.marko_0_input_other#6/subscribers": "input_other",
     "PatchMarkedWrite:input_other": (p => p = new Promise((f, r) => _.a = {
       f,
       r(e) {
@@ -61,11 +60,12 @@
         r(e)
       }
     }))(),
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-off-branch-path/tags/card.marko_0_input_other#6/subscribers": "input_other",
     "PatchCatch:#text/1": []
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-off-branch-path/template.marko_0_input_label#6/subscribers": "input_label",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-off-branch-path/template.marko_0_brand#10/subscribers": "brand",
   "PatchMarkedWrite:input_label": "c",
-  "PatchMarkedWrite:brand": "cmce!"
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-off-branch-path/template.marko_0_input_label#6/subscribers": "input_label",
+  "PatchMarkedWrite:brand": "cmce!",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-off-branch-path/template.marko_0_brand#10/subscribers": "brand"
 }
 (_.a.f("o3"), 0)

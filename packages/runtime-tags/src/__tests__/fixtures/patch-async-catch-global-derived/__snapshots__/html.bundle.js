@@ -33,10 +33,9 @@ var template_default = _template("a", (input) => {
 	_html(`<button>${_text_mark($scope0_id, "c", n)}</button>${_el_mark($scope0_id, "b")}</main>`);
 	_fill_global_subscribe("a5", $scope0_id);
 	_script($scope0_id, "a6");
-	_patch_subscribers($scope0_id, "a7", "g");
 	_scope($scope0_id, {
 		g: tag,
 		h: n,
 		i: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures
-	}) || _patch_write($scope0_id, "xg", tag);
+	}) || _patch_write($scope0_id, "xg", tag) && _patch_subscribers($scope0_id, "a7", "g");
 }, 1);

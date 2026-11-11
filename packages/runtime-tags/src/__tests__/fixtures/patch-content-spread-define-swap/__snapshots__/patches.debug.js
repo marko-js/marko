@@ -6,8 +6,8 @@
   "PatchChild:BranchScopes:#div/0": {
     "PatchText:#text/0": "t2"
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-spread-define-swap/template.marko_0_input_title#3/subscribers": "input_title",
-  "PatchMarkedWrite:input_title": "t2"
+  "PatchMarkedWrite:input_title": "t2",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-spread-define-swap/template.marko_0_input_title#3/subscribers": "input_title"
 }
 ;BgI
 
@@ -19,7 +19,7 @@
   "PatchChild:BranchScopes:#div/0": {
     "PatchText:#text/0": "t3"
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-spread-define-swap/template.marko_0_input_title#3/subscribers": "input_title",
-  "PatchMarkedWrite:input_title": "t3"
+  "PatchMarkedWrite:input_title": "t3",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-spread-define-swap/template.marko_0_input_title#3/subscribers": "input_title"
 }
 ;BwY

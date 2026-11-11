@@ -41,7 +41,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&`)($walks$1);
 const $setup = _shell_setup([[], []], ["#childScope/0>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `b/${_w0}&`)($walks$1)};${((_w0) => `<!>${_w0}`)($template$1)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_suffix = _write_guard($scope0_reason, 0), $wi__input_suffix = _write_if($scope0_reason, 0), $uf__input_suffix = _updates_from($scope0_reason, 0), $fg__input_suffix = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_suffix = _write_guard($scope0_reason, 0), $wi__input_suffix = _write_if($scope0_reason, 0), $uf__input_suffix = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = new Set();
 	_set_scope_reason(0);
@@ -64,10 +64,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$wg__input_suffix || $wg__value || $wg__input_suffix && _resume_branch($scope1_id);
 	}, $scope0_id) });
 	_patch_child_end();
-	$fg__input_suffix && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_suffix#3/subscribers", "input_suffix");
 	_scope($scope0_id, {
 		input_suffix: input.suffix,
 		"ClosureScopes:input_suffix/4": $wi__input_suffix && $input_suffix__closures,
 		"#childScope/0": _existing_scope($childScope2)
-	}, "__tests__/template.marko", 0, { input_suffix: ["input.suffix"] }) || $fg__input_suffix && _patch_write($scope0_id, "PatchMarkedWrite:input_suffix", input.suffix, !_server_guard($scope0_reason, 0));
+	}, "__tests__/template.marko", 0, { input_suffix: ["input.suffix"] }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_suffix", input.suffix, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_suffix#3/subscribers", "input_suffix");
 }, 1);

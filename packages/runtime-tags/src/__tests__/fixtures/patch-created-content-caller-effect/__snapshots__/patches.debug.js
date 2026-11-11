@@ -22,8 +22,8 @@
         }
       }, _.b]
     },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-caller-effect/tags/child.marko_0_input_count#4/subscribers": "input_count",
-    "PatchMarkedWrite:input_count": 10
+    "PatchMarkedWrite:input_count": 10,
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-caller-effect/tags/child.marko_0_input_count#4/subscribers": "input_count"
   }
 }
 ;Cwo

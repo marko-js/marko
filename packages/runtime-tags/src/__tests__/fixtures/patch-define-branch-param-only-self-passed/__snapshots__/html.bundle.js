@@ -12,7 +12,7 @@ _shells({
 	b4: `b4 >a>;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($R_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($R_content__template)}`
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_v = _client_guard($scope0_reason, 1), $wi__input_v__OR__input_on = _write_if($scope0_reason, 0), $wi__input_on = _write_if($scope0_reason, 2), $wg__input_on = _write_guard($scope0_reason, 2), $ui__input_on = _unfilled_if($scope0_reason, 2), $fg__input_v = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_v = _client_guard($scope0_reason, 1), $wi__input_v__OR__input_on = _write_if($scope0_reason, 0), $wi__input_on = _write_if($scope0_reason, 2), $wg__input_on = _write_guard($scope0_reason, 2), $ui__input_on = _unfilled_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_v__closures = /* @__PURE__ */ new Set();
 	const R = { content: _content("b2", ({ flip, depth }) => {
@@ -71,12 +71,11 @@ var child_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "b", 1, $wg__input_on, 1, 0, 0, ["b4"], $scope0_reason, 2);
-	$fg__input_v && _client_guard($scope0_reason, 2) && _patch_subscribers($scope0_id, "b5", "e");
 	_scope($scope0_id, {
 		e: ($ui__input_on || _unfilled_if($scope0_reason, 1)) && input.v,
 		g: _write_if($scope0_reason, 1) && $input_v__closures,
 		a: _existing_scope($childScope2)
-	}) || $fg__input_v && $ui__input_on && _patch_write($scope0_id, "xe", input.v, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && $ui__input_on && _patch_write($scope0_id, "xe", input.v, !_server_guard($scope0_reason, 1)) && _client_guard($scope0_reason, 2) && _patch_subscribers($scope0_id, "b5", "e");
 });
 
 // template.marko

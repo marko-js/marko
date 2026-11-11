@@ -8,8 +8,8 @@
       Sa0: 0
     }
   }, "a4"],
-  Sa6: "d",
-  xd: "b"
+  xd: "b",
+  Sa6: "d"
 }
 ;BgE
 
@@ -22,8 +22,8 @@
       Sa0: 0
     }
   }, "a4"],
-  Sa6: "d",
-  xd: "c"
+  xd: "c",
+  Sa6: "d"
 }
 
 // PATCH holding BgE
@@ -31,6 +31,6 @@
   cAa: [{
     ta: "d"
   }, "a4"],
-  Sa6: "d",
-  xd: "d"
+  xd: "d",
+  Sa6: "d"
 }

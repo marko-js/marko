@@ -5,7 +5,7 @@ _shells({
 	a3: "a3 a2;D ;<p> </p>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_items = _filled_guard($scope0_reason, 1), $fg__input_suffix = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 1), $fg__input_items = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();
@@ -32,12 +32,11 @@ var template_default = _template("a", (input) => {
 	_html(`<button>+</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a6");
 	$fg__input_items && $cg__input_show && _patch_render($scope0_id, "a5", "f");
-	$fg__input_suffix && ($cg__input_show || $cg__input_items) && _patch_subscribers($scope0_id, "a7", "g");
 	_scope($scope0_id, {
 		f: _write_if($scope0_reason, 0) && input.items,
 		g: input.suffix,
 		h: count,
 		j: _write_if($scope0_reason, 2) && $input_suffix__closures,
 		k: $count__closures
-	}) || ($fg__input_items && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.items, !_server_guard($scope0_reason, 1)), $fg__input_suffix && _patch_write($scope0_id, "xg", input.suffix, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_items && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.items, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "xg", input.suffix, !_server_guard($scope0_reason, 2)) && ($cg__input_show || $cg__input_items) && _patch_subscribers($scope0_id, "a7", "g"));
 }, 1);

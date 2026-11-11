@@ -36,7 +36,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
 const $setup = _shell_setup([[], []], ["#childScope/0>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$1)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $uf__input_a = _updates_from($scope0_reason, 2), $uf__input_obj = _updates_from($scope0_reason, 1), $ui__input_obj = _unfilled_if($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $uf__input_a = _updates_from($scope0_reason, 2), $uf__input_obj = _updates_from($scope0_reason, 1), $ui__input_obj = _unfilled_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	_set_scope_reason($uf__input_obj << 1 | $uf__input_obj << 5);
@@ -62,10 +62,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope0_id)
 	});
 	_patch_child_end();
-	$fg__input_a && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_a#4/subscribers", "input_a");
 	_scope($scope0_id, {
 		input_a: ($ui__input_obj || _unfilled_if($scope0_reason, 2)) && input.a,
 		"ClosureScopes:input_a/5": _write_if($scope0_reason, 2) && $input_a__closures,
 		"#childScope/0": _existing_scope($childScope2)
-	}, "__tests__/template.marko", 0, { input_a: ["input.a"] }) || $fg__input_a && $ui__input_obj && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 2));
+	}, "__tests__/template.marko", 0, { input_a: ["input.a"] }) || _filled_guard($scope0_reason, 2) && $ui__input_obj && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_a#4/subscribers", "input_a");
 }, 1);

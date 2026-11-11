@@ -9,8 +9,6 @@
         "PatchText:#text/0": "b"
       }
     }
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-templates-scriptless-content/template.marko_0_input_bold#4/subscribers": "input_bold",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-templates-scriptless-content/template.marko_0_input_label#5/subscribers": "input_label"
+  }
 }
 ;CQo

@@ -4,11 +4,11 @@
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchBranch:#div/0": "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-nested-call/tags/card.marko_3*shell",
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-nested-call/tags/card.marko_0_input_w#5/subscribers": "input_w",
       "PatchSetupValues:": {
         "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-nested-call/tags/card.marko_0_k#6/fill": 1
       },
-      "PatchMarkedWrite:input_w": "b"
+      "PatchMarkedWrite:input_w": "b",
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-nested-call/tags/card.marko_0_input_w#5/subscribers": "input_w"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-nested-call/template.marko_1*shell"]
 }
@@ -19,11 +19,11 @@
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchBranch:#div/0": "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-nested-call/tags/card.marko_3*shell",
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-nested-call/tags/card.marko_0_input_w#5/subscribers": "input_w",
       "PatchSetupValues:": {
         "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-nested-call/tags/card.marko_0_k#6/fill": 1
       },
-      "PatchMarkedWrite:input_w": "c"
+      "PatchMarkedWrite:input_w": "c",
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-nested-call/tags/card.marko_0_input_w#5/subscribers": "input_w"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-nested-call/template.marko_1*shell"]
 }

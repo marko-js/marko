@@ -9,9 +9,9 @@
       }, _.a]
     }
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-stateful-consumer-try/template.marko_0_input_fail#3/subscribers": "input_fail",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-stateful-consumer-try/template.marko_0_input_x#4/subscribers": "input_x",
   "PatchMarkedWrite:input_fail": !0,
-  "PatchMarkedWrite:input_x": "two"
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-stateful-consumer-try/template.marko_0_input_fail#3/subscribers": "input_fail",
+  "PatchMarkedWrite:input_x": "two",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-stateful-consumer-try/template.marko_0_input_x#4/subscribers": "input_x"
 }
 ;CQw

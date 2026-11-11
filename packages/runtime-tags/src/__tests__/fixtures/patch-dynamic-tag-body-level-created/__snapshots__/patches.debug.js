@@ -19,8 +19,8 @@
       "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-level-created/template.marko_2*content"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-level-created/template.marko_1*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-level-created/template.marko_0_input_note#5/subscribers": "input_note",
-  "PatchMarkedWrite:input_note": "b"
+  "PatchMarkedWrite:input_note": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-level-created/template.marko_0_input_note#5/subscribers": "input_note"
 }
 ;Cxk
 
@@ -44,6 +44,6 @@
       "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-level-created/template.marko_2*content"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-level-created/template.marko_1*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-level-created/template.marko_0_input_note#5/subscribers": "input_note",
-  "PatchMarkedWrite:input_note": "c"
+  "PatchMarkedWrite:input_note": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-level-created/template.marko_0_input_note#5/subscribers": "input_note"
 }

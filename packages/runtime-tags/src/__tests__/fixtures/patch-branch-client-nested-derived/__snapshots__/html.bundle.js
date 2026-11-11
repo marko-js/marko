@@ -14,12 +14,11 @@ var template_default = _template("a", (input) => {
 	_if(() => {}, $scope0_id, "a");
 	_html(`<button>+</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a2");
-	$fg__input_title && _patch_subscribers($scope0_id, "a3", "g");
 	$fg__input_title && _patch_render($scope0_id, "a1", "h");
 	_scope($scope0_id, {
 		f: open,
 		g: label,
 		h: show,
 		i: $wi__input_title && $label__closures
-	}) || ($fg__input_title && _patch_write($scope0_id, "xg", label, !$sg__input_title), $fg__input_title && _patch_write($scope0_id, "xh", show, !$sg__input_title));
+	}) || ($fg__input_title && _patch_write($scope0_id, "xg", label, !$sg__input_title) && _patch_subscribers($scope0_id, "a3", "g"), $fg__input_title && _patch_write($scope0_id, "xh", show, !$sg__input_title));
 }, 1);

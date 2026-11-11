@@ -42,7 +42,7 @@ _shells({
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `/${_w0}&b`)($walks$1)};${((_w0) => `${_w0}<!>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 0), $fg__input_promise = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_promise__closures = new Set();
 	_set_scope_reason(0);
@@ -60,10 +60,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_resume_branch($scope1_id);
 	}, $scope0_id) });
 	_patch_child_end();
-	$fg__input_promise && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_promise#3/subscribers", "input_promise");
 	_scope($scope0_id, {
 		input_promise: input.promise,
 		"ClosureScopes:input_promise/4": _write_if($scope0_reason, 0) && $input_promise__closures,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { input_promise: ["input.promise"] }) || $fg__input_promise && _patch_write($scope0_id, "PatchMarkedWrite:input_promise", input.promise, !_server_guard($scope0_reason, 0));
+	}, "__tests__/template.marko", 0, { input_promise: ["input.promise"] }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_promise", input.promise, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_promise#3/subscribers", "input_promise");
 }, 1);

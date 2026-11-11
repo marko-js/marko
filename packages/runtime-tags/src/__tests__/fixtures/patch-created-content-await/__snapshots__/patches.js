@@ -14,8 +14,6 @@
       }
     }
   }, "a4"],
-  Sa6: "d",
-  Sa7: "e",
   xd: (p => p = new Promise((f, r) => _.a = {
     f,
     r(e) {
@@ -23,7 +21,9 @@
       r(e)
     }
   }))(),
-  xe: "b"
+  Sa6: "d",
+  xe: "b",
+  Sa7: "e"
 }
 [{
   cAa: {
@@ -57,8 +57,6 @@
       }
     }
   }, "a4"],
-  Sa6: "d",
-  Sa7: "e",
   xd: (p => p = new Promise((f, r) => _.a = {
     f,
     r(e) {
@@ -66,7 +64,9 @@
       r(e)
     }
   }))(),
-  xe: "c"
+  Sa6: "d",
+  xe: "c",
+  Sa7: "e"
 }
 [{
   cAa: {

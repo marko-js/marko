@@ -8,8 +8,8 @@
   cAb: {
     ta: "b"
   },
-  Sa4: "f",
-  xf: "b"
+  xf: "b",
+  Sa4: "f"
 }
 ;CAI
 
@@ -23,8 +23,8 @@
   cAb: {
     ta: "c"
   },
-  Sa4: "f",
-  xf: "c"
+  xf: "c",
+  Sa4: "f"
 }
 ;CQw
 
@@ -37,6 +37,6 @@
   cAb: {
     ta: "d"
   },
-  Sa4: "f",
-  xf: "d"
+  xf: "d",
+  Sa4: "f"
 }

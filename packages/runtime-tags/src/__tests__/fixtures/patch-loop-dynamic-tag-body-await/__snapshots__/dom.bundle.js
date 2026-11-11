@@ -13,6 +13,6 @@ const $rowcardCarddiv_content__setup = ($scope) => {
 	$rowcardCarddiv_content__row_label($scope);
 	$rowcardCarddiv_content__v($scope);
 };
-const $rowcardCarddiv_content__v = /*@__PURE__*/ _closure_get_patch("a2", 8, ($scope) => _text($scope.b, $scope._.c), 0, "a3", 0);
+const $rowcardCarddiv_content__v = /*@__PURE__*/ _closure_get_patch("a2", 8, ($scope) => _text($scope.b, $scope._.c), 0, "a4", 0);
 const $rowcardCarddiv_content = _content$1("a0", "<b><!> <!></b>", "D%c%", $rowcardCarddiv_content__setup);
 _content_resume($rowcardCarddiv_content);

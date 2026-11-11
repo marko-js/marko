@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $Level_content__n__closures = new Set();
 		const $Level_content__label__closures = new Set();
-		const $scope1_reason = _scope_reason(), $cg__label = _client_guard($scope1_reason, 1), $wg__n = _write_guard($scope1_reason, 0), $fg__n = _filled_guard($scope1_reason, 0), $fg__label = _filled_guard($scope1_reason, 1);
+		const $scope1_reason = _scope_reason(), $cg__label = _client_guard($scope1_reason, 1), $wg__n = _write_guard($scope1_reason, 0);
 		_if(() => {
 			if (n) {
 				const $scope2_id = _scope_id();
@@ -78,8 +78,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $childScope2 = _peek_scope_id($scope1_id, "#childScope/1", 1);
 		keeper_default({ content });
 		_patch_child_end();
-		$fg__n && _patch_subscribers($scope1_id, "__tests__/template.marko_1_n#4/subscribers", "n");
-		$fg__label && _patch_subscribers($scope1_id, "__tests__/template.marko_1_label#5/subscribers", "label");
 		_scope($scope1_id, {
 			n,
 			label,
@@ -89,7 +87,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "1:2", {
 			n: "1:17",
 			label: "1:20"
-		}) || ($fg__n && _patch_write($scope1_id, "PatchMarkedWrite:n", n, !_server_guard($scope1_reason, 0)), $fg__label && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !_server_guard($scope1_reason, 1)));
+		}) || (_filled_guard($scope1_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:n", n, !_server_guard($scope1_reason, 0)) && _patch_subscribers($scope1_id, "__tests__/template.marko_1_n#4/subscribers", "n"), _filled_guard($scope1_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !_server_guard($scope1_reason, 1)) && _patch_subscribers($scope1_id, "__tests__/template.marko_1_label#5/subscribers", "label"));
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 3);

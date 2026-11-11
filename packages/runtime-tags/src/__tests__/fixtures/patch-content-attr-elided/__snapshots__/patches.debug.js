@@ -5,16 +5,14 @@
   "PatchChild:BranchScopes:#section/0": {
     "PatchText:#text/0": "two"
   },
-  "PatchText:#text/1": "two",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-attr-elided/template.marko_0_input_note#4/subscribers": "input_note"
+  "PatchText:#text/1": "two"
 }
 ;BAE
 
 // PATCH holding BAE
 {
   "PatchDynamicTag:#section/0": 0,
-  "PatchText:#text/1": "three",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-attr-elided/template.marko_0_input_note#4/subscribers": "input_note"
+  "PatchText:#text/1": "three"
 }
 
 // PATCH holding BAE
@@ -23,6 +21,5 @@
   "PatchChild:BranchScopes:#section/0": {
     "PatchText:#text/0": "four"
   },
-  "PatchText:#text/1": "four",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-attr-elided/template.marko_0_input_note#4/subscribers": "input_note"
+  "PatchText:#text/1": "four"
 }

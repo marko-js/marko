@@ -3,22 +3,22 @@
 {
   lb: [{
     xd: "T0b",
+    Sa2: "d",
     ca: {
       ib0: "e",
       s: {
         de: "^a1"
       }
-    },
-    Sa2: "d"
+    }
   }, {
     xd: "T1b",
+    Sa2: "d",
     ca: {
       ib0: "e",
       s: {
         de: "^a1"
       }
-    },
-    Sa2: "d"
+    }
   }, "a3"]
 }
 ;CgI

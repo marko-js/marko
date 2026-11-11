@@ -48,7 +48,6 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a4", 1, $fg__input_b);
 	_script($scope0_id, "a5", 1, $sg__input_b && 2);
 	_script($scope0_id, "a6");
-	$fg__input_b && _patch_subscribers($scope0_id, "a7", "g");
 	_patch_render($scope0_id, "a8", $fg__input_b && "g");
 	_scope($scope0_id, {
 		g: input.b,
@@ -57,5 +56,5 @@ var template_default = _template("a", (input) => {
 		j: two,
 		n: status,
 		o: $wi__input_b && $input_b__closures
-	}) || ($fg__input_b && _patch_write($scope0_id, "xg", input.b, !$sg__input_b), $fg__input_b && _patch_write($scope0_id, "xn", status, !$sg__input_b));
+	}) || ($fg__input_b && _patch_write($scope0_id, "xg", input.b, !$sg__input_b) && _patch_subscribers($scope0_id, "a7", "g"), $fg__input_b && _patch_write($scope0_id, "xn", status, !$sg__input_b));
 }, 1);

@@ -6,7 +6,6 @@
     "PatchChild:BranchScopes:#section/0": {
       "PatchText:#text/0": "Y"
     }
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-derived-input/template.marko_0_input_a#6/subscribers": "input_a"
+  }
 }
 ;BAE

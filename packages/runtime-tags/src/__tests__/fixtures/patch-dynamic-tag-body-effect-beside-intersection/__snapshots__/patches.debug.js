@@ -12,9 +12,8 @@
       }
     }
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-effect-beside-intersection/template.marko_0_input_a#4/subscribers": "input_a",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-effect-beside-intersection/template.marko_0_input_b#5/subscribers": "input_b",
-  "PatchMarkedWrite:input_a": "a2"
+  "PatchMarkedWrite:input_a": "a2",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-effect-beside-intersection/template.marko_0_input_a#4/subscribers": "input_a"
 }
 ;BAE
 
@@ -31,9 +30,8 @@
       }
     }
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-effect-beside-intersection/template.marko_0_input_a#4/subscribers": "input_a",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-effect-beside-intersection/template.marko_0_input_b#5/subscribers": "input_b",
-  "PatchMarkedWrite:input_a": "a2"
+  "PatchMarkedWrite:input_a": "a2",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-effect-beside-intersection/template.marko_0_input_a#4/subscribers": "input_a"
 }
 
 // PATCH holding BAE
@@ -47,7 +45,6 @@
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-effect-beside-intersection/template.marko_1_n#4/fill": 0
     }
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-effect-beside-intersection/template.marko_0_input_a#4/subscribers": "input_a",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-effect-beside-intersection/template.marko_0_input_b#5/subscribers": "input_b",
-  "PatchMarkedWrite:input_a": "a3"
+  "PatchMarkedWrite:input_a": "a3",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-effect-beside-intersection/template.marko_0_input_a#4/subscribers": "input_a"
 }

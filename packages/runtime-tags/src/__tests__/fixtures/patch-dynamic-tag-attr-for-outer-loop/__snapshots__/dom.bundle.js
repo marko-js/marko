@@ -1,5 +1,5 @@
 // template.marko
-const $item_content__input_note = /*@__PURE__*/ _closure_get_patch("a0", 12, ($scope) => _text($scope.c, $scope._._.i), ($scope) => $scope._._, "a9", 0);
+const $item_content__input_note = /*@__PURE__*/ _closure_get_patch("a0", 12, ($scope) => _text($scope.c, $scope._._.i), ($scope) => $scope._._, "a7", 0);
 const $item_content__setup = ($scope) => {
 	$item_content__input_note($scope);
 	$item_content__a($scope);

@@ -1,15 +1,15 @@
 // PATCH
 {
   cb: {
-    Sb3: "d",
-    xd: "b2"
+    xd: "b2",
+    Sb3: "d"
   }
 }
 
 // PATCH
 {
   cb: {
-    Sb3: "d",
-    xd: "b3"
+    xd: "b3",
+    Sb3: "d"
   }
 }

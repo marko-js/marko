@@ -27,7 +27,7 @@ _shells({
 	"__tests__/tags/child.marko_2*shell": "__tests__/tags/child.marko_2*shell,<span>shown</span>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_items__OR__input_show = _write_if($scope0_reason, 0), $ui__input_items = _unfilled_if($scope0_reason, 1), $fg__input_show = _filled_guard($scope0_reason, 2), $wi__input_show = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_items__OR__input_show = _write_if($scope0_reason, 0), $ui__input_items = _unfilled_if($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = new Set();
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
@@ -50,12 +50,11 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	list_default({ item: $item });
 	_patch_child_end();
-	$fg__input_show && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "__tests__/tags/child.marko_0_input_show#4/subscribers", "input_show");
 	_scope($scope0_id, {
 		input_show: ($ui__input_items || _unfilled_if($scope0_reason, 2)) && input.show,
 		"ClosureScopes:input_show/5": $wi__input_show && $input_show__closures,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/tags/child.marko", 0, { input_show: ["input.show"] }) || $fg__input_show && $ui__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 2));
+	}, "__tests__/tags/child.marko", 0, { input_show: ["input.show"] }) || _filled_guard($scope0_reason, 2) && $ui__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 2)) && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "__tests__/tags/child.marko_0_input_show#4/subscribers", "input_show");
 });
 
 // template.marko

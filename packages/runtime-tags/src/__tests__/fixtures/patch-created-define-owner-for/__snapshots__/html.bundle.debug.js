@@ -9,7 +9,7 @@ _shells({
 	"__tests__/tags/card.marko": `__tests__/tags/card.marko #childScope/0>!__tests__/tags/card.marko_0;${((_w0) => `b/${_w0}& b`)($List_content__walks)};${((_w0) => `<!>${_w0}<button>x</button>`)($List_content__template)}`
 });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_w = _write_guard($scope0_reason, 1), $cg__input_w = _client_guard($scope0_reason, 1), $wi__input_w = _write_if($scope0_reason, 1), $fg__input_w = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_w = _write_guard($scope0_reason, 1), $cg__input_w = _client_guard($scope0_reason, 1), $wi__input_w = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_w__closures = new Set();
 	let k = [input.n];
@@ -30,13 +30,12 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_patch_child_end();
 	_html(`<button>x</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
-	$fg__input_w && _patch_subscribers($scope0_id, "__tests__/tags/card.marko_0_input_w#5/subscribers", "input_w");
 	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_k#6/fill", k, 1);
 	_scope($scope0_id, {
 		input_w: input.w,
 		"ClosureScopes:input_w/7": $wi__input_w && $input_w__closures,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/tags/card.marko", 0, { input_w: ["input.w"] }) || $fg__input_w && _patch_write($scope0_id, "PatchMarkedWrite:input_w", input.w, !_server_guard($scope0_reason, 1));
+	}, "__tests__/tags/card.marko", 0, { input_w: ["input.w"] }) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_w", input.w, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "__tests__/tags/card.marko_0_input_w#5/subscribers", "input_w");
 });
 
 // template.marko

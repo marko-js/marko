@@ -17,7 +17,7 @@ var template_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 1);
 	_client_guard($scope0_reason, 1);
 	_write_guard($scope0_reason, 0);
-	const $fg__input_show = _filled_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1);
+	const $fg__input_show = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	let open = false;
@@ -25,11 +25,10 @@ var template_default = _template("b", (input) => {
 	_if(() => {}, $scope0_id, "b", 1, 1, 1, "</main>");
 	_script($scope0_id, "b2");
 	$fg__input_show && _patch_render($scope0_id, "b1", "e");
-	$fg__input_label && _patch_subscribers($scope0_id, "b3", "f");
 	_scope($scope0_id, {
 		e: input.show,
 		f: input.label,
 		g: open,
 		i: $wi__input_label && $input_label__closures
-	}) || ($fg__input_show && _patch_write($scope0_id, "xe", input.show, !_server_guard($scope0_reason, 0)), $fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)));
+	}) || ($fg__input_show && _patch_write($scope0_id, "xe", input.show, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "b3", "f"));
 }, 1);

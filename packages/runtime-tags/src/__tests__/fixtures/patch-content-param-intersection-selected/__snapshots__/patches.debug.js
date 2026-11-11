@@ -7,8 +7,8 @@
         "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-content-param-intersection-selected/tags/owner.marko_2_x#1:2/setup": "x"
       }
     },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-param-intersection-selected/tags/owner.marko_0_input_a#5/subscribers": "input_a",
-    "PatchMarkedWrite:input_a": "a2"
+    "PatchMarkedWrite:input_a": "a2",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-param-intersection-selected/tags/owner.marko_0_input_a#5/subscribers": "input_a"
   }
 }
 
@@ -21,7 +21,7 @@
         "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-content-param-intersection-selected/tags/owner.marko_2_x#1:2/setup": "x"
       }
     },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-param-intersection-selected/tags/owner.marko_0_input_a#5/subscribers": "input_a",
-    "PatchMarkedWrite:input_a": "a3"
+    "PatchMarkedWrite:input_a": "a3",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-param-intersection-selected/tags/owner.marko_0_input_a#5/subscribers": "input_a"
   }
 }

@@ -4,8 +4,8 @@
   "PatchChild:#childScope/0": {
     "PatchChild:#childScope/0": {
       "PatchChild:BranchScopes:#text/0": [0, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-child-define-local-effect-catch/tags/wrap.marko_3*content", "packages/runtime-tags/src/__tests__/fixtures/patch-child-define-local-effect-catch/tags/wrap.marko_2*content"],
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-define-local-effect-catch/tags/wrap.marko_1_x#1/subscribers": "x",
       "PatchMarkedWrite:x": "b!",
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-define-local-effect-catch/tags/wrap.marko_1_x#1/subscribers": "x",
       "PatchCatch:#text/0": [{
         "PatchText:#text/0": "boom",
         "PatchSetup:": {
@@ -22,8 +22,8 @@
   "PatchChild:#childScope/0": {
     "PatchChild:#childScope/0": {
       "PatchChild:BranchScopes:#text/0": [0, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-child-define-local-effect-catch/tags/wrap.marko_3*content", "packages/runtime-tags/src/__tests__/fixtures/patch-child-define-local-effect-catch/tags/wrap.marko_2*content"],
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-define-local-effect-catch/tags/wrap.marko_1_x#1/subscribers": "x",
       "PatchMarkedWrite:x": "c!",
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-define-local-effect-catch/tags/wrap.marko_1_x#1/subscribers": "x",
       "PatchCatch:#text/0": [{
         "PatchText:#text/0": "boom",
         "PatchSetup:": {

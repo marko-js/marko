@@ -4,8 +4,8 @@
   ca: {
     ca: {
       cAa: [0, "b3", "b5"],
-      Sb8: "b",
       xb: "b!",
+      Sb8: "b",
       ka: [{
         ta: "boom",
         s: {
@@ -22,8 +22,8 @@
   ca: {
     ca: {
       cAa: [0, "b3", "b5"],
-      Sb8: "b",
       xb: "c!",
+      Sb8: "b",
       ka: [{
         ta: "boom",
         s: {

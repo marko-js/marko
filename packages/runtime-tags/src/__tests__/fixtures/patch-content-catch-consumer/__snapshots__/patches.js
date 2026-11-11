@@ -16,8 +16,8 @@
       }
     }, "b2"]
   },
-  Sa7: "h",
-  xh: "b"
+  xh: "b",
+  Sa7: "h"
 }
 ;Dwo
 
@@ -38,8 +38,8 @@
       }
     }, "b2"]
   },
-  Sa7: "h",
-  xh: "c"
+  xh: "c",
+  Sa7: "h"
 }
 
 // PATCH holding Dwo
@@ -59,8 +59,8 @@
       }
     }, "b2"]
   },
-  Sa7: "h",
-  xh: "e"
+  xh: "e",
+  Sa7: "h"
 }
 
 // PATCH holding Dwo
@@ -75,6 +75,6 @@
       ta: "ok"
     }, "b2"]
   },
-  Sa7: "h",
-  xh: "d"
+  xh: "d",
+  Sa7: "h"
 }

@@ -1,17 +1,17 @@
 // PATCH
 {
-  Sb2: "d",
-  xd: "two"
+  xd: "two",
+  Sb2: "d"
 }
 
 // PATCH
 {
-  Sb2: "d",
-  xd: "three"
+  xd: "three",
+  Sb2: "d"
 }
 
 // PATCH
 {
-  Sb2: "d",
-  xd: "four"
+  xd: "four",
+  Sb2: "d"
 }

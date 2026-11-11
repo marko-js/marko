@@ -33,14 +33,13 @@ var child_default = _template("b", (input) => {
 		});
 	}, 0, $scope0_id, "b", 1, 1, 1, 0, 0, "b3", $scope0_reason, 5);
 	$ui__input_mode && _patch_write($scope0_id, "wi", frag.content, 1);
-	$fg__input_b && _patch_subscribers($scope0_id, "b4", "e");
 	$fg__input_b && _client_guard($scope0_reason, 5) && _patch_render($scope0_id, "b5", "e");
 	_client_guard($scope0_reason, 4) && _patch_render($scope0_id, "b6");
 	_scope($scope0_id, {
 		e: ($ui__input_mode__OR__input_items || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.b,
 		i: $ui__input_mode && frag.content,
 		k: _write_if($scope0_reason, 3) && $input_b__closures
-	}) || $fg__input_b && $ui__input_mode__OR__input_items && _patch_write($scope0_id, "xe", input.b, !_server_guard($scope0_reason, 3));
+	}) || $fg__input_b && $ui__input_mode__OR__input_items && _patch_write($scope0_id, "xe", input.b, !_server_guard($scope0_reason, 3)) && _patch_subscribers($scope0_id, "b4", "e");
 });
 
 // template.marko

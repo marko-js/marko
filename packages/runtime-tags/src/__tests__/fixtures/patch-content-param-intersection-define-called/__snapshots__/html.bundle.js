@@ -3,7 +3,7 @@ const $Box_content__walks = "D l";
 const $Box_content__template = "<p> </p>";
 _shells({ a: `a !a3;${((_w0) => `/${_w0}&%b b`)($Box_content__walks)};${((_w0) => `${_w0}<!><button>inc</button>`)($Box_content__template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $uf__input_a = _updates_from($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 1), $wi__input_a = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $uf__input_a = _updates_from($scope0_reason, 1), $wi__input_a = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	let n = 0;
@@ -24,12 +24,11 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "b", Box, { x: input.x }, 9, 0, 0, _write_guard($scope0_reason, 2), $scope0_reason, 2, 0, 0, 0);
 	_html(`<button>inc</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a3");
-	$fg__input_a && _patch_subscribers($scope0_id, "a4", "f");
 	_scope($scope0_id, {
 		f: input.a,
 		h: n,
 		i: _unfilled_if($scope0_reason, 2) && Box,
 		k: $wi__input_a && $input_a__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_a && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a4", "f");
 }, 1);

@@ -7,7 +7,7 @@ _shells({
 	b3: "b3; ;<section></section>"
 });
 var frag_host_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 1), $wi__input_note__OR__input_mode = _write_if($scope0_reason, 0), $ui__input_mode2 = _unfilled_if($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 1), $wi__input_note__OR__input_mode = _write_if($scope0_reason, 0), $ui__input_mode2 = _unfilled_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_for_of([0, 1], (i) => {
@@ -31,11 +31,10 @@ var frag_host_default = _template("b", (input) => {
 			_: $wi__input_note__OR__input_mode && _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b3", 0, 0);
-	$fg__input_note && _patch_subscribers($scope0_id, "b4", "d");
 	_scope($scope0_id, {
 		d: ($ui__input_mode2 || _unfilled_if($scope0_reason, 1)) && input.note,
 		f: _write_if($scope0_reason, 1) && $input_note__closures
-	}) || $fg__input_note && $ui__input_mode2 && _patch_write($scope0_id, "xd", input.note, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && $ui__input_mode2 && _patch_write($scope0_id, "xd", input.note, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "b4", "d");
 });
 
 // template.marko

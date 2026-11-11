@@ -4,8 +4,8 @@
   "PatchLoop:#text/0": [{
     "PatchText:#text/0": "x"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-loop-outer/template.marko_1*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-loop-outer/template.marko_0_input_note#5/subscribers": "input_note",
-  "PatchMarkedWrite:input_note": "n2"
+  "PatchMarkedWrite:input_note": "n2",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-loop-outer/template.marko_0_input_note#5/subscribers": "input_note"
 }
 ;BAE
 
@@ -16,6 +16,6 @@
   }, {
     "PatchText:#text/0": "y"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-loop-outer/template.marko_1*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-loop-outer/template.marko_0_input_note#5/subscribers": "input_note",
-  "PatchMarkedWrite:input_note": "n2"
+  "PatchMarkedWrite:input_note": "n2",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-loop-outer/template.marko_0_input_note#5/subscribers": "input_note"
 }

@@ -8,8 +8,8 @@
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko_2*shell"]
     }
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko_0_input_inner#6/subscribers": "input_inner",
-  "PatchMarkedWrite:input_inner": "b"
+  "PatchMarkedWrite:input_inner": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko_0_input_inner#6/subscribers": "input_inner"
 }
 ;CAI
 
@@ -20,8 +20,8 @@
       "PatchBranch:#text/0": 0
     }
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko_0_input_inner#6/subscribers": "input_inner",
-  "PatchMarkedWrite:input_inner": "a"
+  "PatchMarkedWrite:input_inner": "a",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko_0_input_inner#6/subscribers": "input_inner"
 }
 
 // PATCH holding CAI
@@ -33,8 +33,8 @@
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko_2*shell"]
     }
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko_0_input_inner#6/subscribers": "input_inner",
-  "PatchMarkedWrite:input_inner": $
+  "PatchMarkedWrite:input_inner": $,
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko_0_input_inner#6/subscribers": "input_inner"
 }
 
 // PATCH holding CAI
@@ -45,7 +45,7 @@
       "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko_6*shell"
     }
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko_0_input_inner#6/subscribers": "input_inner",
-  "PatchMarkedWrite:input_inner": "a"
+  "PatchMarkedWrite:input_inner": "a",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko_0_input_inner#6/subscribers": "input_inner"
 }
 ;CQw

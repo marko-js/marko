@@ -12,14 +12,14 @@
           "PatchRender:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/tags/wrapper.marko_2_input_fail#0:4/subscribe"
         }
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/tags/wrapper.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/tags/wrapper.marko_2*content"],
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/tags/wrapper.marko_0_input_content#3/subscribers": "input_content",
       "PatchMarkedWrite:input_content": {
         content: _([], "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/template.marko_1*content", 1)
-      }
+      },
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/tags/wrapper.marko_0_input_content#3/subscribers": "input_content"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/template.marko_3*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/template.marko_0_input_label#5/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "b"
+  "PatchMarkedWrite:input_label": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/template.marko_0_input_label#5/subscribers": "input_label"
 }
 ;DSo
 
@@ -37,22 +37,22 @@
           "PatchRender:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/tags/wrapper.marko_2_input_fail#0:4/subscribe"
         }
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/tags/wrapper.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/tags/wrapper.marko_2*content"],
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/tags/wrapper.marko_0_input_content#3/subscribers": "input_content",
       "PatchMarkedWrite:input_content": {
         content: _([], "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/template.marko_2*content", 1)
-      }
+      },
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/tags/wrapper.marko_0_input_content#3/subscribers": "input_content"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/template.marko_3*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/template.marko_0_input_label#5/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "c"
+  "PatchMarkedWrite:input_label": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/template.marko_0_input_label#5/subscribers": "input_label"
 }
 ;DTo
 
 // PATCH holding DTo
 {
   "PatchBranch:#text/2": 0,
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/template.marko_0_input_label#5/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "d"
+  "PatchMarkedWrite:input_label": "d",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/template.marko_0_input_label#5/subscribers": "input_label"
 }
 
 // PATCH holding DTo
@@ -68,14 +68,14 @@
           "PatchRender:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/tags/wrapper.marko_2_input_fail#0:4/subscribe"
         }
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/tags/wrapper.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/tags/wrapper.marko_2*content"],
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/tags/wrapper.marko_0_input_content#3/subscribers": "input_content",
       "PatchMarkedWrite:input_content": {
         content: _([], "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/template.marko_1*content", 1)
-      }
+      },
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/tags/wrapper.marko_0_input_content#3/subscribers": "input_content"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/template.marko_3*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/template.marko_0_input_label#5/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "e"
+  "PatchMarkedWrite:input_label": "e",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/template.marko_0_input_label#5/subscribers": "input_label"
 }
 
 // PATCH holding DTo
@@ -91,12 +91,12 @@
           "PatchRender:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/tags/wrapper.marko_2_input_fail#0:4/subscribe"
         }
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/tags/wrapper.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/tags/wrapper.marko_2*content"],
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/tags/wrapper.marko_0_input_content#3/subscribers": "input_content",
       "PatchMarkedWrite:input_content": {
         content: _([], "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/template.marko_2*content", 1)
-      }
+      },
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/tags/wrapper.marko_0_input_content#3/subscribers": "input_content"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/template.marko_3*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/template.marko_0_input_label#5/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "f"
+  "PatchMarkedWrite:input_label": "f",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-content/template.marko_0_input_label#5/subscribers": "input_label"
 }

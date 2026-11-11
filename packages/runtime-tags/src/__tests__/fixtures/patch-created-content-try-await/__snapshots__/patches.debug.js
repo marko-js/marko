@@ -11,9 +11,8 @@
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/tags/wrap.marko_1*shell"]
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_0_input_id#4/subscribers": "input_id",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_0_input_value#5/subscribers": "input_value",
-  "PatchMarkedWrite:input_id": "b"
+  "PatchMarkedWrite:input_id": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_0_input_id#4/subscribers": "input_id"
 }
 {
   "PatchChild:#childScope/0": {
@@ -47,9 +46,8 @@
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/tags/wrap.marko_1*shell"]
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_0_input_id#4/subscribers": "input_id",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_0_input_value#5/subscribers": "input_value",
-  "PatchMarkedWrite:input_id": "c"
+  "PatchMarkedWrite:input_id": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_0_input_id#4/subscribers": "input_id"
 }
 
 // PATCH holding D1o
@@ -57,9 +55,8 @@
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": 0
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_0_input_id#4/subscribers": "input_id",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_0_input_value#5/subscribers": "input_value",
-  "PatchMarkedWrite:input_id": "d"
+  "PatchMarkedWrite:input_id": "d",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_0_input_id#4/subscribers": "input_id"
 }
 
 // PATCH holding D1o
@@ -78,7 +75,6 @@
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/tags/wrap.marko_1*shell"]
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_0_input_id#4/subscribers": "input_id",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_0_input_value#5/subscribers": "input_value",
-  "PatchMarkedWrite:input_id": "e"
+  "PatchMarkedWrite:input_id": "e",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_0_input_id#4/subscribers": "input_id"
 }

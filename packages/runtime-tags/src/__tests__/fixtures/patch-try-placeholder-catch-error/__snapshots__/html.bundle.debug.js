@@ -18,7 +18,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_title__OR__input_fail = _write_guard($scope0_reason, 0), $wi__input_slow = _write_if($scope0_reason, 3), $fg__input_title = _filled_guard($scope0_reason, 1), $fg__input_fail = _filled_guard($scope0_reason, 2), $wi__input_title = _write_if($scope0_reason, 1), $wi__input_fail = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_title__OR__input_fail = _write_guard($scope0_reason, 0), $wi__input_slow = _write_if($scope0_reason, 3), $wi__input_title = _write_if($scope0_reason, 1), $wi__input_fail = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	const $input_fail__closures = new Set();
@@ -52,8 +52,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, 0, "__tests__/template.marko_4*content", "__tests__/template.marko_2*content");
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "13:4");
 	}, void 0, "__tests__/template.marko_1*content", void 0, "__tests__/template.marko_3*content", 1);
-	$fg__input_title && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_title#3/subscribers", "input_title");
-	$fg__input_fail && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_fail#4/subscribers", "input_fail");
 	_scope($scope0_id, {
 		input_title: input.title,
 		input_fail: input.fail,
@@ -63,5 +61,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		input_fail: ["input.fail"]
-	}) || ($fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !_server_guard($scope0_reason, 1)), $fg__input_fail && _patch_write($scope0_id, "PatchMarkedWrite:input_fail", input.fail, !_server_guard($scope0_reason, 2)));
+	}) || (_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_title#3/subscribers", "input_title"), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_fail", input.fail, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_fail#4/subscribers", "input_fail"));
 }, 1);

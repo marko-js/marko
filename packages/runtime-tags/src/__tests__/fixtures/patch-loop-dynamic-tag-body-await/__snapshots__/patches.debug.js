@@ -3,16 +3,16 @@
 {
   "PatchLoop:#text/0": [1, {
     "PatchPending:#text/0": _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_2*content",
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_1_row_label#5/subscribers": "row_label",
-    "PatchMarkedWrite:row_label": "c"
+    "PatchMarkedWrite:row_label": "c",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_1_row_label#5/subscribers": "row_label"
   }, 2, {
     "PatchPending:#text/0": _.a,
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_1_row_label#5/subscribers": "row_label",
-    "PatchMarkedWrite:row_label": "d"
+    "PatchMarkedWrite:row_label": "d",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_1_row_label#5/subscribers": "row_label"
   }, 3, {
     "PatchPending:#text/0": _.a,
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_1_row_label#5/subscribers": "row_label",
-    "PatchMarkedWrite:row_label": "e"
+    "PatchMarkedWrite:row_label": "e",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_1_row_label#5/subscribers": "row_label"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_1*shell"]
 }
 [`packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/tags/card.marko !packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/tags/card.marko_0; b%;<button class=toggle>toggle</button><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_3*content`]
@@ -28,8 +28,8 @@
           },
           "PatchBind:input_content": _.e = "^packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_3*content"
         },
-        "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_2_v#2/subscribers": "v",
-        "PatchMarkedWrite:v": "y"
+        "PatchMarkedWrite:v": "y",
+        "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_2_v#2/subscribers": "v"
       }
     },
     [1, 2], {
@@ -40,8 +40,7 @@
             "PatchText:#text/0": "d",
             "PatchText:#text/1": "y"
           }
-        },
-        "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_2_v#2/subscribers": "v"
+        }
       }
     },
     [2, 3], {
@@ -54,8 +53,8 @@
           },
           "PatchBind:input_content": _.e
         },
-        "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_2_v#2/subscribers": "v",
-        "PatchMarkedWrite:v": "y"
+        "PatchMarkedWrite:v": "y",
+        "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_2_v#2/subscribers": "v"
       }
     }
   ]

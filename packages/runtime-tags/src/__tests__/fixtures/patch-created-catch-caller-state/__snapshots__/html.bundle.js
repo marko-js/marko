@@ -11,7 +11,7 @@ _shells({
 	b2: "b2 !b0;D ;<i> </i>"
 });
 var detail_view_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_detail = _client_guard($scope0_reason, 0), $cg__input_error = _client_guard($scope0_reason, 1), $fg__input_detail = _filled_guard($scope0_reason, 0), $wi__input_detail = _write_if($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_detail = _client_guard($scope0_reason, 0), $cg__input_error = _client_guard($scope0_reason, 1), $wi__input_detail = _write_if($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_detail__closures = /* @__PURE__ */ new Set();
 	const $input_error__closures = /* @__PURE__ */ new Set();
@@ -41,12 +41,11 @@ var detail_view_default = _template("b", (input) => {
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b5", $cg__input_detail);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_detail__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_detail && "b5");
 	}, 0, "b4", "b3", 1, 1, 1);
-	$fg__input_detail && _patch_subscribers($scope0_id, "b7", "d");
 	_scope($scope0_id, {
 		d: input.detail,
 		f: $wi__input_detail && $input_detail__closures,
 		g: $wi__input_error && _unfilled_if($scope0_reason, 1) && $input_error__closures
-	}) || $fg__input_detail && _patch_write($scope0_id, "xd", input.detail, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.detail, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "b7", "d");
 });
 
 // template.marko

@@ -3,8 +3,8 @@
   ca: {
     ta: "b"
   },
-  Sa2: "e",
-  xe: "y"
+  xe: "y",
+  Sa2: "e"
 }
 
 // PATCH
@@ -12,8 +12,8 @@
   ca: {
     ta: "c"
   },
-  Sa2: "e",
-  xe: "z"
+  xe: "z",
+  Sa2: "e"
 }
 
 // PATCH
@@ -21,6 +21,6 @@
   ca: {
     ta: "d"
   },
-  Sa2: "e",
-  xe: "w"
+  xe: "w",
+  Sa2: "e"
 }

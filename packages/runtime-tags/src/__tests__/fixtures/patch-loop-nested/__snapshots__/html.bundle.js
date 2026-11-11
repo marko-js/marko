@@ -1,7 +1,7 @@
 // template.marko
 _shells({ a: "a !a1;D%b b ;<main><!><button class=o>o</button><button class=i>i</button></main>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 0), $fg__input_note = _filled_guard($scope0_reason, 0), $wi__input_note = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 0), $wi__input_note = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	let outer = ["a"];
@@ -19,11 +19,10 @@ var template_default = _template("a", (input) => {
 	}, 0, $scope0_id, "a");
 	_html(`<button class=o>o</button>${_el_mark($scope0_id, "b")}<button class=i>i</button>${_el_mark($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a1");
-	$fg__input_note && _patch_subscribers($scope0_id, "a2", "f");
 	_scope($scope0_id, {
 		f: input.note,
 		g: outer,
 		h: inner,
 		i: $wi__input_note && $input_note__closures
-	}) || $fg__input_note && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "a2", "f");
 }, 1);

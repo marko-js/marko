@@ -11,7 +11,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_value = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $ui__input_value2 = _unfilled_if($scope0_reason, 2), $fg__input_value = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_value = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $ui__input_value2 = _unfilled_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_value__closures = new Set();
 	_html("<main>");
@@ -39,9 +39,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#main/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html(`</main>${_el_mark($scope0_id, "#main/0", $wg__input_show)}`);
-	$fg__input_value && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_value#4/subscribers", "input_value");
 	_scope($scope0_id, {
 		input_value: ($ui__input_show || $ui__input_value2) && input.value,
 		"ClosureScopes:input_value/5": _write_if($scope0_reason, 2) && ($ui__input_value2 || $ui__input_show) && $input_value__closures
-	}, "__tests__/template.marko", 0, { input_value: ["input.value"] }) || $fg__input_value && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_value", input.value, !_server_guard($scope0_reason, 2));
+	}, "__tests__/template.marko", 0, { input_value: ["input.value"] }) || _filled_guard($scope0_reason, 2) && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_value", input.value, !_server_guard($scope0_reason, 2)) && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_value#4/subscribers", "input_value");
 }, 1);

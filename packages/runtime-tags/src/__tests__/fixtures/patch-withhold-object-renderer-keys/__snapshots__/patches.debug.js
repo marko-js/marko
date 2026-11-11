@@ -7,7 +7,6 @@
       "PatchText:#text/0": "b"
     }
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-withhold-object-renderer-keys/template.marko_0_input_note#7/subscribers": "input_note",
   "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-withhold-object-renderer-keys/template.marko_0_input_mode#5_m#8/setup": "input_mode",
   "PatchMarkedWrite:input_mode": {
     a: "a0",
@@ -29,7 +28,6 @@
     },
     "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-withhold-object-renderer-keys/template.marko_1*content"
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-withhold-object-renderer-keys/template.marko_0_input_note#7/subscribers": "input_note",
   "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-withhold-object-renderer-keys/template.marko_0_input_mode#5_m#8/setup": "input_mode",
   "PatchMarkedWrite:input_mode": {
     a: "a0",
@@ -37,6 +35,7 @@
     id: "__tests__/template.marko_1*content",
     owner: 99
   },
-  "PatchMarkedWrite:input_note": "c"
+  "PatchMarkedWrite:input_note": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-withhold-object-renderer-keys/template.marko_0_input_note#7/subscribers": "input_note"
 }
 ;CxE

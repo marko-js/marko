@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $Level_content__n__closures = /* @__PURE__ */ new Set();
 		const $Level_content__label__closures = /* @__PURE__ */ new Set();
-		const $scope1_reason = _scope_reason(), $cg__label = _client_guard($scope1_reason, 1), $wg__n = _write_guard($scope1_reason, 0), $fg__n = _filled_guard($scope1_reason, 0), $fg__label = _filled_guard($scope1_reason, 1);
+		const $scope1_reason = _scope_reason(), $cg__label = _client_guard($scope1_reason, 1), $wg__n = _write_guard($scope1_reason, 0);
 		_if(() => {
 			if (n) {
 				const $scope2_id = _scope_id();
@@ -73,15 +73,13 @@ var template_default = _template("a", (input) => {
 		const $childScope2 = _peek_scope_id($scope1_id, "b", 1);
 		keeper_default({ content });
 		_patch_child_end();
-		$fg__n && _patch_subscribers($scope1_id, "a6", "e");
-		$fg__label && _patch_subscribers($scope1_id, "a7", "f");
 		_scope($scope1_id, {
 			e: n,
 			f: label,
 			h: _write_if($scope1_reason, 0) && $Level_content__n__closures,
 			i: _write_if($scope1_reason, 1) && $Level_content__label__closures,
 			b: _existing_scope($childScope2)
-		}) || ($fg__n && _patch_write($scope1_id, "xe", n, !_server_guard($scope1_reason, 0)), $fg__label && _patch_write($scope1_id, "xf", label, !_server_guard($scope1_reason, 1)));
+		}) || (_filled_guard($scope1_reason, 0) && _patch_write($scope1_id, "xe", n, !_server_guard($scope1_reason, 0)) && _patch_subscribers($scope1_id, "a6", "e"), _filled_guard($scope1_reason, 1) && _patch_write($scope1_id, "xf", label, !_server_guard($scope1_reason, 1)) && _patch_subscribers($scope1_id, "a7", "f"));
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 3);

@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/panel/index.marko_2*shell": "__tests__/tags/panel/index.marko_2*shell;D ;<em> </em>"
 });
 var panel_default = _template("__tests__/tags/panel/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 4), $wg__input_inner = _write_guard($scope0_reason, 3), $wi__input_show__OR__input_inner__OR__input_title = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2), $ui__input_inner = _unfilled_if($scope0_reason, 3), $ui__input_title = _unfilled_if($scope0_reason, 4), $ui__input_show__OR__input_inner = _unfilled_if($scope0_reason, 0), $fg__input_inner = _filled_guard($scope0_reason, 3), $fg__input_title = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2), $cg__input_inner = _client_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 4), $wg__input_inner = _write_guard($scope0_reason, 3), $wi__input_show__OR__input_inner__OR__input_title = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2), $ui__input_inner = _unfilled_if($scope0_reason, 3), $ui__input_title = _unfilled_if($scope0_reason, 4), $ui__input_show__OR__input_inner = _unfilled_if($scope0_reason, 0), $cg__input_inner = _client_guard($scope0_reason, 3), $fg__input_inner = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	_if(() => {
@@ -31,7 +31,6 @@ var panel_default = _template("__tests__/tags/panel/index.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/panel/index.marko_1*shell"], $scope0_reason, 2);
 	$fg__input_inner && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/panel/index.marko_1_input_inner#0:4/setup", "input_inner");
-	$fg__input_title && ($cg__input_show || $cg__input_inner) && _patch_subscribers($scope0_id, "__tests__/tags/panel/index.marko_0_input_title#5/subscribers", "input_title");
 	_scope($scope0_id, {
 		input_inner: ($ui__input_show || $ui__input_inner) && input.inner,
 		input_title: ($ui__input_show__OR__input_inner || $ui__input_title) && input.title,
@@ -39,7 +38,7 @@ var panel_default = _template("__tests__/tags/panel/index.marko", (input) => {
 	}, "__tests__/tags/panel/index.marko", 0, {
 		input_inner: ["input.inner"],
 		input_title: ["input.title"]
-	}) || ($fg__input_inner && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_inner", input.inner, !_server_guard($scope0_reason, 3)), $fg__input_title && $ui__input_show__OR__input_inner && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_inner && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_inner", input.inner, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && $ui__input_show__OR__input_inner && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !_server_guard($scope0_reason, 4)) && ($cg__input_show || $cg__input_inner) && _patch_subscribers($scope0_id, "__tests__/tags/panel/index.marko_0_input_title#5/subscribers", "input_title"));
 });
 
 // template.marko

@@ -47,7 +47,7 @@ _shells({
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `/${_w0}&b`)($walks$1)};${((_w0) => `${_w0}<!>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_fail = _filled_guard($scope0_reason, 1), $fg__input_x = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $input_fail__closures = new Set();
 	const $input_x__closures = new Set();
@@ -73,8 +73,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2");
 	}, $scope0_id) });
 	_patch_child_end();
-	$fg__input_fail && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_fail#3/subscribers", "input_fail");
-	$fg__input_x && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_x#4/subscribers", "input_x");
 	_scope($scope0_id, {
 		input_fail: input.fail,
 		input_x: input.x,
@@ -84,5 +82,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_fail: ["input.fail"],
 		input_x: ["input.x"]
-	}) || ($fg__input_fail && _patch_write($scope0_id, "PatchMarkedWrite:input_fail", input.fail, !_server_guard($scope0_reason, 1)), $fg__input_x && _patch_write($scope0_id, "PatchMarkedWrite:input_x", input.x, !_server_guard($scope0_reason, 2)));
+	}) || (_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_fail", input.fail, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_fail#3/subscribers", "input_fail"), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_x", input.x, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_x#4/subscribers", "input_x"));
 }, 1);

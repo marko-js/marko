@@ -1,23 +1,23 @@
 // PATCH
 {
-  Sb3: "f",
   ib4: "e",
   xe: !0,
-  xf: "two"
+  xf: "two",
+  Sb3: "f"
 }
 
 // PATCH
 {
-  Sb3: "f",
   ib4: "e",
   xe: !0,
-  xf: "three"
+  xf: "three",
+  Sb3: "f"
 }
 
 // PATCH
 {
-  Sb3: "f",
   ib4: "e",
   xe: !0,
-  xf: "four"
+  xf: "four",
+  Sb3: "f"
 }

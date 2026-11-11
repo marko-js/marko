@@ -17,8 +17,8 @@
       }
     }
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-define-attr/template.marko_0_input_note#6/subscribers": "input_note",
-  "PatchMarkedWrite:input_note": "b"
+  "PatchMarkedWrite:input_note": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-define-attr/template.marko_0_input_note#6/subscribers": "input_note"
 }
 ;D1U
 
@@ -40,6 +40,6 @@
       }
     }
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-define-attr/template.marko_0_input_note#6/subscribers": "input_note",
-  "PatchMarkedWrite:input_note": "c"
+  "PatchMarkedWrite:input_note": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-define-attr/template.marko_0_input_note#6/subscribers": "input_note"
 }

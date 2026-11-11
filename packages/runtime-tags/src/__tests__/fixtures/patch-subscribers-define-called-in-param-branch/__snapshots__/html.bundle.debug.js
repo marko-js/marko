@@ -28,7 +28,7 @@ _shells({
 	"__tests__/tags/panel.marko_3*shell": "__tests__/tags/panel.marko_3*shell >#childScope/0>;/&;"
 });
 var panel_default = _template("__tests__/tags/panel.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 1), $uf__input_x = _updates_from($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 2), $sg__input_n = _server_guard($scope0_reason, 1), $fg__input_n2 = _filled_guard($scope0_reason, 1), $wi__input_n = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 1), $uf__input_x = _updates_from($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 2), $sg__input_n = _server_guard($scope0_reason, 1), $wi__input_n = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_n__closures = new Set();
 	const Info = { content: _content("__tests__/tags/panel.marko_1*content", () => {
@@ -73,12 +73,11 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		}, $scope0_id)
 	});
 	_patch_child_end();
-	$fg__input_n2 && _patch_subscribers($scope0_id, "__tests__/tags/panel.marko_0_input_n#4/subscribers", "input_n");
 	_scope($scope0_id, {
 		input_n: input.n,
 		"ClosureScopes:input_n/7": $wi__input_n && $input_n__closures,
 		"#childScope/1": _existing_scope($childScope2)
-	}, "__tests__/tags/panel.marko", 0, { input_n: ["input.n"] }) || $fg__input_n2 && _patch_write($scope0_id, "PatchMarkedWrite:input_n", input.n, !$sg__input_n);
+	}, "__tests__/tags/panel.marko", 0, { input_n: ["input.n"] }) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_n", input.n, !$sg__input_n) && _patch_subscribers($scope0_id, "__tests__/tags/panel.marko_0_input_n#4/subscribers", "input_n");
 });
 
 // template.marko

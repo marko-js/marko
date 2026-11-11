@@ -3,8 +3,8 @@
   ca: {
     ta: "sb"
   },
-  Sa4: "f",
   ia5: "g",
   xf: "b",
+  Sa4: "f",
   xg: !0
 }

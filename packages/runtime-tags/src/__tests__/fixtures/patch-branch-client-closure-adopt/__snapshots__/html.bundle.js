@@ -36,12 +36,11 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "a");
 	_html(`<button>+</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a4");
-	$fg__input_title && _patch_subscribers($scope0_id, "a5", "e");
 	$fg__input_title && _patch_render($scope0_id, "a3", "e");
 	_scope($scope0_id, {
 		e: input.title,
 		f: open,
 		g: $wi__input_title && $input_title__closures,
 		h: $open__closures
-	}) || $fg__input_title && _patch_write($scope0_id, "xe", input.title, !_server_guard($scope0_reason, 0));
+	}) || $fg__input_title && _patch_write($scope0_id, "xe", input.title, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "a5", "e");
 }, 1);

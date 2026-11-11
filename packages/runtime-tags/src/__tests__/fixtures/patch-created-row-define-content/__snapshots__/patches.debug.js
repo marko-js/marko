@@ -36,11 +36,11 @@
         }
       }
     }, _.d = "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_3*shell"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_2_row_label#7/subscribers": "row_label",
     "PatchSetupValues:": {
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_2_n#11/fill": 0
     },
-    "PatchMarkedWrite:row_label": "d"
+    "PatchMarkedWrite:row_label": "d",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_2_row_label#7/subscribers": "row_label"
   }, 3, {
     "PatchChild:#childScope/2": {
       "PatchSetup:": {
@@ -76,11 +76,11 @@
         }
       }
     }, _.d],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_2_row_label#7/subscribers": "row_label",
     "PatchSetupValues:": {
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_2_n#11/fill": 0
     },
-    "PatchMarkedWrite:row_label": "n"
+    "PatchMarkedWrite:row_label": "n",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_2_row_label#7/subscribers": "row_label"
   }, 1, {
     "PatchChild:#childScope/2": {
       "PatchSetup:": {
@@ -115,11 +115,11 @@
         }, _.b]
       }
     }, _.d],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_2_row_label#7/subscribers": "row_label",
     "PatchSetupValues:": {
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_2_n#11/fill": 0
     },
-    "PatchMarkedWrite:row_label": "e"
+    "PatchMarkedWrite:row_label": "e",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_2_row_label#7/subscribers": "row_label"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_2*shell"]
 }
 ;Ef4
@@ -171,11 +171,11 @@
         }
       }
     }, _.f = "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_3*shell"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_2_row_label#7/subscribers": "row_label",
     "PatchSetupValues:": {
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_2_n#11/fill": 0
     },
-    "PatchMarkedWrite:row_label": "m"
+    "PatchMarkedWrite:row_label": "m",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_2_row_label#7/subscribers": "row_label"
   }, 2, {
     "PatchChild:#childScope/2": {
       "PatchSetup:": {
@@ -221,10 +221,10 @@
         }
       }
     }, _.f],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_2_row_label#7/subscribers": "row_label",
     "PatchSetupValues:": {
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_2_n#11/fill": 0
     },
-    "PatchMarkedWrite:row_label": "f"
+    "PatchMarkedWrite:row_label": "f",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_2_row_label#7/subscribers": "row_label"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_2*shell"]
 }

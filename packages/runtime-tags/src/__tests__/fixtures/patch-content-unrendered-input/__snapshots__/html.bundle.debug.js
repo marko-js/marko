@@ -94,7 +94,7 @@ _shells({
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0, _w1) => ` D l/${_w0}&/${_w1}&`)("b%c", " b")};${((_w0, _w1) => `<button class=inc> </button>${_w0}${_w1}`)($template$2, $template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_rows = _client_guard($scope0_reason, 4), $cg__input_guestText = _client_guard($scope0_reason, 5), $uf__input_admin = _updates_from($scope0_reason, 3), $cg__input_bodyText = _client_guard($scope0_reason, 7), $uf__input_showBody = _updates_from($scope0_reason, 6), $ui__input_admin = _unfilled_if($scope0_reason, 3), $ui__input_showBody = _unfilled_if($scope0_reason, 6), $fg__input_rows = _filled_guard($scope0_reason, 4), $fg__input_guestText = _filled_guard($scope0_reason, 5), $fg__input_bodyText = _filled_guard($scope0_reason, 7);
+	const $scope0_reason = _scope_reason(), $cg__input_rows = _client_guard($scope0_reason, 4), $cg__input_guestText = _client_guard($scope0_reason, 5), $uf__input_admin = _updates_from($scope0_reason, 3), $cg__input_bodyText = _client_guard($scope0_reason, 7), $uf__input_showBody = _updates_from($scope0_reason, 6), $ui__input_admin = _unfilled_if($scope0_reason, 3), $ui__input_showBody = _unfilled_if($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_rows__closures = new Set();
 	const $input_guestText__closures = new Set();
@@ -142,9 +142,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_patch_child_end();
 	_script($scope0_id, "__tests__/template.marko_0");
-	$fg__input_rows && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_rows#7/subscribers", "input_rows");
-	$fg__input_guestText && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_guestText#8/subscribers", "input_guestText");
-	$fg__input_bodyText && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_bodyText#10/subscribers", "input_bodyText");
 	_scope($scope0_id, {
 		input_rows: ($ui__input_admin || _unfilled_if($scope0_reason, 4)) && input.rows,
 		input_guestText: ($ui__input_admin || _unfilled_if($scope0_reason, 5)) && input.guestText,
@@ -160,5 +157,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_guestText: ["input.guestText"],
 		input_bodyText: ["input.bodyText"],
 		n: "1:6"
-	}) || ($fg__input_rows && $ui__input_admin && _patch_write($scope0_id, "PatchMarkedWrite:input_rows", input.rows, !_server_guard($scope0_reason, 4)), $fg__input_guestText && $ui__input_admin && _patch_write($scope0_id, "PatchMarkedWrite:input_guestText", input.guestText, !_server_guard($scope0_reason, 5)), $fg__input_bodyText && $ui__input_showBody && _patch_write($scope0_id, "PatchMarkedWrite:input_bodyText", input.bodyText, !_server_guard($scope0_reason, 7)));
+	}) || (_filled_guard($scope0_reason, 4) && $ui__input_admin && _patch_write($scope0_id, "PatchMarkedWrite:input_rows", input.rows, !_server_guard($scope0_reason, 4)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_rows#7/subscribers", "input_rows"), _filled_guard($scope0_reason, 5) && $ui__input_admin && _patch_write($scope0_id, "PatchMarkedWrite:input_guestText", input.guestText, !_server_guard($scope0_reason, 5)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_guestText#8/subscribers", "input_guestText"), _filled_guard($scope0_reason, 7) && $ui__input_showBody && _patch_write($scope0_id, "PatchMarkedWrite:input_bodyText", input.bodyText, !_server_guard($scope0_reason, 7)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_bodyText#10/subscribers", "input_bodyText"));
 }, 1);

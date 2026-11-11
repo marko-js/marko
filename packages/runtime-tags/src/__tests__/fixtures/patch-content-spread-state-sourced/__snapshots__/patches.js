@@ -7,8 +7,8 @@
       content: _([], "a1", 1)
     }
   },
-  Sa2: "e",
-  xe: "y"
+  xe: "y",
+  Sa2: "e"
 }
 
 // PATCH
@@ -20,6 +20,6 @@
       content: _([], "a1", 1)
     }
   },
-  Sa2: "e",
-  xe: "z"
+  xe: "z",
+  Sa2: "e"
 }

@@ -14,11 +14,11 @@
         "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-sync-forward/tags/card.marko_2*content"
       }
     },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-sync-forward/tags/card.marko_0_input_content#4/subscribers": _.a,
-    "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-sync-forward/template.marko_1*content"
+    "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-sync-forward/template.marko_1*content",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-sync-forward/tags/card.marko_0_input_content#4/subscribers": _.a
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-sync-forward/template.marko_0_input_note#6/subscribers": "input_note",
-  "PatchMarkedWrite:input_note": "b"
+  "PatchMarkedWrite:input_note": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-sync-forward/template.marko_0_input_note#6/subscribers": "input_note"
 }
 ;D10
 
@@ -37,9 +37,9 @@
         "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-sync-forward/tags/card.marko_2*content"
       }
     },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-sync-forward/tags/card.marko_0_input_content#4/subscribers": _.a,
-    "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-sync-forward/template.marko_1*content"
+    "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-sync-forward/template.marko_1*content",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-sync-forward/tags/card.marko_0_input_content#4/subscribers": _.a
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-sync-forward/template.marko_0_input_note#6/subscribers": "input_note",
-  "PatchMarkedWrite:input_note": "c"
+  "PatchMarkedWrite:input_note": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-sync-forward/template.marko_0_input_note#6/subscribers": "input_note"
 }

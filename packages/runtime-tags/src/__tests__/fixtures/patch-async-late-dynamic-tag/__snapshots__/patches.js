@@ -9,15 +9,14 @@
       pa: "a1"
     }
   },
-  Sa8: "g",
-  Sa9: "h",
   xh: (p => p = new Promise((f, r) => _.a = {
     f,
     r(e) {
       p.catch(_ => 0);
       r(e)
     }
-  }))()
+  }))(),
+  Sa9: "h"
 }
 {
   cAa: {
@@ -41,15 +40,14 @@
       pa: "a1"
     }
   },
-  Sa8: "g",
-  Sa9: "h",
   xh: (p => p = new Promise((f, r) => _.a = {
     f,
     r(e) {
       p.catch(_ => 0);
       r(e)
     }
-  }))()
+  }))(),
+  Sa9: "h"
 }
 {
   cAa: {

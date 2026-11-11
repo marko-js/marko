@@ -9,7 +9,7 @@ _shells({
 	a1: "a1;D ;<em> </em>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 4), $ui__input_show = _unfilled_if($scope0_reason, 2), $fg__input_promise = _filled_guard($scope0_reason, 3), $fg__input_label = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2), $fg__input_other = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 4), $ui__input_show = _unfilled_if($scope0_reason, 2), $fg__input_promise = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2), $fg__input_other = _filled_guard($scope0_reason, 5), $fg__input_label = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	let open = false;
@@ -67,7 +67,6 @@ var template_default = _template("a", (input) => {
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a8");
 	$fg__input_promise && $cg__input_show && _patch_render($scope0_id, "a7", "g");
-	$fg__input_label && $cg__input_show && _patch_subscribers($scope0_id, "a9", "h");
 	_patch_render($scope0_id, "a10", $fg__input_other && "i", $scope0_reason, 5);
 	_patch_render($scope0_id, "a11", (($fg__input_label ? " h" : "") + ($fg__input_other ? " m" : "")).slice(1));
 	_scope($scope0_id, {
@@ -77,5 +76,5 @@ var template_default = _template("a", (input) => {
 		k: _unfilled_if($scope0_reason, 5) && Panel,
 		m: Tag,
 		p: _write_if($scope0_reason, 4) && $input_label__closures
-	}) || ($fg__input_promise && $ui__input_show && _patch_write($scope0_id, "xg", input.promise, !_server_guard($scope0_reason, 3)), $fg__input_label && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 4)), $fg__input_other && _patch_write($scope0_id, "xm", Tag, !_server_guard($scope0_reason, 5)));
+	}) || ($fg__input_promise && $ui__input_show && _patch_write($scope0_id, "xg", input.promise, !_server_guard($scope0_reason, 3)), $fg__input_label && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 4)) && $cg__input_show && _patch_subscribers($scope0_id, "a9", "h"), $fg__input_other && _patch_write($scope0_id, "xm", Tag, !_server_guard($scope0_reason, 5)));
 }, 1);

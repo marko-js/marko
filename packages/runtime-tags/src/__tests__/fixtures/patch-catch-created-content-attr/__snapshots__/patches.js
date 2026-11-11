@@ -13,8 +13,8 @@
       }
     }, "b2"]
   },
-  Sa4: "g",
-  xg: "b"
+  xg: "b",
+  Sa4: "g"
 }
 ;Cwo
 
@@ -32,8 +32,8 @@
       }
     }, "b2"]
   },
-  Sa4: "g",
-  xg: "c"
+  xg: "c",
+  Sa4: "g"
 }
 
 // PATCH holding Cwo
@@ -50,8 +50,8 @@
       }
     }, "b2"]
   },
-  Sa4: "g",
-  xg: "e"
+  xg: "e",
+  Sa4: "g"
 }
 
 // PATCH holding Cwo
@@ -61,6 +61,6 @@
       ta: "ok"
     }, "b2"]
   },
-  Sa4: "g",
-  xg: "d"
+  xg: "d",
+  Sa4: "g"
 }

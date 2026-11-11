@@ -4,7 +4,7 @@
     brand: "bmce"
   },
   cAa: 0,
-  Sa7: "g",
   xg: "bmce!",
+  Sa7: "g",
   ka: []
 }

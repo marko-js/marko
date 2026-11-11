@@ -11,7 +11,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0 __tests__/template.marko_0_input_attrs#7_extra#9 __tests__/template.marko_0_input_attrs#7;D b b D ;<main><div></div><section></section><button> </button></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	let count = 0;
@@ -33,7 +33,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#7_extra#9");
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#7");
-	$fg__input_title && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_title#6/subscribers", "input_title");
 	_scope($scope0_id, {
 		input_title: input.title,
 		count,
@@ -45,5 +44,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		extra: "2:9",
 		"EventAttributes:#div/0": ["...input.attrs", "6:11"],
 		"EventAttributes:#section/1": ["...{ ...input.attrs, content: extra }", "7:15"]
-	}) || $fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_title#6/subscribers", "input_title");
 }, 1);

@@ -6,8 +6,8 @@
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-content-placeholder-pending/tags/card/index.marko_3*content"
     }
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-placeholder-pending/template.marko_0_input_note#4/subscribers": "input_note",
-  "PatchMarkedWrite:input_note": "y"
+  "PatchMarkedWrite:input_note": "y",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-placeholder-pending/template.marko_0_input_note#4/subscribers": "input_note"
 }
 {
   "PatchChild:#childScope/0": {

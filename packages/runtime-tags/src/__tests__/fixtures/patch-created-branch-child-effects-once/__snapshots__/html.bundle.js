@@ -139,7 +139,6 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 3), 1, 0, 0, ["a6"], $scope0_reason, 3);
 	_script($scope0_id, "a22");
-	$fg__input_items4 && _patch_subscribers($scope0_id, "a23", "g");
 	$fg__input_items4 && $cg__input_show && _patch_render($scope0_id, "a19", "g");
 	$fg__input_nested && $cg__input_show && _patch_render($scope0_id, "a20", "h");
 	$fg__input_tag && $cg__input_show && _patch_render($scope0_id, "a21", "i");
@@ -149,5 +148,5 @@ var template_default = _template("a", (input) => {
 		i: ($ui__input_show || _unfilled_if($scope0_reason, 6)) && input.tag,
 		j: count,
 		k: $wi__input_items && $input_items__closures
-	}) || ($fg__input_items4 && (_client_branch_if("a4", $scope0_id) || _unfilled_if($scope0_reason, 1)) && _patch_write($scope0_id, "xg", input.items, !$sg__input_items), $fg__input_nested && $ui__input_show && _patch_write($scope0_id, "xh", input.nested, !_server_guard($scope0_reason, 5)), $fg__input_tag && $ui__input_show && _patch_write($scope0_id, "xi", input.tag, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_items4 && (_client_branch_if("a4", $scope0_id) || _unfilled_if($scope0_reason, 1)) && _patch_write($scope0_id, "xg", input.items, !$sg__input_items) && _patch_subscribers($scope0_id, "a23", "g"), $fg__input_nested && $ui__input_show && _patch_write($scope0_id, "xh", input.nested, !_server_guard($scope0_reason, 5)), $fg__input_tag && $ui__input_show && _patch_write($scope0_id, "xi", input.tag, !_server_guard($scope0_reason, 6)));
 }, 1);

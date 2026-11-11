@@ -23,7 +23,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1], ["#childScope/1>", $setup$1])};${/*@__PURE__*/ ((_w0, _w1) => `D/${_w0}&/${_w1}&l`)("D%l", "D%l")};${/*@__PURE__*/ ((_w0, _w1) => `<main>${_w0}${_w1}</main>`)($template$1, $template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $a__closures = new Set();
@@ -70,7 +70,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_html(`<button class=a>a</button>${_el_mark($scope0_id, "#button/1")}<button class=b>b</button>${_el_mark($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$fg__input_label && _client_guard($scope0_reason, 0) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#6/subscribers", "input_label");
 	_scope($scope0_id, {
 		input_label: input.label,
 		a,
@@ -82,5 +81,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_label: ["input.label"],
 		a: "1:6",
 		b: "2:6"
-	}) || $fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1)) && _client_guard($scope0_reason, 0) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#6/subscribers", "input_label");
 }, 1);

@@ -7,8 +7,8 @@
   cAb: {
     ta: "b"
   },
-  Sa5: "f",
-  xf: "b"
+  xf: "b",
+  Sa5: "f"
 }
 
 // PATCH
@@ -19,8 +19,8 @@
   cAb: {
     ta: "c"
   },
-  Sa5: "f",
-  xf: "c"
+  xf: "c",
+  Sa5: "f"
 }
 
 // PATCH
@@ -32,6 +32,6 @@
   cAb: {
     ta: "d"
   },
-  Sa5: "f",
-  xf: "d"
+  xf: "d",
+  Sa5: "f"
 }

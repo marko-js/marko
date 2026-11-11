@@ -10,7 +10,7 @@ _shells({
 	"__tests__/tags/wrapper.marko": "__tests__/tags/wrapper.marko;b%;<!><!><!>"
 });
 var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_fallback = _write_guard($scope0_reason, 0), $cg__input_fallback = _client_guard($scope0_reason, 0), $cg__input_fail = _client_guard($scope0_reason, 1), $fg__input_fallback = _filled_guard($scope0_reason, 0), $wi__input_fallback = _write_if($scope0_reason, 0), $wi__input_fail = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_fallback = _write_guard($scope0_reason, 0), $cg__input_fallback = _client_guard($scope0_reason, 0), $cg__input_fail = _client_guard($scope0_reason, 1), $wi__input_fallback = _write_if($scope0_reason, 0), $wi__input_fail = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_fallback__closures = new Set();
 	const $input_fail__closures = new Set();
@@ -27,12 +27,11 @@ var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 		$cg__input_fallback && _patch_render($scope1_id, "__tests__/tags/wrapper.marko_1_input_fallback#0:3/subscribe");
 		_subscribe($wi__input_fallback && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/wrapper.marko", "6:4"), $cg__input_fallback && "__tests__/tags/wrapper.marko_1_input_fallback#0:3/subscribe", $wg__input_fallback);
 	}, 0, "__tests__/tags/wrapper.marko_1*content", "__tests__/tags/wrapper.marko_2*content", 1);
-	$fg__input_fallback && _patch_subscribers($scope0_id, "__tests__/tags/wrapper.marko_0_input_fallback#3/subscribers", "input_fallback");
 	_scope($scope0_id, {
 		input_fallback: input.fallback,
 		"ClosureScopes:input_fallback/5": $wi__input_fallback && $input_fallback__closures,
 		"ClosureScopes:input_fail/6": $wi__input_fail && _unfilled_if($scope0_reason, 1) && $input_fail__closures
-	}, "__tests__/tags/wrapper.marko", 0, { input_fallback: ["input.fallback"] }) || $fg__input_fallback && _patch_write($scope0_id, "PatchMarkedWrite:input_fallback", input.fallback, !_server_guard($scope0_reason, 0));
+	}, "__tests__/tags/wrapper.marko", 0, { input_fallback: ["input.fallback"] }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_fallback", input.fallback, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "__tests__/tags/wrapper.marko_0_input_fallback#3/subscribers", "input_fallback");
 });
 
 // tags/panel.marko
@@ -44,7 +43,7 @@ _shells({
 	"__tests__/tags/panel.marko": `__tests__/tags/panel.marko${_shell_marker($setup$1)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$2)}`
 });
 var panel_default = _template("__tests__/tags/panel.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_a = _filled_guard($scope0_reason, 2), $fg__input_b = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	const $input_b__closures = new Set();
@@ -63,8 +62,6 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		}, $scope0_id) })
 	});
 	_patch_child_end();
-	$fg__input_a && _patch_subscribers($scope0_id, "__tests__/tags/panel.marko_0_input_a#4/subscribers", "input_a");
-	$fg__input_b && _patch_subscribers($scope0_id, "__tests__/tags/panel.marko_0_input_b#5/subscribers", "input_b");
 	_scope($scope0_id, {
 		input_a: input.a,
 		input_b: input.b,
@@ -74,7 +71,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	}, "__tests__/tags/panel.marko", 0, {
 		input_a: ["input.a"],
 		input_b: ["input.b"]
-	}) || ($fg__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 2)), $fg__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope0_reason, 3)));
+	}) || (_filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "__tests__/tags/panel.marko_0_input_a#4/subscribers", "input_a"), _filled_guard($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope0_reason, 3)) && _patch_subscribers($scope0_id, "__tests__/tags/panel.marko_0_input_b#5/subscribers", "input_b"));
 });
 
 // template.marko

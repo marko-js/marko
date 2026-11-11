@@ -7,7 +7,6 @@
       ta: "b"
     }
   },
-  Sa3: "h",
   ia4: "f",
   xf: {
     a: "a0",
@@ -29,7 +28,6 @@
     },
     de: "^a0"
   },
-  Sa3: "h",
   ia4: "f",
   xf: {
     a: "a0",
@@ -37,6 +35,7 @@
     id: "__tests__/template.marko_1*content",
     owner: 99
   },
-  xh: "c"
+  xh: "c",
+  Sa3: "h"
 }
 ;CwY

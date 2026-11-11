@@ -13,8 +13,8 @@
       Sa5: 0
     }
   }, "a4"],
-  Sa8: "f",
-  xf: "b"
+  xf: "b",
+  Sa8: "f"
 }
 ;CQo
 
@@ -27,8 +27,8 @@
       Sa5: 0
     }
   }, "a4"],
-  Sa8: "f",
-  xf: ""
+  xf: "",
+  Sa8: "f"
 }
 
 // PATCH holding CQo
@@ -45,6 +45,6 @@
       Sa5: 0
     }
   }, "a4"],
-  Sa8: "f",
-  xf: "c"
+  xf: "c",
+  Sa8: "f"
 }

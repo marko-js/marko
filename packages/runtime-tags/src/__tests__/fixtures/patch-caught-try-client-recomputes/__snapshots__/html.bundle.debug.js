@@ -33,7 +33,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko;b%b%;<!><!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $uf__input_label = _updates_from($scope0_reason, 1), $cg__input_label = _client_guard($scope0_reason, 1), $cg__input_count = _client_guard($scope0_reason, 2), $cg__input_early = _client_guard($scope0_reason, 3), $uf__input_label__OR__input_count = _updates_from($scope0_reason, 0), $uf__input_count = _updates_from($scope0_reason, 2), $cg__input_late = _client_guard($scope0_reason, 4), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_count = _filled_guard($scope0_reason, 2), $wi__input_label = _write_if($scope0_reason, 1), $wi__input_count = _write_if($scope0_reason, 2), $wi__input_early = _write_if($scope0_reason, 3), $wi__input_late = _write_if($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $uf__input_label = _updates_from($scope0_reason, 1), $cg__input_label = _client_guard($scope0_reason, 1), $cg__input_count = _client_guard($scope0_reason, 2), $cg__input_early = _client_guard($scope0_reason, 3), $uf__input_label__OR__input_count = _updates_from($scope0_reason, 0), $uf__input_count = _updates_from($scope0_reason, 2), $cg__input_late = _client_guard($scope0_reason, 4), $wi__input_label = _write_if($scope0_reason, 1), $wi__input_count = _write_if($scope0_reason, 2), $wi__input_early = _write_if($scope0_reason, 3), $wi__input_late = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $input_count__closures = new Set();
@@ -99,8 +99,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"ClosureSignalIndex:input_count/9": $wi__input_count && 1
 		}, "__tests__/template.marko", "14:4", { err_message: ["err.message", "14:11"] }), $cg__input_label && "__tests__/template.marko_3_input_label#0:4/subscribe"), $cg__input_count && "__tests__/template.marko_3_input_count#0:5/subscribe");
 	}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_4*content", 1, 1, 1);
-	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#4/subscribers", "input_label");
-	$fg__input_count && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_count#5/subscribers", "input_count");
 	_scope($scope0_id, {
 		input_label: input.label,
 		input_count: input.count,
@@ -111,5 +109,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_label: ["input.label"],
 		input_count: ["input.count"]
-	}) || ($fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1)), $fg__input_count && _patch_write($scope0_id, "PatchMarkedWrite:input_count", input.count, !_server_guard($scope0_reason, 2)));
+	}) || (_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#4/subscribers", "input_label"), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_count", input.count, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_count#5/subscribers", "input_count"));
 }, 1);

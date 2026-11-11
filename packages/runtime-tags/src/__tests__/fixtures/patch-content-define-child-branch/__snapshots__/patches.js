@@ -8,8 +8,7 @@
         ta: "y"
       }
     }, "a0"]
-  },
-  Sa5: "e"
+  }
 }
 ;BwY
 
@@ -22,16 +21,14 @@
         ta: "z"
       }
     }, "a0"]
-  },
-  Sa5: "e"
+  }
 }
 
 // PATCH holding BwY
 {
   ca: {
     ba: 0
-  },
-  Sa5: "e"
+  }
 }
 
 // PATCH holding BwY
@@ -43,6 +40,5 @@
         ta: "v"
       }
     }, "a0"]
-  },
-  Sa5: "e"
+  }
 }

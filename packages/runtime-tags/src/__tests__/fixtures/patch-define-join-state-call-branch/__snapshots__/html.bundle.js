@@ -10,7 +10,7 @@ _shells({
 	b3: "b3;D ;<p> </p>"
 });
 var panel_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_a__OR__input_b = _write_if($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wi__input_a__OR__input_b = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	const $input_b__closures = /* @__PURE__ */ new Set();
@@ -41,8 +41,6 @@ var panel_default = _template("b", (input) => {
 	_patch_child_end();
 	_html(`<button class=t>t</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "b5");
-	$fg__input_a && _patch_subscribers($scope0_id, "b6", "f");
-	$fg__input_b && _patch_subscribers($scope0_id, "b7", "g");
 	_patch_fill($scope0_id, "vb8", t, 1);
 	_scope($scope0_id, {
 		f: input.a,
@@ -52,7 +50,7 @@ var panel_default = _template("b", (input) => {
 		k: _write_if($scope0_reason, 2) && $input_b__closures,
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2)
-	}) || ($fg__input_a && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 1)), $fg__input_b && _patch_write($scope0_id, "xg", input.b, !_server_guard($scope0_reason, 2)));
+	}) || (_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "b6", "f"), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "xg", input.b, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "b7", "g"));
 });
 
 // template.marko

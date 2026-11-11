@@ -58,7 +58,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const D = { content: _content("__tests__/template.marko_1*content", ({ label, prev }) => {
 		const $scope1_id = _scope_id(), $ui__input_on = _unfilled_if($scope0_reason, 0);
 		const $D_content__label__closures = new Set();
-		const $scope1_reason = _scope_reason(), $scope1_page = _page_render(), $cg__label = _client_guard($scope1_reason, 1), $wg__prev = _write_guard($scope1_reason, 2), $fg__label = _filled_guard($scope1_reason, 1), $fg__prev = _filled_guard($scope1_reason, 2), $wi__label = _write_if($scope1_reason, 1);
+		const $scope1_reason = _scope_reason(), $scope1_page = _page_render(), $cg__label = _client_guard($scope1_reason, 1), $wg__prev = _write_guard($scope1_reason, 2), $fg__prev = _filled_guard($scope1_reason, 2), $wi__label = _write_if($scope1_reason, 1);
 		const X = { content: _content_resume("__tests__/template.marko_2*content", () => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason();
@@ -70,7 +70,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/1", input.on ? keeper_default : plain_default, { content: prev }, 9, 0, 0, $wg__input_on || $wg__prev, $uf__input_on << 1, 0, 0, void 0, 0, 0, "__tests__/template.marko_2*content");
 		const $return = X;
 		$ui__input_on && _patch_write($scope1_id, "PatchWrite:X", X, 1);
-		$fg__label && _patch_subscribers($scope1_id, "__tests__/template.marko_1_label#4/subscribers", "label");
 		_patch_render($scope1_id, "__tests__/template.marko_1_input_on#0:5_prev#5/setup", ((_filled_guard($scope0_reason, 0) ? " >input_on" : "") + ($fg__prev ? " prev" : "")).slice(1), $uf__input_on << 1, 0);
 		($wi__input_on || _write_if($scope1_reason, 0)) && _subscribe(_unfilled_if($uf__input_on << 1, 0) && $wi__input_on && $input_on__closures, _scope($scope1_id, {
 			label: ($ui__input_on || _unfilled_if($scope1_reason, 1)) && label,
@@ -82,7 +81,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			label: "3:13",
 			prev: "3:20",
 			X: "4:11"
-		}), _client_guard($uf__input_on << 1, 0) && "__tests__/template.marko_1_input_on#0:5/subscribe", $wg__input_on || $wg__prev || $wg__input_on) || ($fg__label && (_client_branch_if("__tests__/template.marko_2*content", $scope1_id) || _client_guard($scope0_reason, 0) || $ui__input_on) && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !_server_guard($scope1_reason, 1)), $fg__prev && $ui__input_on && _patch_write($scope1_id, "PatchMarkedWrite:prev", prev, 1));
+		}), _client_guard($uf__input_on << 1, 0) && "__tests__/template.marko_1_input_on#0:5/subscribe", $wg__input_on || $wg__prev || $wg__input_on) || (_filled_guard($scope1_reason, 1) && (_client_branch_if("__tests__/template.marko_2*content", $scope1_id) || _client_guard($scope0_reason, 0) || $ui__input_on) && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !_server_guard($scope1_reason, 1)) && _patch_subscribers($scope1_id, "__tests__/template.marko_1_label#4/subscribers", "label"), $fg__prev && $ui__input_on && _patch_write($scope1_id, "PatchMarkedWrite:prev", prev, 1));
 		return $return;
 	}, $scope0_id) };
 	_html("<main>");

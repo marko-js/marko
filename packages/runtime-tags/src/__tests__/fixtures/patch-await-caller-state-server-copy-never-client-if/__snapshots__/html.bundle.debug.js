@@ -12,7 +12,7 @@ _shells({
 	"__tests__/tags/show-await.marko_2*shell": "__tests__/tags/show-await.marko_2*shell; bD%c%c%;<style></style><b class=b><!>:<!>:<!></b>"
 });
 var show_await_default = _template("__tests__/tags/show-await.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $ui__input_promise = _unfilled_if($scope0_reason, 1), $ui__input_label = _unfilled_if($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 2), $cg__input_promise = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $ui__input_promise = _unfilled_if($scope0_reason, 1), $ui__input_label = _unfilled_if($scope0_reason, 2), $cg__input_promise = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	_await($scope0_id, "#text/0", input.promise, (x) => {
@@ -31,11 +31,10 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 		}, $scope1_id, "#text/1", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/tags/show-await.marko_2*shell"], $scope0_reason, 1);
 		_scope($scope1_id, {}, "__tests__/tags/show-await.marko", "1:2");
 	}, 1, "__tests__/tags/show-await.marko_1*content", $ui__input_promise && 2, 1);
-	$fg__input_label && $cg__input_promise && _patch_subscribers($scope0_id, "__tests__/tags/show-await.marko_0_input_label#4/subscribers", "input_label");
 	_scope($scope0_id, {
 		input_label: ($ui__input_promise || $ui__input_label) && input.label,
 		"ClosureScopes:input_label/5": _write_if($scope0_reason, 2) && ($ui__input_label || $ui__input_promise) && $input_label__closures
-	}, "__tests__/tags/show-await.marko", 0, { input_label: ["input.label"] }) || $fg__input_label && $ui__input_promise && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 2));
+	}, "__tests__/tags/show-await.marko", 0, { input_label: ["input.label"] }) || _filled_guard($scope0_reason, 2) && $ui__input_promise && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 2)) && $cg__input_promise && _patch_subscribers($scope0_id, "__tests__/tags/show-await.marko_0_input_label#4/subscribers", "input_label");
 });
 
 // template.marko

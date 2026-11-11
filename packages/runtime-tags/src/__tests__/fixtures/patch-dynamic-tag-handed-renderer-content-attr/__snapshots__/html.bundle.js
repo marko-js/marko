@@ -45,7 +45,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_y = _client_guard($scope0_reason, 2), $scope0_page = _page_render(), $uf__input_x = _updates_from($scope0_reason, 1), $ui__input_x = _unfilled_if($scope0_reason, 1), $fg__input_y = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_y = _client_guard($scope0_reason, 2), $scope0_page = _page_render(), $uf__input_x = _updates_from($scope0_reason, 1), $ui__input_x = _unfilled_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_y__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason($uf__input_x << 3 | $uf__input_x << 5 | $uf__input_x << 7 | $uf__input_x << 13);
@@ -62,10 +62,9 @@ var template_default = _template("a", (input) => {
 		}, $scope0_id, ($scope) => $scope0_page ? [{ e: input.y }] : [])
 	});
 	_patch_child_end();
-	$fg__input_y && _patch_subscribers($scope0_id, "a2", "e");
 	_scope($scope0_id, {
 		e: ($ui__input_x || _unfilled_if($scope0_reason, 2)) && input.y,
 		f: _write_if($scope0_reason, 2) && $input_y__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_y && (_client_branch_if("a1", $scope0_id) || _client_guard($scope0_reason, 1) || $ui__input_x) && _patch_write($scope0_id, "xe", input.y, !_server_guard($scope0_reason, 2));
+	}) || _filled_guard($scope0_reason, 2) && (_client_branch_if("a1", $scope0_id) || _client_guard($scope0_reason, 1) || $ui__input_x) && _patch_write($scope0_id, "xe", input.y, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "a2", "e");
 }, 1);

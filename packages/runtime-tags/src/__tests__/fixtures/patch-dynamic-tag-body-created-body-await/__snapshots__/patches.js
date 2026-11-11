@@ -9,8 +9,6 @@
     },
     de: "^a3"
   },
-  Sa5: "e",
-  Sa6: "f",
   xe: (p => p = new Promise((f, r) => _.a = {
     f,
     r(e) {
@@ -18,7 +16,9 @@
       r(e)
     }
   }))(),
-  xf: "b"
+  Sa5: "e",
+  xf: "b",
+  Sa6: "f"
 }
 (_.a.f("y"), 0)
 ;Cxg
@@ -33,8 +33,6 @@
     },
     de: "^a3"
   },
-  Sa5: "e",
-  Sa6: "f",
   xe: (p => p = new Promise((f, r) => _.a = {
     f,
     r(e) {
@@ -42,6 +40,8 @@
       r(e)
     }
   }))(),
-  xf: "c"
+  Sa5: "e",
+  xf: "c",
+  Sa6: "f"
 }
 (_.a.f("z"), 0)

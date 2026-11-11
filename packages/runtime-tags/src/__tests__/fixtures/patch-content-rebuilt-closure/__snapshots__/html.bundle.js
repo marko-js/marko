@@ -26,7 +26,7 @@ _shells({
 	b0: "b0,<span>shown</span>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_items__OR__input_show = _write_if($scope0_reason, 0), $ui__input_items = _unfilled_if($scope0_reason, 1), $fg__input_show = _filled_guard($scope0_reason, 2), $wi__input_show = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_items__OR__input_show = _write_if($scope0_reason, 0), $ui__input_items = _unfilled_if($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
@@ -49,12 +49,11 @@ var child_default = _template("b", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	list_default({ item: $item });
 	_patch_child_end();
-	$fg__input_show && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "b3", "e");
 	_scope($scope0_id, {
 		e: ($ui__input_items || _unfilled_if($scope0_reason, 2)) && input.show,
 		f: $wi__input_show && $input_show__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_show && $ui__input_items && _patch_write($scope0_id, "xe", input.show, !_server_guard($scope0_reason, 2));
+	}) || _filled_guard($scope0_reason, 2) && $ui__input_items && _patch_write($scope0_id, "xe", input.show, !_server_guard($scope0_reason, 2)) && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "b3", "e");
 });
 
 // template.marko

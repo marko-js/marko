@@ -8,8 +8,8 @@
       }, "a2"]
     }
   },
-  Sa9: "g",
-  xg: "b"
+  xg: "b",
+  Sa9: "g"
 }
 ;CAI
 
@@ -20,8 +20,8 @@
       ba: 0
     }
   },
-  Sa9: "g",
-  xg: "a"
+  xg: "a",
+  Sa9: "g"
 }
 
 // PATCH holding CAI
@@ -33,8 +33,8 @@
       }, "a2"]
     }
   },
-  Sa9: "g",
-  xg: $
+  xg: $,
+  Sa9: "g"
 }
 
 // PATCH holding CAI
@@ -45,7 +45,7 @@
       ba: "a1"
     }
   },
-  Sa9: "g",
-  xg: "a"
+  xg: "a",
+  Sa9: "g"
 }
 ;CQY

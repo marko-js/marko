@@ -8,7 +8,7 @@ _shells({
 	a: "a;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_msg = _client_guard($scope0_reason, 1), $ui__input_msg__OR__input_fail = _unfilled_if($scope0_reason, 0), $ui__input_msg = _unfilled_if($scope0_reason, 1), $fg__input_msg = _filled_guard($scope0_reason, 1), $wi__input_msg = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_msg = _client_guard($scope0_reason, 1), $ui__input_msg__OR__input_fail = _unfilled_if($scope0_reason, 0), $ui__input_msg = _unfilled_if($scope0_reason, 1), $wi__input_msg = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_msg__closures = /* @__PURE__ */ new Set();
 	const $input_fail__closures = /* @__PURE__ */ new Set();
@@ -30,11 +30,10 @@ var template_default = _template("a", (input) => {
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a0", $cg__input_msg);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_msg__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_msg && "a0");
 	}, 0, "a4", "a5", 1, 1, 1);
-	$fg__input_msg && _patch_subscribers($scope0_id, "a6", "d");
 	_scope($scope0_id, {
 		d: input.msg,
 		e: ($ui__input_msg || $ui__input_msg__OR__input_fail) && input.fail,
 		f: $wi__input_msg && $input_msg__closures,
 		g: _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || $ui__input_msg__OR__input_fail) && $input_fail__closures
-	}) || ($fg__input_msg && _patch_write($scope0_id, "xd", input.msg, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && $ui__input_msg && _patch_write($scope0_id, "xe", input.fail, !_server_guard($scope0_reason, 2)));
+	}) || (_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xd", input.msg, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a6", "d"), _filled_guard($scope0_reason, 2) && $ui__input_msg && _patch_write($scope0_id, "xe", input.fail, !_server_guard($scope0_reason, 2)));
 }, 1);

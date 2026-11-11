@@ -4,7 +4,7 @@ _shells({
 	a: "a !a2 a3 a4;D b b D ;<main><div></div><section></section><button> </button></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	let count = 0;
@@ -26,11 +26,10 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a2");
 	_script($scope0_id, "a3");
 	_script($scope0_id, "a4");
-	$fg__input_title && _patch_subscribers($scope0_id, "a5", "g");
 	_scope($scope0_id, {
 		g: input.title,
 		i: count,
 		j: _unfilled_if($scope0_reason, 1) && extra,
 		l: _write_if($scope0_reason, 0) && $input_title__closures
-	}) || $fg__input_title && _patch_write($scope0_id, "xg", input.title, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.title, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "a5", "g");
 }, 1);

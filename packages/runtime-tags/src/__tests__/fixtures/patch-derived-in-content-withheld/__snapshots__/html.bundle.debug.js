@@ -54,10 +54,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/0", 1);
 	wrapper_default({ content: _content("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
-		const $scope1_id = _scope_id(), $fg__input_label = _filled_guard($scope0_reason, 0);
+		const $scope1_id = _scope_id();
 		const $wrapper_content__label__closures = new Set();
 		const label = input.label;
-		$fg__input_label && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !_server_guard($scope0_reason, 0));
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope1_id, "__tests__/template.marko_1_label#1/subscribers", "label");
 		_set_scope_reason(10);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		toggle_default({
@@ -71,7 +71,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, $scope1_id)
 		});
 		_patch_child_end();
-		$fg__input_label && _patch_subscribers($scope1_id, "__tests__/template.marko_1_label#1/subscribers", "label");
 		_subscribe($open__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			label,
 			_: _scope_with_id($scope0_id),

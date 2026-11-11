@@ -12,9 +12,8 @@
       }
     }
   },
-  Sa8: "e",
-  Sa9: "f",
-  xe: "a2"
+  xe: "a2",
+  Sa8: "e"
 }
 ;BAE
 
@@ -31,9 +30,8 @@
       }
     }
   },
-  Sa8: "e",
-  Sa9: "f",
-  xe: "a2"
+  xe: "a2",
+  Sa8: "e"
 }
 
 // PATCH holding BAE
@@ -47,7 +45,6 @@
       va7: 0
     }
   },
-  Sa8: "e",
-  Sa9: "f",
-  xe: "a3"
+  xe: "a3",
+  Sa8: "e"
 }

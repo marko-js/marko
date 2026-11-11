@@ -14,8 +14,8 @@
             },
             "PatchBind:input_content": _.e = "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-closure-loop/tags/heading.marko_2*content"
           },
-          "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-closure-loop/tags/heading.marko_1_i#1/subscribers": "i",
-          "PatchMarkedWrite:i": 0
+          "PatchMarkedWrite:i": 0,
+          "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-closure-loop/tags/heading.marko_1_i#1/subscribers": "i"
         }
       }, {
         "PatchDynamicTag:#text/0": _.a,
@@ -28,13 +28,13 @@
             },
             "PatchBind:input_content": _.e
           },
-          "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-closure-loop/tags/heading.marko_1_i#1/subscribers": "i",
-          "PatchMarkedWrite:i": 1
+          "PatchMarkedWrite:i": 1,
+          "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-closure-loop/tags/heading.marko_1_i#1/subscribers": "i"
         }
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-closure-loop/tags/list.marko_1*shell"]
     },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-closure-loop/tags/heading.marko_0_input_n#3/subscribers": "input_n",
-    "PatchMarkedWrite:input_n": 2
+    "PatchMarkedWrite:input_n": 2,
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-closure-loop/tags/heading.marko_0_input_n#3/subscribers": "input_n"
   }
 }
 ;Dy0

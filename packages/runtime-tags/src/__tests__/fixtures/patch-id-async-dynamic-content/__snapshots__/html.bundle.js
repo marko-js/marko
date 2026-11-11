@@ -35,7 +35,7 @@ _shells({
 	a6: "a6;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_items__OR__input_loaded = _write_guard($scope0_reason, 0), $wi__input_items__OR__input_loaded = _write_if($scope0_reason, 0), $ui__input_items2 = _unfilled_if($scope0_reason, 1), $ui__input_items__OR__input_loaded = _unfilled_if($scope0_reason, 0), $fg__input_loaded = _filled_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_items__OR__input_loaded = _write_guard($scope0_reason, 0), $wi__input_items__OR__input_loaded = _write_if($scope0_reason, 0), $ui__input_items2 = _unfilled_if($scope0_reason, 1), $ui__input_items__OR__input_loaded = _unfilled_if($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_loaded__closures = /* @__PURE__ */ new Set();
 	_for_of(input.items, (item) => {
@@ -84,9 +84,8 @@ var template_default = _template("a", (input) => {
 			g: _write_if($scope0_reason, 1) && (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && $for_content__item_promise__closures
 		});
 	}, "key", $scope0_id, "a", 1, 1, 1, 0, 0, "a6", $scope0_reason, 1);
-	$fg__input_loaded && $cg__input_items && _patch_subscribers($scope0_id, "a9", "e");
 	_scope($scope0_id, {
 		e: ($ui__input_items2 || $ui__input_items__OR__input_loaded) && input.loaded,
 		f: _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || $ui__input_items__OR__input_loaded || $ui__input_items2) && $input_loaded__closures
-	}) || $fg__input_loaded && $ui__input_items2 && _patch_write($scope0_id, "xe", input.loaded, !_server_guard($scope0_reason, 2));
+	}) || _filled_guard($scope0_reason, 2) && $ui__input_items2 && _patch_write($scope0_id, "xe", input.loaded, !_server_guard($scope0_reason, 2)) && $cg__input_items && _patch_subscribers($scope0_id, "a9", "e");
 }, 1);

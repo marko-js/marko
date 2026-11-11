@@ -39,7 +39,7 @@ _shells({
 	"__tests__/tags/level.marko_1*shell": `__tests__/tags/level.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks$1)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1)}`
 });
 const $content = (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_n = _write_guard($scope0_reason, 0), $fg__input_n = _filled_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_n = _write_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_n__closures = new Set();
 	const $input_label__closures = new Set();
@@ -74,8 +74,6 @@ const $content = (input) => {
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	keeper_default({ content: input.content });
 	_patch_child_end();
-	$fg__input_n && _patch_subscribers($scope0_id, "__tests__/tags/level.marko_0_input_n#4/subscribers", "input_n");
-	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/tags/level.marko_0_input_label#5/subscribers", "input_label");
 	$fg__input_label && $cg__input_n && _patch_render($scope0_id, "__tests__/tags/level.marko_1_input_label#0:5/setup", "input_label");
 	_scope($scope0_id, {
 		input_n: input.n,
@@ -86,7 +84,7 @@ const $content = (input) => {
 	}, "__tests__/tags/level.marko", 0, {
 		input_n: ["input.n"],
 		input_label: ["input.label"]
-	}) || ($fg__input_n && _patch_write($scope0_id, "PatchMarkedWrite:input_n", input.n, !_server_guard($scope0_reason, 0)), $fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1)));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_n", input.n, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "__tests__/tags/level.marko_0_input_n#4/subscribers", "input_n"), $fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "__tests__/tags/level.marko_0_input_label#5/subscribers", "input_label"));
 };
 var level_default = _template("__tests__/tags/level.marko", $content);
 

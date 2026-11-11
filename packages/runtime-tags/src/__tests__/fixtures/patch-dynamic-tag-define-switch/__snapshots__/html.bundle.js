@@ -32,7 +32,6 @@ var template_default = _template("a", (input) => {
 		}), $cg__input_label && "a5");
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", input.which ? Counter : Other, { label: input.label }, 1, 0, 0, $wg__input_label__OR__input_which, $scope0_reason, 0);
-	$fg__input_label && _patch_subscribers($scope0_id, "a6", "d");
 	_patch_render($scope0_id, "a7", (($fg__input_label ? " d" : "") + ($fg__input_which ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_which || $ui__input_label__OR__input_which || $ui__input_label) && input.label,
@@ -40,5 +39,5 @@ var template_default = _template("a", (input) => {
 		f: $ui__input_label__OR__input_which && Counter,
 		g: $ui__input_label__OR__input_which && Other,
 		i: $wi__input_label && $input_label__closures
-	}) || ($fg__input_label && $ui__input_which && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 1)), $fg__input_which && $ui__input_label && _patch_write($scope0_id, "xe", input.which, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_label && $ui__input_which && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a6", "d"), $fg__input_which && $ui__input_label && _patch_write($scope0_id, "xe", input.which, !_server_guard($scope0_reason, 2)));
 }, 1);

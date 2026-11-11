@@ -6,7 +6,7 @@ _shells({
 	a3: "a3; ; "
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0), $wg__input_fail = _write_guard($scope0_reason, 1), $cg__input_fail = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0), $fg__input_other = _filled_guard($scope0_reason, 2), $wi__input_fail = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0), $wg__input_fail = _write_guard($scope0_reason, 1), $cg__input_fail = _client_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 0), $wi__input_fail = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_fail__closures = /* @__PURE__ */ new Set();
@@ -66,7 +66,6 @@ var template_default = _template("a", (input) => {
 	}, 8);
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a8");
-	$fg__input_label && _patch_subscribers($scope0_id, "a9", "f");
 	_patch_render($scope0_id, "a10", $fg__input_other && "h", $scope0_reason, 2);
 	_patch_render($scope0_id, "a11", (($fg__input_label ? " f" : "") + ($fg__input_other ? " l" : "")).slice(1));
 	_scope($scope0_id, {
@@ -76,5 +75,5 @@ var template_default = _template("a", (input) => {
 		l: Tag,
 		n: $wi__input_label && $input_label__closures,
 		o: $wi__input_fail && _unfilled_if($scope0_reason, 1) && $input_fail__closures
-	}) || ($fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 0)), $fg__input_other && _patch_write($scope0_id, "xl", Tag, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "a9", "f"), $fg__input_other && _patch_write($scope0_id, "xl", Tag, !_server_guard($scope0_reason, 2)));
 }, 1);

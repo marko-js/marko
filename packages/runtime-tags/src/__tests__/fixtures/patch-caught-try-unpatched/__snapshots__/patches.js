@@ -1,15 +1,15 @@
 // PATCH
 {
-  Sa5: "e",
-  Sa6: "f",
   xe: "b",
-  xf: $
+  Sa5: "e",
+  xf: $,
+  Sa6: "f"
 }
 
 // PATCH
 {
-  Sa5: "e",
-  Sa6: "f",
   xe: "c",
-  xf: !0
+  Sa5: "e",
+  xf: !0,
+  Sa6: "f"
 }

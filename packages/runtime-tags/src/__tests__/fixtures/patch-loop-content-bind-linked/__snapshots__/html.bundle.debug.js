@@ -47,10 +47,10 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1);
 const $setup = _shell_setup([[], []], ["#childScope/0>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `/${_w0}&b`)($walks$1)};${((_w0) => `${_w0}<!>`)($template$1)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 0), $fg__input_note = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
-	$fg__input_note && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 0));
+	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#3/subscribers", "input_note");
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3);
 	let $item;
 	forOf(input.labels, (label) => $item = attrTags($item, { content: _content_resume("__tests__/template.marko_1*content", () => {
@@ -68,7 +68,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		item: $item
 	});
 	_patch_child_end();
-	$fg__input_note && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#3/subscribers", "input_note");
 	_scope($scope0_id, {
 		input_note: input.note,
 		"ClosureScopes:input_note/5": _write_if($scope0_reason, 0) && $input_note__closures,

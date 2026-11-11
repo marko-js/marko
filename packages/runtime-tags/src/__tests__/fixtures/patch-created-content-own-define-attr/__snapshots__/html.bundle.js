@@ -23,7 +23,7 @@ _shells({
 	a5: `a5${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 3), $wg__input_tag = _write_guard($scope0_reason, 4), $cg__input_tag = _client_guard($scope0_reason, 4), $wi__input_label__OR__input_tag__OR__input_show = _write_if($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 5), $ui__input_show = _unfilled_if($scope0_reason, 5), $fg__input_label = _filled_guard($scope0_reason, 3), $fg__input_tag = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 3), $wg__input_tag = _write_guard($scope0_reason, 4), $cg__input_tag = _client_guard($scope0_reason, 4), $wi__input_label__OR__input_tag__OR__input_show = _write_if($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 5), $ui__input_show = _unfilled_if($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_tag__closures = /* @__PURE__ */ new Set();
@@ -60,13 +60,11 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a5"], $scope0_reason, 5);
-	$fg__input_label && _patch_subscribers($scope0_id, "a6", "d");
-	$fg__input_tag && _patch_subscribers($scope0_id, "a7", "e");
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.label,
 		e: ($ui__input_show || _unfilled_if($scope0_reason, 4)) && input.tag,
 		h: $ui__input_show && Body.content,
 		i: _write_if($scope0_reason, 3) && $input_label__closures,
 		j: _write_if($scope0_reason, 4) && $input_tag__closures
-	}) || ($fg__input_label && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 3)), $fg__input_tag && _patch_write($scope0_id, "xe", input.tag, !_server_guard($scope0_reason, 4)));
+	}) || (_filled_guard($scope0_reason, 3) && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 3)) && _patch_subscribers($scope0_id, "a6", "d"), _filled_guard($scope0_reason, 4) && _patch_write($scope0_id, "xe", input.tag, !_server_guard($scope0_reason, 4)) && _patch_subscribers($scope0_id, "a7", "e"));
 }, 1);

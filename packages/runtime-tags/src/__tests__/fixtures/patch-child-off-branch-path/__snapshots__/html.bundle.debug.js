@@ -47,7 +47,7 @@ _shells({
 	"__tests__/tags/card.marko": "__tests__/tags/card.marko;b%b%;<!><!><!><!>"
 });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0), $wi__input_slow = _write_if($scope0_reason, 1), $uf__input_label = _updates_from($scope0_reason, 0), $wg__input_other = _write_guard($scope0_reason, 2), $wi__input_other = _write_if($scope0_reason, 2), $cg__input_other = _client_guard($scope0_reason, 2), $wg__input_label = _write_guard($scope0_reason, 0), $wi__input_failing = _write_if($scope0_reason, 3), $fg__input_label = _filled_guard($scope0_reason, 0), $fg__input_other = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0), $wi__input_slow = _write_if($scope0_reason, 1), $uf__input_label = _updates_from($scope0_reason, 0), $wg__input_other = _write_guard($scope0_reason, 2), $wi__input_other = _write_if($scope0_reason, 2), $cg__input_other = _client_guard($scope0_reason, 2), $wg__input_label = _write_guard($scope0_reason, 0), $wi__input_failing = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $input_slow__closures = new Set();
@@ -110,8 +110,6 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		}, "__tests__/tags/card.marko", "13:4"), $cg__input_label && "__tests__/tags/card.marko_3_input_label#0:4/subscribe", 0), $cg__input_other && "__tests__/tags/card.marko_3_input_other#0:6/subscribe", 0);
 		($wg__input_label || $wg__input_other) && _resume_branch($scope3_id);
 	}, 0, "__tests__/tags/card.marko_3*content", "__tests__/tags/card.marko_4*content", 1);
-	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/tags/card.marko_0_input_label#4/subscribers", "input_label");
-	$fg__input_other && _patch_subscribers($scope0_id, "__tests__/tags/card.marko_0_input_other#6/subscribers", "input_other");
 	_scope($scope0_id, {
 		input_label: input.label,
 		input_other: input.other,
@@ -122,7 +120,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	}, "__tests__/tags/card.marko", 0, {
 		input_label: ["input.label"],
 		input_other: ["input.other"]
-	}) || ($fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 0)), $fg__input_other && _patch_write($scope0_id, "PatchMarkedWrite:input_other", input.other, !_server_guard($scope0_reason, 2)));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "__tests__/tags/card.marko_0_input_label#4/subscribers", "input_label"), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_other", input.other, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "__tests__/tags/card.marko_0_input_other#6/subscribers", "input_other"));
 });
 
 // template.marko
@@ -136,7 +134,7 @@ _shells({
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => ` D l%b/${_w0}&b`)($walks$1)};${((_w0) => `<button> </button><!>${_w0}<!>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_slow = _write_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_slow = _write_if($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $n__closures = new Set();
@@ -190,8 +188,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#8", $scope0_id);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#6/subscribers", "input_label");
-	_patch_subscribers($scope0_id, "__tests__/template.marko_0_brand#10/subscribers", "brand");
 	_scope($scope0_id, {
 		input_label: input.label,
 		brand,
@@ -204,5 +200,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_label: ["input.label"],
 		brand: "1:8",
 		n: "2:6"
-	}) || ($fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 0)), _patch_write($scope0_id, "PatchMarkedWrite:brand", brand));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#6/subscribers", "input_label"), _patch_write($scope0_id, "PatchMarkedWrite:brand", brand) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_brand#10/subscribers", "brand"));
 }, 1);

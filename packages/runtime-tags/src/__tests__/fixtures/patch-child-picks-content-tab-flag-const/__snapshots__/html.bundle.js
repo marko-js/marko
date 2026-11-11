@@ -18,7 +18,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => ` b/${_w0}&b`)("b%c")};${((_w0) => `<button class=s>s</button>${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_y = _client_guard($scope0_reason, 2), $ui__input_x = _unfilled_if($scope0_reason, 1), $ui__input_y = _unfilled_if($scope0_reason, 2), $fg__input_y = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_y = _client_guard($scope0_reason, 2), $ui__input_x = _unfilled_if($scope0_reason, 1), $ui__input_y = _unfilled_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_y__closures = /* @__PURE__ */ new Set();
 	const $s__closures = /* @__PURE__ */ new Set();
@@ -46,12 +46,11 @@ var template_default = _template("a", (input) => {
 	}) });
 	_patch_child_end();
 	_script($scope0_id, "a4");
-	$fg__input_y && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "a5", "f");
 	_scope($scope0_id, {
 		f: ($ui__input_x || $ui__input_y) && input.y,
 		g: s,
 		h: _write_if($scope0_reason, 2) && ($ui__input_y || $ui__input_x) && $input_y__closures,
 		i: $s__closures,
 		b: _existing_scope($childScope)
-	}) || $fg__input_y && $ui__input_x && _patch_write($scope0_id, "xf", input.y, !_server_guard($scope0_reason, 2));
+	}) || _filled_guard($scope0_reason, 2) && $ui__input_x && _patch_write($scope0_id, "xf", input.y, !_server_guard($scope0_reason, 2)) && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "a5", "f");
 }, 1);

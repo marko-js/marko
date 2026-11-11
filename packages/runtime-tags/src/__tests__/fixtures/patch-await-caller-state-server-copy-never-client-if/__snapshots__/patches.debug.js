@@ -6,8 +6,8 @@
       "PatchSetup:": {
         "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-server-copy-never-client-if/tags/show-await.marko_1*content"
       },
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-server-copy-never-client-if/tags/show-await.marko_0_input_label#4/subscribers": "input_label",
-      "PatchMarkedWrite:input_label": "b"
+      "PatchMarkedWrite:input_label": "b",
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-server-copy-never-client-if/tags/show-await.marko_0_input_label#4/subscribers": "input_label"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-server-copy-never-client-if/template.marko_1*shell"]
 }

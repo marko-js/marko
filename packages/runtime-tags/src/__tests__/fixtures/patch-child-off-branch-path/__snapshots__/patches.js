@@ -17,7 +17,6 @@
       }
     },
     cAb: 0,
-    Sb15: "g",
     xg: (p => p = new Promise((f, r) => _.a = {
       f,
       r(e) {
@@ -25,12 +24,13 @@
         r(e)
       }
     }))(),
+    Sb15: "g",
     kb: []
   },
-  Sa10: "g",
-  Sa11: "k",
   xg: "b",
-  xk: "bmce!"
+  Sa10: "g",
+  xk: "bmce!",
+  Sa11: "k"
 }
 (_.a.f("o2"), 0)
 
@@ -53,7 +53,6 @@
       }
     },
     cAb: 0,
-    Sb15: "g",
     xg: (p => p = new Promise((f, r) => _.a = {
       f,
       r(e) {
@@ -61,11 +60,12 @@
         r(e)
       }
     }))(),
+    Sb15: "g",
     kb: []
   },
-  Sa10: "g",
-  Sa11: "k",
   xg: "c",
-  xk: "cmce!"
+  Sa10: "g",
+  xk: "cmce!",
+  Sa11: "k"
 }
 (_.a.f("o3"), 0)

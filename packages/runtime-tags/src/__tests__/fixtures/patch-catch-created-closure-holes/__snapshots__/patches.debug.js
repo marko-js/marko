@@ -12,7 +12,7 @@
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-closure-holes/template.marko_1_input_msg#0:3/subscribe": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-closure-holes/template.marko_1*content"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-closure-holes/template.marko_0_input_msg#3/subscribers": "input_msg",
-  "PatchMarkedWrite:input_msg": "b"
+  "PatchMarkedWrite:input_msg": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-closure-holes/template.marko_0_input_msg#3/subscribers": "input_msg"
 }
 ;BgE

@@ -9,7 +9,7 @@ const $setup__script = _script("c1", ($scope) => _on($scope.a, "click", function
 
 // tags/card.marko
 const $xKeeperdiv_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
-const $xKeeperdiv_content__c = /*@__PURE__*/ _closure_get_patch("b1", 6, ($scope) => $xKeeperdiv_content__dynamicTag($scope, $scope._.e), 0, "b2", 0);
+const $xKeeperdiv_content__c = /*@__PURE__*/ _closure_get_patch("b1", 6, ($scope) => $xKeeperdiv_content__dynamicTag($scope, $scope._.e), 0, "b4", 0);
 const $xKeeperdiv_content = _content$1("b0", "<!><!><!>", "b%", $xKeeperdiv_content__c);
 _content_resume($xKeeperdiv_content);
 

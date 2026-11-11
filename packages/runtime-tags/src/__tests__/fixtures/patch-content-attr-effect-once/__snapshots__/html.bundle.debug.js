@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/host.marko": "__tests__/tags/host.marko !__tests__/tags/host.marko_0_extra#4; ;<div></div>"
 });
 var host_default = _template("__tests__/tags/host.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const extra = { content: _content_resume("__tests__/tags/host.marko_1*content", () => {
@@ -23,7 +23,6 @@ var host_default = _template("__tests__/tags/host.marko", (input) => {
 	_html(`</div>${_el_mark($scope0_id, "#div/0", 0)}`);
 	_script($scope0_id, "__tests__/tags/host.marko_0_extra#4");
 	_patch_write($scope0_id, "PatchWrite:extra", extra, 1);
-	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/tags/host.marko_0_input_label#3/subscribers", "input_label");
 	_scope($scope0_id, {
 		input_label: input.label,
 		extra,
@@ -31,7 +30,7 @@ var host_default = _template("__tests__/tags/host.marko", (input) => {
 	}, "__tests__/tags/host.marko", 0, {
 		input_label: ["input.label"],
 		extra: "1:9"
-	}) || $fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "__tests__/tags/host.marko_0_input_label#3/subscribers", "input_label");
 });
 
 // template.marko

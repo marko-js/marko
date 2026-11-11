@@ -15,7 +15,7 @@ a, `b3 >b>!>b>b>a0;D l/b%b/ D%c%l&b&b;<b> </b><!><!><button><!>:<!></button><!><
       }
     }
   }, "b3"],
-  Sb5: "d",
-  xd: "b"
+  xd: "b",
+  Sb5: "d"
 }
 ;CAI

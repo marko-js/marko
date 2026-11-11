@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		const $Info_content__id__closures = new Set();
 		const $Info_content__value__closures = new Set();
-		const $scope2_reason = _scope_reason(), $wg__id = _write_guard($scope2_reason, 0), $wi__id = _write_if($scope2_reason, 0), $cg__id = _client_guard($scope2_reason, 0), $cg__value = _client_guard($scope2_reason, 1), $fg__id = _filled_guard($scope2_reason, 0);
+		const $scope2_reason = _scope_reason(), $wg__id = _write_guard($scope2_reason, 0), $wi__id = _write_if($scope2_reason, 0), $cg__id = _client_guard($scope2_reason, 0), $cg__value = _client_guard($scope2_reason, 1);
 		_try($scope2_id, "#text/0", () => {
 			const $scope3_reason = _scope_reason();
 			const $scope3_id = _scope_id(), $ui__value = _unfilled_if($scope2_reason, 1);
@@ -43,13 +43,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				"ClosureSignalIndex:id/9": $wi__id && 1
 			}, "__tests__/template.marko", "7:6"), $cg__id && "__tests__/template.marko_5_id#2:3/subscribe", $wg__id);
 		}, void 0, "__tests__/template.marko_5*content", void 0, "__tests__/template.marko_3*content");
-		$fg__id && _patch_subscribers($scope2_id, "__tests__/template.marko_2_id#3/subscribers", "id");
 		_scope($scope2_id, {
 			id,
 			_: _scope_with_id($scope0_id),
 			"ClosureScopes:id/9": $wi__id && $Info_content__id__closures,
 			"ClosureScopes:value/10": _write_if($scope2_reason, 1) && (_unfilled_if($scope2_reason, 1) || _unfilled_if($scope0_reason, 1)) && $Info_content__value__closures
-		}, "__tests__/template.marko", "2:2", { id: "2:16" }) || $fg__id && _patch_write($scope2_id, "PatchMarkedWrite:id", id, !_server_guard($scope2_reason, 0));
+		}, "__tests__/template.marko", "2:2", { id: "2:16" }) || _filled_guard($scope2_reason, 0) && _patch_write($scope2_id, "PatchMarkedWrite:id", id, !_server_guard($scope2_reason, 0)) && _patch_subscribers($scope2_id, "__tests__/template.marko_2_id#3/subscribers", "id");
 	}, $scope0_id) };
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();

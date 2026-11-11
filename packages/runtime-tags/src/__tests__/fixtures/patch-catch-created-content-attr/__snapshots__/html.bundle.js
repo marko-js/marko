@@ -10,7 +10,7 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var error_wrapper_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_fallback = _client_guard($scope0_reason, 0), $cg__input_fail = _client_guard($scope0_reason, 1), $fg__input_fallback = _filled_guard($scope0_reason, 0), $wi__input_fail = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_fallback = _client_guard($scope0_reason, 0), $cg__input_fail = _client_guard($scope0_reason, 1), $wi__input_fail = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_fallback__closures = /* @__PURE__ */ new Set();
 	const $input_fail__closures = /* @__PURE__ */ new Set();
@@ -29,12 +29,11 @@ var error_wrapper_default = _template("b", (input) => {
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b0", $cg__input_fallback);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_fallback && "b0");
 	}, 0, "b2", "b3", 1, 1, 1);
-	$fg__input_fallback && _patch_subscribers($scope0_id, "b4", "d");
 	_scope($scope0_id, {
 		d: input.fallback,
 		f: _write_if($scope0_reason, 0) && $input_fallback__closures,
 		g: $wi__input_fail && _unfilled_if($scope0_reason, 1) && $input_fail__closures
-	}) || $fg__input_fallback && _patch_write($scope0_id, "xd", input.fallback, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.fallback, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "b4", "d");
 });
 
 // template.marko
@@ -44,7 +43,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => ` D l/${_w0}&b`)("b%c")};${((_w0) => `<button> </button>${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();
@@ -64,12 +63,11 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_script($scope0_id, "a3");
-	$fg__input_label && _patch_subscribers($scope0_id, "a4", "g");
 	_scope($scope0_id, {
 		g: input.label,
 		h: count,
 		i: _write_if($scope0_reason, 1) && $input_label__closures,
 		j: $count__closures,
 		c: _existing_scope($childScope)
-	}) || $fg__input_label && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a4", "g");
 }, 1);

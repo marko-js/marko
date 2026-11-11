@@ -7,7 +7,7 @@ _shells({
 	a: "a !a6;D%b D ;<main><!><button> </button></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
@@ -33,11 +33,10 @@ var template_default = _template("a", (input) => {
 	}, 0, "a4", "a3", 1, 1, 1);
 	_html(`<button>${_text_mark($scope0_id, "c", n)}</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a6");
-	$fg__input_title && _patch_subscribers($scope0_id, "a7", "f");
 	_scope($scope0_id, {
 		f: input.title,
 		h: n,
 		i: _write_if($scope0_reason, 0) && $input_title__closures,
 		j: $wi__input_promise && _unfilled_if($scope0_reason, 1) && $input_promise__closures
-	}) || $fg__input_title && _patch_write($scope0_id, "xf", input.title, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.title, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "a7", "f");
 }, 1);

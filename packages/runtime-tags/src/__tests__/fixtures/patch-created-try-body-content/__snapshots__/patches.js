@@ -12,14 +12,14 @@
           i: "b2"
         }
       }, "b3", "b4"],
-      Sb5: "d",
       xd: {
         content: _([], "a0", 1)
-      }
+      },
+      Sb5: "d"
     }
   }, "a5"],
-  Sa7: "f",
-  xf: "b"
+  xf: "b",
+  Sa7: "f"
 }
 ;DSo
 
@@ -37,22 +37,22 @@
           i: "b2"
         }
       }, "b3", "b4"],
-      Sb5: "d",
       xd: {
         content: _([], "a2", 1)
-      }
+      },
+      Sb5: "d"
     }
   }, "a5"],
-  Sa7: "f",
-  xf: "c"
+  xf: "c",
+  Sa7: "f"
 }
 ;DS4
 
 // PATCH holding DS4
 {
   bc: 0,
-  Sa7: "f",
-  xf: "d"
+  xf: "d",
+  Sa7: "f"
 }
 
 // PATCH holding DS4
@@ -68,14 +68,14 @@
           i: "b2"
         }
       }, "b3", "b4"],
-      Sb5: "d",
       xd: {
         content: _([], "a0", 1)
-      }
+      },
+      Sb5: "d"
     }
   }, "a5"],
-  Sa7: "f",
-  xf: "e"
+  xf: "e",
+  Sa7: "f"
 }
 
 // PATCH holding DS4
@@ -91,12 +91,12 @@
           i: "b2"
         }
       }, "b3", "b4"],
-      Sb5: "d",
       xd: {
         content: _([], "a2", 1)
-      }
+      },
+      Sb5: "d"
     }
   }, "a5"],
-  Sa7: "f",
-  xf: "f"
+  xf: "f",
+  Sa7: "f"
 }

@@ -9,10 +9,10 @@
     },
     ia2: "d >f >g"
   }, "a5"],
-  Sa8: "f",
-  Sa9: "g",
   xf: !0,
-  xg: "b"
+  Sa8: "f",
+  xg: "b",
+  Sa9: "g"
 }
 ;CgE
 
@@ -26,10 +26,10 @@
     },
     ia2: "d >f >g"
   }, "a5"],
-  Sa8: "f",
-  Sa9: "g",
   xf: !1,
-  xg: "c"
+  Sa8: "f",
+  xg: "c",
+  Sa9: "g"
 }
 
 // PATCH holding CgE
@@ -42,10 +42,10 @@
     },
     ia2: "d >f >g"
   }, "a5"],
-  Sa8: "f",
-  Sa9: "g",
   xf: !0,
-  xg: "e"
+  Sa8: "f",
+  xg: "e",
+  Sa9: "g"
 }
 
 // PATCH holding CgE
@@ -53,8 +53,8 @@
   cAc: [{
     ta: "ok"
   }, "a5"],
-  Sa8: "f",
-  Sa9: "g",
   xf: !1,
-  xg: "d"
+  Sa8: "f",
+  xg: "d",
+  Sa9: "g"
 }

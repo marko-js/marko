@@ -31,7 +31,6 @@ var child_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 5), 1, 0, 0, ["b3"], $scope0_reason, 5);
 	$ui__input_mode && _patch_write($scope0_id, "wi", frag.content, 1);
-	$fg__input_a && _patch_subscribers($scope0_id, "b4", "e");
 	$fg__input_a && _client_guard($scope0_reason, 5) && _patch_render($scope0_id, "b5", "e");
 	_client_guard($scope0_reason, 4) && _patch_render($scope0_id, "b6");
 	_scope($scope0_id, {
@@ -39,7 +38,7 @@ var child_default = _template("b", (input) => {
 		g: ($ui__input_a || $ui__input_a__OR__input_b) && input.b,
 		i: $ui__input_mode && frag.content,
 		k: _write_if($scope0_reason, 3) && $input_a__closures
-	}) || ($fg__input_a && $ui__input_mode__OR__input_b && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 5) && $ui__input_a && _patch_write($scope0_id, "xg", input.b, !_server_guard($scope0_reason, 5)));
+	}) || ($fg__input_a && $ui__input_mode__OR__input_b && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 3)) && _patch_subscribers($scope0_id, "b4", "e"), _filled_guard($scope0_reason, 5) && $ui__input_a && _patch_write($scope0_id, "xg", input.b, !_server_guard($scope0_reason, 5)));
 });
 
 // template.marko

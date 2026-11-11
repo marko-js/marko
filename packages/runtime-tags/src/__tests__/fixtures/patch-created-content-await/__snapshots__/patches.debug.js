@@ -14,8 +14,6 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-await/template.marko_3*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-await/template.marko_0_input_p#3/subscribers": "input_p",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-await/template.marko_0_input_label#4/subscribers": "input_label",
   "PatchMarkedWrite:input_p": (p => p = new Promise((f, r) => _.a = {
     f,
     r(e) {
@@ -23,7 +21,9 @@
       r(e)
     }
   }))(),
-  "PatchMarkedWrite:input_label": "b"
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-await/template.marko_0_input_p#3/subscribers": "input_p",
+  "PatchMarkedWrite:input_label": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-await/template.marko_0_input_label#4/subscribers": "input_label"
 }
 [{
   "PatchChild:BranchScopes:#text/0": {
@@ -57,8 +57,6 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-await/template.marko_3*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-await/template.marko_0_input_p#3/subscribers": "input_p",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-await/template.marko_0_input_label#4/subscribers": "input_label",
   "PatchMarkedWrite:input_p": (p => p = new Promise((f, r) => _.a = {
     f,
     r(e) {
@@ -66,7 +64,9 @@
       r(e)
     }
   }))(),
-  "PatchMarkedWrite:input_label": "c"
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-await/template.marko_0_input_p#3/subscribers": "input_p",
+  "PatchMarkedWrite:input_label": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-await/template.marko_0_input_label#4/subscribers": "input_label"
 }
 [{
   "PatchChild:BranchScopes:#text/0": {

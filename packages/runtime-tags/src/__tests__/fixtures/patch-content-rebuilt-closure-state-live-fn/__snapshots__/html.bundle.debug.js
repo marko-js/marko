@@ -40,10 +40,10 @@ _shells({
 	"__tests__/tags/child.marko_2*shell": "__tests__/tags/child.marko_2*shell,<span>shown</span>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = new Set();
-	$fg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 0));
+	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "__tests__/tags/child.marko_0_input_show#5/subscribers", "input_show");
 	let items = [1, 2];
 	_html(`<button>add</button>${_el_mark($scope0_id, "#button/0")}`);
 	_set_scope_reason(2);
@@ -73,7 +73,6 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	}, "__tests__/tags/child.marko_0/get", $scope0_id) });
 	_patch_child_end();
 	_script($scope0_id, "__tests__/tags/child.marko_0");
-	$fg__input_show && _patch_subscribers($scope0_id, "__tests__/tags/child.marko_0_input_show#5/subscribers", "input_show");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_0_items#6/fill", items, 1);
 	_scope($scope0_id, {
 		input_show: input.show,

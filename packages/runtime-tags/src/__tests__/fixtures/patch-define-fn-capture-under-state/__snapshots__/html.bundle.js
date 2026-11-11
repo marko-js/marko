@@ -4,7 +4,7 @@ _shells({
 	a2: "a2;D ;<span> </span>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_x = _write_guard($scope0_reason, 0), $cg__input_x = _client_guard($scope0_reason, 0), $fg__input_x = _filled_guard($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_x = _write_guard($scope0_reason, 0), $cg__input_x = _client_guard($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_x__closures = /* @__PURE__ */ new Set();
 	let show = true;
@@ -47,12 +47,11 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "b");
 	_script($scope0_id, "a6");
-	$fg__input_x && _patch_subscribers($scope0_id, "a7", "e");
 	$fg__input_a && _patch_render($scope0_id, "a5", "f");
 	_scope($scope0_id, {
 		e: input.x,
 		f: input.a,
 		g: show,
 		h: _write_if($scope0_reason, 0) && $input_x__closures
-	}) || ($fg__input_x && _patch_write($scope0_id, "xe", input.x, !_server_guard($scope0_reason, 0)), $fg__input_a && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 1)));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.x, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "a7", "e"), $fg__input_a && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 1)));
 }, 1);

@@ -23,10 +23,10 @@ _shells({
 	"__tests__/tags/w.marko_4*shell": "__tests__/tags/w.marko_4*shell !__tests__/tags/w.marko_4; ;<button>b</button>"
 });
 var w_default = _template("__tests__/tags/w.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_flag__OR__input_x = _write_if($scope0_reason, 1), $wg__input_flag__OR__input_x = _write_guard($scope0_reason, 0), $ui__input_flag__OR__input_x = _unfilled_if($scope0_reason, 0), $ui__input_x = _unfilled_if($scope0_reason, 4), $ui__input_flag = _unfilled_if($scope0_reason, 3), $fg__input_show = _filled_guard($scope0_reason, 2), $fg__input_flag = _filled_guard($scope0_reason, 3), $fg__input_x = _filled_guard($scope0_reason, 4), $wi__input_show = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_flag__OR__input_x = _write_if($scope0_reason, 1), $wg__input_flag__OR__input_x = _write_guard($scope0_reason, 0), $ui__input_flag__OR__input_x = _unfilled_if($scope0_reason, 0), $ui__input_x = _unfilled_if($scope0_reason, 4), $ui__input_flag = _unfilled_if($scope0_reason, 3), $fg__input_flag = _filled_guard($scope0_reason, 3), $fg__input_x = _filled_guard($scope0_reason, 4), $wi__input_show = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = new Set();
-	$fg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 2));
+	_filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "__tests__/tags/w.marko_0_input_show#4/subscribers", "input_show");
 	const A = { content: _content_resume("__tests__/tags/w.marko_1*content", ({ x }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
@@ -79,7 +79,6 @@ var w_default = _template("__tests__/tags/w.marko", (input) => {
 	_patch_child_end();
 	$ui__input_flag__OR__input_x && _patch_write($scope0_id, "PatchWrite:A", A, 1);
 	$ui__input_flag__OR__input_x && _patch_write($scope0_id, "PatchWrite:B", B, 1);
-	$fg__input_show && _patch_subscribers($scope0_id, "__tests__/tags/w.marko_0_input_show#4/subscribers", "input_show");
 	_patch_render($scope0_id, "__tests__/tags/w.marko_0_input_flag#5_input_x#6_A#7_B#8/setup", (($fg__input_flag ? " input_flag" : "") + ($fg__input_x ? " input_x" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_show: input.show,

@@ -42,7 +42,6 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_html(`<button class=s>+</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	$fg__input_sel && $cg__input_obj && _patch_render($scope0_id, "__tests__/tags/card.marko_1_input_sel#0:6/setup", "input_sel");
-	$fg__input_prefix2 && ($cg__input_obj || $cg__input_sel) && _patch_subscribers($scope0_id, "__tests__/tags/card.marko_0_fmt#8/subscribers", "fmt input_prefix");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_s#7/fill", s, 1);
 	_scope($scope0_id, {
 		input_prefix: input.prefix,
@@ -56,7 +55,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		input_sel: ["input.sel"],
 		s: "1:6",
 		fmt: "2:8"
-	}) || ($fg__input_sel && $ui__input_obj && _patch_write($scope0_id, "PatchMarkedWrite:input_sel", input.sel, !_server_guard($scope0_reason, 3)), $fg__input_prefix2 && _patch_write($scope0_id, "PatchMarkedWrite:fmt", fmt, !$sg__input_prefix));
+	}) || ($fg__input_sel && $ui__input_obj && _patch_write($scope0_id, "PatchMarkedWrite:input_sel", input.sel, !_server_guard($scope0_reason, 3)), $fg__input_prefix2 && _patch_write($scope0_id, "PatchMarkedWrite:fmt", fmt, !$sg__input_prefix) && ($cg__input_obj || $cg__input_sel) && _patch_subscribers($scope0_id, "__tests__/tags/card.marko_0_fmt#8/subscribers", "fmt input_prefix"));
 });
 
 // template.marko

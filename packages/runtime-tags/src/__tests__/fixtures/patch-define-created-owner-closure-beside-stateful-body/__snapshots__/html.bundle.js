@@ -64,7 +64,6 @@ var template_default = _template("a", (input) => {
 	}, 16);
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a7");
-	$fg__input_label && _patch_subscribers($scope0_id, "a8", "f");
 	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "a5", "f");
 	$fg__input_open && $cg__input_show && _patch_render($scope0_id, "a6", "h");
 	_patch_render($scope0_id, "a9", $fg__input_other && "i", $scope0_reason, 4);
@@ -76,5 +75,5 @@ var template_default = _template("a", (input) => {
 		k: _unfilled_if($scope0_reason, 4) && Panel,
 		m: Tag,
 		o: _write_if($scope0_reason, 1) && $input_label__closures
-	}) || ($fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)), $fg__input_open && $ui__input_show && _patch_write($scope0_id, "xh", input.open, !_server_guard($scope0_reason, 3)), $fg__input_other && _patch_write($scope0_id, "xm", Tag, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a8", "f"), $fg__input_open && $ui__input_show && _patch_write($scope0_id, "xh", input.open, !_server_guard($scope0_reason, 3)), $fg__input_other && _patch_write($scope0_id, "xm", Tag, !_server_guard($scope0_reason, 4)));
 }, 1);

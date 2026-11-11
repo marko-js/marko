@@ -13,6 +13,6 @@ const $inputonCarddiv_content__setup = ($scope) => {
 	$inputonCarddiv_content__input_note($scope);
 	$inputonCarddiv_content__row_label($scope);
 };
-const $inputonCarddiv_content__row_label = /*@__PURE__*/ _closure_get_patch("a2", 8, ($scope) => _text($scope.b, $scope._.d), 0, "a3", 0);
+const $inputonCarddiv_content__row_label = /*@__PURE__*/ _closure_get_patch("a2", 8, ($scope) => _text($scope.b, $scope._.d), 0, "a4", 0);
 const $inputonCarddiv_content = _content$1("a0", "<em><!> <!></em>", "D%c%", $inputonCarddiv_content__setup);
 _content_resume($inputonCarddiv_content);

@@ -15,7 +15,7 @@
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-lazy-wrapper-child/template.marko_1_input_label#0:3/subscribe": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-lazy-wrapper-child/template.marko_1*content"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-lazy-wrapper-child/template.marko_0_input_label#3/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "b"
+  "PatchMarkedWrite:input_label": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-lazy-wrapper-child/template.marko_0_input_label#3/subscribers": "input_label"
 }
 ;CgM

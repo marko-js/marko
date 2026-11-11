@@ -55,7 +55,7 @@ _shells({
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_y = _client_guard($scope0_reason, 2), $scope0_page = _page_render(), $uf__input_x = _updates_from($scope0_reason, 1), $ui__input_x = _unfilled_if($scope0_reason, 1), $fg__input_y = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_y = _client_guard($scope0_reason, 2), $scope0_page = _page_render(), $uf__input_x = _updates_from($scope0_reason, 1), $ui__input_x = _unfilled_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_y__closures = new Set();
 	_set_scope_reason($uf__input_x << 3 | $uf__input_x << 5 | $uf__input_x << 7 | $uf__input_x << 13);
@@ -72,10 +72,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope0_id, ($scope) => $scope0_page ? [{ input_y: input.y }] : [])
 	});
 	_patch_child_end();
-	$fg__input_y && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_y#4/subscribers", "input_y");
 	_scope($scope0_id, {
 		input_y: ($ui__input_x || _unfilled_if($scope0_reason, 2)) && input.y,
 		"ClosureScopes:input_y/5": _write_if($scope0_reason, 2) && $input_y__closures,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { input_y: ["input.y"] }) || $fg__input_y && (_client_branch_if("__tests__/template.marko_1*content", $scope0_id) || _client_guard($scope0_reason, 1) || $ui__input_x) && _patch_write($scope0_id, "PatchMarkedWrite:input_y", input.y, !_server_guard($scope0_reason, 2));
+	}, "__tests__/template.marko", 0, { input_y: ["input.y"] }) || _filled_guard($scope0_reason, 2) && (_client_branch_if("__tests__/template.marko_1*content", $scope0_id) || _client_guard($scope0_reason, 1) || $ui__input_x) && _patch_write($scope0_id, "PatchMarkedWrite:input_y", input.y, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_y#4/subscribers", "input_y");
 }, 1);

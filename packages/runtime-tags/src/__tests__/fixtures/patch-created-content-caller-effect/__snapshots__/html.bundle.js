@@ -32,7 +32,7 @@ _shells({
 	b: `b${_shell_marker($setup$1)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$1)}`
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_count = _client_guard($scope0_reason, 1), $uf__input_show = _updates_from($scope0_reason, 0), $fg__input_count = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_count = _client_guard($scope0_reason, 1), $uf__input_show = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_count__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason($uf__input_show << 1 | $uf__input_show << 3);
@@ -50,12 +50,11 @@ var child_default = _template("b", (input) => {
 		}, $scope0_id) })
 	});
 	_patch_child_end();
-	$fg__input_count && _patch_subscribers($scope0_id, "b3", "e");
 	_scope($scope0_id, {
 		e: input.count,
 		f: _write_if($scope0_reason, 1) && $input_count__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_count && _patch_write($scope0_id, "xe", input.count, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.count, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "b3", "e");
 });
 
 // template.marko

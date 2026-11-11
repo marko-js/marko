@@ -10,8 +10,8 @@
           "PatchText:#text/1": "y"
         }
       }, $, _.b = "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-body-state/template.marko_3*content", _.c = "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-body-state/template.marko_5*content"],
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-body-state/template.marko_2_id#3/subscribers": "id",
-      "PatchMarkedWrite:id": "a"
+      "PatchMarkedWrite:id": "a",
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-body-state/template.marko_2_id#3/subscribers": "id"
     }
   }, {
     "PatchChild:#childScope/0": {
@@ -22,8 +22,8 @@
           "PatchText:#text/1": "y"
         }
       }, $, _.b, _.c],
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-body-state/template.marko_2_id#3/subscribers": "id",
-      "PatchMarkedWrite:id": "b"
+      "PatchMarkedWrite:id": "b",
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-body-state/template.marko_2_id#3/subscribers": "id"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-body-state/template.marko_1*shell"]
 }
@@ -36,8 +36,8 @@
       "PatchChild:BranchScopes:#text/0": [{
         "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-body-state/template.marko_4*content"
       }, $, "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-body-state/template.marko_3*content", "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-body-state/template.marko_5*content"],
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-body-state/template.marko_2_id#3/subscribers": "id",
-      "PatchMarkedWrite:id": "c"
+      "PatchMarkedWrite:id": "c",
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-body-state/template.marko_2_id#3/subscribers": "id"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-body-state/template.marko_1*shell"]
 }

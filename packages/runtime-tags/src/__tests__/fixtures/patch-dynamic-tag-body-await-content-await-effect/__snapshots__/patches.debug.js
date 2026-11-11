@@ -2,9 +2,6 @@
 [`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/tags/card.marko !packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/tags/card.marko_0; b%;<button class=toggle>toggle</button><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_2*content`]
 {
   "PatchPending:#text/0": 1,
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_0_input_w#5/subscribers": "input_w",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_0_input_inner#6/subscribers": "input_inner",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_0_input_note#7/subscribers": "input_note",
   "PatchMarkedWrite:input_w": (p => p = new Promise((f, r) => _.a = {
     f,
     r(e) {
@@ -12,8 +9,11 @@
       r(e)
     }
   }))(),
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_0_input_w#5/subscribers": "input_w",
   "PatchMarkedWrite:input_inner": !1,
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_0_input_inner#6/subscribers": "input_inner",
   "PatchMarkedWrite:input_note": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_0_input_note#7/subscribers": "input_note",
   "PatchChild:BranchScopes:#text/0": {
     "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/tags/card.marko", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_2*content"],
     "PatchChild:BranchScopes:#text/0": {
@@ -32,9 +32,6 @@
 [`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_3*content;D l%;<b> </b><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_4*content`]
 {
   "PatchPending:#text/0": 1,
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_0_input_w#5/subscribers": "input_w",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_0_input_inner#6/subscribers": "input_inner",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_0_input_note#7/subscribers": "input_note",
   "PatchMarkedWrite:input_w": (p => p = new Promise((f, r) => _.a = {
     f,
     r(e) {
@@ -42,8 +39,11 @@
       r(e)
     }
   }))(),
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_0_input_w#5/subscribers": "input_w",
   "PatchMarkedWrite:input_inner": !0,
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_0_input_inner#6/subscribers": "input_inner",
   "PatchMarkedWrite:input_note": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_0_input_note#7/subscribers": "input_note",
   "PatchChild:BranchScopes:#text/0": {
     "PatchDynamicTag:#text/0": [">div", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_2*content"],
     "PatchChild:BranchScopes:#text/0": {
@@ -51,6 +51,7 @@
         "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_3*content",
         "PatchChild:BranchScopes:#text/0": {
           "PatchMarkedWrite:w": "z",
+          "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_3_w#3/subscribers": "w",
           "PatchText:#text/0": "z",
           "PatchDynamicTag:#text/1": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/tags/card.marko", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_4*content"],
           "PatchChild:BranchScopes:#text/1": {
@@ -60,8 +61,7 @@
             },
             "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_4*content"
           },
-          "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_3_w#3",
-          "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_3_w#3/subscribers": "w"
+          "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_3_w#3"
         }
       }
     }
@@ -73,9 +73,6 @@
 // PATCH holding EdE
 {
   "PatchPending:#text/0": 1,
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_0_input_w#5/subscribers": "input_w",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_0_input_inner#6/subscribers": "input_inner",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_0_input_note#7/subscribers": "input_note",
   "PatchMarkedWrite:input_w": (p => p = new Promise((f, r) => _.a = {
     f,
     r(e) {
@@ -83,8 +80,11 @@
       r(e)
     }
   }))(),
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_0_input_w#5/subscribers": "input_w",
   "PatchMarkedWrite:input_inner": !0,
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_0_input_inner#6/subscribers": "input_inner",
   "PatchMarkedWrite:input_note": "d",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_0_input_note#7/subscribers": "input_note",
   "PatchChild:BranchScopes:#text/0": {
     "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/tags/card.marko", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_2*content"],
     "PatchChild:BranchScopes:#text/0": {

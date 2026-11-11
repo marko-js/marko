@@ -3,14 +3,14 @@
 {
   "PatchBranch:#main/0": [{
     "PatchMarkedWrite:x": "b!",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1_x#2/subscribers": "x",
     "PatchDynamicTag:#text/1": [">div", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_2*content"],
     "PatchChild:BranchScopes:#text/1": {
       "PatchChild:BranchScopes:#div/0": {
         "PatchText:#text/0": "b!"
       }
     },
-    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1_x#2",
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1_x#2/subscribers": "x"
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1_x#2"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1*shell"]
 }
 ;CQw
@@ -20,6 +20,7 @@
 {
   "PatchBranch:#main/0": [{
     "PatchMarkedWrite:x": "c!",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1_x#2/subscribers": "x",
     "PatchDynamicTag:#text/1": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/tags/card.marko", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_2*content"],
     "PatchChild:BranchScopes:#text/1": {
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/tags/card.marko_1_input_content#0:4/setup": "input_content",
@@ -28,8 +29,7 @@
       },
       "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_2*content"
     },
-    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1_x#2",
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1_x#2/subscribers": "x"
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1_x#2"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1*shell"]
 }
 ;CQ0
@@ -38,13 +38,13 @@
 {
   "PatchBranch:#main/0": [{
     "PatchMarkedWrite:x": "d!",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1_x#2/subscribers": "x",
     "PatchDynamicTag:#text/1": [">div", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_2*content"],
     "PatchChild:BranchScopes:#text/1": {
       "PatchChild:BranchScopes:#div/0": {
         "PatchText:#text/0": "d!"
       }
     },
-    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1_x#2",
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1_x#2/subscribers": "x"
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1_x#2"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1*shell"]
 }

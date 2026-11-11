@@ -9,7 +9,7 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var wrapper_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 1), $cg__input_content = _client_guard($scope0_reason, 1), $wi__input_content = _write_if($scope0_reason, 1), $cg__input_fail = _client_guard($scope0_reason, 2), $fg__input_content = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 1), $cg__input_content = _client_guard($scope0_reason, 1), $wi__input_content = _write_if($scope0_reason, 1), $cg__input_fail = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
 	const $input_fail__closures = /* @__PURE__ */ new Set();
@@ -31,12 +31,11 @@ var wrapper_default = _template("b", (input) => {
 		$cg__input_content && _patch_render($scope1_id, "b0");
 		_subscribe($wi__input_content && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_content && "b0", $wg__input_content);
 	}, 0, "b3", "b4", 1);
-	$fg__input_content && _patch_subscribers($scope0_id, "b5", "d");
 	_scope($scope0_id, {
 		d: input.content,
 		f: $wi__input_content && $input_content__closures,
 		g: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_fail__closures
-	}) || $fg__input_content && _patch_write($scope0_id, "xd", input.content, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xd", input.content, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "b5", "d");
 });
 
 // template.marko
@@ -47,7 +46,7 @@ _shells({
 	a5: `a5${_shell_marker([["a12"], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $cg__input_show__OR__input_alt = _client_guard($scope0_reason, 0), $ui__input_alt = _unfilled_if($scope0_reason, 3), $ui__input_show__OR__input_alt = _unfilled_if($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_alt = _filled_guard($scope0_reason, 3), $wi__input_label = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $cg__input_show__OR__input_alt = _client_guard($scope0_reason, 0), $ui__input_alt = _unfilled_if($scope0_reason, 3), $ui__input_show__OR__input_alt = _unfilled_if($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 2), $fg__input_alt = _filled_guard($scope0_reason, 3), $wi__input_label = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	let count = 0;
@@ -90,7 +89,6 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["a5"], $scope0_reason, 2);
 	_script($scope0_id, "a6");
-	$fg__input_label && _patch_subscribers($scope0_id, "a7", "f");
 	$fg__input_alt && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "a8", "h");
 	_scope($scope0_id, {
 		f: input.label,
@@ -99,5 +97,5 @@ var template_default = _template("a", (input) => {
 		j: ($ui__input_show__OR__input_alt || $ui__input_alt) && A,
 		k: ($ui__input_show__OR__input_alt || $ui__input_alt) && B,
 		l: $wi__input_label && $input_label__closures
-	}) || ($fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)), $fg__input_alt && $ui__input_show && _patch_write($scope0_id, "xh", input.alt, !_server_guard($scope0_reason, 3)));
+	}) || (_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a7", "f"), $fg__input_alt && $ui__input_show && _patch_write($scope0_id, "xh", input.alt, !_server_guard($scope0_reason, 3)));
 }, 1);

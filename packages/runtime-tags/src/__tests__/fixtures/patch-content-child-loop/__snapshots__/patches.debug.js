@@ -15,8 +15,7 @@
         "PatchText:#text/0": "y"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-child-loop/tags/card/index.marko_1*shell"]
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-child-loop/template.marko_0_input_note#4/subscribers": "input_note"
+  }
 }
 ;CQo
 
@@ -30,8 +29,7 @@
         "PatchText:#text/0": "z"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-child-loop/tags/card/index.marko_1*shell"]
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-child-loop/template.marko_0_input_note#4/subscribers": "input_note"
+  }
 }
 
 // PATCH holding CQo
@@ -56,6 +54,5 @@
         "PatchText:#text/0": "w"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-child-loop/tags/card/index.marko_1*shell"]
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-child-loop/template.marko_0_input_note#4/subscribers": "input_note"
+  }
 }

@@ -35,7 +35,7 @@ var wrapper_default = _template("c", (input) => {
 // template.marko
 const $setup = _shell_setup([[], ["a6"]], ["a>", $setup$1]);
 _shells({
-	a1: "a1",
+	a2: "a2",
 	a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}& b`)("D%l")};${((_w0) => `${_w0}<button>+</button>`)($template)}`
 });
 var template_default = _template("a", (input) => {
@@ -48,24 +48,23 @@ var template_default = _template("a", (input) => {
 	const $childScope2 = _peek_scope_id($scope0_id, "a", 1);
 	wrapper_default({ content: _content("a5", () => {
 		_scope_reason();
-		const $scope1_id = _scope_id(), $fg__input_label = _filled_guard($scope0_reason, 0);
+		const $scope1_id = _scope_id();
 		const $wrapper_content__label__closures = /* @__PURE__ */ new Set();
 		const label = input.label;
-		$fg__input_label && _patch_write($scope1_id, "xb", label, !_server_guard($scope0_reason, 0));
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xb", label, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope1_id, "a0", "b");
 		_set_scope_reason(10);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		toggle_default({
 			open,
-			content: _content_resume("a1", () => {
+			content: _content_resume("a2", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<p>${_text_mark($scope2_id, "a", label, 1, $scope0_reason, 0)}</p>`);
-				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a0", $cg__input_label);
-				_subscribe(_unfilled_if($scope0_reason, 0) && $wrapper_content__label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_label && "a0");
+				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a1", $cg__input_label);
+				_subscribe(_unfilled_if($scope0_reason, 0) && $wrapper_content__label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_label && "a1");
 			}, $scope1_id)
 		});
 		_patch_child_end();
-		$fg__input_label && _patch_subscribers($scope1_id, "a2", "b");
 		_subscribe($open__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			b: label,
 			_: _scope_with_id($scope0_id),

@@ -31,7 +31,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `D%b/${_w0}& l`)(" b")};${((_w0) => `<main><!>${_w0}<button>interactive</button></main>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_as__OR__input_p = _write_if($scope0_reason, 0), $cg__input_q = _client_guard($scope0_reason, 3), $ui__input_as = _unfilled_if($scope0_reason, 1), $fg__input_p = _filled_guard($scope0_reason, 2), $fg__input_q = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_as__OR__input_p = _write_if($scope0_reason, 0), $cg__input_q = _client_guard($scope0_reason, 3), $ui__input_as = _unfilled_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_p__closures = /* @__PURE__ */ new Set();
 	const $input_q__closures = /* @__PURE__ */ new Set();
@@ -65,13 +65,11 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_html(`<button>interactive</button>${_el_mark($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a7");
-	$fg__input_p && _patch_subscribers($scope0_id, "a8", "g");
-	$fg__input_q && _patch_subscribers($scope0_id, "a9", "h");
 	_scope($scope0_id, {
 		g: ($ui__input_as || _unfilled_if($scope0_reason, 2)) && input.p,
 		h: input.q,
 		i: _write_if($scope0_reason, 2) && $input_p__closures,
 		j: _write_if($scope0_reason, 3) && $input_q__closures,
 		b: _existing_scope($childScope)
-	}) || ($fg__input_p && (_client_branch_if("a3", $scope0_id) || $ui__input_as) && _patch_write($scope0_id, "xg", input.p, !_server_guard($scope0_reason, 2)), $fg__input_q && _patch_write($scope0_id, "xh", input.q, !_server_guard($scope0_reason, 3)));
+	}) || (_filled_guard($scope0_reason, 2) && (_client_branch_if("a3", $scope0_id) || $ui__input_as) && _patch_write($scope0_id, "xg", input.p, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "a8", "g"), _filled_guard($scope0_reason, 3) && _patch_write($scope0_id, "xh", input.q, !_server_guard($scope0_reason, 3)) && _patch_subscribers($scope0_id, "a9", "h"));
 }, 1);

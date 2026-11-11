@@ -41,10 +41,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$cg__input_id && _patch_render($scope2_id, "__tests__/template.marko_2_input_id#0:5/subscribe");
 		_subscribe($wi__input_id && $input_id__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4"), $cg__input_id && "__tests__/template.marko_2_input_id#0:5/subscribe", $wg__input_id);
 	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_3*content", 1);
-	$fg__input_id && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_id#5/subscribers", "input_id");
 	$fg__input_id && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/template.marko_1_input_id#0:5/setup", "input_id");
 	_scope($scope0_id, {
 		input_id: input.id,
 		"ClosureScopes:input_id/6": $wi__input_id && $input_id__closures
-	}, "__tests__/template.marko", 0, { input_id: ["input.id"] }) || $fg__input_id && _patch_write($scope0_id, "PatchMarkedWrite:input_id", input.id, !_server_guard($scope0_reason, 2));
+	}, "__tests__/template.marko", 0, { input_id: ["input.id"] }) || $fg__input_id && _patch_write($scope0_id, "PatchMarkedWrite:input_id", input.id, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_id#5/subscribers", "input_id");
 }, 1);

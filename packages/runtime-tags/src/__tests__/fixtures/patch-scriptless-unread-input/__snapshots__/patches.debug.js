@@ -19,7 +19,6 @@
     "PatchChild:BranchScopes:#div/0": {
       "PatchText:#text/0": "SHOWN_name2c"
     }
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-unread-input/template.marko_0_input_user3_name#12/subscribers": "input_user3_name"
+  }
 }
 ;CQw

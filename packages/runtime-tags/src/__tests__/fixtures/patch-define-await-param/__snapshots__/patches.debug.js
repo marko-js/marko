@@ -9,8 +9,8 @@
         "PatchText:#text/1": "y"
       }
     }, $, "packages/runtime-tags/src/__tests__/fixtures/patch-define-await-param/template.marko_2*content", "packages/runtime-tags/src/__tests__/fixtures/patch-define-await-param/template.marko_4*content"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-await-param/template.marko_1_id#3/subscribers": "id",
-    "PatchMarkedWrite:id": "b"
+    "PatchMarkedWrite:id": "b",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-await-param/template.marko_1_id#3/subscribers": "id"
   }
 }
 ;CQo
@@ -25,7 +25,7 @@
         "PatchText:#text/1": "z"
       }
     }, $, "packages/runtime-tags/src/__tests__/fixtures/patch-define-await-param/template.marko_2*content", "packages/runtime-tags/src/__tests__/fixtures/patch-define-await-param/template.marko_4*content"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-await-param/template.marko_1_id#3/subscribers": "id",
-    "PatchMarkedWrite:id": "c"
+    "PatchMarkedWrite:id": "c",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-await-param/template.marko_1_id#3/subscribers": "id"
   }
 }

@@ -35,7 +35,7 @@ var one_default = _template("b", (input) => {
 const $setup = _shell_setup([[], ["a2"]], ["b>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0) => ` b/${_w0}&b`)($walks)};${((_w0) => `<button class=s>s</button>${_w0}<!>`)($template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_y = _client_guard($scope0_reason, 0), $fg__input_y = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_y = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_y__closures = /* @__PURE__ */ new Set();
 	let s = "a";
@@ -54,11 +54,10 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_script($scope0_id, "a2");
-	$fg__input_y && _patch_subscribers($scope0_id, "a3", "e");
 	_scope($scope0_id, {
 		e: input.y,
 		f: s,
 		g: _write_if($scope0_reason, 0) && $input_y__closures,
 		b: _existing_scope($childScope)
-	}) || $fg__input_y && _patch_write($scope0_id, "xe", input.y, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.y, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "a3", "e");
 }, 1);

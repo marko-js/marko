@@ -8,6 +8,6 @@ const $setup__script = _script("b1", ($scope) => _on($scope.a, "click", function
 }));
 
 // template.marko
-const $inputwrapCarddiv_content__row_label = /*@__PURE__*/ _closure_get_patch("a1", 6, ($scope) => _text($scope.a, $scope._.d), 0, "a2", 0);
+const $inputwrapCarddiv_content__row_label = /*@__PURE__*/ _closure_get_patch("a1", 6, ($scope) => _text($scope.a, $scope._.d), 0, "a3", 0);
 const $inputwrapCarddiv_content = _content$1("a0", "<b> </b>", "D ", $inputwrapCarddiv_content__row_label);
 _content_resume($inputwrapCarddiv_content);

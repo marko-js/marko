@@ -2,9 +2,6 @@
 [`b !b1; b%;<button class=toggle>toggle</button><!><!>`, `a7`]
 {
   pa: 1,
-  Sa12: "f",
-  Sa13: "g",
-  Sa14: "h",
   xf: (p => p = new Promise((f, r) => _.a = {
     f,
     r(e) {
@@ -12,8 +9,11 @@
       r(e)
     }
   }))(),
+  Sa12: "f",
   xg: !1,
+  Sa13: "g",
   xh: "b",
+  Sa14: "h",
   cAa: {
     fa: ["b", "a7"],
     cAa: {
@@ -32,9 +32,6 @@
 [`a5;b%;<!><!><!>`, `a0`]
 {
   pa: 1,
-  Sa12: "f",
-  Sa13: "g",
-  Sa14: "h",
   xf: (p => p = new Promise((f, r) => _.a = {
     f,
     r(e) {
@@ -42,8 +39,11 @@
       r(e)
     }
   }))(),
+  Sa12: "f",
   xg: !0,
+  Sa13: "g",
   xh: "c",
+  Sa14: "h",
   cAa: {
     fa: [">div", "a7"],
     cAa: {
@@ -58,8 +58,8 @@
             },
             de: "^a0"
           },
-          Sa3: "c",
-          xc: "z"
+          xc: "z",
+          Sa4: "c"
         }
       }
     }
@@ -71,9 +71,6 @@
 // PATCH holding EZY
 {
   pa: 1,
-  Sa12: "f",
-  Sa13: "g",
-  Sa14: "h",
   xf: (p => p = new Promise((f, r) => _.a = {
     f,
     r(e) {
@@ -81,8 +78,11 @@
       r(e)
     }
   }))(),
+  Sa12: "f",
   xg: !0,
+  Sa13: "g",
   xh: "d",
+  Sa14: "h",
   cAa: {
     fa: ["b", "a7"],
     cAa: {

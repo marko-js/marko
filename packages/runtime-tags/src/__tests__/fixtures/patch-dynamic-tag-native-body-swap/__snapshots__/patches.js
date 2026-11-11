@@ -6,8 +6,7 @@
     cAa: {
       ta: "b"
     }
-  },
-  Sb2: "e"
+  }
 }
 ;BgI
 
@@ -18,8 +17,7 @@
     cAa: {
       ta: "c"
     }
-  },
-  Sb2: "e"
+  }
 }
 
 // PATCH holding BgI
@@ -32,7 +30,7 @@
       ta: "d"
     }
   },
-  Sb2: "e",
-  xe: "d"
+  xe: "d",
+  Sb2: "e"
 }
 ;BwU

@@ -38,10 +38,10 @@ _shells({
 	b1: "b1,<span>shown</span>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = /* @__PURE__ */ new Set();
-	$fg__input_show && _patch_write($scope0_id, "xf", input.show, !_server_guard($scope0_reason, 0));
+	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.show, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "b5", "f");
 	let items = [1, 2];
 	_html(`<button>add</button>${_el_mark($scope0_id, "a")}`);
 	_set_scope_reason(2);
@@ -71,7 +71,6 @@ var child_default = _template("b", (input) => {
 	}, "b0", $scope0_id) });
 	_patch_child_end();
 	_script($scope0_id, "b4");
-	$fg__input_show && _patch_subscribers($scope0_id, "b5", "f");
 	_patch_fill($scope0_id, "vb6", items, 1);
 	_scope($scope0_id, {
 		f: input.show,

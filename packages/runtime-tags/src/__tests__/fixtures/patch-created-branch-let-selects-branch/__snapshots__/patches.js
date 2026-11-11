@@ -6,8 +6,8 @@
       va2: !0
     }
   }, "a3"],
-  Sa4: "f",
-  xf: "b"
+  xf: "b",
+  Sa4: "f"
 }
 ;BAE
 
@@ -18,15 +18,15 @@
       va2: !0
     }
   }, "a3"],
-  Sa4: "f",
-  xf: "c"
+  xf: "c",
+  Sa4: "f"
 }
 
 // PATCH holding BAE
 {
   ba: 0,
-  Sa4: "f",
-  xf: "d"
+  xf: "d",
+  Sa4: "f"
 }
 
 // PATCH holding BAE
@@ -36,6 +36,6 @@
       va2: !1
     }
   }, "a3"],
-  Sa4: "f",
-  xf: "e"
+  xf: "e",
+  Sa4: "f"
 }

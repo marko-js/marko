@@ -21,11 +21,10 @@ var template_default = _template("a", (input) => {
 	_if(() => {}, $scope0_id, "a");
 	_html(`<button>+</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a2");
-	$fg__input_title && _patch_subscribers($scope0_id, "a3", "e");
 	$fg__input_title && _patch_render($scope0_id, "a1", "e");
 	_scope($scope0_id, {
 		e: input.title,
 		f: show,
 		g: $wi__input_title && $input_title__closures
-	}) || $fg__input_title && _patch_write($scope0_id, "xe", input.title, !_server_guard($scope0_reason, 0));
+	}) || $fg__input_title && _patch_write($scope0_id, "xe", input.title, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "a3", "e");
 }, 1);

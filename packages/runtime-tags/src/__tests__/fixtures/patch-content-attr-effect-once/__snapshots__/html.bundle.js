@@ -4,7 +4,7 @@ _shells({
 	b: "b !b3; ;<div></div>"
 });
 var host_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const extra = { content: _content_resume("b0", () => {
@@ -20,12 +20,11 @@ var host_default = _template("b", (input) => {
 	_html(`</div>${_el_mark($scope0_id, "a", 0)}`);
 	_script($scope0_id, "b3");
 	_patch_write($scope0_id, "we", extra, 1);
-	$fg__input_label && _patch_subscribers($scope0_id, "b4", "d");
 	_scope($scope0_id, {
 		d: input.label,
 		e: extra,
 		f: _write_if($scope0_reason, 0) && $input_label__closures
-	}) || $fg__input_label && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "b4", "d");
 });
 
 // template.marko

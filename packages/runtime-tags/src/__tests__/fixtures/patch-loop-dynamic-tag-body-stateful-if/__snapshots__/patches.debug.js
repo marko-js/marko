@@ -10,8 +10,8 @@
       },
       "PatchBind:input_content": _.d = "^packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-stateful-if/template.marko_2*content"
     },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-stateful-if/template.marko_1_row_label#3/subscribers": "row_label",
-    "PatchMarkedWrite:row_label": "a"
+    "PatchMarkedWrite:row_label": "a",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-stateful-if/template.marko_1_row_label#3/subscribers": "row_label"
   }, 2, {
     "PatchDynamicTag:#text/0": [_.a, _.b],
     "PatchChild:BranchScopes:#text/0": {
@@ -21,8 +21,8 @@
       },
       "PatchBind:input_content": _.d
     },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-stateful-if/template.marko_1_row_label#3/subscribers": "row_label",
-    "PatchMarkedWrite:row_label": "b"
+    "PatchMarkedWrite:row_label": "b",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-stateful-if/template.marko_1_row_label#3/subscribers": "row_label"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-stateful-if/template.marko_1*shell"]
 }
 ;CQ0

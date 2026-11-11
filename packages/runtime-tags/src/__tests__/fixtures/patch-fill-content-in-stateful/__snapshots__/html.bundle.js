@@ -12,7 +12,7 @@ var wrap_default = _template("b", (input) => {
 // template.marko
 _shells({ a: "a !a4; b%;<button>inc</button><!><!>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_msg = _filled_guard($scope0_reason, 0), $wi__input_msg = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_msg = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_msg__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();
@@ -36,11 +36,10 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "b", 1, 1, 0, 0, 1);
 	_script($scope0_id, "a4");
-	$fg__input_msg && _patch_subscribers($scope0_id, "a5", "e");
 	_scope($scope0_id, {
 		e: input.msg,
 		f: count,
 		g: $wi__input_msg && $input_msg__closures,
 		h: $count__closures
-	}) || $fg__input_msg && _patch_write($scope0_id, "xe", input.msg, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.msg, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "a5", "e");
 }, 1);

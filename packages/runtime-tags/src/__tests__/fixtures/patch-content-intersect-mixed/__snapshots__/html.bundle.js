@@ -12,7 +12,7 @@ var box_default = _template("b", (input) => {
 // template.marko
 _shells({ a: "a !a4;D%b b D ;<main><!><button class=toggle>+</button><button class=bump> </button></main>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_a = _filled_guard($scope0_reason, 0), $wi__input_a = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_a = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();
@@ -22,12 +22,11 @@ var template_default = _template("a", (input) => {
 	_if(() => {}, $scope0_id, "a", 1, 1, 0, 0, 1);
 	_html(`<button class=toggle>+</button>${_el_mark($scope0_id, "b")}<button class=bump>${_text_mark($scope0_id, "d", count)}</button>${_el_mark($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a4");
-	$fg__input_a && _patch_subscribers($scope0_id, "a5", "g");
 	_scope($scope0_id, {
 		g: input.a,
 		h: open,
 		i: count,
 		j: $wi__input_a && $input_a__closures,
 		k: $count__closures
-	}) || $fg__input_a && _patch_write($scope0_id, "xg", input.a, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.a, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "a5", "g");
 }, 1);

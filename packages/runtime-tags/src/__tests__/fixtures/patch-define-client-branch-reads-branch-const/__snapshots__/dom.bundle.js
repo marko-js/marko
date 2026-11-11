@@ -1,5 +1,5 @@
 // tags/child.marko
-const $if_content2__v = /*@__PURE__*/ _closure_get_patch("b0", 8, ($scope) => _text($scope.a, $scope._._.b), ($scope) => $scope._._, "b4", 0);
+const $if_content2__v = /*@__PURE__*/ _closure_get_patch("b1", 8, ($scope) => _text($scope.a, $scope._._.b), ($scope) => $scope._._, "b0", 0);
 const $D_content__if = /*@__PURE__*/ _if(0, "<span> </span>", "D ", $if_content2__v);
 const $D_content__on = ($scope, on) => $D_content__if($scope, on ? 0 : 1);
 const $if_content__input_on = /*@__PURE__*/ _if_closure_patch("b6", 0, 0, ($scope) => $D_content__on($scope.a, $scope._.f));

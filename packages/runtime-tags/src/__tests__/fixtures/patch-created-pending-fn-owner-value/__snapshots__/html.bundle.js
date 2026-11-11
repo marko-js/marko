@@ -23,11 +23,11 @@ _shells({
 	a: "a;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
-	$fg__input_label && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 0));
+	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "a7", "d");
 	_try($scope0_id, "a", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id(), $ui__input_promise = _unfilled_if($scope0_reason, 1);
@@ -55,7 +55,6 @@ var template_default = _template("a", (input) => {
 		}), $cg__input_label && "a1", 0);
 		_write_guard($scope0_reason, 0) && _resume_branch($scope1_id);
 	}, void 0, "a6", void 0, "a4", 1);
-	$fg__input_label && _patch_subscribers($scope0_id, "a7", "d");
 	_scope($scope0_id, {
 		d: input.label,
 		f: $wi__input_label && $input_label__closures,

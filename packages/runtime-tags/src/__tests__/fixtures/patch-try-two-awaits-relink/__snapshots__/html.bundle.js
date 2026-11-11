@@ -10,7 +10,7 @@ _shells({
 	a6: "a6;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_fast = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_fast__OR__input_slow = _write_if($scope0_reason, 1), $ui__input_fast2 = _unfilled_if($scope0_reason, 3), $fg__input_fast = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_fast = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_fast__OR__input_slow = _write_if($scope0_reason, 1), $ui__input_fast2 = _unfilled_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_fast__closures = /* @__PURE__ */ new Set();
 	const $input_show__closures = /* @__PURE__ */ new Set();
@@ -51,11 +51,10 @@ var template_default = _template("a", (input) => {
 	}, void 0, "a2", void 0, "a4", 1, 0, 2);
 	_html(`<button>x</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a10");
-	$fg__input_fast && $cg__input_show && _patch_subscribers($scope0_id, "a11", "f");
 	_scope($scope0_id, {
 		f: ($ui__input_show || $ui__input_fast2) && input.fast,
 		i: _write_if($scope0_reason, 3) && ($ui__input_fast2 || $ui__input_show) && $input_fast__closures,
 		h: _write_if($scope0_reason, 2) && $ui__input_show && $input_show__closures,
 		j: _write_if($scope0_reason, 4) && _unfilled_if($scope0_reason, 4) && $input_slow__closures
-	}) || $fg__input_fast && $ui__input_show && _patch_write($scope0_id, "xf", input.fast, !_server_guard($scope0_reason, 3));
+	}) || _filled_guard($scope0_reason, 3) && $ui__input_show && _patch_write($scope0_id, "xf", input.fast, !_server_guard($scope0_reason, 3)) && $cg__input_show && _patch_subscribers($scope0_id, "a11", "f");
 }, 1);

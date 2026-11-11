@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	_write_guard($scope0_reason, 1);
 	_client_guard($scope0_reason, 1);
-	const $fg__input_title = _filled_guard($scope0_reason, 0), $fg__input_note = _filled_guard($scope0_reason, 1), $wi__input_note = _write_if($scope0_reason, 1);
+	const $fg__input_title = _filled_guard($scope0_reason, 0), $wi__input_note = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	let open = false;
@@ -41,11 +41,10 @@ var template_default = _template("a", (input) => {
 	_html(`<button>+</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a3");
 	$fg__input_title && _patch_render($scope0_id, "a2", "e");
-	$fg__input_note && _patch_subscribers($scope0_id, "a4", "f");
 	_scope($scope0_id, {
 		e: input.title,
 		f: input.note,
 		g: open,
 		i: $wi__input_note && $input_note__closures
-	}) || ($fg__input_title && _patch_write($scope0_id, "xe", input.title, !_server_guard($scope0_reason, 0)), $fg__input_note && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 1)));
+	}) || ($fg__input_title && _patch_write($scope0_id, "xe", input.title, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a4", "f"));
 }, 1);

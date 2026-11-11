@@ -52,7 +52,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	counter_default({});
 	_patch_child_end();
-	$fg__input_a && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_f#6/subscribers", "f input_a");
 	_scope($scope0_id, {
 		input_a: ($ui__input_x || $ui__input_a) && input.a,
 		f: ($ui__input_x || $ui__input_a) && f,
@@ -62,5 +61,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_a: ["input.a"],
 		f: "1:8"
-	}) || $fg__input_a && $ui__input_x && _patch_write($scope0_id, "PatchMarkedWrite:f", f, !$sg__input_a);
+	}) || $fg__input_a && $ui__input_x && _patch_write($scope0_id, "PatchMarkedWrite:f", f, !$sg__input_a) && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_f#6/subscribers", "f input_a");
 }, 1);

@@ -13,7 +13,7 @@
     },
     "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-double-read/template.marko_1*content"
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-double-read/template.marko_0_input_note#4/subscribers": "input_note",
-  "PatchMarkedWrite:input_note": "b"
+  "PatchMarkedWrite:input_note": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-double-read/template.marko_0_input_note#4/subscribers": "input_note"
 }
 ;BwU

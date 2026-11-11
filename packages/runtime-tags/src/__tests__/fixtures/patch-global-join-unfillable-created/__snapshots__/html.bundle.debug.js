@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $Outer_content__value__closures = new Set();
 		const $scope1_reason = _scope_reason(), $wi__value = _write_if($scope1_reason, 0);
-		_patch_write($scope1_id, "PatchMarkedWrite:value", value);
+		_patch_write($scope1_id, "PatchMarkedWrite:value", value) && _patch_subscribers($scope1_id, "__tests__/template.marko_1_value#4/subscribers", "value");
 		let count = 0;
 		const Inner = { content: _content("__tests__/template.marko_2*content", ({ y }) => {
 			const $scope2_id = _scope_id();
@@ -41,7 +41,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_patch_child_end();
 		_html(`<button>inc</button>${_el_mark($scope1_id, "#button/1")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
-		_patch_subscribers($scope1_id, "__tests__/template.marko_1_value#4/subscribers", "value");
 		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_count#5/fill", count, 1);
 		_scope($scope1_id, {
 			value,

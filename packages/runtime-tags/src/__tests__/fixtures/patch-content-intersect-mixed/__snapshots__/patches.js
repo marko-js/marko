@@ -1,11 +1,11 @@
 // PATCH
 {
-  Sa5: "g",
-  xg: "y"
+  xg: "y",
+  Sa5: "g"
 }
 
 // PATCH
 {
-  Sa5: "g",
-  xg: "z"
+  xg: "z",
+  Sa5: "g"
 }

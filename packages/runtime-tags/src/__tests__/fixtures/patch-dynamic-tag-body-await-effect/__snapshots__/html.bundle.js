@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 	const $input_on__closures = /* @__PURE__ */ new Set();
 	_html(`<main><div></div>${_el_mark($scope0_id, "a")}`);
 	_await($scope0_id, "b", input.v, (v) => {
-		const $scope1_id = _scope_id(), $ui__input_on = _unfilled_if($scope0_reason, 4), $fg__input_v = _filled_guard($scope0_reason, 3);
+		const $scope1_id = _scope_id(), $ui__input_on = _unfilled_if($scope0_reason, 4);
 		const $await_content__v__closures = /* @__PURE__ */ new Set();
 		_dynamic_tag($scope1_id, "a", input.on ? card_default : "div", {}, 2, _content_resume("a0", () => {
 			const $scope2_id = _scope_id();
@@ -47,21 +47,19 @@ var template_default = _template("a", (input) => {
 			_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "a2", $cg__input_v);
 			_subscribe(_unfilled_if($scope0_reason, 3) && $await_content__v__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_note__closures, _scope($scope2_id, { _: $wi__input_note__OR__input_v__OR__input_on && _scope_with_id($scope1_id) }), $cg__input_note && "a1"), $cg__input_v && "a2");
 		}, $scope1_id, ($scope) => $scope0_page ? [{ c: v }] : []), 0, $wg__input_on, $scope0_reason, 4, 0, void 0, 0, 0, "a0");
-		$fg__input_v && _patch_subscribers($scope1_id, "a3", "c");
-		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a4", $cg__input_on);
+		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a3", $cg__input_on);
 		$wi__input_note__OR__input_v__OR__input_on && _subscribe($ui__input_on && $input_on__closures, _scope($scope1_id, {
 			c: ($ui__input_on || _unfilled_if($scope0_reason, 3)) && v,
 			j: _write_if($scope0_reason, 3) && $await_content__v__closures
-		}), $cg__input_on && "a4", $wg__input_on);
-		$fg__input_v && (_client_branch_if("a0", $scope1_id) || $ui__input_on) && _patch_write($scope1_id, "xc", v, !_server_guard($scope0_reason, 3));
+		}), $cg__input_on && "a3", $wg__input_on);
+		_filled_guard($scope0_reason, 3) && (_client_branch_if("a0", $scope1_id) || $ui__input_on) && _patch_write($scope1_id, "xc", v, !_server_guard($scope0_reason, 3)) && _patch_subscribers($scope1_id, "a4", "c");
 		$wg__input_on || $wi__input_note__OR__input_v__OR__input_on && _resume_branch($scope1_id);
 	}, 1, "a5", _unfilled_if($scope0_reason, 3), 1, 1);
 	_html("</main>");
 	_script($scope0_id, "a7", 1, $fg__input_note);
-	$fg__input_note && _patch_subscribers($scope0_id, "a8", "e");
 	_scope($scope0_id, {
 		e: input.note,
 		h: _write_if($scope0_reason, 2) && $input_note__closures,
 		i: _write_if($scope0_reason, 4) && _unfilled_if($scope0_reason, 4) && $input_on__closures
-	}) || $fg__input_note && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_note && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "a8", "e");
 }, 1);

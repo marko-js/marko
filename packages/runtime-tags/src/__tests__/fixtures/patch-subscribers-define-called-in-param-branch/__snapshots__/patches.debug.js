@@ -14,8 +14,8 @@
         "PatchText:#text/1": 2
       }
     },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-subscribers-define-called-in-param-branch/tags/panel.marko_0_input_n#4/subscribers": "input_n",
-    "PatchMarkedWrite:input_n": 2
+    "PatchMarkedWrite:input_n": 2,
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-subscribers-define-called-in-param-branch/tags/panel.marko_0_input_n#4/subscribers": "input_n"
   }
 }
 ;DAQ

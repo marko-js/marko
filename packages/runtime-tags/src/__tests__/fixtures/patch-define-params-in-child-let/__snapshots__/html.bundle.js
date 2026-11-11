@@ -21,7 +21,7 @@ const $Row_content__template = "<em><!> <!></em>";
 const $setup = _shell_setup([[], []], ["b>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0, _w1) => `/${_w0}&/${_w1}&`)($Row_content__walks, $walks)};${((_w0, _w1) => `${_w0}${_w1}`)($Row_content__template, $template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const Row = { content: _content("a0", ({ n }) => {
@@ -39,10 +39,9 @@ var template_default = _template("a", (input) => {
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	card_default({ content: Row });
 	_patch_child_end();
-	$fg__input_label && _patch_subscribers($scope0_id, "a2", "e");
 	_scope($scope0_id, {
 		g: $wi__input_label && $input_label__closures,
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2)
-	}) || $fg__input_label && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "a2", "e");
 }, 1);

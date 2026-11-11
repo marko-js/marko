@@ -15,9 +15,8 @@
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-dynamic-tag-join-member-filled/tags/wrap.marko_1*shell"]
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-dynamic-tag-join-member-filled/template.marko_0_input_which#4/subscribers": "input_which",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-dynamic-tag-join-member-filled/template.marko_0_input_id#5/subscribers": "input_id",
-  "PatchMarkedWrite:input_id": "b"
+  "PatchMarkedWrite:input_id": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-dynamic-tag-join-member-filled/template.marko_0_input_id#5/subscribers": "input_id"
 }
 ;D2k
 
@@ -38,9 +37,8 @@
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-dynamic-tag-join-member-filled/tags/wrap.marko_1*shell"]
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-dynamic-tag-join-member-filled/template.marko_0_input_which#4/subscribers": "input_which",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-dynamic-tag-join-member-filled/template.marko_0_input_id#5/subscribers": "input_id",
-  "PatchMarkedWrite:input_id": "c"
+  "PatchMarkedWrite:input_id": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-dynamic-tag-join-member-filled/template.marko_0_input_id#5/subscribers": "input_id"
 }
 ;D2s
 
@@ -49,9 +47,8 @@
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": 0
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-dynamic-tag-join-member-filled/template.marko_0_input_which#4/subscribers": "input_which",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-dynamic-tag-join-member-filled/template.marko_0_input_id#5/subscribers": "input_id",
-  "PatchMarkedWrite:input_id": "d"
+  "PatchMarkedWrite:input_id": "d",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-dynamic-tag-join-member-filled/template.marko_0_input_id#5/subscribers": "input_id"
 }
 
 // PATCH holding D2s
@@ -70,7 +67,6 @@
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-dynamic-tag-join-member-filled/tags/wrap.marko_1*shell"]
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-dynamic-tag-join-member-filled/template.marko_0_input_which#4/subscribers": "input_which",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-dynamic-tag-join-member-filled/template.marko_0_input_id#5/subscribers": "input_id",
-  "PatchMarkedWrite:input_id": "e"
+  "PatchMarkedWrite:input_id": "e",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-dynamic-tag-join-member-filled/template.marko_0_input_id#5/subscribers": "input_id"
 }

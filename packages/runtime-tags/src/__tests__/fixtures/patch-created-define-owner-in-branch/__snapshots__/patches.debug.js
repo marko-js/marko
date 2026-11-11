@@ -6,8 +6,8 @@
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-in-branch/template.marko_1_k#2/fill": 1
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-in-branch/template.marko_1*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-in-branch/template.marko_0_input_w#5/subscribers": "input_w",
-  "PatchMarkedWrite:input_w": "b"
+  "PatchMarkedWrite:input_w": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-in-branch/template.marko_0_input_w#5/subscribers": "input_w"
 }
 ;BgE
 
@@ -18,6 +18,6 @@
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-in-branch/template.marko_1_k#2/fill": 1
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-in-branch/template.marko_1*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-in-branch/template.marko_0_input_w#5/subscribers": "input_w",
-  "PatchMarkedWrite:input_w": "c"
+  "PatchMarkedWrite:input_w": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-in-branch/template.marko_0_input_w#5/subscribers": "input_w"
 }

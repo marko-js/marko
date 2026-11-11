@@ -16,8 +16,8 @@
   cAb: {
     ta: "b"
   },
-  Sa5: "g",
-  xg: "b"
+  xg: "b",
+  Sa5: "g"
 }
 ;BAE
 
@@ -36,6 +36,6 @@
   cAb: {
     ta: "c"
   },
-  Sa5: "g",
-  xg: "c"
+  xg: "c",
+  Sa5: "g"
 }

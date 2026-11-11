@@ -53,7 +53,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}&D%l b`)(" b")};${((_w0) => `${_w0}<main><!></main><button class=m>m</button>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_note = _client_guard($scope0_reason, 3), $ui__input_on = _unfilled_if($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 3), $fg__input_mode = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_note = _client_guard($scope0_reason, 3), $ui__input_on = _unfilled_if($scope0_reason, 2), $fg__input_mode = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	let m = false;
@@ -71,7 +71,6 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, ($scope) => $scope0_page ? [{ h: input.note }] : []), 0, _write_guard($scope0_reason, 2), $scope0_reason, 2, 0, void 0, 0, 0, "a0");
 	_html(`</main><button class=m>m</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a2");
-	$fg__input_note && _patch_subscribers($scope0_id, "a3", "h");
 	_patch_render($scope0_id, "a4", $fg__input_mode && "f");
 	_scope($scope0_id, {
 		f: input.mode,
@@ -79,5 +78,5 @@ var template_default = _template("a", (input) => {
 		i: m,
 		a: _existing_scope($childScope),
 		k: _write_if($scope0_reason, 3) && $input_note__closures
-	}) || ($fg__input_mode && _patch_write($scope0_id, "xf", input.mode, !_server_guard($scope0_reason, 1)), $fg__input_note && (_client_branch_if("a0", $scope0_id) || $ui__input_on) && _patch_write($scope0_id, "xh", input.note, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_mode && _patch_write($scope0_id, "xf", input.mode, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 3) && (_client_branch_if("a0", $scope0_id) || $ui__input_on) && _patch_write($scope0_id, "xh", input.note, !_server_guard($scope0_reason, 3)) && _patch_subscribers($scope0_id, "a3", "h"));
 }, 1);

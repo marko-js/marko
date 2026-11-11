@@ -1,5 +1,5 @@
 // tags/host.marko
-const $inputnativesectioninputwrap_content__input_label = /*@__PURE__*/ _closure_get_patch("b2", 12, ($scope) => _text($scope.a, $scope._._.i), ($scope) => $scope._._, "b8", 0);
+const $inputnativesectioninputwrap_content__input_label = /*@__PURE__*/ _closure_get_patch("b2", 12, ($scope) => _text($scope.a, $scope._._.i), ($scope) => $scope._._, "b6", 0);
 const $inputnativesectioninputwrap_content = _content$1("b1", "<i> </i>", "D ", $inputnativesectioninputwrap_content__input_label);
 _content_resume($inputnativesectioninputwrap_content);
 const $if_content__dynamicTag$1 = /*@__PURE__*/ _dynamic_tag(0);

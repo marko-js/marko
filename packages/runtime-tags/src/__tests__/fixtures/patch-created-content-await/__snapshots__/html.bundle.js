@@ -23,7 +23,7 @@ _shells({
 	a4: `a4${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 4), $wi__input_p__OR__input_label__OR__input_show = _write_if($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 5), $ui__input_show = _unfilled_if($scope0_reason, 5), $fg__input_p = _filled_guard($scope0_reason, 3), $fg__input_label = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 4), $wi__input_p__OR__input_label__OR__input_show = _write_if($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 5), $ui__input_show = _unfilled_if($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_p__closures = /* @__PURE__ */ new Set();
@@ -52,13 +52,11 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a4"], $scope0_reason, 5);
-	$fg__input_p && _patch_subscribers($scope0_id, "a6", "d");
-	$fg__input_label && _patch_subscribers($scope0_id, "a7", "e");
 	_scope($scope0_id, {
 		d: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.p,
 		e: ($ui__input_show || _unfilled_if($scope0_reason, 4)) && input.label,
 		h: $ui__input_show && Body.content,
 		j: _write_if($scope0_reason, 4) && $input_label__closures,
 		i: _write_if($scope0_reason, 3) && $input_p__closures
-	}) || ($fg__input_p && _patch_write($scope0_id, "xd", input.p, !_server_guard($scope0_reason, 3)), $fg__input_label && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 4)));
+	}) || (_filled_guard($scope0_reason, 3) && _patch_write($scope0_id, "xd", input.p, !_server_guard($scope0_reason, 3)) && _patch_subscribers($scope0_id, "a6", "d"), _filled_guard($scope0_reason, 4) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 4)) && _patch_subscribers($scope0_id, "a7", "e"));
 }, 1);

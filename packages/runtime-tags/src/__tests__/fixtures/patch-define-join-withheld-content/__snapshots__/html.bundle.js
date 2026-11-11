@@ -6,7 +6,7 @@ _shells({
 	b: "b; ;<section></section>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_a__OR__input_b = _unfilled_if($scope0_reason, 0), $ui__input_b__OR__input_mode = _unfilled_if($scope0_reason, 2), $ui__input_a__OR__input_mode = _unfilled_if($scope0_reason, 1), $ui__input_mode = _unfilled_if($scope0_reason, 6), $fg__input_a = _filled_guard($scope0_reason, 4), $fg__input_b = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $ui__input_a__OR__input_b = _unfilled_if($scope0_reason, 0), $ui__input_b__OR__input_mode = _unfilled_if($scope0_reason, 2), $ui__input_a__OR__input_mode = _unfilled_if($scope0_reason, 1), $ui__input_mode = _unfilled_if($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	const $input_b__closures = /* @__PURE__ */ new Set();
@@ -23,8 +23,6 @@ var child_default = _template("b", (input) => {
 	_attr_content("a", $scope0_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 6);
 	_html(`</section>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 6))}`);
 	$ui__input_mode && _patch_write($scope0_id, "wh", frag.content, 1);
-	$fg__input_a && _patch_subscribers($scope0_id, "b4", "d");
-	$fg__input_b && _patch_subscribers($scope0_id, "b5", "e");
 	_client_guard($scope0_reason, 6) && _patch_render($scope0_id, "b6");
 	_scope($scope0_id, {
 		d: ($ui__input_b__OR__input_mode || $ui__input_a__OR__input_b) && input.a,
@@ -32,7 +30,7 @@ var child_default = _template("b", (input) => {
 		h: $ui__input_mode && frag.content,
 		j: _write_if($scope0_reason, 4) && $input_a__closures,
 		k: _write_if($scope0_reason, 5) && $input_b__closures
-	}) || ($fg__input_a && $ui__input_b__OR__input_mode && _patch_write($scope0_id, "xd", input.a, !_server_guard($scope0_reason, 4)), $fg__input_b && $ui__input_a__OR__input_mode && _patch_write($scope0_id, "xe", input.b, !_server_guard($scope0_reason, 5)));
+	}) || (_filled_guard($scope0_reason, 4) && $ui__input_b__OR__input_mode && _patch_write($scope0_id, "xd", input.a, !_server_guard($scope0_reason, 4)) && _patch_subscribers($scope0_id, "b4", "d"), _filled_guard($scope0_reason, 5) && $ui__input_a__OR__input_mode && _patch_write($scope0_id, "xe", input.b, !_server_guard($scope0_reason, 5)) && _patch_subscribers($scope0_id, "b5", "e"));
 });
 
 // template.marko

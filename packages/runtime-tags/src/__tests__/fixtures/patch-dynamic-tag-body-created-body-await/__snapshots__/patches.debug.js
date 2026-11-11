@@ -9,8 +9,6 @@
     },
     "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-created-body-await/template.marko_1*content"
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-created-body-await/template.marko_0_input_w#4/subscribers": "input_w",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-created-body-await/template.marko_0_input_note#5/subscribers": "input_note",
   "PatchMarkedWrite:input_w": (p => p = new Promise((f, r) => _.a = {
     f,
     r(e) {
@@ -18,7 +16,9 @@
       r(e)
     }
   }))(),
-  "PatchMarkedWrite:input_note": "b"
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-created-body-await/template.marko_0_input_w#4/subscribers": "input_w",
+  "PatchMarkedWrite:input_note": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-created-body-await/template.marko_0_input_note#5/subscribers": "input_note"
 }
 (_.a.f("y"), 0)
 ;CwU
@@ -33,8 +33,6 @@
     },
     "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-created-body-await/template.marko_1*content"
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-created-body-await/template.marko_0_input_w#4/subscribers": "input_w",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-created-body-await/template.marko_0_input_note#5/subscribers": "input_note",
   "PatchMarkedWrite:input_w": (p => p = new Promise((f, r) => _.a = {
     f,
     r(e) {
@@ -42,6 +40,8 @@
       r(e)
     }
   }))(),
-  "PatchMarkedWrite:input_note": "c"
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-created-body-await/template.marko_0_input_w#4/subscribers": "input_w",
+  "PatchMarkedWrite:input_note": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-created-body-await/template.marko_0_input_note#5/subscribers": "input_note"
 }
 (_.a.f("z"), 0)

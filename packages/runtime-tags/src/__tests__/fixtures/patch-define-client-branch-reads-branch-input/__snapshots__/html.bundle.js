@@ -10,7 +10,7 @@ _shells({
 	b1: "b1;D ;<span> </span>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_v = _client_guard($scope0_reason, 1), $wi__input_v = _write_if($scope0_reason, 1), $wg__input_v = _write_guard($scope0_reason, 1), $ui__input_v = _unfilled_if($scope0_reason, 1), $ui__input_on = _unfilled_if($scope0_reason, 2), $fg__input_v = _filled_guard($scope0_reason, 1), $cg__input_on = _client_guard($scope0_reason, 2), $fg__input_on = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_v = _client_guard($scope0_reason, 1), $wi__input_v = _write_if($scope0_reason, 1), $wg__input_v = _write_guard($scope0_reason, 1), $ui__input_v = _unfilled_if($scope0_reason, 1), $ui__input_on = _unfilled_if($scope0_reason, 2), $cg__input_on = _client_guard($scope0_reason, 2), $fg__input_on = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_v__closures = /* @__PURE__ */ new Set();
 	_if(() => {
@@ -42,13 +42,12 @@ var child_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_v, 1, 0, 0, ["b3"], $scope0_reason, 1);
-	$fg__input_v && $cg__input_on && _patch_subscribers($scope0_id, "b5", "d");
 	$fg__input_on && $cg__input_v && _patch_render($scope0_id, "b4", "e");
 	_scope($scope0_id, {
 		d: ($ui__input_on || $ui__input_v) && input.v,
 		e: ($ui__input_v || $ui__input_on) && input.on,
 		f: $wi__input_v && $input_v__closures
-	}) || ($fg__input_v && $ui__input_on && _patch_write($scope0_id, "xd", input.v, !_server_guard($scope0_reason, 1)), $fg__input_on && $ui__input_v && _patch_write($scope0_id, "xe", input.on, !_server_guard($scope0_reason, 2)));
+	}) || (_filled_guard($scope0_reason, 1) && $ui__input_on && _patch_write($scope0_id, "xd", input.v, !_server_guard($scope0_reason, 1)) && $cg__input_on && _patch_subscribers($scope0_id, "b5", "d"), $fg__input_on && $ui__input_v && _patch_write($scope0_id, "xe", input.on, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko

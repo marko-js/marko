@@ -33,10 +33,10 @@
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-caught-try-client-recomputes/template.marko_3_input_count#0:5/subscribe": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-caught-try-client-recomputes/template.marko_3*content"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-caught-try-client-recomputes/template.marko_0_input_label#4/subscribers": "input_label",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-caught-try-client-recomputes/template.marko_0_input_count#5/subscribers": "input_count",
   "PatchMarkedWrite:input_label": "a",
-  "PatchMarkedWrite:input_count": 1
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-caught-try-client-recomputes/template.marko_0_input_label#4/subscribers": "input_label",
+  "PatchMarkedWrite:input_count": 1,
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-caught-try-client-recomputes/template.marko_0_input_count#5/subscribers": "input_count"
 }
 ;DRQ
 
@@ -74,10 +74,10 @@
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-caught-try-client-recomputes/template.marko_3_input_count#0:5/subscribe": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-caught-try-client-recomputes/template.marko_3*content"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-caught-try-client-recomputes/template.marko_0_input_label#4/subscribers": "input_label",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-caught-try-client-recomputes/template.marko_0_input_count#5/subscribers": "input_count",
   "PatchMarkedWrite:input_label": "b",
-  "PatchMarkedWrite:input_count": 1
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-caught-try-client-recomputes/template.marko_0_input_label#4/subscribers": "input_label",
+  "PatchMarkedWrite:input_count": 1,
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-caught-try-client-recomputes/template.marko_0_input_count#5/subscribers": "input_count"
 }
 
 // PATCH holding DRQ
@@ -114,8 +114,8 @@
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-caught-try-client-recomputes/template.marko_3_input_count#0:5/subscribe": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-caught-try-client-recomputes/template.marko_3*content"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-caught-try-client-recomputes/template.marko_0_input_label#4/subscribers": "input_label",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-caught-try-client-recomputes/template.marko_0_input_count#5/subscribers": "input_count",
   "PatchMarkedWrite:input_label": "b",
-  "PatchMarkedWrite:input_count": 2
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-caught-try-client-recomputes/template.marko_0_input_label#4/subscribers": "input_label",
+  "PatchMarkedWrite:input_count": 2,
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-caught-try-client-recomputes/template.marko_0_input_count#5/subscribers": "input_count"
 }

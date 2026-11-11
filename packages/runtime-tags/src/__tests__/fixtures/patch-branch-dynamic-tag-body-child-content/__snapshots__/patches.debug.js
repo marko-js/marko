@@ -17,8 +17,8 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-dynamic-tag-body-child-content/template.marko_1*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-branch-dynamic-tag-body-child-content/template.marko_0_input_label#5/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "b"
+  "PatchMarkedWrite:input_label": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-branch-dynamic-tag-body-child-content/template.marko_0_input_label#5/subscribers": "input_label"
 }
 ;Cww
 
@@ -40,8 +40,8 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-dynamic-tag-body-child-content/template.marko_1*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-branch-dynamic-tag-body-child-content/template.marko_0_input_label#5/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "c"
+  "PatchMarkedWrite:input_label": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-branch-dynamic-tag-body-child-content/template.marko_0_input_label#5/subscribers": "input_label"
 }
 
 // PATCH holding Cww
@@ -62,6 +62,6 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-dynamic-tag-body-child-content/template.marko_1*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-branch-dynamic-tag-body-child-content/template.marko_0_input_label#5/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "d"
+  "PatchMarkedWrite:input_label": "d",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-branch-dynamic-tag-body-child-content/template.marko_0_input_label#5/subscribers": "input_label"
 }

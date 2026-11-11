@@ -42,10 +42,10 @@ var list_default = _template("b", (input) => {
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}&b`)($walks)};${((_w0) => `${_w0}<!>`)($template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 0), $fg__input_note = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
-	$fg__input_note && _patch_write($scope0_id, "xd", input.note, !_server_guard($scope0_reason, 0));
+	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.note, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "a3", "d");
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3);
 	let $item;
 	forOf(input.labels, (label) => $item = attrTags($item, { content: _content_resume("a2", () => {
@@ -63,7 +63,6 @@ var template_default = _template("a", (input) => {
 		item: $item
 	});
 	_patch_child_end();
-	$fg__input_note && _patch_subscribers($scope0_id, "a3", "d");
 	_scope($scope0_id, {
 		d: input.note,
 		f: _write_if($scope0_reason, 0) && $input_note__closures,

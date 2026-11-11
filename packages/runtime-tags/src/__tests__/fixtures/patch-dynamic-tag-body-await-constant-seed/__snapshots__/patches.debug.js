@@ -4,7 +4,6 @@
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-constant-seed/tags/card.marko_1*content",
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-constant-seed/tags/card.marko_0_input_note#5/subscribers": "input_note",
       "PatchSetup:": {
         "PatchWrite:input_note": "n"
       }
@@ -24,8 +23,8 @@
           },
           "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-constant-seed/tags/card.marko_2*content"
         },
-        "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-constant-seed/tags/card.marko_1_v#2/subscribers": "v",
-        "PatchMarkedWrite:v": "y"
+        "PatchMarkedWrite:v": "y",
+        "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-constant-seed/tags/card.marko_1_v#2/subscribers": "v"
       }
     }
   }
@@ -37,7 +36,6 @@
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-constant-seed/tags/card.marko_1*content",
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-constant-seed/tags/card.marko_0_input_note#5/subscribers": "input_note",
       "PatchSetup:": {
         "PatchWrite:input_note": "n"
       },
@@ -50,8 +48,8 @@
           },
           "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-constant-seed/tags/card.marko_2*content"
         },
-        "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-constant-seed/tags/card.marko_1_v#2/subscribers": "v",
-        "PatchMarkedWrite:v": "z"
+        "PatchMarkedWrite:v": "z",
+        "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-constant-seed/tags/card.marko_1_v#2/subscribers": "v"
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-constant-seed/template.marko_1*shell"]

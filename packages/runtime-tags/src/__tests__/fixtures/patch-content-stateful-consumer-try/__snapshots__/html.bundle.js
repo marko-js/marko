@@ -32,7 +32,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}&b`)($walks)};${((_w0) => `${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_fail = _filled_guard($scope0_reason, 1), $fg__input_x = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $input_fail__closures = /* @__PURE__ */ new Set();
 	const $input_x__closures = /* @__PURE__ */ new Set();
@@ -58,13 +58,11 @@ var template_default = _template("a", (input) => {
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id) });
 	_patch_child_end();
-	$fg__input_fail && _patch_subscribers($scope0_id, "a6", "d");
-	$fg__input_x && _patch_subscribers($scope0_id, "a7", "e");
 	_scope($scope0_id, {
 		d: input.fail,
 		e: input.x,
 		f: _write_if($scope0_reason, 1) && $input_fail__closures,
 		g: _write_if($scope0_reason, 2) && $input_x__closures,
 		a: _existing_scope($childScope)
-	}) || ($fg__input_fail && _patch_write($scope0_id, "xd", input.fail, !_server_guard($scope0_reason, 1)), $fg__input_x && _patch_write($scope0_id, "xe", input.x, !_server_guard($scope0_reason, 2)));
+	}) || (_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xd", input.fail, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a6", "d"), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.x, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "a7", "e"));
 }, 1);

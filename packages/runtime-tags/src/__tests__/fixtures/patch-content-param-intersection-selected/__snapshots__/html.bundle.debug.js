@@ -27,7 +27,7 @@ _shells({
 	"__tests__/tags/owner.marko_2*shell": "__tests__/tags/owner.marko_2*shell;D ;<p> </p>"
 });
 var owner_default = _template("__tests__/tags/owner.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $uf__input_a = _updates_from($scope0_reason, 5), $wg__input_show = _write_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 4), $wi__input_x__OR__input_show__OR__input_a = _write_if($scope0_reason, 2), $uf__input_x = _updates_from($scope0_reason, 3), $ui__input_x = _unfilled_if($scope0_reason, 3), $ui__input_x__OR__input_show = _unfilled_if($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $uf__input_a = _updates_from($scope0_reason, 5), $wg__input_show = _write_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 4), $wi__input_x__OR__input_show__OR__input_a = _write_if($scope0_reason, 2), $uf__input_x = _updates_from($scope0_reason, 3), $ui__input_x = _unfilled_if($scope0_reason, 3), $ui__input_x__OR__input_show = _unfilled_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	const $input_show__closures = new Set();
@@ -60,8 +60,6 @@ var owner_default = _template("__tests__/tags/owner.marko", (input) => {
 	});
 	_patch_child_end();
 	_script($scope0_id, "__tests__/tags/owner.marko_0", 0);
-	$fg__input_show && _patch_subscribers($scope0_id, "__tests__/tags/owner.marko_0_input_show#4/subscribers", "input_show");
-	$fg__input_a && _patch_subscribers($scope0_id, "__tests__/tags/owner.marko_0_input_a#5/subscribers", "input_a");
 	_scope($scope0_id, {
 		input_show: ($ui__input_x || _unfilled_if($scope0_reason, 4)) && input.show,
 		input_a: ($ui__input_x__OR__input_show || _unfilled_if($scope0_reason, 5)) && input.a,
@@ -71,7 +69,7 @@ var owner_default = _template("__tests__/tags/owner.marko", (input) => {
 	}, "__tests__/tags/owner.marko", 0, {
 		input_show: ["input.show"],
 		input_a: ["input.a"]
-	}) || ($fg__input_show && $ui__input_x && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 4)), $fg__input_a && $ui__input_x__OR__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 5)));
+	}) || (_filled_guard($scope0_reason, 4) && $ui__input_x && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 4)) && _patch_subscribers($scope0_id, "__tests__/tags/owner.marko_0_input_show#4/subscribers", "input_show"), _filled_guard($scope0_reason, 5) && $ui__input_x__OR__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 5)) && _patch_subscribers($scope0_id, "__tests__/tags/owner.marko_0_input_a#5/subscribers", "input_a"));
 });
 
 // template.marko

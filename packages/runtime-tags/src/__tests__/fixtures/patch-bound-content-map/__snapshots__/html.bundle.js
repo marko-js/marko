@@ -41,7 +41,7 @@ _shells({
 	a2: `a2${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const Body = { content: _content_resume("a0", () => {
@@ -63,10 +63,9 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a2"], $scope0_reason, 1);
-	$fg__input_label && _patch_subscribers($scope0_id, "a3", "d");
 	_scope($scope0_id, {
 		d: input.label,
 		g: _unfilled_if($scope0_reason, 1) && Body.content,
 		h: _write_if($scope0_reason, 0) && $input_label__closures
-	}) || $fg__input_label && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "a3", "d");
 }, 1);

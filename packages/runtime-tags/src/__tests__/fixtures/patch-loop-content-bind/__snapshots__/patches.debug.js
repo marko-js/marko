@@ -19,8 +19,8 @@
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-bind/tags/list.marko_2_item_content#1:3/setup": "item_content"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-bind/tags/list.marko_1*shell"]
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-bind/template.marko_0_input_note#4/subscribers": "input_note",
-  "PatchMarkedWrite:input_note": "y"
+  "PatchMarkedWrite:input_note": "y",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-bind/template.marko_0_input_note#4/subscribers": "input_note"
 }
 ;BgE
 
@@ -34,6 +34,6 @@
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-bind/tags/list.marko_2_item_content#1:3/setup": "item_content"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-bind/tags/list.marko_1*shell"]
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-bind/template.marko_0_input_note#4/subscribers": "input_note",
-  "PatchMarkedWrite:input_note": "z"
+  "PatchMarkedWrite:input_note": "z",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-bind/template.marko_0_input_note#4/subscribers": "input_note"
 }

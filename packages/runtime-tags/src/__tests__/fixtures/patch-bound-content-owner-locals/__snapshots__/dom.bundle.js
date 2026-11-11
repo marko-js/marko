@@ -1,5 +1,5 @@
 // tags/host.marko
-const $item_content__input_label = /*@__PURE__*/ _closure_get_patch("b0", 9, ($scope) => _text($scope.b, $scope._._.g), ($scope) => $scope._._, "b6", 0);
+const $item_content__input_label = /*@__PURE__*/ _closure_get_patch("b0", 9, ($scope) => _text($scope.b, $scope._._.g), ($scope) => $scope._._, "b4", 0);
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content$1("b1", "<i><!>:<!></i>", "D%c%", $item_content__input_label), { 2: ($scope) => _text($scope.a, $scope.c) });
 _content_resume($item_content, 1);
 

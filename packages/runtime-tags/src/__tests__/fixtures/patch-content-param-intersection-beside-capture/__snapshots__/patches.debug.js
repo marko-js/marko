@@ -9,8 +9,7 @@
         "PatchBind:get": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-param-intersection-beside-capture/template.marko_1/get"
       }
     }
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-param-intersection-beside-capture/template.marko_0_input_a#4/subscribers": "input_a"
+  }
 }
 
 // PATCH
@@ -24,6 +23,5 @@
         "PatchBind:get": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-param-intersection-beside-capture/template.marko_1/get"
       }
     }
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-param-intersection-beside-capture/template.marko_0_input_a#4/subscribers": "input_a"
+  }
 }

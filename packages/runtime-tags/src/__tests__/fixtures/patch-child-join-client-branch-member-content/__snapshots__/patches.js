@@ -2,16 +2,16 @@
 `b1;D ;<p> </p>`
 {
   ca: {
-    Sb4: "f",
     ib5: "f",
-    xf: "y"
+    xf: "y",
+    Sb4: "f"
   },
   cb: {
     ba: [{
       ta: "yq"
     }, "b1"],
-    Sb4: "f",
-    xf: "y"
+    xf: "y",
+    Sb4: "f"
   }
 }
 ;CAI
@@ -19,31 +19,31 @@
 // PATCH holding CAI
 {
   ca: {
-    Sb4: "f",
     ib5: "f",
-    xf: "z"
+    xf: "z",
+    Sb4: "f"
   },
   cb: {
     ba: [{
       ta: "zr"
     }, "b1"],
-    Sb4: "f",
-    xf: "z"
+    xf: "z",
+    Sb4: "f"
   }
 }
 
 // PATCH holding CAI
 {
   ca: {
-    Sb4: "f",
     ib5: "f",
-    xf: "w"
+    xf: "w",
+    Sb4: "f"
   },
   cb: {
     ba: [{
       ta: "wt"
     }, "b1"],
-    Sb4: "f",
-    xf: "w"
+    xf: "w",
+    Sb4: "f"
   }
 }

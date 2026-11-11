@@ -6,8 +6,8 @@
   cAd: {
     ta: "b"
   },
-  Sa5: "h",
-  xh: "b"
+  xh: "b",
+  Sa5: "h"
 }
 ;CAI
 
@@ -19,8 +19,8 @@
   cAd: {
     ta: "c"
   },
-  Sa5: "h",
-  xh: "c"
+  xh: "c",
+  Sa5: "h"
 }
 ;CQw
 
@@ -31,6 +31,6 @@
   cAd: {
     ta: "d"
   },
-  Sa5: "h",
-  xh: "d"
+  xh: "d",
+  Sa5: "h"
 }

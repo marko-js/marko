@@ -40,7 +40,6 @@ var template_default = _template("a", (input) => {
 	let count = _dynamic_tag($scope0_id, "a", input.which ? Counter : Other, { label: input.label }, 1, 0, 0, 1, $scope0_reason, 0, 0, void 0, 0, "a6");
 	_var($scope0_id, "b", $inputwhichCounterOther_scope, "a6");
 	_html(`<p>${_text_mark($scope0_id, "c", count)}</p>`);
-	$fg__input_label && _patch_subscribers($scope0_id, "a7", "f");
 	_patch_render($scope0_id, "a8", (($fg__input_label ? " f" : "") + ($fg__input_which ? " g" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		f: ($ui__input_which || $ui__input_label__OR__input_which || $ui__input_label) && input.label,
@@ -48,5 +47,5 @@ var template_default = _template("a", (input) => {
 		h: $ui__input_label__OR__input_which && Counter,
 		i: $ui__input_label__OR__input_which && Other,
 		l: $wi__input_label && $input_label__closures
-	}) || ($fg__input_label && $ui__input_which && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)), $fg__input_which && $ui__input_label && _patch_write($scope0_id, "xg", input.which, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_label && $ui__input_which && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a7", "f"), $fg__input_which && $ui__input_label && _patch_write($scope0_id, "xg", input.which, !_server_guard($scope0_reason, 2)));
 }, 1);

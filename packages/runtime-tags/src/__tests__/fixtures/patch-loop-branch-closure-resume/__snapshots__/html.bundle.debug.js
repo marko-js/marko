@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/sub.marko_2*shell": "__tests__/tags/sub.marko_2*shell __tests__/tags/sub.marko_2_g#0:6/subscribe;D ;<span class=v> </span>"
 });
 var sub_default = _template("__tests__/tags/sub.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_items = _write_guard($scope0_reason, 0), $fg__input_n = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_items = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_n__closures = new Set();
 	const $g__closures = new Set();
@@ -29,7 +29,6 @@ var sub_default = _template("__tests__/tags/sub.marko", (input) => {
 	}, "k", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/sub.marko_1*shell", $scope0_reason, 0);
 	_html(`<button class=inc>+</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/sub.marko_0");
-	$fg__input_n && _client_guard($scope0_reason, 0) && _patch_subscribers($scope0_id, "__tests__/tags/sub.marko_0_input_n#5/subscribers", "input_n");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/sub.marko_0_g#6/fill", g, 1);
 	_scope($scope0_id, {
 		input_n: input.n,
@@ -39,7 +38,7 @@ var sub_default = _template("__tests__/tags/sub.marko", (input) => {
 	}, "__tests__/tags/sub.marko", 0, {
 		input_n: ["input.n"],
 		g: "2:6"
-	}) || $fg__input_n && _patch_write($scope0_id, "PatchMarkedWrite:input_n", input.n, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_n", input.n, !_server_guard($scope0_reason, 1)) && _client_guard($scope0_reason, 0) && _patch_subscribers($scope0_id, "__tests__/tags/sub.marko_0_input_n#5/subscribers", "input_n");
 });
 
 // tags/route-cl.marko

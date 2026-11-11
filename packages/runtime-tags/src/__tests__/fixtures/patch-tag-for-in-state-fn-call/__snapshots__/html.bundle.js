@@ -39,7 +39,6 @@ var card_default = _template("b", (input) => {
 	_html(`<button class=s>+</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "b8");
 	$fg__input_sel && $cg__input_obj && _patch_render($scope0_id, "b7", "g");
-	$fg__input_prefix2 && ($cg__input_obj || $cg__input_sel) && _patch_subscribers($scope0_id, "b9", "i e");
 	_patch_fill($scope0_id, "vb10", s, 1);
 	_scope($scope0_id, {
 		e: input.prefix,
@@ -48,7 +47,7 @@ var card_default = _template("b", (input) => {
 		i: fmt,
 		k: $s__closures,
 		l: _write_if($scope0_reason, 1) && $fmt2__closures
-	}) || ($fg__input_sel && $ui__input_obj && _patch_write($scope0_id, "xg", input.sel, !_server_guard($scope0_reason, 3)), $fg__input_prefix2 && _patch_write($scope0_id, "xi", fmt, !$sg__input_prefix));
+	}) || ($fg__input_sel && $ui__input_obj && _patch_write($scope0_id, "xg", input.sel, !_server_guard($scope0_reason, 3)), $fg__input_prefix2 && _patch_write($scope0_id, "xi", fmt, !$sg__input_prefix) && ($cg__input_obj || $cg__input_sel) && _patch_subscribers($scope0_id, "b9", "i e"));
 });
 
 // template.marko

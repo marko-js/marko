@@ -13,7 +13,6 @@
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-content-call-beside-stateful-body/template.marko_5*shell"]
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-content-call-beside-stateful-body/template.marko_0_input_label#6/subscribers": "input_label",
   "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-content-call-beside-stateful-body/template.marko_0_open#8_Tag#11/setup": "Tag",
   "PatchMarkedWrite:Tag": {
     content: _([], "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-content-call-beside-stateful-body/template.marko_2*content", 1)
@@ -35,7 +34,6 @@
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-content-call-beside-stateful-body/template.marko_5*shell"]
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-content-call-beside-stateful-body/template.marko_0_input_label#6/subscribers": "input_label",
   "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-content-call-beside-stateful-body/template.marko_0_open#8_Tag#11/setup": "Tag",
   "PatchMarkedWrite:Tag": {
     content: _([], "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-content-call-beside-stateful-body/template.marko_2*content", 1)
@@ -47,7 +45,6 @@
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": 0
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-content-call-beside-stateful-body/template.marko_0_input_label#6/subscribers": "input_label",
   "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-content-call-beside-stateful-body/template.marko_0_open#8_Tag#11/setup": "Tag",
   "PatchMarkedWrite:Tag": {
     content: _([], "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-content-call-beside-stateful-body/template.marko_2*content", 1)
@@ -68,7 +65,6 @@
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-content-call-beside-stateful-body/template.marko_5*shell"]
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-content-call-beside-stateful-body/template.marko_0_input_label#6/subscribers": "input_label",
   "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-content-call-beside-stateful-body/template.marko_0_open#8_Tag#11/setup": "Tag",
   "PatchMarkedWrite:Tag": {
     content: _([], "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-content-call-beside-stateful-body/template.marko_2*content", 1)

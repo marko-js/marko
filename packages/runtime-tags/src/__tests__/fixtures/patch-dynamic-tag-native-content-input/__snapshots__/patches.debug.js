@@ -24,8 +24,8 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-content-input/template.marko_2*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-content-input/template.marko_0_input_label#5/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "b"
+  "PatchMarkedWrite:input_label": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-content-input/template.marko_0_input_label#5/subscribers": "input_label"
 }
 ;CgI
 
@@ -44,6 +44,6 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-content-input/template.marko_2*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-content-input/template.marko_0_input_label#5/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "c"
+  "PatchMarkedWrite:input_label": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-content-input/template.marko_0_input_label#5/subscribers": "input_label"
 }

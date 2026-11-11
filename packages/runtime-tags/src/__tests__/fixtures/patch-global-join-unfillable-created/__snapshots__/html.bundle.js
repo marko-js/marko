@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $Outer_content__value__closures = /* @__PURE__ */ new Set();
 		const $scope1_reason = _scope_reason(), $wi__value = _write_if($scope1_reason, 0);
-		_patch_write($scope1_id, "xe", value);
+		_patch_write($scope1_id, "xe", value) && _patch_subscribers($scope1_id, "a6", "e");
 		let count = 0;
 		const Inner = { content: _content("a0", ({ y }) => {
 			const $scope2_id = _scope_id();
@@ -35,7 +35,6 @@ var template_default = _template("a", (input) => {
 		_patch_child_end();
 		_html(`<button>inc</button>${_el_mark($scope1_id, "b")}`);
 		_script($scope1_id, "a5");
-		_patch_subscribers($scope1_id, "a6", "e");
 		_patch_fill($scope1_id, "va7", count, 1);
 		_scope($scope1_id, {
 			e: value,

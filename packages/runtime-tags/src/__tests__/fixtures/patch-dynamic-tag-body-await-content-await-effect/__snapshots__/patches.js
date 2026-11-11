@@ -2,9 +2,6 @@
 [`b !b1; b%;<button class=toggle>toggle</button><!><!>`, `a8`]
 {
   pa: 1,
-  Sa13: "f",
-  Sa14: "g",
-  Sa15: "h",
   xf: (p => p = new Promise((f, r) => _.a = {
     f,
     r(e) {
@@ -12,8 +9,11 @@
       r(e)
     }
   }))(),
+  Sa13: "f",
   xg: !1,
+  Sa14: "g",
   xh: "b",
+  Sa15: "h",
   cAa: {
     fa: ["b", "a8"],
     cAa: {
@@ -32,9 +32,6 @@
 [`a6;D l%;<b> </b><!><!>`, `a0`]
 {
   pa: 1,
-  Sa13: "f",
-  Sa14: "g",
-  Sa15: "h",
   xf: (p => p = new Promise((f, r) => _.a = {
     f,
     r(e) {
@@ -42,8 +39,11 @@
       r(e)
     }
   }))(),
+  Sa13: "f",
   xg: !0,
+  Sa14: "g",
   xh: "c",
+  Sa15: "h",
   cAa: {
     fa: [">div", "a8"],
     cAa: {
@@ -51,6 +51,7 @@
         pa: "a6",
         cAa: {
           xd: "z",
+          Sa4: "d",
           ta: "z",
           fb: ["b", "a0"],
           cAb: {
@@ -60,8 +61,7 @@
             },
             de: "^a0"
           },
-          e: "a3",
-          Sa4: "d"
+          e: "a3"
         }
       }
     }
@@ -73,9 +73,6 @@
 // PATCH holding Eao
 {
   pa: 1,
-  Sa13: "f",
-  Sa14: "g",
-  Sa15: "h",
   xf: (p => p = new Promise((f, r) => _.a = {
     f,
     r(e) {
@@ -83,8 +80,11 @@
       r(e)
     }
   }))(),
+  Sa13: "f",
   xg: !0,
+  Sa14: "g",
   xh: "d",
+  Sa15: "h",
   cAa: {
     fa: ["b", "a8"],
     cAa: {

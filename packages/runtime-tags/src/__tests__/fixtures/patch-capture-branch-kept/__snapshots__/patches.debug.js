@@ -4,11 +4,11 @@
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/1": [{
       "PatchMarkedWrite:s": !1,
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-capture-branch-kept/tags/child.marko_1_s#2/subscribers": "s",
       "PatchChild:#childScope/1": {
         "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-capture-branch-kept/tags/probe.marko_0_get#3",
         "PatchBind:get": "^packages/runtime-tags/src/__tests__/fixtures/patch-capture-branch-kept/tags/child.marko_1/get"
-      },
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-capture-branch-kept/tags/child.marko_1_s#2/subscribers": "s"
+      }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-capture-branch-kept/tags/child.marko_1*shell"]
   }
 }
@@ -19,11 +19,11 @@
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/1": [{
       "PatchMarkedWrite:s": !0,
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-capture-branch-kept/tags/child.marko_1_s#2/subscribers": "s",
       "PatchChild:#childScope/1": {
         "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-capture-branch-kept/tags/probe.marko_0_get#3",
         "PatchBind:get": "^packages/runtime-tags/src/__tests__/fixtures/patch-capture-branch-kept/tags/child.marko_1/get"
-      },
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-capture-branch-kept/tags/child.marko_1_s#2/subscribers": "s"
+      }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-capture-branch-kept/tags/child.marko_1*shell"]
   }
 }

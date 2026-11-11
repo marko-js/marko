@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/host.marko_2*shell": "__tests__/tags/host.marko_2*shell;b%;<!><!><!>"
 });
 var host_default = _template("__tests__/tags/host.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_wrap = _write_guard($scope0_reason, 4), $scope0_page = _page_render(), $cg__input_label = _client_guard($scope0_reason, 7), $wg__input_wrap__OR__input_native = _write_guard($scope0_reason, 1), $wi__input_wrap__OR__input_show__OR__input_native__OR__input_label = _write_if($scope0_reason, 3), $ui__input_wrap__OR__input_show = _unfilled_if($scope0_reason, 0), $ui__input_wrap__OR__input_show__OR__input_native = _unfilled_if($scope0_reason, 2), $fg__input_wrap = _filled_guard($scope0_reason, 4), $fg__input_native = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 5), $fg__input_label = _filled_guard($scope0_reason, 7);
+	const $scope0_reason = _scope_reason(), $wg__input_wrap = _write_guard($scope0_reason, 4), $scope0_page = _page_render(), $cg__input_label = _client_guard($scope0_reason, 7), $wg__input_wrap__OR__input_native = _write_guard($scope0_reason, 1), $wi__input_wrap__OR__input_show__OR__input_native__OR__input_label = _write_if($scope0_reason, 3), $ui__input_wrap__OR__input_show = _unfilled_if($scope0_reason, 0), $ui__input_wrap__OR__input_show__OR__input_native = _unfilled_if($scope0_reason, 2), $fg__input_wrap = _filled_guard($scope0_reason, 4), $fg__input_native = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	let flag = false;
@@ -41,7 +41,6 @@ var host_default = _template("__tests__/tags/host.marko", (input) => {
 	$fg__input_wrap && _patch_render($scope0_id, "__tests__/tags/host.marko_1_input_wrap#0:5/setup", "input_wrap");
 	$fg__input_wrap && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/host.marko_2_input_wrap#0:5/setup", "input_wrap");
 	$fg__input_native && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/host.marko_2_input_native#0:7/setup", "input_native");
-	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/tags/host.marko_0_input_label#8/subscribers", "input_label");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/host.marko_0_flag#9/fill", flag, 1);
 	_scope($scope0_id, {
 		input_wrap: input.wrap,
@@ -54,7 +53,7 @@ var host_default = _template("__tests__/tags/host.marko", (input) => {
 		input_native: ["input.native"],
 		input_label: ["input.label"],
 		flag: "1:6"
-	}) || ($fg__input_wrap && _patch_write($scope0_id, "PatchMarkedWrite:input_wrap", input.wrap, !_server_guard($scope0_reason, 4)), $fg__input_native && $ui__input_wrap__OR__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_native", input.native, !_server_guard($scope0_reason, 6)), $fg__input_label && (_client_branch_if("__tests__/tags/host.marko_3*content", $scope0_id) || $ui__input_wrap__OR__input_show__OR__input_native) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 7)));
+	}) || ($fg__input_wrap && _patch_write($scope0_id, "PatchMarkedWrite:input_wrap", input.wrap, !_server_guard($scope0_reason, 4)), $fg__input_native && $ui__input_wrap__OR__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_native", input.native, !_server_guard($scope0_reason, 6)), _filled_guard($scope0_reason, 7) && (_client_branch_if("__tests__/tags/host.marko_3*content", $scope0_id) || $ui__input_wrap__OR__input_show__OR__input_native) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 7)) && _patch_subscribers($scope0_id, "__tests__/tags/host.marko_0_input_label#8/subscribers", "input_label"));
 });
 
 // template.marko

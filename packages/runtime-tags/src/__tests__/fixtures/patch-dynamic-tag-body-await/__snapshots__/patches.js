@@ -2,8 +2,8 @@
 [`b !b1; b%;<button class=toggle>toggle</button><!><!>`, `a0`]
 {
   pa: 1,
-  Sa7: "f",
   xf: "b",
+  Sa7: "f",
   cAa: {
     fa: ["b", "a0"],
     cAa: {
@@ -13,8 +13,8 @@
       },
       de: "^a0"
     },
-    Sa3: "c",
-    xc: "y"
+    xc: "y",
+    Sa4: "c"
   }
 }
 ;CxI
@@ -22,8 +22,8 @@
 // PATCH holding CxI
 {
   pa: 1,
-  Sa7: "f",
   xf: "c",
+  Sa7: "f",
   cAa: {
     fa: ["b", "a0"],
     cAa: {
@@ -33,7 +33,7 @@
       },
       de: "^a0"
     },
-    Sa3: "c",
-    xc: "z"
+    xc: "z",
+    Sa4: "c"
   }
 }

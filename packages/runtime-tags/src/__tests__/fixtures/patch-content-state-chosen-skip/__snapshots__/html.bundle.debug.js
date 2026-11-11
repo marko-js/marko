@@ -51,7 +51,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0_status#13", 1, $fg__input_b);
 	_script($scope0_id, "__tests__/template.marko_0_attrs#12", 1, $sg__input_b && 2);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$fg__input_b && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_b#6/subscribers", "input_b");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_b#6_mode#7_one#8_two#9/setup", $fg__input_b && "input_b");
 	_scope($scope0_id, {
 		input_b: input.b,
@@ -68,5 +67,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		status: "24:8",
 		"EventAttributes:#section/2": ["...attrs", "22:13"],
 		"EventAttributes:#section/3": ["...attrs", "23:13"]
-	}) || ($fg__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !$sg__input_b), $fg__input_b && _patch_write($scope0_id, "PatchMarkedWrite:status", status, !$sg__input_b));
+	}) || ($fg__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !$sg__input_b) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_b#6/subscribers", "input_b"), $fg__input_b && _patch_write($scope0_id, "PatchMarkedWrite:status", status, !$sg__input_b));
 }, 1);

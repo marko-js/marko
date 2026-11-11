@@ -11,7 +11,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_msg = _client_guard($scope0_reason, 4), $ui__input_show = _unfilled_if($scope0_reason, 2), $wi__input_show__OR__input_promise__OR__input_msg = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $ui__input_promise2 = _unfilled_if($scope0_reason, 3), $ui__input_msg = _unfilled_if($scope0_reason, 4), $fg__input_promise = _filled_guard($scope0_reason, 3), $fg__input_msg = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_msg = _client_guard($scope0_reason, 4), $ui__input_show = _unfilled_if($scope0_reason, 2), $wi__input_show__OR__input_promise__OR__input_msg = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $ui__input_promise2 = _unfilled_if($scope0_reason, 3), $ui__input_msg = _unfilled_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_msg__closures = new Set();
 	const $input_promise__closures = new Set();
@@ -47,8 +47,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("<em>loading</em>");
 	}, void 0, "__tests__/template.marko_4*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$fg__input_promise && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_promise#6/subscribers", "input_promise");
-	$fg__input_msg && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_msg#7/subscribers", "input_msg");
 	_scope($scope0_id, {
 		input_promise: ($ui__input_show || $ui__input_promise2) && input.promise,
 		input_msg: ($ui__input_show || $ui__input_msg) && input.msg,
@@ -60,5 +58,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_promise: ["input.promise"],
 		input_msg: ["input.msg"],
 		count: "1:6"
-	}) || ($fg__input_promise && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_promise", input.promise, !_server_guard($scope0_reason, 3)), $fg__input_msg && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_msg", input.msg, !_server_guard($scope0_reason, 4)));
+	}) || (_filled_guard($scope0_reason, 3) && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_promise", input.promise, !_server_guard($scope0_reason, 3)) && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_promise#6/subscribers", "input_promise"), _filled_guard($scope0_reason, 4) && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_msg", input.msg, !_server_guard($scope0_reason, 4)) && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_msg#7/subscribers", "input_msg"));
 }, 1);

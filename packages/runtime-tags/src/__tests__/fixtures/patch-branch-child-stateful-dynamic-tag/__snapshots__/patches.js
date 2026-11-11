@@ -3,11 +3,11 @@
 {
   ba: [{
     ca: {
-      Sb3: "e",
       o: {
         vb4: 0
       },
-      xe: "two"
+      xe: "two",
+      Sb3: "e"
     }
   }, "a1"]
 }
@@ -17,11 +17,11 @@
 {
   ba: [{
     ca: {
-      Sb3: "e",
       o: {
         vb4: 0
       },
-      xe: "three"
+      xe: "three",
+      Sb3: "e"
     }
   }, "a1"]
 }

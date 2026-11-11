@@ -31,12 +31,11 @@ var panel_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["b4"], $scope0_reason, 1);
 	_html(`<output>${_text_mark($scope0_id, "b", out, 1, 0, 0, 1)}</output>`);
-	$fg__input_a && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "b5", "g e");
 	_scope($scope0_id, {
 		e: input.a,
 		g: f,
 		i: _write_if($scope0_reason, 0) && $f2__closures
-	}) || $fg__input_a && _patch_write($scope0_id, "xg", f, !$sg__input_a);
+	}) || $fg__input_a && _patch_write($scope0_id, "xg", f, !$sg__input_a) && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "b5", "g e");
 });
 
 // template.marko

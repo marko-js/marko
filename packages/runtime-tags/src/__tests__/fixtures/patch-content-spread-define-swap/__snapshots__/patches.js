@@ -6,8 +6,8 @@
   cAa: {
     ta: "t2"
   },
-  Sa5: "d",
-  xd: "t2"
+  xd: "t2",
+  Sa5: "d"
 }
 ;BgI
 
@@ -19,7 +19,7 @@
   cAa: {
     ta: "t3"
   },
-  Sa5: "d",
-  xd: "t3"
+  xd: "t3",
+  Sa5: "d"
 }
 ;BwY

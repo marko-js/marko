@@ -3,16 +3,16 @@
 {
   la: [1, {
     pa: "a5",
-    Sa8: "f",
-    xf: "c"
+    xf: "c",
+    Sa8: "f"
   }, 2, {
     pa: "a5",
-    Sa8: "f",
-    xf: "d"
+    xf: "d",
+    Sa8: "f"
   }, 3, {
     pa: "a5",
-    Sa8: "f",
-    xf: "e"
+    xf: "e",
+    Sa8: "f"
   }, "a7"]
 }
 [`b !b1; b%;<button class=toggle>toggle</button><!><!>`, `a0`]
@@ -28,8 +28,8 @@
           },
           de: "^a0"
         },
-        Sa3: "c",
-        xc: "y"
+        xc: "y",
+        Sa4: "c"
       }
     },
     [1, 2], {
@@ -40,8 +40,7 @@
             ta: "d",
             tb: "y"
           }
-        },
-        Sa3: "c"
+        }
       }
     },
     [2, 3], {
@@ -54,8 +53,8 @@
           },
           de: "^a0"
         },
-        Sa3: "c",
-        xc: "y"
+        xc: "y",
+        Sa4: "c"
       }
     }
   ]

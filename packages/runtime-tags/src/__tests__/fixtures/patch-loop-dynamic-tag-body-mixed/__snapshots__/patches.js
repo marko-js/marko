@@ -10,24 +10,22 @@
       },
       de: "^a0"
     },
-    Sa2: "e",
-    xe: "d"
+    xe: "d",
+    Sa2: "e"
   }, 2, {
     fa: [">div", "a0"],
     cAa: {
       cAa: {
         ta: "e"
       }
-    },
-    Sa2: "e"
+    }
   }, 3, {
     fa: [">div", "a0"],
     cAa: {
       cAa: {
         ta: "f"
       }
-    },
-    Sa2: "e"
+    }
   }, "a3"]
 }
 ;CQ4

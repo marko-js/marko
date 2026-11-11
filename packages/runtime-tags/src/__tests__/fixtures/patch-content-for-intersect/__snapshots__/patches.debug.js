@@ -1,11 +1,11 @@
 // PATCH
 {
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-for-intersect/template.marko_0_input_title#4/subscribers": "input_title",
-  "PatchMarkedWrite:input_title": "b"
+  "PatchMarkedWrite:input_title": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-for-intersect/template.marko_0_input_title#4/subscribers": "input_title"
 }
 
 // PATCH
 {
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-for-intersect/template.marko_0_input_title#4/subscribers": "input_title",
-  "PatchMarkedWrite:input_title": "c"
+  "PatchMarkedWrite:input_title": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-for-intersect/template.marko_0_input_title#4/subscribers": "input_title"
 }

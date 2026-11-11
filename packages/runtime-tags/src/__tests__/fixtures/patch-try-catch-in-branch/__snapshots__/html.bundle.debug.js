@@ -12,7 +12,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 1), $cg__input_message = _client_guard($scope0_reason, 2), $cg__input_boom = _client_guard($scope0_reason, 3), $wi__input_show__OR__input_message__OR__input_boom = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_message = _unfilled_if($scope0_reason, 2), $ui__input_boom = _unfilled_if($scope0_reason, 3), $fg__input_message = _filled_guard($scope0_reason, 2), $fg__input_boom = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 1), $cg__input_message = _client_guard($scope0_reason, 2), $cg__input_boom = _client_guard($scope0_reason, 3), $wi__input_show__OR__input_message__OR__input_boom = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_message = _unfilled_if($scope0_reason, 2), $ui__input_boom = _unfilled_if($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_message__closures = new Set();
 	const $input_boom__closures = new Set();
@@ -38,8 +38,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#main/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html(`</main>${_el_mark($scope0_id, "#main/0", $wg__input_show)}`);
-	$fg__input_message && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_message#4/subscribers", "input_message");
-	$fg__input_boom && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_boom#5/subscribers", "input_boom");
 	_scope($scope0_id, {
 		input_message: ($ui__input_show || $ui__input_message) && input.message,
 		input_boom: ($ui__input_show || $ui__input_boom) && input.boom,
@@ -48,5 +46,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_message: ["input.message"],
 		input_boom: ["input.boom"]
-	}) || ($fg__input_message && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_message", input.message, !_server_guard($scope0_reason, 2)), $fg__input_boom && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_boom", input.boom, !_server_guard($scope0_reason, 3)));
+	}) || (_filled_guard($scope0_reason, 2) && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_message", input.message, !_server_guard($scope0_reason, 2)) && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_message#4/subscribers", "input_message"), _filled_guard($scope0_reason, 3) && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_boom", input.boom, !_server_guard($scope0_reason, 3)) && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_boom#5/subscribers", "input_boom"));
 }, 1);

@@ -13,8 +13,8 @@
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-closure-structure/template.marko_1_input_detail#0:5/subscribe": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-closure-structure/template.marko_1*content"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-closure-structure/template.marko_0_input_detail#5/subscribers": "input_detail",
-  "PatchMarkedWrite:input_detail": "b"
+  "PatchMarkedWrite:input_detail": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-closure-structure/template.marko_0_input_detail#5/subscribers": "input_detail"
 }
 ;CQY
 
@@ -27,8 +27,8 @@
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-closure-structure/template.marko_1_input_detail#0:5/subscribe": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-closure-structure/template.marko_1*content"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-closure-structure/template.marko_0_input_detail#5/subscribers": "input_detail",
-  "PatchMarkedWrite:input_detail": ""
+  "PatchMarkedWrite:input_detail": "",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-closure-structure/template.marko_0_input_detail#5/subscribers": "input_detail"
 }
 
 // PATCH holding CQY
@@ -45,6 +45,6 @@
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-closure-structure/template.marko_1_input_detail#0:5/subscribe": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-closure-structure/template.marko_1*content"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-closure-structure/template.marko_0_input_detail#5/subscribers": "input_detail",
-  "PatchMarkedWrite:input_detail": "c"
+  "PatchMarkedWrite:input_detail": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-closure-structure/template.marko_0_input_detail#5/subscribers": "input_detail"
 }

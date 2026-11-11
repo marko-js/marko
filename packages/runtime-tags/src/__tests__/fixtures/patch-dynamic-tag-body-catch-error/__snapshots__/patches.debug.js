@@ -4,14 +4,14 @@
   "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/tags/card.marko", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/template.marko_1*content"],
   "PatchChild:BranchScopes:#text/0": {
     "PatchChild:BranchScopes:#text/1": [{}, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/tags/card.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/tags/card.marko_3*content"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/tags/card.marko_0_input_content#4/subscribers": "input_content",
     "PatchSetupValues:": {
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/tags/card.marko_0_fail#5/fill": !1
     },
-    "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/template.marko_1*content"
+    "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/template.marko_1*content",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/tags/card.marko_0_input_content#4/subscribers": "input_content"
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/template.marko_0_input_note#4/subscribers": "input_note",
-  "PatchMarkedWrite:input_note": "b"
+  "PatchMarkedWrite:input_note": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/template.marko_0_input_note#4/subscribers": "input_note"
 }
 ;DSk
 
@@ -20,12 +20,12 @@
   "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/tags/card.marko", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/template.marko_1*content"],
   "PatchChild:BranchScopes:#text/0": {
     "PatchChild:BranchScopes:#text/1": [{}, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/tags/card.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/tags/card.marko_3*content"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/tags/card.marko_0_input_content#4/subscribers": "input_content",
     "PatchSetupValues:": {
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/tags/card.marko_0_fail#5/fill": !1
     },
-    "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/template.marko_1*content"
+    "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/template.marko_1*content",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/tags/card.marko_0_input_content#4/subscribers": "input_content"
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/template.marko_0_input_note#4/subscribers": "input_note",
-  "PatchMarkedWrite:input_note": "c"
+  "PatchMarkedWrite:input_note": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/template.marko_0_input_note#4/subscribers": "input_note"
 }

@@ -8,7 +8,7 @@ _shells({
 	b: "b;D%;<section><!></section>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $cg__input_content = _client_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 0), $wi__input_content = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $cg__input_content = _client_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 1), $wi__input_content = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
@@ -31,19 +31,18 @@ var card_default = _template("b", (input) => {
 		_subscribe($wi__input_content && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_content && "b0", $wg__input_content);
 	}, void 0, "b5", void 0, "b3", 1);
 	_html("</section>");
-	$fg__input_content && _patch_subscribers($scope0_id, "b6", "d");
 	_scope($scope0_id, {
 		d: input.content,
 		f: $wi__input_content && $input_content__closures,
 		g: $wi__input_promise && _unfilled_if($scope0_reason, 1) && $input_promise__closures
-	}) || $fg__input_content && _patch_write($scope0_id, "xd", input.content, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.content, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "b6", "d");
 });
 
 // template.marko
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0) => `D/${_w0}&l`)("D%l")};${((_w0) => `<main>${_w0}</main>`)($template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 1), $fg__input_note = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -61,10 +60,9 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_html("</main>");
-	$fg__input_note && _patch_subscribers($scope0_id, "a2", "e");
 	_scope($scope0_id, {
 		e: input.note,
 		f: _write_if($scope0_reason, 1) && $input_note__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_note && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a2", "e");
 }, 1);

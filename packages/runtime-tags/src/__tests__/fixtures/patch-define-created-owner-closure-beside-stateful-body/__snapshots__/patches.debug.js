@@ -15,9 +15,9 @@
       }, _.a]
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-owner-closure-beside-stateful-body/template.marko_3*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-owner-closure-beside-stateful-body/template.marko_0_input_label#5/subscribers": "input_label",
   "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-owner-closure-beside-stateful-body/template.marko_0_input_label#5_open#9_Tag#12/setup": "input_label Tag",
   "PatchMarkedWrite:input_label": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-owner-closure-beside-stateful-body/template.marko_0_input_label#5/subscribers": "input_label",
   "PatchMarkedWrite:Tag": {
     content: _([], "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-owner-closure-beside-stateful-body/template.marko_1*content", 1)
   }
@@ -40,9 +40,9 @@
       }, _.a]
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-owner-closure-beside-stateful-body/template.marko_3*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-owner-closure-beside-stateful-body/template.marko_0_input_label#5/subscribers": "input_label",
   "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-owner-closure-beside-stateful-body/template.marko_0_input_label#5_open#9_Tag#12/setup": "input_label Tag",
   "PatchMarkedWrite:input_label": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-owner-closure-beside-stateful-body/template.marko_0_input_label#5/subscribers": "input_label",
   "PatchMarkedWrite:Tag": {
     content: _([], "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-owner-closure-beside-stateful-body/template.marko_1*content", 1)
   }
@@ -51,9 +51,9 @@
 // PATCH holding BwY
 {
   "PatchBranch:#text/0": 0,
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-owner-closure-beside-stateful-body/template.marko_0_input_label#5/subscribers": "input_label",
   "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-owner-closure-beside-stateful-body/template.marko_0_input_label#5_open#9_Tag#12/setup": "input_label Tag",
   "PatchMarkedWrite:input_label": "d",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-owner-closure-beside-stateful-body/template.marko_0_input_label#5/subscribers": "input_label",
   "PatchMarkedWrite:Tag": {
     content: _([], "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-owner-closure-beside-stateful-body/template.marko_1*content", 1)
   }
@@ -75,9 +75,9 @@
       }, _.a]
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-owner-closure-beside-stateful-body/template.marko_3*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-owner-closure-beside-stateful-body/template.marko_0_input_label#5/subscribers": "input_label",
   "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-owner-closure-beside-stateful-body/template.marko_0_input_label#5_open#9_Tag#12/setup": "input_label Tag",
   "PatchMarkedWrite:input_label": "e",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-owner-closure-beside-stateful-body/template.marko_0_input_label#5/subscribers": "input_label",
   "PatchMarkedWrite:Tag": {
     content: _([], "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-owner-closure-beside-stateful-body/template.marko_1*content", 1)
   }

@@ -36,7 +36,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>${_text_mark($scope0_id, "#text/2", n)}</button>${_el_mark($scope0_id, "#button/1")}</main>`);
 	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#5", $scope0_id);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_patch_subscribers($scope0_id, "__tests__/template.marko_0_tag#6/subscribers", "tag");
 	_scope($scope0_id, {
 		tag,
 		n,
@@ -44,5 +43,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		tag: "1:8",
 		n: "2:6"
-	}) || _patch_write($scope0_id, "PatchMarkedWrite:tag", tag);
+	}) || _patch_write($scope0_id, "PatchMarkedWrite:tag", tag) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_tag#6/subscribers", "tag");
 }, 1);

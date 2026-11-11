@@ -10,8 +10,8 @@
       Sa0: 0
     }
   }, "a3"],
-  Sa6: "f",
-  xf: "b"
+  xf: "b",
+  Sa6: "f"
 }
 ;CAE
 
@@ -26,8 +26,8 @@
       Sa0: 0
     }
   }, "a3"],
-  Sa6: "f",
-  xf: "c"
+  xf: "c",
+  Sa6: "f"
 }
 
 // PATCH holding CAE
@@ -41,8 +41,8 @@
       Sa0: 0
     }
   }, "a3"],
-  Sa6: "f",
-  xf: "e"
+  xf: "e",
+  Sa6: "f"
 }
 
 // PATCH holding CAE
@@ -50,6 +50,6 @@
   cAc: [{
     ta: "ok"
   }, "a3"],
-  Sa6: "f",
-  xf: "d"
+  xf: "d",
+  Sa6: "f"
 }

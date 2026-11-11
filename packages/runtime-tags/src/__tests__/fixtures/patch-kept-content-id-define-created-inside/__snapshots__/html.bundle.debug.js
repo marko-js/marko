@@ -23,7 +23,7 @@ _shells({
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `/${_w0}&b`)($walks$1)};${((_w0) => `${_w0}<!>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_on = _write_guard($scope0_reason, 2), $wi__input_label__OR__input_on = _write_if($scope0_reason, 0), $ui__input_on2 = _unfilled_if($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_on = _write_guard($scope0_reason, 2), $wi__input_label__OR__input_on = _write_if($scope0_reason, 0), $ui__input_on2 = _unfilled_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $input_on__closures = new Set();
@@ -48,11 +48,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$wg__input_on || $wi__input_label__OR__input_on && _resume_branch($scope1_id);
 	}, $scope0_id, 1) });
 	_patch_child_end();
-	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#3/subscribers", "input_label");
 	_scope($scope0_id, {
 		input_label: ($ui__input_on2 || _unfilled_if($scope0_reason, 1)) && input.label,
 		"ClosureScopes:input_label/5": _write_if($scope0_reason, 1) && $input_label__closures,
 		"ClosureScopes:input_on/6": _write_if($scope0_reason, 2) && $ui__input_on2 && $input_on__closures,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { input_label: ["input.label"] }) || $fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1));
+	}, "__tests__/template.marko", 0, { input_label: ["input.label"] }) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#3/subscribers", "input_label");
 }, 1);

@@ -10,7 +10,7 @@ _shells({
 	a5: "a5;D ;<i> </i>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $cg__input_error = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $cg__input_error = _client_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_error__closures = /* @__PURE__ */ new Set();
@@ -43,10 +43,9 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id, "a", 1, $wg__err_status, 1, 0, 0, ["a2", "a5"]);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, 0, "a4", "a3", 1, 1, 1);
-	$fg__input_label && _patch_subscribers($scope0_id, "a7", "d");
 	_scope($scope0_id, {
 		d: input.label,
 		f: $wi__input_label && $input_label__closures,
 		g: $wi__input_error && _unfilled_if($scope0_reason, 1) && $input_error__closures
-	}) || $fg__input_label && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "a7", "d");
 }, 1);

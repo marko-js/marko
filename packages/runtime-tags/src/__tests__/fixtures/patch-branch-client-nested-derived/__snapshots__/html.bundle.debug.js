@@ -30,7 +30,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/0");
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$fg__input_title && _patch_subscribers($scope0_id, "__tests__/template.marko_0_label#6/subscribers", "label");
 	$fg__input_title && _patch_render($scope0_id, "__tests__/template.marko_1_show#0:7/setup", "show");
 	_scope($scope0_id, {
 		open,
@@ -41,5 +40,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		open: "1:6",
 		label: "2:8",
 		show: "3:8"
-	}) || ($fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:label", label, !$sg__input_title), $fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:show", show, !$sg__input_title));
+	}) || ($fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:label", label, !$sg__input_title) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_label#6/subscribers", "label"), $fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:show", show, !$sg__input_title));
 }, 1);

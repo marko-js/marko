@@ -11,8 +11,8 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-map/template.marko_2*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-map/template.marko_0_input_label#3/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "b"
+  "PatchMarkedWrite:input_label": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-map/template.marko_0_input_label#3/subscribers": "input_label"
 }
 ;CgQ
 
@@ -28,6 +28,6 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-map/template.marko_2*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-map/template.marko_0_input_label#3/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "c"
+  "PatchMarkedWrite:input_label": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-map/template.marko_0_input_label#3/subscribers": "input_label"
 }

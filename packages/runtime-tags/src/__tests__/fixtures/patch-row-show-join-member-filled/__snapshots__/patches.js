@@ -7,8 +7,8 @@
   cAb: {
     ta: "b"
   },
-  Sa6: "f",
-  xf: "b"
+  xf: "b",
+  Sa6: "f"
 }
 ;BgE
 
@@ -20,8 +20,8 @@
   cAb: {
     ta: "c"
   },
-  Sa6: "f",
-  xf: "c"
+  xf: "c",
+  Sa6: "f"
 }
 
 // PATCH holding BgE
@@ -32,6 +32,6 @@
   cAb: {
     ta: "d"
   },
-  Sa6: "f",
-  xf: "d"
+  xf: "d",
+  Sa6: "f"
 }

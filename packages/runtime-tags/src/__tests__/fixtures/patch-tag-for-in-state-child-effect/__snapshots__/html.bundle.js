@@ -60,7 +60,6 @@ var shape_default = _template("c", (input) => {
 	_script($scope0_id, "c7");
 	_script($scope0_id, "c8", 1, $fg__input_b);
 	$fg__input_sel && $cg__input_obj && _patch_render($scope0_id, "c6", "f");
-	$fg__input_b && ($cg__input_obj || $cg__input_sel) && _patch_subscribers($scope0_id, "c9", "g");
 	_patch_fill($scope0_id, "vc10", s, 1);
 	_scope($scope0_id, {
 		f: ($ui__input_obj || _unfilled_if($scope0_reason, 2)) && input.sel,
@@ -68,7 +67,7 @@ var shape_default = _template("c", (input) => {
 		h: s,
 		j: _write_if($scope0_reason, 3) && $input_b__closures,
 		k: $s__closures
-	}) || ($fg__input_sel && $ui__input_obj && _patch_write($scope0_id, "xf", input.sel, !_server_guard($scope0_reason, 2)), $fg__input_b && _patch_write($scope0_id, "xg", input.b, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_sel && $ui__input_obj && _patch_write($scope0_id, "xf", input.sel, !_server_guard($scope0_reason, 2)), $fg__input_b && _patch_write($scope0_id, "xg", input.b, !_server_guard($scope0_reason, 3)) && ($cg__input_obj || $cg__input_sel) && _patch_subscribers($scope0_id, "c9", "g"));
 });
 
 // template.marko

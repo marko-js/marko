@@ -25,7 +25,7 @@ _shells({
 	a10: "a10;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_card = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 3), $scope0_page = _page_render(), $wi__input_tag__OR__input_boxed = _write_if($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 3), $ui__input_card2 = _unfilled_if($scope0_reason, 5), $ui__input_tag = _unfilled_if($scope0_reason, 6), $fg__input_user = _filled_guard($scope0_reason, 4), $fg__input_card = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_boxed = _filled_guard($scope0_reason, 7);
+	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_card = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 3), $scope0_page = _page_render(), $wi__input_tag__OR__input_boxed = _write_if($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 3), $ui__input_card2 = _unfilled_if($scope0_reason, 5), $ui__input_tag = _unfilled_if($scope0_reason, 6), $fg__input_user = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_card__closures = /* @__PURE__ */ new Set();
 	const $input_boxed__closures = /* @__PURE__ */ new Set();
@@ -85,8 +85,6 @@ var template_default = _template("a", (input) => {
 	_html("<p>end</p>");
 	_script($scope0_id, "a14");
 	$fg__input_user && $cg__input_show && _patch_render($scope0_id, "a11", "i");
-	$fg__input_card && $cg__input_show && _patch_subscribers($scope0_id, "a15", "j");
-	$fg__input_boxed && _patch_subscribers($scope0_id, "a16", "l");
 	_scope($scope0_id, {
 		i: ($ui__input_show || _unfilled_if($scope0_reason, 4)) && input.user,
 		j: ($ui__input_show || $ui__input_card2) && input.card,
@@ -94,5 +92,5 @@ var template_default = _template("a", (input) => {
 		m: n,
 		o: _write_if($scope0_reason, 5) && ($ui__input_card2 || $ui__input_show) && $input_card__closures,
 		p: _write_if($scope0_reason, 7) && $input_boxed__closures
-	}) || ($fg__input_user && $ui__input_show && _patch_write($scope0_id, "xi", input.user, !_server_guard($scope0_reason, 4)), $fg__input_card && $ui__input_show && _patch_write($scope0_id, "xj", input.card, !_server_guard($scope0_reason, 5)), $fg__input_boxed && (_client_branch_if("a5", $scope0_id) || $ui__input_tag) && _patch_write($scope0_id, "xl", input.boxed, !_server_guard($scope0_reason, 7)));
+	}) || ($fg__input_user && $ui__input_show && _patch_write($scope0_id, "xi", input.user, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 5) && $ui__input_show && _patch_write($scope0_id, "xj", input.card, !_server_guard($scope0_reason, 5)) && $cg__input_show && _patch_subscribers($scope0_id, "a15", "j"), _filled_guard($scope0_reason, 7) && (_client_branch_if("a5", $scope0_id) || $ui__input_tag) && _patch_write($scope0_id, "xl", input.boxed, !_server_guard($scope0_reason, 7)) && _patch_subscribers($scope0_id, "a16", "l"));
 }, 1);

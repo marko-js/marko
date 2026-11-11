@@ -4,8 +4,8 @@
   cAb: {
     pa: 1
   },
-  Sa7: "e",
-  xe: "Store!"
+  xe: "Store!",
+  Sa7: "e"
 }
 {
   cAb: {

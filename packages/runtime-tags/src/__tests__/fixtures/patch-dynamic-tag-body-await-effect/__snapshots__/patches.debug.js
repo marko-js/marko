@@ -3,8 +3,8 @@
 {
   "PatchPending:#text/1": 1,
   "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_0_input_note#4",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_0_input_note#4/subscribers": "input_note",
   "PatchMarkedWrite:input_note": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_0_input_note#4/subscribers": "input_note",
   "PatchChild:BranchScopes:#text/1": {
     "PatchDynamicTag:#text/0": [">div", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_2*content"],
     "PatchChild:BranchScopes:#text/0": {
@@ -12,8 +12,7 @@
         "PatchText:#text/0": "b",
         "PatchText:#text/1": "y"
       }
-    },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_1_v#2/subscribers": "v"
+    }
   }
 }
 ;CgQ
@@ -23,8 +22,8 @@
 {
   "PatchPending:#text/1": 1,
   "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_0_input_note#4",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_0_input_note#4/subscribers": "input_note",
   "PatchMarkedWrite:input_note": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_0_input_note#4/subscribers": "input_note",
   "PatchChild:BranchScopes:#text/1": {
     "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/tags/card.marko", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_2*content"],
     "PatchChild:BranchScopes:#text/0": {
@@ -34,8 +33,8 @@
       },
       "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_2*content"
     },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_1_v#2/subscribers": "v",
-    "PatchMarkedWrite:v": "z"
+    "PatchMarkedWrite:v": "z",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_1_v#2/subscribers": "v"
   }
 }
 ;CxE
@@ -44,8 +43,8 @@
 {
   "PatchPending:#text/1": 1,
   "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_0_input_note#4",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_0_input_note#4/subscribers": "input_note",
   "PatchMarkedWrite:input_note": "d",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_0_input_note#4/subscribers": "input_note",
   "PatchChild:BranchScopes:#text/1": {
     "PatchDynamicTag:#text/0": [">div", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_2*content"],
     "PatchChild:BranchScopes:#text/0": {
@@ -53,7 +52,6 @@
         "PatchText:#text/0": "d",
         "PatchText:#text/1": "w"
       }
-    },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_1_v#2/subscribers": "v"
+    }
   }
 }

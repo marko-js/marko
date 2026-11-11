@@ -25,8 +25,7 @@
                 }
               }, _.b]
             },
-            "PatchBranch:#text/1": 0,
-            "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-template-cycle-registered-content-shell/tags/tree-b.marko_0_input_depth#5/subscribers": "input_depth"
+            "PatchBranch:#text/1": 0
           },
           "PatchSetupValues:": {
             "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-template-cycle-registered-content-shell/tags/tree-a.marko_0_count#7/fill": 0

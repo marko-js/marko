@@ -7,7 +7,7 @@ _shells({
 	a0: "a0;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_tags__OR__input_card = _write_guard($scope0_reason, 0), $cg__input_tags__OR__input_card = _client_guard($scope0_reason, 0), $ui__input_tags__OR__input_card = _unfilled_if($scope0_reason, 0), $ui__input_tags = _unfilled_if($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_card = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_tags__OR__input_card = _write_guard($scope0_reason, 0), $cg__input_tags__OR__input_card = _client_guard($scope0_reason, 0), $ui__input_tags__OR__input_card = _unfilled_if($scope0_reason, 0), $ui__input_tags = _unfilled_if($scope0_reason, 2), $fg__input_card = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $n__closures = /* @__PURE__ */ new Set();
@@ -51,7 +51,6 @@ var template_default = _template("a", (input) => {
 		});
 	}, 0, $scope0_id, "c", 1, 1, 1, 0, 0, "a3", $scope0_reason, 2);
 	_script($scope0_id, "a7");
-	$fg__input_label && _patch_subscribers($scope0_id, "a8", "f");
 	$fg__input_card && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "a9", "h");
 	_scope($scope0_id, {
 		f: ($ui__input_tags__OR__input_card || _unfilled_if($scope0_reason, 1)) && input.label,
@@ -61,5 +60,5 @@ var template_default = _template("a", (input) => {
 		k: $ui__input_tags__OR__input_card && Label,
 		l: _write_if($scope0_reason, 1) && $input_label__closures,
 		o: $n__closures
-	}) || ($fg__input_label && (_client_branch_if("a2", $scope0_id) || $cg__input_tags__OR__input_card || $ui__input_tags__OR__input_card) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)), $fg__input_card && $ui__input_tags && _patch_write($scope0_id, "xh", input.card, !_server_guard($scope0_reason, 3)));
+	}) || (_filled_guard($scope0_reason, 1) && (_client_branch_if("a2", $scope0_id) || $cg__input_tags__OR__input_card || $ui__input_tags__OR__input_card) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a8", "f"), $fg__input_card && $ui__input_tags && _patch_write($scope0_id, "xh", input.card, !_server_guard($scope0_reason, 3)));
 }, 1);

@@ -22,7 +22,6 @@
       }
     },
     "PatchLoop:#text/4": [],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2_row_label#7/subscribers": "row_label",
     "PatchSetupValues:": {
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2_n#11/fill": 0
     }
@@ -71,11 +70,11 @@
         }, _.b]
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_3*shell"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2_row_label#7/subscribers": "row_label",
     "PatchSetupValues:": {
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2_n#11/fill": 0
     },
-    "PatchMarkedWrite:row_label": "c"
+    "PatchMarkedWrite:row_label": "c",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2_row_label#7/subscribers": "row_label"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2*shell"]
 }
 ;Ef4
@@ -117,11 +116,11 @@
         }
       }
     }, _.d = "packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_3*shell"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2_row_label#7/subscribers": "row_label",
     "PatchSetupValues:": {
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2_n#11/fill": 0
     },
-    "PatchMarkedWrite:row_label": "d"
+    "PatchMarkedWrite:row_label": "d",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2_row_label#7/subscribers": "row_label"
   }, 1, {
     "PatchChild:#childScope/2": {
       "PatchSetup:": {
@@ -156,10 +155,10 @@
         }, _.b]
       }
     }, _.d],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2_row_label#7/subscribers": "row_label",
     "PatchSetupValues:": {
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2_n#11/fill": 0
     },
-    "PatchMarkedWrite:row_label": "e"
+    "PatchMarkedWrite:row_label": "e",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2_row_label#7/subscribers": "row_label"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2*shell"]
 }

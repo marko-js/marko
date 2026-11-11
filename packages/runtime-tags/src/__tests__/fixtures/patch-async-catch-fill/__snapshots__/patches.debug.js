@@ -2,8 +2,8 @@
 `packages/runtime-tags/src/__tests__/fixtures/patch-async-catch-fill/template.marko_1*content`
 {
   "PatchChild:BranchScopes:#text/0": 0,
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-async-catch-fill/template.marko_0_input_title#5/subscribers": "input_title",
   "PatchMarkedWrite:input_title": "second",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-async-catch-fill/template.marko_0_input_title#5/subscribers": "input_title",
   "PatchCatch:#text/0": [{
     "PatchText:#text/0": "second",
     "PatchText:#text/1": "boom",

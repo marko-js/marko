@@ -49,7 +49,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_id = _write_guard($scope0_reason, 4), $wi__input_id = _write_if($scope0_reason, 4), $cg__input_id = _client_guard($scope0_reason, 4), $wg__input_which__OR__input_id = _write_guard($scope0_reason, 1), $uf__input_show = _updates_from($scope0_reason, 2), $ui__input_show__OR__input_id = _unfilled_if($scope0_reason, 0), $fg__input_which = _filled_guard($scope0_reason, 3), $fg__input_id = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $wg__input_id = _write_guard($scope0_reason, 4), $wi__input_id = _write_if($scope0_reason, 4), $cg__input_id = _client_guard($scope0_reason, 4), $wg__input_which__OR__input_id = _write_guard($scope0_reason, 1), $uf__input_show = _updates_from($scope0_reason, 2), $ui__input_show__OR__input_id = _unfilled_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_id__closures = /* @__PURE__ */ new Set();
 	const $input_which__closures = /* @__PURE__ */ new Set();
@@ -88,13 +88,11 @@ var template_default = _template("a", (input) => {
 		}, $scope0_id)
 	});
 	_patch_child_end();
-	$fg__input_which && _patch_subscribers($scope0_id, "a8", "e");
-	$fg__input_id && _patch_subscribers($scope0_id, "a9", "f");
 	_scope($scope0_id, {
 		e: ($ui__input_show__OR__input_id || _unfilled_if($scope0_reason, 1)) && input.which,
 		f: input.id,
 		h: $wi__input_id && $input_id__closures,
 		g: _write_if($scope0_reason, 3) && $input_which__closures,
 		a: _existing_scope($childScope)
-	}) || ($fg__input_which && $ui__input_show__OR__input_id && _patch_write($scope0_id, "xe", input.which, !_server_guard($scope0_reason, 3)), $fg__input_id && _patch_write($scope0_id, "xf", input.id, !_server_guard($scope0_reason, 4)));
+	}) || (_filled_guard($scope0_reason, 3) && $ui__input_show__OR__input_id && _patch_write($scope0_id, "xe", input.which, !_server_guard($scope0_reason, 3)) && _patch_subscribers($scope0_id, "a8", "e"), _filled_guard($scope0_reason, 4) && _patch_write($scope0_id, "xf", input.id, !_server_guard($scope0_reason, 4)) && _patch_subscribers($scope0_id, "a9", "f"));
 }, 1);

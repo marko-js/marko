@@ -5,9 +5,9 @@
       ic2: ">e"
     }
   },
-  Sc7: "f",
   xe: !0,
-  xf: "two"
+  xf: "two",
+  Sc7: "f"
 }
 
 // PATCH
@@ -17,9 +17,9 @@
       ic2: ">e"
     }
   },
-  Sc7: "f",
   xe: !1,
-  xf: "three"
+  xf: "three",
+  Sc7: "f"
 }
 
 // PATCH
@@ -29,7 +29,7 @@
       ic2: ">e"
     }
   },
-  Sc7: "f",
   xe: !0,
-  xf: "four"
+  xf: "four",
+  Sc7: "f"
 }

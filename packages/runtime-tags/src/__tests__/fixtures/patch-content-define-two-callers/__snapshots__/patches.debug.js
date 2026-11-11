@@ -3,8 +3,8 @@
   "PatchChild:#childScope/1": {
     "PatchBranch:#text/0": 0
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-define-two-callers/template.marko_0_input_title#5/subscribers": "input_title",
-  "PatchMarkedWrite:input_title": "b"
+  "PatchMarkedWrite:input_title": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-define-two-callers/template.marko_0_input_title#5/subscribers": "input_title"
 }
 
 // PATCH
@@ -18,8 +18,8 @@
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-define-two-callers/template.marko_4*shell"]
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-define-two-callers/template.marko_0_input_title#5/subscribers": "input_title",
-  "PatchMarkedWrite:input_title": "c"
+  "PatchMarkedWrite:input_title": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-define-two-callers/template.marko_0_input_title#5/subscribers": "input_title"
 }
 ;CQw
 
@@ -33,6 +33,6 @@
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-define-two-callers/template.marko_4*shell"]
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-define-two-callers/template.marko_0_input_title#5/subscribers": "input_title",
-  "PatchMarkedWrite:input_title": "d"
+  "PatchMarkedWrite:input_title": "d",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-define-two-callers/template.marko_0_input_title#5/subscribers": "input_title"
 }

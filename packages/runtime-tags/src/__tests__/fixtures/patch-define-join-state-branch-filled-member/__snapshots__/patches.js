@@ -2,9 +2,9 @@
 `b4 >a>;/D l&;<p> </p>`
 {
   ca: {
-    Sb8: "f",
     ib6: "f",
-    xf: "y"
+    xf: "y",
+    Sb8: "f"
   },
   cb: {
     ba: [{
@@ -21,9 +21,9 @@
 // PATCH holding CAM
 {
   ca: {
-    Sb8: "f",
     ib6: "f",
-    xf: "z"
+    xf: "z",
+    Sb8: "f"
   },
   cb: {
     ba: [{

@@ -23,7 +23,7 @@
       }
     }, _.d]
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-kept-content-id-define-created-inside/template.marko_0_input_label#3/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "b"
+  "PatchMarkedWrite:input_label": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-kept-content-id-define-created-inside/template.marko_0_input_label#3/subscribers": "input_label"
 }
 ;BgI

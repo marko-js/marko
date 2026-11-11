@@ -6,8 +6,7 @@
       "PatchDynamicTag:#text/0": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-child-picks-content-passed-on/template.marko_2*content",
       "PatchText:#text/1": "t"
     }
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-picks-content-passed-on/template.marko_0_input_x#5/subscribers": "input_x"
+  }
 }
 ;CgQ
 
@@ -22,7 +21,6 @@
       },
       "PatchText:#text/1": "u"
     }
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-picks-content-passed-on/template.marko_0_input_x#5/subscribers": "input_x"
+  }
 }
 ;Cxg

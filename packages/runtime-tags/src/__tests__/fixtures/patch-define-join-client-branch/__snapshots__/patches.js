@@ -1,27 +1,27 @@
 // PATCH
 {
   ca: {
-    Sb6: "e",
-    xe: "b"
+    xe: "b",
+    Sb6: "e"
   },
   cb: {
-    Sb5: "d",
-    Sb6: "e",
     xd: "q",
-    xe: "b"
+    Sb5: "d",
+    xe: "b",
+    Sb6: "e"
   }
 }
 
 // PATCH
 {
   ca: {
-    Sb6: "e",
-    xe: "c"
+    xe: "c",
+    Sb6: "e"
   },
   cb: {
-    Sb5: "d",
-    Sb6: "e",
     xd: "r",
-    xe: "c"
+    Sb5: "d",
+    xe: "c",
+    Sb6: "e"
   }
 }

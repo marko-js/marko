@@ -2,28 +2,28 @@
 `a2 a6;b%;<!><!><!>`
 {
   ba: "a2",
-  Sa4: "f",
-  xf: "two"
+  xf: "two",
+  Sa4: "f"
 }
 ;BAE
 
 // PATCH holding BAE
 {
   ba: "a2",
-  Sa4: "f",
-  xf: "three"
+  xf: "three",
+  Sa4: "f"
 }
 
 // PATCH holding BAE
 {
   ba: 0,
-  Sa4: "f",
-  xf: "four"
+  xf: "four",
+  Sa4: "f"
 }
 
 // PATCH holding BAE
 {
   ba: "a2",
-  Sa4: "f",
-  xf: "five"
+  xf: "five",
+  Sa4: "f"
 }

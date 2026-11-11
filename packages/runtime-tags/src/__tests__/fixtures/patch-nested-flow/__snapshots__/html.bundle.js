@@ -23,7 +23,7 @@ _shells({
 	a0: "a0,<em>on sale</em>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_detail = _client_guard($scope0_reason, 3), $wi__input_summary__OR__input_detail = _write_if($scope0_reason, 0), $ui__input_summary = _unfilled_if($scope0_reason, 2), $ui__input_detail = _unfilled_if($scope0_reason, 3), $fg__input_detail = _filled_guard($scope0_reason, 3), $cg__input_summary = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_detail = _client_guard($scope0_reason, 3), $wi__input_summary__OR__input_detail = _write_if($scope0_reason, 0), $ui__input_summary = _unfilled_if($scope0_reason, 2), $ui__input_detail = _unfilled_if($scope0_reason, 3), $cg__input_summary = _client_guard($scope0_reason, 2), $fg__input_detail = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_detail__closures = /* @__PURE__ */ new Set();
 	_html("<main><ul>");
@@ -67,11 +67,10 @@ var template_default = _template("a", (input) => {
 	badge_default({ label: input.badge });
 	_patch_child_end();
 	_html("</main>");
-	$fg__input_detail && $cg__input_summary && _patch_subscribers($scope0_id, "a7", "h");
 	$fg__input_detail && $cg__input_summary && _patch_render($scope0_id, "a6", "h");
 	_scope($scope0_id, {
 		h: ($ui__input_summary || $ui__input_detail) && input.detail,
 		k: _write_if($scope0_reason, 3) && ($ui__input_detail || $ui__input_summary) && $input_detail__closures,
 		c: _existing_scope($childScope)
-	}) || $fg__input_detail && $ui__input_summary && _patch_write($scope0_id, "xh", input.detail, !_server_guard($scope0_reason, 3));
+	}) || $fg__input_detail && $ui__input_summary && _patch_write($scope0_id, "xh", input.detail, !_server_guard($scope0_reason, 3)) && $cg__input_summary && _patch_subscribers($scope0_id, "a7", "h");
 }, 1);

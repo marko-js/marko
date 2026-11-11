@@ -7,6 +7,7 @@
   "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_1*content",
   "PatchChild:BranchScopes:#text/0": {
     "PatchMarkedWrite:value": 1,
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_1_value#4/subscribers": "value",
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
         "PatchWrite:y": 0,
@@ -14,7 +15,6 @@
         "PatchRender:": "packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_2_value#1:4_y#3/setup"
       }
     },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_1_value#4/subscribers": "value",
     "PatchSetupValues:": {
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_1_count#5/fill": 0
     }
@@ -30,6 +30,7 @@
   "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_1*content",
   "PatchChild:BranchScopes:#text/0": {
     "PatchMarkedWrite:value": 1,
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_1_value#4/subscribers": "value",
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
         "PatchWrite:y": 0,
@@ -37,7 +38,6 @@
         "PatchRender:": "packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_2_value#1:4_y#3/setup"
       }
     },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_1_value#4/subscribers": "value",
     "PatchSetupValues:": {
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_1_count#5/fill": 0
     }

@@ -20,7 +20,7 @@ const $Child_withLoadAssets = withLoadAssets(() => child_default, "__tests__/chi
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; b ;<button class=toggle>toggle</button><main></main>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 1), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 1), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	let open = false;
@@ -51,7 +51,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#main/1", 1, 1, 1, "</main>");
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_show#0:4/setup", "input_show");
-	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#5/subscribers", "input_label");
 	_scope($scope0_id, {
 		input_show: input.show,
 		input_label: input.label,
@@ -61,5 +60,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_show: ["input.show"],
 		input_label: ["input.label"],
 		open: "3:6"
-	}) || ($fg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 0)), $fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1)));
+	}) || ($fg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#5/subscribers", "input_label"));
 }, 1);

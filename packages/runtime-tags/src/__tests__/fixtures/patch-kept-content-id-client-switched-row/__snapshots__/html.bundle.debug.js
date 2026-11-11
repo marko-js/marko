@@ -34,7 +34,7 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell; b D ;<input><label> </label>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 3), $ui__input_show = _unfilled_if($scope0_reason, 3), $ui__input_rows = _unfilled_if($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 3), $wi__input_rows__OR__input_show__OR__input_label = _write_if($scope0_reason, 1), $ui__input_label = _unfilled_if($scope0_reason, 4), $fg__input_show = _filled_guard($scope0_reason, 3), $fg__input_label = _filled_guard($scope0_reason, 4), $cg__input_rows = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 3), $ui__input_show = _unfilled_if($scope0_reason, 3), $ui__input_rows = _unfilled_if($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 3), $wi__input_rows__OR__input_show__OR__input_label = _write_if($scope0_reason, 1), $ui__input_label = _unfilled_if($scope0_reason, 4), $cg__input_rows = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $input_show__closures = new Set();
@@ -65,8 +65,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "1:2");
 	}, "id", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 2);
-	$fg__input_show && $cg__input_rows && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_show#4/subscribers", "input_show");
-	$fg__input_label && ($cg__input_rows || $cg__input_show) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#5/subscribers", "input_label");
 	_scope($scope0_id, {
 		input_show: ($ui__input_rows || $ui__input_show) && input.show,
 		input_label: (_unfilled_if($scope0_reason, 0) || $ui__input_label) && input.label,
@@ -75,5 +73,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_show: ["input.show"],
 		input_label: ["input.label"]
-	}) || ($fg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 3)), $fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 4)));
+	}) || (_filled_guard($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 3)) && $cg__input_rows && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_show#4/subscribers", "input_show"), _filled_guard($scope0_reason, 4) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 4)) && ($cg__input_rows || $cg__input_show) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#5/subscribers", "input_label"));
 }, 1);

@@ -8,7 +8,7 @@ _shells({
 	a5: "a5;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_outer = _client_guard($scope0_reason, 3), $wi__input_show__OR__input_outer__OR__input_inner = _write_if($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 2), $ui__input_inner2 = _unfilled_if($scope0_reason, 4), $fg__input_outer = _filled_guard($scope0_reason, 3), $fg__input_inner = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_outer = _client_guard($scope0_reason, 3), $wi__input_show__OR__input_outer__OR__input_inner = _write_if($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 2), $ui__input_inner2 = _unfilled_if($scope0_reason, 4), $fg__input_outer = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_inner__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -36,10 +36,9 @@ var template_default = _template("a", (input) => {
 	_html(`<button>interactive</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a8");
 	$fg__input_outer && $cg__input_show && _patch_render($scope0_id, "a7", "f");
-	$fg__input_inner && $cg__input_show && _patch_subscribers($scope0_id, "a9", "g");
 	_scope($scope0_id, {
 		f: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.outer,
 		g: ($ui__input_show || $ui__input_inner2) && input.inner,
 		i: _write_if($scope0_reason, 4) && ($ui__input_inner2 || $ui__input_show) && $input_inner__closures
-	}) || ($fg__input_outer && $ui__input_show && _patch_write($scope0_id, "xf", input.outer, !_server_guard($scope0_reason, 3)), $fg__input_inner && $ui__input_show && _patch_write($scope0_id, "xg", input.inner, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_outer && $ui__input_show && _patch_write($scope0_id, "xf", input.outer, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && $ui__input_show && _patch_write($scope0_id, "xg", input.inner, !_server_guard($scope0_reason, 4)) && $cg__input_show && _patch_subscribers($scope0_id, "a9", "g"));
 }, 1);

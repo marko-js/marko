@@ -9,8 +9,8 @@
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-error-structure-reads-param/template.marko_2*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-error-structure-reads-param/template.marko_1*content"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-error-structure-reads-param/template.marko_0_input_label#3/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "b"
+  "PatchMarkedWrite:input_label": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-error-structure-reads-param/template.marko_0_input_label#3/subscribers": "input_label"
 }
 ;CwY
 
@@ -25,8 +25,8 @@
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-error-structure-reads-param/template.marko_3*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-error-structure-reads-param/template.marko_1*content"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-error-structure-reads-param/template.marko_0_input_label#3/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "c"
+  "PatchMarkedWrite:input_label": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-error-structure-reads-param/template.marko_0_input_label#3/subscribers": "input_label"
 }
 ;Cw4
 
@@ -35,6 +35,6 @@
   "PatchChild:BranchScopes:#text/0": [{
     "PatchText:#text/0": "ok"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-error-structure-reads-param/template.marko_1*content"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-error-structure-reads-param/template.marko_0_input_label#3/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "d"
+  "PatchMarkedWrite:input_label": "d",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-error-structure-reads-param/template.marko_0_input_label#3/subscribers": "input_label"
 }

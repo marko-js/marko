@@ -8,9 +8,9 @@
       }, "a1"]
     }
   }, "a2"],
-  Sa7: "f",
   ia9: "m",
   xf: "b",
+  Sa7: "f",
   xm: {
     content: _([], "a3", 1)
   }
@@ -26,9 +26,9 @@
       }, "a1"]
     }
   }, "a2"],
-  Sa7: "f",
   ia9: "m",
   xf: "c",
+  Sa7: "f",
   xm: {
     content: _([], "a3", 1)
   }
@@ -37,9 +37,9 @@
 // PATCH holding BwY
 {
   ba: 0,
-  Sa7: "f",
   ia9: "m",
   xf: "d",
+  Sa7: "f",
   xm: {
     content: _([], "a3", 1)
   }
@@ -54,9 +54,9 @@
       }, "a1"]
     }
   }, "a2"],
-  Sa7: "f",
   ia9: "m",
   xf: "e",
+  Sa7: "f",
   xm: {
     content: _([], "a3", 1)
   }

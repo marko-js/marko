@@ -5,13 +5,13 @@
     "PatchBranch:#text/1": [{
       "PatchText:#text/0": "cd"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-join-withheld-content-read/tags/child.marko_2*shell"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-withheld-content-read/tags/child.marko_0_input_a#4/subscribers": "input_a",
-    "PatchMarkedWrite:input_a": "c"
+    "PatchMarkedWrite:input_a": "c",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-withheld-content-read/tags/child.marko_0_input_a#4/subscribers": "input_a"
   },
   "PatchChild:#childScope/1": {
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-withheld-content-read/tags/child.marko_0_input_a#4/subscribers": "input_a",
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-withheld-content-read/tags/child.marko_2_input_a#0:4/setup": "input_a",
-    "PatchMarkedWrite:input_a": "c"
+    "PatchMarkedWrite:input_a": "c",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-withheld-content-read/tags/child.marko_0_input_a#4/subscribers": "input_a"
   }
 }
 ;CAI
@@ -22,13 +22,13 @@
     "PatchBranch:#text/1": [{
       "PatchText:#text/0": "ef"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-join-withheld-content-read/tags/child.marko_2*shell"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-withheld-content-read/tags/child.marko_0_input_a#4/subscribers": "input_a",
-    "PatchMarkedWrite:input_a": "e"
+    "PatchMarkedWrite:input_a": "e",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-withheld-content-read/tags/child.marko_0_input_a#4/subscribers": "input_a"
   },
   "PatchChild:#childScope/1": {
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-withheld-content-read/tags/child.marko_0_input_a#4/subscribers": "input_a",
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-withheld-content-read/tags/child.marko_2_input_a#0:4/setup": "input_a",
-    "PatchMarkedWrite:input_a": "e"
+    "PatchMarkedWrite:input_a": "e",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-withheld-content-read/tags/child.marko_0_input_a#4/subscribers": "input_a"
   }
 }
 
@@ -38,12 +38,12 @@
     "PatchBranch:#text/1": [{
       "PatchText:#text/0": "gh"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-join-withheld-content-read/tags/child.marko_2*shell"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-withheld-content-read/tags/child.marko_0_input_a#4/subscribers": "input_a",
-    "PatchMarkedWrite:input_a": "g"
+    "PatchMarkedWrite:input_a": "g",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-withheld-content-read/tags/child.marko_0_input_a#4/subscribers": "input_a"
   },
   "PatchChild:#childScope/1": {
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-withheld-content-read/tags/child.marko_0_input_a#4/subscribers": "input_a",
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-withheld-content-read/tags/child.marko_2_input_a#0:4/setup": "input_a",
-    "PatchMarkedWrite:input_a": "g"
+    "PatchMarkedWrite:input_a": "g",
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-withheld-content-read/tags/child.marko_0_input_a#4/subscribers": "input_a"
   }
 }

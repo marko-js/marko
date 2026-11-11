@@ -6,7 +6,7 @@ _shells({
 	a: "a;E l%;<main><h1> </h1><!></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_title = _write_guard($scope0_reason, 0), $cg__input_title = _client_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_title = _write_guard($scope0_reason, 0), $cg__input_title = _client_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 1), $wi__input_title = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
@@ -31,10 +31,9 @@ var template_default = _template("a", (input) => {
 		_subscribe($wi__input_title && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_title && "a1", $wg__input_title);
 	}, void 0, "a6", void 0, "a4", 1);
 	_html("</main>");
-	$fg__input_title && _patch_subscribers($scope0_id, "a7", "e");
 	_scope($scope0_id, {
 		e: input.title,
 		g: $wi__input_title && $input_title__closures,
 		h: $wi__input_promise && _unfilled_if($scope0_reason, 1) && $input_promise__closures
-	}) || $fg__input_title && _patch_write($scope0_id, "xe", input.title, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.title, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "a7", "e");
 }, 1);

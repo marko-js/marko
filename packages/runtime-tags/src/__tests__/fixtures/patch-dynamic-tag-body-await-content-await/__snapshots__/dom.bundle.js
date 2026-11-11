@@ -22,11 +22,11 @@ const $inputinnerCardsection_content__setup = ($scope) => {
 	$inputinnerCardsection_content__input_note($scope);
 	$inputinnerCardsection_content__w($scope);
 };
-const $inputinnerCardsection_content__w = /*@__PURE__*/ _closure_get_patch("a2", 12, ($scope) => _text($scope.b, $scope._.c), 0, "a3", 0);
+const $inputinnerCardsection_content__w = /*@__PURE__*/ _closure_get_patch("a2", 12, ($scope) => _text($scope.b, $scope._.c), 0, "a4", 0);
 const $inputinnerCardsection_content = _content$1("a0", "<em><!> <!></em>", "D%c%", $inputinnerCardsection_content__setup);
 _content_resume($inputinnerCardsection_content);
 const $await_content2__dynamicTag = /*@__PURE__*/ _dynamic_tag(0, $inputinnerCardsection_content);
-const $await_content2__input_inner = /*@__PURE__*/ _closure_get_patch("a4", 10, ($scope) => $await_content2__dynamicTag($scope, $scope._._._.g ? card_default : "section"), ($scope) => $scope._._._, "a13", 0);
+const $await_content2__input_inner = /*@__PURE__*/ _closure_get_patch("a3", 10, ($scope) => $await_content2__dynamicTag($scope, $scope._._._.g ? card_default : "section"), ($scope) => $scope._._._, "a13", 0);
 const $await_content2__setup = $await_content2__input_inner;
 const $await_content2__$params = ($scope, $params3) => $await_content2__w($scope, $params3[0]);
 const $await_content2__w = /*@__PURE__*/ _const(2, /* @__PURE__ */ _closure($inputinnerCardsection_content__w));

@@ -4,7 +4,7 @@ const $walks = "b%b b";
 const $setup = [[], ["b2"]];
 _shells({ b: "b !b2;b%b ;<!><!><button>+</button>" });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	let count = 0;
@@ -17,13 +17,12 @@ var child_default = _template("b", (input) => {
 	}, $scope0_id));
 	_html(`<button>+</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "b2");
-	$fg__input_label && _patch_subscribers($scope0_id, "b3", "e");
 	_patch_fill($scope0_id, "vb4", count, 1);
 	_scope($scope0_id, {
 		e: input.label,
 		f: count,
 		g: $wi__input_label && $input_label__closures
-	}) || $fg__input_label && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "b3", "e");
 });
 
 // template.marko

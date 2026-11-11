@@ -14,11 +14,11 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_items__OR__input_v = _client_guard($scope0_reason, 0), $wi__input_items__OR__input_v = _write_if($scope0_reason, 0), $cg__input_on = _client_guard($scope0_reason, 4), $ui__input_items = _unfilled_if($scope0_reason, 2), $fg__input_v = _filled_guard($scope0_reason, 3), $fg__input_on = _filled_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_for_of(input.items, (item) => {
-		const $scope1_id = _scope_id(), $ui__input_on = _unfilled_if($scope0_reason, 4), $ui__input_items__OR__input_v = _unfilled_if($scope0_reason, 0), $ui__input_v = _unfilled_if($scope0_reason, 3), $fg__input_items__OR__input_v = _filled_guard($scope0_reason, 0), $fg__input_items = _filled_guard($scope0_reason, 2);
+		const $scope1_id = _scope_id(), $ui__input_on = _unfilled_if($scope0_reason, 4), $ui__input_items__OR__input_v = _unfilled_if($scope0_reason, 0), $ui__input_v = _unfilled_if($scope0_reason, 3), $fg__input_items = _filled_guard($scope0_reason, 2);
 		const $for_content__v__closures = new Set();
 		$fg__input_items && $ui__input_v && _patch_write($scope1_id, "PatchMarkedWrite:item", item, !_server_guard($scope0_reason, 2));
 		const v = `${item}${input.v}!`;
-		$fg__input_items__OR__input_v && $ui__input_on && _patch_write($scope1_id, "PatchMarkedWrite:v", v, !_server_guard($scope0_reason, 0));
+		_filled_guard($scope0_reason, 0) && $ui__input_on && _patch_write($scope1_id, "PatchMarkedWrite:v", v, !_server_guard($scope0_reason, 0)) && $cg__input_on && _patch_subscribers($scope1_id, "__tests__/tags/child.marko_1_v#4/subscribers", "v");
 		const D = { content: _content("__tests__/tags/child.marko_2*content", ({ on }) => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason(), $wg__on = _write_guard($scope2_reason, 0), $wi__on = _write_if($scope2_reason, 0);
@@ -37,7 +37,6 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		D.content({ on: input.on });
 		_patch_child_end();
-		$fg__input_items__OR__input_v && $cg__input_on && _patch_subscribers($scope1_id, "__tests__/tags/child.marko_1_v#4/subscribers", "v");
 		$cg__input_on && _patch_render($scope1_id, "__tests__/tags/child.marko_1_input_on#0:5/setup");
 		_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_v#0:4_item#2/setup", ((_filled_guard($scope0_reason, 3) ? " >input_v" : "") + ($fg__input_items ? " item" : "")).slice(1), $scope0_reason, 0);
 		_scope($scope1_id, {

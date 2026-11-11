@@ -4,7 +4,7 @@ _shells({
 	a: "a;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_a = _client_guard($scope0_reason, 3), $wg__input_tag = _write_guard($scope0_reason, 2), $ui__input_tag__OR__input_a = _unfilled_if($scope0_reason, 0), $fg__input_a2 = _filled_guard($scope0_reason, 3), $fg__input_b = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_a = _client_guard($scope0_reason, 3), $wg__input_tag = _write_guard($scope0_reason, 2), $ui__input_tag__OR__input_a = _unfilled_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	const $input_b__closures = /* @__PURE__ */ new Set();
@@ -25,12 +25,10 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id)
 		}), $cg__input_a && "a3"), _client_guard($scope0_reason, 4) && "a4");
 	}, $scope0_id, ($scope) => $scope0_page ? [{ f: input.b }] : []), 0, $wg__input_tag, $scope0_reason, 2, 0, void 0, 0, 0, "a0");
-	$fg__input_a2 && _patch_subscribers($scope0_id, "a8", "e");
-	$fg__input_b && _patch_subscribers($scope0_id, "a9", "f");
 	_scope($scope0_id, {
 		e: input.a,
 		f: ($ui__input_tag__OR__input_a || _unfilled_if($scope0_reason, 1)) && input.b,
 		g: _write_if($scope0_reason, 3) && $input_a__closures,
 		h: _write_if($scope0_reason, 4) && $input_b__closures
-	}) || ($fg__input_a2 && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 3)), $fg__input_b && (_client_branch_if("a0", $scope0_id) || $ui__input_tag__OR__input_a) && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 4)));
+	}) || (_filled_guard($scope0_reason, 3) && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 3)) && _patch_subscribers($scope0_id, "a8", "e"), _filled_guard($scope0_reason, 4) && (_client_branch_if("a0", $scope0_id) || $ui__input_tag__OR__input_a) && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 4)) && _patch_subscribers($scope0_id, "a9", "f"));
 }, 1);

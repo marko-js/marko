@@ -6,8 +6,8 @@
   cAb: {
     ta: "a2x2"
   },
-  Sa4: "f",
-  xf: "a2"
+  xf: "a2",
+  Sa4: "f"
 }
 
 // PATCH
@@ -18,6 +18,6 @@
   cAb: {
     ta: "a3x3"
   },
-  Sa4: "f",
-  xf: "a3"
+  xf: "a3",
+  Sa4: "f"
 }

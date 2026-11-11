@@ -9,8 +9,8 @@
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-define-stateful/template.marko_2_open#5/fill": !0
     }
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-define-stateful/template.marko_0_input_note#4/subscribers": "input_note",
-  "PatchMarkedWrite:input_note": "b"
+  "PatchMarkedWrite:input_note": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-define-stateful/template.marko_0_input_note#4/subscribers": "input_note"
 }
 ;BwY
 
@@ -24,6 +24,6 @@
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-define-stateful/template.marko_2_open#5/fill": !0
     }
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-define-stateful/template.marko_0_input_note#4/subscribers": "input_note",
-  "PatchMarkedWrite:input_note": "c"
+  "PatchMarkedWrite:input_note": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-define-stateful/template.marko_0_input_note#4/subscribers": "input_note"
 }

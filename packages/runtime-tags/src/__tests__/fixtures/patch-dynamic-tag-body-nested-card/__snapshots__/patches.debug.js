@@ -9,10 +9,10 @@
     },
     "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-nested-card/template.marko_1*content"
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-nested-card/template.marko_0_input_p#4/subscribers": "input_p",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-nested-card/template.marko_0_input_note#5/subscribers": "input_note",
   "PatchMarkedWrite:input_p": !0,
-  "PatchMarkedWrite:input_note": "b"
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-nested-card/template.marko_0_input_p#4/subscribers": "input_p",
+  "PatchMarkedWrite:input_note": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-nested-card/template.marko_0_input_note#5/subscribers": "input_note"
 }
 ;CQU
 
@@ -26,8 +26,8 @@
     },
     "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-nested-card/template.marko_1*content"
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-nested-card/template.marko_0_input_p#4/subscribers": "input_p",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-nested-card/template.marko_0_input_note#5/subscribers": "input_note",
   "PatchMarkedWrite:input_p": !0,
-  "PatchMarkedWrite:input_note": "c"
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-nested-card/template.marko_0_input_p#4/subscribers": "input_p",
+  "PatchMarkedWrite:input_note": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-nested-card/template.marko_0_input_note#5/subscribers": "input_note"
 }

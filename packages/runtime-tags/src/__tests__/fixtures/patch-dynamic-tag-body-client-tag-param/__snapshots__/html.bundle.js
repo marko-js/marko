@@ -6,7 +6,7 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_note = _client_guard($scope0_reason, 2), $wg__input_tag = _write_guard($scope0_reason, 1), $ui__input_tag = _unfilled_if($scope0_reason, 1), $fg__input_note = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_note = _client_guard($scope0_reason, 2), $wg__input_tag = _write_guard($scope0_reason, 1), $ui__input_tag = _unfilled_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_dynamic_tag($scope0_id, "a", input.tag, {}, 2, _content_resume("b0", () => {
@@ -16,11 +16,10 @@ var child_default = _template("b", (input) => {
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b1", $cg__input_note);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), $cg__input_note && "b1");
 	}, $scope0_id, ($scope) => $scope0_page ? [{ e: input.note }] : []), 0, $wg__input_tag, $scope0_reason, 1, 0, void 0, 0, 0, "b0");
-	$fg__input_note && _patch_subscribers($scope0_id, "b2", "e");
 	_scope($scope0_id, {
 		e: ($ui__input_tag || _unfilled_if($scope0_reason, 2)) && input.note,
 		f: _write_if($scope0_reason, 2) && $input_note__closures
-	}) || $fg__input_note && (_client_branch_if("b0", $scope0_id) || $ui__input_tag) && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 2));
+	}) || _filled_guard($scope0_reason, 2) && (_client_branch_if("b0", $scope0_id) || $ui__input_tag) && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "b2", "e");
 });
 
 // template.marko

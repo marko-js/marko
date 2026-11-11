@@ -13,6 +13,6 @@ const $inputtype_content__setup = ($scope) => {
 	$inputtype_content__input_n($scope);
 	$inputtype_content__i($scope);
 };
-const $inputtype_content__i = /*@__PURE__*/ _closure_get_patch("c2", 7, ($scope) => _text($scope.a, $scope._.b), 0, "c3", 0);
+const $inputtype_content__i = /*@__PURE__*/ _closure_get_patch("c2", 7, ($scope) => _text($scope.a, $scope._.b), 0, "c4", 0);
 const $inputtype_content = _content$1("c0", "item <!> of <!>", "b%c%", $inputtype_content__setup);
 _content_resume($inputtype_content);

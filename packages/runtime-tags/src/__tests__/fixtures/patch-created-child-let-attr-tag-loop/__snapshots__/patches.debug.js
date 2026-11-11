@@ -16,8 +16,8 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-attr-tag-loop/template.marko_1*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-attr-tag-loop/template.marko_0_input_label#4/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "b"
+  "PatchMarkedWrite:input_label": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-attr-tag-loop/template.marko_0_input_label#4/subscribers": "input_label"
 }
 ;BgI
 
@@ -38,6 +38,6 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-attr-tag-loop/template.marko_1*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-attr-tag-loop/template.marko_0_input_label#4/subscribers": "input_label",
-  "PatchMarkedWrite:input_label": "c"
+  "PatchMarkedWrite:input_label": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-attr-tag-loop/template.marko_0_input_label#4/subscribers": "input_label"
 }

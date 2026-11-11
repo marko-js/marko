@@ -9,7 +9,7 @@ _shells({
 	c: "c;b%;<!><!><!>"
 });
 var wrapper_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_fallback = _write_guard($scope0_reason, 0), $cg__input_fallback = _client_guard($scope0_reason, 0), $cg__input_fail = _client_guard($scope0_reason, 1), $fg__input_fallback = _filled_guard($scope0_reason, 0), $wi__input_fallback = _write_if($scope0_reason, 0), $wi__input_fail = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_fallback = _write_guard($scope0_reason, 0), $cg__input_fallback = _client_guard($scope0_reason, 0), $cg__input_fail = _client_guard($scope0_reason, 1), $wi__input_fallback = _write_if($scope0_reason, 0), $wi__input_fail = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_fallback__closures = /* @__PURE__ */ new Set();
 	const $input_fail__closures = /* @__PURE__ */ new Set();
@@ -26,12 +26,11 @@ var wrapper_default = _template("c", (input) => {
 		$cg__input_fallback && _patch_render($scope1_id, "c0");
 		_subscribe($wi__input_fallback && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_fallback && "c0", $wg__input_fallback);
 	}, 0, "c2", "c3", 1);
-	$fg__input_fallback && _patch_subscribers($scope0_id, "c4", "d");
 	_scope($scope0_id, {
 		d: input.fallback,
 		f: $wi__input_fallback && $input_fallback__closures,
 		g: $wi__input_fail && _unfilled_if($scope0_reason, 1) && $input_fail__closures
-	}) || $fg__input_fallback && _patch_write($scope0_id, "xd", input.fallback, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.fallback, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "c4", "d");
 });
 
 // tags/panel.marko
@@ -43,7 +42,7 @@ _shells({
 	b: `b${_shell_marker($setup$1)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$1)}`
 });
 var panel_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_a = _filled_guard($scope0_reason, 2), $fg__input_b = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	const $input_b__closures = /* @__PURE__ */ new Set();
@@ -62,15 +61,13 @@ var panel_default = _template("b", (input) => {
 		}, $scope0_id) })
 	});
 	_patch_child_end();
-	$fg__input_a && _patch_subscribers($scope0_id, "b4", "e");
-	$fg__input_b && _patch_subscribers($scope0_id, "b5", "f");
 	_scope($scope0_id, {
 		e: input.a,
 		f: input.b,
 		g: _write_if($scope0_reason, 2) && $input_a__closures,
 		h: _write_if($scope0_reason, 3) && $input_b__closures,
 		a: _existing_scope($childScope)
-	}) || ($fg__input_a && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 2)), $fg__input_b && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 3)));
+	}) || (_filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "b4", "e"), _filled_guard($scope0_reason, 3) && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 3)) && _patch_subscribers($scope0_id, "b5", "f"));
 });
 
 // template.marko

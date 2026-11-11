@@ -46,7 +46,7 @@ var template_default = _template("a", (input) => {
 	const D = { content: _content("a2", ({ label, prev }) => {
 		const $scope1_id = _scope_id(), $ui__input_on = _unfilled_if($scope0_reason, 0);
 		const $D_content__label__closures = /* @__PURE__ */ new Set();
-		const $scope1_reason = _scope_reason(), $scope1_page = _page_render(), $cg__label = _client_guard($scope1_reason, 1), $wg__prev = _write_guard($scope1_reason, 2), $fg__label = _filled_guard($scope1_reason, 1), $fg__prev = _filled_guard($scope1_reason, 2), $wi__label = _write_if($scope1_reason, 1);
+		const $scope1_reason = _scope_reason(), $scope1_page = _page_render(), $cg__label = _client_guard($scope1_reason, 1), $wg__prev = _write_guard($scope1_reason, 2), $fg__prev = _filled_guard($scope1_reason, 2), $wi__label = _write_if($scope1_reason, 1);
 		const X = { content: _content_resume("a0", () => {
 			const $scope2_id = _scope_id();
 			_scope_reason();
@@ -58,7 +58,6 @@ var template_default = _template("a", (input) => {
 		_dynamic_tag($scope1_id, "b", input.on ? keeper_default : plain_default, { content: prev }, 9, 0, 0, $wg__input_on || $wg__prev, $uf__input_on << 1, 0, 0, void 0, 0, 0, "a0");
 		const $return = X;
 		$ui__input_on && _patch_write($scope1_id, "wh", X, 1);
-		$fg__label && _patch_subscribers($scope1_id, "a3", "e");
 		_patch_render($scope1_id, "a4", ((_filled_guard($scope0_reason, 0) ? " >f" : "") + ($fg__prev ? " f" : "")).slice(1), $uf__input_on << 1, 0);
 		($wi__input_on || _write_if($scope1_reason, 0)) && _subscribe(_unfilled_if($uf__input_on << 1, 0) && $wi__input_on && $input_on__closures, _scope($scope1_id, {
 			e: ($ui__input_on || _unfilled_if($scope1_reason, 1)) && label,
@@ -66,7 +65,7 @@ var template_default = _template("a", (input) => {
 			h: $ui__input_on && X,
 			_: $wi__input_on && _scope_with_id($scope0_id),
 			k: $wi__label && $D_content__label__closures
-		}), _client_guard($uf__input_on << 1, 0) && "a5", $wg__input_on || $wg__prev || $wg__input_on) || ($fg__label && (_client_branch_if("a0", $scope1_id) || _client_guard($scope0_reason, 0) || $ui__input_on) && _patch_write($scope1_id, "xe", label, !_server_guard($scope1_reason, 1)), $fg__prev && $ui__input_on && _patch_write($scope1_id, "xf", prev, 1));
+		}), _client_guard($uf__input_on << 1, 0) && "a5", $wg__input_on || $wg__prev || $wg__input_on) || (_filled_guard($scope1_reason, 1) && (_client_branch_if("a0", $scope1_id) || _client_guard($scope0_reason, 0) || $ui__input_on) && _patch_write($scope1_id, "xe", label, !_server_guard($scope1_reason, 1)) && _patch_subscribers($scope1_id, "a3", "e"), $fg__prev && $ui__input_on && _patch_write($scope1_id, "xf", prev, 1));
 		return $return;
 	}, $scope0_id) };
 	_html("<main>");

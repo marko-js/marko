@@ -40,7 +40,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_items__OR__input_loaded = _write_guard($scope0_reason, 0), $wi__input_items__OR__input_loaded = _write_if($scope0_reason, 0), $ui__input_items2 = _unfilled_if($scope0_reason, 1), $ui__input_items__OR__input_loaded = _unfilled_if($scope0_reason, 0), $fg__input_loaded = _filled_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_items__OR__input_loaded = _write_guard($scope0_reason, 0), $wi__input_items__OR__input_loaded = _write_if($scope0_reason, 0), $ui__input_items2 = _unfilled_if($scope0_reason, 1), $ui__input_items__OR__input_loaded = _unfilled_if($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_loaded__closures = new Set();
 	_for_of(input.items, (item) => {
@@ -89,9 +89,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"ClosureScopes:item_promise/6": _write_if($scope0_reason, 1) && (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && $for_content__item_promise__closures
 		}, "__tests__/template.marko", "2:2", { "#LoopKey": ["item.key", "2:6"] });
 	}, "key", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
-	$fg__input_loaded && $cg__input_items && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_loaded#4/subscribers", "input_loaded");
 	_scope($scope0_id, {
 		input_loaded: ($ui__input_items2 || $ui__input_items__OR__input_loaded) && input.loaded,
 		"ClosureScopes:input_loaded/5": _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || $ui__input_items__OR__input_loaded || $ui__input_items2) && $input_loaded__closures
-	}, "__tests__/template.marko", 0, { input_loaded: ["input.loaded"] }) || $fg__input_loaded && $ui__input_items2 && _patch_write($scope0_id, "PatchMarkedWrite:input_loaded", input.loaded, !_server_guard($scope0_reason, 2));
+	}, "__tests__/template.marko", 0, { input_loaded: ["input.loaded"] }) || _filled_guard($scope0_reason, 2) && $ui__input_items2 && _patch_write($scope0_id, "PatchMarkedWrite:input_loaded", input.loaded, !_server_guard($scope0_reason, 2)) && $cg__input_items && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_loaded#4/subscribers", "input_loaded");
 }, 1);

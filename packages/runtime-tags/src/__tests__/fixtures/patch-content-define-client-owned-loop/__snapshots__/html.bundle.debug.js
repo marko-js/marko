@@ -9,7 +9,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;D%b%;<li><!><!></li>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_suffix = _client_guard($scope0_reason, 0), $wi__input_suffix = _write_if($scope0_reason, 0), $fg__input_suffix = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_suffix = _client_guard($scope0_reason, 0), $wi__input_suffix = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = new Set();
 	let count = 1;
@@ -36,7 +36,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$fg__input_suffix && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_suffix#5/subscribers", "input_suffix");
 	_scope($scope0_id, {
 		input_suffix: input.suffix,
 		count,
@@ -46,5 +45,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_suffix: ["input.suffix"],
 		count: "1:6"
-	}) || $fg__input_suffix && _patch_write($scope0_id, "PatchMarkedWrite:input_suffix", input.suffix, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_suffix", input.suffix, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_suffix#5/subscribers", "input_suffix");
 }, 1);

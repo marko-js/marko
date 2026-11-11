@@ -8,7 +8,7 @@ _shells({
 	a0: "a0;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 1), $uf__input_open = _updates_from($scope0_reason, 2), $fg__input_title = _filled_guard($scope0_reason, 1), $wi__input_title = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 1), $uf__input_open = _updates_from($scope0_reason, 2), $wi__input_title = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	let count = 0;
@@ -58,12 +58,11 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_html(`<button>+</button>${_el_mark($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a7");
-	$fg__input_title && _patch_subscribers($scope0_id, "a8", "f");
 	_scope($scope0_id, {
 		f: input.title,
 		h: count,
 		i: $wi__input_title && $input_title__closures,
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2)
-	}) || $fg__input_title && _patch_write($scope0_id, "xf", input.title, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.title, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a8", "f");
 }, 1);

@@ -18,7 +18,7 @@ const $walks = "D%b b D m";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b b D ;<main><!><button class=toggle>+</button><button class=bump> </button></main>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_a = _filled_guard($scope0_reason, 0), $wi__input_a = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_a = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	const $count__closures = new Set();
@@ -44,7 +44,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
 	_html(`<button class=toggle>+</button>${_el_mark($scope0_id, "#button/1")}<button class=bump>${_text_mark($scope0_id, "#text/3", count)}</button>${_el_mark($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$fg__input_a && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_a#6/subscribers", "input_a");
 	_scope($scope0_id, {
 		input_a: input.a,
 		open,
@@ -55,5 +54,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_a: ["input.a"],
 		open: "1:6",
 		count: "2:6"
-	}) || $fg__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_a#6/subscribers", "input_a");
 }, 1);

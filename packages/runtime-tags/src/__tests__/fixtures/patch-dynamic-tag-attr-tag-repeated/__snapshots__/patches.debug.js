@@ -17,10 +17,10 @@
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-tag-repeated/template.marko_3_open#5/fill": !0
     }
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-tag-repeated/template.marko_0_input_a#4/subscribers": "input_a",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-tag-repeated/template.marko_0_input_b#5/subscribers": "input_b",
   "PatchMarkedWrite:input_a": "a2",
-  "PatchMarkedWrite:input_b": "b2"
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-tag-repeated/template.marko_0_input_a#4/subscribers": "input_a",
+  "PatchMarkedWrite:input_b": "b2",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-tag-repeated/template.marko_0_input_b#5/subscribers": "input_b"
 }
 ;DAM
 
@@ -42,8 +42,8 @@
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-tag-repeated/template.marko_3_open#5/fill": !0
     }
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-tag-repeated/template.marko_0_input_a#4/subscribers": "input_a",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-tag-repeated/template.marko_0_input_b#5/subscribers": "input_b",
   "PatchMarkedWrite:input_a": "a3",
-  "PatchMarkedWrite:input_b": "b3"
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-tag-repeated/template.marko_0_input_a#4/subscribers": "input_a",
+  "PatchMarkedWrite:input_b": "b3",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-tag-repeated/template.marko_0_input_b#5/subscribers": "input_b"
 }

@@ -13,8 +13,7 @@
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "a2x2"
       }
-    },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-param-intersection-per-owner/tags/owner.marko_0_input_a#4/subscribers": "input_a"
+    }
   }
 }
 
@@ -33,7 +32,6 @@
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "a3x3"
       }
-    },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-param-intersection-per-owner/tags/owner.marko_0_input_a#4/subscribers": "input_a"
+    }
   }
 }
