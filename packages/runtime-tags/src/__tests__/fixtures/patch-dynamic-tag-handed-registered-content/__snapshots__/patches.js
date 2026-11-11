@@ -1,10 +1,8 @@
 // PATCH
-`a0;D ;<em> </em>`
+[`a2`, `a0;D ;<em> </em>`]
 {
   cc: {
-    fa: ["^^a1", 0, {
-      label: "two"
-    }],
+    fa: "^^a2",
     cAa: {
       ba: [{
         ta: "two"
@@ -12,26 +10,24 @@
     }
   }
 }
-;BgE
+;Cwo
 
-// PATCH holding BgE
+// PATCH holding Cwo
+`a1`
 {
   cc: {
-    fa: ["^^a2", 0, {
-      label: "three"
-    }],
+    fa: "^^a1",
     cAa: {
       ta: "three"
     }
   }
 }
+;Cw4
 
-// PATCH holding BgE
+// PATCH holding Cw4
 {
   cc: {
-    fa: ["^^a1", 0, {
-      label: "two"
-    }],
+    fa: "^^a2",
     cAa: {
       ba: [{
         ta: "two"

@@ -63,7 +63,7 @@ export function isStatefulRead(read: ReferencedExtra) {
 
 // A read handing the value on to a render of it as content: a call passing it to
 // a child, or a `<const>`.
-function derivesRenderedContent(read: ReferencedExtra) {
+export function derivesRenderedContent(read: ReferencedExtra) {
   return some(read.derives, isRenderedContent);
 }
 

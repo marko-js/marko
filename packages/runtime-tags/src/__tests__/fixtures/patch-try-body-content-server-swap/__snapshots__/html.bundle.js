@@ -40,7 +40,11 @@ var wrapper_default = _template("b", (input) => {
 
 // template.marko
 const $setup = _shell_setup([[], ["a4"]], ["c>", $setup$1]);
-_shells({ a: `a${_shell_marker($setup)};${((_w0) => ` D l/${_w0}&b`)("b%c")};${((_w0) => `<button> </button>${_w0}<!>`)($template)}` });
+_shells({
+	a2: "a2",
+	a0: "a0",
+	a: `a${_shell_marker($setup)};${((_w0) => ` D l/${_w0}&b`)("b%c")};${((_w0) => `<button> </button>${_w0}<!>`)($template)}`
+});
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $ui__input_alt = _unfilled_if($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
@@ -51,14 +55,14 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<em>A ${_text_mark($scope1_id, "a", input.label, 2, $scope0_reason, 0)}</em>`);
-		$cg__input_label && _patch_render($scope1_id, "a1");
+		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a1", $cg__input_label);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_label && "a1");
 	}, $scope0_id) };
 	const B = { content: _content_resume("a2", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
 		_html(`<i>B ${_text_mark($scope2_id, "a", input.label, 2, $scope0_reason, 0)}</i>`);
-		$cg__input_label && _patch_render($scope2_id, "a3");
+		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a3", $cg__input_label);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
 			Cl: $wi__input_label && 1

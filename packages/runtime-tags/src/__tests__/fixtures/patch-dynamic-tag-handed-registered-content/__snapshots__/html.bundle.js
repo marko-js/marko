@@ -16,13 +16,15 @@ var child_default = _template("b", (input) => {
 // template.marko
 const $setup = _shell_setup([[], ["a3"]], ["c>", $setup$1]);
 _shells({
+	a1: "a1",
+	a2: "a2",
 	a: `a${_shell_marker($setup)};${((_w0) => ` b%b/${_w0}&b`)("b%c")};${((_w0) => `<button>toggle</button><!>${_w0}<!>`)($template)}`,
 	a0: "a0;D ;<em> </em>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const A = { content: _content_resume("a1", ({ label }) => {
+	const A = { content: _content_resume("a2", ({ label }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__label = _write_guard($scope1_reason, 0), $wi__label = _write_if($scope1_reason, 0);
 		_if(() => {
@@ -35,7 +37,7 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id, "a", 1, $wg__label, 1, 0, 0, ["a0"]);
 		$wi__label && _scope($scope1_id, {});
 	}, $scope0_id) };
-	const B = { content: _content_resume("a2", ({ label }) => {
+	const B = { content: _content_resume("a1", ({ label }) => {
 		const $scope3_id = _scope_id();
 		_scope_reason();
 		_html(`<b>${_text_mark($scope3_id, "a", label, 1, 4, 0)}</b>`);

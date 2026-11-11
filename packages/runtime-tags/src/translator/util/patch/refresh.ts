@@ -109,6 +109,7 @@ import {
   getStatefulConsumers,
   isPassedStateByEveryCall,
   isStatefulRead,
+  derivesRenderedContent,
 } from "./structure";
 
 // A value's fill, derived once per analysis (afresh each solve pass): what its reads
@@ -1771,11 +1772,12 @@ function patchMayCreateAtRead(
         read.derives,
         (derived) => derived.section.program !== read.section.program,
       )) &&
-    // A dynamic tag a patch switches creates what it renders; a child's read renders
-    // what its call site hands it, unless the child picks it.
+    // A dynamic tag or call a patch switches creates what it renders or hands a child to
+    // render; a child's read renders what its call site hands it, unless the child picks it.
     ((inTemplate
-      ? rendersContent &&
-        switchesContent(read, asInput) &&
+      ? (rendersContent
+          ? switchesContent(read, asInput)
+          : !!getFillSources(read) && derivesRenderedContent(read)) &&
         patchFillsSection(read.section)
       : picksContent(read, asInput)) ||
       // A callee's root renders where its call site does, which the content's

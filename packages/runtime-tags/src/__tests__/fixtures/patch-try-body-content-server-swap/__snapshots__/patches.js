@@ -1,4 +1,5 @@
 // PATCH
+`a0`
 {
   cc: {
     cAa: [{
@@ -15,8 +16,10 @@
   xf: "b",
   Sa5: "f"
 }
+;CgE
 
-// PATCH
+// PATCH holding CgE
+`a2`
 {
   cc: {
     cAa: [{
@@ -33,8 +36,9 @@
   xf: "c",
   Sa5: "f"
 }
+;CwY
 
-// PATCH
+// PATCH holding CwY
 {
   cc: {
     cAa: [{

@@ -1,4 +1,5 @@
 // PATCH
+`packages/runtime-tags/src/__tests__/fixtures/patch-try-body-content-server-swap/template.marko_1*content`
 {
   "PatchChild:#childScope/2": {
     "PatchChild:BranchScopes:#text/0": [{
@@ -15,8 +16,10 @@
   "PatchMarkedWrite:input_label": "b",
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-try-body-content-server-swap/template.marko_0_input_label#5/subscribers": "input_label"
 }
+;CgM
 
-// PATCH
+// PATCH holding CgM
+`packages/runtime-tags/src/__tests__/fixtures/patch-try-body-content-server-swap/template.marko_2*content`
 {
   "PatchChild:#childScope/2": {
     "PatchChild:BranchScopes:#text/0": [{
@@ -33,8 +36,9 @@
   "PatchMarkedWrite:input_label": "c",
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-try-body-content-server-swap/template.marko_0_input_label#5/subscribers": "input_label"
 }
+;Cxg
 
-// PATCH
+// PATCH holding Cxg
 {
   "PatchChild:#childScope/2": {
     "PatchChild:BranchScopes:#text/0": [{

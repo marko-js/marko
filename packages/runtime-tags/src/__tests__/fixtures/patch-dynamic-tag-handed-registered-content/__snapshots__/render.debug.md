@@ -60,5 +60,4 @@ UPDATE: b:nth-of-type(2)::text " " => "three"
 ```
 REMOVE: em + b
 INSERT: b + em
-UPDATE: em::text " " => "two"
 ```
