@@ -34,10 +34,10 @@ patchers[PatchKey.DynamicTag] = setupPatchers[PatchKey.DynamicTag] = (
     } else {
       renderer = getContentAt(scope, renderer);
       if (
-        !input &&
-        // The live branch renders this content for this owner.
+        // The live branch renders this content for this owner; the branch's
+        // own entries write whatever its input changed.
         scope[AccessorPrefix.ConditionalRenderer + accessor] ===
-          rendererKey(renderer)
+        rendererKey(renderer)
       ) {
         // Linked like one this created, for entries walking up through it.
         (scope[AccessorPrefix.BranchScopes + accessor] as Scope)[

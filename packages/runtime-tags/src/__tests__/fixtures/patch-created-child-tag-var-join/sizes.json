@@ -10,8 +10,8 @@
     },
     "route-pg.mjs": {
       "total": {
-        "min": 2838,
-        "brotli": 1355
+        "min": 2834,
+        "brotli": 1352
       },
       "files": {
         "tags/file-store.marko": 289,
