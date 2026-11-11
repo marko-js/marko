@@ -1122,7 +1122,8 @@ export function _resume_locals<T extends WeakKey>(
     : _base_resume_locals(val, id, locals, ownerScopeId);
 }
 
-// A patched scope write, a created scope's seed (`setup`) in its setup envelope.
+// A patched scope write (`1` once in the scope's patch), a created scope's seed
+// (`setup`) in its setup envelope.
 export function _patch_write(
   scopeId: number,
   key: string,
@@ -1150,6 +1151,7 @@ export function _patch_write(
         ? PatchKey.Write + accessor
         : key;
     entries[entryKey] = bind || value;
+    if (!setup) return 1;
   }
   return "";
 }

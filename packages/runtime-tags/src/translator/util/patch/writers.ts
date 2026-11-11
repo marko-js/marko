@@ -377,48 +377,7 @@ export function writePatchResumeStatements(
   // A closure over a patch-written slot (a value or a function with filled references' new bind)
   // the client renders re-runs on a live scope once marked: no node reaches it.
   forEach(section.bindings, (binding) => {
-    // A call may hand the client the structure around each subscriber, unless no param selects one's.
-    let walks = false;
-    let structure: Sources[] | undefined = [];
-    forEach(binding.closureSections, (closureSection) => {
-      if (runsSubscribersByWrite(binding, closureSection)) {
-        walks = true;
-        const selected = getCallerSelectedStructure(binding, closureSection);
-        structure = selected ? structure?.concat(selected) : undefined;
-      }
-    });
     const { sources } = binding;
-    // None where no call's patch fills the value, decided before its guards are built.
-    if (walks && getCallerGroupBit(section, "_filled_guard", sources) !== 0) {
-      body.push(
-        t.expressionStatement(
-          andGuard(
-            getCallerGroupGuard(section, "_filled_guard", sources),
-            andGuard(
-              orCallerGroupGuards(
-                section,
-                undefined,
-                "_client_guard",
-                fromIter(structure || []),
-              ),
-              callRuntime(
-                "_patch_subscribers",
-                getScopeIdIdentifier(section),
-                t.stringLiteral(getClosureSubscribersId(binding)),
-                getReads(
-                  section,
-                  [binding],
-                  "_filled_guard",
-                  isGuardedReason(sources) &&
-                    !sources.global &&
-                    getSoleCallerGroup(section, sources),
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-    }
     forEach(binding.closureSections, (closureSection) => {
       if (
         runsClosureByWrite(binding, closureSection) &&
@@ -1306,15 +1265,52 @@ function getUnfilledPatchWrite(section: Section, binding: Binding) {
           );
   // None where the guard folds to never, decided before the write is built.
   if (!guard || !isNever(guard)) {
-    return andGuard(
-      guard,
-      buildPatchWrite(
-        section,
-        binding,
-        getPatchKey().MarkedWrite,
-        getConstantSetup(section, binding),
-      ),
+    let write: t.Expression = buildPatchWrite(
+      section,
+      binding,
+      getPatchKey().MarkedWrite,
+      getConstantSetup(section, binding),
     );
+    // The walk re-runs subscribers where the write marked a change, so it ships after it;
+    // a call may hand the client each subscriber's structure, unless no param selects one's.
+    let walks = false;
+    let structure: Sources[] | undefined = [];
+    forEach(binding.closureSections, (closureSection) => {
+      if (runsSubscribersByWrite(binding, closureSection)) {
+        walks = true;
+        const selected = getCallerSelectedStructure(binding, closureSection);
+        structure = selected ? structure?.concat(selected) : undefined;
+      }
+    });
+    if (walks) {
+      const { sources } = binding;
+      write = t.logicalExpression(
+        "&&",
+        write,
+        andGuard(
+          orCallerGroupGuards(
+            section,
+            undefined,
+            "_client_guard",
+            fromIter(structure || []),
+          ),
+          callRuntime(
+            "_patch_subscribers",
+            getScopeIdIdentifier(section),
+            t.stringLiteral(getClosureSubscribersId(binding)),
+            getReads(
+              section,
+              [binding],
+              "_filled_guard",
+              isGuardedReason(sources) &&
+                !sources.global &&
+                getSoleCallerGroup(section, sources),
+            ),
+          ),
+        ),
+      );
+    }
+    return andGuard(guard, write);
   }
 }
 
