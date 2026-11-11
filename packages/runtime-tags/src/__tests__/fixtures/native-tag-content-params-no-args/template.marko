@@ -1,0 +1,8 @@
+<let/on=true>
+<define/Label|label = "none"|><i>${label}</i></define>
+<define/Count|{ count } = { count: 1 }|><b>${count}</b></define>
+<div content=(on ? Label : Count)/>
+<section ...(on ? { content: Count } : { content: Label })/>
+<${input.tag}|label = "body"|>${label}</>
+<${input.tag} content=(on ? Label.content : Count.content)/>
+<button onClick() { on = !on }/>

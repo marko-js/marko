@@ -2,8 +2,8 @@
   "dom": {
     "template.marko.page.mjs": {
       "total": {
-        "min": 64134,
-        "brotli": 19974
+        "min": 64160,
+        "brotli": 20024
       },
       "files": {
         "components/split-display/component-browser.js": 113,
