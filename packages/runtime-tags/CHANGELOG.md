@@ -1,5 +1,19 @@
 # @marko/runtime-tags
 
+## 6.4.13
+
+### Patch Changes
+
+- [#4674](https://github.com/marko-js/marko/pull/4674) [`afc52a9`](https://github.com/marko-js/marko/commit/afc52a933bd089ebfcfcd138811ca52d0580801a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Run the params of content that no tag calls (a native tag's content, a falsy-named dynamic tag's body, a `<try>` placeholder) with no arguments on the client, as the server renders it, so values derived from absent params render.
+
+- [#4676](https://github.com/marko-js/marko/pull/4676) [`2d8b623`](https://github.com/marko-js/marko/commit/2d8b623e0f0ec83e73787ed148b322df892dd62d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Error at compile time when a `<try>`'s `<@placeholder>` declares parameters, since nothing passes it arguments.
+
+- [#4677](https://github.com/marko-js/marko/pull/4677) [`e382f12`](https://github.com/marko-js/marko/commit/e382f1202351d7c8256ec1c3191885e666e70324) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Document the core tags with a doc comment above their `Input` type, in place of the descriptions their taglibs dropped. Language servers that read these comments show them when a tag is hovered or completed, and strike through the replaced `<effect>`. Marko 5's `<await>` no longer declares its `@then`, `@catch` and `@placeholder` as nested tags, which only fed editor completions.
+
+- [#4677](https://github.com/marko-js/marko/pull/4677) [`e382f12`](https://github.com/marko-js/marko/commit/e382f1202351d7c8256ec1c3191885e666e70324) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Drop the editor-only attribute and autocomplete metadata from core tag definitions, which the taglib loader no longer reads.
+- Updated dependencies [[`012a7e1`](https://github.com/marko-js/marko/commit/012a7e1978cacb8203bf2dd94cac78e9379416ba), [`e382f12`](https://github.com/marko-js/marko/commit/e382f1202351d7c8256ec1c3191885e666e70324)]:
+  - @marko/compiler@5.43.0
+
 ## 6.4.12
 
 ### Patch Changes

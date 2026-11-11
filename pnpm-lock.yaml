@@ -165,7 +165,7 @@ importers:
         specifier: ^9.0.0
         version: 9.0.0
       marko:
-        specifier: ^5.39.51
+        specifier: ^5.40.0
         version: link:../runtime-class
       resolve-sync:
         specifier: ^1.3.0
@@ -174,10 +174,10 @@ importers:
   packages/runtime-class:
     dependencies:
       '@marko/compiler':
-        specifier: ^5.42.18
+        specifier: ^5.43.0
         version: link:../compiler
       '@marko/runtime-tags':
-        specifier: 6.4.12
+        specifier: 6.4.13
         version: link:../runtime-tags
       app-module-path:
         specifier: ^2.2.0
@@ -223,7 +223,7 @@ importers:
   packages/runtime-tags:
     dependencies:
       '@marko/compiler':
-        specifier: ^5.42.18
+        specifier: ^5.43.0
         version: link:../compiler
       csstype:
         specifier: ^3.2.3

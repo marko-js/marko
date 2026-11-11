@@ -1,5 +1,18 @@
 # Change Log
 
+## 5.40.0
+
+### Minor Changes
+
+- [#4677](https://github.com/marko-js/marko/pull/4677) [`e382f12`](https://github.com/marko-js/marko/commit/e382f1202351d7c8256ec1c3191885e666e70324) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Read only the taglib declarations that change class API output (an attribute's `target-property`, `preserve-name`, `remove-dashes` and `default-value`, attribute patterns, and nested tags), and drop the unknown-attribute and required-attribute compile errors, which TypeScript covers. `marko/src/taglib` no longer exposes `loader`, `finder` or `registerFromFile`, and the legacy compiler API drops `taglibLoader`/`taglibFinder`. The undocumented `htmlType: "custom-element"` taglib setting is no longer read, nor handled by the runtime. A declared dashed attribute's `default-value` now reaches the camelCased property its value would. The core taglib drops its editor-only completion metadata.
+
+### Patch Changes
+
+- [#4677](https://github.com/marko-js/marko/pull/4677) [`e382f12`](https://github.com/marko-js/marko/commit/e382f1202351d7c8256ec1c3191885e666e70324) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Document the core tags with a doc comment above their `Input` type, in place of the descriptions their taglibs dropped. Language servers that read these comments show them when a tag is hovered or completed, and strike through the replaced `<effect>`. Marko 5's `<await>` no longer declares its `@then`, `@catch` and `@placeholder` as nested tags, which only fed editor completions.
+- Updated dependencies [[`012a7e1`](https://github.com/marko-js/marko/commit/012a7e1978cacb8203bf2dd94cac78e9379416ba), [`afc52a9`](https://github.com/marko-js/marko/commit/afc52a933bd089ebfcfcd138811ca52d0580801a), [`e382f12`](https://github.com/marko-js/marko/commit/e382f1202351d7c8256ec1c3191885e666e70324), [`2d8b623`](https://github.com/marko-js/marko/commit/2d8b623e0f0ec83e73787ed148b322df892dd62d), [`e382f12`](https://github.com/marko-js/marko/commit/e382f1202351d7c8256ec1c3191885e666e70324), [`e382f12`](https://github.com/marko-js/marko/commit/e382f1202351d7c8256ec1c3191885e666e70324)]:
+  - @marko/compiler@5.43.0
+  - @marko/runtime-tags@6.4.13
+
 ## 5.39.51
 
 ### Patch Changes
