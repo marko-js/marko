@@ -3,7 +3,8 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-import { taglib } from "@marko/compiler";
+import { compileSync, taglib } from "@marko/compiler";
+import * as runtimeTagsTranslator from "@marko/runtime-tags/translator";
 
 // Every case writes its own project in a fresh directory.
 let dir;
@@ -192,7 +193,11 @@ describe("compiler/taglib-loader", () => {
         file("tags/group/inner.marko"),
       );
       assert.ok(tags.getTagsSorted().every((tag) => tag.name !== "broken"));
-      assert.throws(() => tags.getTag("broken"), /Unable to parse JSON file/);
+      assert.equal(tags.getTag("broken"), undefined);
+      assert.match(
+        tags.getTagError("broken").message,
+        /Unable to parse JSON file/,
+      );
     });
 
     it("keeps a tag's own file over a directory its marko-tag.json renames to it", () => {
@@ -1218,14 +1223,92 @@ describe("compiler/taglib-loader", () => {
       assert.throws(lookup, /The tags directory ".*missing" does not exist/);
     });
 
-    it("throws for a tag entry naming a file that does not exist, only where it is used", () => {
-      write({ "marko.json": { "<tag-a>": "./missing/marko-tag.json" } });
-      const tags = lookup();
-      assert.ok(tags.getTagsSorted().every((tag) => tag.name !== "tag-a"));
-      assert.throws(
-        () => tags.getTag("tag-a"),
-        /Tag at path ".*marko-tag\.json" does not exist/,
-      );
+    it("does not find a tag that fails to load, and keeps why for a compile that uses it", () => {
+      write({
+        "marko.json": {
+          "<tag-a>": "./missing/marko-tag.json",
+          "<tag-b>": "./tags/tag-b/marko-tag.json",
+          "<tag-c>": { template: "./missing.marko" },
+        },
+        "tags/tag-b/marko-tag.json": "{ BAD JSON",
+        "tags/tag-e/marko-tag.json": { template: "./missing.marko" },
+        "tags/tag-f.marko": "",
+        "src/tags/tag-g.marko": "",
+      });
+      const reasons = {
+        "tag-a": /Tag at path ".*marko-tag\.json" does not exist/,
+        "tag-b": /Unable to parse JSON file at path/,
+        "tag-c": /Template at path ".*missing\.marko" does not exist/,
+        "tag-e": /Template at path ".*missing\.marko" does not exist/,
+      };
+      for (const tags of [lookup(), lookup("src")]) {
+        for (const name in reasons) {
+          assert.equal(tags.getTag(name), undefined);
+          assert.match(tags.getTagError(name).message, reasons[name]);
+          assert.equal(tags.getTag(name + ":nested"), undefined);
+          assert.equal(
+            tags.getTagError(name + ":nested"),
+            tags.getTagError(name),
+          );
+          assert.ok(tags.getTagsSorted().every((tag) => tag.name !== name));
+        }
+        assert.equal(tags.getTag("tag-f").template, file("tags/tag-f.marko"));
+        assert.equal(tags.getTagError("tag-f"), undefined);
+        assert.equal(tags.getTagError("tag-z"), undefined);
+      }
+    });
+
+    it("fails a compile at each use of a tag that fails to load, and no other", () => {
+      write({
+        "marko.json": { "<tag-a>": { template: "./missing.marko" } },
+        "tags/tag-b/marko-tag.json": "{ BAD JSON",
+        "tags/tag-f.marko": "<div/>",
+      });
+      const compile = (code, errorRecovery) =>
+        compileSync(code, file(errorRecovery ? "editor.marko" : "page.marko"), {
+          translator: runtimeTagsTranslator,
+          errorRecovery,
+          babelConfig: {
+            babelrc: false,
+            configFile: false,
+            browserslistConfigFile: false,
+          },
+        });
+      const reasons = {
+        "tag-a": /Template at path ".*missing\.marko" does not exist/,
+        "tag-b": /Unable to parse JSON file at path/,
+      };
+      for (const name in reasons) {
+        const code = `<tag-f/>\n<div>\n  <${name}/>\n</div>`;
+        const [diagnostic] = compile(code, true).meta.diagnostics;
+        assert.match(diagnostic.label, reasons[name]);
+        assert.deepEqual(diagnostic.loc.start, { line: 3, column: 3 });
+        assert.deepEqual(diagnostic.loc.end, { line: 3, column: 8 });
+        assert.throws(() => compile(code, false), reasons[name]);
+        assert.throws(() => compile(code, false), /page\.marko:3:4/);
+      }
+      assert.ok(compile("<tag-f/>", false).code);
+    });
+
+    it("keeps the tags above a directory whose taglibs fail to load, given an onError", () => {
+      write({
+        "tags/tag-a.marko": "",
+        "src/marko.json": { "taglib-imports": ["./missing/marko.json"] },
+        "src/tags/tag-b.marko": "",
+        "src/pages/tags/tag-c.marko": "",
+      });
+      for (const rel of ["src", "src/pages"]) {
+        const errors = [];
+        const tags = taglib.buildLookup(file(rel), tagsTranslator, (err) =>
+          errors.push(err.message),
+        );
+        assert.match(errors[0], /Import not found: \.\/missing\/marko\.json/);
+        assert.equal(errors.length, 1);
+        assert.equal(tags.getTag("tag-a").template, file("tags/tag-a.marko"));
+        assert.equal(tags.getTag("tag-b"), undefined);
+        assert.ok(tags.getTag("div"));
+        assert.throws(() => lookup(rel), /Import not found/);
+      }
     });
 
     it("throws for a tags-dir given as an object", () => {
@@ -1246,14 +1329,6 @@ describe("compiler/taglib-loader", () => {
         "tags/tag-b.marko": "",
       });
       assert.equal(template("src/tag-b"), file("tags/tag-b.marko"));
-    });
-
-    it("throws for a template that does not exist", () => {
-      write({ "marko.json": { "<tag-a>": { template: "./missing.marko" } } });
-      assert.throws(
-        () => lookup().getTag("tag-a"),
-        /Template at path ".*missing\.marko" does not exist/,
-      );
     });
   });
 });

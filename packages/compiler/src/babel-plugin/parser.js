@@ -1,5 +1,7 @@
 import {
+  diagnosticError,
   getTagDefForTagName,
+  getTaglibLookup,
   parseArgs,
   parseBlock,
   parseExpression,
@@ -374,10 +376,22 @@ export function parseMarko(file) {
           );
         }
 
-        const parseOptions = (node.tagDef = getTagDefForTagName(
+        const tagDef = (node.tagDef = getTagDefForTagName(
           file,
           literalTagName,
-        ))?.parseOptions;
+        ));
+        const parseOptions = tagDef?.parseOptions;
+
+        if (!tagDef) {
+          // A tag that failed to load is reported where it is used.
+          const err = getTaglibLookup(file).getTagError(literalTagName);
+          if (err) {
+            diagnosticError(file.path, {
+              label: err.message,
+              loc: tagName.loc,
+            });
+          }
+        }
 
         if (parseOptions) {
           if (parseOptions.preserveWhitespace) {
