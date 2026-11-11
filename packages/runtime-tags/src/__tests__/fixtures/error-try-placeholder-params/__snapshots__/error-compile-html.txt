@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-try-placeholder-params/template.marko:2:4
+      1 | <try>
+    > 2 |   <@placeholder|label = "loading"|>${label}</@placeholder>
+        |    ^^^^^^^^^^^^ The [`<try>` tag](https://markojs.com/docs/reference/core-tag#try)'s `<@placeholder>` takes no parameters: nothing passes it arguments.
+      3 |   <await|v|=input.p>${v}</await>
+      4 | </try>
+      5 |
