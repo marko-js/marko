@@ -29,8 +29,8 @@ declare module "./apply" {
 // it even when no client control flow does.
 const _content = /*@__PURE__*/ withBranches(content);
 
-// A scope this flush created has no render coming: its setup envelope applies
-// within its entry, values after child entries, and its shell's renders after.
+// A scope this flush created has no render coming: its setup envelope applies as its entry
+// orders it (values after child entries, or ahead of client rows they build), renders after.
 patchers[PatchKey.Setup] = patchers[PatchKey.SetupValues] = (
   scope,
   _accessor,

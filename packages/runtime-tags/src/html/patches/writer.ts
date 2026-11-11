@@ -33,6 +33,7 @@ import {
   _scope as _base_scope,
   _script as _base_script,
   $chunk,
+  getChunk,
   getContext,
   getScopeId,
   getState,
@@ -51,7 +52,7 @@ export let patchBuild: string | undefined;
 
 // A generated id names its declaration under the hops its render passed
 // through: each row key and call site, the root's address first.
-export function _id(declaration: string) {
+export function _id(declaration: string, readBesideSources?: 1) {
   const ids = getIds();
   for (let hop = ids.built - 1; hop < ids.depth; hop++) {
     ids.addresses[hop + 1] =
@@ -59,6 +60,14 @@ export function _id(declaration: string) {
       encodeHop(ids.path[hop * 2] as IdHop, ids.path[hop * 2 + 1]);
   }
   ids.built = ids.depth + 1;
+  // In a kept instance's render, one an expression reads beside a value with sources
+  // (`isIdReadBesideSources`), or one in a branch below it, varies the live instance.
+  if (
+    getContext(kSeedRoot) !== undefined &&
+    (readBesideSources || getContext(kBranchId) !== getContext(kKeptBranch))
+  ) {
+    (getState() as PatchRenderState).liveIds++;
+  }
   return ids.addresses[ids.depth] + (MARKO_DEBUG ? "." : "") + declaration;
 }
 
@@ -153,6 +162,55 @@ export function withUnpatched<T, U>(cb: (value?: U) => T, value?: U): T {
   return withContext(kUnpatched, 1, cb, value);
 }
 
+// Set while a patch renders unpatched structure only for the kept content inside,
+// whose instances render apart from it (`renderKeptInstance`): nothing else there writes.
+const kKeptOnly = Symbol("Kept Only");
+
+// Outside a render (a flush serializing its bound shells), nothing is.
+export function inKeptOnly() {
+  return !!getChunk()?.context?.[kKeptOnly];
+}
+
+export function withKeptOnly<T, U, V>(
+  cb: (value: U, value2: V) => T,
+  value: U,
+  value2: V,
+): T {
+  return withContext(kKeptOnly, 1, cb, value, value2);
+}
+
+// A kept instance's render, whose holes a patch fills wherever it sits: its branch
+// tells its own scopes and `<id>`s from those in branches below it, and its own
+// scopes' seeds hang from `seedRoot`'s (`ensurePatchSetup`).
+const kKeptBranch = Symbol("Kept Branch");
+const kSeedRoot = Symbol("Seed Root");
+
+export function renderKeptInstance(
+  content: ServerRenderer,
+  // None for its owner's entry, which carries no instance's seeds.
+  seedRoot: number | null,
+) {
+  return withContext(
+    kKeptBranch,
+    getContext(kBranchId),
+    withSeedRoot,
+    content,
+    seedRoot,
+  );
+}
+
+function withSeedRoot(content: ServerRenderer, seedRoot: number | null) {
+  return withContext(kSeedRoot, seedRoot, withFilledHoles, content);
+}
+
+function withFilledHoles(content: ServerRenderer) {
+  return withContext(kKeptOnly, 0, renderFilled, content);
+}
+
+function renderFilled(content: ServerRenderer) {
+  return withContext(kUnpatched, 0, content);
+}
+
 // The lazy modules a patch render is inside: a write there makes the flush
 // wait for each of them.
 const kReadyIds = Symbol("Ready Ids");
@@ -211,16 +269,8 @@ export function _client_branch(value: unknown) {
       const id = (content as ServerRenderer)[RendererProp.Id];
       const owner = (content as ServerRenderer)[RendererProp.Owner]!;
       if (id) addClientBranch(state, id, owner);
-      const section = clientBranchRenderers.get(content as ServerRenderer);
-      if (section) {
-        renderClientBranch(
-          state,
-          content as ServerRenderer,
-          id!,
-          owner,
-          section,
-        );
-      }
+      const kept = clientBranchRenderers.get(content as ServerRenderer);
+      if (kept) renderClientBranch(state, content as ServerRenderer, kept);
     }
   }
 }
@@ -237,37 +287,35 @@ export function addClientBranch(
   }
 }
 
-// Content whose kept instances take their holes as data, by its section
-// (`_content`'s `elide`).
-export const clientBranchRenderers = new WeakMap<ServerRenderer, number>();
+// Content whose kept instances take their holes as data (`_content`'s `elide`): a
+// renderer per owner.
+export const clientBranchRenderers = new WeakMap<ServerRenderer, KeptContent>();
 
-// A flush that leaves content to the consumers keeping it renders its holes
-// once for its owner, under the entry every instance there takes.
+export interface KeptContent {
+  section: number;
+  // Its owner's client branch entry's scope, once the response renders it.
+  entry?: number;
+}
+
+// A response renders kept content's holes once for its owner, under the entry
+// every instance there takes.
 function renderClientBranch(
   state: PatchRenderState,
   renderer: ServerRenderer,
-  id: string,
-  ownerId: number,
-  section: number,
+  kept: KeptContent,
 ) {
-  const rendered = (state.clientBranchRendered ??= new Map());
-  const ownerKey = clientBranchKey(section, ownerId);
-  if (rendered.has(ownerKey)) return;
-  const scopeId = _base_peek_scope_id();
-  rendered.set(ownerKey, scopeId);
+  if (kept.entry !== undefined) return;
+  const scopeId = (kept.entry = _base_peek_scope_id());
   state.patchLinks[scopeId] = {
-    parent: ownerId,
+    parent: renderer[RendererProp.Owner]!,
     hop: "",
-    key: PatchKey.ClientBranch + section,
+    key: PatchKey.ClientBranch + kept.section,
   };
-  pushIdHop(IdHop.ClientBranch, id);
-  renderer({});
+  // It links once its render shows what every instance shares (`keepHoles`).
+  openScopePatch(state, scopeId);
+  pushIdHop(IdHop.ClientBranch, renderer[RendererProp.Id]!);
+  renderer();
   popIdHop();
-}
-
-// Kept content's client branch entry for one owner.
-export function clientBranchKey(section: number, ownerId: number) {
-  return PatchKey.ClientBranch + section + " " + ownerId;
 }
 
 // The setup ids a setup envelope names, each written once: several locals may
@@ -277,7 +325,7 @@ export function addSetupId(
   scopeId: number,
   id: string,
 ) {
-  const setup = ensurePatchSetup(state, ensureScopePatch(state, scopeId));
+  const setup = ensurePatchSetup(state, scopeId);
   const setupIds = (state.setupIds ??= new Map());
   let ids = setupIds.get(setup);
   if (!ids) setupIds.set(setup, (ids = new Set()));
@@ -321,18 +369,53 @@ export function patchTreeNode<T extends object>(
   return node;
 }
 
+// A scope's setup envelope: in a kept instance's own branch, its seeds, which its
+// site entry carries apart (none in its owner's entry); elsewhere, in its patch.
 export function ensurePatchSetup(
   state: PatchRenderState,
-  patch: Record<string, unknown>,
+  scopeId: number,
   key: typeof PatchKey.Setup | typeof PatchKey.SetupValues = PatchKey.Setup,
 ) {
+  const seedRoot = getContext(kSeedRoot) as number | null | undefined;
+  let patch: Record<string, unknown>;
+  if (
+    seedRoot === undefined ||
+    getContext(kBranchId) !== getContext(kKeptBranch)
+  ) {
+    patch = ensureScopePatch(state, scopeId);
+  } else if (seedRoot === null) {
+    return {};
+  } else {
+    patch = ensureSeedPatch(state, scopeId, seedRoot);
+  }
   return (patch[key] ??= patchTreeNode(state, {})) as Record<string, unknown>;
+}
+
+// A kept instance's scope's seeds, hung from its parent's as its patch is.
+function ensureSeedPatch(
+  state: PatchRenderState,
+  scopeId: number,
+  root: number,
+): Record<string, unknown> {
+  const seeds = (state.seedTree ??= {});
+  let patch = seeds[scopeId];
+  if (!patch) {
+    patch = seeds[scopeId] = patchTreeNode(state, {});
+    if (scopeId !== root) {
+      const link = state.patchLinks[scopeId];
+      ensureSeedPatch(state, link.parent, root)[linkKey(link)] = patch;
+    }
+  }
+  return patch;
 }
 
 export function ensureScopePatch(
   state: PatchRenderState,
   scopeId: number,
+  // A child's link, which unpatched structure carries for the kept content inside.
+  link?: 1,
 ): Record<string, unknown> {
+  if (!link && inKeptOnly()) return {};
   const readyIds = getPatchReadyIds();
   if (readyIds) for (const readyId of readyIds) patchWait(state, readyId);
   const patches = ensurePatchTree(state);
@@ -362,19 +445,30 @@ export function linkScopePatch(
     if (typeof hop === "string") {
       if (contentId) shipShell(state, contentId);
       const entry = slotIds && patchTreeNode(state, [patch, ...slotIds]);
-      const key = link.key || PatchKey.Child + hop;
+      const key = linkKey(link);
       if (state.setupLinks?.has(scopeId)) {
-        ensurePatchSetup(state, ensureScopePatch(state, parent))[key] =
-          entry || patch;
+        ensurePatchSetup(state, parent)[key] = entry || patch;
       } else {
-        writePatchEntry(state, parent, key, entry || patch);
+        ensureScopePatch(state, parent, 1)[key] = entry || patch;
       }
       return entry;
     } else {
+      // A keyed item's `[index, key]` ships afresh in each flush linking it.
+      const at = hop[1];
+      const parentPatch = ensureScopePatch(state, parent, 1);
+      // Rows its setup values build follow them, and apply once they exist.
+      if (parent === state.rowsAfterValues) {
+        parentPatch[PatchKey.SetupValues] ??= patchTreeNode(state, {});
+      }
       (
-        (ensureScopePatch(state, parent)[PatchKey.LoopItem + hop[0]] ??=
-          patchTreeNode(state, [])) as unknown[]
-      ).push(hop[1], patch);
+        (parentPatch[PatchKey.LoopItem + hop[0]] ??= patchTreeNode(
+          state,
+          [],
+        )) as unknown[]
+      ).push(
+        typeof at === "number" ? at : patchTreeNode(state, [at[0], at[1]]),
+        patch,
+      );
     }
   } else if (scopeId === ROOT_SCOPE_ID) {
     // Every other patch nests inside an ancestor's structural entry rooted
@@ -391,6 +485,7 @@ export function linkScopePatch(
 // The flush holding the current root names the lazy modules it first needs in
 // the response (`PatchRenderState.addResumes`); later flushes wait behind it.
 export function patchWait(state: PatchRenderState, readyId: string) {
+  if (inKeptOnly()) return;
   const readyIds = (state.readyIds ||= new Set());
   if (readyIds.has(readyId)) return;
   readyIds.add(readyId);
@@ -430,11 +525,16 @@ export interface PatchLink {
     | string
     | [accessor: string, at: number | [index: number, key: string | number]];
   contentId?: string;
-  slotIds?: (string | undefined)[];
+  slotIds?: (string | number | undefined)[];
   // A content body's owner (its client `_`) when not the rendering scope.
   owner?: number;
   // The parent's entry key, where not a child entry's.
   key?: string;
+}
+
+// The key a scope's patch takes in its parent's.
+function linkKey(link: PatchLink) {
+  return link.key || PatchKey.Child + (link.hop as string);
 }
 
 // A patch template's document render: structure tracks unpatched context.
@@ -533,7 +633,8 @@ export function shipShell(
   shellId: string | 0 | undefined,
   ref?: boolean,
 ) {
-  if (shellId && shellId in rawShells) {
+  // Unpatched structure a patch renders for kept content ships nothing itself.
+  if (shellId && shellId in rawShells && !inKeptOnly()) {
     if (rawShells[shellId] && !(state.heldShells ??= new Set()).has(shellId)) {
       state.heldShells.add(shellId);
       // One shell ships bare; a second opens a list (`[…]`) that `addResumes` closes.
@@ -579,8 +680,15 @@ export class PatchRenderState extends PatchPageState {
   // The branches linked into their parent's setup: only the flush creating the
   // parent applies it, so a later flush links them as children.
   setupLinks?: Set<number>;
-  // Each owner's client branch entry the response renders, with the scope it is in.
-  clientBranchRendered?: Map<string, number>;
+  // How many `<id>`s that vary a live kept instance the response has rendered (`_id`).
+  liveIds = 0;
+  // A scope the flush may create whose client rows render now, from its setup values,
+  // which lead its entry; a row settling in a later flush finds them shipped.
+  rowsAfterValues?: number;
+  // Each kept instance's own scopes' seeds in the flush (`ensurePatchSetup`).
+  seedTree?: Record<number, Record<string, unknown> | undefined>;
+  // Kept content rendered so far, which unpatched structure after it may hold.
+  keptContent?: 1;
 
   // Nothing ever resumes a patch render's output, so resume writes stop at the
   // canonical scope (server reads); patch data goes through `writePatchEntry`.
@@ -624,6 +732,7 @@ export class PatchRenderState extends PatchPageState {
       out += ";" + encodeHeld(this.heldShells) + "\n";
     }
     this.patchTree =
+      this.seedTree =
       this.patchTreeNodes =
       this.setupIds =
       this.setupLinks =
@@ -683,9 +792,10 @@ export function linkBranch(
   accessor: Accessor,
   branchId: number,
   contentId?: string,
-  slotIds?: (string | undefined)[],
+  slotIds?: (string | number | undefined)[],
   ownerScopeId?: number,
   setup?: boolean,
+  key?: string,
 ) {
   // The id a pairing peeks is its own: no other branch has linked or opened it.
   state.patchLinks[branchId] = {
@@ -694,6 +804,7 @@ export function linkBranch(
     contentId,
     slotIds,
     owner: ownerScopeId,
+    key,
   };
   if (setup) (state.setupLinks ||= new Set()).add(branchId);
 }
@@ -744,10 +855,9 @@ export function ensureFills(
     ((updatesFrom && !setup) || !inCreatable())
   )
     return 0;
-  const patch = ensureScopePatch(state, scopeId);
   return updatesFrom === UpdatesFrom.Server
-    ? patch
-    : ensurePatchSetup(state, patch);
+    ? ensureScopePatch(state, scopeId)
+    : ensurePatchSetup(state, scopeId);
 }
 
 // A patch render's output for a hole: its fill where the patch fills it, and
@@ -831,9 +941,7 @@ export function _peek_scope_id(
     // A created child's tag variable wiring leads its setup, ahead of what it
     // renders; `_var` names it.
     if (wiresVar && inCreatable()) {
-      ensurePatchSetup(state, ensureScopePatch(state, childScopeId))[
-        PatchKey.Var
-      ] = undefined;
+      ensurePatchSetup(state, childScopeId)[PatchKey.Var] = undefined;
     }
   }
   return childScopeId;
@@ -857,9 +965,7 @@ export function _patch_subscribe(
     if (setup) {
       addSetupId(state, scopeId, subscriberId);
     } else {
-      ensurePatchSetup(state, ensureScopePatch(state, scopeId))[
-        PatchKey.Subscribers + subscriberId
-      ] = 0;
+      ensurePatchSetup(state, scopeId)[PatchKey.Subscribers + subscriberId] = 0;
     }
   }
 }
@@ -879,12 +985,11 @@ export function _patch_fill(
     // client group's: the client derives it (its initial values, or its own value).
     if (setup && (!inCreatable() || _client_guard(mask, group))) return "";
     const bind = bindEntry(state, scopeId, value);
-    const patch = ensureScopePatch(state, scopeId);
     // Setup entries nest under `s`: the client applies them only to
     // freshly created scopes; only a scope below a branch is created.
     const entries = setup
-      ? ensurePatchSetup(state, patch, PatchKey.SetupValues)
-      : patch;
+      ? ensurePatchSetup(state, scopeId, PatchKey.SetupValues)
+      : ensureScopePatch(state, scopeId);
     const entryKey = bind
       ? PatchKey.BindFill + key.slice(PatchKey.Fill.length)
       : key;
@@ -908,13 +1013,12 @@ export function _patch_bind<T>(
     // scope may be created, which a paired one there takes again.
     const updatesFrom = getUpdatesFrom(mask, group);
     if (isFilledEntry(updatesFrom)) {
-      const patch = ensureScopePatch(state, scopeId);
       const bind = bindEntry(state, scopeId, value);
       // A plain value is a write a created scope takes as a paired one does.
       const entries =
         bind && updatesFrom !== UpdatesFrom.Server
-          ? ensurePatchSetup(state, patch)
-          : patch;
+          ? ensurePatchSetup(state, scopeId)
+          : ensureScopePatch(state, scopeId);
       const entryKey = bind
         ? PatchKey.Bind + key.slice(PatchKey.Write.length)
         : key;
@@ -1035,8 +1139,9 @@ export function _patch_write(
     );
     if (setup && !inCreatable()) return "";
     const bind = bindEntry(state, scopeId, value);
-    const patch = ensureScopePatch(state, scopeId);
-    const entries = setup ? ensurePatchSetup(state, patch) : patch;
+    const entries = setup
+      ? ensurePatchSetup(state, scopeId)
+      : ensureScopePatch(state, scopeId);
     // A created scope's write (its setup) marks no change, which only a live
     // one runs by; a bind marks only a new function.
     const entryKey = bind

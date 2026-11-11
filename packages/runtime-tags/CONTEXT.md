@@ -384,7 +384,8 @@ scope gets in place of its renderer's setup (seeds, bindings, setup ids). It
 applies only to a scope its flush created; a paired scope ignores it. Its
 writes, bindings and setup ids apply at once, ahead of the scope's child
 scopes, which may read them; its values follow the scope's child entries on the
-wire, as their renders may read what those write. A write never sets a slot a
+wire, as their renders may read what those write, except where the client's rows
+of a scope a flush may create build from them: there they lead. A write never sets a slot a
 value's signal sets, which would then skip its renders: a `<let>` whose renders
 read members seeds the written ones in that one value too. Where its group
 mixes, a filled intersection the scope renders rides the scope's own
@@ -423,7 +424,8 @@ A branch body whose branch expression has a state reason (its `BranchExpr`
 slot) — state sources, no `$global`, param sources a patch fills —
 derived from its branch expression (`isStatefulStructure`), never stored; or a
 content or `<define>` body every consumer renders with client state. Resumed
-code re-renders it, so patch renders skip it and flushes omit its entry. A
+code re-renders it, so flushes omit its entry and patch renders skip it, but
+for kept content inside (_Unpatched structure_). A
 body only some consumer renders so (`getStatefulConsumers`) is patched
 structure whose instances each consumer sets at render: a call by its mask, a
 dynamic tag or stateful chain by rendering it unpatched.
@@ -483,6 +485,9 @@ a dynamic tag site a patch never pairs, a `@catch` (one reading its error is
 written once, by the patch creating it). The html writer tracks it at render
 as context (`withUnpatched`, `inUnpatched`) because a child template cannot
 see how its parent reached it; the static cases are where `patchFillsSection` fails.
+Once kept content exists in a patch render, its unpatched loops, `<if>`s and
+`<try>`s render, writing nothing but the kept content inside (`withKeptOnly`):
+created with a scope the flush may create, else paired.
 _Avoid_: client-owned structure, client-selected
 
 **Caught try**:
@@ -560,6 +565,19 @@ renders its holes once per owner under the _client branch entry_
 set its owner holds them in: the section's scopes main keeps for hoisted reads
 (`ClosureScopes:<section>`), which a document fills with `_subscribe` and an
 instance created from its shell joins (its shell names the section, `id|section`).
+The entry carries what every live instance shares; an instance whose render
+differs, or that a flush may create, also takes a _site entry_.
+
+**Site entry**:
+A kept instance's own entry at the site rendering it (`PatchClientBranch:<accessor>`,
+`[patch, key, seeds?]`). Like its owner's holes it waits where it lands, at the site
+(`ClientBranchHoles:<accessor>`): the branch there takes it now, and one the client
+creates there later takes the last one, if it renders what the server did: `key` is
+the content's id, or the client `<if>`'s branch index. `seeds` are its own scopes' setup envelopes, where
+a flush may create it; `patch` is all it renders, where an `<id>` some expression
+reads beside a value with sources, or one in a branch below it, varies it, which
+the owner's entry then leaves to it.
+_Avoid_: instance entry
 
 **Filled intersection**:
 An intersection of two or more params, one a caller passes, whose every read the patch

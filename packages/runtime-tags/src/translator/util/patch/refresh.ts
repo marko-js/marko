@@ -1237,6 +1237,26 @@ function isRegisteredFnRead(read: Read) {
   return !!read.fnRoot?.reason;
 }
 
+// An `<id>` an expression (a hole, a `<const>`, a handler) reads beside a value with
+// sources, here or in a template it is passed to: a hole may vary each kept instance.
+export function isIdReadBesideSources(id: Binding) {
+  return someReached(id, isReadBesideSources);
+}
+
+function isReadBesideSources(reached: Binding) {
+  for (const expr of reached.reads.keys()) {
+    if (
+      some(
+        getReferencedBindings(expr),
+        (read) => read !== reached && !!read.sources,
+      )
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
 // Kept content with nodes of its own: its instances take their holes as data.
 export function keepsHoles(section: Section) {
   return !!section.bindings && keepsContent(section);

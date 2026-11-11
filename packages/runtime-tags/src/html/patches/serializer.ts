@@ -149,22 +149,6 @@ function writePatchProp(
 ) {
   const escapedKey = toObjectKey(key);
   const member = (node as Record<string, unknown>)[key];
-  // Kept instances are objects: a primitive skips the lookup.
-  if (member && typeof member === "object") {
-    const render = state.boundary.state;
-    // A created instance takes the holes from its owner's client branch entry instead,
-    // where this flush writes that entry.
-    const kept = (member as { [kKeptInstance]?: string })[kKeptInstance];
-    const clientBranchId = kept
-      ? render.clientBranchRendered?.get(kept)
-      : undefined;
-    if (
-      clientBranchId !== undefined &&
-      patchTreeNodes.has(render.patchTree![clientBranchId]!)
-    ) {
-      return sep;
-    }
-  }
   if (member === undefined) {
     state.wroteUndefined = true;
     state.buf.push(sep + escapedKey + ":$");
@@ -185,9 +169,6 @@ function writePatchProp(
   state.buf.pop();
   return sep;
 }
-
-// The client branch entry a kept instance's patch repeats where its scope is created.
-export const kKeptInstance = Symbol();
 
 // A node keeps a reference (a later flush may reach a value by its path) but
 // needs no identity lookups: `writeArray` and `writePlainObject` without them.

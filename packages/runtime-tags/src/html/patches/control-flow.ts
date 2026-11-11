@@ -34,6 +34,7 @@ import {
   deferBranchStart,
   $chunk,
   getState,
+  NOOP,
   withBranchId,
 } from "../writer";
 import {
@@ -55,6 +56,8 @@ import {
   pushIdHop,
   shipShell,
   walkMarkers,
+  inKeptOnly,
+  withKeptOnly,
   withPairedBranchId,
   withUnpatched,
   writePatchEntry,
@@ -112,9 +115,13 @@ export function _if(
 ) {
   const state = getState();
   if (state instanceof PatchRenderState) {
-    // A chain with no shells is the resumed page's (unpatched): a patch skips it.
-    if (shellIds)
+    // A chain with no shells is the resumed page's (unpatched): a patch renders
+    // it only for the kept content its branch holds.
+    if (shellIds) {
       writeBranch(state, scopeId, accessor, cb, shellIds, mask, group);
+    } else if (state.keptContent) {
+      writeUnpatchedBranch(state, scopeId, accessor, cb);
+    }
     return;
   }
   // A patchable conditional's markers must resume even on a page with no
@@ -199,6 +206,44 @@ export function writeBranch(
     // Nothing rendered took the peeked id: consume it so no later scope
     // finds this branch's patch or link.
     _scope_id();
+  }
+}
+
+// The client's branch of an unpatched chain, while it shows the branch the server
+// rendered; only kept content inside writes to it, linking it as it first writes.
+function writeUnpatchedBranch(
+  state: PatchRenderState,
+  scopeId: number,
+  accessor: Accessor,
+  cb: () => number | undefined | void,
+) {
+  const branchId = _peek_scope_id();
+  const key = PatchKey.ClientBranch + accessor;
+  const slotIds: number[] = [];
+  linkBranch(
+    state,
+    scopeId,
+    accessor,
+    branchId,
+    undefined,
+    slotIds,
+    undefined,
+    false,
+    key,
+  );
+  const branchIndex = withKeptOnly<ReturnType<typeof cb>, number, typeof cb>(
+    inCreatable() ? withBranchId : withPairedBranchId,
+    branchId,
+    cb,
+  );
+  if (branchIndex === undefined) {
+    _scope_id();
+  } else {
+    // The index the client's branch must show, for this entry and any later one.
+    slotIds.push(branchIndex);
+    if (state.patchTree?.[branchId]) {
+      (state.patchTree[scopeId][key] as unknown[]).push(branchIndex);
+    }
   }
 }
 
@@ -385,8 +430,9 @@ function patchLoop<A, B>(
 ) {
   const state = getState();
   if (state instanceof PatchRenderState) {
-    // A loop with no shell slot is the resumed page's (unpatched): a patch skips it.
-    if (shellId !== undefined) {
+    // A loop with no shell slot is the resumed page's (unpatched): a patch renders
+    // its rows only for the kept content they hold.
+    if (shellId !== undefined || state.keptContent) {
       writeLoop(
         state,
         by,
@@ -430,21 +476,25 @@ export function writeLoop<A, B>(
   iterate: LoopIterate<A, B>,
   scopeId: number,
   accessor: string,
-  shellId: string | 0,
+  shellId: string | 0 | undefined,
   mask?: GroupMask,
   group?: number,
 ) {
   // A list updating from the client, or a paired one, pairs its rows: its entry
   // ships only what the rows themselves fill.
   const updatesFrom = getUpdatesFrom(mask, group);
-  const clientRows = updatesFrom & UpdatesFrom.Client;
+  const unpatched = shellId === undefined;
+  const clientRows = unpatched || updatesFrom & UpdatesFrom.Client;
   const rowsPaired = clientRows || (!updatesFrom && !inCreatable());
   const patches: object[] = [];
   const keys: (string | number)[] = [];
   let indexKeys = true;
-  const row = rowsPaired ? pairedBranch(cb) : cb;
+  // The client's rows of a scope the flush creates are created with it.
+  const paired =
+    rowsPaired && !(unpatched && inCreatable()) ? pairedBranch(cb) : cb;
+  const row = unpatched ? (a: A, b: B) => withKeptOnly(paired, a, b) : paired;
   if (MARKO_DEBUG && by) iterate = checkLoopKeys(cb, iterate);
-  iterate((itemKey, sameAsIndex, a, b) => {
+  const each = (itemKey: string | number, sameAsIndex: boolean, a: A, b: B) => {
     indexKeys &&= sameAsIndex;
     // An item is found where it rendered, checked by key as the loop's
     // reconciler does (the client may since have moved it).
@@ -454,29 +504,26 @@ export function writeLoop<A, B>(
       hop: [accessor, sameAsIndex ? keys.length : [keys.length, itemKey]],
     };
     keys.push(itemKey);
-    // Opened here so an item settling after this flush re-links by its hop.
-    patches.push(openScopePatch(state, branchId));
+    // Opened here so an item settling after this flush re-links by its hop; the
+    // client's rows link by it as they first write.
+    if (!clientRows) patches.push(openScopePatch(state, branchId));
     pushIdHop(IdHop.Row, itemKey);
     withBranchId(branchId, row, a, b);
     popIdHop();
-  });
-  if (rowsPaired && !patches.some(hasKeys)) return 1;
-  if (clientRows) {
-    // The rows are the client's: each patch applies to the row it still
-    // holds under that key, and none is added or removed.
-    const items: unknown[] = patchTreeNode(state, []);
-    for (let i = 0; i < patches.length; i++) {
-      if (hasKeys(patches[i])) {
-        items.push(
-          indexKeys ? i : patchTreeNode(state, [i, keys[i]]),
-          patches[i],
-        );
-      }
-    }
-    if (items.length)
-      writePatchEntry(state, scopeId, PatchKey.LoopItem + accessor, items);
-    return 1;
+  };
+  // A scope a shell creates builds the client's rows from its setup values.
+  const rowsAfterValues = state.rowsAfterValues;
+  if (unpatched && inCreatable() && !inKeptOnly()) {
+    state.rowsAfterValues = scopeId;
   }
+  try {
+    iterate(each);
+  } finally {
+    state.rowsAfterValues = rowsAfterValues;
+  }
+  // The client's rows: each patch applies to the row it still holds under that key,
+  // and none is added or removed.
+  if (clientRows || (rowsPaired && !patches.some(hasKeys))) return 1;
   // Paired rows are never created, so they need no shell.
   const sentShellId =
     patches.length && !rowsPaired ? shipShell(state, shellId) : undefined;
@@ -522,9 +569,10 @@ export function _await<T>(
     // only there); outside such structure the body is the client's branch.
     const creatable = inCreatable();
     if (creatable) {
-      ensurePatchSetup(state, ensureScopePatch(state, scopeId))[
-        PatchKey.Pending + accessor
-      ] = shipShell(state, shellId);
+      ensurePatchSetup(state, scopeId)[PatchKey.Pending + accessor] = shipShell(
+        state,
+        shellId,
+      );
     }
     // Caught even where nothing awaits it, so its rejection is never unhandled.
     const copy = isPromise(promise) ? promise.then(undefined, skip) : promise;
@@ -614,6 +662,24 @@ export function _try(
   // The placeholder's branch id precedes the body's, as in a document.
   const placeholderBranchId = placeholderContent ? _scope_id() : 0;
   const branchId = _peek_scope_id();
+  // In its branch, the body's own setup rides its shell; it is creatable
+  // only where the try's scope is.
+  const branchContent = inCreatable()
+    ? content
+    : () => withPairedBranchId(branchId, content);
+  // In unpatched structure the try is the client's: its body renders for the kept
+  // content inside, and a throw writes nothing, as the client's try catches its own.
+  if (inKeptOnly()) {
+    linkBranch(state, scopeId, accessor, branchId);
+    tryBoundary(
+      branchContent,
+      catchContent,
+      branchId,
+      NOOP,
+      catchContent && NOOP,
+    );
+    return;
+  }
   // The entry carries the creation payload (body shell, slot ids) unless the try
   // always pairs here; one that only pairs still names its catch, so a caught try rejects its body.
   const create = !alwaysPairs || inCreatable();
@@ -633,11 +699,6 @@ export function _try(
   );
   const chunk = $chunk;
   const beforeBranch = deferBranchStart(chunk);
-  // In its branch, the body's own setup rides its shell; it is creatable
-  // only where the try's scope is.
-  const branchContent = inCreatable()
-    ? content
-    : () => withPairedBranchId(branchId, content);
   // A flush that leaves the body pending ships the placeholder's shell, as a
   // document renders the placeholder.
   const bodyContent = placeholderContent
