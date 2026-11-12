@@ -1,5 +1,17 @@
 # @marko/runtime-tags
 
+## 6.4.14
+
+### Patch Changes
+
+- [#4683](https://github.com/marko-js/marko/pull/4683) [`97439f3`](https://github.com/marko-js/marko/commit/97439f3becfafc1961bca2d029ac5dd9caa253d7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Type `role` from the current WAI-ARIA 1.2, Graphics-ARIA and DPUB-ARIA 1.1 roles and accept any other role or fallback role list, and accept every token list for `aria-relevant` and `aria-dropeffect`.
+
+- [#4683](https://github.com/marko-js/marko/pull/4683) [`97439f3`](https://github.com/marko-js/marko/commit/97439f3becfafc1961bca2d029ac5dd9caa253d7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Accept the module preload destinations (`json`, `text`, worklets and workers) for `<link as>`, lower-case `<meta http-equiv>` keywords, a missing value for `aria-sort` and `<feDisplacementMap>`'s channel selectors, and `<feTurbulence stitchTiles>` in place of the misspelled `stichTiles`.
+
+- [#4683](https://github.com/marko-js/marko/pull/4683) [`97439f3`](https://github.com/marko-js/marko/commit/97439f3becfafc1961bca2d029ac5dd9caa253d7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Mark the attributes HTML lists as obsolete (`contextmenu`, `<menu type>` and `label`, `<area hreflang>`, `<object usemap>`) and the SVG ones SVG 2, Filter Effects and CSS Masking removed or deprecated (`externalResourcesRequired`, `zoomAndPan`, `kerning`, `glyph-orientation-horizontal`, `glyph-orientation-vertical`, `color-rendering`, `enable-background`, `clip`) as deprecated, so editors strike them through.
+
+- [#4683](https://github.com/marko-js/marko/pull/4683) [`97439f3`](https://github.com/marko-js/marko/commit/97439f3becfafc1961bca2d029ac5dd9caa253d7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Type the `on-*` event aliases (and Marko 5's deprecated lower-cased ones) from their handler on the declaring interface instead of polymorphic `this`, which made TypeScript 5 and 6 fail with "Type instantiation is excessively deep and possibly infinite" (TS2589) when a mapped type or intersection over a native tag's attributes redeclared an alias.
+
 ## 6.4.13
 
 ### Patch Changes

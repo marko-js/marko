@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.40.1
+
+### Patch Changes
+
+- [#4683](https://github.com/marko-js/marko/pull/4683) [`97439f3`](https://github.com/marko-js/marko/commit/97439f3becfafc1961bca2d029ac5dd9caa253d7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Type the `on-*` event aliases (and Marko 5's deprecated lower-cased ones) from their handler on the declaring interface instead of polymorphic `this`, which made TypeScript 5 and 6 fail with "Type instantiation is excessively deep and possibly infinite" (TS2589) when a mapped type or intersection over a native tag's attributes redeclared an alias.
+- Updated dependencies [[`97439f3`](https://github.com/marko-js/marko/commit/97439f3becfafc1961bca2d029ac5dd9caa253d7), [`97439f3`](https://github.com/marko-js/marko/commit/97439f3becfafc1961bca2d029ac5dd9caa253d7), [`97439f3`](https://github.com/marko-js/marko/commit/97439f3becfafc1961bca2d029ac5dd9caa253d7), [`97439f3`](https://github.com/marko-js/marko/commit/97439f3becfafc1961bca2d029ac5dd9caa253d7)]:
+  - @marko/runtime-tags@6.4.14
+
 ## 5.40.0
 
 ### Minor Changes
