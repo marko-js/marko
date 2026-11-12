@@ -1829,22 +1829,31 @@ function patchMayCreateEnclosing(section: Section, root: boolean): boolean {
   return section.parent
     ? patchMayCreateOwn(section) ||
         (section.renderedBy
-          ? patchMayCreateAtCalls[+root](section)
+          ? (root ? patchMayCreateAtCallsOrRoot : patchMayCreateAtCalls)(
+              section,
+            )
           : patchMayCreateEnclosing(section.parent, root))
     : root;
 }
 
-// A `<define>` body sits in the structure around each call rendering it, one memo
-// per `root`: a recursive call asks of the body again.
-const patchMayCreateAtCalls = [false, true].map((root) =>
-  createPassMemo(
-    (body: Section) =>
-      some(body.renderedBy, (call: KnownTagExtra) =>
-        patchMayCreateEnclosing(call.childScopeBinding.section, root),
-      ),
-    false,
-  ),
+// A `<define>` body sits in the structure around each call rendering it, memoized
+// as a recursive call asks of the body again: once per `root`.
+const patchMayCreateAtCalls = createPassMemo(
+  (body: Section) => some(body.renderedBy, isCallCreatable),
+  false,
 );
+const patchMayCreateAtCallsOrRoot = createPassMemo(
+  (body: Section) => some(body.renderedBy, isCallCreatableOrRoot),
+  false,
+);
+
+function isCallCreatable(call: KnownTagExtra) {
+  return patchMayCreateEnclosing(call.childScopeBinding.section, false);
+}
+
+function isCallCreatableOrRoot(call: KnownTagExtra) {
+  return patchMayCreateEnclosing(call.childScopeBinding.section, true);
+}
 
 // A section whose scopes a flush creates from its shell: a branch, `<await>` or
 // `<try>` body, a `@catch`, or content a patch may create.
