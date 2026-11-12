@@ -350,6 +350,7 @@ declare global {
         /**
          * Specifies the language of the linked resource.
          * @see https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-hreflang
+         * @deprecated
          */
         hreflang?: A["hreflang"];
 
@@ -485,98 +486,98 @@ declare global {
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-afterprint
          */
         onAfterPrint?: AttrEventHandler<Event, HTMLBodyElement>;
-        "on-afterprint"?: this["onAfterPrint"];
+        "on-afterprint"?: Body["onAfterPrint"];
 
         /**
          * Fires before printing the document.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-beforeprint
          */
         onBeforePrint?: AttrEventHandler<Event, HTMLBodyElement>;
-        "on-beforeprint"?: this["onBeforePrint"];
+        "on-beforeprint"?: Body["onBeforePrint"];
 
         /**
          * Fired when the page is about to be unloaded, in case the page would like to show a warning prompt.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-beforeunload
          */
         onBeforeUnload?: AttrEventHandler<BeforeUnloadEvent, HTMLBodyElement>;
-        "on-beforeunload"?: this["onBeforeUnload"];
+        "on-beforeunload"?: Body["onBeforeUnload"];
 
         /**
          * Fired when the fragment part of the document's URL changes.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-hashchange
          */
         onHashChange?: AttrEventHandler<HashChangeEvent, HTMLBodyElement>;
-        "on-hashchange"?: this["onHashChange"];
+        "on-hashchange"?: Body["onHashChange"];
 
         /**
          * Fired when the user's preferred languages change.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-languagechange
          */
         onLanguageChange?: AttrEventHandler<Event, HTMLBodyElement>;
-        "on-languagechange"?: this["onLanguageChange"];
+        "on-languagechange"?: Body["onLanguageChange"];
 
         /**
          * Fired when the window receives a message.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-message
          */
         onMessage?: AttrEventHandler<MessageEvent, HTMLBodyElement>;
-        "on-message"?: this["onMessage"];
+        "on-message"?: Body["onMessage"];
 
         /**
          * Fired when the window receives an error message.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-messageerror
          */
         onMessageError?: AttrEventHandler<MessageEvent, HTMLBodyElement>;
-        "on-messageerror"?: this["onMessageError"];
+        "on-messageerror"?: Body["onMessageError"];
 
         /**
          * Fired when the network connection is lost.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-offline
          */
         onOffline?: AttrEventHandler<Event, HTMLBodyElement>;
-        "on-offline"?: this["onOffline"];
+        "on-offline"?: Body["onOffline"];
 
         /**
          * Fired when the network connection is recovered.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-online
          */
         onOnline?: AttrEventHandler<Event, HTMLBodyElement>;
-        "on-online"?: this["onOnline"];
+        "on-online"?: Body["onOnline"];
 
         /**
          * Fired when the page's session history entry stops being the active entry.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-pagehide
          */
         onPageHide?: AttrEventHandler<PageTransitionEvent, HTMLBodyElement>;
-        "on-pagehide"?: this["onPageHide"];
+        "on-pagehide"?: Body["onPageHide"];
 
         /**
          * Fired when the page's session history entry becomes the active entry.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-pageshow
          */
         onPageShow?: AttrEventHandler<PageTransitionEvent, HTMLBodyElement>;
-        "on-pageshow"?: this["onPageShow"];
+        "on-pageshow"?: Body["onPageShow"];
 
         /**
          * Fired when the window's session history is popped.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-popstate
          */
         onPopState?: AttrEventHandler<PopStateEvent, HTMLBodyElement>;
-        "on-popstate"?: this["onPopState"];
+        "on-popstate"?: Body["onPopState"];
 
         /**
          * Fires when a previously-unhandled promise rejection becomes handled.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-rejectionhandled
          */
         onRejectionHandled?: AttrEventHandler<Event, HTMLBodyElement>;
-        "on-rejectionhandled"?: this["onRejectionHandled"];
+        "on-rejectionhandled"?: Body["onRejectionHandled"];
 
         /**
          * Fired when the corresponding localStorage or sessionStorage storage areas change.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-storage
          */
         onStorage?: AttrEventHandler<StorageEvent, HTMLBodyElement>;
-        "on-storage"?: this["onStorage"];
+        "on-storage"?: Body["onStorage"];
 
         /**
          * Fired when a promise rejection goes unhandled.
@@ -586,14 +587,14 @@ declare global {
           PromiseRejectionEvent,
           HTMLBodyElement
         >;
-        "on-unhandledrejection"?: this["onUnhandledRejection"];
+        "on-unhandledrejection"?: Body["onUnhandledRejection"];
 
         /**
          * Fired when the page is going away.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-unload
          */
         onUnload?: AttrEventHandler<Event, HTMLBodyElement>;
-        "on-unload"?: this["onUnload"];
+        "on-unload"?: Body["onUnload"];
 
         /** @deprecated */
         alink?: AttrString;
@@ -974,14 +975,14 @@ declare global {
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-formdata
          */
         onFormData?: AttrEventHandler<FormDataEvent, HTMLFormElement>;
-        "on-formdata"?: this["onFormData"];
+        "on-formdata"?: Form["onFormData"];
 
         /**
          * Fired when a form is submitted, either by user interaction or through a script.
          * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#event-submit
          */
         onSubmit?: AttrEventHandler<SubmitEvent, HTMLFormElement>;
-        "on-submit"?: this["onSubmit"];
+        "on-submit"?: Form["onSubmit"];
       }
       interface H1 extends HTMLAttributes<HTMLHeadingElement> {}
       interface H2 extends HTMLAttributes<HTMLHeadingElement> {}
@@ -1509,20 +1510,26 @@ declare global {
       // TODO break into multiple interfaces based on rel?
       interface Link extends HTMLAttributes<HTMLLinkElement> {
         /**
-         * Specifies the type of resource for the preload request.
-         * @see https://html.spec.whatwg.org/multipage/links.html#attr-link-as
+         * Specifies the destination of the preload or module preload request.
+         * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-as
          */
         as?:
           | AttrMissing
           | "audio"
+          | "audioworklet"
           | "document"
           | "embed"
           | "fetch"
           | "font"
           | "image"
+          | "json"
           | "object"
+          | "paintworklet"
           | "script"
+          | "serviceworker"
+          | "sharedworker"
           | "style"
+          | "text"
           | "track"
           | "video"
           | "worker";
@@ -1654,12 +1661,14 @@ declare global {
         /**
          * Specifies the title of the menu.
          * @see https://html.spec.whatwg.org/multipage/interactive-elements.html#attr-menu-label
+         * @deprecated
          */
         label?: AttrString;
 
         /**
          * Specifies the type of the menu, either a context menu or a toolbar.
          * @see https://html.spec.whatwg.org/multipage/interactive-elements.html#attr-menu-type
+         * @deprecated
          */
         type?: AttrMissing | "context" | "toolbar";
       }
@@ -1684,10 +1693,15 @@ declare global {
         "http-equiv"?:
           | AttrMissing
           | "Content-Security-Policy"
+          | "content-security-policy"
           | "Content-Type"
+          | "content-type"
           | "Default-Style"
+          | "default-style"
           | "Refresh"
-          | "X-UA-Compatible";
+          | "refresh"
+          | "X-UA-Compatible"
+          | "x-ua-compatible";
 
         /**
          * Specifies which media the metadata applies to (valid media query list).
@@ -1779,6 +1793,7 @@ declare global {
         /**
          * Specifies a client-side image map to be used with the object element.
          * @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-object-usemap
+         * @deprecated
          */
         usemap?: AttrString;
 
@@ -2693,6 +2708,7 @@ declare global {
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ExternalResourcesRequiredAttribute
+         * @deprecated
          */
         externalResourcesRequired?: AttrBooleanString;
 
@@ -3004,12 +3020,12 @@ declare global {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fedisplacementmap-xchannelselector
          */
-        xChannelSelector?: "R" | "G" | "B" | "A";
+        xChannelSelector?: AttrMissing | "R" | "G" | "B" | "A";
 
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fedisplacementmap-ychannelselector
          */
-        yChannelSelector?: "R" | "G" | "B" | "A";
+        yChannelSelector?: AttrMissing | "R" | "G" | "B" | "A";
       }
 
       /**
@@ -3133,6 +3149,7 @@ declare global {
         extends SVGAttributes<SVGFEImageElement>, SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ExternalResourcesRequiredAttribute
+         * @deprecated
          */
         externalResourcesRequired?: AttrBooleanString;
 
@@ -3332,7 +3349,7 @@ declare global {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-feturbulence-stitchtiles
          */
-        stichTiles?: AttrMissing | "stitch" | "noStitch";
+        stitchTiles?: AttrMissing | "stitch" | "noStitch";
 
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-feturbulence-type
@@ -3346,6 +3363,7 @@ declare global {
       interface Filter extends SVGAttributes<SVGFilterElement> {
         /**
          * @see https://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ExternalResourcesRequiredAttribute
+         * @deprecated
          */
         externalResourcesRequired?: AttrBooleanString;
 
@@ -3903,7 +3921,8 @@ declare global {
         preserveAspectRatio?: AttrPreserveAspectRatio;
 
         /**
-         * @see https://www.w3.org/TR/SVG2/interact.html#ZoomAndPanAttribute
+         * @see https://www.w3.org/TR/SVG11/interact.html#ZoomAndPanAttribute
+         * @deprecated
          */
         zoomAndPan?: AttrMissing | "disable" | "magnify";
 
@@ -4180,7 +4199,8 @@ declare global {
         preserveAspectRatio?: AttrPreserveAspectRatio;
 
         /**
-         * @see https://www.w3.org/TR/SVG2/interact.html#ZoomAndPanAttribute
+         * @see https://www.w3.org/TR/SVG11/interact.html#ZoomAndPanAttribute
+         * @deprecated
          */
         zoomAndPan?: AttrMissing | "disable" | "magnify";
       }
@@ -4234,6 +4254,7 @@ declare global {
       /**
        * Specifies the ID of a context menu to show when the element is right-clicked.
        * @see https://html.spec.whatwg.org/multipage/interaction.html#attr-contextmenu
+       * @deprecated
        */
       contextmenu?: AttrString;
 
@@ -4477,6 +4498,7 @@ declare global {
 
       "alignment-baseline"?: AttrMissing | csstype.Property.AlignmentBaseline;
       "baseline-shift"?: AttrMissing | csstype.Property.BaselineShift | number;
+      /** @deprecated */
       clip?: AttrMissing | csstype.Property.Clip | number;
       "clip-path"?: AttrMissing | csstype.Property.ClipPath;
       "clip-rule"?: AttrMissing | csstype.Property.ClipRule;
@@ -4485,6 +4507,7 @@ declare global {
       "color-interpolation-filters"?:
         | AttrMissing
         | csstype.Property.ColorInterpolation;
+      /** @deprecated */
       "color-rendering"?: AttrMissing | csstype.Property.ColorRendering;
       cursor?: AttrMissing | csstype.Property.Cursor;
       direction?: AttrMissing | csstype.Property.Direction;
@@ -4495,6 +4518,7 @@ declare global {
         | number;
       /**
        * @see https://www.w3.org/TR/SVG11/filters.html#EnableBackgroundProperty
+       * @deprecated
        */
       "enable-background"?: AttrMissing | "accumulate" | "new" | (string & {});
       fill?: AttrMissing | "freeze" | "remove" | csstype.Property.Fill;
@@ -4514,14 +4538,17 @@ declare global {
       "font-style"?: AttrMissing | csstype.Property.FontStyle;
       "font-variant"?: AttrMissing | csstype.Property.FontVariant;
       "font-weight"?: AttrMissing | csstype.Property.FontWeight | number;
+      /** @deprecated */
       "glyph-orientation-horizontal"?:
         | AttrMissing
         | csstype.Property.GlyphOrientationVertical;
+      /** @deprecated */
       "glyph-orientation-vertical"?:
         | AttrMissing
         | csstype.Property.GlyphOrientationVertical;
       "image-rendering"?: AttrMissing | csstype.Property.ImageRendering;
       isolation?: AttrMissing | csstype.Property.Isolation;
+      /** @deprecated */
       kerning?: AttrMissing | csstype.Property.FontKerning | number;
       "letter-spacing"?: AttrMissing | csstype.Property.LetterSpacing | number;
       "lighting-color"?: AttrMissing | csstype.Property.LightingColor;
@@ -4767,7 +4794,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/media.html#event-media-abort
    */
   onAbort?: AttrEventHandler<Event, T>;
-  "on-abort"?: this["onAbort"];
+  "on-abort"?: CommonAttributes<T>["onAbort"];
   onabort?: AttrString;
 
   /**
@@ -4775,28 +4802,28 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/csswg-drafts/css-animations/#eventdef-globaleventhandlers-animationcancel
    */
   onAnimationCancel?: AttrEventHandler<AnimationEvent, T>;
-  "on-animationcancel"?: this["onAnimationCancel"];
+  "on-animationcancel"?: CommonAttributes<T>["onAnimationCancel"];
 
   /**
    * Fired when an animation has completed.
    * @see https://w3c.github.io/csswg-drafts/css-animations/#eventdef-globaleventhandlers-animationend
    */
   onAnimationEnd?: AttrEventHandler<AnimationEvent, T>;
-  "on-animationend"?: this["onAnimationEnd"];
+  "on-animationend"?: CommonAttributes<T>["onAnimationEnd"];
 
   /**
    * Fired at the end of each iteration of an animation, except when an animationend event would fire at the same time.
    * @see https://w3c.github.io/csswg-drafts/css-animations/#eventdef-globaleventhandlers-animationiteration
    */
   onAnimationIteration?: AttrEventHandler<AnimationEvent, T>;
-  "on-animationiteration"?: this["onAnimationIteration"];
+  "on-animationiteration"?: CommonAttributes<T>["onAnimationIteration"];
 
   /**
    * Fired when an animation has started.
    * @see https://w3c.github.io/csswg-drafts/css-animations/#eventdef-globaleventhandlers-animationstart
    */
   onAnimationStart?: AttrEventHandler<AnimationEvent, T>;
-  "on-animationstart"?: this["onAnimationStart"];
+  "on-animationstart"?: CommonAttributes<T>["onAnimationStart"];
 
   /**
    * Fired when a non-primary pointing device button (any mouse button other than the primary—usually leftmost—button)
@@ -4804,7 +4831,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/uievents/#event-type-auxclick
    */
   onAuxClick?: AttrEventHandler<PointerEvent, T>;
-  "on-auxclick"?: this["onAuxClick"];
+  "on-auxclick"?: CommonAttributes<T>["onAuxClick"];
   onauxclick?: AttrString;
 
   /**
@@ -4812,7 +4839,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/uievents/#event-type-beforeinput
    */
   onBeforeInput?: AttrEventHandler<InputEvent, T>;
-  "on-beforeinput"?: this["onBeforeInput"];
+  "on-beforeinput"?: CommonAttributes<T>["onBeforeInput"];
   onbeforeinput?: AttrString;
 
   /**
@@ -4820,7 +4847,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/indices.html#event-beforematch
    */
   onBeforeMatch?: AttrEventHandler<Event, T>;
-  "on-beforematch"?: this["onBeforeMatch"];
+  "on-beforematch"?: CommonAttributes<T>["onBeforeMatch"];
   onbeforematch?: AttrString;
 
   /**
@@ -4828,7 +4855,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/indices.html#event-beforetoggle
    */
   onBeforeToggle?: AttrEventHandler<Event, T>;
-  "on-beforetoggle"?: this["onBeforeToggle"];
+  "on-beforetoggle"?: CommonAttributes<T>["onBeforeToggle"];
   onbeforetoggle?: AttrString;
 
   /**
@@ -4836,7 +4863,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/indices.html#event-blur
    */
   onBlur?: AttrEventHandler<Event, T>;
-  "on-blur"?: this["onBlur"];
+  "on-blur"?: CommonAttributes<T>["onBlur"];
   onblur?: AttrString;
 
   /**
@@ -4844,7 +4871,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/indices.html#event-cancel
    */
   onCancel?: AttrEventHandler<Event, T>;
-  "on-cancel"?: this["onCancel"];
+  "on-cancel"?: CommonAttributes<T>["onCancel"];
   oncancel?: AttrString;
 
   /**
@@ -4854,7 +4881,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/media.html#event-media-canplay
    */
   onCanPlay?: AttrEventHandler<Event, T>;
-  "on-canplay"?: this["onCanPlay"];
+  "on-canplay"?: CommonAttributes<T>["onCanPlay"];
   oncanplay?: AttrString;
 
   /**
@@ -4862,7 +4889,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/media.html#event-media-canplaythrough
    */
   onCanPlayThrough?: AttrEventHandler<Event, T>;
-  "on-canplaythrough"?: this["onCanPlayThrough"];
+  "on-canplaythrough"?: CommonAttributes<T>["onCanPlayThrough"];
   oncanplaythrough?: AttrString;
 
   /**
@@ -4870,7 +4897,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/indices.html#event-change
    */
   onChange?: AttrEventHandler<Event, T>;
-  "on-change"?: this["onChange"];
+  "on-change"?: CommonAttributes<T>["onChange"];
   onchange?: AttrString;
 
   /**
@@ -4879,7 +4906,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/uievents/#event-type-click
    */
   onClick?: AttrEventHandler<PointerEvent, T>;
-  "on-click"?: this["onClick"];
+  "on-click"?: CommonAttributes<T>["onClick"];
   onclick?: AttrString;
 
   /**
@@ -4887,7 +4914,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/indices.html#event-close
    */
   onClose?: AttrEventHandler<Event, T>;
-  "on-close"?: this["onClose"];
+  "on-close"?: CommonAttributes<T>["onClose"];
   onclose?: AttrString;
 
   /**
@@ -4895,14 +4922,14 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/uievents/#event-type-compositionend
    */
   onCompositionEnd?: AttrEventHandler<CompositionEvent, T>;
-  "on-compositionend"?: this["onCompositionEnd"];
+  "on-compositionend"?: CommonAttributes<T>["onCompositionEnd"];
 
   /**
    * Fired when a text composition system such as an input method editor starts a new composition session.
    * @see https://w3c.github.io/uievents/#event-type-compositionstart
    */
   onCompositionStart?: AttrEventHandler<CompositionEvent, T>;
-  "on-compositionstart"?: this["onCompositionStart"];
+  "on-compositionstart"?: CommonAttributes<T>["onCompositionStart"];
 
   /**
    * Fired when a new character is received in the context of a text composition session controlled by a text
@@ -4910,14 +4937,14 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/uievents/#event-type-compositionupdate
    */
   onCompositionUpdate?: AttrEventHandler<CompositionEvent, T>;
-  "on-compositionupdate"?: this["onCompositionUpdate"];
+  "on-compositionupdate"?: CommonAttributes<T>["onCompositionUpdate"];
 
   /**
    * Fired when the corresponding CanvasRenderingContext2D or OffscreenCanvasRenderingContext2D is lost
    * @see https://html.spec.whatwg.org/multipage/indices.html#event-contextlost
    */
   onContextLost?: AttrEventHandler<Event, T>;
-  "on-contextlost"?: this["onContextLost"];
+  "on-contextlost"?: CommonAttributes<T>["onContextLost"];
   oncontextlost?: AttrString;
 
   /**
@@ -4926,7 +4953,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/uievents/#event-type-contextmenu
    */
   onContextMenu?: AttrEventHandler<PointerEvent, T>;
-  "on-contextmenu"?: this["onContextMenu"];
+  "on-contextmenu"?: CommonAttributes<T>["onContextMenu"];
   oncontextmenu?: AttrString;
 
   /**
@@ -4934,7 +4961,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/indices.html#event-contextrestored
    */
   onContextRestored?: AttrEventHandler<Event, T>;
-  "on-contextrestored"?: this["onContextRestored"];
+  "on-contextrestored"?: CommonAttributes<T>["onContextRestored"];
   oncontextrestored?: AttrString;
 
   /**
@@ -4942,7 +4969,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/clipboard-apis/#clipboard-event-copy
    */
   onCopy?: AttrEventHandler<ClipboardEvent, T>;
-  "on-copy"?: this["onCopy"];
+  "on-copy"?: CommonAttributes<T>["onCopy"];
   oncopy?: AttrString;
 
   /**
@@ -4950,7 +4977,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/media.html#event-media-cuechange
    */
   onCueChange?: AttrEventHandler<Event, T>;
-  "on-cuechange"?: this["onCueChange"];
+  "on-cuechange"?: CommonAttributes<T>["onCueChange"];
   oncuechange?: AttrString;
 
   /**
@@ -4958,7 +4985,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/clipboard-apis/#clipboard-event-cut
    */
   onCut?: AttrEventHandler<ClipboardEvent, T>;
-  "on-cut"?: this["onCut"];
+  "on-cut"?: CommonAttributes<T>["onCut"];
   oncut?: AttrString;
 
   /**
@@ -4966,7 +4993,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/uievents/#event-type-dblclick
    */
   onDblClick?: AttrEventHandler<MouseEvent, T>;
-  "on-dblclick"?: this["onDblClick"];
+  "on-dblclick"?: CommonAttributes<T>["onDblClick"];
   ondblclick?: AttrString;
 
   /**
@@ -4974,7 +5001,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-drag
    */
   onDrag?: AttrEventHandler<DragEvent, T>;
-  "on-drag"?: this["onDrag"];
+  "on-drag"?: CommonAttributes<T>["onDrag"];
   ondrag?: AttrString;
 
   /**
@@ -4982,7 +5009,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragend
    */
   onDragEnd?: AttrEventHandler<DragEvent, T>;
-  "on-dragend"?: this["onDragEnd"];
+  "on-dragend"?: CommonAttributes<T>["onDragEnd"];
   ondragend?: AttrString;
 
   /**
@@ -4990,7 +5017,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragenter
    */
   onDragEnter?: AttrEventHandler<DragEvent, T>;
-  "on-dragenter"?: this["onDragEnter"];
+  "on-dragenter"?: CommonAttributes<T>["onDragEnter"];
   ondragenter?: AttrString;
 
   /**
@@ -4998,7 +5025,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragleave
    */
   onDragLeave?: AttrEventHandler<DragEvent, T>;
-  "on-dragleave"?: this["onDragLeave"];
+  "on-dragleave"?: CommonAttributes<T>["onDragLeave"];
   ondragleave?: AttrString;
 
   /**
@@ -5006,7 +5033,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragover
    */
   onDragOver?: AttrEventHandler<DragEvent, T>;
-  "on-dragover"?: this["onDragOver"];
+  "on-dragover"?: CommonAttributes<T>["onDragOver"];
   ondragover?: AttrString;
 
   /**
@@ -5014,7 +5041,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragstart
    */
   onDragStart?: AttrEventHandler<DragEvent, T>;
-  "on-dragstart"?: this["onDragStart"];
+  "on-dragstart"?: CommonAttributes<T>["onDragStart"];
   ondragstart?: AttrString;
 
   /**
@@ -5022,7 +5049,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-drop
    */
   onDrop?: AttrEventHandler<DragEvent, T>;
-  "on-drop"?: this["onDrop"];
+  "on-drop"?: CommonAttributes<T>["onDrop"];
   ondrop?: AttrString;
 
   /**
@@ -5030,7 +5057,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/media.html#event-media-durationchange
    */
   onDurationChange?: AttrEventHandler<Event, T>;
-  "on-durationchange"?: this["onDurationChange"];
+  "on-durationchange"?: CommonAttributes<T>["onDurationChange"];
   ondurationchange?: AttrString;
 
   /**
@@ -5038,7 +5065,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/media.html#event-media-emptied
    */
   onEmptied?: AttrEventHandler<Event, T>;
-  "on-emptied"?: this["onEmptied"];
+  "on-emptied"?: CommonAttributes<T>["onEmptied"];
   onemptied?: AttrString;
 
   /**
@@ -5046,14 +5073,14 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/encrypted-media/#dom-evt-encrypted
    */
   onEncrypted?: AttrEventHandler<MediaEncryptedEvent, T>;
-  "on-encrypted"?: this["onEncrypted"];
+  "on-encrypted"?: CommonAttributes<T>["onEncrypted"];
 
   /**
    * Fired when playback of a media element reaches its end, either because the media has reached its end or the loop attribute is not set.
    * @see https://html.spec.whatwg.org/multipage/media.html#event-media-ended
    */
   onEnded?: AttrEventHandler<Event, T>;
-  "on-ended"?: this["onEnded"];
+  "on-ended"?: CommonAttributes<T>["onEnded"];
   onended?: AttrString;
 
   /**
@@ -5061,7 +5088,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/indices.html#event-error
    */
   onError?: AttrEventHandler<ErrorEvent | Event, T>;
-  "on-error"?: this["onError"];
+  "on-error"?: CommonAttributes<T>["onError"];
   onerror?: AttrString;
 
   /**
@@ -5069,7 +5096,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/interaction.html#event-focus
    */
   onFocus?: AttrEventHandler<FocusEvent, T>;
-  "on-focus"?: this["onFocus"];
+  "on-focus"?: CommonAttributes<T>["onFocus"];
   onfocus?: AttrString;
 
   /**
@@ -5078,7 +5105,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/uievents/#event-type-focusin
    */
   onFocusIn?: AttrEventHandler<FocusEvent, T>;
-  "on-focusin"?: this["onFocusIn"];
+  "on-focusin"?: CommonAttributes<T>["onFocusIn"];
 
   /**
    * Fires when an element has lost focus, after the blur event. The two events differ in that focusout bubbles, while blur does not.
@@ -5086,14 +5113,14 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/uievents/#event-type-focusout
    */
   onFocusOut?: AttrEventHandler<FocusEvent, T>;
-  "on-focusout"?: this["onFocusOut"];
+  "on-focusout"?: CommonAttributes<T>["onFocusOut"];
 
   /**
    * Fired at a form element when it is constructing the entry list
    * @see https://html.spec.whatwg.org/multipage/indices.html#event-formdata
    */
   onFormData?: AttrEventHandler<FormDataEvent, T>;
-  "on-formdata"?: this["onFormData"];
+  "on-formdata"?: CommonAttributes<T>["onFormData"];
   onformdata?: AttrString;
 
   /**
@@ -5101,14 +5128,14 @@ interface CommonAttributes<T extends Element> {
    * @see https://fullscreen.spec.whatwg.org/#handler-document-onfullscreenchange
    */
   onFullscreenChange?: AttrEventHandler<Event, T>;
-  "on-fullscreenchange"?: this["onFullscreenChange"];
+  "on-fullscreenchange"?: CommonAttributes<T>["onFullscreenChange"];
 
   /**
    * Fired when the browser cannot switch to fullscreen mode.
    * @see https://fullscreen.spec.whatwg.org/#handler-document-onfullscreenerror
    */
   onFullscreenError?: AttrEventHandler<Event, T>;
-  "on-fullscreenerror"?: this["onFullscreenError"];
+  "on-fullscreenerror"?: CommonAttributes<T>["onFullscreenError"];
 
   /**
    * Fired when an element captures a pointer using setPointerCapture().
@@ -5117,14 +5144,14 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/pointerevents/#the-gotpointercapture-event
    */
   onGotPointerCapture?: AttrEventHandler<PointerEvent, T>;
-  "on-gotpointercapture"?: this["onGotPointerCapture"];
+  "on-gotpointercapture"?: CommonAttributes<T>["onGotPointerCapture"];
 
   /**
    * Fired when the form element's value changes, as a result of user input.
    * @see https://w3c.github.io/uievents/#event-type-input
    */
   onInput?: AttrEventHandler<InputEvent, T>;
-  "on-input"?: this["onInput"];
+  "on-input"?: CommonAttributes<T>["onInput"];
   oninput?: AttrString;
 
   /**
@@ -5132,7 +5159,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/indices.html#event-invalid
    */
   onInvalid?: AttrEventHandler<Event, T>;
-  "on-invalid"?: this["onInvalid"];
+  "on-invalid"?: CommonAttributes<T>["onInvalid"];
   oninvalid?: AttrString;
 
   /**
@@ -5140,7 +5167,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/uievents/#event-type-keydown
    */
   onKeyDown?: AttrEventHandler<KeyboardEvent, T>;
-  "on-keydown"?: this["onKeyDown"];
+  "on-keydown"?: CommonAttributes<T>["onKeyDown"];
   onkeydown?: AttrString;
 
   /**
@@ -5148,7 +5175,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/uievents/#event-type-keypress
    */
   onKeyPress?: AttrEventHandler<KeyboardEvent, T>;
-  "on-keypress"?: this["onKeyPress"];
+  "on-keypress"?: CommonAttributes<T>["onKeyPress"];
   onkeypress?: AttrString;
 
   /**
@@ -5156,7 +5183,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/uievents/#event-type-keyup
    */
   onKeyUp?: AttrEventHandler<KeyboardEvent, T>;
-  "on-keyup"?: this["onKeyUp"];
+  "on-keyup"?: CommonAttributes<T>["onKeyUp"];
   onkeyup?: AttrString;
 
   /**
@@ -5164,7 +5191,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/indices.html#event-load
    */
   onLoad?: AttrEventHandler<Event, T>;
-  "on-load"?: this["onLoad"];
+  "on-load"?: CommonAttributes<T>["onLoad"];
   onload?: AttrString;
 
   /**
@@ -5172,7 +5199,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/media.html#event-media-loadeddata
    */
   onLoadedData?: AttrEventHandler<Event, T>;
-  "on-loadeddata"?: this["onLoadedData"];
+  "on-loadeddata"?: CommonAttributes<T>["onLoadedData"];
   onloadeddata?: AttrString;
 
   /**
@@ -5180,7 +5207,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/media.html#event-media-loadedmetadata
    */
   onLoadedMetadata?: AttrEventHandler<Event, T>;
-  "on-loadedmetadata"?: this["onLoadedMetadata"];
+  "on-loadedmetadata"?: CommonAttributes<T>["onLoadedMetadata"];
   onloadedmetadata?: AttrString;
 
   /**
@@ -5188,7 +5215,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/media.html#event-media-loadstart
    */
   onLoadStart?: AttrEventHandler<Event, T>;
-  "on-loadstart"?: this["onLoadStart"];
+  "on-loadstart"?: CommonAttributes<T>["onLoadStart"];
   onloadstart?: AttrString;
 
   /**
@@ -5196,14 +5223,14 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/pointerevents/#dfn-lostpointercapture
    */
   onLostPointerCapture?: AttrEventHandler<PointerEvent, T>;
-  "on-lostpointercapture"?: this["onLostPointerCapture"];
+  "on-lostpointercapture"?: CommonAttributes<T>["onLostPointerCapture"];
 
   /**
    * Fired when a pointing device button is pressed down over an element.
    * @see https://w3c.github.io/uievents/#event-type-mousedown
    */
   onMouseDown?: AttrEventHandler<MouseEvent, T>;
-  "on-mousedown"?: this["onMouseDown"];
+  "on-mousedown"?: CommonAttributes<T>["onMouseDown"];
   onmousedown?: AttrString;
 
   /**
@@ -5211,7 +5238,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/uievents/#event-type-mouseenter
    */
   onMouseEnter?: AttrEventHandler<MouseEvent, T>;
-  "on-mouseenter"?: this["onMouseEnter"];
+  "on-mouseenter"?: CommonAttributes<T>["onMouseEnter"];
   onmouseenter?: AttrString;
 
   /**
@@ -5219,7 +5246,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/uievents/#event-type-mouseleave
    */
   onMouseLeave?: AttrEventHandler<MouseEvent, T>;
-  "on-mouseleave"?: this["onMouseLeave"];
+  "on-mouseleave"?: CommonAttributes<T>["onMouseLeave"];
   onmouseleave?: AttrString;
 
   /**
@@ -5227,7 +5254,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/uievents/#event-type-mousemove
    */
   onMouseMove?: AttrEventHandler<MouseEvent, T>;
-  "on-mousemove"?: this["onMouseMove"];
+  "on-mousemove"?: CommonAttributes<T>["onMouseMove"];
   onmousemove?: AttrString;
 
   /**
@@ -5235,7 +5262,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/uievents/#event-type-mouseout
    */
   onMouseOut?: AttrEventHandler<MouseEvent, T>;
-  "on-mouseout"?: this["onMouseOut"];
+  "on-mouseout"?: CommonAttributes<T>["onMouseOut"];
   onmouseout?: AttrString;
 
   /**
@@ -5243,7 +5270,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/uievents/#event-type-mouseover
    */
   onMouseOver?: AttrEventHandler<MouseEvent, T>;
-  "on-mouseover"?: this["onMouseOver"];
+  "on-mouseover"?: CommonAttributes<T>["onMouseOver"];
   onmouseover?: AttrString;
 
   /**
@@ -5251,7 +5278,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/uievents/#event-type-mouseup
    */
   onMouseUp?: AttrEventHandler<MouseEvent, T>;
-  "on-mouseup"?: this["onMouseUp"];
+  "on-mouseup"?: CommonAttributes<T>["onMouseUp"];
   onmouseup?: AttrString;
 
   /**
@@ -5259,7 +5286,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/clipboard-apis/#clipboard-event-paste
    */
   onPaste?: AttrEventHandler<ClipboardEvent, T>;
-  "on-paste"?: this["onPaste"];
+  "on-paste"?: CommonAttributes<T>["onPaste"];
   onpaste?: AttrString;
 
   /**
@@ -5267,7 +5294,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/media.html#event-media-pause
    */
   onPause?: AttrEventHandler<Event, T>;
-  "on-pause"?: this["onPause"];
+  "on-pause"?: CommonAttributes<T>["onPause"];
   onpause?: AttrString;
 
   /**
@@ -5275,7 +5302,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/media.html#event-media-play
    */
   onPlay?: AttrEventHandler<Event, T>;
-  "on-play"?: this["onPlay"];
+  "on-play"?: CommonAttributes<T>["onPlay"];
   onplay?: AttrString;
 
   /**
@@ -5283,7 +5310,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/media.html#event-media-playing
    */
   onPlaying?: AttrEventHandler<Event, T>;
-  "on-playing"?: this["onPlaying"];
+  "on-playing"?: CommonAttributes<T>["onPlaying"];
   onplaying?: AttrString;
 
   /**
@@ -5291,63 +5318,63 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/pointerevents/#the-pointercancel-event
    */
   onPointerCancel?: AttrEventHandler<PointerEvent, T>;
-  "on-pointercancel"?: this["onPointerCancel"];
+  "on-pointercancel"?: CommonAttributes<T>["onPointerCancel"];
 
   /**
    * Fired when a pointing device's button is pressed down on an element.
    * @see https://w3c.github.io/pointerevents/#the-pointerdown-event
    */
   onPointerDown?: AttrEventHandler<PointerEvent, T>;
-  "on-pointerdown"?: this["onPointerDown"];
+  "on-pointerdown"?: CommonAttributes<T>["onPointerDown"];
 
   /**
    * Fired when a pointing device is moved onto the element.
    * @see https://w3c.github.io/pointerevents/#the-pointerenter-event
    */
   onPointerEnter?: AttrEventHandler<PointerEvent, T>;
-  "on-pointerenter"?: this["onPointerEnter"];
+  "on-pointerenter"?: CommonAttributes<T>["onPointerEnter"];
 
   /**
    * Fired when a pointing device is moved off the element.
    * @see https://w3c.github.io/pointerevents/#the-pointerleave-event
    */
   onPointerLeave?: AttrEventHandler<PointerEvent, T>;
-  "on-pointerleave"?: this["onPointerLeave"];
+  "on-pointerleave"?: CommonAttributes<T>["onPointerLeave"];
 
   /**
    * Fired when a pointing device is moved over an element.
    * @see https://w3c.github.io/pointerevents/#the-pointermove-event
    */
   onPointerMove?: AttrEventHandler<PointerEvent, T>;
-  "on-pointermove"?: this["onPointerMove"];
+  "on-pointermove"?: CommonAttributes<T>["onPointerMove"];
 
   /**
    * Fired when a pointing device is moved off the element or off one of its children.
    * @see https://w3c.github.io/pointerevents/#the-pointerout-event
    */
   onPointerOut?: AttrEventHandler<PointerEvent, T>;
-  "on-pointerout"?: this["onPointerOut"];
+  "on-pointerout"?: CommonAttributes<T>["onPointerOut"];
 
   /**
    * Fired when a pointing device is moved onto the element or onto one of its children.
    * @see https://w3c.github.io/pointerevents/#the-pointerover-event
    */
   onPointerOver?: AttrEventHandler<PointerEvent, T>;
-  "on-pointerover"?: this["onPointerOver"];
+  "on-pointerover"?: CommonAttributes<T>["onPointerOver"];
 
   /**
    * Fired when a pointing device's button is released over an element.
    * @see https://w3c.github.io/pointerevents/#the-pointerup-event
    */
   onPointerUp?: AttrEventHandler<PointerEvent, T>;
-  "on-pointerup"?: this["onPointerUp"];
+  "on-pointerup"?: CommonAttributes<T>["onPointerUp"];
 
   /**
    * Fired when the user agent is downloading media data or resources, to indicate progress.
    * @see https://html.spec.whatwg.org/multipage/media.html#event-media-progress
    */
   onProgress?: AttrEventHandler<Event, T>;
-  "on-progress"?: this["onProgress"];
+  "on-progress"?: CommonAttributes<T>["onProgress"];
   onprogress?: AttrString;
 
   /**
@@ -5355,7 +5382,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/media.html#event-media-ratechange
    */
   onRateChange?: AttrEventHandler<Event, T>;
-  "on-ratechange"?: this["onRateChange"];
+  "on-ratechange"?: CommonAttributes<T>["onRateChange"];
   onratechange?: AttrString;
 
   /**
@@ -5363,7 +5390,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#event-reset
    */
   onReset?: AttrEventHandler<Event, T>;
-  "on-reset"?: this["onReset"];
+  "on-reset"?: CommonAttributes<T>["onReset"];
   onreset?: AttrString;
 
   /**
@@ -5371,7 +5398,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://drafts.csswg.org/cssom-view/#eventdef-window-resize
    */
   onResize?: AttrEventHandler<Event, T>;
-  "on-resize"?: this["onResize"];
+  "on-resize"?: CommonAttributes<T>["onResize"];
   onresize?: AttrString;
 
   /**
@@ -5379,7 +5406,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://drafts.csswg.org/cssom-view/#eventdef-document-scroll
    */
   onScroll?: AttrEventHandler<Event, T>;
-  "on-scroll"?: this["onScroll"];
+  "on-scroll"?: CommonAttributes<T>["onScroll"];
   onscroll?: AttrString;
 
   /**
@@ -5387,7 +5414,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://drafts.csswg.org/cssom-view/#eventdef-document-scrollend
    */
   onScrollEnd?: AttrEventHandler<Event, T>;
-  "on-scrollend"?: this["onScrollEnd"];
+  "on-scrollend"?: CommonAttributes<T>["onScrollEnd"];
   onscrollend?: AttrString;
 
   /**
@@ -5395,7 +5422,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/webappsec-csp/#eventdef-globaleventhandlers-securitypolicyviolation
    */
   onSecurityPolicyViolation?: AttrEventHandler<SecurityPolicyViolationEvent, T>;
-  "on-securitypolicyviolation"?: this["onSecurityPolicyViolation"];
+  "on-securitypolicyviolation"?: CommonAttributes<T>["onSecurityPolicyViolation"];
   onsecuritypolicyviolation?: AttrString;
 
   /**
@@ -5403,7 +5430,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/media.html#event-media-seeked
    */
   onSeeked?: AttrEventHandler<Event, T>;
-  "on-seeked"?: this["onSeeked"];
+  "on-seeked"?: CommonAttributes<T>["onSeeked"];
   onseeked?: AttrString;
 
   /**
@@ -5411,7 +5438,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/media.html#event-media-seeking
    */
   onSeeking?: AttrEventHandler<Event, T>;
-  "on-seeking"?: this["onSeeking"];
+  "on-seeking"?: CommonAttributes<T>["onSeeking"];
   onseeking?: AttrString;
 
   /**
@@ -5419,7 +5446,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#event-select
    */
   onSelect?: AttrEventHandler<Event, T>;
-  "on-select"?: this["onSelect"];
+  "on-select"?: CommonAttributes<T>["onSelect"];
   onselect?: AttrString;
 
   /**
@@ -5427,7 +5454,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://dom.spec.whatwg.org/#eventdef-htmlslotelement-slotchange
    */
   onSlotChange?: AttrEventHandler<Event, T>;
-  "on-slotchange"?: this["onSlotChange"];
+  "on-slotchange"?: CommonAttributes<T>["onSlotChange"];
   onslotchange?: AttrString;
 
   /**
@@ -5435,7 +5462,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/media.html#event-media-stalled
    */
   onStalled?: AttrEventHandler<Event, T>;
-  "on-stalled"?: this["onStalled"];
+  "on-stalled"?: CommonAttributes<T>["onStalled"];
   onstalled?: AttrString;
 
   /**
@@ -5443,7 +5470,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/indices.html#event-submit
    */
   onSubmit?: AttrEventHandler<SubmitEvent, T>;
-  "on-submit"?: this["onSubmit"];
+  "on-submit"?: CommonAttributes<T>["onSubmit"];
   onsubmit?: AttrString;
 
   /**
@@ -5451,7 +5478,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/media.html#event-media-suspend
    */
   onSuspend?: AttrEventHandler<Event, T>;
-  "on-suspend"?: this["onSuspend"];
+  "on-suspend"?: CommonAttributes<T>["onSuspend"];
   onsuspend?: AttrString;
 
   /**
@@ -5459,7 +5486,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/media.html#event-media-timeupdate
    */
   onTimeUpdate?: AttrEventHandler<Event, T>;
-  "on-timeupdate"?: this["onTimeUpdate"];
+  "on-timeupdate"?: CommonAttributes<T>["onTimeUpdate"];
   ontimeupdate?: AttrString;
 
   /**
@@ -5467,7 +5494,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/indices.html#event-toggle
    */
   onToggle?: AttrEventHandler<Event, T>;
-  "on-toggle"?: this["onToggle"];
+  "on-toggle"?: CommonAttributes<T>["onToggle"];
   ontoggle?: AttrString;
 
   /**
@@ -5475,63 +5502,63 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/touch-events/#event-touchcancel
    */
   onTouchCancel?: AttrEventHandler<TouchEvent, T>;
-  "on-touchcancel"?: this["onTouchCancel"];
+  "on-touchcancel"?: CommonAttributes<T>["onTouchCancel"];
 
   /**
    * Fired when a finger is lifted from a touch surface.
    * @see https://w3c.github.io/touch-events/#event-touchend
    */
   onTouchEnd?: AttrEventHandler<TouchEvent, T>;
-  "on-touchend"?: this["onTouchEnd"];
+  "on-touchend"?: CommonAttributes<T>["onTouchEnd"];
 
   /**
    * Fired when a finger is moved along a touch surface.
    * @see https://w3c.github.io/touch-events/#event-touchmove
    */
   onTouchMove?: AttrEventHandler<TouchEvent, T>;
-  "on-touchmove"?: this["onTouchMove"];
+  "on-touchmove"?: CommonAttributes<T>["onTouchMove"];
 
   /**
    * Fired when a finger is placed on a touch surface.
    * @see https://w3c.github.io/touch-events/#event-touchstart
    */
   onTouchStart?: AttrEventHandler<TouchEvent, T>;
-  "on-touchstart"?: this["onTouchStart"];
+  "on-touchstart"?: CommonAttributes<T>["onTouchStart"];
 
   /**
    * Fired when a CSS transition is canceled.
    * @see https://drafts.csswg.org/css-transitions/#transitioncancel
    */
   onTransitionCancel?: AttrEventHandler<TransitionEvent, T>;
-  "on-transitioncancel"?: this["onTransitionCancel"];
+  "on-transitioncancel"?: CommonAttributes<T>["onTransitionCancel"];
 
   /**
    * Fired when a CSS transition has completed.
    * @see https://drafts.csswg.org/css-transitions/#transitionend
    */
   onTransitionEnd?: AttrEventHandler<TransitionEvent, T>;
-  "on-transitionend"?: this["onTransitionEnd"];
+  "on-transitionend"?: CommonAttributes<T>["onTransitionEnd"];
 
   /**
    * Fired when a CSS transition is first created, i.e. before any transition-delay has begun.
    * @see https://drafts.csswg.org/css-transitions/#transitionrun
    */
   onTransitionRun?: AttrEventHandler<TransitionEvent, T>;
-  "on-transitionrun"?: this["onTransitionRun"];
+  "on-transitionrun"?: CommonAttributes<T>["onTransitionRun"];
 
   /**
    * Fired when a CSS transition has actually started, i.e., after any transition-delay has ended.
    * @see https://drafts.csswg.org/css-transitions/#transitionstart
    */
   onTransitionStart?: AttrEventHandler<TransitionEvent, T>;
-  "on-transitionstart"?: this["onTransitionStart"];
+  "on-transitionstart"?: CommonAttributes<T>["onTransitionStart"];
 
   /**
    * Fired when the volume level or muted state of a media element changes.
    * @see https://html.spec.whatwg.org/multipage/media.html#event-media-volumechange
    */
   onVolumeChange?: AttrEventHandler<Event, T>;
-  "on-volumechange"?: this["onVolumeChange"];
+  "on-volumechange"?: CommonAttributes<T>["onVolumeChange"];
   onvolumechange?: AttrString;
 
   /**
@@ -5539,7 +5566,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://html.spec.whatwg.org/multipage/media.html#event-media-waiting
    */
   onWaiting?: AttrEventHandler<Event, T>;
-  "on-waiting"?: this["onWaiting"];
+  "on-waiting"?: CommonAttributes<T>["onWaiting"];
   onwaiting?: AttrString;
 
   /**
@@ -5547,7 +5574,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://w3c.github.io/uievents/#event-type-wheel
    */
   onWheel?: AttrEventHandler<WheelEvent, T>;
-  "on-wheel"?: this["onWheel"];
+  "on-wheel"?: CommonAttributes<T>["onWheel"];
   onwheel?: AttrString;
 
   /**
@@ -5650,7 +5677,8 @@ interface CommonAttributes<T extends Element> {
     | "link"
     | "move"
     | "none"
-    | "popup";
+    | "popup"
+    | (string & {});
   /**
    * Identifies the element that provides an error message for the object.
    * @see https://www.w3.org/TR/wai-aria-1.1/#aria-errormessage
@@ -5789,7 +5817,8 @@ interface CommonAttributes<T extends Element> {
     | "removals"
     | "text additions"
     | "text removals"
-    | "text";
+    | "text"
+    | (string & {});
   /**
    * Indicates that user input is required on the element before a form may be submitted.
    * @see https://www.w3.org/TR/wai-aria-1.1/#aria-required
@@ -5835,7 +5864,7 @@ interface CommonAttributes<T extends Element> {
    * Indicates if items in a table or grid are sorted in ascending or descending order.
    * @see https://www.w3.org/TR/wai-aria-1.1/#aria-sort
    */
-  "aria-sort"?: "ascending" | "descending" | "none" | "other";
+  "aria-sort"?: AttrMissing | "ascending" | "descending" | "none" | "other";
   /**
    * Defines the maximum allowed value for a range widget.
    * @see https://www.w3.org/TR/wai-aria-1.1/#aria-valuemax
@@ -5863,8 +5892,10 @@ interface CommonAttributes<T extends Element> {
    */
   "aria-valuetext"?: AttrString;
   /**
-   * Defines the ARIA role of an element.
-   * @see https://www.w3.org/TR/wai-aria-1.1/#role_definitions
+   * Defines the ARIA role of an element: a space separated list of roles, of which the first one the user agent supports applies.
+   * @see https://www.w3.org/TR/wai-aria-1.2/#role_definitions
+   * @see https://www.w3.org/TR/graphics-aria-1.0/#role_definitions
+   * @see https://www.w3.org/TR/dpub-aria-1.1/#role_definitions
    */
   role?:
     | AttrMissing
@@ -5873,25 +5904,73 @@ interface CommonAttributes<T extends Element> {
     | "application"
     | "article"
     | "banner"
+    | "blockquote"
     | "button"
+    | "caption"
     | "cell"
     | "checkbox"
+    | "code"
     | "columnheader"
     | "combobox"
     | "complementary"
     | "contentinfo"
     | "definition"
+    | "deletion"
     | "dialog"
-    | "directory"
+    | "doc-abstract"
+    | "doc-acknowledgments"
+    | "doc-afterword"
+    | "doc-appendix"
+    | "doc-backlink"
+    | "doc-bibliography"
+    | "doc-biblioref"
+    | "doc-chapter"
+    | "doc-colophon"
+    | "doc-conclusion"
+    | "doc-cover"
+    | "doc-credit"
+    | "doc-credits"
+    | "doc-dedication"
+    | "doc-endnotes"
+    | "doc-epigraph"
+    | "doc-epilogue"
+    | "doc-errata"
+    | "doc-example"
+    | "doc-footnote"
+    | "doc-foreword"
+    | "doc-glossary"
+    | "doc-glossref"
+    | "doc-index"
+    | "doc-introduction"
+    | "doc-noteref"
+    | "doc-notice"
+    | "doc-pagebreak"
+    | "doc-pagefooter"
+    | "doc-pageheader"
+    | "doc-pagelist"
+    | "doc-part"
+    | "doc-preface"
+    | "doc-prologue"
+    | "doc-pullquote"
+    | "doc-qna"
+    | "doc-subtitle"
+    | "doc-tip"
+    | "doc-toc"
     | "document"
+    | "emphasis"
     | "feed"
     | "figure"
     | "form"
+    | "generic"
+    | "graphics-document"
+    | "graphics-object"
+    | "graphics-symbol"
     | "grid"
     | "gridcell"
     | "group"
     | "heading"
     | "img"
+    | "insertion"
     | "link"
     | "list"
     | "listbox"
@@ -5910,6 +5989,7 @@ interface CommonAttributes<T extends Element> {
     | "none"
     | "note"
     | "option"
+    | "paragraph"
     | "presentation"
     | "progressbar"
     | "radio"
@@ -5925,6 +6005,9 @@ interface CommonAttributes<T extends Element> {
     | "slider"
     | "spinbutton"
     | "status"
+    | "strong"
+    | "subscript"
+    | "superscript"
     | "switch"
     | "tab"
     | "table"
@@ -5932,12 +6015,14 @@ interface CommonAttributes<T extends Element> {
     | "tabpanel"
     | "term"
     | "textbox"
+    | "time"
     | "timer"
     | "toolbar"
     | "tooltip"
     | "tree"
     | "treegrid"
-    | "treeitem";
+    | "treeitem"
+    | (string & {});
 }
 type AttrMissing = undefined | null | false;
 type AttrClass =
