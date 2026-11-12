@@ -522,10 +522,15 @@ export function getSignal(
       signal.build = () =>
         buildIntersection(section, referencedBindings, signal);
     } else if (isGlobalBinding(referencedBindings)) {
-      // The section's work reading a `$global` key, which setup runs: it reads the
-      // scope's `$global`, not a value it is passed.
+      // The section's work reading a `$global` key, which setup runs where the section reads
+      // the key alone (a join's run subscribes the scope): it reads the scope's `$global`.
       signal.storesValue = true;
-      addValue(section, undefined, signal);
+      for (const expr of getGlobalExprs().get(section)!) {
+        if (getReferencedBindings(expr) === referencedBindings) {
+          addValue(section, undefined, signal);
+          break;
+        }
+      }
       signal.build = () => buildGlobalSignal(signal);
     } else if (
       referencedBindings.section !== section &&
@@ -702,7 +707,7 @@ function buildGlobalSignal(signal: Signal) {
     signal.patch.length ||
     signal.values.length ||
     signal.effect.length
-      ? buildSignalFn(signal)
+      ? buildKeySignalFn(signal)
       : undefined;
   const id = t.stringLiteral(getGlobalSubscriptionId(section, binding));
   const key = getGlobalKeyIdentifier(signal, binding);
@@ -737,9 +742,23 @@ function buildGlobalJoin(signal: Signal) {
   return callRuntime(
     "_global_or",
     t.numericLiteral(section.intersections!.get(intersection)!.id!),
-    buildSignalFn(signal),
+    buildKeySignalFn(signal),
     ...keySignals,
   );
+}
+
+// A signal reading `$global` keys runs its effect by a call, never as the effect itself,
+// which declares after it (`_global_script`).
+function buildKeySignalFn(signal: Signal) {
+  const fn = buildSignalFn(signal);
+  return t.isIdentifier(fn) &&
+    signal.effect.length &&
+    fn.name === getSignalEffectIdentifier(signal).name
+    ? t.arrowFunctionExpression(
+        [scopeIdentifier],
+        t.callExpression(fn, [scopeIdentifier]),
+      )
+    : fn;
 }
 
 // What an effect of a signal reading `$global` keys subscribes its scope by: the
@@ -892,8 +911,6 @@ export function signalHasWork(signal: Signal): boolean {
     if (
       !Array.isArray(binding) &&
       (binding.closureSections ||
-        // A `$global` key's signal subscribes the scope, as a closure's does.
-        isGlobalBinding(binding) ||
         binding.type === BindingType.dom ||
         (binding.section === signal.section &&
           (binding.hoists ||
@@ -1579,6 +1596,7 @@ export function writeSignals(section: Section) {
     if (isInlinedValue(signal)) return;
 
     let effectDeclarator: t.VariableDeclarator | undefined;
+    let keySignal: t.Identifier | false = false;
     if (signal.effect.length) {
       // An effect's registration names the writes a flush's entry re-runs it on, as a
       // function's names its filled references.
@@ -1590,29 +1608,25 @@ export function writeSignals(section: Section) {
         getResumeRegistryId(section, signal.referencedBindings) +
           (reads ? " " + reads : ""),
       );
-      // An effect reading `$global` keys holds their signal, which its resume subscribes.
-      const keySignal =
-        some(signal.referencedBindings, isGlobalBinding) &&
-        getEffectKeySignal(signal);
       const effectFn = t.arrowFunctionExpression(
         [scopeIdentifier],
-        toOnlyExpressionOrBlock(
-          keySignal
-            ? [
-                t.expressionStatement(
-                  t.callExpression(
-                    t.memberExpression(keySignal, t.identifier("r")),
-                    [scopeIdentifier],
-                  ),
-                ),
-                ...signal.effect,
-              ]
-            : signal.effect,
-        ),
+        toOnlyExpressionOrBlock(signal.effect),
       );
+      // An effect reading `$global` keys holds their signal, by which each run, and so its
+      // resume, subscribes its scope; it declares after the signal it takes.
+      keySignal =
+        some(signal.referencedBindings, isGlobalBinding) &&
+        getEffectKeySignal(signal);
       effectDeclarator = t.variableDeclarator(
         effectIdentifier,
-        callRuntime(reads ? "_script_patch" : "_script", key, effectFn),
+        keySignal
+          ? callRuntime(
+              "_global_script",
+              reads ? callRuntime("_filled_id", key) : key,
+              effectFn,
+              keySignal,
+            )
+          : callRuntime(reads ? "_script_patch" : "_script", key, effectFn),
       );
     }
 
@@ -1679,12 +1693,16 @@ export function writeSignals(section: Section) {
 
     const signalStatements = signal.prependStatements || [];
 
-    if (effectDeclarator) {
+    if (effectDeclarator && !keySignal) {
       signalStatements.push(t.variableDeclaration("const", [effectDeclarator]));
     }
 
     if (signalDeclaration) {
       signalStatements.push(signalDeclaration);
+    }
+
+    if (effectDeclarator && keySignal) {
+      signalStatements.push(t.variableDeclaration("const", [effectDeclarator]));
     }
     getProgram().node.body.push(...signalStatements);
 

@@ -6,10 +6,7 @@ const $global_brand_key = /*@__PURE__*/ _global_key("$global_brand/10", "brand")
 const $placeholder_content__$global_brand = /*@__PURE__*/ _global_closure("__tests__/template.marko_2_$global_brand#0:7/subscribe", $global_brand_key);
 const $placeholder_content__n__OR__$global_brand = /*@__PURE__*/ _global_or(1, ($scope) => _text($scope["#text/0"], $scope._.n + _global_read($scope.$global, "brand")), $placeholder_content__$global_brand);
 const $placeholder_content__n = /*@__PURE__*/ _closure_get("n/8", $placeholder_content__n__OR__$global_brand, 0, "__tests__/template.marko_2_n#0:6/subscribe");
-const $placeholder_content__setup = ($scope) => {
-	$placeholder_content__n($scope);
-	$placeholder_content__$global_brand($scope);
-};
+const $placeholder_content__setup = $placeholder_content__n;
 const $placeholder_content = _content("__tests__/template.marko_2*content", "<p> </p>", "D ", $placeholder_content__setup);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<em> </em>", "D ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);

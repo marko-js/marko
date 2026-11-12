@@ -1,11 +1,9 @@
 // template.marko
-const $global_key = /*@__PURE__*/ _global_key(1);
-const $global2__script = _script("a1", ($scope) => {
-	$global2.r($scope);
+const $global2 = /*@__PURE__*/ _global_closure("a3", /* @__PURE__ */ _global_key(1), ($scope) => $global2__script($scope));
+const $global2__script = _global_script("a1", ($scope) => {
 	{
 		const g = $scope.$;
 		const el = document.querySelector("main");
 		el.dataset.log = (el.dataset.log || "") + "[" + g.brand + "]";
 	}
-});
-const $global2 = /*@__PURE__*/ _global_closure("a3", $global_key, $global2__script);
+}, $global2);

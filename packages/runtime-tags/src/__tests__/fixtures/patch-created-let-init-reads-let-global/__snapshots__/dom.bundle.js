@@ -1,8 +1,7 @@
 // template.marko
 const $if_content__y__script = _script("a2", ($scope) => $scope.a.dataset.y = String($scope.f));
 const $if_content__y = _let(5, $if_content__y__script);
-const $if_content__$global_n = /*@__PURE__*/ _global_closure("a0", /* @__PURE__ */ _global_key(5, "n"));
-const $if_content__$global_n__OR__x = /*@__PURE__*/ _global_or(4, ($scope) => $if_content__y($scope, $scope.d + $scope.$.n), $if_content__$global_n);
+const $if_content__$global_n__OR__x = /*@__PURE__*/ _global_or(4, ($scope) => $if_content__y($scope, $scope.d + $scope.$.n), /* @__PURE__ */ _global_closure("a0", /* @__PURE__ */ _global_key(5, "n")));
 const $if_content__x = /*@__PURE__*/ _fill_let("a3", 3, ($scope) => {
 	_text($scope.c, $scope.d);
 	$if_content__$global_n__OR__x($scope);

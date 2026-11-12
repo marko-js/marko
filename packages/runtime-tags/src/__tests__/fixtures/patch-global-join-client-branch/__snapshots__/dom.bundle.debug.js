@@ -5,10 +5,7 @@ const $global_g_key = /*@__PURE__*/ _global_key("$global_g/9", "g");
 const $if_content__$global_g = /*@__PURE__*/ _global_if("__tests__/template.marko_1_$global_g#0:9/subscribe", $global_g_key, "#text/2", 0);
 const $if_content__input_a__OR__$global_g = /*@__PURE__*/ _global_or(1, ($scope) => _text($scope["#text/0"], $scope._.input_a + _global_read($scope.$global, "g")), $if_content__$global_g);
 const $if_content__input_a = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_input_a#0:5/setup", "#text/2", 0, $if_content__input_a__OR__$global_g);
-const $if_content__setup = ($scope) => {
-	$if_content__input_a._($scope);
-	$if_content__$global_g($scope);
-};
+const $if_content__setup = $if_content__input_a;
 const $if = /*@__PURE__*/ _if("#text/2", "<p>t:<!></p>", "Db%", $if_content__setup);
 const $s = _let("s/6", ($scope) => {
 	_text($scope["#text/1"], $scope.s);

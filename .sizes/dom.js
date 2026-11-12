@@ -1,4 +1,4 @@
-// size: 27479 (min) 10177 (brotli)
+// size: 27528 (min) 10155 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -2079,6 +2079,11 @@ function _global_or(slot, fn, ...signals) {
   for (let signal of signals) signal.j.push([fn, slot]);
   return join;
 }
+function _global_script(id, fn, signal) {
+  return _script(id, (scope) => {
+    (signal.r(scope), fn(scope));
+  });
+}
 function renderChange(scope, fn, joins) {
   fn && queueRender(scope, fn, -1);
   for (let [join, slot] of joins) queueRender(scope, join, slot);
@@ -2337,7 +2342,7 @@ function _fill_let(key, id, fn, fillFn) {
 function _fill_let_change(key, id, fn, fillFn) {
   return fill(key, _let_change(id, fn), id, fillFn ?? fn ?? 0);
 }
-function filledId(key) {
+function _filled_id(key) {
   let sep = key.indexOf(" "),
     reads = key.slice(sep + 1);
   return (
@@ -2347,10 +2352,10 @@ function filledId(key) {
   );
 }
 function _bind_resume(key, factory) {
-  _resumed[filledId(key)] = factory;
+  _resumed[_filled_id(key)] = factory;
 }
 function _script_patch(key, fn) {
-  return _script(filledId(key), fn);
+  return _script(_filled_id(key), fn);
 }
 function _or_patch(setupId, id, fn, defaultPending, scopeIdAccessor) {
   let scopeIdKey = scopeIdAccessor ? decodeAccessor(scopeIdAccessor) : "L";

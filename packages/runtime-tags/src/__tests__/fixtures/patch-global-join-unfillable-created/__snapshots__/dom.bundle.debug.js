@@ -9,10 +9,7 @@ const $Inner_content__$global_suffix__OR__b = /*@__PURE__*/ _global_or(6, ($scop
 const $Inner_content__b = /*@__PURE__*/ _const("b", $Inner_content__$global_suffix__OR__b);
 const $Inner_content__value__OR__y = /*@__PURE__*/ _or_patch("__tests__/template.marko_2_value#1:4_y#3/setup", 4, ($scope) => $Inner_content__b($scope, $scope._.value + $scope.y));
 const $Inner_content__value = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_value#1:4/subscribe", "value/9", $Inner_content__value__OR__y, 0, "__tests__/template.marko_1_value#4/subscribers", 0);
-const $Inner_content__setup = ($scope) => {
-	$Inner_content__value($scope);
-	$Inner_content__$global_suffix($scope);
-};
+const $Inner_content__setup = $Inner_content__value;
 const $Inner_content__y = /*@__PURE__*/ _const("y", $Inner_content__value__OR__y);
 const $Inner_content__$params = ($scope, $params3) => $Inner_content__$temp($scope, $params3[0]);
 const $Inner_content__$temp = ($scope, $temp2) => $Inner_content__y($scope, $temp2.y);

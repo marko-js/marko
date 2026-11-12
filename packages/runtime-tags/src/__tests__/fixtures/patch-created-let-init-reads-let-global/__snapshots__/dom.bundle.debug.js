@@ -16,7 +16,6 @@ const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope
 	_el_read($scope["#span/0"]).title = String($scope.y);
 }));
 const $if_content__setup = ($scope) => {
-	$if_content__$global_n($scope);
 	$if_content__setup__script($scope);
 	$if_content__x($scope, 1);
 };

@@ -1,6 +1,5 @@
 // tags/child.marko
-const $global_g = /*@__PURE__*/ _global_closure("b0", /* @__PURE__ */ _global_key(7, "g"));
-const $input_a__OR__input_b__OR__$global_g = /*@__PURE__*/ _or_patch("b1", 5, /*@__PURE__*/ _global_or(5, ($scope) => _text($scope.a, $scope.d + $scope.e + $scope.$.g), $global_g));
+const $input_a__OR__input_b__OR__$global_g = /*@__PURE__*/ _or_patch("b1", 5, /*@__PURE__*/ _global_or(5, ($scope) => _text($scope.a, $scope.d + $scope.e + $scope.$.g), /* @__PURE__ */ _global_closure("b0", /* @__PURE__ */ _global_key(7, "g"))));
 const $input_a = /*@__PURE__*/ _const(3, $input_a__OR__input_b__OR__$global_g);
 const $input_b = /*@__PURE__*/ _const(4, $input_a__OR__input_b__OR__$global_g);
 

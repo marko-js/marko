@@ -1,14 +1,12 @@
 // tags/gm/index.marko
 const $template$1 = "<p></p><!><!>";
 const $walks$1 = " b%c";
+const $setup$1 = ($_) => {};
 const $global_mark_key = /*@__PURE__*/ _global_key("$global_mark/11", "mark");
 const $if_content__$global_mark = /*@__PURE__*/ _global_closure("__tests__/tags/gm/index.marko_1_$global_mark#0:10/subscribe", $global_mark_key);
 const $if_content__z__OR__$global_mark = /*@__PURE__*/ _global_or(1, ($scope) => _attr($scope["#i/0"], "data-z", $scope._.z + _global_read($scope.$global, "mark")), $if_content__$global_mark);
 const $if_content__z = /*@__PURE__*/ _if_closure_patch("__tests__/tags/gm/index.marko_1_z#0:6/setup", "#text/1", 0, $if_content__z__OR__$global_mark);
-const $if_content__setup$1 = ($scope) => {
-	$if_content__z._($scope);
-	$if_content__$global_mark($scope);
-};
+const $if_content__setup$1 = $if_content__z;
 const $z = /*@__PURE__*/ _const("z", $if_content__z);
 const $global_flag_key = /*@__PURE__*/ _global_key("$global_flag/10", "flag");
 const $global_flag = /*@__PURE__*/ _global_closure("__tests__/tags/gm/index.marko_0_$global_flag#6/subscribe", $global_flag_key);
@@ -18,13 +16,12 @@ const $input_v = /*@__PURE__*/ _const("input_v", ($scope) => {
 	$if$1($scope, $scope.input_v ? 0 : 1);
 	$input_v__OR__$global_flag($scope);
 });
-const $setup$1 = $global_flag;
 const $input_w$1 = ($scope, input_w) => _attr($scope["#p/0"], "data-w", input_w);
 const $input$1 = ($scope, input) => {
 	$input_v($scope, input.v);
 	$input_w$1($scope, input.w);
 };
-var gm_default = /*@__PURE__*/ _template("__tests__/tags/gm/index.marko", $template$1, $walks$1, $setup$1, $input$1);
+var gm_default = /*@__PURE__*/ _template("__tests__/tags/gm/index.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko
 const $template = "<main><!><button>t</button></main>";
@@ -32,7 +29,6 @@ const $walks = "D%b l";
 const $if_content__input_w = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_input_w#0:4/setup", "#text/0", 0, ($scope) => $input_w$1($scope["#childScope/0"], $scope._.input_w));
 const $if_content__setup = ($scope) => {
 	$if_content__input_w._($scope);
-	$setup$1($scope["#childScope/0"]);
 	$input_v($scope["#childScope/0"], "a");
 };
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1), $if_content__setup);

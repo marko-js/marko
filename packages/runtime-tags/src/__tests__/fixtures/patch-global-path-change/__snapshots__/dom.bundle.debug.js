@@ -10,18 +10,13 @@ const $global_o_x_key = /*@__PURE__*/ _global_key("$global_o_x/7", "o", "x");
 const $global_o_x = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global_o_x#8/subscribe", $global_o_x_key);
 const $global_k_key = /*@__PURE__*/ _global_key("$global_k/8", "k");
 const $global_k = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global_k#10/subscribe", $global_k_key);
-const $global_o_x__OR__$global_k__script = _script("__tests__/template.marko_0_$global_o_x#8_$global_k#10", ($scope) => {
-	$global_o_x__OR__$global_k.r($scope);
-	_el_read($scope["#div/2"]).textContent = $scope.$global.o.x + $scope.$global.k;
-});
-const $global_o_x__OR__$global_k = /*@__PURE__*/ _global_or(4, $global_o_x__OR__$global_k__script, $global_o_x, $global_k);
+const $global_o_x__OR__$global_k = /*@__PURE__*/ _global_or(4, ($scope) => $global_o_x__OR__$global_k__script($scope), $global_o_x, $global_k);
+const $global_o_x__OR__$global_k__script = _global_script("__tests__/template.marko_0_$global_o_x#8_$global_k#10", ($scope) => _el_read($scope["#div/2"]).textContent = $scope.$global.o.x + $scope.$global.k, $global_o_x__OR__$global_k);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));
 function $setup($scope) {
 	$open($scope, true);
-	$global_o_x($scope);
-	$global_k($scope);
 	$global_o_x__OR__$global_k($scope);
 	$setup__script($scope);
 }

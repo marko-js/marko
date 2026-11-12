@@ -12,6 +12,7 @@ import { _resumed } from "../resume";
 import {
   _for_closure,
   _if_closure,
+  _script,
   type SignalFn,
   subscribeToScopeSet,
 } from "../signals";
@@ -140,6 +141,15 @@ export function _global_or(
   };
   for (const signal of signals) signal.j.push([fn, slot]);
   return join;
+}
+
+// Like `_script`, for an effect reading `$global` keys: each run, and so its resume,
+// subscribes its scope by their signal, which a patch changing a key runs.
+export function _global_script(id: string, fn: SignalFn, signal: GlobalSignal) {
+  return _script(id, (scope) => {
+    signal.r(scope);
+    fn(scope);
+  });
 }
 
 function renderChange(

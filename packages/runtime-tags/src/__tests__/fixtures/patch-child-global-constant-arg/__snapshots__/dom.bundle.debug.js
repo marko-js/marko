@@ -9,13 +9,13 @@ var label_text_default = /*@__PURE__*/ _template("__tests__/tags/label-text.mark
 // tags/pass.marko
 const $template$1 = $template$2;
 const $walks$1 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l");
+const $setup$1 = ($_) => {};
 const $global_suffix_key = /*@__PURE__*/ _global_key("$global_suffix/6", "suffix");
 const $global_suffix = /*@__PURE__*/ _global_closure("__tests__/tags/pass.marko_0_$global_suffix#5/subscribe", $global_suffix_key);
 const $input_x__OR__$global_suffix = /*@__PURE__*/ _global_or(4, ($scope) => $input_v($scope["#childScope/0"], $scope.input_x + _global_read($scope.$global, "suffix")), $global_suffix);
 const $input_x = /*@__PURE__*/ _const("input_x", $input_x__OR__$global_suffix);
-const $setup$1 = $global_suffix;
 const $input = ($scope, input) => $input_x($scope, input.x);
-var pass_default = /*@__PURE__*/ _template("__tests__/tags/pass.marko", $template$1, $walks$1, $setup$1, $input);
+var pass_default = /*@__PURE__*/ _template("__tests__/tags/pass.marko", $template$1, $walks$1, 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button> </button>`)($template$1);
@@ -25,7 +25,6 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
-	$setup$1($scope["#childScope/0"]);
 	$input_x($scope["#childScope/0"], "a");
 	$count($scope, 0);
 	$setup__script($scope);

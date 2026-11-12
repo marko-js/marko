@@ -85,7 +85,7 @@ export const filledReferences: Record<
 > = {};
 
 // Records a registration's filled references (`id read …`) under its id, which it returns.
-function filledId(key: string) {
+export function _filled_id(key: string) {
   const sep = key.indexOf(" ");
   const reads = key.slice(sep + 1);
   filledReferences[(key = key.slice(0, sep))] = (owner, stop) =>
@@ -95,12 +95,12 @@ function filledId(key: string) {
 
 // A registration of a function with filled references (`patches/marked-bind`): `id read …`.
 export function _bind_resume(key: string, factory: (owner: Scope) => unknown) {
-  _resumed[filledId(key)] = factory;
+  _resumed[_filled_id(key)] = factory;
 }
 
 // An effect with filled references (`patches/effect`), keyed as a function's.
 export function _script_patch(key: string, fn: (scope: Scope) => void) {
-  return _script(filledId(key), fn);
+  return _script(_filled_id(key), fn);
 }
 
 // An intersection a flush renders by this id, after whatever members arrive: a created

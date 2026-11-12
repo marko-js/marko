@@ -7,17 +7,14 @@ const $global_brand_key = /*@__PURE__*/ _global_key("$global_brand/4", "brand");
 const $global_brand = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global_brand#5/subscribe", $global_brand_key);
 const $global_locale_key = /*@__PURE__*/ _global_key("$global_locale/5", "locale");
 const $global_locale = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global_locale#6/subscribe", $global_locale_key);
-const $global_brand__OR__$global_locale__script = _script("__tests__/template.marko_0_$global_brand#5_$global_locale#6", ($scope) => {
-	$global_brand__OR__$global_locale.r($scope);
+const $global_brand__OR__$global_locale = /*@__PURE__*/ _global_or(1, ($scope) => $global_brand__OR__$global_locale__script($scope), $global_brand, $global_locale);
+const $global_brand__OR__$global_locale__script = _global_script("__tests__/template.marko_0_$global_brand#5_$global_locale#6", ($scope) => {
 	{
 		const el = document.querySelector("main");
 		el.dataset.log = (el.dataset.log || "") + "[" + $scope.$global.brand + ":" + $scope.$global.locale + "]";
 	}
-});
-const $global_brand__OR__$global_locale = /*@__PURE__*/ _global_or(1, $global_brand__OR__$global_locale__script, $global_brand, $global_locale);
+}, $global_brand__OR__$global_locale);
 function $setup($scope) {
-	$global_brand($scope);
-	$global_locale($scope);
 	$global_brand__OR__$global_locale($scope);
 	$global_other($scope);
 }

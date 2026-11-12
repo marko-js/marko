@@ -60,11 +60,8 @@ const $Layout_content__input_page = /*@__PURE__*/ _closure_get("input_page/4", (
 const $Layout_content__setup = $Layout_content__input_page;
 const $Layout_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", $Layout_content__setup);
 const $global_key = /*@__PURE__*/ _global_key("$global/3/5");
-const $global2__script = _script("__tests__/template.marko_0_$global#3", ($scope) => {
-	$global2.r($scope);
-	$scope.$global.log?.("router");
-});
-const $global2 = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global#3/subscribe", $global_key, $global2__script);
+const $global2 = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global#3/subscribe", $global_key, ($scope) => $global2__script($scope));
+const $global2__script = _global_script("__tests__/template.marko_0_$global#3", ($scope) => $scope.$global.log?.("router"), $global2);
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input_content_direct($scope["#childScope/0"], $Layout_content($scope));

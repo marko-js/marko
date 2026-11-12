@@ -21,7 +21,6 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
-	$global_prefix($scope);
 	$count($scope, 0);
 	$setup__script($scope);
 }

@@ -15,14 +15,9 @@ const $global_mark_key = /*@__PURE__*/ _global_key("$global_mark/12", "mark");
 const $wrap_content__$global_mark = /*@__PURE__*/ _global_closure("__tests__/template.marko_1_$global_mark#0:9/subscribe", $global_mark_key);
 const $wrap_content__z__OR__$global_mark = /*@__PURE__*/ _global_or(1, ($scope) => _attr($scope["#p/0"], "data-z", $scope._.z + _global_read($scope.$global, "mark")), $wrap_content__$global_mark);
 const $wrap_content__z = /*@__PURE__*/ _closure_get("z/9", $wrap_content__z__OR__$global_mark, 0, "__tests__/template.marko_1_z#0:7/subscribe");
-const $wrap_content__setup = ($scope) => {
-	$wrap_content__z($scope);
-	$wrap_content__$global_mark($scope);
-};
+const $wrap_content__setup = $wrap_content__z;
 const $wrap_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<p></p>", " ", $wrap_content__setup);
 const $n = _let("n/6", ($scope) => _text($scope["#text/2"], $scope.n));
-const $global_flag_key = /*@__PURE__*/ _global_key("$global_flag/11", "flag");
-const $global_flag = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global_flag#6/subscribe", $global_flag_key);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));
@@ -30,10 +25,11 @@ function $setup($scope) {
 	$input_content_direct($scope["#childScope/0"], $wrap_content($scope));
 	$n($scope, 0);
 	$setup__script($scope);
-	$global_flag($scope);
 }
 const $z__closure = /*@__PURE__*/ _closure($wrap_content__z);
 const $z = /*@__PURE__*/ _const("z", $z__closure);
+const $global_flag_key = /*@__PURE__*/ _global_key("$global_flag/11", "flag");
+const $global_flag = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global_flag#6/subscribe", $global_flag_key);
 const $input_v__OR__$global_flag = /*@__PURE__*/ _global_or(8, ($scope) => $z($scope, $scope.input_v + _global_read($scope.$global, "flag")), $global_flag);
 const $input_v = /*@__PURE__*/ _const("input_v", $input_v__OR__$global_flag);
 const $input = ($scope, input) => $input_v($scope, input.v);

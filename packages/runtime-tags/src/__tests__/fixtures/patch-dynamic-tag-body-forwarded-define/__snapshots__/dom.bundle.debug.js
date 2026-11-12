@@ -28,7 +28,6 @@ const $Wrap__OR__$global_p = /*@__PURE__*/ _global_or(5, ($scope) => $dynamicTag
 const $Wrap = /*@__PURE__*/ _const("Wrap", $Wrap__OR__$global_p);
 function $setup$1($scope) {
 	$Wrap($scope, { content: $Wrap_content($scope) });
-	$global_p($scope);
 }
 const $input$1 = ($scope, input) => $input_content($scope, input.content);
 const $input_content__closure = /*@__PURE__*/ _closure($globalppWrap_content__input_content);

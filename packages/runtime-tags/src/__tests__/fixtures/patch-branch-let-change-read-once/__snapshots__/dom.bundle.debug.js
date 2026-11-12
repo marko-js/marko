@@ -21,7 +21,6 @@ const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope
 const $if_content__setup = ($scope) => {
 	$if_content__input_start._($scope);
 	$if_content__onCount._($scope);
-	$if_content__$global($scope);
 	$if_content__setup__script($scope);
 };
 const $if_content__onCount = /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__input_start__OR__onCount__OR__$global);

@@ -83,6 +83,7 @@ export {
   _global_if,
   _global_key,
   _global_or,
+  _global_script,
 } from "./dom/patches/global";
 export { _load_lazy, _load_signal_patch } from "./dom/patches/load";
 export {
@@ -94,6 +95,7 @@ export {
   _fill_let_change_resume,
   _fill_let_resume,
   _fill_var_resume,
+  _filled_id,
   _for_closure_patch,
   _for_selector_patch,
   _if_closure_patch,

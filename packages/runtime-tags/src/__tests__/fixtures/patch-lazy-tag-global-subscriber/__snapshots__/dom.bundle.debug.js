@@ -18,7 +18,6 @@ const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
-	$global_brand($scope);
 	$setup__script($scope);
 	$count($scope, 0);
 }

@@ -15,7 +15,6 @@ const $global_p_key = /*@__PURE__*/ _global_key("$global_p/10", "p");
 const $catch_content2__$global_p = /*@__PURE__*/ _global_closure("__tests__/template.marko_5_$global_p#0:14/subscribe", $global_p_key, ($scope) => $catch_content2__await_promise($scope, $scope.$global.p));
 const $catch_content2__setup = ($scope) => {
 	$await_content2($scope);
-	$catch_content2__$global_label($scope);
 	$catch_content2__$global_p($scope);
 };
 const $catch_content2__$params = ($scope, $params4) => $catch_content2__err_message($scope, $params4[0]?.message);
@@ -29,7 +28,6 @@ const $catch_content__await_promise = /*@__PURE__*/ _await_promise("#text/1", $a
 const $catch_content__$global_p = /*@__PURE__*/ _global_closure("__tests__/template.marko_3_$global_p#0:14/subscribe", $global_p_key, ($scope) => $catch_content__await_promise($scope, $scope.$global.p));
 const $catch_content__setup = ($scope) => {
 	$await_content($scope);
-	$catch_content__$global_label($scope);
 	$catch_content__$global_p($scope);
 };
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);

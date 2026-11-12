@@ -15,9 +15,8 @@ const $await_content__x = /*@__PURE__*/ _const("x", ($scope) => {
 	$await_content__$global_flag__OR__x($scope);
 	$if_content__x($scope);
 });
-const $await_content__setup = $await_content__$global_flag;
 const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);
-const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "b%", $await_content__setup);
+const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "b%");
 const $await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $setup$1 = $await_content;
 const $input_promise$1 = $await_promise;

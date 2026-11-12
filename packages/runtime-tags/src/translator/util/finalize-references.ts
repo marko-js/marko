@@ -83,7 +83,7 @@ import {
   type StructureOp,
   finalizeEnclosing,
 } from "./sections";
-import { addSetupSubscription, addSetupWork } from "./setup-work";
+import { addSetupWork } from "./setup-work";
 import { ensureSectionSlot, ensureSlot, SlotKind } from "./slots";
 import {
   ALWAYS,
@@ -190,8 +190,6 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
         // With no resolved references but `$global` keys, which never arrive, setup
         // runs any statement this expression keys.
         addSetupWork(expr.section);
-      } else if (some(exprBindings.referencedBindings, isGlobalBinding)) {
-        addSetupSubscription(expr.section);
       }
       forEach(exprBindings.lazyBindings, markLazyRead);
       expr.section.referencedClosures = bindingUtil.union(
