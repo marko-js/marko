@@ -1,8 +1,8 @@
 import type { TestConfig } from "../../main.test";
 
-// A `@catch` the document rendered reads a param beside its error: a patch
-// that throws again keeps its message and updates the param, and one
-// rendering the body reloads.
+// A `@catch` the document rendered reads a param beside its error, in a template with
+// client work: a patch that throws again keeps its message and updates the param, and
+// one rendering the body reloads.
 export const config: TestConfig = {
   // Debug logs the rejection's reason, which optimize cannot.
   skip_parity: true,

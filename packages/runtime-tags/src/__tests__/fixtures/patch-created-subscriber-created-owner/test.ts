@@ -2,9 +2,8 @@ import type { TestConfig } from "../../main.test";
 
 const error = (id: string) => new Error("SHOWN_message" + id);
 
-// A `@catch` in a child the same patch creates passes content reading the
-// child's input on: its subscriber resumes into an owner holding no set yet;
-// a patch rendering the body reloads.
+// A `@catch` in a child with client work the same patch creates passes content reading
+// the child's input on: its subscriber resumes into an owner holding no set yet.
 export const config: TestConfig = {
   // Debug logs the rejection's reason, which optimize cannot.
   skip_parity: true,

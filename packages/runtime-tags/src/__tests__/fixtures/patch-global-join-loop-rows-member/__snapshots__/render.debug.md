@@ -37,6 +37,7 @@ document.querySelector(selector).click();
 ## Change
 ```
 INSERT: ul > li
+UPDATE: ul > li::text@2 "" => "a"
 ```
 
 # Update
@@ -66,6 +67,7 @@ document.querySelector(selector).click();
 ## Change
 ```
 INSERT: ul > li:nth-of-type(1) + li
+UPDATE: ul > li:nth-of-type(2)::text@2 "" => "a"
 ```
 
 # Update `{"$global":{"o":{"x":"b","y":1},"serializedGlobals":["o"]}}`

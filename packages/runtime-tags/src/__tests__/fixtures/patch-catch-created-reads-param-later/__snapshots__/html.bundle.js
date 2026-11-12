@@ -5,7 +5,7 @@ function boom(msg) {
 _shells({
 	a5: "a5;D ;<p> </p>",
 	a4: "a4",
-	a: "a;b%;<!><!><!>"
+	a: "a !a6;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_msg = _client_guard($scope0_reason, 1), $ui__input_msg__OR__input_fail = _unfilled_if($scope0_reason, 0), $wi__input_msg = _write_if($scope0_reason, 1), $wi__input_fail = _write_if($scope0_reason, 2);
@@ -30,10 +30,11 @@ var template_default = _template("a", (input) => {
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a0", $cg__input_msg);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_msg__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_msg && "a0");
 	}, 0, "a4", "a5", 1, 1, 1);
+	_script($scope0_id, "a6", 0);
 	_scope($scope0_id, {
 		d: input.msg,
 		e: $wi__input_msg && $ui__input_msg__OR__input_fail && input.fail,
 		f: $wi__input_msg && $input_msg__closures,
 		g: $wi__input_fail && $wi__input_fail && $ui__input_msg__OR__input_fail && $input_fail__closures
-	}) || (_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xd", input.msg, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a6", "d"), _filled_guard($scope0_reason, 2) && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.fail, !_server_guard($scope0_reason, 2)));
+	}) || (_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xd", input.msg, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a7", "d"), _filled_guard($scope0_reason, 2) && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.fail, !_server_guard($scope0_reason, 2)));
 }, 1);

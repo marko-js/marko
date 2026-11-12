@@ -4,11 +4,11 @@ const $walks = "b%c";
 function boom(error) {
 	throw error;
 }
-const $setup = [[], []];
+const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
 	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content;D ;<p> </p>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content",
-	"__tests__/template.marko": "__tests__/template.marko;b%;<!><!><!>",
+	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b%;<!><!><!>",
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;D ;<b> </b>",
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell;D ;<i> </i>"
 });
@@ -46,6 +46,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id, "#text/0", 1, $wg__err_status, 1, 0, 0, ["__tests__/template.marko_2*shell", "__tests__/template.marko_3*shell"]);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4");
 	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_4*content", 1, 1, 1);
+	_script($scope0_id, "__tests__/template.marko_0", 0);
 	_scope($scope0_id, {
 		input_label: input.label,
 		"ClosureScopes:input_label/5": $wi__input_label && $input_label__closures,

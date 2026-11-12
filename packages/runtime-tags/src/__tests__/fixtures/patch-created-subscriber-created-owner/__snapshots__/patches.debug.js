@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-created-owner/tags/child.marko_3*content;D ;<p> </p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-created-owner/tags/child.marko_1*content`, `packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-created-owner/tags/child.marko_2*content`, `packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-created-owner/template.marko_1*shell;b/b%c&b;<!><!><!><!><!>`]
+[`packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-created-owner/tags/child.marko_3*content;D ;<p> </p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-created-owner/tags/child.marko_1*content`, `packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-created-owner/tags/child.marko_2*content`, `packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-created-owner/template.marko_1*shell !#childScope/0>packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-created-owner/tags/child.marko_0;b/b%c&b;<!><!><!><!><!>`]
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {

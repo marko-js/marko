@@ -11,7 +11,11 @@ const $catch_content__setup = $catch_content__input_label;
 const $catch_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]?.message);
 const $catch_content = _content("__tests__/template.marko_1*content", "<b><!> <!></b>", "D%c%", $catch_content__setup, $catch_content__$params);
 const $try = /*@__PURE__*/ _try("#text/0", "<p> </p>", "D ", $try_content__setup, 0, $catch_content);
-const $setup = $try;
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => document.body.dataset.ready = "1");
+function $setup($scope) {
+	$try($scope);
+	$setup__script($scope);
+}
 const $input = ($scope, input) => {
 	$input_label($scope, input.label);
 	$input_error($scope, input.error);

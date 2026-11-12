@@ -5,7 +5,7 @@ function boom(error) {
 _shells({
 	a3: "a3;D ;<p> </p>",
 	a4: "a4",
-	a: "a;b%;<!><!><!>",
+	a: "a !a7;b%;<!><!><!>",
 	a2: "a2;D ;<b> </b>",
 	a5: "a5;D ;<i> </i>"
 });
@@ -43,9 +43,10 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id, "a", 1, $wg__err_status, 1, 0, 0, ["a2", "a5"]);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, 0, "a4", "a3", 1, 1, 1);
+	_script($scope0_id, "a7", 0);
 	_scope($scope0_id, {
 		d: input.label,
 		f: $wi__input_label && $input_label__closures,
 		g: $wi__input_error && _unfilled_if($scope0_reason, 1) && $input_error__closures
-	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "a7", "d");
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "a8", "d");
 }, 1);

@@ -4,11 +4,11 @@ const $walks = "b%c";
 function boom(msg) {
 	throw new Error(msg);
 }
-const $setup = [[], []];
+const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;D ;<p> </p>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content",
-	"__tests__/template.marko": "__tests__/template.marko;b%;<!><!><!>"
+	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_msg = _client_guard($scope0_reason, 1), $ui__input_msg__OR__input_fail = _unfilled_if($scope0_reason, 0), $wi__input_msg = _write_if($scope0_reason, 1), $wi__input_fail = _write_if($scope0_reason, 2);
@@ -33,6 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_msg#0:3/subscribe", $cg__input_msg);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_msg__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4"), $cg__input_msg && "__tests__/template.marko_1_input_msg#0:3/subscribe");
 	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 1, 1);
+	_script($scope0_id, "__tests__/template.marko_0", 0);
 	_scope($scope0_id, {
 		input_msg: input.msg,
 		input_fail: $wi__input_msg && $ui__input_msg__OR__input_fail && input.fail,
