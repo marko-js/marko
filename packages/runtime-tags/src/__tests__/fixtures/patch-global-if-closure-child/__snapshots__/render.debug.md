@@ -44,6 +44,8 @@ document.querySelector("button").click();
 ## Change
 ```
 INSERT: button + :is(em, b)
+UPDATE: em::text " " => "acme"
+UPDATE: b::text " " => "acme"
 ```
 
 # Update `{"$global":{"brand":"bmce","serializedGlobals":["brand"]}}`

@@ -83,6 +83,7 @@ document.querySelector("button").click();
 ## Change
 ```
 INSERT: button + p
+UPDATE: p::text " " => "b"
 ```
 
 # Update `{"$global":{"o":{"x":"c","y":1},"k":"l","serializedGlobals":["o","k"]}}`

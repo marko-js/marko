@@ -45,8 +45,8 @@ UPDATE: b::text " " => "1a"
 ```
 ## Change
 ```
-UPDATE: p::text "1a" => "1b"
 UPDATE: button::text "1a" => "1b"
+UPDATE: p::text "1a" => "1b"
 UPDATE: b::text "1a" => "1b"
 ```
 

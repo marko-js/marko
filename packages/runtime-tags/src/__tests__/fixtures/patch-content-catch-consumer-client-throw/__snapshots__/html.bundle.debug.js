@@ -43,7 +43,7 @@ function boom() {
 const $setup$1 = [[], []];
 _shells({
 	"__tests__/tags/error-wrapper.marko_2*content": "__tests__/tags/error-wrapper.marko_2*content;D ;<p> </p>",
-	"__tests__/tags/error-wrapper.marko_1*content": "__tests__/tags/error-wrapper.marko_1*content",
+	"__tests__/tags/error-wrapper.marko_1*content": "__tests__/tags/error-wrapper.marko_1*content;D l%;<b> </b><!><!>",
 	"__tests__/tags/error-wrapper.marko": "__tests__/tags/error-wrapper.marko;b%;<!><!><!>"
 });
 var error_wrapper_default = _template("__tests__/tags/error-wrapper.marko", (input) => {
@@ -62,8 +62,8 @@ var error_wrapper_default = _template("__tests__/tags/error-wrapper.marko", (inp
 		const $scope1_id = _scope_id();
 		_html(`<b>${_text_mark($scope1_id, "#text/0", err.message, 1, 4, 0)}</b>`);
 		_dynamic_tag($scope1_id, "#text/1", input.fallback, {}, 2, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
-		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/tags/error-wrapper.marko_1_input_fallback#0:3/subscribe", $cg__input_fallback);
-		_subscribe(_unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/error-wrapper.marko", "6:4"), $cg__input_fallback && "__tests__/tags/error-wrapper.marko_1_input_fallback#0:3/subscribe");
+		_any_client_guard($scope0_reason) && _unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/tags/error-wrapper.marko_1_input_fallback#0:3/subscribe", $cg__input_fallback);
+		_subscribe(_any_client_guard($scope0_reason) && _unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/error-wrapper.marko", "6:4"), _any_client_guard($scope0_reason) && $cg__input_fallback && "__tests__/tags/error-wrapper.marko_1_input_fallback#0:3/subscribe");
 	}, 0, "__tests__/tags/error-wrapper.marko_1*content", "__tests__/tags/error-wrapper.marko_2*content", 1, 1, 1);
 	_scope($scope0_id, {
 		input_fallback: input.fallback,

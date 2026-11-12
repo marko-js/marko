@@ -22,4 +22,5 @@ document.querySelector("button").click();
 ## Change
 ```
 INSERT: button + em
+UPDATE: em::text " " => "b"
 ```

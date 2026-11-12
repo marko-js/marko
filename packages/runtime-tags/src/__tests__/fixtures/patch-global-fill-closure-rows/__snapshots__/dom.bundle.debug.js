@@ -79,7 +79,8 @@ const $p = /*@__PURE__*/ _const("p", ($scope) => {
 const $proj__closure = /*@__PURE__*/ _closure($for_content2__proj);
 const $proj = /*@__PURE__*/ _const("proj", $proj__closure);
 const $p_owned = /*@__PURE__*/ _const("p_owned", $for_content__p_owned);
-const $global_data = /*@__PURE__*/ _fill_global_path("__tests__/shop.marko_0_$global_data#6/subscribe", ($scope) => $p($scope, $scope.$global.data.player), "data", "player");
+const $global_data_key = /*@__PURE__*/ _global_key("$global_data/16", "data", "player");
+const $global_data = /*@__PURE__*/ _global_closure("__tests__/shop.marko_0_$global_data#6/subscribe", $global_data_key, ($scope) => $p($scope, $scope.$global.data.player));
 const $now__closure = /*@__PURE__*/ _closure($for_content2__now);
 const $now = /*@__PURE__*/ _fill_let("__tests__/shop.marko_0_now#8/fill", "now/8", ($scope) => {
 	_text($scope["#text/1"], $scope.now);

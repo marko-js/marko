@@ -41,7 +41,7 @@ function boom() {
 const $setup$1 = [[], []];
 _shells({
 	b3: "b3;D ;<p> </p>",
-	b2: "b2",
+	b2: "b2;D l%;<b> </b><!><!>",
 	b: "b;b%;<!><!><!>"
 });
 var error_wrapper_default = _template("b", (input) => {
@@ -60,8 +60,8 @@ var error_wrapper_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<b>${_text_mark($scope1_id, "a", err.message, 1, 4, 0)}</b>`);
 		_dynamic_tag($scope1_id, "b", input.fallback, {}, 2, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
-		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b0", $cg__input_fallback);
-		_subscribe(_unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_fallback && "b0");
+		_any_client_guard($scope0_reason) && _unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b0", $cg__input_fallback);
+		_subscribe(_any_client_guard($scope0_reason) && _unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _any_client_guard($scope0_reason) && $cg__input_fallback && "b0");
 	}, 0, "b2", "b3", 1, 1, 1);
 	_scope($scope0_id, {
 		d: input.fallback,

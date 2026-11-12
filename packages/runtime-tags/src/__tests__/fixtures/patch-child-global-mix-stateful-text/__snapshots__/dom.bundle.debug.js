@@ -1,18 +1,28 @@
 // tags/gm/index.marko
 const $template$1 = "<p> </p>";
 const $walks$1 = "D l";
-const $setup$1 = ($_) => {};
-const $z__OR__$global_mark = /*@__PURE__*/ _fill_global("__tests__/tags/gm/index.marko_0_z#4_$global_mark#7/subscribe", ($scope) => _text($scope["#text/0"], $scope.z + _global_read($scope.$global, "mark")), "mark");
+const $global_mark_key = /*@__PURE__*/ _global_key("$global_mark/9", "mark");
+const $global_mark = /*@__PURE__*/ _global_closure("__tests__/tags/gm/index.marko_0_$global_mark#7/subscribe", $global_mark_key);
+const $z__OR__$global_mark = /*@__PURE__*/ _global_or(6, ($scope) => _text($scope["#text/0"], $scope.z + _global_read($scope.$global, "mark")), $global_mark);
 const $z = /*@__PURE__*/ _const("z", $z__OR__$global_mark);
-const $input_v__OR__$global_flag = /*@__PURE__*/ _fill_global("__tests__/tags/gm/index.marko_0_input_v#3_$global_flag#5/subscribe", ($scope) => $z($scope, $scope.input_v + _global_read($scope.$global, "flag")), "flag");
+const $global_flag_key = /*@__PURE__*/ _global_key("$global_flag/8", "flag");
+const $global_flag = /*@__PURE__*/ _global_closure("__tests__/tags/gm/index.marko_0_$global_flag#5/subscribe", $global_flag_key);
+const $input_v__OR__$global_flag = /*@__PURE__*/ _global_or(5, ($scope) => $z($scope, $scope.input_v + _global_read($scope.$global, "flag")), $global_flag);
 const $input_v = /*@__PURE__*/ _const("input_v", $input_v__OR__$global_flag);
+function $setup$1($scope) {
+	$global_flag($scope);
+	$global_mark($scope);
+}
 const $input = ($scope, input) => $input_v($scope, input.v);
-var gm_default = /*@__PURE__*/ _template("__tests__/tags/gm/index.marko", $template$1, "D l", 0, $input);
+var gm_default = /*@__PURE__*/ _template("__tests__/tags/gm/index.marko", $template$1, "D l", $setup$1, $input);
 
 // template.marko
 const $template = "<main><!><button>t</button></main>";
 const $walks = "D%b l";
-const $if_content__setup = ($scope) => $input_v($scope["#childScope/0"], "a");
+const $if_content__setup = ($scope) => {
+	$setup$1($scope["#childScope/0"]);
+	$input_v($scope["#childScope/0"], "a");
+};
 const $if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $if_content__setup);
 const $open = _let("open/2", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

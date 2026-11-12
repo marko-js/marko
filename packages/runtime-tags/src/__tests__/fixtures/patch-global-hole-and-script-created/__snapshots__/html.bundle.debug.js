@@ -13,7 +13,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (show) {
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_mark($scope1_id, "#text/0", $global$1.brand, $scope0_page)}</p>`);
-			_fill_global_subscribe("__tests__/template.marko_1_$global_brand#0:7/subscribe", $scope1_id, 1);
 			_script($scope1_id, "__tests__/template.marko_1_$global_brand#0:7", $scope0_page);
 			_scope($scope1_id, {}, "__tests__/template.marko", "3:2");
 			return 0;

@@ -2,8 +2,10 @@
 const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `<main><h1> </h1><p> </p>${_w0}${_w1}${_w2}</main>`)($template$1, $template$2, $template$3);
 const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => `E l D l/${_w0}&/${_w1}&/${_w2}&l`)($walks$1, $walks$2, "D l");
 const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_title);
-const $global_locale = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_$global_locale#8/subscribe", ($scope) => _attr($scope["#p/1"], "title", $scope.$global.locale), "locale");
-const $global_brand = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_$global_brand#10/subscribe", ($scope) => _text($scope["#text/2"], $scope.$global.brand), "brand");
+const $global_locale_key = /*@__PURE__*/ _global_key("$global_locale/12", "locale");
+const $global_locale = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global_locale#8/subscribe", $global_locale_key, ($scope) => _attr($scope["#p/1"], "title", $scope.$global.locale));
+const $global_brand_key = /*@__PURE__*/ _global_key("$global_brand/13", "brand");
+const $global_brand = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global_brand#10/subscribe", $global_brand_key, ($scope) => _text($scope["#text/2"], $scope.$global.brand));
 function $setup($scope) {
 	$setup$1($scope["#childScope/3"]);
 	$setup$2($scope["#childScope/4"]);

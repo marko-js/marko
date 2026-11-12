@@ -22,6 +22,7 @@ document.querySelector("button").click();
 ## Change
 ```
 INSERT: button + p
+UPDATE: p::text " " => "acme"
 UPDATE: p[data-log] null => "[acme]"
 ```
 

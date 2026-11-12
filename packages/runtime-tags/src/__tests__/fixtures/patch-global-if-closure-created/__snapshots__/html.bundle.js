@@ -8,6 +8,7 @@ var badge_default = _template("b", (input) => {
 	let open = false;
 	_html(`<button class=b>o</button>${_el_mark($scope0_id, "a")}`);
 	_if(() => {}, $scope0_id, "b", 1, 1, 0, 0, 1);
+	_fill_global_subscribe("b0", $scope0_id, 1);
 	_script($scope0_id, "b1");
 	_patch_fill($scope0_id, "vb2", open, 1);
 	_scope($scope0_id, { c: open });

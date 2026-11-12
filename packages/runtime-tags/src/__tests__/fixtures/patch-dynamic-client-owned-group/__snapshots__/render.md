@@ -63,6 +63,7 @@ document.querySelector("button").click();
 ```
 INSERT: main > em
 UPDATE: main > em::text@0 "" => "three"
+UPDATE: main > em::text@6 "" => "c"
 ```
 
 # Update `{"label":"four","$global":{"brand":"d","serializedGlobals":["brand"]}}`

@@ -7,7 +7,8 @@ function track(where, value) {
 // template.marko
 const $template = "<button>t</button><!><!>";
 const $walks = " b%c";
-const $if_content__$global_o = /*@__PURE__*/ _fill_global_path("__tests__/template.marko_1_$global_o#0:7/subscribe", ($scope) => _text($scope["#text/0"], track("p", $scope.$global.o.x)), "o", "x");
+const $global_o_key = /*@__PURE__*/ _global_key("$global_o/4", "o", "x");
+const $if_content__$global_o = /*@__PURE__*/ _global_if("__tests__/template.marko_1_$global_o#0:7/subscribe", $global_o_key, "#text/1", 0, ($scope) => _text($scope["#text/0"], track("p", $scope.$global.o.x)));
 const $if_content__setup = $if_content__$global_o;
 const $if = /*@__PURE__*/ _if("#text/1", "<p> </p>", "D ", $if_content__setup);
 const $open = _let("open/2", ($scope) => $if($scope, $scope.open ? 0 : 1));

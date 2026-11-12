@@ -1,7 +1,8 @@
 // tags/badge.marko
 const $template$1 = "<em> </em>";
 const $walks$1 = "D l";
-const $global_brand = /*@__PURE__*/ _fill_global("__tests__/tags/badge.marko_0_$global_brand#4/subscribe", ($scope) => _text($scope["#text/0"], $scope.$global.brand), "brand");
+const $global_brand_key = /*@__PURE__*/ _global_key("$global_brand/2", "brand");
+const $global_brand = /*@__PURE__*/ _global_closure("__tests__/tags/badge.marko_0_$global_brand#4/subscribe", $global_brand_key, ($scope) => _text($scope["#text/0"], $scope.$global.brand));
 const $setup$1 = $global_brand;
 var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge.marko", $template$1, "D l", $setup$1);
 

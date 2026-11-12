@@ -10,9 +10,9 @@ var template_default = _template("a", (input) => {
 	_for_until(n, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_mark($scope1_id, "a", i + ":" + $global$1.x, $scope0_page)}</li>`);
-		_fill_global_subscribe("a0", $scope1_id, 1);
 		_scope($scope1_id, { M: i });
 	}, 0, $scope0_id, "b", 1, 1, 1, "</ul>", 1);
+	_fill_global_subscribe("a0", $scope0_id, 1);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, { c: n });
 }, 1);

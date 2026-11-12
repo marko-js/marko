@@ -1,10 +1,10 @@
 // tags/path-child.marko
 const $template = "<p> </p>";
-const $global_o = /*@__PURE__*/ _fill_global_path("b0", ($scope) => _text($scope.a, $scope.$.o.x), "o", "x");
+const $global_o = /*@__PURE__*/ _global_closure("b0", /* @__PURE__ */ _global_key(2, "o", "x"), ($scope) => _text($scope.a, $scope.$.o.x));
 const $setup = $global_o;
 
 // template.marko
-const $if_content__$global_k = /*@__PURE__*/ _fill_global("a0", ($scope) => _text($scope.a, $scope.$.k), "k");
+const $if_content__$global_k = /*@__PURE__*/ _global_if("a0", /* @__PURE__ */ _global_key(4, "k"), 1, 0, ($scope) => _text($scope.a, $scope.$.k));
 const $if_content__setup = ($scope) => {
 	$setup($scope.b);
 	$if_content__$global_k($scope);

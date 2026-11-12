@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			let count = input.start;
 			_html(`<button>${_text_mark($scope1_id, "#text/1", count)}</button>${_el_mark($scope1_id, "#button/0")}`);
-			_fill_global_subscribe("__tests__/template.marko_1_input_start#0:5_onCount#0:7_$global#0:9/subscribe", $scope1_id);
+			_fill_global_subscribe("__tests__/template.marko_1_$global#0:9/subscribe", $scope1_id);
 			_script($scope1_id, "__tests__/template.marko_1");
 			!_client_guard($scope0_reason, 0) && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:onCount", onCount);
 			_patch_render($scope1_id, "__tests__/template.marko_1_input_start#0:5_onCount#0:7_$global#0:9/setup", _filled_guard($scope0_reason, 2) && ">input_start", (2 | $uf__input_start) << 1, 0);

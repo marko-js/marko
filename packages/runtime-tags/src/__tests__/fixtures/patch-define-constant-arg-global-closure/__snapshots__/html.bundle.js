@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 		_unfilled_if() && _patch_write($scope1_id, "wf", z, 1);
 		_scope($scope1_id, {
 			f: _unfilled_if() && z,
-			g: $scope1_page && _unfilled_if() && $D_content__z__closures,
+			h: $scope1_page && _unfilled_if() && $D_content__z__closures,
 			a: _existing_scope($childScope)
 		});
 	}, $scope0_id) };

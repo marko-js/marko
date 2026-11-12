@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-content-attr/tags/error-wrapper.marko_1*content`, `packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-content-attr/template.marko_1*content packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-content-attr/template.marko_1_count#0:7/subscribe`]
+[`packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-content-attr/tags/error-wrapper.marko_1*content;D l ;<b> </b><div></div>`, `packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-content-attr/template.marko_1*content packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-content-attr/template.marko_1_count#0:7/subscribe`]
 {
   "PatchChild:#childScope/2": {
     "PatchCatch:#text/0": [{

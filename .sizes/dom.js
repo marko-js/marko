@@ -1,4 +1,4 @@
-// size: 27150 (min) 10029 (brotli)
+// size: 27479 (min) 10177 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -2011,9 +2011,7 @@ function readChanged(scope, reads, stop = renderData.q) {
 // packages/runtime-tags/dist/dom.mjs
 let empty = [];
 let rest = Symbol();
-let globalSignals = {};
-let globalScopes = {};
-let changesMember;
+let globalKeys = [];
 function attrTag(attrs) {
   return ((attrs[Symbol.iterator] = attrTagIterator), (attrs[rest] = empty), attrs);
 }
@@ -2025,57 +2023,92 @@ function attrTags(first, attrs) {
 function* attrTagIterator() {
   (yield this, yield* this[rest]);
 }
-function _fill_global(id, signal, ...keys) {
+function _global_key(accessor, ...paths) {
+  patchers.$ = patchGlobal;
+  let key = {
+    k: paths,
+    i: "C" + decodeAccessor(accessor),
+    p: [],
+    w: [],
+  };
+  return (globalKeys.push(key), key);
+}
+function _global_closure(id, key, fn) {
+  let index = key.p.length,
+    signal = (scope) => {
+      (signal.r(scope), fn && queueRender(scope, fn, -1));
+    };
   return (
-    (patchers.$ = patchGlobal),
-    (_resumed[id] ||= (scope) => subscribeToScopeSet(globalScopes, id, scope)),
-    (globalSignals[id] = [
+    (signal.r = _resumed[id] =
       (scope) => {
-        (signal(scope), subscribeToScopeSet(globalScopes, id, scope));
-      },
-      keys,
-    ])[0]
+        ((scope[key.i] = index), subscribeToScopeSet(key, "s", scope));
+      }),
+    (signal.j = []),
+    key.p.push((scope) => renderChange(scope, fn, signal.j)),
+    signal
   );
 }
-function _fill_global_script(id, fn, ...keys) {
-  let effect = (_resumed[id] = (scope) => {
-      (fn(scope), subscribeToScopeSet(globalScopes, id, scope));
-    }),
-    queued = /* @__PURE__ */ new WeakMap(),
-    queue = (scope) => {
-      queued.get(scope) !== runId && (queued.set(scope, runId), queueEffect(scope, effect));
+function _global_if(id, key, ownerConditionalNodeAccessor, branch, fn) {
+  return walkFromOwner(id, key, fn, (render) =>
+    _if_closure(ownerConditionalNodeAccessor, branch, render),
+  );
+}
+function _global_for(id, key, ownerLoopNodeAccessor, fn) {
+  return walkFromOwner(id, key, fn, (render) => _for_closure(ownerLoopNodeAccessor, render, -1));
+}
+function walkFromOwner(id, key, fn, walk) {
+  let owners = {},
+    subscribe = (_resumed[id] = (owner) => subscribeToScopeSet(owners, "s", owner)),
+    signal = (scope) => {
+      (signal.r(scope), fn && queueRender(scope, fn, -1));
     };
-  return (_fill_global(id, queue, ...keys), queue);
+  return (
+    (signal.r = (scope) => subscribe(scope._)),
+    (signal.j = []),
+    key.w.push([walk((scope) => renderChange(scope, fn, signal.j)), owners]),
+    signal
+  );
 }
-function _fill_global_path(id, signal, ...keys) {
-  return ((changesMember = membersChanged), _fill_global(id, signal, ...keys, 0));
+function _global_or(slot, fn, ...signals) {
+  let join = (scope) => {
+    (join.r(scope), fn(scope));
+  };
+  join.r = (scope) => {
+    for (let signal of signals) signal.r(scope);
+  };
+  for (let signal of signals) signal.j.push([fn, slot]);
+  return join;
 }
-function _fill_global_path_script(id, fn, ...keys) {
-  return ((changesMember = membersChanged), _fill_global_script(id, fn, ...keys, 0));
+function renderChange(scope, fn, joins) {
+  fn && queueRender(scope, fn, -1);
+  for (let [join, slot] of joins) queueRender(scope, join, slot);
 }
-function patchGlobal(live, _accessor, value, order = 0) {
-  let changed = [];
-  for (let key in value) live.$[key] !== value[key] && changed.push(key);
-  changed.length && changed.push("");
-  for (let id in globalSignals)
-    (order--,
-      (changesMember && globalSignals[id][1].includes(0)
-        ? changesMember(globalSignals[id][1], changed, live.$, value)
-        : globalSignals[id][1].some((key) => changed.includes(key))) &&
-        globalScopes[id]?.forEach(
-          (scope) => scope.$ === live.$ && queueRender(scope, globalSignals[id][0], order),
-        ));
-  Object.assign(live.$, value);
+function patchGlobal(live, _accessor, value) {
+  let held = live.$;
+  for (let key of globalKeys)
+    if (changes(key.k, held, value)) {
+      key.s?.forEach((scope) => scope.$ === held && key.p[scope[key.i]](scope));
+      for (let [walk, owners] of key.w)
+        owners.s?.forEach((owner) => owner.$ === held && walk(owner));
+    }
+  Object.assign(held, value);
 }
-function membersChanged(keys, changed, held, next) {
+function changes(paths, held, next) {
+  if (!paths.length) {
+    for (let key in next) if (held[key] !== next[key]) return 1;
+    return 0;
+  }
   let heldValue = held,
     nextValue = next,
     first;
-  for (let key of keys)
-    if (key !== 0)
-      ((first ??= key), (heldValue = heldValue?.[key]), (nextValue = nextValue?.[key]));
-    else if (changed.includes(first) && heldValue !== nextValue) return 1;
-    else ((heldValue = held), (nextValue = next), (first = void 0));
+  for (let i = 0; i <= paths.length; i++) {
+    let key = paths[i];
+    if (key === 0 || key === void 0) {
+      if (first in next && heldValue !== nextValue) return 1;
+      ((heldValue = held), (nextValue = next), (first = void 0));
+    } else ((first ??= key), (heldValue = heldValue?.[key]), (nextValue = nextValue?.[key]));
+  }
+  return 0;
 }
 // packages/runtime-tags/dist/dom.mjs
 let _template = (id, template, walks, setup, inputSignal) => {
@@ -2304,7 +2337,7 @@ function _fill_let(key, id, fn, fillFn) {
 function _fill_let_change(key, id, fn, fillFn) {
   return fill(key, _let_change(id, fn), id, fillFn ?? fn ?? 0);
 }
-function _filled_id(key) {
+function filledId(key) {
   let sep = key.indexOf(" "),
     reads = key.slice(sep + 1);
   return (
@@ -2314,10 +2347,10 @@ function _filled_id(key) {
   );
 }
 function _bind_resume(key, factory) {
-  _resumed[_filled_id(key)] = factory;
+  _resumed[filledId(key)] = factory;
 }
 function _script_patch(key, fn) {
-  return _script(_filled_id(key), fn);
+  return _script(filledId(key), fn);
 }
 function _or_patch(setupId, id, fn, defaultPending, scopeIdAccessor) {
   let scopeIdKey = scopeIdAccessor ? decodeAccessor(scopeIdAccessor) : "L";

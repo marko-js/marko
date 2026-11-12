@@ -68,7 +68,7 @@ const $aside_content__setup = ($scope) => {
 	$setup$2($scope["#childScope/0"]);
 };
 const $aside_content__p_base = /*@__PURE__*/ _closure_get_patch("__tests__/page.marko_2_p_base#0:9/subscribe", "p_base/11", $aside_content__bonus__OR__p_base__OR__item_n, ($scope) => $scope._._, "__tests__/page.marko_0_p_base#9/subscribers", 0);
-const $aside_content__item_n = /*@__PURE__*/ _closure_get_patch("__tests__/page.marko_2_item_n#1:3/subscribe", "item_n/12", $aside_content__bonus__OR__p_base__OR__item_n);
+const $aside_content__item_n = /*@__PURE__*/ _closure_get_patch("__tests__/page.marko_2_item_n#1:3/subscribe", "item_n/14", $aside_content__bonus__OR__p_base__OR__item_n);
 const $aside_content = /*@__PURE__*/ _content("__tests__/page.marko_2*content", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2), $aside_content__setup);
 const $for_content__setup = ($scope) => $input_aside($scope["#childScope/0"], attrTag({ content: $aside_content($scope) }));
 const $for_content__$params = ($scope, $params2) => $for_content__item_n($scope, $params2[0]?.n);
@@ -77,7 +77,8 @@ const $for_content__item_n = /*@__PURE__*/ _const("item_n", $for_content__item_n
 const $bonus__closure = /*@__PURE__*/ _closure($aside_content__bonus);
 const $bonus = _var_resume("__tests__/page.marko_0_bonus#7/var", /*@__PURE__*/ _const("bonus", $bonus__closure));
 const $p = ($scope, p) => $p_base($scope, p?.base);
-const $global_data = /*@__PURE__*/ _fill_global("__tests__/page.marko_0_$global_data#8/subscribe", ($scope) => $p($scope, $scope.$global.data), "data");
+const $global_data_key = /*@__PURE__*/ _global_key("$global_data/13", "data");
+const $global_data = /*@__PURE__*/ _global_closure("__tests__/page.marko_0_$global_data#8/subscribe", $global_data_key, ($scope) => $p($scope, $scope.$global.data));
 const $setup__script = _script("__tests__/page.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	_var_change($scope["#childScope/0"], 5, "bonus");
 }));

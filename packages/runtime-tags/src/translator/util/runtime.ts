@@ -20,8 +20,11 @@ export type HTMLRuntimeHelpers = keyof typeof import("../../html/patch");
 // matters only for a value a serialized register id keeps in the module graph.
 const patchPureDOMFunctions = new Set<string>([
   "_await_promise",
-  "_fill_global",
-  "_fill_global_path",
+  "_global_closure",
+  "_global_for",
+  "_global_if",
+  "_global_key",
+  "_global_or",
   "_closure_get_patch",
   "_for_closure_patch",
   "_for_selector_patch",

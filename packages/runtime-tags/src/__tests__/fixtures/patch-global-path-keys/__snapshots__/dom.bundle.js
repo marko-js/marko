@@ -1,11 +1,11 @@
 // template.marko
-const $if_content__$global_o = /*@__PURE__*/ _fill_global_path("a0", ($scope) => {
+const $if_content__$global_o = /*@__PURE__*/ _global_if("a0", /* @__PURE__ */ _global_key(4, "o", "x", 0, "o", "list", "length", 0, "o", "a.b"), 1, 0, ($scope) => {
 	_text($scope.a, $scope.$.o.x.toUpperCase());
 	_text($scope.b, $scope.$.o.list.length);
 	_text($scope.c, $scope.$.o["a.b"]);
-}, "o", "x", 0, "o", "list", "length", 0, "o", "a.b");
-const $if_content__$global_c_d = /*@__PURE__*/ _fill_global("a1", ($scope) => _text($scope.d, $scope.$["c.d"]), "c.d");
-const $if_content__$global_p = /*@__PURE__*/ _fill_global_path("a2", ($scope) => _text($scope.e, $scope.$.p?.x), "p", "x");
+});
+const $if_content__$global_c_d = /*@__PURE__*/ _global_if("a1", /* @__PURE__ */ _global_key(9, "c.d"), 1, 0, ($scope) => _text($scope.d, $scope.$["c.d"]));
+const $if_content__$global_p = /*@__PURE__*/ _global_if("a2", /* @__PURE__ */ _global_key(10, "p", "x"), 1, 0, ($scope) => _text($scope.e, $scope.$.p?.x));
 const $if_content__setup = ($scope) => {
 	$if_content__$global_c_d($scope);
 	$if_content__$global_o($scope);

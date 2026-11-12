@@ -7,7 +7,7 @@ function boom(msg) {
 const $setup = [[], []];
 _shells({
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;D ;<p> </p>",
-	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content",
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content; D%c%c%c%;<b><!> <!> <!> <!></b>",
 	"__tests__/template.marko": "__tests__/template.marko;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
@@ -32,16 +32,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$ui__input_msg && _patch_write($scope1_id, "PatchMarkedWrite:err_message", err?.message);
 		const upper = input.msg.toUpperCase();
 		_html(`<b${_attr("title", input.msg, $scope1_id, "#b/0", $scope0_reason, 1)}>${_text_mark($scope1_id, "#text/1", err.message, 1, 4, 0)} ${_text_mark($scope1_id, "#text/2", input.msg, 2, $scope0_reason, 1)} ${_text_mark($scope1_id, "#text/3", upper, 2, $scope0_reason, 1)} ${_text_mark($scope1_id, "#text/4", err.message + upper, 2, (2 | $uf__input_msg) << 1, 0)}</b>${_el_mark($scope1_id, "#b/0", $uf__input_msg)}`);
-		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_msg#0:3/subscribe", $cg__input_msg);
-		_patch_render($scope1_id, "__tests__/template.marko_1_err_message#7_upper#8/setup", "err_message" + (_filled_guard($scope0_reason, 1) ? " upper" : ""), (2 | $uf__input_msg) << 1, 0);
-		_subscribe($ui__input_msg && $input_msg__closures, _scope($scope1_id, {
+		_any_client_guard($scope0_reason) && _unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_msg#0:3/subscribe", $cg__input_msg);
+		_any_client_guard($scope0_reason) && _patch_render($scope1_id, "__tests__/template.marko_1_err_message#7_upper#8/setup", "err_message" + (_filled_guard($scope0_reason, 1) ? " upper" : ""), (2 | $uf__input_msg) << 1, 0);
+		_subscribe(_any_client_guard($scope0_reason) && $ui__input_msg && $input_msg__closures, _scope($scope1_id, {
 			err_message: $ui__input_msg && err?.message,
 			upper: _unfilled_if($scope1_reason, 0) && upper,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "6:4", {
 			err_message: ["err.message", "6:11"],
 			upper: "7:12"
-		}), $cg__input_msg && "__tests__/template.marko_1_input_msg#0:3/subscribe");
+		}), _any_client_guard($scope0_reason) && $cg__input_msg && "__tests__/template.marko_1_input_msg#0:3/subscribe");
 	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 1, 1);
 	_scope($scope0_id, {
 		input_msg: input.msg,

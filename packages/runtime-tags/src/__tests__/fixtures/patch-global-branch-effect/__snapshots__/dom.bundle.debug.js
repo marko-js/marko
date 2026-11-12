@@ -15,10 +15,11 @@ const $if_content__input_msg = /*@__PURE__*/ _if_closure_patch("__tests__/templa
 const $if_content__setup = $if_content__input_msg;
 const $if = /*@__PURE__*/ _if("#text/0", "<a href=#main>Skip to content</a>", " ", $if_content__setup);
 const $if2 = /*@__PURE__*/ _if("#text/2", /*@__PURE__*/ ((_w0) => `${_w0}<p></p>`)($template$1), /*@__PURE__*/ ((_w0) => `/${_w0}& b`)("b"), $if_content2__setup);
-const $global_meta = /*@__PURE__*/ _fill_global_path("__tests__/template.marko_0_$global_meta#5/subscribe", ($scope) => {
+const $global_meta_key = /*@__PURE__*/ _global_key("$global_meta/8", "meta", "headings", 0, "meta", "hideFooter");
+const $global_meta = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global_meta#5/subscribe", $global_meta_key, ($scope) => {
 	$if($scope, $scope.$global.meta.headings ? 0 : 1);
 	$if2($scope, !$scope.$global.meta.hideFooter ? 0 : 1);
-}, "meta", "headings", 0, "meta", "hideFooter");
+});
 const $setup = $global_meta;
 const $input_msg = /*@__PURE__*/ _const("input_msg", ($scope) => {
 	_text($scope["#text/1"], $scope.input_msg);

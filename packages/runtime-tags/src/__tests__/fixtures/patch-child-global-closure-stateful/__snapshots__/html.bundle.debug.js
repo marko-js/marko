@@ -16,12 +16,12 @@ var gm_default = _template("__tests__/tags/gm/index.marko", (input) => {
 		if (input.v) {
 			const $scope1_id = _scope_id();
 			_html(`<i${_attr("data-z", z + $global$1.mark, $scope1_id, "#i/0", (2 | _updates_from($scope0_reason, 0)) << 1, 0)}></i>${_el_mark($scope1_id, "#i/0")}`);
-			_fill_global_subscribe("__tests__/tags/gm/index.marko_1_z#0:6_$global_mark#0:10/subscribe", $scope1_id);
+			_fill_global_subscribe("__tests__/tags/gm/index.marko_1_$global_mark#0:10/subscribe", $scope1_id);
 			_scope($scope1_id, { _: ($scope0_page || _write_if($scope0_reason, 0)) && _scope_with_id($scope0_id) }, "__tests__/tags/gm/index.marko", "3:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/tags/gm/index.marko_1*shell"], $scope0_reason, 0);
-	_fill_global_subscribe("__tests__/tags/gm/index.marko_0_input_v#4_$global_flag#6/subscribe", $scope0_id, _client_guard($scope0_reason, 0));
+	_fill_global_subscribe("__tests__/tags/gm/index.marko_0_$global_flag#6/subscribe", $scope0_id, _client_guard($scope0_reason, 0));
 	$ui__input_v && _patch_write($scope0_id, "PatchWrite:input_v", input.v, 1);
 	_scope($scope0_id, {
 		input_v: $ui__input_v && input.v,

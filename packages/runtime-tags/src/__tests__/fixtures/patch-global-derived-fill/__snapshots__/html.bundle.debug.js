@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/1", 1, 1, 0, 0, 1);
-	_fill_global_subscribe("__tests__/template.marko_0_input_name#4_$global_prefix#5/subscribe", $scope0_id, _client_guard((2 | $uf__input_name) << 1, 0));
+	_fill_global_subscribe("__tests__/template.marko_0_$global_prefix#5/subscribe", $scope0_id, _client_guard((2 | $uf__input_name) << 1, 0));
 	_script($scope0_id, "__tests__/template.marko_0");
 	_filled_guard((2 | $uf__input_name) << 1, 0) && _patch_render($scope0_id, "__tests__/template.marko_1_greeting#0:5/setup", _filled_guard((2 | $uf__input_name) << 1, 0) && "greeting");
 	_scope($scope0_id, {

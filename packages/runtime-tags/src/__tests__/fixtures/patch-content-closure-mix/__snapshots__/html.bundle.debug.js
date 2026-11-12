@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_patch_child_end();
 		_scope($scope1_id, {
 			_: $wi__input_items__OR__input_prefix && _scope_with_id($scope0_id),
-			"ClosureScopes:item/6": $wi__input_items && _unfilled_if($scope0_reason, 1) && $for_content__item__closures,
+			"ClosureScopes:item/8": $wi__input_items && _unfilled_if($scope0_reason, 1) && $for_content__item__closures,
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "2:4");
 	}, 0, $scope0_id, "#main/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);

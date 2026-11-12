@@ -2,7 +2,8 @@
 const $template$1 = "<span>t</span>";
 const $walks$1 = "b";
 const $g = /*@__PURE__*/ _const("g", ($scope) => _return($scope, $scope.g));
-const $global_locale = /*@__PURE__*/ _fill_global("__tests__/tags/tagger/index.marko_0_$global_locale#4/subscribe", ($scope) => $g($scope, $scope.$global.locale + "!"), "locale");
+const $global_locale_key = /*@__PURE__*/ _global_key("$global_locale/2", "locale");
+const $global_locale = /*@__PURE__*/ _global_closure("__tests__/tags/tagger/index.marko_0_$global_locale#4/subscribe", $global_locale_key, ($scope) => $g($scope, $scope.$global.locale + "!"));
 const $setup$1 = $global_locale;
 var tagger_default = /*@__PURE__*/ _template("__tests__/tags/tagger/index.marko", $template$1, "b", /*@__PURE__*/ _return_setup($setup$1));
 

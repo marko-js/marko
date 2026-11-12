@@ -94,7 +94,7 @@ var page_default = _template("a", (input) => {
 		_scope($scope1_id, {
 			d: item?.n,
 			_: _scope_with_id($scope0_id),
-			m: _write_if($scope0_reason, 0) && $for_content__item_n__closures,
+			o: _write_if($scope0_reason, 0) && $for_content__item_n__closures,
 			a: _existing_scope($childScope3)
 		});
 	}, 0, $scope0_id, "d", 1, 1, 1, 0, 0, "a5", $scope0_reason, 0);

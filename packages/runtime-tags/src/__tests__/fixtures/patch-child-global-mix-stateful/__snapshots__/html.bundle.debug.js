@@ -9,8 +9,8 @@ var gm_default = _template("__tests__/tags/gm/index.marko", (input) => {
 	const $global$1 = $global();
 	const z = input.v + $global$1.flag;
 	_html(`<p${_attr("data-z", z + $global$1.mark, $scope0_id, "#p/0", (2 | _updates_from($scope0_reason, 0)) << 1, 0)}></p>${_el_mark($scope0_id, "#p/0")}`);
-	_fill_global_subscribe("__tests__/tags/gm/index.marko_0_input_v#3_$global_flag#5/subscribe", $scope0_id, _client_guard($scope0_reason, 0));
-	_fill_global_subscribe("__tests__/tags/gm/index.marko_0_z#4_$global_mark#7/subscribe", $scope0_id);
+	_fill_global_subscribe("__tests__/tags/gm/index.marko_0_$global_flag#5/subscribe", $scope0_id, _client_guard($scope0_reason, 0));
+	_fill_global_subscribe("__tests__/tags/gm/index.marko_0_$global_mark#7/subscribe", $scope0_id);
 	$ui__input_v && _patch_write($scope0_id, "PatchWrite:input_v", input.v, 1);
 	_scope($scope0_id, {
 		input_v: $ui__input_v && input.v,

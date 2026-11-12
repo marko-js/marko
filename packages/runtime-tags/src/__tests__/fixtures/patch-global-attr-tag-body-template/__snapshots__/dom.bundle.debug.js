@@ -1,7 +1,8 @@
 // tags/other.marko
 const $template$2 = "<i>user=<!></i>";
 const $walks$2 = "Db%l";
-const $global_user = /*@__PURE__*/ _fill_global("__tests__/tags/other.marko_0_$global_user#4/subscribe", ($scope) => _text($scope["#text/0"], $scope.$global.user), "user");
+const $global_user_key = /*@__PURE__*/ _global_key("$global_user/2", "user");
+const $global_user = /*@__PURE__*/ _global_closure("__tests__/tags/other.marko_0_$global_user#4/subscribe", $global_user_key, ($scope) => _text($scope["#text/0"], $scope.$global.user));
 const $setup$2 = $global_user;
 var other_default = /*@__PURE__*/ _template("__tests__/tags/other.marko", $template$2, $walks$2, $setup$2);
 

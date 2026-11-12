@@ -1,7 +1,7 @@
 // tags/badge.marko
 const $template = "<em> </em>";
 const $walks = "D l";
-const $global_brand = /*@__PURE__*/ _fill_global("b0", ($scope) => _text($scope.a, $scope.$.brand), "brand");
+const $global_brand = /*@__PURE__*/ _global_closure("b0", /* @__PURE__ */ _global_key(2, "brand"), ($scope) => _text($scope.a, $scope.$.brand));
 const $setup = $global_brand;
 var badge_default = /*@__PURE__*/ _template("b", $template, "D l", $setup);
 

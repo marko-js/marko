@@ -1,13 +1,16 @@
 // template.marko
 const $template = "<button>t</button><!><!>";
 const $walks = " b%c";
-const $if_content__$global_o = /*@__PURE__*/ _fill_global_path("__tests__/template.marko_1_$global_o#0:7/subscribe", ($scope) => {
+const $global_o_key = /*@__PURE__*/ _global_key("$global_o/4", "o", "x", 0, "o", "list", "length", 0, "o", "a.b");
+const $if_content__$global_o = /*@__PURE__*/ _global_if("__tests__/template.marko_1_$global_o#0:7/subscribe", $global_o_key, "#text/1", 0, ($scope) => {
 	_text($scope["#text/0"], $scope.$global.o.x.toUpperCase());
 	_text($scope["#text/1"], $scope.$global.o.list.length);
 	_text($scope["#text/2"], $scope.$global.o["a.b"]);
-}, "o", "x", 0, "o", "list", "length", 0, "o", "a.b");
-const $if_content__$global_c_d = /*@__PURE__*/ _fill_global("__tests__/template.marko_1_$global_c_d#0:15/subscribe", ($scope) => _text($scope["#text/3"], $scope.$global["c.d"]), "c.d");
-const $if_content__$global_p = /*@__PURE__*/ _fill_global_path("__tests__/template.marko_1_$global_p#0:17/subscribe", ($scope) => _text($scope["#text/4"], $scope.$global.p?.x), "p", "x");
+});
+const $global_c_d_key = /*@__PURE__*/ _global_key("$global_c_d/9", "c.d");
+const $if_content__$global_c_d = /*@__PURE__*/ _global_if("__tests__/template.marko_1_$global_c_d#0:15/subscribe", $global_c_d_key, "#text/1", 0, ($scope) => _text($scope["#text/3"], $scope.$global["c.d"]));
+const $global_p_key = /*@__PURE__*/ _global_key("$global_p/10", "p", "x");
+const $if_content__$global_p = /*@__PURE__*/ _global_if("__tests__/template.marko_1_$global_p#0:17/subscribe", $global_p_key, "#text/1", 0, ($scope) => _text($scope["#text/4"], $scope.$global.p?.x));
 const $if_content__setup = ($scope) => {
 	$if_content__$global_c_d($scope);
 	$if_content__$global_o($scope);

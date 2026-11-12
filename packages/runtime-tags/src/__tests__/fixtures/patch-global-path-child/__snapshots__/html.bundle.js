@@ -25,11 +25,11 @@ var template_default = _template("a", (input) => {
 			_patch_child(0);
 			path_child_default({});
 			_patch_child_end();
-			_fill_global_subscribe("a0", $scope1_id, 1);
 			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b");
+	_fill_global_subscribe("a0", $scope0_id, 1);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, { c: open });
 }, 1);

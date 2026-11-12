@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_await($scope1_id, "#text/0", input.p, (x) => {
 				const $scope2_id = _scope_id();
 				_html(`<p>${_text_mark($scope2_id, "#text/0", x + ":" + $global$1.f, 1, (2 | _updates_from($scope0_reason, 2)) << 1, 0)}</p>`);
-				_fill_global_subscribe("__tests__/template.marko_2_$global_f#0:10_x#2/subscribe", $scope2_id);
+				_fill_global_subscribe("__tests__/template.marko_2_$global_f#0:10/subscribe", $scope2_id);
 				_scope($scope2_id, { x: _unfilled_if($scope0_reason, 2) && x }, "__tests__/template.marko", "2:4", { x: "2:10" });
 			}, 1, "__tests__/template.marko_2*content", _unfilled_if($scope0_reason, 2) && 2);
 			_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "__tests__/template.marko_1_input_p#0:4/setup");

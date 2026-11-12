@@ -99,7 +99,7 @@ var page_default = _template("__tests__/page.marko", (input) => {
 		_scope($scope1_id, {
 			item_n: item?.n,
 			_: _scope_with_id($scope0_id),
-			"ClosureScopes:item_n/12": _write_if($scope0_reason, 0) && $for_content__item_n__closures,
+			"ClosureScopes:item_n/14": _write_if($scope0_reason, 0) && $for_content__item_n__closures,
 			"#childScope/0": _existing_scope($childScope3)
 		}, "__tests__/page.marko", "4:2", { item_n: ["item.n", "4:6"] });
 	}, 0, $scope0_id, "#text/3", 1, 1, 1, 0, 0, "__tests__/page.marko_1*shell", $scope0_reason, 0);

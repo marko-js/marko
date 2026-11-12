@@ -76,7 +76,11 @@ import {
   type Section,
   sectionUtil,
 } from "../sections";
-import { isQueuedOnCreate } from "../shell";
+import {
+  getCreatedSetupIds,
+  inCatchWithoutClientWork,
+  isQueuedOnCreate,
+} from "../shell";
 import {
   getClosureSubscribersId,
   getCreatedSetupId,
@@ -95,6 +99,7 @@ import { withLeadingComment } from "../with-comment";
 import {
   andGuard,
   buildComposedGroupValue,
+  getCallerClientGuard,
   buildGroupsValue,
   buildGroupMask,
   getExprIfWritten,
@@ -436,6 +441,23 @@ export function writePatchResumeStatements(
   // the group, a subscriber, and on any scope a filled intersection's render.
   const entries = getBodyEntries(section);
   const setupStart = body.length;
+  // In a `@catch` of a template with no client work, a created scope runs setup only
+  // where a caller's client state loads the module; no shell names what it always runs.
+  const callerClient =
+    inCatchWithoutClientWork(section) && getCallerClientGuard();
+  const pushSetup = (expr: t.Expression) =>
+    body.push(t.expressionStatement(andGuard(callerClient, expr)));
+  if (callerClient) {
+    for (const id of getCreatedSetupIds(section)) {
+      pushSetup(
+        callRuntime(
+          "_patch_render",
+          getScopeIdIdentifier(section),
+          t.stringLiteral(id),
+        ),
+      );
+    }
+  }
   for (const [ref, setup] of getCreatedSetup(section)) {
     if (Array.isArray(ref)) {
       if (setup.setup === "mixed") {
@@ -461,48 +483,40 @@ export function writePatchResumeStatements(
         const rendered =
           script &&
           callRuntime("_script", ...script, reads, renderId, ...groupArgs);
-        body.push(
-          t.expressionStatement(
-            rendered
-              ? scripts.length
-                ? t.logicalExpression(
-                    "||",
-                    rendered,
-                    toSequenceExpression(scripts.map(buildScriptCall)),
-                  )
-                : rendered
-              : callRuntime(
-                  "_patch_render",
-                  getScopeIdIdentifier(section),
-                  renderId,
-                  reads,
-                  ...groupArgs,
-                ),
-          ),
+        pushSetup(
+          rendered
+            ? scripts.length
+              ? t.logicalExpression(
+                  "||",
+                  rendered,
+                  toSequenceExpression(scripts.map(buildScriptCall)),
+                )
+              : rendered
+            : callRuntime(
+                "_patch_render",
+                getScopeIdIdentifier(section),
+                renderId,
+                reads,
+                ...groupArgs,
+              ),
         );
       } else if (setup.setup === "client") {
-        body.push(
-          t.expressionStatement(
-            buildClientSetup(
-              section,
-              getSetupSources(ref),
-              getCreatedSetupId(section, ref),
-            ),
-          ),
-        );
-      }
-    } else if (setup.subscribe) {
-      body.push(
-        t.expressionStatement(buildSubscribe(section, ref, setup.subscribe)),
-      );
-    } else if (setupFromClient(section, ref, setup.setup)) {
-      body.push(
-        t.expressionStatement(
+        pushSetup(
           buildClientSetup(
             section,
             getSetupSources(ref),
             getCreatedSetupId(section, ref),
           ),
+        );
+      }
+    } else if (setup.subscribe) {
+      pushSetup(buildSubscribe(section, ref, setup.subscribe));
+    } else if (setupFromClient(section, ref, setup.setup)) {
+      pushSetup(
+        buildClientSetup(
+          section,
+          getSetupSources(ref),
+          getCreatedSetupId(section, ref),
         ),
       );
     }

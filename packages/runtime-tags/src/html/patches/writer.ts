@@ -515,6 +515,8 @@ function ensurePatchTree(state: PatchRenderState) {
 // Every group server-sourced, for a child whose groups the caller cannot see;
 // bit 0, which no group uses, keeps it apart from any mask, as `ALL_GROUPS`.
 export const ALL_SERVER = 0x55555555;
+// Every group's client bit.
+const ALL_CLIENT = 0x2aaaaaaa;
 
 // Where a group updates from: its 2 bits, which `_updates_from` also composes
 // into a child's mask. No mask (no group args) reads as `ALL_SERVER`.
@@ -528,6 +530,13 @@ export function getUpdatesFrom(mask: GroupMask, group?: number) {
 // the group then updates from the resumed page.
 export function _client_guard(mask: GroupMask, group?: number) {
   return getUpdatesFrom(mask, group) & UpdatesFrom.Client ? 1 : 0;
+}
+
+// Whether any group is client-sourced: a caller passing client state loads the module.
+export function _any_client_guard(mask: GroupMask) {
+  if (typeof mask === "number") return mask & ALL_CLIENT ? 1 : 0;
+  for (const group in mask) if (mask[group]! & UpdatesFrom.Client) return 1;
+  return 0;
 }
 
 // How a scope's patch reaches its parent's entry.

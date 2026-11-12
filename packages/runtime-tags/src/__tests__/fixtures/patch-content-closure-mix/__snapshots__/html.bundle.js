@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 		_patch_child_end();
 		_scope($scope1_id, {
 			_: $wi__input_items__OR__input_prefix && _scope_with_id($scope0_id),
-			g: $wi__input_items && _unfilled_if($scope0_reason, 1) && $for_content__item__closures,
+			i: $wi__input_items && _unfilled_if($scope0_reason, 1) && $for_content__item__closures,
 			a: _existing_scope($childScope)
 		});
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a4", $scope0_reason, 1);

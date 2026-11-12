@@ -1,7 +1,20 @@
-import { AccessorProp, PatchKey, type Scope } from "../../common/types";
-import { queueEffect, queueRender, runId } from "../queue";
+import { decodeAccessor } from "../../common/helpers";
+import {
+  AccessorPrefix,
+  AccessorProp,
+  type Accessor,
+  type EncodedAccessor,
+  PatchKey,
+  type Scope,
+} from "../../common/types";
+import { queueRender } from "../queue";
 import { _resumed } from "../resume";
-import { type SignalFn, subscribeToScopeSet } from "../signals";
+import {
+  _for_closure,
+  _if_closure,
+  type SignalFn,
+  subscribeToScopeSet,
+} from "../signals";
 import { patchers } from "./apply";
 
 declare module "./apply" {
@@ -10,135 +23,185 @@ declare module "./apply" {
   }
 }
 
-// Signals reading `$global`, by id, with the keys each reads (`""`: the whole object;
-// a `0` ends each member where one is nested).
-const globalSignals: Record<string, [SignalFn, (string | 0)[]]> = {};
-// The scopes subscribed to each signal, by its id, from every render on the page.
-const globalScopes: Record<string, Set<Scope> | undefined> = {};
+// A template's registration of a `$global` key by the paths read under it (`0` between
+// two; none for `$global`): what a change runs on the scopes in its set and owners walked.
+interface GlobalKey {
+  k: (string | 0)[];
+  i: Accessor;
+  p: SignalFn[];
+  s?: Set<Scope>;
+  w: [SignalFn, { s?: Set<Scope> }][];
+}
 
-export function _fill_global(
-  id: string,
-  signal: SignalFn,
-  ...keys: (string | 0)[]
-): SignalFn {
-  // A retained signal brings the patcher that re-runs it.
+// A section's signal of a key: it subscribes the scope it runs on (`r` alone, as an
+// effect reading it does), and holds the joins of the key with the section's values.
+type GlobalSignal = SignalFn & {
+  j: [SignalFn, number][];
+  r: (scope: Scope) => void;
+};
+
+const globalKeys: GlobalKey[] = [];
+
+export function _global_key(
+  accessor: EncodedAccessor,
+  ...paths: (string | 0)[]
+): GlobalKey {
+  // A key some shipped signal holds brings the patcher that runs it.
   patchers[PatchKey.Global] = patchGlobal;
-  // A scope the document subscribes does so on resume, unless an effect of this id
-  // registered first: it subscribes as it runs.
-  _resumed[id] ||= (scope: Scope) =>
-    subscribeToScopeSet(globalScopes, id, scope);
-  return (globalSignals[id] = [
-    (scope: Scope) => {
-      signal(scope);
-      subscribeToScopeSet(globalScopes, id, scope);
-    },
-    keys,
-  ])[0];
-}
-
-// Like `_script`, but a change to a `$global` member it reads re-runs it on every
-// scope it ran on, once per run however many readers queue it.
-export function _fill_global_script(
-  id: string,
-  fn: (scope: Scope) => void,
-  ...keys: (string | 0)[]
-) {
-  const effect = (_resumed[id] = (scope: Scope) => {
-    fn(scope);
-    subscribeToScopeSet(globalScopes, id, scope);
-  });
-  const queued = new WeakMap<Scope, number>();
-  const queue = (scope: Scope) => {
-    if (queued.get(scope) !== runId) {
-      queued.set(scope, runId);
-      queueEffect(scope, effect);
-    }
+  const key: GlobalKey = {
+    k: paths,
+    i: (AccessorPrefix.ClosureSignalIndex +
+      (MARKO_DEBUG
+        ? accessor
+        : decodeAccessor(accessor as number))) as Accessor,
+    p: [],
+    w: [],
   };
-  _fill_global(id, queue, ...keys);
-  return queue;
+  globalKeys.push(key);
+  return key;
 }
 
-// Registrations with a nested member, each member ending in `0`: only a page
-// with one checks paths, and only on such registrations.
-export function _fill_global_path(
-  id: string,
-  signal: SignalFn,
-  ...keys: (string | 0)[]
-): SignalFn {
-  changesMember = membersChanged;
-  return _fill_global(id, signal, ...keys, 0);
+// The key's signal in a section, which enters each scope into the key's set at its
+// position, as `_closure_get` does; a scope resuming by `id` subscribes too.
+export function _global_closure(id: string, key: GlobalKey, fn?: SignalFn) {
+  const index = key.p.length;
+  const signal = ((scope: Scope) => {
+    signal.r(scope);
+    if (fn) queueRender(scope, fn, -1);
+  }) as GlobalSignal;
+  signal.r = _resumed[id] = (scope: Scope) => {
+    scope[key.i] = index;
+    subscribeToScopeSet(key as never, "s", scope);
+  };
+  signal.j = [];
+  key.p.push((scope) => renderChange(scope, fn, signal.j));
+  return signal;
 }
-export function _fill_global_path_script(
+
+// The key's signal in an `<if>` body, whose owner subscribes once and walks the branch,
+// as `_if_closure` does.
+export function _global_if(
   id: string,
-  fn: (scope: Scope) => void,
-  ...keys: (string | 0)[]
+  key: GlobalKey,
+  ownerConditionalNodeAccessor: EncodedAccessor,
+  branch: number,
+  fn?: SignalFn,
 ) {
-  changesMember = membersChanged;
-  return _fill_global_script(id, fn, ...keys, 0);
+  return walkFromOwner(id, key, fn, (render) =>
+    _if_closure(ownerConditionalNodeAccessor, branch, render),
+  );
 }
-let changesMember: typeof membersChanged | undefined;
 
-// Each signal reading a member the patch changes re-runs once per live scope, then
-// the globals land; a later (calling) signal sorts first within a scope (`order`).
+// The key's signal in a `<for>` body, whose owner subscribes once per loop instance and
+// walks the rows, as `_for_closure` does: a row subscribes nothing.
+export function _global_for(
+  id: string,
+  key: GlobalKey,
+  ownerLoopNodeAccessor: EncodedAccessor,
+  fn?: SignalFn,
+) {
+  return walkFromOwner(id, key, fn, (render) =>
+    _for_closure(ownerLoopNodeAccessor, render, -1),
+  );
+}
+
+function walkFromOwner(
+  id: string,
+  key: GlobalKey,
+  fn: SignalFn | undefined,
+  walk: (render: SignalFn) => SignalFn,
+) {
+  const owners: { s?: Set<Scope> } = {};
+  const subscribe = (_resumed[id] = (owner: Scope) =>
+    subscribeToScopeSet(owners, "s", owner));
+  const signal = ((scope: Scope) => {
+    signal.r(scope);
+    if (fn) queueRender(scope, fn, -1);
+  }) as GlobalSignal;
+  signal.r = (scope) => subscribe(scope[AccessorProp.Owner]!);
+  signal.j = [];
+  key.w.push([walk((scope) => renderChange(scope, fn, signal.j)), owners]);
+  return signal;
+}
+
+// A join of keys with a section's values, which their signals there run at its slot;
+// a run subscribes its scope, as an effect of it does by `r`.
+export function _global_or(
+  slot: number,
+  fn: SignalFn,
+  ...signals: GlobalSignal[]
+) {
+  const join = ((scope: Scope) => {
+    join.r(scope);
+    fn(scope);
+  }) as GlobalSignal;
+  join.r = (scope) => {
+    for (const signal of signals) signal.r(scope);
+  };
+  for (const signal of signals) signal.j.push([fn, slot]);
+  return join;
+}
+
+function renderChange(
+  scope: Scope,
+  fn: SignalFn | undefined,
+  joins: [SignalFn, number][],
+) {
+  if (fn) queueRender(scope, fn, -1);
+  for (const [join, slot] of joins) queueRender(scope, join, slot);
+}
+
+// Each key a patch changes runs its signals on this render's scopes, then the globals land.
 function patchGlobal(
   live: Scope,
   _accessor: string,
   value: Record<string, unknown>,
-  order = 0,
 ) {
-  const changed: string[] = [];
-  for (const key in value) {
-    if (live[AccessorProp.Global][key] !== value[key]) {
-      changed.push(key);
-    }
-  }
-  // A whole-object read (`""`) re-runs on any change.
-  if (changed.length) changed.push("");
-  for (const id in globalSignals) {
-    order--;
-    if (
-      changesMember && globalSignals[id][1].includes(0)
-        ? changesMember(
-            globalSignals[id][1],
-            changed,
-            live[AccessorProp.Global],
-            value,
-          )
-        : globalSignals[id][1].some((key) => changed.includes(key as string))
-    ) {
-      // Only this render's scopes: another's reads its own `$global`.
-      globalScopes[id]?.forEach(
+  const held = live[AccessorProp.Global];
+  for (const key of globalKeys) {
+    if (changes(key.k, held, value)) {
+      // Only this render's scopes: another render on the page reads its own `$global`.
+      key.s?.forEach(
         (scope) =>
-          scope[AccessorProp.Global] === live[AccessorProp.Global] &&
-          queueRender(scope, globalSignals[id][0], order),
+          scope[AccessorProp.Global] === held &&
+          key.p[scope[key.i] as number](scope),
       );
+      for (const [walk, owners] of key.w) {
+        owners.s?.forEach(
+          (owner) => owner[AccessorProp.Global] === held && walk(owner),
+        );
+      }
     }
   }
-  Object.assign(live[AccessorProp.Global], value);
+  Object.assign(held, value);
 }
 
-// A path registration's members: one changes where its key changed and the value
-// at its path differs.
-function membersChanged(
-  keys: (string | 0)[],
-  changed: string[],
-  held: unknown,
-  next: unknown,
+// A path changes where the patch carries its first key and the value at its end differs;
+// `$global` itself changes with any key.
+function changes(
+  paths: (string | 0)[],
+  held: Record<string, unknown>,
+  next: Record<string, unknown>,
 ) {
-  let heldValue = held;
-  let nextValue = next;
+  if (!paths.length) {
+    for (const key in next) if (held[key] !== next[key]) return 1;
+    return 0;
+  }
+  let heldValue: unknown = held;
+  let nextValue: unknown = next;
   let first: string | undefined;
-  for (const key of keys) {
-    if (key !== 0) {
-      first ??= key;
-      heldValue = (heldValue as Record<string, unknown> | undefined)?.[key];
-      nextValue = (nextValue as Record<string, unknown> | undefined)?.[key];
-    } else if (changed.includes(first!) && heldValue !== nextValue) {
-      return 1;
-    } else {
+  for (let i = 0; i <= paths.length; i++) {
+    const key = paths[i];
+    if (key === 0 || key === undefined) {
+      if (first! in next && heldValue !== nextValue) return 1;
       heldValue = held;
       nextValue = next;
       first = undefined;
+    } else {
+      first ??= key;
+      heldValue = (heldValue as Record<string, unknown> | undefined)?.[key];
+      nextValue = (nextValue as Record<string, unknown> | undefined)?.[key];
     }
   }
+  return 0;
 }

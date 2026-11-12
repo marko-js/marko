@@ -118,11 +118,21 @@ export type ReferencedBindings = SortedOpt<Binding>;
 
 export type Intersection = SortedMany<Binding>;
 
-/** Every member computed from one local source in the same pass, or the
- * intersection's own render id and the tag whose scope offset it renders after. */
+/** Every member computed from one local source in the same pass, or the intersection's own render id,
+ * the tag whose scope offset it renders after and, for one with `$global` keys, the intersection of its other values. */
 export type IntersectionMeta =
-  | { source: Binding; id?: undefined; returnedBy?: undefined }
-  | { source: undefined; id: number; returnedBy: Binding | undefined };
+  | {
+      source: Binding;
+      id?: undefined;
+      returnedBy?: undefined;
+      arriving?: undefined;
+    }
+  | {
+      source: undefined;
+      id: number;
+      returnedBy: Binding | undefined;
+      arriving: Intersection | undefined;
+    };
 
 export interface Getter {
   hoisted: Section | false;
@@ -212,19 +222,14 @@ export function createBinding(
   return binding;
 }
 
-// `$global` or a member of it: no slot, never arriving, re-run by registration.
+// `$global`, or a key or path read from it: no slot, never arriving, re-run by the
+// registration of its key.
 export function isGlobalBinding(binding: Binding) {
   return binding.type === BindingType.global;
 }
 
-// The `$global` key a read of `$global` is read under, or `$global` itself.
-export function getGlobalKey(binding: Binding) {
-  while (binding.aliasOf?.aliasOf) binding = binding.aliasOf;
-  return binding;
-}
-
-// The bindings but `$global`'s members: an intersection's that arrive, a function's
-// captures (it reads `$global` live).
+// The bindings but `$global`'s: an intersection's that arrive, a function's captures
+// (it reads `$global` live).
 export function withoutGlobals(bindings: ReferencedBindings) {
   return bindingUtil.filter(bindings, isNotGlobal);
 }
@@ -233,16 +238,16 @@ function isNotGlobal(binding: Binding) {
   return !isGlobalBinding(binding);
 }
 
-// Each `$global` binding the template reads through: the object, then its members.
-export function forEachGlobalMember(cb: (member: Binding) => void) {
+// `$global` and each key and path the template reads from it, outermost first.
+export function forEachGlobalBinding(cb: (binding: Binding) => void) {
   const { globalBinding } = getProgram().node.extra;
-  if (globalBinding) visitGlobalMember(globalBinding, cb);
+  if (globalBinding) visitGlobalBinding(globalBinding, cb);
 }
 
-function visitGlobalMember(member: Binding, cb: (member: Binding) => void) {
-  cb(member);
-  for (const part of member.propertyAliases.values()) {
-    visitGlobalMember(part, cb);
+function visitGlobalBinding(binding: Binding, cb: (binding: Binding) => void) {
+  cb(binding);
+  for (const alias of binding.propertyAliases.values()) {
+    visitGlobalBinding(alias, cb);
   }
 }
 

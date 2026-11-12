@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $global$1 = $global();
 	let count = 0;
 	_html(`<div><h1>${_text_mark($scope0_id, "#text/0", $global$1.brand + " #" + count)}</h1><button>+</button>${_el_mark($scope0_id, "#button/1")}</div>`);
-	_fill_global_subscribe("__tests__/template.marko_0_count#2_$global_brand#5/subscribe", $scope0_id, 1);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#5/subscribe", $scope0_id, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
 }, 1);

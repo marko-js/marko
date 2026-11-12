@@ -159,7 +159,7 @@ function addMemberReason(
   member: Binding,
   reason: Reason | undefined | false,
 ) {
-  // A `$global` member is read off the scope's globals: no slot, no owner chain.
+  // A `$global` key is read off the scope's globals: no slot, no owner chain.
   if (reason && !isGlobalBinding(member)) {
     // A member of an ancestor, even one always written, is read through the
     // owner chain, so a change that re-runs it needs that chain written.

@@ -77,11 +77,7 @@ import {
   sectionUtil,
 } from "../sections";
 import { shipsContentShell } from "../shell";
-import {
-  getArrivingIntersection,
-  getResumeRegistryId,
-  shipsClosureScopes,
-} from "../signals";
+import { getResumeRegistryId, shipsClosureScopes } from "../signals";
 import { findSlot, type Slot, SlotKind } from "../slots";
 import {
   bindingReaders,
@@ -541,8 +537,7 @@ function derivesByCreatedSetup(binding: Binding) {
 }
 
 // A param a created scope gets as a seed, as no structure brings it: a known child's, a
-// branch's static one (a loop item, an `<await>` value), or a `@catch` error member
-// intersecting a caller's or a `$global` member, whose change re-runs the intersection.
+// branch's static one (a loop item, an `<await>` value), or a `@catch` error member intersecting a caller's or a `$global` key.
 function seedsParam(binding: Binding) {
   const { section } = binding;
   return (
@@ -550,11 +545,11 @@ function seedsParam(binding: Binding) {
     (!!section.branch && !binding.sources?.param) ||
     (section.boundaryContent === "catch" &&
       (hasCallerParamSourceAt(getWriteReason(binding), section) ||
-        someBindingRead(binding, readsGlobalMember)))
+        someBindingRead(binding, readsGlobalKey)))
   );
 }
 
-function readsGlobalMember(read: ReferencedExtra) {
+function readsGlobalKey(read: ReferencedExtra) {
   return some(getReferencedBindings(read), isGlobalBinding);
 }
 
@@ -980,8 +975,7 @@ export function runsEffectOnPatch(binding: Binding) {
 }
 
 // A value a patch may fill, as `>` hops from `section` up to its own (what the
-// runtime's `readChanged` reads); client state, constants and `$global` members
-// (which the patch's `$global` entry changes) it never fills.
+// runtime's `readChanged` reads); never client state, constants or `$global` keys.
 export function getWriteHop(section: Section, binding: Binding) {
   if (hasParamOrGlobalSource(binding.sources) && !isGlobalBinding(binding)) {
     return (
@@ -1367,12 +1361,12 @@ export interface CreatedSetup {
 const [getRenderedIntersections] = createAnalysisMemo((section: Section) => {
   const intersections: Intersection[] = [];
   for (const intersection of section.intersections!.keys()) {
-    // A join with `$global` members that setup, one member or another join runs renders
-    // as their work, with no setup of its own.
+    // A join with `$global` keys that setup, one value or another intersection runs
+    // renders as their work, with no setup of its own.
     if (
       !some(intersection, isConstant) &&
       Array.isArray(withoutGlobals(intersection)) &&
-      !getArrivingIntersection(section, intersection)
+      !section.intersections!.get(intersection)!.arriving
     ) {
       intersections.push(intersection);
     }

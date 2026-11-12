@@ -129,7 +129,12 @@ import {
   type Section,
 } from "./sections";
 import { addSetupExpr, addSetupWork } from "./setup-work";
-import { addParamFill, getParamEntries, type ParamFill } from "./shell";
+import {
+  addParamFill,
+  getParamEntries,
+  inCatchWithoutClientWork,
+  type ParamFill,
+} from "./shell";
 import {
   addStatement,
   getResumeRegistryId,
@@ -169,6 +174,7 @@ import {
   andGuard,
   buildGroupsValue,
   buildGroupMask,
+  getCallerClientGuard,
   getExprIfWritten,
   getWriteGuard,
   getGroupsConstant,
@@ -451,13 +457,21 @@ export function knownTagTranslateHTML(
     const wires =
       !keyed ||
       getCallerGroupBit(section, "_unfilled_if", childScopeReason) !== 0;
+    // In a `@catch` of a template with no client work, only where a caller's client state
+    // loads its module.
+    const callerClient =
+      inCatchWithoutClientWork(section) && getCallerClientGuard();
     const guardVar = (expr: t.Expression) =>
       keyed
         ? andGuard(
             getCallerGroupGuard(section, "_unfilled_if", childScopeReason),
-            expr,
+            andGuard(callerClient, expr),
           )
-        : getExprIfWritten(section, childScopeReason!, expr);
+        : getExprIfWritten(
+            section,
+            childScopeReason!,
+            andGuard(callerClient, expr),
+          );
     // After the attr statements: building attribute tags can consume scope
     // ids (eg `_resume_locals`), and the peek must see the child's root id.
     statements.push(

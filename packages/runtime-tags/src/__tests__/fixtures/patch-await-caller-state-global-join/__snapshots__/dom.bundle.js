@@ -1,5 +1,6 @@
 // tags/show-await.marko
-const $await_content__x = /*@__PURE__*/ _const(2, /* @__PURE__ */ _fill_global("b0", ($scope) => _text($scope.a, $scope.$.brand + ":" + $scope.c), "brand"));
+const $await_content__$global_brand = /*@__PURE__*/ _global_closure("b0", /* @__PURE__ */ _global_key(5, "brand"));
+const $await_content__x = /*@__PURE__*/ _const(2, /* @__PURE__ */ _global_or(3, ($scope) => _text($scope.a, $scope.$.brand + ":" + $scope.c), $await_content__$global_brand));
 const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);
 const $await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);
 const $input_promise = $await_promise;

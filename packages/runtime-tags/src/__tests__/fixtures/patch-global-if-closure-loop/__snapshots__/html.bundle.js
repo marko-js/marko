@@ -17,11 +17,11 @@ var template_default = _template("a", (input) => {
 				_fill_global_subscribe("a0", $scope2_id, 1);
 				_scope($scope2_id, {});
 			});
-			_fill_global_subscribe("a1", $scope1_id, 1);
 			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b");
+	_fill_global_subscribe("a1", $scope0_id, 1);
 	_script($scope0_id, "a2");
 	_scope($scope0_id, { c: on });
 }, 1);

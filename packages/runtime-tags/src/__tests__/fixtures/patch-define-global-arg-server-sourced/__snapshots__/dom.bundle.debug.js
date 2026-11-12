@@ -18,7 +18,8 @@ const $Label_content__$params = ($scope, $params2) => $Label_content__$temp($sco
 const $Label_content__$temp = ($scope, $temp) => $Label_content__text($scope, $temp.text);
 const $open__closure = /*@__PURE__*/ _closure($Label_content__open);
 const $open = _let("open/2", $open__closure);
-const $global_text = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_$global_text#12/subscribe", ($scope) => $Label_content__text($scope["#childScope/0"], $scope.$global.text), "text");
+const $global_text_key = /*@__PURE__*/ _global_key("$global_text/5", "text");
+const $global_text = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global_text#12/subscribe", $global_text_key, ($scope) => $Label_content__text($scope["#childScope/0"], $scope.$global.text));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$open($scope, !$scope.open);
 }));

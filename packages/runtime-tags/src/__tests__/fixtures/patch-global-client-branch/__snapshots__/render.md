@@ -28,4 +28,5 @@ document.querySelector("button").click();
 ```
 INSERT: main > button + :is(p, b)
 UPDATE: main > b::text " " => "n:Marko"
+UPDATE: main > p::text " " => "Marko"
 ```

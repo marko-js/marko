@@ -11,6 +11,7 @@ import { createAnalysisSectionState } from "./state";
 
 const [getSetupInfo] = createAnalysisSectionState(() => ({
   always: false,
+  subscribes: false,
   exprs: new Set<t.NodeExtra>(),
 }));
 
@@ -22,6 +23,11 @@ export function addSetupExpr(section: Section, node: t.Node) {
 // Client work the section runs in setup.
 export function addSetupWork(section: Section) {
   getSetupInfo(section).always = true;
+}
+
+// Setup subscribes the section to a `$global` key it reads, which writes no value.
+export function addSetupSubscription(section: Section) {
+  getSetupInfo(section).subscribes = true;
 }
 
 export function finalizeSetupWork() {
@@ -50,10 +56,12 @@ function setCallSectionSetup(call: KnownTagExtra) {
 }
 
 function hasOwnSetupWork(section: Section) {
-  // Setup subscribes the section to the closures it reads, and sets up another
-  // template it renders.
+  // Setup subscribes the section to the closures and `$global` keys it reads, and sets
+  // up another template it renders.
+  const info = getSetupInfo(section);
   return (
-    getSetupInfo(section).always ||
+    info.always ||
+    info.subscribes ||
     !!section.referencedClosures ||
     callsOtherTemplateSetup(section) ||
     hasSetupWorkReadingNothing(section)

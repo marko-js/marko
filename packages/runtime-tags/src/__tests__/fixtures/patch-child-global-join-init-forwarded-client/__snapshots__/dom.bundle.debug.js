@@ -28,7 +28,8 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // tags/mid.marko
 const $template$1 = $template$2;
 const $walks$1 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2);
-const $global_x = /*@__PURE__*/ _fill_global("__tests__/tags/mid.marko_0_$global_x#5/subscribe", ($scope) => $input_a($scope["#childScope/0"], $scope.$global.x), "x");
+const $global_x_key = /*@__PURE__*/ _global_key("$global_x/5", "x");
+const $global_x = /*@__PURE__*/ _global_closure("__tests__/tags/mid.marko_0_$global_x#5/subscribe", $global_x_key, ($scope) => $input_a($scope["#childScope/0"], $scope.$global.x));
 function $setup$1($scope) {
 	$setup$2($scope["#childScope/0"]);
 	$global_x($scope);

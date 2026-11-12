@@ -1,4 +1,5 @@
 import { types as t } from "@marko/compiler";
+import { getProgram } from "@marko/compiler/babel-utils";
 
 import { UpdatesFrom } from "../../common/types";
 import {
@@ -684,6 +685,15 @@ function hasGuardedReason(section: Section) {
 
 function isConditionalSlot(slot: Slot) {
   return isGuardedReason(mapBodyParams(slot.section, slot.reason));
+}
+
+// Whether a group the template's caller passes is client-sourced: the caller's module
+// then loads this one's, so its client code runs here.
+export function getCallerClientGuard() {
+  return callRuntime(
+    "_any_client_guard",
+    scopeReasonIdentifier(getProgram().node.extra.section!),
+  );
 }
 
 function scopeReasonIdentifier(section: Section) {

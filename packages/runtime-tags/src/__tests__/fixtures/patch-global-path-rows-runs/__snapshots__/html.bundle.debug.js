@@ -18,9 +18,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_until(n, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_mark($scope1_id, "#text/0", track("li", $global$1.o.x), $scope0_page)}</li>`);
-		_fill_global_subscribe("__tests__/template.marko_1_$global_o#0:9/subscribe", $scope1_id, 1);
 		_scope($scope1_id, {}, "__tests__/template.marko", "6:4");
 	}, 0, $scope0_id, "#ul/1", 1, 1, 1, "</ul>", 1);
+	_fill_global_subscribe("__tests__/template.marko_1_$global_o#0:9/subscribe", $scope0_id, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { n }, "__tests__/template.marko", 0, { n: "3:6" });
 }, 1);

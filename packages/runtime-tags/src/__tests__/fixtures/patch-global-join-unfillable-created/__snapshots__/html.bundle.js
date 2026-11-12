@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 		_scope($scope1_id, {
 			e: value,
 			f: count,
-			g: $wi__value && $Outer_content__value__closures,
+			j: $wi__value && $Outer_content__value__closures,
 			a: _existing_scope($childScope)
 		});
 	}, $scope0_id) };

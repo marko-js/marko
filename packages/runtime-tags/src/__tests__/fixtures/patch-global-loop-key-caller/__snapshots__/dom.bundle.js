@@ -1,5 +1,5 @@
 // tags/rows.marko
-const $for = /*@__PURE__*/ _for_until_unkeyed(0, "<li> </li>", "D ", /* @__PURE__ */ _fill_global("b0", ($scope) => _text($scope.a, $scope.M + ":" + $scope.$.x), "x"));
+const $for = /*@__PURE__*/ _for_until_unkeyed(0, "<li> </li>", "D ", /* @__PURE__ */ _global_for("b1", /* @__PURE__ */ _global_key(5, "x"), 0, ($scope) => _text($scope.a, $scope.M + ":" + $scope.$.x)));
 const $input_n = ($scope, input_n) => $for($scope, [input_n]);
 
 // template.marko

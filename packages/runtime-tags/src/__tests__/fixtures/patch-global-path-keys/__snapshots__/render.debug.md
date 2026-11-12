@@ -41,11 +41,11 @@
 ```
 ## Change
 ```
-UPDATE: s::text "" => "t"
-UPDATE: u::text "q" => "s"
 UPDATE: p::text "A" => "B"
 UPDATE: b::text "1" => "2"
 UPDATE: i::text "p" => "r"
+UPDATE: s::text "" => "t"
+UPDATE: u::text "q" => "s"
 ```
 
 # Update
@@ -93,6 +93,11 @@ document.querySelector("button").click();
 ## Change
 ```
 INSERT: button + :is(p, b, i, u, s)
+UPDATE: u::text " " => "s"
+UPDATE: s::text " " => "t"
+UPDATE: p::text " " => "B"
+UPDATE: b::text " " => "2"
+UPDATE: i::text " " => "r"
 ```
 
 # Update `{"$global":{"o":{"x":"c","list":[3,4],"a.b":"u"},"c.d":"v","p":{"x":"w"},"serializedGlobals":["o","c.d","p"]}}`
@@ -118,10 +123,10 @@ INSERT: button + :is(p, b, i, u, s)
 ```
 ## Change
 ```
-UPDATE: s::text "t" => "w"
-UPDATE: u::text "s" => "v"
 UPDATE: p::text "B" => "C"
 UPDATE: i::text "r" => "u"
+UPDATE: s::text "t" => "w"
+UPDATE: u::text "s" => "v"
 ```
 
 # Update `{"$global":{"o":{"x":"c","list":[3,4,5],"a.b":"u"},"c.d":"v","p":{"x":"w"},"serializedGlobals":["o","c.d","p"]}}`

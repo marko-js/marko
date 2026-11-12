@@ -10,8 +10,8 @@ import {
   type ReferencedBindings,
   bindingUtil,
   compareIntersections,
+  forEachGlobalBinding,
   getAliasRoot,
-  getGlobalKey,
   withoutGlobals,
   getBindings,
   getCanonicalBinding,
@@ -83,7 +83,7 @@ import {
   type StructureOp,
   finalizeEnclosing,
 } from "./sections";
-import { addSetupWork } from "./setup-work";
+import { addSetupSubscription, addSetupWork } from "./setup-work";
 import { ensureSectionSlot, ensureSlot, SlotKind } from "./slots";
 import {
   ALWAYS,
@@ -187,9 +187,11 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
         exprBindings.constantBindings,
       );
       if (every(exprBindings.referencedBindings, isGlobalBinding)) {
-        // With no resolved references but `$global` members, which never arrive, setup
+        // With no resolved references but `$global` keys, which never arrive, setup
         // runs any statement this expression keys.
         addSetupWork(expr.section);
+      } else if (some(exprBindings.referencedBindings, isGlobalBinding)) {
+        addSetupSubscription(expr.section);
       }
       forEach(exprBindings.lazyBindings, markLazyRead);
       expr.section.referencedClosures = bindingUtil.union(
@@ -427,10 +429,21 @@ export function allocateIds(
     }
     let intersection: Intersection;
     const assignIntersectionId = (intersection: Intersection) => {
+      const arrivals = withoutGlobals(intersection);
+      const index =
+        arrivals !== intersection && Array.isArray(arrivals)
+          ? searchSorted(
+              compareIntersections,
+              intersectionsBySection.get(section)!,
+              arrivals,
+            )
+          : -1;
       intersectionMeta.set(intersection, {
         source: undefined,
         id: nextId++,
         returnedBy: getLastOwnSourceReturn(intersection, section),
+        arriving:
+          index >= 0 ? intersectionsBySection.get(section)![index] : undefined,
       });
     };
     forEach(bindings, (binding) => {
@@ -476,6 +489,13 @@ export function allocateIds(
         closureId += getForClosureIndex(binding) || 1;
       }
     });
+    // A `$global` key holds no value slot: each scope's position in its set takes this id.
+    if (!section.parent) {
+      forEachGlobalBinding((binding) => {
+        closureId = Math.max(closureId, nextId);
+        binding.closureId = closureId++;
+      });
+    }
     closureIdEnds.set(section, closureId);
   });
 }
@@ -925,15 +945,16 @@ function resolveReferencedBindings(
           resolveExpressionReference(expr, read));
       }
       if (binding.type === BindingType.global) {
-        // `$global` reads stay verbatim member chains, with no read slot.
+        // `$global` reads stay verbatim property chains, with no read slot.
         getProgram().node.extra.hasGlobalRead = true;
         // Only a patch changes `$global` after the page renders: a read as the expression
-        // evaluates references its key, an effect's what it reads, which re-runs it.
+        // evaluates references its key, an effect's the path it reads, which re-runs it.
         if (isPatch() && !isLazyRead(read, binding, isChangeHandlerRead)) {
-          referencedBindings = bindingUtil.add(
-            referencedBindings,
-            getCanonicalExpr(expr).isEffect ? binding : getGlobalKey(binding),
-          );
+          let key = binding;
+          if (!getCanonicalExpr(expr).isEffect) {
+            while (key.aliasOf?.aliasOf) key = key.aliasOf;
+          }
+          referencedBindings = bindingUtil.add(referencedBindings, key);
         }
       } else if (binding.type !== BindingType.dom) {
         // A read outside a getter is from this section or an enclosing one.
@@ -973,14 +994,16 @@ function resolveReferencedBindings(
   // A binding also read live by this expression stays subscribed.
   lazyBindings = bindingUtil.difference(lazyBindings, referencedBindings);
 
-  // A `$global` member read beside one it is part of re-runs with that one.
+  // A `$global` path read beside a path it lies under re-runs with that one.
   if (Array.isArray(referencedBindings)) {
-    referencedBindings = bindingUtil.filter(
-      referencedBindings,
-      (binding) =>
-        !isGlobalBinding(binding) ||
-        !hasReadAncestor(binding, referencedBindings),
-    );
+    referencedBindings = bindingUtil.filter(referencedBindings, (binding) => {
+      if (isGlobalBinding(binding)) {
+        for (let cur = binding.aliasOf; cur; cur = cur.aliasOf) {
+          if (bindingUtil.has(referencedBindings, cur)) return false;
+        }
+      }
+      return true;
+    });
   }
 
   if (Array.isArray(referencedBindings)) {
@@ -1009,13 +1032,6 @@ function resolveReferencedBindings(
     closureSection,
     hoistedSection,
   };
-}
-
-function hasReadAncestor(binding: Binding, reads: ReferencedBindings) {
-  for (let cur = binding.aliasOf; cur; cur = cur.aliasOf) {
-    if (bindingUtil.has(reads, cur)) return true;
-  }
-  return false;
 }
 
 // A dynamic tag's name that is one read as written.

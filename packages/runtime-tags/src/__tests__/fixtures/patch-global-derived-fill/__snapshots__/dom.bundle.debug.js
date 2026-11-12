@@ -8,7 +8,9 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__count = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/1"], $scope._.count));
 const $greeting = /*@__PURE__*/ _const("greeting", $if_content__greeting);
-const $input_name__OR__$global_prefix = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_input_name#4_$global_prefix#5/subscribe", ($scope) => $greeting($scope, _global_read($scope.$global, "prefix") + ":" + $scope.input_name), "prefix");
+const $global_prefix_key = /*@__PURE__*/ _global_key("$global_prefix/11", "prefix");
+const $global_prefix = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global_prefix#5/subscribe", $global_prefix_key);
+const $input_name__OR__$global_prefix = /*@__PURE__*/ _global_or(7, ($scope) => $greeting($scope, _global_read($scope.$global, "prefix") + ":" + $scope.input_name), $global_prefix);
 const $input_name = /*@__PURE__*/ _const("input_name", $input_name__OR__$global_prefix);
 const $if = /*@__PURE__*/ _if("#text/1", "<span><!> <!></span>", "D%c%", $if_content__setup);
 const $count = _let("count/6", ($scope) => {
@@ -19,6 +21,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
+	$global_prefix($scope);
 	$count($scope, 0);
 	$setup__script($scope);
 }

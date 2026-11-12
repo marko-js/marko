@@ -210,7 +210,7 @@ export function patch(
       return done(1);
     }
     // Re-shipped globals land on the globals object, so `$global` reads never go
-    // stale; a page with `$global` signals installed its own (`_fill_global`).
+    // stale; a page with a `$global` key's registration installed its own (`_global_key`).
     patchers[PatchKey.Global] ||= (live, _key, value) =>
       Object.assign(live[AccessorProp.Global], value);
     // Reports once: at the first failure, else when the last wait applies.

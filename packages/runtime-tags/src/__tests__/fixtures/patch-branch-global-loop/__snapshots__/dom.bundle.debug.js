@@ -25,7 +25,8 @@ const $pattern2 = ($scope, $pattern) => {
 };
 const $search_q = /*@__PURE__*/ _const("search_q", $else_content__search_q);
 const $if = /*@__PURE__*/ _if("#text/0", "<p>invalid</p>", 0, 0, "<div></div>", " ", $else_content__setup);
-const $global_search = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_$global_search#7/subscribe", ($scope) => $pattern2($scope, $scope.$global.search), "search");
+const $global_search_key = /*@__PURE__*/ _global_key("$global_search/7", "search");
+const $global_search = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global_search#7/subscribe", $global_search_key, ($scope) => $pattern2($scope, $scope.$global.search));
 const $setup = $global_search;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);
 

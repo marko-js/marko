@@ -96,7 +96,8 @@ const $placeholder_content__n = /*@__PURE__*/ _closure_get("n/15", ($scope) => {
 const $placeholder_content = _content("__tests__/template.marko_1*content", /*@__PURE__*/ ((_w0, _w1, _w2) => `${_w0}${_w1}${_w2}<!>`)($template$3, $template$3, $template$2), /*@__PURE__*/ ((_w0, _w1, _w2) => `/${_w0}&/${_w1}&/${_w2}&b`)("D l", "D l", "b%c"), $placeholder_content__setup);
 const $brand__closure = /*@__PURE__*/ _closure($placeholder_content__brand);
 const $brand = /*@__PURE__*/ _const("brand", $brand__closure);
-const $global_brand = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_$global_brand#8/subscribe", ($scope) => $brand($scope, `${$scope.$global.brand}!`), "brand");
+const $global_brand_key = /*@__PURE__*/ _global_key("$global_brand/17", "brand");
+const $global_brand = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global_brand#8/subscribe", $global_brand_key, ($scope) => $brand($scope, `${$scope.$global.brand}!`));
 const $n__closure = /*@__PURE__*/ _closure($placeholder_content__n);
 const $n = _let("n/11", ($scope) => {
 	_text($scope["#text/1"], $scope.n);

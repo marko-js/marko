@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 		_patch_fill($scope1_id, "va5", count, 1);
 		_scope($scope1_id, {
 			g: count,
-			h: $wi__value && $Outer_content__value__closures,
+			j: $wi__value && $Outer_content__value__closures,
 			a: _existing_scope($childScope)
 		});
 	}, $scope0_id) };

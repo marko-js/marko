@@ -35,15 +35,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_reason = _scope_reason(), $scope2_page = _page_render();
 			const $scope2_id = _scope_id();
 			_html(`<p${_attr("data-z", z + $global$1.mark, $scope2_id, "#p/0", 4, 0)}></p>${_el_mark($scope2_id, "#p/0")}`);
-			_fill_global_subscribe("__tests__/template.marko_2_$global_mark#0:12_z#1:5/subscribe", $scope2_id);
+			_fill_global_subscribe("__tests__/template.marko_2_$global_mark#0:12/subscribe", $scope2_id);
 			_subscribe(_unfilled_if() && $D_content__z__closures, _scope($scope2_id, { _: $scope2_page && _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4"));
 		}, $scope1_id) });
 		_patch_child_end();
-		_fill_global_subscribe("__tests__/template.marko_1_$global_flag#0:9_v#3/subscribe", $scope1_id);
+		_fill_global_subscribe("__tests__/template.marko_1_$global_flag#0:9/subscribe", $scope1_id);
 		_unfilled_if() && _patch_write($scope1_id, "PatchWrite:z", z, 1);
 		_scope($scope1_id, {
 			z: _unfilled_if() && z,
-			"ClosureScopes:z/6": $scope1_page && _unfilled_if() && $D_content__z__closures,
+			"ClosureScopes:z/7": $scope1_page && _unfilled_if() && $D_content__z__closures,
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "2:2", {
 			v: "2:13",

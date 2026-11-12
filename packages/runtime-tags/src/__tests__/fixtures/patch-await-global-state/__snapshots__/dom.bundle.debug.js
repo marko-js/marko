@@ -4,7 +4,9 @@ const $walks = "b%b D l";
 const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<p> </p>", "D ");
 const $await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $count__OR__$global_suffix = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_count#3_$global_suffix#7/subscribe", ($scope) => $await_promise($scope, Promise.resolve($scope.count + _global_read($scope.$global, "suffix"))), "suffix");
+const $global_suffix_key = /*@__PURE__*/ _global_key("$global_suffix/6", "suffix");
+const $global_suffix = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global_suffix#7/subscribe", $global_suffix_key);
+const $count__OR__$global_suffix = /*@__PURE__*/ _global_or(4, ($scope) => $await_promise($scope, Promise.resolve($scope.count + _global_read($scope.$global, "suffix"))), $global_suffix);
 const $count = _let("count/3", ($scope) => {
 	_text($scope["#text/2"], $scope.count);
 	$count__OR__$global_suffix($scope);
@@ -15,6 +17,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 function $setup($scope) {
 	$await_content($scope);
 	$count($scope, 0);
+	$global_suffix($scope);
 	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

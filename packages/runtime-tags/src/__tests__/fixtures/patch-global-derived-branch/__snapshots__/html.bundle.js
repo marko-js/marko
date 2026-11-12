@@ -11,8 +11,8 @@ function collected(global) {
 // template.marko
 _shells({
 	a: "a;D%b%;<main><!><!></main>",
-	a1: "a1;D ;<p> </p>",
-	a2: "a2; ;<style></style>"
+	a0: "a0;D ;<p> </p>",
+	a1: "a1; ;<style></style>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -22,9 +22,8 @@ var template_default = _template("a", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		_html(`<p>${_text_mark($scope1_id, "a", collect($global$1, item), 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</p>`);
-		_fill_global_subscribe("a0", $scope1_id, _client_guard($scope0_reason, 0));
 		_scope($scope1_id, { c: _unfilled_if($scope0_reason, 0) && item });
-	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a1", $scope0_reason, 0);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a0", $scope0_reason, 0);
 	const summary = collected($global$1);
 	_if(() => {
 		if (summary) {
@@ -33,8 +32,9 @@ var template_default = _template("a", (input) => {
 			_scope($scope2_id, {});
 			return 0;
 		}
-	}, $scope0_id, "b", 1, $scope0_page, 1, 0, 0, ["a2"]);
+	}, $scope0_id, "b", 1, $scope0_page, 1, 0, 0, ["a1"]);
 	_html("</main>");
-	_fill_global_subscribe("a3", $scope0_id);
+	_fill_global_subscribe("a2", $scope0_id);
+	_fill_global_subscribe("a3", $scope0_id, _client_guard($scope0_reason, 0) || _client_guard($scope0_reason, 0));
 	_scope($scope0_id, {});
 }, 1);
