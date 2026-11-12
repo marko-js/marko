@@ -1,0 +1,8 @@
+<let/count=0/>
+<p/p onClick() { count++ }>${count}</p>
+<if=count >= 0>
+  <i>${$global.brand}</i>
+  <script>
+    p().dataset.log = (p().dataset.log || "") + "[" + JSON.stringify($global) + "]";
+  </script>
+</if>
