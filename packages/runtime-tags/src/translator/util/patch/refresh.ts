@@ -544,12 +544,8 @@ function seedsParam(binding: Binding) {
     (!!section.branch && !binding.sources?.param) ||
     (section.boundaryContent === "catch" &&
       (hasCallerParamSourceAt(getWriteReason(binding), section) ||
-        someBindingRead(binding, readsGlobal)))
+        someBindingRead(binding, getGlobalReads)))
   );
-}
-
-function readsGlobal(read: ReferencedExtra) {
-  return !!getGlobalReads(read);
 }
 
 // Why a binding fills: `true` unconditionally, or the run-time conditions
