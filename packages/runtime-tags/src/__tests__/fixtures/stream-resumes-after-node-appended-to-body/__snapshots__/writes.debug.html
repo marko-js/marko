@@ -1,0 +1,58 @@
+<html lang=en>
+
+<head>
+  <title>x</title>
+</head>
+
+<body>
+  <main>
+    <p>0<!--M_$1 #text/0--></p>
+    <script>
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ => [1, {
+        clicks: 0
+      }]]
+    </script>
+
+    <!-- FLUSH -->
+
+    <!--M_[--><button class=a>a</button><!--M_$2 #button/0-->
+    <script async type=module src="counter.marko.load.mjs"></script><button
+      class=lazy-a>0<!--M_$3 #text/1--></button><!--M_$3 #button/0--><!--M_]1 #text/1 2-->
+    <script>
+      M._.b = {
+        "ready:packages/runtime-tags/src/__tests__/fixtures/stream-resumes-after-node-appended-to-body/tags/counter.marko": [
+          _ => [3, {
+            count: 0
+          }]
+        ]
+      };
+      M._.w()
+    </script>
+
+    <!-- FLUSH -->
+
+    <!--M_[--><button class=b>b</button><!--M_$4 #button/0--><button
+      class=lazy-b>0<!--M_$5 #text/1--></button><!--M_$5 #button/0--><!--M_]1 #text/2 4-->
+  </main>
+  <script>
+    M._.b[
+      "ready:packages/runtime-tags/src/__tests__/fixtures/stream-resumes-after-node-appended-to-body/tags/counter.marko"
+      ].push(
+      "packages/runtime-tags/src/__tests__/fixtures/stream-resumes-after-node-appended-to-body/tags/counter.marko_0 3"
+      );
+    M._.b[
+      "ready:packages/runtime-tags/src/__tests__/fixtures/stream-resumes-after-node-appended-to-body/tags/counter.marko"
+      ].push(_ => [5, {
+        count: 0
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/stream-resumes-after-node-appended-to-body/tags/counter.marko_0 5"
+      );
+    M._.r.push(
+      "packages/runtime-tags/src/__tests__/fixtures/stream-resumes-after-node-appended-to-body/template.marko_1 2 packages/runtime-tags/src/__tests__/fixtures/stream-resumes-after-node-appended-to-body/template.marko_2 4"
+      );
+    M._.w()
+  </script>
+</body>
+
+</html>

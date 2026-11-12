@@ -1,0 +1,13 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/dark=false/>
+<html lang="en">
+  <head><title>x</title></head>
+  <body class={ dark }>
+    <try>
+      <@placeholder>loading</@placeholder>
+      <await|v|=resolveAfter("done", 1)>
+        <button onClick() { dark = !dark }>${v} ${dark}</button>
+      </await>
+    </try>
+  </body>
+</html>
