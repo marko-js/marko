@@ -1,6 +1,6 @@
 {
   "name": "marko",
-  "version": "5.40.1",
+  "version": "5.40.2",
   "private": true,
   "description": "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
   "keywords": [
@@ -71,7 +71,7 @@
   },
   "dependencies": {
     "@marko/compiler": "^5.43.0",
-    "@marko/runtime-tags": "6.4.14",
+    "@marko/runtime-tags": "6.4.15",
     "app-module-path": "^2.2.0",
     "argly": "^1.2.0",
     "browser-refresh-client": "1.1.4",

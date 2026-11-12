@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.4.15
+
+### Patch Changes
+
+- [#4685](https://github.com/marko-js/marko/pull/4685) [`01b6843`](https://github.com/marko-js/marko/commit/01b6843f02e0dc82fd76111634cc116771bc2b55) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A streamed page no longer loses the content and event handlers that arrive after another script (a tag manager, a browser extension) appends a node to `<body>` or `<html>` mid-stream, and a stateful `<body>` no longer hides out-of-order content streamed after it.
+
 ## 6.4.14
 
 ### Patch Changes
