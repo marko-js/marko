@@ -37,6 +37,10 @@ export const WALKER_RUNTIME_CODE = /* js */ `((runtimeId) => (self[runtimeId] ||
           visits.push(node);
         }
       }
+
+      // Back to the script calling it, which is where the parser is: a node
+      // another script appended lies past it, ahead of what streams in later.
+      walker.currentNode = document.currentScript;
     },
   })
 , self[runtimeId]))`;

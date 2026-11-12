@@ -1,0 +1,19 @@
+import { resolveAfter } from "../../utils/resolve";
+import Counter from "<counter>" with { load: "render" };
+<let/clicks=0>
+<html lang="en">
+  <head><title>x</title></head>
+  <body>
+    <main>
+      <p>${clicks}</p>
+      <await|v|=resolveAfter("a", 1)>
+        <button class=v onClick() { clicks++ }>${v}</button>
+        <Counter class="lazy-a"/>
+      </await>
+      <await|v|=resolveAfter("b", 2)>
+        <button class=v onClick() { clicks++ }>${v}</button>
+        <Counter class="lazy-b"/>
+      </await>
+    </main>
+  </body>
+</html>
