@@ -51,6 +51,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/2", 1, $scope0_page, 1, 0, 0, ["__tests__/template.marko_2*shell"]);
 	_trailers("</body></html>");
-	_fill_global_subscribe("__tests__/template.marko_0_$global_meta#5/subscribe", $scope0_id);
+	_global_subscribe("__tests__/template.marko_0_$global_meta#5/subscribe", $scope0_id);
 	_scope($scope0_id, { input_msg: input.msg }, "__tests__/template.marko", 0, { input_msg: ["input.msg"] }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_msg", input.msg, !_server_guard($scope0_reason, 0));
 }, 1);

@@ -12,8 +12,8 @@ const $walks = "D%b l";
 const $if_content__brand = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_brand#0:2/setup", "#text/0", 0, ($scope) => $input_text($scope["#childScope/0"], $scope._.brand));
 const $if_content__setup = $if_content__brand;
 const $brand = /*@__PURE__*/ _const("brand", $if_content__brand);
-const $global_brand_key = /*@__PURE__*/ _global_key("$global_brand/6", "brand");
-const $global_brand = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global_brand#4/subscribe", $global_brand_key, ($scope) => $brand($scope, `${$scope.$global.brand}`));
+const $global_brand_key = /*@__PURE__*/ _global_key("brand");
+const $global_brand = /*@__PURE__*/ _global_closure($global_brand_key, "__tests__/template.marko_0_$global_brand#4/subscribe", ($scope) => $brand($scope, `${$scope.$global.brand}`));
 const $if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $if_content__setup);
 const $show = _let("show/3", ($scope) => $if($scope, $scope.show ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

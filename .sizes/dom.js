@@ -1,4 +1,4 @@
-// size: 27528 (min) 10155 (brotli)
+// size: 27441 (min) 10133 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -2011,7 +2011,7 @@ function readChanged(scope, reads, stop = renderData.q) {
 // packages/runtime-tags/dist/dom.mjs
 let empty = [];
 let rest = Symbol();
-let globalKeys = [];
+let declarations = [];
 function attrTag(attrs) {
   return ((attrs[Symbol.iterator] = attrTagIterator), (attrs[rest] = empty), attrs);
 }
@@ -2023,97 +2023,82 @@ function attrTags(first, attrs) {
 function* attrTagIterator() {
   (yield this, yield* this[rest]);
 }
-function _global_key(accessor, ...paths) {
+function _global_key(...paths) {
   patchers.$ = patchGlobal;
-  let key = {
-    k: paths,
-    i: "C" + decodeAccessor(accessor),
-    p: [],
-    w: [],
-  };
-  return (globalKeys.push(key), key);
+  let declaration = [paths];
+  return (declarations.push(declaration), declaration);
 }
-function _global_closure(id, key, fn) {
-  let index = key.p.length,
+function _global_closure(declaration, id, fn, walk) {
+  let scopes = {},
+    j = [],
+    subscribe = (scope) => subscribeToScopeSet(scopes, "s", scope),
+    r = walk ? (scope) => subscribe(scope._) : subscribe,
+    run = (scope) => {
+      fn && queueRender(scope, fn, -1);
+      for (let change of j) queueRender(scope, change, -1);
+    },
     signal = (scope) => {
-      (signal.r(scope), fn && queueRender(scope, fn, -1));
+      (r(scope), fn && queueRender(scope, fn, -1));
     };
   return (
-    (signal.r = _resumed[id] =
-      (scope) => {
-        ((scope[key.i] = index), subscribeToScopeSet(key, "s", scope));
-      }),
-    (signal.j = []),
-    key.p.push((scope) => renderChange(scope, fn, signal.j)),
+    id && (_resumed[id] = subscribe),
+    declaration.push([walk ? walk(run) : run, scopes]),
+    (signal.r = r),
+    (signal.j = j),
     signal
   );
 }
-function _global_if(id, key, ownerConditionalNodeAccessor, branch, fn) {
-  return walkFromOwner(id, key, fn, (render) =>
-    _if_closure(ownerConditionalNodeAccessor, branch, render),
+function _global_if(declaration, ownerConditionalNodeAccessor, branch, id, fn) {
+  return _global_closure(declaration, id, fn, (run) =>
+    _if_closure(ownerConditionalNodeAccessor, branch, run),
   );
 }
-function _global_for(id, key, ownerLoopNodeAccessor, fn) {
-  return walkFromOwner(id, key, fn, (render) => _for_closure(ownerLoopNodeAccessor, render, -1));
+function _global_for(declaration, ownerLoopNodeAccessor, id, fn) {
+  return _global_closure(declaration, id, fn, (run) =>
+    _for_closure(ownerLoopNodeAccessor, run, -1),
+  );
 }
-function walkFromOwner(id, key, fn, walk) {
-  let owners = {},
-    subscribe = (_resumed[id] = (owner) => subscribeToScopeSet(owners, "s", owner)),
-    signal = (scope) => {
-      (signal.r(scope), fn && queueRender(scope, fn, -1));
+function _global_or(fn, ...signals) {
+  let effects = [],
+    intersection = (scope) => {
+      (intersection.r(scope), fn(scope));
+      for (let effect of effects) effect(scope);
     };
-  return (
-    (signal.r = (scope) => subscribe(scope._)),
-    (signal.j = []),
-    key.w.push([walk((scope) => renderChange(scope, fn, signal.j)), owners]),
-    signal
-  );
-}
-function _global_or(slot, fn, ...signals) {
-  let join = (scope) => {
-    (join.r(scope), fn(scope));
-  };
-  join.r = (scope) => {
+  ((intersection.r = (scope) => {
     for (let signal of signals) signal.r(scope);
-  };
-  for (let signal of signals) signal.j.push([fn, slot]);
-  return join;
+  }),
+    (intersection.j = effects));
+  for (let signal of signals) signal.j.push(intersection);
+  return intersection;
 }
-function _global_script(id, fn, signal) {
-  return _script(id, (scope) => {
-    (signal.r(scope), fn(scope));
-  });
-}
-function renderChange(scope, fn, joins) {
-  fn && queueRender(scope, fn, -1);
-  for (let [join, slot] of joins) queueRender(scope, join, slot);
+function _global_script(id, fn, ...signals) {
+  let effect = (_resumed[id] = (scope) => {
+      for (let signal of signals) signal.r(scope);
+      fn(scope);
+    }),
+    queue = (scope) => queueEffect(scope, effect);
+  for (let signal of signals) signal.j.push(queue);
+  return queue;
 }
 function patchGlobal(live, _accessor, value) {
   let held = live.$;
-  for (let key of globalKeys)
-    if (changes(key.k, held, value)) {
-      key.s?.forEach((scope) => scope.$ === held && key.p[scope[key.i]](scope));
-      for (let [walk, owners] of key.w)
-        owners.s?.forEach((owner) => owner.$ === held && walk(owner));
+  for (let [paths, ...signals] of declarations) {
+    let changed = 0;
+    if (!paths.length) for (let key in value) held[key] !== value[key] && (changed = 1);
+    for (let i = 0, heldValue = held, nextValue = value, first = 0; i <= paths.length; i++) {
+      let key = paths[i];
+      key
+        ? ((first ||= key), (heldValue = heldValue?.[key]), (nextValue = nextValue?.[key]))
+        : (first in value && heldValue !== nextValue && (changed = 1),
+          (heldValue = held),
+          (nextValue = value),
+          (first = 0));
     }
+    if (changed)
+      for (let [run, scopes] of signals)
+        scopes.s?.forEach((scope) => scope.$ === held && run(scope));
+  }
   Object.assign(held, value);
-}
-function changes(paths, held, next) {
-  if (!paths.length) {
-    for (let key in next) if (held[key] !== next[key]) return 1;
-    return 0;
-  }
-  let heldValue = held,
-    nextValue = next,
-    first;
-  for (let i = 0; i <= paths.length; i++) {
-    let key = paths[i];
-    if (key === 0 || key === void 0) {
-      if (first in next && heldValue !== nextValue) return 1;
-      ((heldValue = held), (nextValue = next), (first = void 0));
-    } else ((first ??= key), (heldValue = heldValue?.[key]), (nextValue = nextValue?.[key]));
-  }
-  return 0;
 }
 // packages/runtime-tags/dist/dom.mjs
 let _template = (id, template, walks, setup, inputSignal) => {

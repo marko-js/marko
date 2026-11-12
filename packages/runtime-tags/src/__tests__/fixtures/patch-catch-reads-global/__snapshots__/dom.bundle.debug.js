@@ -5,14 +5,14 @@ function boom(msg) {
 	throw new Error(msg);
 }
 const $await_content2__$params = ($scope, $params5) => _text($scope["#text/0"], $params5[0]);
-const $global_label_key = /*@__PURE__*/ _global_key("$global_label/9", "label");
-const $catch_content2__$global_label = /*@__PURE__*/ _global_closure("__tests__/template.marko_5_$global_label#0:10/subscribe", $global_label_key);
-const $catch_content2__$global_label__OR__err_message = /*@__PURE__*/ _global_or(5, ($scope) => _text($scope["#text/0"], _global_read($scope.$global, "label") + " " + $scope.err_message), $catch_content2__$global_label);
+const $global_label_key = /*@__PURE__*/ _global_key("label");
+const $catch_content2__$global_label = /*@__PURE__*/ _global_closure($global_label_key, "__tests__/template.marko_5_$global_label#0:10/subscribe");
+const $catch_content2__$global_label__OR__err_message = /*@__PURE__*/ _global_or(($scope) => _text($scope["#text/0"], _global_read($scope.$global, "label") + " " + $scope.err_message), $catch_content2__$global_label);
 const $catch_content2__err_message = /*@__PURE__*/ _const("err_message", $catch_content2__$global_label__OR__err_message);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/1", "<i> </i>", "D ");
 const $catch_content2__await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content2__$params);
-const $global_p_key = /*@__PURE__*/ _global_key("$global_p/10", "p");
-const $catch_content2__$global_p = /*@__PURE__*/ _global_closure("__tests__/template.marko_5_$global_p#0:14/subscribe", $global_p_key, ($scope) => $catch_content2__await_promise($scope, $scope.$global.p));
+const $global_p_key = /*@__PURE__*/ _global_key("p");
+const $catch_content2__$global_p = /*@__PURE__*/ _global_closure($global_p_key, "__tests__/template.marko_5_$global_p#0:14/subscribe", ($scope) => $catch_content2__await_promise($scope, $scope.$global.p));
 const $catch_content2__setup = ($scope) => {
 	$await_content2($scope);
 	$catch_content2__$global_p($scope);
@@ -20,12 +20,12 @@ const $catch_content2__setup = ($scope) => {
 const $catch_content2__$params = ($scope, $params4) => $catch_content2__err_message($scope, $params4[0]?.message);
 const $catch_content2 = _content("__tests__/template.marko_5*content", "<b> </b><!><!>", "D l%", $catch_content2__setup, $catch_content2__$params);
 const $await_content__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]);
-const $catch_content__$global_label = /*@__PURE__*/ _global_closure("__tests__/template.marko_3_$global_label#0:10/subscribe", $global_label_key);
-const $catch_content__$global_label__OR__err_message = /*@__PURE__*/ _global_or(5, ($scope) => _text($scope["#text/0"], _global_read($scope.$global, "label") + " " + $scope.err_message), $catch_content__$global_label);
+const $catch_content__$global_label = /*@__PURE__*/ _global_closure($global_label_key, "__tests__/template.marko_3_$global_label#0:10/subscribe");
+const $catch_content__$global_label__OR__err_message = /*@__PURE__*/ _global_or(($scope) => _text($scope["#text/0"], _global_read($scope.$global, "label") + " " + $scope.err_message), $catch_content__$global_label);
 const $catch_content__err_message = /*@__PURE__*/ _const("err_message", $catch_content__$global_label__OR__err_message);
 const $await_content = /*@__PURE__*/ _await_content("#text/1", "<i> </i>", "D ");
 const $catch_content__await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content__$params);
-const $catch_content__$global_p = /*@__PURE__*/ _global_closure("__tests__/template.marko_3_$global_p#0:14/subscribe", $global_p_key, ($scope) => $catch_content__await_promise($scope, $scope.$global.p));
+const $catch_content__$global_p = /*@__PURE__*/ _global_closure($global_p_key, "__tests__/template.marko_3_$global_p#0:14/subscribe", ($scope) => $catch_content__await_promise($scope, $scope.$global.p));
 const $catch_content__setup = ($scope) => {
 	$await_content($scope);
 	$catch_content__$global_p($scope);

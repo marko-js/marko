@@ -20,9 +20,9 @@ const $highlight2 = /*@__PURE__*/ _const("highlight", ($scope) => {
 	$if_content__highlight($scope);
 	$else_content__highlight($scope);
 });
-const $global_theme_key = /*@__PURE__*/ _global_key("$global_theme/11", "theme");
-const $global_theme = /*@__PURE__*/ _global_closure("__tests__/tags/code-block.marko_0_$global_theme#8/subscribe", $global_theme_key);
-const $input_cursor__OR__$global_theme = /*@__PURE__*/ _global_or(7, ($scope) => $highlight2($scope, $highlight($scope)), $global_theme);
+const $global_theme_key = /*@__PURE__*/ _global_key("theme");
+const $global_theme = /*@__PURE__*/ _global_closure($global_theme_key, "__tests__/tags/code-block.marko_0_$global_theme#8/subscribe");
+const $input_cursor__OR__$global_theme = /*@__PURE__*/ _global_or(($scope) => $highlight2($scope, $highlight($scope)), $global_theme);
 const $input_cursor = /*@__PURE__*/ _const("input_cursor", $input_cursor__OR__$global_theme);
 const $if = /*@__PURE__*/ _if("#text/0", "<div> </div>", "D ", $if_content__setup, "<span> </span>", "D ", $else_content__setup);
 const $input$1 = ($scope, input) => {

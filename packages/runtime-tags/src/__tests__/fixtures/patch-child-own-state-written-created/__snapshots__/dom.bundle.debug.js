@@ -2,9 +2,9 @@
 const $template$1 = "<p> </p>";
 const $walks$1 = "D l";
 const $setup$1 = ($_) => {};
-const $global_flag_key = /*@__PURE__*/ _global_key("$global_flag/6", "flag");
-const $global_flag = /*@__PURE__*/ _global_closure("__tests__/tags/gm-badge/index.marko_0_$global_flag#5/subscribe", $global_flag_key);
-const $input_value__OR__$global_flag = /*@__PURE__*/ _global_or(4, ($scope) => _text($scope["#text/0"], $scope.input_value + _global_read($scope.$global, "flag")), $global_flag);
+const $global_flag_key = /*@__PURE__*/ _global_key("flag");
+const $global_flag = /*@__PURE__*/ _global_closure($global_flag_key, "__tests__/tags/gm-badge/index.marko_0_$global_flag#5/subscribe");
+const $input_value__OR__$global_flag = /*@__PURE__*/ _global_or(($scope) => _text($scope["#text/0"], $scope.input_value + _global_read($scope.$global, "flag")), $global_flag);
 const $input_value = /*@__PURE__*/ _const("input_value", $input_value__OR__$global_flag);
 const $input$1 = ($scope, input) => $input_value($scope, input.value);
 var gm_badge_default = /*@__PURE__*/ _template("__tests__/tags/gm-badge/index.marko", $template$1, "D l", 0, $input$1);

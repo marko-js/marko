@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 	Label.content({ text: $global$1.text });
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "b")}`);
-	_fill_global_subscribe("a4", $scope0_id);
+	_global_subscribe("a4", $scope0_id);
 	_script($scope0_id, "a5");
 	_scope($scope0_id, {
 		c: open,

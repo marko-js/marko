@@ -2,16 +2,15 @@
 const $template = "<main><h1> </h1><!></main>";
 const $walks = "E l%l";
 const $setup = ($_) => {};
-const $global_key = /*@__PURE__*/ _global_key("$global/7/8");
-const $if_content__$global = /*@__PURE__*/ _global_closure("__tests__/template.marko_1_$global#0:7/subscribe", $global_key);
-const $if_content__input_value__OR__$global = /*@__PURE__*/ _global_or(0, ($scope) => $if_content__input_value__OR__$global__script($scope), $if_content__$global);
-const $if_content__input_value__OR__$global__script = _global_script(_filled_id("__tests__/template.marko_1_input_value#0:6_$global#0:7 >input_value"), ($scope) => {
+const $global_key = /*@__PURE__*/ _global_key();
+const $if_content__$global = /*@__PURE__*/ _global_closure($global_key);
+const $if_content__input_value__OR__$global = _global_script(_filled_id("__tests__/template.marko_1_input_value#0:6_$global#0:7 >input_value"), ($scope) => {
 	{
 		const g = $scope.$global;
 		const el = document.querySelector("main");
 		el.dataset.log = (el.dataset.log || "") + "[" + $scope._.input_value + ":" + g.brand + "]";
 	}
-}, $if_content__input_value__OR__$global);
+}, $if_content__$global);
 const $if_content__input_value = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_input_value#0:6/setup", "#text/1", 0, $if_content__input_value__OR__$global);
 const $if_content__setup = $if_content__input_value;
 const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_title);

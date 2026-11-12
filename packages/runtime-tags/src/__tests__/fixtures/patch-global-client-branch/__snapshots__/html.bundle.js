@@ -11,7 +11,6 @@ var template_default = _template("a", (input) => {
 	_html(`<main><button>t</button>${_el_mark($scope0_id, "a")}`);
 	_if(() => {}, $scope0_id, "b");
 	_html("</main>");
-	_fill_global_subscribe("a0", $scope0_id, 1);
 	_script($scope0_id, "a1");
 	$fg__input_name && _patch_render($scope0_id, "a2", "e");
 	_scope($scope0_id, {

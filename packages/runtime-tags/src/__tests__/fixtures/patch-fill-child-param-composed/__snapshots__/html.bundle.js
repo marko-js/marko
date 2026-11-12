@@ -71,7 +71,7 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_if(() => {}, $scope0_id, "c", 1, 1, 0, 0, 1);
-	_fill_global_subscribe("a0", $scope0_id);
+	_global_subscribe("a0", $scope0_id);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		f: open,

@@ -34,8 +34,8 @@ var template_default = _template("a", (input) => {
 			_html(`<i>${_text_mark($scope4_id, "a", v, 1, 4, 0)}</i>`);
 			_scope($scope4_id, {});
 		}, 1, "a3");
-		_fill_global_subscribe("a8", $scope3_id);
-		_fill_global_subscribe("a9", $scope3_id);
+		_global_subscribe("a8", $scope3_id);
+		_global_subscribe("a9", $scope3_id);
 		_patch_write($scope3_id, "we", err?.message, 1);
 		_scope($scope3_id, { e: _unfilled_if($scope3_reason, 0) && err?.message });
 	}, 0, "a5", "a7", 1, 1, 1);
@@ -54,8 +54,8 @@ var template_default = _template("a", (input) => {
 			_html(`<i>${_text_mark($scope6_id, "a", v, 1, 4, 0)}</i>`);
 			_scope($scope6_id, {});
 		}, 1, "a0");
-		_fill_global_subscribe("a11", $scope5_id);
-		_fill_global_subscribe("a12", $scope5_id);
+		_global_subscribe("a11", $scope5_id);
+		_global_subscribe("a12", $scope5_id);
 		_patch_write($scope5_id, "we", err?.message, 1);
 		_scope($scope5_id, { e: _unfilled_if($scope5_reason, 0) && err?.message });
 	}, 0, "a2", "a6", 1, 1, 1);

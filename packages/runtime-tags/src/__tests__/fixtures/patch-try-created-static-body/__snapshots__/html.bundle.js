@@ -6,7 +6,9 @@ _shells({
 	a2: "a2;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
+	_any_client_guard($scope0_reason);
+	const $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_if(() => {

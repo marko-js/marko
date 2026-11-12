@@ -11,9 +11,9 @@ function read($global, handler) {
 	return handler;
 }
 const $if_content__count = /*@__PURE__*/ _fill_let_change("__tests__/template.marko_1_count#3/fill", "count/3", ($scope) => _text($scope["#text/1"], $scope.count));
-const $global_key = /*@__PURE__*/ _global_key("$global/9/10");
-const $if_content__$global = /*@__PURE__*/ _global_closure("__tests__/template.marko_1_$global#0:9/subscribe", $global_key);
-const $if_content__input_start__OR__onCount__OR__$global = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_start#0:5_onCount#0:7_$global#0:9/setup", 2, /*@__PURE__*/ _global_or(2, ($scope) => $if_content__count($scope, $scope._.input_start, read($scope.$global, $scope._.onCount)), $if_content__$global));
+const $global_key = /*@__PURE__*/ _global_key();
+const $if_content__$global = /*@__PURE__*/ _global_closure($global_key, "__tests__/template.marko_1_$global#0:9/subscribe");
+const $if_content__input_start__OR__onCount__OR__$global = /*@__PURE__*/ _global_or(/*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_start#0:5_onCount#0:7_$global#0:9/setup", 2, ($scope) => $if_content__count($scope, $scope._.input_start, read($scope.$global, $scope._.onCount))), $if_content__$global);
 const $if_content__input_start = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_input_start#0:5/setup", "#text/1", 0, $if_content__input_start__OR__onCount__OR__$global);
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$if_content__count($scope, +$scope.count + 1);

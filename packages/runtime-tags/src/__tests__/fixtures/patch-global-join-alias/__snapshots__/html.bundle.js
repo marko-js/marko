@@ -7,8 +7,7 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	_html(`<button>${_text_mark($scope0_id, "b", count + $global$1.suffix)}</button>${_el_mark($scope0_id, "a")}<p>${_text_mark($scope0_id, "c", count + $global$1.suffix)}</p>`);
 	_if(() => {}, $scope0_id, "d", 1, 1, 0, 0, 1);
-	_fill_global_subscribe("a0", $scope0_id, 1);
-	_fill_global_subscribe("a1", $scope0_id, 1);
+	_global_subscribe("a1", $scope0_id, 1);
 	_script($scope0_id, "a2");
 	_scope($scope0_id, { e: count });
 }, 1);

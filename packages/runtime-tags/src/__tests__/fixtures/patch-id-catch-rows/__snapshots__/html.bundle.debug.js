@@ -24,7 +24,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_rows = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $scope0_client = _any_client_guard($scope0_reason), $wi__input_rows = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const heading = _id("heading");
 	_html(`<h1${_attr("id", heading, $scope0_id, "#h1/0", 0, 0)}>Fields</h1>${_el_mark($scope0_id, "#h1/0", 0)}`);

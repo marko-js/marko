@@ -1,7 +1,7 @@
 // template.marko
 const $Inner_content__walks = "D l";
 const $Inner_content__template = "<p> </p>";
-const $Inner_content__b = /*@__PURE__*/ _const(5, /* @__PURE__ */ _global_or(6, ($scope) => _text($scope.a, $scope.f + $scope.$.suffix), /* @__PURE__ */ _global_closure("a1", /* @__PURE__ */ _global_key(8, "suffix"))));
+const $Inner_content__b = /*@__PURE__*/ _const(5, /* @__PURE__ */ _global_or(($scope) => _text($scope.a, $scope.f + $scope.$.suffix), /* @__PURE__ */ _global_closure(/* @__PURE__ */ _global_key("suffix"), "a1")));
 const $Inner_content__value__OR__y = /*@__PURE__*/ _or(4, ($scope) => $Inner_content__b($scope, $scope._.f + $scope.d));
 const $Inner_content__value = /*@__PURE__*/ _closure_get_patch("a2", 9, $Inner_content__value__OR__y);
 const $Inner_content__setup = $Inner_content__value;

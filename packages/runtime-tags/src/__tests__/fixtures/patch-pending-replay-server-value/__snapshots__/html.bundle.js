@@ -25,13 +25,13 @@ var template_default = _template("a", (input) => {
 			}, 0, $scope2_id, "a", 1, 1, 1, 0, 0, "a0");
 			_scope($scope2_id, {});
 		}, 1, "a2", void 0, 1);
-		_fill_global_subscribe("a5", $scope1_id);
+		_global_subscribe("a5", $scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("Loading");
 	}, void 0, "a1", void 0, "a4", 0, 0, 2);
-	_fill_global_subscribe("a6", $scope0_id);
+	_global_subscribe("a6", $scope0_id);
 	_script($scope0_id, "a7");
 	_scope($scope0_id, {});
 }, 1);

@@ -9,7 +9,7 @@ var badge_default = _template("b", (input) => {
 	const $global$1 = $global();
 	let count = 0;
 	_html(`<p>${_text_mark($scope0_id, "b", count + $global$1.brand)}</p>${_el_mark($scope0_id, "a")}`);
-	_fill_global_subscribe("b0", $scope0_id, 1);
+	_global_subscribe("b0", $scope0_id, 1);
 	_script($scope0_id, "b1");
 	_script($scope0_id, "b2");
 	_patch_fill($scope0_id, "vb3", count, 1);

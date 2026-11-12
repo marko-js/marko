@@ -10,6 +10,7 @@ _shells({
 });
 var show_await_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
+	_any_client_guard($scope0_reason);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_await($scope0_id, "a", input.promise, (x) => {
@@ -19,7 +20,7 @@ var show_await_default = _template("b", (input) => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<span>${_text_mark($scope2_id, "a", $global$1.brand, 1, 4, 0)}</span>`);
-			_fill_global_subscribe("b0", $scope2_id);
+			_global_subscribe("b0", $scope2_id);
 			_scope($scope2_id, {});
 		}, void 0, () => {
 			_scope_reason();

@@ -175,7 +175,7 @@ var template_default = _template("a", (input) => {
 		other: input.other
 	});
 	_patch_child_end();
-	_fill_global_subscribe("a8", $scope0_id);
+	_global_subscribe("a8", $scope0_id);
 	_script($scope0_id, "a9");
 	_scope($scope0_id, {
 		g: input.label,

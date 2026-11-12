@@ -30,12 +30,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason(), $scope1_page = _page_render();
 		const $scope1_id = _scope_id();
 		_html(`<p${_attr("data-z", z + $global$1.mark, $scope1_id, "#p/0", (2 | $uf__input_v) << 1, 0)}></p>${_el_mark($scope1_id, "#p/0")}`);
-		_fill_global_subscribe("__tests__/template.marko_1_$global_mark#0:9/subscribe", $scope1_id);
+		_global_subscribe("__tests__/template.marko_1_$global_mark#0:9/subscribe", $scope1_id);
 		_subscribe(_unfilled_if((2 | $uf__input_v) << 1, 0) && $z__closures, _scope($scope1_id, { _: ($scope1_page || $wi__input_v) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), _client_guard((2 | $uf__input_v) << 1, 0) && "__tests__/template.marko_1_z#0:7/subscribe");
 	}, $scope0_id) });
 	_patch_child_end();
 	_html(`<button>${_text_mark($scope0_id, "#text/2", n)}</button>${_el_mark($scope0_id, "#button/1")}`);
-	_fill_global_subscribe("__tests__/template.marko_0_$global_flag#6/subscribe", $scope0_id, _client_guard($scope0_reason, 0));
+	_global_subscribe("__tests__/template.marko_0_$global_flag#6/subscribe", $scope0_id, _client_guard($scope0_reason, 0));
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		input_v: $ui__input_v && input.v,

@@ -6,7 +6,7 @@ const $brand = /*@__PURE__*/ _const("brand", ($scope) => {
 	_text($scope["#text/0"], $scope.brand);
 	$brand__script($scope);
 });
-const $global_brand_key = /*@__PURE__*/ _global_key("$global_brand/3", "brand");
-const $global_brand = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global_brand#4/subscribe", $global_brand_key, ($scope) => $brand($scope, $scope.$global.brand));
+const $global_brand_key = /*@__PURE__*/ _global_key("brand");
+const $global_brand = /*@__PURE__*/ _global_closure($global_brand_key, "__tests__/template.marko_0_$global_brand#4/subscribe", ($scope) => $brand($scope, $scope.$global.brand));
 const $setup = $global_brand;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "E m", $setup);

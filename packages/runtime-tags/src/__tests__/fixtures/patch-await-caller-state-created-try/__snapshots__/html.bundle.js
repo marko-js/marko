@@ -10,6 +10,7 @@ _shells({
 });
 var show_await_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
+	_any_client_guard($scope0_reason);
 	const $scope0_id = _scope_id();
 	_await($scope0_id, "a", input.promise, (x) => {
 		const $scope1_id = _scope_id();

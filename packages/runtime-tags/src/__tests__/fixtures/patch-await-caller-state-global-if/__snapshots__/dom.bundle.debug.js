@@ -2,9 +2,9 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $await_content__if = /*@__PURE__*/ _if("#text/1", "<b>on</b>");
-const $global_flag_key = /*@__PURE__*/ _global_key("$global_flag/5", "flag");
-const $await_content__$global_flag = /*@__PURE__*/ _global_closure("__tests__/tags/show-await.marko_1_$global_flag#0:9/subscribe", $global_flag_key);
-const $await_content__$global_flag__OR__x = /*@__PURE__*/ _global_or(4, ($scope) => $await_content__if($scope, $scope.x && _global_read($scope.$global, "flag") ? 0 : 1), $await_content__$global_flag);
+const $global_flag_key = /*@__PURE__*/ _global_key("flag");
+const $await_content__$global_flag = /*@__PURE__*/ _global_closure($global_flag_key, "__tests__/tags/show-await.marko_1_$global_flag#0:9/subscribe");
+const $await_content__$global_flag__OR__x = /*@__PURE__*/ _global_or(($scope) => $await_content__if($scope, $scope.x && _global_read($scope.$global, "flag") ? 0 : 1), $await_content__$global_flag);
 const $await_content__x = /*@__PURE__*/ _const("x", ($scope) => {
 	_text($scope["#text/0"], $scope.x);
 	$await_content__$global_flag__OR__x($scope);

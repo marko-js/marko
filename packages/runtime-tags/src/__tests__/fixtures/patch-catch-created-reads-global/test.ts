@@ -1,9 +1,8 @@
 import type { TestConfig } from "../../main.test";
 import { wait } from "../../utils/resolve";
 
-// A `@catch` the document caught and one a patch created both follow later `$global`
-// changes while caught, on a page whose template ships client code: a text joining
-// the error and an `<await>`.
+// The `@catch`es of a try the document caught and of one a patch caught follow later
+// `$global` changes, in a template with client work: a text reading the error, and an `<await>`.
 export const config: TestConfig = {
   patches: true,
   steps: () => [

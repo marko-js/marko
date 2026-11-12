@@ -28,12 +28,12 @@ var template_default = _template("a", (input) => {
 		const $scope1_page = _page_render();
 		const $scope1_id = _scope_id();
 		_html(`<p${_attr("data-z", z + $global$1.mark, $scope1_id, "a", (2 | $uf__input_v) << 1, 0)}></p>${_el_mark($scope1_id, "a")}`);
-		_fill_global_subscribe("a0", $scope1_id);
+		_global_subscribe("a0", $scope1_id);
 		_subscribe(_unfilled_if((2 | $uf__input_v) << 1, 0) && $z__closures, _scope($scope1_id, { _: ($scope1_page || $wi__input_v) && _scope_with_id($scope0_id) }), _client_guard((2 | $uf__input_v) << 1, 0) && "a1");
 	}, $scope0_id) });
 	_patch_child_end();
 	_html(`<button>${_text_mark($scope0_id, "c", n)}</button>${_el_mark($scope0_id, "b")}`);
-	_fill_global_subscribe("a3", $scope0_id, _client_guard($scope0_reason, 0));
+	_global_subscribe("a3", $scope0_id, _client_guard($scope0_reason, 0));
 	_script($scope0_id, "a4");
 	_scope($scope0_id, {
 		f: $ui__input_v && input.v,

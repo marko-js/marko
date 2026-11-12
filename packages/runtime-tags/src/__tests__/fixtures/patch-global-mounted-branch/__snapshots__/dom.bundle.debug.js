@@ -1,15 +1,15 @@
 // tags/badge.marko
 const $template$1 = "<p> </p><!><!>";
 const $walks$1 = " D l%c";
-const $global_brand_key = /*@__PURE__*/ _global_key("$global_brand/5", "brand");
-const $if_content__$global_brand = /*@__PURE__*/ _global_if("__tests__/tags/badge.marko_1_$global_brand#0:8/subscribe", $global_brand_key, "#text/2", 0, ($scope) => _text($scope["#text/0"], $scope.$global.brand));
-const $global_key = /*@__PURE__*/ _global_key("$global/7/4");
-const $if_content__$global = /*@__PURE__*/ _global_if("__tests__/tags/badge.marko_1_$global#0:7/subscribe", $global_key, "#text/2", 0, ($scope) => $if_content__$global__script($scope));
-const $if_content__$global__script = _global_script("__tests__/tags/badge.marko_1_$global#0:7", ($scope) => _el_read($scope._["#p/0"]).dataset.log = (_el_read($scope._["#p/0"]).dataset.log || "") + "[" + JSON.stringify($scope.$global) + "]", $if_content__$global);
+const $global_brand_key = /*@__PURE__*/ _global_key("brand");
+const $if_content__$global_brand = /*@__PURE__*/ _global_if($global_brand_key, "#text/2", 0, "__tests__/tags/badge.marko_1_$global_brand#0:8/subscribe", ($scope) => _text($scope["#text/0"], $scope.$global.brand));
 const $if_content__setup = ($scope) => {
+	$if_content__$global__script($scope);
 	$if_content__$global_brand($scope);
-	$if_content__$global($scope);
 };
+const $global_key = /*@__PURE__*/ _global_key();
+const $if_content__$global = /*@__PURE__*/ _global_if($global_key, "#text/2", 0);
+const $if_content__$global__script = _global_script("__tests__/tags/badge.marko_1_$global#0:7", ($scope) => _el_read($scope._["#p/0"]).dataset.log = (_el_read($scope._["#p/0"]).dataset.log || "") + "[" + JSON.stringify($scope.$global) + "]", $if_content__$global);
 const $if = /*@__PURE__*/ _if("#text/2", "<i> </i>", "D ", $if_content__setup);
 const $count = /*@__PURE__*/ _fill_let("__tests__/tags/badge.marko_0_count#3/fill", "count/3", ($scope) => {
 	_text($scope["#text/1"], $scope.count);

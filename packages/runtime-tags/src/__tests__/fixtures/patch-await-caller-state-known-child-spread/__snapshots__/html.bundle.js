@@ -8,7 +8,7 @@ var brand_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<span>${_text_mark($scope0_id, "a", $global$1.brand, 1, 4, 0)}</span><b>${_text_mark($scope0_id, "b", input.label, 1, $scope0_reason, 0)}</b>`);
-	_fill_global_subscribe("b0", $scope0_id);
+	_global_subscribe("b0", $scope0_id);
 	_scope($scope0_id, {});
 });
 

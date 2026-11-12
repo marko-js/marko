@@ -91,7 +91,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/2", 1, 1, 0, 0, 1);
-	_fill_global_subscribe("__tests__/template.marko_0_$global_data#5/subscribe", $scope0_id);
+	_global_subscribe("__tests__/template.marko_0_$global_data#5/subscribe", $scope0_id);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		open,

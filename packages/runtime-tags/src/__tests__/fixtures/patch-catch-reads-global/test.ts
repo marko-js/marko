@@ -1,9 +1,8 @@
 import type { TestConfig } from "../../main.test";
 import { wait } from "../../utils/resolve";
 
-// On a page with no client code, a `@catch` the document caught and one a patch
-// creates read `$global` beside their error and in an `<await>`: nothing of the
-// template ships, so neither subscribes a registration the page lacks.
+// In a template without client work, the `@catch`es of a try the document caught and of one
+// a patch catches read `$global` beside their error and in an `<await>`: none subscribes.
 export const config: TestConfig = {
   patches: true,
   steps: () => [

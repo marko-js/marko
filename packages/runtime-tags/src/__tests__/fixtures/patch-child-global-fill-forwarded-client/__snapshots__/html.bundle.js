@@ -37,7 +37,7 @@ var mid_default = _template("c", (input) => {
 		show: input.show
 	});
 	_patch_child_end();
-	_fill_global_subscribe("c0", $scope0_id);
+	_global_subscribe("c0", $scope0_id);
 	_scope($scope0_id, { a: _existing_scope($childScope) });
 });
 

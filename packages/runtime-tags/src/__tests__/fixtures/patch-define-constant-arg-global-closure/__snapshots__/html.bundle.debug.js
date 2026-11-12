@@ -35,11 +35,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_reason = _scope_reason(), $scope2_page = _page_render();
 			const $scope2_id = _scope_id();
 			_html(`<p${_attr("data-z", z + $global$1.mark, $scope2_id, "#p/0", 4, 0)}></p>${_el_mark($scope2_id, "#p/0")}`);
-			_fill_global_subscribe("__tests__/template.marko_2_$global_mark#0:12/subscribe", $scope2_id);
+			_global_subscribe("__tests__/template.marko_2_$global_mark#0:12/subscribe", $scope2_id);
 			_subscribe(_unfilled_if() && $D_content__z__closures, _scope($scope2_id, { _: $scope2_page && _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4"));
 		}, $scope1_id) });
 		_patch_child_end();
-		_fill_global_subscribe("__tests__/template.marko_1_$global_flag#0:9/subscribe", $scope1_id);
+		_global_subscribe("__tests__/template.marko_1_$global_flag#0:9/subscribe", $scope1_id);
 		_unfilled_if() && _patch_write($scope1_id, "PatchWrite:z", z, 1);
 		_scope($scope1_id, {
 			z: _unfilled_if() && z,

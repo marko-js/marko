@@ -22,8 +22,8 @@ const $Panel_content__$temp = ($scope, $temp) => {
 };
 const $Panel_content = _content("__tests__/template.marko_2*content", $Panel_content__template, $Panel_content__walks, 0, $Panel_content__$params);
 const $if_content__input_show = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_input_show#0:5/setup", "#text/0", 0, ($scope) => $Panel_content__isOpen($scope["#childScope/0"], $scope._.input_show));
-const $global_brand_key = /*@__PURE__*/ _global_key("$global_brand/15", "brand");
-const $if_content__$global_brand = /*@__PURE__*/ _global_closure("__tests__/template.marko_1_$global_brand#0:17/subscribe", $global_brand_key, ($scope) => {
+const $global_brand_key = /*@__PURE__*/ _global_key("brand");
+const $if_content__$global_brand = /*@__PURE__*/ _global_closure($global_brand_key, "__tests__/template.marko_1_$global_brand#0:17/subscribe", ($scope) => {
 	$Panel_content__label($scope["#childScope/0"], $scope.$global.brand);
 	$Panel_content__label($scope["#childScope/1"], $scope.$global.brand);
 	_text($scope["#text/2"], $scope.$global.brand);

@@ -2,9 +2,9 @@
 const $template$1 = "<p> </p>";
 const $walks$1 = "D l";
 const $setup$1 = ($_) => {};
-const $global_g_key = /*@__PURE__*/ _global_key("$global_g/7", "g");
-const $global_g = /*@__PURE__*/ _global_closure("__tests__/tags/child.marko_0_$global_g#6/subscribe", $global_g_key);
-const $input_a__OR__input_b__OR__$global_g = /*@__PURE__*/ _or_patch("__tests__/tags/child.marko_0_input_a#3_input_b#4_$global_g#6/setup", 5, /*@__PURE__*/ _global_or(5, ($scope) => _text($scope["#text/0"], $scope.input_a + $scope.input_b + _global_read($scope.$global, "g")), $global_g));
+const $global_g_key = /*@__PURE__*/ _global_key("g");
+const $global_g = /*@__PURE__*/ _global_closure($global_g_key, "__tests__/tags/child.marko_0_$global_g#6/subscribe");
+const $input_a__OR__input_b__OR__$global_g = /*@__PURE__*/ _global_or(/*@__PURE__*/ _or_patch("__tests__/tags/child.marko_0_input_a#3_input_b#4_$global_g#6/setup", 5, ($scope) => _text($scope["#text/0"], $scope.input_a + $scope.input_b + _global_read($scope.$global, "g"))), $global_g);
 const $input_a = /*@__PURE__*/ _const("input_a", $input_a__OR__input_b__OR__$global_g);
 const $input_b = /*@__PURE__*/ _const("input_b", $input_a__OR__input_b__OR__$global_g);
 const $input$1 = ($scope, input) => {

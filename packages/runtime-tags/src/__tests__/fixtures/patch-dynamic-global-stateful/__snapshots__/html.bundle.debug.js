@@ -8,7 +8,7 @@ var card_default = _template("__tests__/card.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<em>${_text_mark($scope0_id, "#text/0", $global$1.brand, 1, 4, 0)}</em>`);
-	_fill_global_subscribe("__tests__/card.marko_0_$global_brand#4/subscribe", $scope0_id);
+	_global_subscribe("__tests__/card.marko_0_$global_brand#4/subscribe", $scope0_id);
 	_scope($scope0_id, {}, "__tests__/card.marko", 0);
 });
 

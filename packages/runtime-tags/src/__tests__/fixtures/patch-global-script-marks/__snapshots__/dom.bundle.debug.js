@@ -16,18 +16,18 @@ const $input_v9 = ($scope, input_v9) => _text($scope["#text/8"], input_v9);
 const $input_v10 = ($scope, input_v10) => _text($scope["#text/9"], input_v10);
 const $input_v11 = ($scope, input_v11) => _text($scope["#text/10"], input_v11);
 const $input_v12 = ($scope, input_v12) => _text($scope["#text/11"], input_v12);
-const $global_brand_key = /*@__PURE__*/ _global_key("$global_brand/30", "brand");
-const $global_brand = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global_brand#30/subscribe", $global_brand_key, ($scope) => {
-	$global_brand__script($scope);
-	_text($scope["#text/13"], $scope.$global.brand);
-});
+const $global_brand_key = /*@__PURE__*/ _global_key("brand");
+const $global_brand = /*@__PURE__*/ _global_closure($global_brand_key, 0, ($scope) => _text($scope["#text/13"], $scope.$global.brand));
 const $global_brand__script = _global_script("__tests__/template.marko_0_$global_brand#30", ($scope) => {
 	{
 		const el = document.querySelector("main");
 		el.dataset.g = (el.dataset.g || "") + "[" + $scope.$global.brand + "]";
 	}
-}, $global_brand);
-const $setup = $global_brand;
+}, /*@__PURE__*/ _global_closure($global_brand_key));
+function $setup($scope) {
+	$global_brand__script($scope);
+	$global_brand($scope);
+}
 const $input_label__script = _script_patch("__tests__/template.marko_0_input_label#28 input_label", ($scope) => {
 	{
 		const el = document.querySelector("main");

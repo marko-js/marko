@@ -514,16 +514,19 @@ _Avoid_: server-required param
 **`$global` key**:
 In a patch build, the binding a read of `$global` references as its expression
 evaluates: the key it reads under (an effect's, the deepest path it reads, so it
-runs again only when that changes). It has no slot and never arrives. A template
-registers it once (`_global_key`), by the paths it reads under it. Each section
-reading it has the key's signal, which setup runs: it enters the scope into the
-key's set at its position, as a closure subscriber does (`_global_closure`), or,
-in an `<if>` or `<for>` body whose scopes resume into its owner, the owner, once
-per instance (`_global_if`, `_global_for`). A patch changing the key runs those
-signals on this render's scopes, and the joins of the key with a section's values
-at their slot (`_global_or`). An effect reading it subscribes its scope as it
-resumes, and a document subscribes one only where the client re-runs the read.
-_Avoid_: part, global part, `$global` join, `$global` signal, `$global` member
+runs again only when that changes). It has no slot and never arrives at an
+intersection. A template declares it once per set of paths it reads under it
+(`_global_key`), holding each signal that reads it with the scopes that signal runs
+on. Each section reading it has the key's signal (`_global_closure`), which setup
+runs where the section reads the key alone; an intersection's or an effect's run
+subscribes the scope otherwise. In an `<if>` or `<for>` body whose scopes resume into
+its owner, the owner subscribes, once per instance, and a change walks the body
+(`_global_if`, `_global_for`). A patch changing the key runs its signals on this
+render's scopes, with the intersections of the key with a section's values
+(`_global_or`) and the effects reading it (`_global_script`). A document subscribes a
+scope only where the client re-runs a read no effect's resume subscribes.
+_Avoid_: part, global part, `$global` join, `$global` signal, `$global` member, key
+registration, effect subscriber
 
 **Stable**:
 A binding or expression with no sources, so fixed for its scope's lifetime: a
@@ -550,8 +553,9 @@ _Avoid_: capture path, patch section
 **Patch fill**:
 A fill lands one of two ways. It runs a registered _fill_ only where the hole
 is state a server value keeps reaching: a `<let>`'s declaration (`_fill_let`,
-`_fill_let_change`, `_fill_let_resume`), which reaches every read, and
-`$global`'s per-read setup (`_fill_global*`). Every other fill _writes_ the slot
+`_fill_let_change`, `_fill_let_resume`), which reaches every read, and a
+`$global` key's declaration (`_global_key`), which runs the key's signals. Every
+other fill _writes_ the slot
 (`_patch_write`, `PatchKey.Write`).
 _Avoid_: deliver/delivery, forwarder
 

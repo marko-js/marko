@@ -22,7 +22,7 @@ var pass_default = _template("c", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	label_text_default({ v: input.x + $global$1.suffix });
 	_patch_child_end();
-	_fill_global_subscribe("c0", $scope0_id, _client_guard($scope0_reason, 0));
+	_global_subscribe("c0", $scope0_id, _client_guard($scope0_reason, 0));
 	$ui__input_x && _patch_write($scope0_id, "wd", input.x, 1);
 	_scope($scope0_id, {
 		d: $ui__input_x && input.x,

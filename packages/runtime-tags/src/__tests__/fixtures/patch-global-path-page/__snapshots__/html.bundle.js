@@ -11,6 +11,8 @@ var template_default = _template("a", (input) => {
 		{
 			const $scope1_id = _scope_id();
 			_html(`<b>${_text_mark($scope1_id, "a", $global$1.a + $global$1.c, $scope0_page)}</b>`);
+			_global_subscribe("a0", $scope0_id, 1);
+			_global_subscribe("a1", $scope0_id, 1);
 			_scope($scope1_id, {});
 			return 0;
 		}
@@ -19,13 +21,11 @@ var template_default = _template("a", (input) => {
 	_for_until(1, 0, 1, (i) => {
 		const $scope2_id = _scope_id();
 		_html(`<li>${_text_mark($scope2_id, "a", $global$1.a + $global$1.c, $scope0_page)}</li>`);
+		_global_subscribe("a2", $scope0_id, 1);
+		_global_subscribe("a3", $scope0_id, 1);
 		_scope($scope2_id, {});
 	}, 0, $scope0_id, "c", 1, 1, 1, "</ul>", 1);
 	_html(`<div></div>${_el_mark($scope0_id, "d")}<div></div>${_el_mark($scope0_id, "e")}<div></div>${_el_mark($scope0_id, "f")}<div></div>${_el_mark($scope0_id, "g")}<div></div>${_el_mark($scope0_id, "h")}`);
-	_fill_global_subscribe("a0", $scope0_id, 1);
-	_fill_global_subscribe("a1", $scope0_id, 1);
-	_fill_global_subscribe("a2", $scope0_id, 1);
-	_fill_global_subscribe("a3", $scope0_id, 1);
 	_script($scope0_id, "a4");
 	_script($scope0_id, "a5");
 	_script($scope0_id, "a6");

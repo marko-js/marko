@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_text_mark($scope1_id, "a", $global$1.brand, 1, 4, 0)}</em>`);
-			_fill_global_subscribe("a0", $scope1_id);
+			_global_subscribe("a0", $scope1_id);
 			_scope($scope1_id, {});
 		}, $scope0_id) })
 	});

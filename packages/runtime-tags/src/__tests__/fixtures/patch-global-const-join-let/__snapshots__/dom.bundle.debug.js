@@ -19,12 +19,12 @@ const $flag = /*@__PURE__*/ _const("flag", ($scope) => {
 	$off($scope, !$scope.flag);
 	$on__OR__flag($scope);
 });
-const $global_flag_key = /*@__PURE__*/ _global_key("$global_flag/18", "flag");
-const $global_flag = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global_flag#6/subscribe", $global_flag_key, ($scope) => $flag($scope, $scope.$global.flag));
+const $global_flag_key = /*@__PURE__*/ _global_key("flag");
+const $global_flag = /*@__PURE__*/ _global_closure($global_flag_key, "__tests__/template.marko_0_$global_flag#6/subscribe", ($scope) => $flag($scope, $scope.$global.flag));
 const $pattern2 = ($scope, $pattern) => $user_name($scope, $pattern.user?.name);
 const $g = ($scope, g) => $g_flag($scope, g?.flag);
-const $global_key = /*@__PURE__*/ _global_key("$global/5/17");
-const $global2 = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global#5/subscribe", $global_key, ($scope) => {
+const $global_key = /*@__PURE__*/ _global_key();
+const $global2 = /*@__PURE__*/ _global_closure($global_key, "__tests__/template.marko_0_$global#5/subscribe", ($scope) => {
 	$pattern2($scope, $scope.$global);
 	$g($scope, $scope.$global);
 });

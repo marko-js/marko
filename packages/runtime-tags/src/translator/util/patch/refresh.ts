@@ -1361,8 +1361,8 @@ export interface CreatedSetup {
 const [getRenderedIntersections] = createAnalysisMemo((section: Section) => {
   const intersections: Intersection[] = [];
   for (const intersection of section.intersections!.keys()) {
-    // A join with `$global` keys that setup, one value or another intersection runs
-    // renders as their work, with no setup of its own.
+    // An intersection with `$global` keys that setup, one value or another intersection
+    // runs renders as their work, with no setup of its own.
     if (
       !some(intersection, isConstant) &&
       Array.isArray(withoutGlobals(intersection)) &&

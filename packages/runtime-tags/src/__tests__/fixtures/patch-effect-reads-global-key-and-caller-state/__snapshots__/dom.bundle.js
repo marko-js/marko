@@ -1,6 +1,6 @@
 // tags/child.marko
-const $input_page__OR__input_n__OR__$global_user_name = /*@__PURE__*/ _global_or(6, ($scope) => $input_page__OR__input_n__OR__$global_user_name__script($scope), /* @__PURE__ */ _global_closure("b4", /* @__PURE__ */ _global_key(9, "user", "name")));
-const $input_page__OR__input_n__OR__$global_user_name__script = _global_script(_filled_id("b1 d e"), ($scope) => $scope.a.textContent = $scope.$.user.name + ":" + $scope.d + $scope.e, $input_page__OR__input_n__OR__$global_user_name);
+const $global_user_name = /*@__PURE__*/ _global_closure(/* @__PURE__ */ _global_key("user", "name"));
+const $input_page__OR__input_n__OR__$global_user_name = _global_script(_filled_id("b1 d e"), ($scope) => $scope.a.textContent = $scope.$.user.name + ":" + $scope.d + $scope.e, $global_user_name);
 const $input_page__OR__input_n__script = _script_patch("b0 d e", ($scope) => $scope.a.title = $scope.d + $scope.e);
 const $input_page__OR__input_n = /*@__PURE__*/ _or_patch("b2", 5, ($scope) => {
 	$input_page__OR__input_n__OR__$global_user_name($scope);

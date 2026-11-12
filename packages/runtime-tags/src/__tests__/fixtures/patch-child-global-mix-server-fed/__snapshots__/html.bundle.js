@@ -8,8 +8,8 @@ var gm_default = _template("b", (input) => {
 	const $global$2 = $global();
 	const z = input.v + $global$2.flag;
 	_html(`<p>${_text_mark($scope0_id, "a", z + $global$2.mark, 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</p>`);
-	_fill_global_subscribe("b0", $scope0_id, _client_guard($scope0_reason, 0));
-	_fill_global_subscribe("b1", $scope0_id);
+	_global_subscribe("b0", $scope0_id, _client_guard($scope0_reason, 0));
+	_global_subscribe("b1", $scope0_id);
 	$ui__input_v && _patch_write($scope0_id, "wd", input.v, 1);
 	_scope($scope0_id, {
 		d: $ui__input_v && input.v,
@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 	gm_default({ v: $global$1.brand });
 	_patch_child_end();
 	_html(`<button>${_text_mark($scope0_id, "c", count)}</button>${_el_mark($scope0_id, "b")}</main>`);
-	_fill_global_subscribe("a0", $scope0_id);
+	_global_subscribe("a0", $scope0_id);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		d: count,

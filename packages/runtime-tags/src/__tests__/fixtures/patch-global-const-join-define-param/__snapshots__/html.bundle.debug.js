@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/0", $scope1_page || $wg__v, $scope1_page || $wg__v, 0, 0, 1);
-		_fill_global_subscribe("__tests__/template.marko_1_$global_flag#0:10/subscribe", $scope1_id);
+		_global_subscribe("__tests__/template.marko_1_$global_flag#0:10/subscribe", $scope1_id);
 		_patch_write($scope1_id, "PatchWrite:v", v, 1);
 		_patch_render($scope1_id, "__tests__/template.marko_1_v#3_flag#4/setup", "flag", 6, 0);
 		_scope($scope1_id, {

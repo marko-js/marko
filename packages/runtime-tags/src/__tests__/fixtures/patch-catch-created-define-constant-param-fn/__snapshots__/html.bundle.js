@@ -11,7 +11,9 @@ _shells({
 	a0: "a0;D ;<span> </span>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_error = _client_guard($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
+	_any_client_guard($scope0_reason);
+	const $cg__input_error = _client_guard($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_error__closures = /* @__PURE__ */ new Set();
 	const D = { content: _content("a3", ({ on }) => {

@@ -9,7 +9,9 @@ _shells({
 	a3: "a3;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_fail = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_fail = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $ui__input_fail = _unfilled_if($scope0_reason, 2), $wi__input_fail = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason();
+	_any_client_guard($scope0_reason);
+	const $cg__input_fail = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_fail = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $ui__input_fail = _unfilled_if($scope0_reason, 2), $wi__input_fail = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_fail__closures = /* @__PURE__ */ new Set();
 	_html("<main>");

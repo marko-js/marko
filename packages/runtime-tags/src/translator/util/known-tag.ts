@@ -129,12 +129,7 @@ import {
   type Section,
 } from "./sections";
 import { addSetupExpr, addSetupWork } from "./setup-work";
-import {
-  addParamFill,
-  getParamEntries,
-  inCatchWithoutClientWork,
-  type ParamFill,
-} from "./shell";
+import { addParamFill, getParamEntries, type ParamFill } from "./shell";
 import {
   addStatement,
   getResumeRegistryId,
@@ -459,8 +454,7 @@ export function knownTagTranslateHTML(
       getCallerGroupBit(section, "_unfilled_if", childScopeReason) !== 0;
     // In a `@catch` of a template with no client work, only where a caller's client state
     // loads its module.
-    const callerClient =
-      inCatchWithoutClientWork(section) && getCallerClientGuard();
+    const callerClient = getCallerClientGuard(section);
     const guardVar = (expr: t.Expression) =>
       keyed
         ? andGuard(

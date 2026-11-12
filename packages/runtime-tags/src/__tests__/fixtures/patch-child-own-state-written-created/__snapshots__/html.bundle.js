@@ -7,7 +7,7 @@ var gm_badge_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<p>${_text_mark($scope0_id, "a", input.value + $global$1.flag, 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</p>`);
-	_fill_global_subscribe("b0", $scope0_id, _client_guard($scope0_reason, 0));
+	_global_subscribe("b0", $scope0_id, _client_guard($scope0_reason, 0));
 	$ui__input_value && _patch_write($scope0_id, "wd", input.value, 1);
 	_scope($scope0_id, { d: $ui__input_value && input.value });
 });

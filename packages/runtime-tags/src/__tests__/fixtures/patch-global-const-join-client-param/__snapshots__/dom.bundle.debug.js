@@ -7,8 +7,8 @@ const $input_on__OR__flag = /*@__PURE__*/ _or_patch("__tests__/tags/gate.marko_0
 	$if($scope, $scope.flag && $scope.input_on ? 0 : 1);
 });
 const $flag = /*@__PURE__*/ _const("flag", $input_on__OR__flag);
-const $global_flag_key = /*@__PURE__*/ _global_key("$global_flag/8", "flag");
-const $global_flag = /*@__PURE__*/ _global_closure("__tests__/tags/gate.marko_0_$global_flag#5/subscribe", $global_flag_key, ($scope) => $flag($scope, $scope.$global.flag));
+const $global_flag_key = /*@__PURE__*/ _global_key("flag");
+const $global_flag = /*@__PURE__*/ _global_closure($global_flag_key, "__tests__/tags/gate.marko_0_$global_flag#5/subscribe", ($scope) => $flag($scope, $scope.$global.flag));
 const $setup$1 = $global_flag;
 const $input_on = /*@__PURE__*/ _const("input_on", $input_on__OR__flag);
 const $input = ($scope, input) => $input_on($scope, input.on);

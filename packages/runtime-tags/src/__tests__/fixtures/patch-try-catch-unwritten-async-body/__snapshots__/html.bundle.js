@@ -8,6 +8,7 @@ _shells({
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
+	_any_client_guard($scope0_reason);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<main><p>${_text_mark($scope0_id, "a", input.label, 1, $scope0_reason, 0)}</p>`);
@@ -18,7 +19,7 @@ var template_default = _template("a", (input) => {
 			_scope_id();
 			_html("<em>static</em>");
 		}, 1, "a0");
-		_fill_global_subscribe("a4", $scope1_id);
+		_global_subscribe("a4", $scope1_id);
 	}, void 0, () => {
 		_scope_reason();
 		_scope_id();

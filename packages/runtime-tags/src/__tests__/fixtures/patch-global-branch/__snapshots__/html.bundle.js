@@ -39,6 +39,6 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "c", 1, $scope0_page, 1, 0, 0, ["a1"]);
 	_trailers("</body></html>");
-	_fill_global_subscribe("a2", $scope0_id);
+	_global_subscribe("a2", $scope0_id);
 	_scope($scope0_id, {});
 }, 1);

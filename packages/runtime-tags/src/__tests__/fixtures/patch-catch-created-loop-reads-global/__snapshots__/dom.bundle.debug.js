@@ -4,8 +4,8 @@ const $walks = "b%c";
 function boom(msg) {
 	throw new Error(msg);
 }
-const $global_label_key = /*@__PURE__*/ _global_key("$global_label/8", "label");
-const $for_content__$global_label = /*@__PURE__*/ _global_for("__tests__/template.marko_3_$global_label#0:15/subscribe", $global_label_key, "#text/1", ($scope) => _text($scope["#text/1"], $scope.$global.label));
+const $global_label_key = /*@__PURE__*/ _global_key("label");
+const $for_content__$global_label = /*@__PURE__*/ _global_for($global_label_key, "#text/1", "__tests__/template.marko_3_$global_label#0:15/subscribe", ($scope) => _text($scope["#text/1"], $scope.$global.label));
 const $for_content__setup = ($scope) => {
 	_text($scope["#text/0"], $scope["#LoopKey"]);
 	$for_content__$global_label($scope);

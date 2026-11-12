@@ -1,10 +1,10 @@
 // tags/logger.marko
 const $template$1 = "<div></div>";
 const $walks$1 = "b";
-const $global_brand_key = /*@__PURE__*/ _global_key("$global_brand/1", "brand");
-const $global_brand = /*@__PURE__*/ _global_closure("__tests__/tags/logger.marko_0_$global_brand#3/subscribe", $global_brand_key, ($scope) => $global_brand__script($scope));
+const $global_brand_key = /*@__PURE__*/ _global_key("brand");
+const $global_brand = /*@__PURE__*/ _global_closure($global_brand_key);
 const $global_brand__script = _global_script("__tests__/tags/logger.marko_0_$global_brand#3", ($scope) => document.querySelector("div").dataset.log = "ran:" + $scope.$global.brand, $global_brand);
-const $setup$1 = $global_brand;
+const $setup$1 = $global_brand__script;
 var logger_default = /*@__PURE__*/ _template("__tests__/tags/logger.marko", $template$1, "b", $setup$1);
 
 // template.marko

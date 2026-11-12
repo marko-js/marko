@@ -14,8 +14,8 @@ const $await_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<a> </a>",
 const $await_content__$params = ($scope, $params2) => $await_content__for($scope, [$params2[0]]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "b%");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $global_data_key = /*@__PURE__*/ _global_key("$global_data/6", "data", "params", 0, "data", "items");
-const $try_content__$global_data = /*@__PURE__*/ _global_closure("__tests__/template.marko_1_$global_data#0:5/subscribe", $global_data_key, ($scope) => $try_content__await_promise($scope, $scope.$global.data.items));
+const $global_data_key = /*@__PURE__*/ _global_key("data", "params", 0, "data", "items");
+const $try_content__$global_data = /*@__PURE__*/ _global_closure($global_data_key, "__tests__/template.marko_1_$global_data#0:5/subscribe", ($scope) => $try_content__await_promise($scope, $scope.$global.data.items));
 const $try_content__setup = ($scope) => {
 	$await_content($scope);
 	$try_content__$global_data($scope);
@@ -23,7 +23,7 @@ const $try_content__setup = ($scope) => {
 const $params4 = ($scope, params) => $params_q($scope, params?.q);
 const $params_q__closure = /*@__PURE__*/ _closure($for_content__params_q);
 const $params_q = /*@__PURE__*/ _const("params_q", $params_q__closure);
-const $global_data = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global_data#5/subscribe", $global_data_key, ($scope) => $params4($scope, $scope.$global.data.params));
+const $global_data = /*@__PURE__*/ _global_closure($global_data_key, "__tests__/template.marko_0_$global_data#5/subscribe", ($scope) => $params4($scope, $scope.$global.data.params));
 const $try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {}));
 function $setup($scope) {

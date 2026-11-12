@@ -3,7 +3,7 @@ import assert from "node:assert";
 import type { TestConfig } from "../../main.test";
 
 // A `$global` key read as a hole the patch fills, and a path under it in an effect: the
-// effect runs by the path's own registration, not as a forward of the key.
+// effect runs by the path's own declaration, not as a forward of the key.
 export const config: TestConfig = {
   patches: true,
   steps: [

@@ -69,7 +69,7 @@ export {
   _any_client_guard,
   _client_guard,
   _client_branch,
-  _fill_global_subscribe,
+  _global_subscribe,
   _filled_guard,
   getUpdatesFrom as _updates_from,
   _page_render,

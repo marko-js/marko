@@ -11,7 +11,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko;D%;<main><!></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $scope0_client = _any_client_guard($scope0_reason);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html("<main>");
@@ -21,10 +21,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_await($scope1_id, "#text/0", $global$1.promise, (v) => {
 			const $scope4_id = _scope_id();
 			_html(`<em>${_text_mark($scope4_id, "#text/0", $global$1.name, 1, 4, 0)} ${_text_mark($scope4_id, "#text/1", v, 2, 4, 0)}</em>`);
-			_fill_global_subscribe("__tests__/template.marko_4_$global_name#0:9/subscribe", $scope4_id);
+			_global_subscribe("__tests__/template.marko_4_$global_name#0:9/subscribe", $scope4_id);
 			_scope($scope4_id, {}, "__tests__/template.marko", "3:6");
 		}, 1, "__tests__/template.marko_4*content", void 0, 1);
-		_fill_global_subscribe("__tests__/template.marko_1_$global_promise#0:7/subscribe", $scope1_id);
+		_global_subscribe("__tests__/template.marko_1_$global_promise#0:7/subscribe", $scope1_id);
 	}, () => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();

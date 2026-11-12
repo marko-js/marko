@@ -9,7 +9,7 @@ var greet_default = _template("b", (input) => {
 	const double = input.n * 2;
 	_html(`<span>${_text_mark($scope0_id, "a", $global$1.locale, 1, 4, 0)}</span>`);
 	const $return = double;
-	_fill_global_subscribe("b0", $scope0_id);
+	_global_subscribe("b0", $scope0_id);
 	_scope($scope0_id, {});
 	return $return;
 });

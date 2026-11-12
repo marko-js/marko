@@ -5,7 +5,8 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var widget_default = _template("b", (input) => {
-	_scope_reason();
+	const $scope0_reason = _scope_reason();
+	_any_client_guard($scope0_reason);
 	const $scope0_id = _scope_id();
 	_try($scope0_id, "a", () => {
 		_scope_reason();

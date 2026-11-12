@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 			const $scope2_reason = _scope_reason(), $wi__y = _write_if($scope2_reason, 0);
 			const b = value + y;
 			_html(`<p>${_text_mark($scope2_id, "a", b + $global$1.suffix, 1, 6, 0)}</p>`);
-			_fill_global_subscribe("a1", $scope2_id, 1);
+			_global_subscribe("a1", $scope2_id, 1);
 			_patch_write($scope2_id, "wd", y, 1);
 			_unfilled_if(6, 0) && _patch_subscribe($scope2_id, "a2");
 			_patch_render($scope2_id, "a3");

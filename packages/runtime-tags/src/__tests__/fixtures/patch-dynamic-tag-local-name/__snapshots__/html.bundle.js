@@ -5,7 +5,7 @@ var alpha_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<i>A ${_text_mark($scope0_id, "a", $global$1.brand, 2, 4, 0)}</i>`);
-	_fill_global_subscribe("b0", $scope0_id);
+	_global_subscribe("b0", $scope0_id);
 	_scope($scope0_id, {});
 });
 

@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_text_mark($scope1_id, "a", $global$1.brand, 1, 4, 0)}</em>`);
-			_fill_global_subscribe("a0", $scope1_id);
+			_global_subscribe("a0", $scope1_id);
 			_scope($scope1_id, {});
 		}, $scope0_id)
 	});
@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 					_scope_reason();
 					const $scope3_id = _scope_id();
 					_html(`<i>${_text_mark($scope3_id, "a", $global$1.brand, 1, 4, 0)}</i>`);
-					_fill_global_subscribe("a2", $scope3_id);
+					_global_subscribe("a2", $scope3_id);
 					_scope($scope3_id, {});
 				}, $scope2_id, 0)
 			});

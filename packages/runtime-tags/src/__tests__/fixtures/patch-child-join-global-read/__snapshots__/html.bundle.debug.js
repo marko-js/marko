@@ -8,7 +8,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<p>${_text_mark($scope0_id, "#text/0", input.a + input.b + $global$1.g, 1, (2 | $uf__input_a__OR__input_b) << 1, 0)}</p>`);
-	_fill_global_subscribe("__tests__/tags/child.marko_0_$global_g#6/subscribe", $scope0_id, _client_guard((2 | $uf__input_a__OR__input_b) << 1, 0));
+	_global_subscribe("__tests__/tags/child.marko_0_$global_g#6/subscribe", $scope0_id, _client_guard((2 | $uf__input_a__OR__input_b) << 1, 0));
 	_patch_render($scope0_id, "__tests__/tags/child.marko_0_input_a#3_input_b#4_$global_g#6/setup", (($fg__input_a ? " input_a" : "") + ($fg__input_b ? " input_b" : "")).slice(1), (2 | $uf__input_a__OR__input_b) << 1, 0);
 	_scope($scope0_id, {
 		input_a: $ui__input_a__OR__input_b && input.a,

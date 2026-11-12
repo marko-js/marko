@@ -187,8 +187,8 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
         exprBindings.constantBindings,
       );
       if (every(exprBindings.referencedBindings, isGlobalBinding)) {
-        // With no resolved references but `$global` keys, which never arrive, setup
-        // runs any statement this expression keys.
+        // With no resolved references but `$global` keys, which never arrive at an
+        // intersection, setup runs any statement this expression keys.
         addSetupWork(expr.section);
       }
       forEach(exprBindings.lazyBindings, markLazyRead);

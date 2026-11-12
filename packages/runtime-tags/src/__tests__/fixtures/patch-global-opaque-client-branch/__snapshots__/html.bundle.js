@@ -8,7 +8,6 @@ var template_default = _template("a", (input) => {
 	let open = false;
 	_html(`<button>t</button>${_el_mark($scope0_id, "a")}`);
 	_if(() => {}, $scope0_id, "b", 1, 1, 0, 0, 1);
-	_fill_global_subscribe("a0", $scope0_id, 1);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, { c: open });
 }, 1);

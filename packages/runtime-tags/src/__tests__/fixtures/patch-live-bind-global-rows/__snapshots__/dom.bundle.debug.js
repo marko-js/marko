@@ -35,8 +35,8 @@ const $for_content__setup = ($scope) => {
 };
 const $for_content__$params = ($scope, $params2) => $for_content__row_qty($scope, $params2[0]?.qty);
 const $for = /*@__PURE__*/ _for_of("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b"), $for_content__setup, $for_content__$params);
-const $global_rows_key = /*@__PURE__*/ _global_key("$global_rows/2", "rows");
-const $global_rows = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global_rows#7/subscribe", $global_rows_key, ($scope) => $for($scope, [$scope.$global.rows, "id"]));
+const $global_rows_key = /*@__PURE__*/ _global_key("rows");
+const $global_rows = /*@__PURE__*/ _global_closure($global_rows_key, "__tests__/template.marko_0_$global_rows#7/subscribe", ($scope) => $for($scope, [$scope.$global.rows, "id"]));
 const $setup = $global_rows;
 const $valueChange = ($scope) => (_new_qty) => $for_content__qty($scope, _new_qty);
 _resumed["__tests__/template.marko_1/valueChange"] = $valueChange;

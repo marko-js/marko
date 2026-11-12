@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 		if ($global$1.enabled && false);
 	}, $scope0_id, "a", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_mark($scope0_id, "b")}</main>`);
-	_fill_global_subscribe("a0", $scope0_id, 1);
+	_global_subscribe("a0", $scope0_id, 1);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, { c: count });
 }, 1);

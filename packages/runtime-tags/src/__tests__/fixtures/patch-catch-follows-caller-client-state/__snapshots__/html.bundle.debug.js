@@ -13,7 +13,7 @@ _shells({
 	"__tests__/tags/child.marko": "__tests__/tags/child.marko;D l%b%;<p> </p><!><!><!>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $cg__input_early = _client_guard($scope0_reason, 2), $cg__input_late = _client_guard($scope0_reason, 3), $wi__input_label = _write_if($scope0_reason, 1), $wi__input_early = _write_if($scope0_reason, 2), $wi__input_late = _write_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $scope0_client = _any_client_guard($scope0_reason), $cg__input_label = _client_guard($scope0_reason, 1), $cg__input_early = _client_guard($scope0_reason, 2), $cg__input_late = _client_guard($scope0_reason, 3), $wi__input_label = _write_if($scope0_reason, 1), $wi__input_early = _write_if($scope0_reason, 2), $wi__input_late = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $input_early__closures = new Set();
@@ -30,10 +30,10 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<b>${_text_mark($scope1_id, "#text/0", $global$1.label, 1, 4, 0)} ${_text_mark($scope1_id, "#text/1", input.label, 2, $scope0_reason, 1)} ${_text_mark($scope1_id, "#text/2", err.message, 2, 4, 0)}</b>`);
-		_any_client_guard($scope0_reason) && _fill_global_subscribe("__tests__/tags/child.marko_1_$global_label#0:13/subscribe", $scope1_id);
-		_any_client_guard($scope0_reason) && _patch_render($scope1_id, "__tests__/tags/child.marko_1_$global_label#0:13/subscribe");
-		_any_client_guard($scope0_reason) && _unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/child.marko_1_input_label#0:6/subscribe", $cg__input_label);
-		_subscribe(_any_client_guard($scope0_reason) && _unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "7:4"), _any_client_guard($scope0_reason) && $cg__input_label && "__tests__/tags/child.marko_1_input_label#0:6/subscribe");
+		$scope0_client && _global_subscribe("__tests__/tags/child.marko_1_$global_label#0:13/subscribe", $scope1_id);
+		$scope0_client && _patch_render($scope1_id, "__tests__/tags/child.marko_1_$global_label#0:13/subscribe");
+		$scope0_client && _unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/child.marko_1_input_label#0:6/subscribe", $cg__input_label);
+		_subscribe($scope0_client && _unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "7:4"), $scope0_client && $cg__input_label && "__tests__/tags/child.marko_1_input_label#0:6/subscribe");
 	}, 0, "__tests__/tags/child.marko_1*content", "__tests__/tags/child.marko_2*content", 1, 1, 1);
 	_try($scope0_id, "#text/2", () => {
 		const $scope4_reason = _scope_reason();
@@ -45,13 +45,13 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
 		_html(`<b>${_text_mark($scope3_id, "#text/0", $global$1.label, 1, 4, 0)} ${_text_mark($scope3_id, "#text/1", input.label, 2, $scope0_reason, 1)} ${_text_mark($scope3_id, "#text/2", err.message, 2, 4, 0)}</b>`);
-		_any_client_guard($scope0_reason) && _fill_global_subscribe("__tests__/tags/child.marko_3_$global_label#0:13/subscribe", $scope3_id);
-		_any_client_guard($scope0_reason) && _patch_render($scope3_id, "__tests__/tags/child.marko_3_$global_label#0:13/subscribe");
-		_any_client_guard($scope0_reason) && _unfilled_if($scope0_reason, 1) && _patch_subscribe($scope3_id, "__tests__/tags/child.marko_3_input_label#0:6/subscribe", $cg__input_label);
-		_subscribe(_any_client_guard($scope0_reason) && _unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope3_id, {
+		$scope0_client && _global_subscribe("__tests__/tags/child.marko_3_$global_label#0:13/subscribe", $scope3_id);
+		$scope0_client && _patch_render($scope3_id, "__tests__/tags/child.marko_3_$global_label#0:13/subscribe");
+		$scope0_client && _unfilled_if($scope0_reason, 1) && _patch_subscribe($scope3_id, "__tests__/tags/child.marko_3_input_label#0:6/subscribe", $cg__input_label);
+		_subscribe($scope0_client && _unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope3_id, {
 			_: _scope_with_id($scope0_id),
 			"ClosureSignalIndex:input_label/9": $wi__input_label && 1
-		}, "__tests__/tags/child.marko", "11:4"), _any_client_guard($scope0_reason) && $cg__input_label && "__tests__/tags/child.marko_3_input_label#0:6/subscribe");
+		}, "__tests__/tags/child.marko", "11:4"), $scope0_client && $cg__input_label && "__tests__/tags/child.marko_3_input_label#0:6/subscribe");
 	}, 0, "__tests__/tags/child.marko_3*content", "__tests__/tags/child.marko_4*content", 1, 1, 1);
 	_scope($scope0_id, {
 		input_label: input.label,

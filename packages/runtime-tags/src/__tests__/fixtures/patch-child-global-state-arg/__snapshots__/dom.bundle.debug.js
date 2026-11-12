@@ -9,9 +9,9 @@ var label_text_default = /*@__PURE__*/ _template("__tests__/tags/label-text.mark
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button> </button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& D l`)("D l");
-const $global_suffix_key = /*@__PURE__*/ _global_key("$global_suffix/6", "suffix");
-const $global_suffix = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global_suffix#5/subscribe", $global_suffix_key);
-const $count__OR__$global_suffix = /*@__PURE__*/ _global_or(4, ($scope) => $input_v($scope["#childScope/0"], $scope.count + _global_read($scope.$global, "suffix")), $global_suffix);
+const $global_suffix_key = /*@__PURE__*/ _global_key("suffix");
+const $global_suffix = /*@__PURE__*/ _global_closure($global_suffix_key, "__tests__/template.marko_0_$global_suffix#5/subscribe");
+const $count__OR__$global_suffix = /*@__PURE__*/ _global_or(($scope) => $input_v($scope["#childScope/0"], $scope.count + _global_read($scope.$global, "suffix")), $global_suffix);
 const $count = _let("count/3", ($scope) => {
 	_text($scope["#text/2"], $scope.count);
 	$count__OR__$global_suffix($scope);

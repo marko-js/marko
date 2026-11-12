@@ -34,8 +34,8 @@ const $data = /*@__PURE__*/ _const("data", ($scope) => {
 	$summary($scope, summarize($scope.data));
 	$data__OR__summary($scope);
 });
-const $global_data_key = /*@__PURE__*/ _global_key("$global_data/16", "data");
-const $global_data = /*@__PURE__*/ _global_closure("__tests__/tags/panel.marko_0_$global_data#4/subscribe", $global_data_key, ($scope) => $data($scope, $scope.$global.data));
+const $global_data_key = /*@__PURE__*/ _global_key("data");
+const $global_data = /*@__PURE__*/ _global_closure($global_data_key, "__tests__/tags/panel.marko_0_$global_data#4/subscribe", ($scope) => $data($scope, $scope.$global.data));
 const $count = /*@__PURE__*/ _fill_let("__tests__/tags/panel.marko_0_count#10/fill", "count/10", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	$for_content__count($scope);

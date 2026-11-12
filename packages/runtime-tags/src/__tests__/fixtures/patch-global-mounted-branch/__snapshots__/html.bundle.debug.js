@@ -13,12 +13,12 @@ var badge_default = _template("__tests__/tags/badge.marko", (input) => {
 		if (count >= 0) {
 			const $scope1_id = _scope_id();
 			_html(`<i>${_text_mark($scope1_id, "#text/0", $global$1.brand, $scope0_page)}</i>`);
+			_global_subscribe("__tests__/tags/badge.marko_1_$global_brand#0:8/subscribe", $scope0_id, 1);
 			_script($scope1_id, "__tests__/tags/badge.marko_1_$global#0:7", $scope0_page);
 			_scope($scope1_id, {}, "__tests__/tags/badge.marko", "3:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/2", 1, 1, 0, 0, 1);
-	_fill_global_subscribe("__tests__/tags/badge.marko_1_$global_brand#0:8/subscribe", $scope0_id, 1);
 	_script($scope0_id, "__tests__/tags/badge.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/badge.marko_0_count#3/fill", count, 1);
 	_scope($scope0_id, { count }, "__tests__/tags/badge.marko", 0, { count: "1:6" });

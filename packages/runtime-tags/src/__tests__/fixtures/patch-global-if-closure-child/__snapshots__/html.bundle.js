@@ -5,7 +5,7 @@ var brand_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$2 = $global();
 	_html(`<b>${_text_mark($scope0_id, "a", $global$2.brand, 1, 4, 0)}</b>`);
-	_fill_global_subscribe("b0", $scope0_id);
+	_global_subscribe("b0", $scope0_id);
 	_scope($scope0_id, {});
 });
 
@@ -25,11 +25,11 @@ var template_default = _template("a", (input) => {
 			_patch_child(0);
 			brand_default({});
 			_patch_child_end();
+			_global_subscribe("a0", $scope0_id, 1);
 			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b");
-	_fill_global_subscribe("a0", $scope0_id, 1);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, { c: on });
 }, 1);

@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			let x = 1;
 			let y = x + $global$1.n;
 			_html(`<span></span>${_el_mark($scope1_id, "#span/0")}<button>${_text_mark($scope1_id, "#text/2", x)}</button>${_el_mark($scope1_id, "#button/1")}`);
-			_fill_global_subscribe("__tests__/template.marko_1_$global_n#0:7/subscribe", $scope1_id, 1);
+			_global_subscribe("__tests__/template.marko_1_$global_n#0:7/subscribe", $scope1_id, 1);
 			_script($scope1_id, "__tests__/template.marko_1");
 			_script($scope1_id, "__tests__/template.marko_1_y#5");
 			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_x#3/fill", x, 1);

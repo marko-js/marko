@@ -13,7 +13,7 @@ var show_await_default = _template("b", (input) => {
 	_await($scope0_id, "a", input.promise, (x) => {
 		const $scope1_id = _scope_id();
 		_html(`<p>${_text_mark($scope1_id, "a", $global$1.brand + ":" + x, 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</p>`);
-		_fill_global_subscribe("b0", $scope1_id, _client_guard($scope0_reason, 0));
+		_global_subscribe("b0", $scope1_id, _client_guard($scope0_reason, 0));
 		_scope($scope1_id, { c: _unfilled_if($scope0_reason, 0) && x });
 	}, 1, "b1", _unfilled_if($scope0_reason, 0) && 2, 1);
 });

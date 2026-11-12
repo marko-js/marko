@@ -17,7 +17,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko;b%b%;<!><!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_early = _client_guard($scope0_reason, 1), $cg__input_late = _client_guard($scope0_reason, 2), $wi__input_early = _write_if($scope0_reason, 1), $wi__input_late = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $scope0_client = _any_client_guard($scope0_reason), $cg__input_early = _client_guard($scope0_reason, 1), $cg__input_late = _client_guard($scope0_reason, 2), $wi__input_early = _write_if($scope0_reason, 1), $wi__input_late = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_early__closures = new Set();
 	const $input_late__closures = new Set();
@@ -37,11 +37,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<i>${_text_mark($scope4_id, "#text/0", v, 1, 4, 0)}</i>`);
 			_scope($scope4_id, {}, "__tests__/template.marko", "8:6");
 		}, 1, "__tests__/template.marko_4*content");
-		_any_client_guard($scope0_reason) && _fill_global_subscribe("__tests__/template.marko_3_$global_label#0:10/subscribe", $scope3_id);
-		_any_client_guard($scope0_reason) && _fill_global_subscribe("__tests__/template.marko_3_$global_p#0:14/subscribe", $scope3_id);
+		$scope0_client && _global_subscribe("__tests__/template.marko_3_$global_label#0:10/subscribe", $scope3_id);
+		$scope0_client && _global_subscribe("__tests__/template.marko_3_$global_p#0:14/subscribe", $scope3_id);
 		_patch_write($scope3_id, "PatchWrite:err_message", err?.message, 1);
-		_any_client_guard($scope0_reason) && _patch_render($scope3_id, "__tests__/template.marko_3_$global_label#0:10/subscribe");
-		_any_client_guard($scope0_reason) && _patch_render($scope3_id, "__tests__/template.marko_3_$global_p#0:14/subscribe");
+		$scope0_client && _patch_render($scope3_id, "__tests__/template.marko_3_$global_label#0:10/subscribe");
+		$scope0_client && _patch_render($scope3_id, "__tests__/template.marko_3_$global_p#0:14/subscribe");
 		_scope($scope3_id, { err_message: _unfilled_if($scope3_reason, 0) && err?.message }, "__tests__/template.marko", "6:4", { err_message: ["err.message", "6:11"] });
 	}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", 1, 1, 1);
 	_try($scope0_id, "#text/1", () => {
@@ -59,11 +59,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<i>${_text_mark($scope6_id, "#text/0", v, 1, 4, 0)}</i>`);
 			_scope($scope6_id, {}, "__tests__/template.marko", "15:6");
 		}, 1, "__tests__/template.marko_6*content");
-		_any_client_guard($scope0_reason) && _fill_global_subscribe("__tests__/template.marko_5_$global_label#0:10/subscribe", $scope5_id);
-		_any_client_guard($scope0_reason) && _fill_global_subscribe("__tests__/template.marko_5_$global_p#0:14/subscribe", $scope5_id);
+		$scope0_client && _global_subscribe("__tests__/template.marko_5_$global_label#0:10/subscribe", $scope5_id);
+		$scope0_client && _global_subscribe("__tests__/template.marko_5_$global_p#0:14/subscribe", $scope5_id);
 		_patch_write($scope5_id, "PatchWrite:err_message", err?.message, 1);
-		_any_client_guard($scope0_reason) && _patch_render($scope5_id, "__tests__/template.marko_5_$global_label#0:10/subscribe");
-		_any_client_guard($scope0_reason) && _patch_render($scope5_id, "__tests__/template.marko_5_$global_p#0:14/subscribe");
+		$scope0_client && _patch_render($scope5_id, "__tests__/template.marko_5_$global_label#0:10/subscribe");
+		$scope0_client && _patch_render($scope5_id, "__tests__/template.marko_5_$global_p#0:14/subscribe");
 		_scope($scope5_id, { err_message: _unfilled_if($scope5_reason, 0) && err?.message }, "__tests__/template.marko", "13:4", { err_message: ["err.message", "13:11"] });
 	}, 0, "__tests__/template.marko_5*content", "__tests__/template.marko_2*content", 1, 1, 1);
 	_scope($scope0_id, {

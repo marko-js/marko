@@ -1,10 +1,10 @@
 // tags/gm/index.marko
 const $template = "<p></p><!><!>";
 const $walks = " b%c";
-const $if_content__z = /*@__PURE__*/ _if_closure_patch("b4", 1, 0, /* @__PURE__ */ _global_or(1, ($scope) => _attr($scope.a, "data-z", $scope._.g + $scope.$.mark), /* @__PURE__ */ _global_closure("b0", /* @__PURE__ */ _global_key(11, "mark"))));
+const $if_content__z = /*@__PURE__*/ _if_closure_patch("b4", 1, 0, /* @__PURE__ */ _global_or(($scope) => _attr($scope.a, "data-z", $scope._.g + $scope.$.mark), /* @__PURE__ */ _global_closure(/* @__PURE__ */ _global_key("mark"), "b0")));
 const $if_content__setup$1 = $if_content__z;
 const $z = /*@__PURE__*/ _const(6, $if_content__z);
-const $input_v__OR__$global_flag = /*@__PURE__*/ _global_or(7, ($scope) => $z($scope, $scope.e + $scope.$.flag), /* @__PURE__ */ _global_closure("b2", /* @__PURE__ */ _global_key(10, "flag")));
+const $input_v__OR__$global_flag = /*@__PURE__*/ _global_or(($scope) => $z($scope, $scope.e + $scope.$.flag), /* @__PURE__ */ _global_closure(/* @__PURE__ */ _global_key("flag"), "b2"));
 const $if$1 = /*@__PURE__*/ _if(1, "<i></i>", " ", $if_content__setup$1);
 const $input_v = /*@__PURE__*/ _const(4, ($scope) => {
 	$if$1($scope, $scope.e ? 0 : 1);

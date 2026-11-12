@@ -76,11 +76,7 @@ import {
   type Section,
   sectionUtil,
 } from "../sections";
-import {
-  getCreatedSetupIds,
-  inCatchWithoutClientWork,
-  isQueuedOnCreate,
-} from "../shell";
+import { getCreatedSetupIds, isQueuedOnCreate } from "../shell";
 import {
   getClosureSubscribersId,
   getCreatedSetupId,
@@ -443,8 +439,7 @@ export function writePatchResumeStatements(
   const setupStart = body.length;
   // In a `@catch` of a template with no client work, a created scope runs setup only
   // where a caller's client state loads the module; no shell names what it always runs.
-  const callerClient =
-    inCatchWithoutClientWork(section) && getCallerClientGuard();
+  const callerClient = getCallerClientGuard(section);
   const pushSetup = (expr: t.Expression) =>
     body.push(t.expressionStatement(andGuard(callerClient, expr)));
   if (callerClient) {

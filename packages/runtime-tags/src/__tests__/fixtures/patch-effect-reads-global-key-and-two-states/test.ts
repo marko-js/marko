@@ -10,8 +10,8 @@ const sum = (text: string) => (document: Document) => {
   assert.equal(document.body.dataset.sum, text);
 };
 
-// An effect joining a `$global` key with two states no other work joins: a change to
-// either state or the key re-runs it, once.
+// An effect reading a `$global` key and two states no other intersection reads: a change
+// to either state or the key re-runs it, once.
 export const config: TestConfig = {
   patches: true,
   steps: [page("x"), sum("3x"), click, sum("5x"), page("y"), sum("5y")],

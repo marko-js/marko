@@ -10,7 +10,7 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var error_wrapper_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_fallback = _client_guard($scope0_reason, 0), $cg__input_fail = _client_guard($scope0_reason, 1), $wi__input_fail = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $scope0_client = _any_client_guard($scope0_reason), $cg__input_fallback = _client_guard($scope0_reason, 0), $cg__input_fail = _client_guard($scope0_reason, 1), $wi__input_fail = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_fallback__closures = /* @__PURE__ */ new Set();
 	const $input_fail__closures = /* @__PURE__ */ new Set();
@@ -26,8 +26,8 @@ var error_wrapper_default = _template("b", (input) => {
 		_html(`<b>${_text_mark($scope1_id, "a", err.message, 1, 4, 0)}</b><div>`);
 		_attr_content("b", $scope1_id, input.fallback, 0, 1, $scope0_reason, 0);
 		_html(`</div>${_el_mark($scope1_id, "b", _updates_from($scope0_reason, 0))}`);
-		_any_client_guard($scope0_reason) && _unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b0", $cg__input_fallback);
-		_subscribe(_any_client_guard($scope0_reason) && _unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _any_client_guard($scope0_reason) && $cg__input_fallback && "b0");
+		$scope0_client && _unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b0", $cg__input_fallback);
+		_subscribe($scope0_client && _unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $scope0_client && $cg__input_fallback && "b0");
 	}, 0, "b2", "b3", 1, 1, 1);
 	_scope($scope0_id, {
 		d: input.fallback,

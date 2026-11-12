@@ -5,7 +5,7 @@ var badge_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<em>${_text_mark($scope0_id, "a", $global$1.brand, 1, 4, 0)}</em>`);
-	_fill_global_subscribe("b0", $scope0_id);
+	_global_subscribe("b0", $scope0_id);
 	_scope($scope0_id, {});
 });
 

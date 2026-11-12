@@ -561,6 +561,8 @@ function linkKey(link: PatchLink) {
 
 // A patch template's document render: structure tracks unpatched context.
 export class PatchPageState extends State {
+  // The `$global` subscriptions this render wrote, by id and scope (`_global_subscribe`).
+  globalSubscribed = new Set<string>();
   ids: IdPath = {
     path: [],
     depth: 0,
@@ -832,14 +834,18 @@ export function linkBranch(
   if (setup) (state.setupLinks ||= new Set()).add(branchId);
 }
 
-// A read a patch fills needs no subscription; one in unpatched structure or
-// `unfilled` (effects, state-mixed reads, client-sourced params) subscribes.
-export function _fill_global_subscribe(
+// A read a patch fills needs no subscription; one in unpatched structure or `unfilled`
+// (state-mixed reads, client-sourced params) subscribes, once per scope and id.
+export function _global_subscribe(
   id: string,
   scopeId: number,
   unfilled?: 0 | 1,
 ) {
   if (!unfilled && !inUnpatched()) return;
+  const state = getState() as PatchPageState;
+  const subscribed = id + " " + scopeId;
+  if (state.globalSubscribed.has(subscribed)) return;
+  state.globalSubscribed.add(subscribed);
   // The scope subscribes on resume, as a late closure subscriber does.
   _script(scopeId, id);
 }

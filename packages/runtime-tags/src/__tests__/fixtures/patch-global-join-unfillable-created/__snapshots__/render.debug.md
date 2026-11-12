@@ -32,6 +32,7 @@ assert.equal(document.querySelector("p").textContent, text);
 ## Change
 ```
 UPDATE: p::text "1b" => "5c"
+UPDATE: p::text "1c" => "5c"
 ```
 
 # Update

@@ -14,12 +14,12 @@ var badge_default = _template("b", (input) => {
 		{
 			const $scope1_id = _scope_id();
 			_html(`<i>${_text_mark($scope1_id, "a", $global$1.brand, $scope0_page)}</i>`);
-			_script($scope1_id, "b0", $scope0_page);
+			_global_subscribe("b0", $scope0_id, 1);
+			_script($scope1_id, "b1", $scope0_page);
 			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "c", 1, 1, 0, 0, 1);
-	_fill_global_subscribe("b1", $scope0_id, 1);
 	_script($scope0_id, "b2");
 	_patch_fill($scope0_id, "vb3", count, 1);
 	_scope($scope0_id, { d: count });

@@ -5,6 +5,6 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let seed = $global().suffix;
 	_html(`<p>${_text_mark($scope0_id, "a", seed)}</p>`);
-	_fill_global_subscribe("a0", $scope0_id);
+	_global_subscribe("a0", $scope0_id);
 	_scope($scope0_id, {});
 }, 1);

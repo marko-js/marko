@@ -74,8 +74,8 @@ var template_default = _template("a", (input) => {
 	site_footer_default({ year: input.year });
 	_patch_child_end();
 	_html("</main>");
-	_fill_global_subscribe("a0", $scope0_id);
-	_fill_global_subscribe("a1", $scope0_id);
+	_global_subscribe("a0", $scope0_id);
+	_global_subscribe("a1", $scope0_id);
 	_scope($scope0_id, {
 		d: _existing_scope($childScope),
 		e: _existing_scope($childScope2),

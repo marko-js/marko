@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 	label_text_default({ v: count + $global$1.suffix });
 	_patch_child_end();
 	_html(`<button>${_text_mark($scope0_id, "c", count)}</button>${_el_mark($scope0_id, "b")}`);
-	_fill_global_subscribe("a0", $scope0_id);
+	_global_subscribe("a0", $scope0_id, 1);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		d: count,

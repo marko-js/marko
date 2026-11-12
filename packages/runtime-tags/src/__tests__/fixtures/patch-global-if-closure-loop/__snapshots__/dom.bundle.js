@@ -1,8 +1,8 @@
 // template.marko
-const $global_brand_key = /*@__PURE__*/ _global_key(4, "brand");
-const $for_content__setup = /* @__PURE__ */ _global_closure("a0", $global_brand_key, ($scope) => _text($scope.b, $scope.$.brand));
+const $global_brand_key = /*@__PURE__*/ _global_key("brand");
+const $for_content__setup = /* @__PURE__ */ _global_closure($global_brand_key, "a0", ($scope) => _text($scope.b, $scope.$.brand));
 const $for_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]);
-const $if_content__$global_brand = /*@__PURE__*/ _global_if("a1", $global_brand_key, 1, 0, ($scope) => _text($scope.a, $scope.$.brand));
+const $if_content__$global_brand = /*@__PURE__*/ _global_if($global_brand_key, 1, 0, "a1", ($scope) => _text($scope.a, $scope.$.brand));
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed(1, "<i><!><!></i>", "D%b%", $for_content__setup, $for_content__$params);
 const $if_content__setup = ($scope) => {
 	$if_content__$global_brand($scope);

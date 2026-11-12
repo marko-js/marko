@@ -10,7 +10,7 @@ var greet_default = _template("__tests__/tags/greet/index.marko", (input) => {
 	const double = input.n * 2;
 	_html(`<span>${_text_mark($scope0_id, "#text/0", $global$1.locale, 1, 4, 0)}</span>`);
 	const $return = double;
-	_fill_global_subscribe("__tests__/tags/greet/index.marko_0_$global_locale#5/subscribe", $scope0_id);
+	_global_subscribe("__tests__/tags/greet/index.marko_0_$global_locale#5/subscribe", $scope0_id);
 	_scope($scope0_id, {}, "__tests__/tags/greet/index.marko", 0);
 	return $return;
 });

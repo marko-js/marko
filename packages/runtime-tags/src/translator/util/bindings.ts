@@ -222,14 +222,14 @@ export function createBinding(
   return binding;
 }
 
-// `$global`, or a key or path read from it: no slot, never arriving, re-run by the
-// registration of its key.
+// `$global`, or a key or path read from it: no slot, never arriving at an intersection,
+// re-run by its key's declaration.
 export function isGlobalBinding(binding: Binding) {
   return binding.type === BindingType.global;
 }
 
-// The bindings but `$global`'s: an intersection's that arrive, a function's captures
-// (it reads `$global` live).
+// The bindings but `$global`'s: an intersection's that arrive, a function's referenced
+// bindings (it reads `$global` live).
 export function withoutGlobals(bindings: ReferencedBindings) {
   return bindingUtil.filter(bindings, isNotGlobal);
 }

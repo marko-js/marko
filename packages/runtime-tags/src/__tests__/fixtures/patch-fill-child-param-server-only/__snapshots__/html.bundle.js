@@ -44,6 +44,6 @@ var template_default = _template("a", (input) => {
 		});
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a2");
 	_html(`</ul>${_el_mark($scope0_id, "a")}`);
-	_fill_global_subscribe("a3", $scope0_id);
+	_global_subscribe("a3", $scope0_id);
 	_scope($scope0_id, { d: hovered });
 }, 1);

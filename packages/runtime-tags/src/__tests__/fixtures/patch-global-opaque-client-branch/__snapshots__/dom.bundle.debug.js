@@ -4,8 +4,8 @@ const $walks = " b%c";
 function brandOf(g) {
 	return g.brand + "!";
 }
-const $global_key = /*@__PURE__*/ _global_key("$global/6/3");
-const $if_content__$global = /*@__PURE__*/ _global_if("__tests__/template.marko_1_$global#0:6/subscribe", $global_key, "#text/1", 0, ($scope) => _text($scope["#text/0"], brandOf($scope.$global)));
+const $global_key = /*@__PURE__*/ _global_key();
+const $if_content__$global = /*@__PURE__*/ _global_if($global_key, "#text/1", 0, "__tests__/template.marko_1_$global#0:6/subscribe", ($scope) => _text($scope["#text/0"], brandOf($scope.$global)));
 const $if_content__setup = $if_content__$global;
 const $if = /*@__PURE__*/ _if("#text/1", "<p> </p>", "D ", $if_content__setup);
 const $open = _let("open/2", ($scope) => $if($scope, $scope.open ? 0 : 1));

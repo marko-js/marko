@@ -2,9 +2,9 @@
 const $template = "<main><!><button> </button></main>";
 const $walks = "D%b D m";
 const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
-const $global_brand_key = /*@__PURE__*/ _global_key("$global_brand/10", "brand");
-const $placeholder_content__$global_brand = /*@__PURE__*/ _global_closure("__tests__/template.marko_2_$global_brand#0:7/subscribe", $global_brand_key);
-const $placeholder_content__n__OR__$global_brand = /*@__PURE__*/ _global_or(1, ($scope) => _text($scope["#text/0"], $scope._.n + _global_read($scope.$global, "brand")), $placeholder_content__$global_brand);
+const $global_brand_key = /*@__PURE__*/ _global_key("brand");
+const $placeholder_content__$global_brand = /*@__PURE__*/ _global_closure($global_brand_key, "__tests__/template.marko_2_$global_brand#0:7/subscribe");
+const $placeholder_content__n__OR__$global_brand = /*@__PURE__*/ _global_or(($scope) => _text($scope["#text/0"], $scope._.n + _global_read($scope.$global, "brand")), $placeholder_content__$global_brand);
 const $placeholder_content__n = /*@__PURE__*/ _closure_get("n/8", $placeholder_content__n__OR__$global_brand, 0, "__tests__/template.marko_2_n#0:6/subscribe");
 const $placeholder_content__setup = $placeholder_content__n;
 const $placeholder_content = _content("__tests__/template.marko_2*content", "<p> </p>", "D ", $placeholder_content__setup);

@@ -30,9 +30,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_for_until(input.n, 0, 1, (i) => {
 			const $scope3_id = _scope_id();
 			_html(`<i>${_text_mark($scope3_id, "#text/0", i, 1, $scope0_reason, 0)}:${_text_mark($scope3_id, "#text/1", $global$1.label, 2, 4, 0)}</i>`);
+			_global_subscribe("__tests__/template.marko_3_$global_label#0:15/subscribe", $scope1_id);
 			_scope($scope3_id, {}, "__tests__/template.marko", "8:6");
 		}, 0, $scope1_id, "#text/1", 1, 1, 1, 0, 0, "__tests__/template.marko_3*shell", $scope0_reason, 0);
-		_fill_global_subscribe("__tests__/template.marko_3_$global_label#0:15/subscribe", $scope1_id, _client_guard($scope0_reason, 0));
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_n#0:3/subscribe", $cg__input_n);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4"), $cg__input_n && "__tests__/template.marko_1_input_n#0:3/subscribe");
 	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 1, 1);

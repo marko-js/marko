@@ -10,7 +10,8 @@ _shells({
 	a: "a;b%;<!><!><!>"
 });
 var child_default = _template("a", (input) => {
-	_scope_reason();
+	const $scope0_reason = _scope_reason();
+	_any_client_guard($scope0_reason);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_try($scope0_id, "a", () => {
@@ -19,10 +20,10 @@ var child_default = _template("a", (input) => {
 		_await($scope1_id, "a", $global$1.promise, (v) => {
 			const $scope4_id = _scope_id();
 			_html(`<em>${_text_mark($scope4_id, "a", $global$1.name, 1, 4, 0)} ${_text_mark($scope4_id, "b", v, 2, 4, 0)}</em>`);
-			_fill_global_subscribe("a0", $scope4_id);
+			_global_subscribe("a0", $scope4_id);
 			_scope($scope4_id, {});
 		}, 1, "a1", void 0, 1);
-		_fill_global_subscribe("a6", $scope1_id);
+		_global_subscribe("a6", $scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();

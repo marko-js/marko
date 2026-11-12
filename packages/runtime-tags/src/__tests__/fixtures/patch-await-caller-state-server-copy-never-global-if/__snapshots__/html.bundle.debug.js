@@ -24,7 +24,7 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, $scope0_page || $wg__input_promise, 1, 0, 0, ["__tests__/tags/show-await.marko_2*shell"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
-		_fill_global_subscribe("__tests__/tags/show-await.marko_1_$global_flag#0:8/subscribe", $scope1_id, $cg__input_promise);
+		_global_subscribe("__tests__/tags/show-await.marko_1_$global_flag#0:8/subscribe", $scope1_id, $cg__input_promise);
 		_scope($scope1_id, { x: _unfilled_if($scope0_reason, 0) && x }, "__tests__/tags/show-await.marko", "1:2", { x: "1:8" });
 	}, 1, "__tests__/tags/show-await.marko_1*content", _unfilled_if($scope0_reason, 0) && 2, 1);
 });

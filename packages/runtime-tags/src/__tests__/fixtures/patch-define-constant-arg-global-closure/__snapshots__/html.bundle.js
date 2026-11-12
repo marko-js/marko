@@ -32,11 +32,11 @@ var template_default = _template("a", (input) => {
 			const $scope2_page = _page_render();
 			const $scope2_id = _scope_id();
 			_html(`<p${_attr("data-z", z + $global$1.mark, $scope2_id, "a", 4, 0)}></p>${_el_mark($scope2_id, "a")}`);
-			_fill_global_subscribe("a0", $scope2_id);
+			_global_subscribe("a0", $scope2_id);
 			_subscribe(_unfilled_if() && $D_content__z__closures, _scope($scope2_id, { _: $scope2_page && _scope_with_id($scope1_id) }));
 		}, $scope1_id) });
 		_patch_child_end();
-		_fill_global_subscribe("a4", $scope1_id);
+		_global_subscribe("a4", $scope1_id);
 		_unfilled_if() && _patch_write($scope1_id, "wf", z, 1);
 		_scope($scope1_id, {
 			f: _unfilled_if() && z,

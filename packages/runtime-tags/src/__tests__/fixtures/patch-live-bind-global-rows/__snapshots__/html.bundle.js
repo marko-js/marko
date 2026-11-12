@@ -48,6 +48,6 @@ var template_default = _template("a", (input) => {
 		_patch_fill($scope1_id, "va1", qty, 1);
 		_scope($scope1_id, { a: _existing_scope($childScope) });
 	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a2");
-	_fill_global_subscribe("a3", $scope0_id);
+	_global_subscribe("a3", $scope0_id);
 	_scope($scope0_id, {});
 }, 1);

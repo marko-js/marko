@@ -2,13 +2,13 @@
 const $template$1 = "<p> </p>";
 const $walks$1 = "D l";
 const $setup$1 = ($_) => {};
-const $global_mark_key = /*@__PURE__*/ _global_key("$global_mark/9", "mark");
-const $global_mark = /*@__PURE__*/ _global_closure("__tests__/tags/gm/index.marko_0_$global_mark#7/subscribe", $global_mark_key);
-const $z__OR__$global_mark = /*@__PURE__*/ _global_or(6, ($scope) => _text($scope["#text/0"], $scope.z + _global_read($scope.$global, "mark")), $global_mark);
+const $global_mark_key = /*@__PURE__*/ _global_key("mark");
+const $global_mark = /*@__PURE__*/ _global_closure($global_mark_key, "__tests__/tags/gm/index.marko_0_$global_mark#7/subscribe");
+const $z__OR__$global_mark = /*@__PURE__*/ _global_or(($scope) => _text($scope["#text/0"], $scope.z + _global_read($scope.$global, "mark")), $global_mark);
 const $z = /*@__PURE__*/ _const("z", $z__OR__$global_mark);
-const $global_flag_key = /*@__PURE__*/ _global_key("$global_flag/8", "flag");
-const $global_flag = /*@__PURE__*/ _global_closure("__tests__/tags/gm/index.marko_0_$global_flag#5/subscribe", $global_flag_key);
-const $input_v__OR__$global_flag = /*@__PURE__*/ _global_or(5, ($scope) => $z($scope, $scope.input_v + _global_read($scope.$global, "flag")), $global_flag);
+const $global_flag_key = /*@__PURE__*/ _global_key("flag");
+const $global_flag = /*@__PURE__*/ _global_closure($global_flag_key, "__tests__/tags/gm/index.marko_0_$global_flag#5/subscribe");
+const $input_v__OR__$global_flag = /*@__PURE__*/ _global_or(($scope) => $z($scope, $scope.input_v + _global_read($scope.$global, "flag")), $global_flag);
 const $input_v = /*@__PURE__*/ _const("input_v", $input_v__OR__$global_flag);
 const $input = ($scope, input) => $input_v($scope, input.v);
 var gm_default = /*@__PURE__*/ _template("__tests__/tags/gm/index.marko", $template$1, "D l", 0, $input);
@@ -17,8 +17,8 @@ var gm_default = /*@__PURE__*/ _template("__tests__/tags/gm/index.marko", $templ
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button> </button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& D m`)("D l");
 const $count = _let("count/3", ($scope) => _text($scope["#text/2"], $scope.count));
-const $global_brand_key = /*@__PURE__*/ _global_key("$global_brand/5", "brand");
-const $global_brand = /*@__PURE__*/ _global_closure("__tests__/template.marko_0_$global_brand#5/subscribe", $global_brand_key, ($scope) => $input_v($scope["#childScope/0"], $scope.$global.brand));
+const $global_brand_key = /*@__PURE__*/ _global_key("brand");
+const $global_brand = /*@__PURE__*/ _global_closure($global_brand_key, "__tests__/template.marko_0_$global_brand#5/subscribe", ($scope) => $input_v($scope["#childScope/0"], $scope.$global.brand));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

@@ -2,8 +2,8 @@
 const $template$2 = "<em><!> <!></em>";
 const $walks$2 = "D%c%l";
 const $input_label$2 = ($scope, input_label) => _text($scope["#text/0"], input_label);
-const $global_brand_key = /*@__PURE__*/ _global_key("$global_brand/6", "brand");
-const $global_brand = /*@__PURE__*/ _global_closure("__tests__/tags/picker/card.marko_0_$global_brand#6/subscribe", $global_brand_key, ($scope) => _text($scope["#text/1"], $scope.$global.brand));
+const $global_brand_key = /*@__PURE__*/ _global_key("brand");
+const $global_brand = /*@__PURE__*/ _global_closure($global_brand_key, "__tests__/tags/picker/card.marko_0_$global_brand#6/subscribe", ($scope) => _text($scope["#text/1"], $scope.$global.brand));
 const $setup$2 = $global_brand;
 const $input$2 = ($scope, input) => $input_label$2($scope, input.label);
 var card_default = /*@__PURE__*/ _template("__tests__/tags/picker/card.marko", $template$2, $walks$2, $setup$2, $input$2);

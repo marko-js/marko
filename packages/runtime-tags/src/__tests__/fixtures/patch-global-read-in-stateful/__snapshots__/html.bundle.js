@@ -11,11 +11,11 @@ var template_default = _template("a", (input) => {
 		{
 			const $scope1_id = _scope_id();
 			_html(`<em>${_text_mark($scope1_id, "a", $global$1.brand, $scope0_page)}</em>`);
+			_global_subscribe("a0", $scope0_id, 1);
 			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b", 1, 1, 0, 0, 1);
-	_fill_global_subscribe("a0", $scope0_id, 1);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, { c: on });
 }, 1);

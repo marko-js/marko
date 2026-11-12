@@ -9,7 +9,7 @@ var child_default = _template("a", (input) => {
 	const $global$1 = $global();
 	let count = 0;
 	_html(`<button>${_text_mark($scope0_id, "b", $global$1.brand + ":0")}</button>${_el_mark($scope0_id, "a")}`);
-	_fill_global_subscribe("a0", $scope0_id, 1);
+	_global_subscribe("a0", $scope0_id, 1);
 	_script($scope0_id, "a1");
 	_patch_fill($scope0_id, "va2", count, 1);
 	_scope($scope0_id, { c: count });

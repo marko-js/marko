@@ -20,6 +20,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_html(`<b>${_text_mark($scope1_id, "#text/0", $global$1.a + $global$1.c, $scope0_page)}</b>`);
+			_global_subscribe("__tests__/template.marko_1_$global_a#0:7/subscribe", $scope0_id, 1);
+			_global_subscribe("__tests__/template.marko_1_$global_c#0:8/subscribe", $scope0_id, 1);
 			_scope($scope1_id, {}, "__tests__/template.marko", "3:2");
 			return 0;
 		}
@@ -28,13 +30,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_until(open ? 1 : 0, 0, 1, (i) => {
 		const $scope2_id = _scope_id();
 		_html(`<li>${_text_mark($scope2_id, "#text/0", $global$1.a + $global$1.c, $scope0_page)}</li>`);
+		_global_subscribe("__tests__/template.marko_2_$global_a#0:7/subscribe", $scope0_id, 1);
+		_global_subscribe("__tests__/template.marko_2_$global_c#0:8/subscribe", $scope0_id, 1);
 		_scope($scope2_id, {}, "__tests__/template.marko", "7:4");
 	}, 0, $scope0_id, "#ul/2", 1, 1, 1, "</ul>", 1);
 	_html(`<div></div>${_el_mark($scope0_id, "#div/3")}<div></div>${_el_mark($scope0_id, "#div/4")}<div></div>${_el_mark($scope0_id, "#div/5")}<div></div>${_el_mark($scope0_id, "#div/6")}<div></div>${_el_mark($scope0_id, "#div/7")}`);
-	_fill_global_subscribe("__tests__/template.marko_1_$global_a#0:7/subscribe", $scope0_id, 1);
-	_fill_global_subscribe("__tests__/template.marko_1_$global_c#0:8/subscribe", $scope0_id, 1);
-	_fill_global_subscribe("__tests__/template.marko_2_$global_a#0:7/subscribe", $scope0_id, 1);
-	_fill_global_subscribe("__tests__/template.marko_2_$global_c#0:8/subscribe", $scope0_id, 1);
 	_script($scope0_id, "__tests__/template.marko_0_$global_o_x#19_$global_cspNonce#20");
 	_script($scope0_id, "__tests__/template.marko_0_$global_a#7_$global_c#8");
 	_script($scope0_id, "__tests__/template.marko_0_$global#6");

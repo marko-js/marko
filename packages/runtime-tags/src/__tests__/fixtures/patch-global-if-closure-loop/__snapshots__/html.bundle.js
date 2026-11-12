@@ -14,14 +14,14 @@ var template_default = _template("a", (input) => {
 			forOf([1, 2], (x) => {
 				const $scope2_id = _scope_id();
 				_html(`<i>${_escape(x)}${_text_mark($scope2_id, "b", $global$1.brand, $scope0_page * 2)}</i>`);
-				_fill_global_subscribe("a0", $scope2_id, 1);
+				_global_subscribe("a0", $scope2_id, 1);
 				_scope($scope2_id, {});
 			});
+			_global_subscribe("a1", $scope0_id, 1);
 			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b");
-	_fill_global_subscribe("a1", $scope0_id, 1);
 	_script($scope0_id, "a2");
 	_scope($scope0_id, { c: on });
 }, 1);

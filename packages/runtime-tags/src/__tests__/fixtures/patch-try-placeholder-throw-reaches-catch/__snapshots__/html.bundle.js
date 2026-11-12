@@ -10,7 +10,9 @@ _shells({
 	a: "a;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_err = _client_guard($scope0_reason, 0), $wi__input_err = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
+	_any_client_guard($scope0_reason);
+	const $cg__input_err = _client_guard($scope0_reason, 0), $wi__input_err = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_err__closures = /* @__PURE__ */ new Set();
 	_try($scope0_id, "a", () => {

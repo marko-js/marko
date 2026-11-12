@@ -70,6 +70,7 @@ assert.equal(document.querySelector("p").textContent, text);
 ## Change
 ```
 UPDATE: main > p::text "11y" => "12z"
+UPDATE: main > p::text "11z" => "12z"
 ```
 
 # Update

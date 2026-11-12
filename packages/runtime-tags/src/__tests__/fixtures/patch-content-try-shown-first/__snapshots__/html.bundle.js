@@ -32,7 +32,9 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_id = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_id = _write_if($scope0_reason, 0), $uf__input_show = _updates_from($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason();
+	_any_client_guard($scope0_reason);
+	const $cg__input_id = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_id = _write_if($scope0_reason, 0), $uf__input_show = _updates_from($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_id__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason($uf__input_show << 1 | $uf__input_show << 3);

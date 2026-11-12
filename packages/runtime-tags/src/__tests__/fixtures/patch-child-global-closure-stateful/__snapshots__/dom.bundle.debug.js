@@ -2,15 +2,15 @@
 const $template$1 = "<p></p><!><!>";
 const $walks$1 = " b%c";
 const $setup$1 = ($_) => {};
-const $global_mark_key = /*@__PURE__*/ _global_key("$global_mark/11", "mark");
-const $if_content__$global_mark = /*@__PURE__*/ _global_closure("__tests__/tags/gm/index.marko_1_$global_mark#0:10/subscribe", $global_mark_key);
-const $if_content__z__OR__$global_mark = /*@__PURE__*/ _global_or(1, ($scope) => _attr($scope["#i/0"], "data-z", $scope._.z + _global_read($scope.$global, "mark")), $if_content__$global_mark);
+const $global_mark_key = /*@__PURE__*/ _global_key("mark");
+const $if_content__$global_mark = /*@__PURE__*/ _global_closure($global_mark_key, "__tests__/tags/gm/index.marko_1_$global_mark#0:10/subscribe");
+const $if_content__z__OR__$global_mark = /*@__PURE__*/ _global_or(($scope) => _attr($scope["#i/0"], "data-z", $scope._.z + _global_read($scope.$global, "mark")), $if_content__$global_mark);
 const $if_content__z = /*@__PURE__*/ _if_closure_patch("__tests__/tags/gm/index.marko_1_z#0:6/setup", "#text/1", 0, $if_content__z__OR__$global_mark);
 const $if_content__setup$1 = $if_content__z;
 const $z = /*@__PURE__*/ _const("z", $if_content__z);
-const $global_flag_key = /*@__PURE__*/ _global_key("$global_flag/10", "flag");
-const $global_flag = /*@__PURE__*/ _global_closure("__tests__/tags/gm/index.marko_0_$global_flag#6/subscribe", $global_flag_key);
-const $input_v__OR__$global_flag = /*@__PURE__*/ _global_or(7, ($scope) => $z($scope, $scope.input_v + _global_read($scope.$global, "flag")), $global_flag);
+const $global_flag_key = /*@__PURE__*/ _global_key("flag");
+const $global_flag = /*@__PURE__*/ _global_closure($global_flag_key, "__tests__/tags/gm/index.marko_0_$global_flag#6/subscribe");
+const $input_v__OR__$global_flag = /*@__PURE__*/ _global_or(($scope) => $z($scope, $scope.input_v + _global_read($scope.$global, "flag")), $global_flag);
 const $if$1 = /*@__PURE__*/ _if("#text/1", "<i></i>", " ", $if_content__setup$1);
 const $input_v = /*@__PURE__*/ _const("input_v", ($scope) => {
 	$if$1($scope, $scope.input_v ? 0 : 1);

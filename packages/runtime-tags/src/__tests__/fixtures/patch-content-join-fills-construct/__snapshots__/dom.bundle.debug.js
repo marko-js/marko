@@ -77,8 +77,8 @@ const $for_content__item_n = /*@__PURE__*/ _const("item_n", $for_content__item_n
 const $bonus__closure = /*@__PURE__*/ _closure($aside_content__bonus);
 const $bonus = _var_resume("__tests__/page.marko_0_bonus#7/var", /*@__PURE__*/ _const("bonus", $bonus__closure));
 const $p = ($scope, p) => $p_base($scope, p?.base);
-const $global_data_key = /*@__PURE__*/ _global_key("$global_data/13", "data");
-const $global_data = /*@__PURE__*/ _global_closure("__tests__/page.marko_0_$global_data#8/subscribe", $global_data_key, ($scope) => $p($scope, $scope.$global.data));
+const $global_data_key = /*@__PURE__*/ _global_key("data");
+const $global_data = /*@__PURE__*/ _global_closure($global_data_key, "__tests__/page.marko_0_$global_data#8/subscribe", ($scope) => $p($scope, $scope.$global.data));
 const $setup__script = _script("__tests__/page.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	_var_change($scope["#childScope/0"], 5, "bonus");
 }));

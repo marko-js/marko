@@ -9,7 +9,9 @@ _shells({
 	a: "a;D%;<main><!></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_a__OR__input_b = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
+	_any_client_guard($scope0_reason);
+	const $wi__input_a__OR__input_b = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_b__closures = /* @__PURE__ */ new Set();
 	const $input_a__closures = /* @__PURE__ */ new Set();

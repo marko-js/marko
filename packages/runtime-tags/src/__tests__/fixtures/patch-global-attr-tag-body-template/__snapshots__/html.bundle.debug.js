@@ -8,7 +8,7 @@ var other_default = _template("__tests__/tags/other.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<i>user=${_text_mark($scope0_id, "#text/0", $global$1.user, 2, 4, 0)}</i>`);
-	_fill_global_subscribe("__tests__/tags/other.marko_0_$global_user#4/subscribe", $scope0_id);
+	_global_subscribe("__tests__/tags/other.marko_0_$global_user#4/subscribe", $scope0_id);
 	_scope($scope0_id, {}, "__tests__/tags/other.marko", 0);
 });
 

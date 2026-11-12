@@ -35,8 +35,8 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "d", 1, 1, 0, 0, 1);
 	_html(`<p>${_text_mark($scope0_id, "e", user.name)}</p>`);
-	_fill_global_subscribe("a0", $scope0_id);
-	_fill_global_subscribe("a1", $scope0_id);
+	_global_subscribe("a0", $scope0_id);
+	_global_subscribe("a1", $scope0_id);
 	_script($scope0_id, "a2");
 	_patch_render($scope0_id, "a3", "g");
 	_patch_render($scope0_id, "a4", "i");

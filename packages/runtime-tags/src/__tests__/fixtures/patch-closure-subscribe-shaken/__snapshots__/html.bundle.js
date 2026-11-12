@@ -58,7 +58,7 @@ var shop_default = _template("a", (input) => {
 		}, $scope1_id, "a", 1, $scope0_page, 1, 0, 0, ["a6"]);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, 0, $scope0_id, "d", 1, 1, 1, 0, 0, "a5", 0, 0);
-	_fill_global_subscribe("a7", $scope0_id);
+	_global_subscribe("a7", $scope0_id);
 	_script($scope0_id, "a8");
 	_patch_fill($scope0_id, "va9", now, 1);
 	_patch_fill($scope0_id, "va10", drops, 1);

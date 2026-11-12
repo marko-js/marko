@@ -1,8 +1,8 @@
 // tags/greet/index.marko
 const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
-const $global_locale_key = /*@__PURE__*/ _global_key("$global_locale/6", "locale");
-const $global_locale = /*@__PURE__*/ _global_closure("__tests__/tags/greet/index.marko_0_$global_locale#5/subscribe", $global_locale_key, ($scope) => _text($scope["#text/0"], $scope.$global.locale));
+const $global_locale_key = /*@__PURE__*/ _global_key("locale");
+const $global_locale = /*@__PURE__*/ _global_closure($global_locale_key, "__tests__/tags/greet/index.marko_0_$global_locale#5/subscribe", ($scope) => _text($scope["#text/0"], $scope.$global.locale));
 const $setup$1 = $global_locale;
 const $double = /*@__PURE__*/ _const("double", ($scope) => _return($scope, $scope.double));
 const $input_n = ($scope, input_n) => $double($scope, input_n * 2);

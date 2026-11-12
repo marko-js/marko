@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
 	_html(`<button class=step>show</button>${_el_mark($scope0_id, "#button/1")}</main>`);
-	_fill_global_subscribe("__tests__/template.marko_0_$global_title#4/subscribe", $scope0_id);
+	_global_subscribe("__tests__/template.marko_0_$global_title#4/subscribe", $scope0_id);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { title }, "__tests__/template.marko", 0, { title: "1:8" }) || _patch_write($scope0_id, "PatchMarkedWrite:title", title);
 }, 1);

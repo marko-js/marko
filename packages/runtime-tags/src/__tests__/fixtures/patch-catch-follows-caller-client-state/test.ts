@@ -9,9 +9,8 @@ const page = (label: string, late?: true) => ({
   $global: { label, serializedGlobals: ["label"] },
 });
 
-// The `@catch`es of a child with no client work, one the document caught and one a patch
-// creates, whose caller passes client state: the caller's module loads the child's, so
-// both follow `$global` and their param.
+// The `@catch`es of a child with no client work, of a try the document caught and of one a
+// patch catches, whose caller passes client state: the module loads, so both follow patches.
 export const config: TestConfig = {
   patches: true,
   steps: [page("a"), page("b", true), click, page("c", true)],

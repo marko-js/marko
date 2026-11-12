@@ -21,7 +21,9 @@ _shells({
 	a4: "a4;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_rows = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
+	_any_client_guard($scope0_reason);
+	const $wi__input_rows = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const heading = _id("A");
 	_html(`<h1${_attr("id", heading, $scope0_id, "a", 0, 0)}>Fields</h1>${_el_mark($scope0_id, "a", 0)}`);

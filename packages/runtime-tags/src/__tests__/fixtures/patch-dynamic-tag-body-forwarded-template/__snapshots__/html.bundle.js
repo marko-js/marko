@@ -40,7 +40,7 @@ var fwd_default = _template("c", (input) => {
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "c1", $cg__input_content);
 		$wi__input_content && _subscribe(_unfilled_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_content && "c1", $wg__input_content);
 	}, $scope0_id, ($scope) => $scope0_page ? [{ d: input.content }] : []), 0, $scope0_page, void 0, void 0, 0, void 0, 0, 0, "c0");
-	_fill_global_subscribe("c2", $scope0_id);
+	_global_subscribe("c2", $scope0_id);
 	_scope($scope0_id, { e: $wi__input_content && $input_content__closures }) || _filled_guard($scope0_reason, 0) && _client_branch_if("c0", $scope0_id) && _patch_write($scope0_id, "xd", input.content, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "c3", "d");
 });
 

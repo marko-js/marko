@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 			});
 			_patch_child_end();
 			_html(`<span>${_text_mark($scope1_id, "c", $global$1.brand, 1, 4, 0)}</span>`);
-			_fill_global_subscribe("a5", $scope1_id);
+			_global_subscribe("a5", $scope1_id);
 			_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "a6");
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),

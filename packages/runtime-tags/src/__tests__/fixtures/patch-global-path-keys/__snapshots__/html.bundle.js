@@ -11,13 +11,13 @@ var template_default = _template("a", (input) => {
 		{
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_mark($scope1_id, "a", $global$1.o.x.toUpperCase(), $scope0_page)}</p><b>${_text_mark($scope1_id, "b", $global$1.o.list.length, $scope0_page)}</b><i>${_text_mark($scope1_id, "c", $global$1.o["a.b"], $scope0_page)}</i><u>${_text_mark($scope1_id, "d", $global$1["c.d"], $scope0_page)}</u><s>${_text_mark($scope1_id, "e", $global$1.p?.x, $scope0_page)}</s>`);
+			_global_subscribe("a0", $scope0_id, 1);
+			_global_subscribe("a1", $scope0_id, 1);
+			_global_subscribe("a2", $scope0_id, 1);
 			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b");
-	_fill_global_subscribe("a0", $scope0_id, 1);
-	_fill_global_subscribe("a1", $scope0_id, 1);
-	_fill_global_subscribe("a2", $scope0_id, 1);
 	_script($scope0_id, "a3");
 	_scope($scope0_id, { c: open });
 }, 1);

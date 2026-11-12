@@ -59,6 +59,6 @@ var template_default = _template("a", (input) => {
 			return 1;
 		}
 	}, $scope0_id, "a", 1, $scope0_page, 1, 0, 0, ["a2", "a1"]);
-	_fill_global_subscribe("a3", $scope0_id);
+	_global_subscribe("a3", $scope0_id);
 	_scope($scope0_id, {});
 }, 1);

@@ -13,12 +13,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (count) {
 			const $scope1_id = _scope_id();
 			_html(`<b>${_text_mark($scope1_id, "#text/0", count + $global$1.suffix)}</b>`);
+			_global_subscribe("__tests__/template.marko_1_$global_suffix#0:8/subscribe", $scope0_id, 1);
 			_scope($scope1_id, {}, "__tests__/template.marko", "6:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/3", 1, 1, 0, 0, 1);
-	_fill_global_subscribe("__tests__/template.marko_0_$global_suffix#8/subscribe", $scope0_id, 1);
-	_fill_global_subscribe("__tests__/template.marko_1_$global_suffix#0:8/subscribe", $scope0_id, 1);
+	_global_subscribe("__tests__/template.marko_0_$global_suffix#8/subscribe", $scope0_id, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
 }, 1);

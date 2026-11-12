@@ -1,7 +1,5 @@
 // template.marko
-const $a__OR__b__OR__$global_x__keys = /*@__PURE__*/ _global_or(5, ($scope) => $a__OR__b__OR__$global_x__script($scope), /* @__PURE__ */ _global_closure("a4", /* @__PURE__ */ _global_key(7, "x")));
-const $a__OR__b__OR__$global_x = /*@__PURE__*/ _or_patch("a2", 5, $a__OR__b__OR__$global_x__keys);
-const $a__OR__b__OR__$global_x__script = _global_script("a0", ($scope) => document.body.dataset.sum = $scope.d + $scope.e + $scope.$.x, $a__OR__b__OR__$global_x__keys);
+const $a__OR__b__OR__$global_x = /*@__PURE__*/ _or_patch("a2", 5, _global_script("a0", ($scope) => document.body.dataset.sum = $scope.d + $scope.e + $scope.$.x, /* @__PURE__ */ _global_closure(/* @__PURE__ */ _global_key("x"))));
 const $a = _let(3, ($scope) => {
 	_text($scope.b, $scope.d);
 	$a__OR__b__OR__$global_x($scope);

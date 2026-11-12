@@ -8,7 +8,7 @@ var tagger_default = _template("b", (input) => {
 	const g = $global().locale + "!";
 	_html("<span>t</span>");
 	const $return = g;
-	_fill_global_subscribe("b0", $scope0_id);
+	_global_subscribe("b0", $scope0_id);
 	return $return;
 });
 

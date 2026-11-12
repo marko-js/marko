@@ -22,7 +22,7 @@ var show_await_default = _template("b", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "b", 1, $scope0_page || _write_guard($scope0_reason, 0), 1, 0, 0, ["b0"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
-		_fill_global_subscribe("b3", $scope1_id, _client_guard($scope0_reason, 0));
+		_global_subscribe("b3", $scope1_id, _client_guard($scope0_reason, 0));
 		_scope($scope1_id, { d: _unfilled_if($scope0_reason, 0) && x });
 	}, 1, "b1", _unfilled_if($scope0_reason, 0) && 2, 1);
 });

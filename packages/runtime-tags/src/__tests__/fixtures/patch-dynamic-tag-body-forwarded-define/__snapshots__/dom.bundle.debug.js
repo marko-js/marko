@@ -22,9 +22,9 @@ const $globalppWrap_content__setup = $globalppWrap_content__input_content;
 const $globalppWrap_content = _content("__tests__/tags/fwd.marko_1*content", "<!><!><!>", "b%", $globalppWrap_content__setup);
 _content_resume($globalppWrap_content);
 const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0", $globalppWrap_content);
-const $global_p_key = /*@__PURE__*/ _global_key("$global_p/8", "p");
-const $global_p = /*@__PURE__*/ _global_closure("__tests__/tags/fwd.marko_0_$global_p#13/subscribe", $global_p_key);
-const $Wrap__OR__$global_p = /*@__PURE__*/ _global_or(5, ($scope) => $dynamicTag$1($scope, _global_read($scope.$global, "p") ? "p" : $scope.Wrap), $global_p);
+const $global_p_key = /*@__PURE__*/ _global_key("p");
+const $global_p = /*@__PURE__*/ _global_closure($global_p_key, "__tests__/tags/fwd.marko_0_$global_p#13/subscribe");
+const $Wrap__OR__$global_p = /*@__PURE__*/ _global_or(($scope) => $dynamicTag$1($scope, _global_read($scope.$global, "p") ? "p" : $scope.Wrap), $global_p);
 const $Wrap = /*@__PURE__*/ _const("Wrap", $Wrap__OR__$global_p);
 function $setup$1($scope) {
 	$Wrap($scope, { content: $Wrap_content($scope) });

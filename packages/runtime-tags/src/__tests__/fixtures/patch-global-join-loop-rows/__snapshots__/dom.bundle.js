@@ -1,5 +1,5 @@
 // template.marko
-const $for_content__$global_x = /*@__PURE__*/ _global_for("a0", /* @__PURE__ */ _global_key(5, "x"), 2, ($scope) => _text($scope.b, $scope.$.x));
+const $for_content__$global_x = /*@__PURE__*/ _global_for(/* @__PURE__ */ _global_key("x"), 2, "a0", ($scope) => _text($scope.b, $scope.$.x));
 const $for_content__setup = ($scope) => {
 	_text($scope.a, $scope.M);
 	$for_content__$global_x($scope);

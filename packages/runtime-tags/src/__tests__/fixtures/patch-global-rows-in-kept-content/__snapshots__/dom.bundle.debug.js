@@ -1,15 +1,15 @@
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
-const $global_brand_key = /*@__PURE__*/ _global_key("$global_brand/6", "brand");
-const $for_content__$global_brand = /*@__PURE__*/ _global_for("__tests__/template.marko_2_$global_brand#0:6/subscribe", $global_brand_key, "#text/1", ($scope) => _text($scope["#text/0"], $scope.$global.brand));
+const $global_brand_key = /*@__PURE__*/ _global_key("brand");
+const $for_content__$global_brand = /*@__PURE__*/ _global_for($global_brand_key, "#text/1", 0, ($scope) => _text($scope["#text/0"], $scope.$global.brand));
 const $for_content__setup = ($scope) => {
 	_text($scope["#text/1"], $scope["#LoopKey"]);
 	$for_content__$global_brand($scope);
 };
 const $card_content__for = /*@__PURE__*/ _for_until_unkeyed("#text/1", "<p><!> <!></p>", "D%c%", $for_content__setup);
 const $card_content__input_n = /*@__PURE__*/ _closure_get("input_n/4", ($scope) => $card_content__for($scope, [$scope._.input_n]), 0, "__tests__/template.marko_1_input_n#0:3/subscribe");
-const $card_content__$global_brand = /*@__PURE__*/ _global_closure("__tests__/template.marko_1_$global_brand#0:6/subscribe", $global_brand_key, ($scope) => _text($scope["#text/0"], $scope.$global.brand));
+const $card_content__$global_brand = /*@__PURE__*/ _global_closure($global_brand_key, 0, ($scope) => _text($scope["#text/0"], $scope.$global.brand));
 const $card_content__setup = ($scope) => {
 	$card_content__input_n($scope);
 	$card_content__$global_brand($scope);

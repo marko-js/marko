@@ -65,7 +65,6 @@ import {
 } from "./sections";
 import {
   getCreatedSetupId,
-  getGlobalSubscriptionId,
   getGlobalSubscriptions,
   getResumeRegistryId,
   isWalkedFromOwner,
@@ -345,12 +344,21 @@ export function inCreatedCatch(section: Section) {
 
 // In a `@catch` of a template with no client work: its client code runs there only where
 // a caller's client state loads the module (`getCallerClientGuard`).
-export function inCatchWithoutClientWork(section: Section) {
-  if (!isPatch() || hasClientWork(getProgram().node.extra)) return false;
-  for (let cur: Section | undefined = section; cur; cur = cur.parent) {
-    if (cur.boundaryContent === "catch") return true;
+const [getCatchWithoutClientWork, setCatchWithoutClientWork] =
+  createOutputSectionState<boolean | undefined>();
+export function inCatchWithoutClientWork(section: Section): boolean {
+  let caught = getCatchWithoutClientWork(section);
+  if (caught === undefined) {
+    setCatchWithoutClientWork(
+      section,
+      (caught =
+        isPatch() &&
+        !hasClientWork(getProgram().node.extra) &&
+        (section.boundaryContent === "catch" ||
+          (!!section.parent && inCatchWithoutClientWork(section.parent)))),
+    );
   }
-  return false;
+  return caught;
 }
 
 // Content the page's bundle registers wherever this template renders: a page
@@ -731,7 +739,7 @@ export function getCreatedSetupIds(section: Section) {
     for (const bodySection of [section, ...section.children]) {
       if ((bodySection !== section) === isWalkedFromOwner(bodySection)) {
         for (const binding of getGlobalSubscriptions(bodySection).keys()) {
-          ids.push(getGlobalSubscriptionId(bodySection, binding));
+          ids.push(getResumeRegistryId(bodySection, binding, "subscribe"));
         }
       }
     }

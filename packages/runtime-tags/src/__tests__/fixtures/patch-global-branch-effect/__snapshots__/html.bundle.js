@@ -47,6 +47,6 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "c", 1, $scope0_page, 1, 0, 0, ["a3"]);
 	_trailers("</body></html>");
-	_fill_global_subscribe("a6", $scope0_id);
+	_global_subscribe("a6", $scope0_id);
 	_scope($scope0_id, { f: input.msg }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.msg, !_server_guard($scope0_reason, 0));
 }, 1);

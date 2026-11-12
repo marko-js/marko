@@ -16,14 +16,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			forOf([1, 2], (x) => {
 				const $scope2_id = _scope_id();
 				_html(`<i>${_escape(x)}${_text_mark($scope2_id, "#text/1", $global$1.brand, $scope0_page * 2)}</i>`);
-				_fill_global_subscribe("__tests__/template.marko_2_$global_brand#0:7/subscribe", $scope2_id, 1);
+				_global_subscribe("__tests__/template.marko_2_$global_brand#0:7/subscribe", $scope2_id, 1);
 				_scope($scope2_id, {}, "__tests__/template.marko", "5:4");
 			});
+			_global_subscribe("__tests__/template.marko_1_$global_brand#0:7/subscribe", $scope0_id, 1);
 			_scope($scope1_id, {}, "__tests__/template.marko", "3:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/1");
-	_fill_global_subscribe("__tests__/template.marko_1_$global_brand#0:7/subscribe", $scope0_id, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { on }, "__tests__/template.marko", 0, { on: "1:6" });
 }, 1);

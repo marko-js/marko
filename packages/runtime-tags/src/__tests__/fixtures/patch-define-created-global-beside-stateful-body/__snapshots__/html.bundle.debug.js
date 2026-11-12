@@ -54,7 +54,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			});
 			_patch_child_end();
 			_html(`<span>${_text_mark($scope1_id, "#text/2", $global$1.brand, 1, 4, 0)}</span>`);
-			_fill_global_subscribe("__tests__/template.marko_1_$global_brand#0:17/subscribe", $scope1_id);
+			_global_subscribe("__tests__/template.marko_1_$global_brand#0:17/subscribe", $scope1_id);
 			_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "__tests__/template.marko_1_input_show#0:5/setup");
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),

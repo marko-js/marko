@@ -13,12 +13,12 @@ var gm_default = _template("b", (input) => {
 		if (input.v) {
 			const $scope1_id = _scope_id();
 			_html(`<i${_attr("data-z", z + $global$1.mark, $scope1_id, "a", (2 | _updates_from($scope0_reason, 0)) << 1, 0)}></i>${_el_mark($scope1_id, "a")}`);
-			_fill_global_subscribe("b0", $scope1_id);
+			_global_subscribe("b0", $scope1_id);
 			_scope($scope1_id, { _: ($scope0_page || _write_if($scope0_reason, 0)) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["b1"], $scope0_reason, 0);
-	_fill_global_subscribe("b2", $scope0_id, _client_guard($scope0_reason, 0));
+	_global_subscribe("b2", $scope0_id, _client_guard($scope0_reason, 0));
 	$ui__input_v && _patch_write($scope0_id, "we", input.v, 1);
 	_scope($scope0_id, {
 		e: $ui__input_v && input.v,

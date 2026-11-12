@@ -18,7 +18,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko;D%b%;<main><!><!></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_a = _write_if($scope0_reason, 2), $wi__input_d = _write_if($scope0_reason, 5), $wi__input_c__OR__input_d = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $scope0_client = _any_client_guard($scope0_reason), $wi__input_a = _write_if($scope0_reason, 2), $wi__input_d = _write_if($scope0_reason, 5), $wi__input_c__OR__input_d = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	const $input_d__closures = new Set();

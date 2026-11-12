@@ -71,6 +71,6 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	$Route_withLoadAssets({ n: Number($global$1.n || 5) });
 	_patch_child_end();
-	_fill_global_subscribe("a0", $scope0_id);
+	_global_subscribe("a0", $scope0_id);
 	_scope($scope0_id, { b: _existing_scope($childScope) });
 }, 1);

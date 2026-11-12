@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", $scope1_page || $wg__v, $scope1_page || $wg__v, 0, 0, 1);
-		_fill_global_subscribe("a1", $scope1_id);
+		_global_subscribe("a1", $scope1_id);
 		_patch_write($scope1_id, "wd", v, 1);
 		_patch_render($scope1_id, "a2", "e", 6, 0);
 		_scope($scope1_id, {
