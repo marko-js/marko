@@ -15,15 +15,15 @@ var template_default = _template("a", (input) => {
 		_html(`<em>${_text_mark($scope1_id, "a", first, 1, $scope0_reason, 0)}</em>`);
 		_scope($scope1_id, {});
 	}, 1, "a2", _unfilled_if($scope0_reason, 0) && 2, 1);
-	_await($scope0_id, "b", input.second, (second) => {
-		const $scope2_id = _scope_id(), $fg__input_second = _filled_guard($scope0_reason, 1), $ui__input_second = _unfilled_if($scope0_reason, 1);
-		$fg__input_second && _patch_write($scope2_id, "xd", second, !_server_guard($scope0_reason, 1));
+	const $scope2_id = _await($scope0_id, "b", input.second, (second) => {
+		const $scope2_id = _scope_id(), $ui__input_second = _unfilled_if($scope0_reason, 1);
+		_filled_guard($scope0_reason, 1) && _patch_write($scope2_id, "xd", second, !_server_guard($scope0_reason, 1));
 		const handler = _bind_resume((event) => event.target.dataset.seen = second, "a0", $scope2_id, 1);
 		_html(`<button${_attrs({
 			title: second,
 			onClick: handler
 		}, "a", $scope2_id, "button", 0, $scope0_reason, 1)}>${_text_mark($scope2_id, "b", second, 1, $scope0_reason, 1)}</button>${_el_mark($scope2_id, "a")}`);
-		_script($scope2_id, "a5", 1, $fg__input_second);
+		_script($scope2_id, "a5", 1, _filled_guard($scope0_reason, 1));
 		$ui__input_second && _patch_write($scope2_id, "we", handler, 1);
 		_client_guard($scope0_reason, 1) && _patch_render($scope2_id, "a6");
 		_scope($scope2_id, {
@@ -31,5 +31,9 @@ var template_default = _template("a", (input) => {
 			e: $ui__input_second && handler
 		});
 	}, 1, "a1", _unfilled_if($scope0_reason, 1) && 2, 1);
+	if ($scope2_id) {
+		_script($scope2_id, "a5", 1, _filled_guard($scope0_reason, 1));
+		_client_guard($scope0_reason, 1) && _patch_render($scope2_id, "a6");
+	}
 	_html("</main>");
 }, 1);
