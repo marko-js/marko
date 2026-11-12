@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-catch-reads-global/template.marko_3*content;D l%;<b> </b><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-catch-reads-global/template.marko_4*content;D ;<i> </i>`, `packages/runtime-tags/src/__tests__/fixtures/patch-catch-reads-global/template.marko_5*content;D l%;<b> </b><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-catch-reads-global/template.marko_6*content;D ;<i> </i>`]
+[`packages/runtime-tags/src/__tests__/fixtures/patch-catch-reads-global/template.marko_3*content packages/runtime-tags/src/__tests__/fixtures/patch-catch-reads-global/template.marko_3_$global_label#0:10/subscribe packages/runtime-tags/src/__tests__/fixtures/patch-catch-reads-global/template.marko_3_$global_p#0:14/subscribe`, `packages/runtime-tags/src/__tests__/fixtures/patch-catch-reads-global/template.marko_4*content;D ;<i> </i>`, `packages/runtime-tags/src/__tests__/fixtures/patch-catch-reads-global/template.marko_5*content packages/runtime-tags/src/__tests__/fixtures/patch-catch-reads-global/template.marko_5_$global_label#0:10/subscribe packages/runtime-tags/src/__tests__/fixtures/patch-catch-reads-global/template.marko_5_$global_p#0:14/subscribe`, `packages/runtime-tags/src/__tests__/fixtures/patch-catch-reads-global/template.marko_6*content;D ;<i> </i>`]
 {
   "$global:": {
     label: "g1",

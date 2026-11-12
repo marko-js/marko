@@ -13,7 +13,7 @@
 ```html
 <p />
 <b>
-  a a early
+  b b early
 </b>
 <b>
   b b late
@@ -26,6 +26,24 @@ REMOVE: b:nth-of-type(2) + p
 UPDATE: b:nth-of-type(2)::text@0 "" => "b"
 UPDATE: b:nth-of-type(2)::text@2 "" => "b"
 UPDATE: b:nth-of-type(2)::text@4 "" => "late"
+UPDATE: b:nth-of-type(1)::text@0 "a" => "b"
+UPDATE: b:nth-of-type(1)::text@2 "a" => "b"
 ```
 
 # Update `{"label":"c","late":true,"$global":{"label":"c","serializedGlobals":["label"]}}`
+```html
+<p />
+<b>
+  c c early
+</b>
+<b>
+  c c late
+</b>
+```
+## Change
+```
+UPDATE: b:nth-of-type(1)::text@0 "b" => "c"
+UPDATE: b:nth-of-type(1)::text@2 "b" => "c"
+UPDATE: b:nth-of-type(2)::text@2 "b" => "c"
+UPDATE: b:nth-of-type(2)::text@0 "b" => "c"
+```

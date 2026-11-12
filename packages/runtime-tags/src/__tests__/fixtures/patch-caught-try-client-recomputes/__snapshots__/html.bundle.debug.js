@@ -24,13 +24,13 @@ const $walks = "b%b%c";
 function boom(message) {
 	throw new Error(message);
 }
-const $setup = [[], ["__tests__/template.marko_0"]];
+const $setup = [[], []];
 _shells({
 	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content;D ;<p> </p>",
 	"__tests__/template.marko_3*content": `__tests__/template.marko_3*content${_shell_marker([[], []], ["#childScope/1>", $setup$1])}`,
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;D ;<p> </p>",
 	"__tests__/template.marko_1*content": `__tests__/template.marko_1*content${_shell_marker([[], []], ["#childScope/1>", $setup$1])}`,
-	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b%b%;<!><!><!><!>"
+	"__tests__/template.marko": "__tests__/template.marko;b%b%;<!><!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $uf__input_label = _updates_from($scope0_reason, 1), $cg__input_label = _client_guard($scope0_reason, 1), $cg__input_count = _client_guard($scope0_reason, 2), $cg__input_early = _client_guard($scope0_reason, 3), $uf__input_label__OR__input_count = _updates_from($scope0_reason, 0), $uf__input_count = _updates_from($scope0_reason, 2), $cg__input_late = _client_guard($scope0_reason, 4), $wi__input_label = _write_if($scope0_reason, 1), $wi__input_count = _write_if($scope0_reason, 2), $wi__input_early = _write_if($scope0_reason, 3), $wi__input_late = _write_if($scope0_reason, 4);
@@ -99,7 +99,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"ClosureSignalIndex:input_count/9": $wi__input_count && 1
 		}, "__tests__/template.marko", "14:4", { err_message: ["err.message", "14:11"] }), $cg__input_label && "__tests__/template.marko_3_input_label#0:4/subscribe"), $cg__input_count && "__tests__/template.marko_3_input_count#0:5/subscribe");
 	}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_4*content", 1, 1, 1);
-	_script($scope0_id, "__tests__/template.marko_0", 0);
 	_scope($scope0_id, {
 		input_label: input.label,
 		input_count: input.count,

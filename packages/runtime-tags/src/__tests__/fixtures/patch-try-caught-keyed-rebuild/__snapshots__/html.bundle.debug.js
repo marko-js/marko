@@ -29,7 +29,7 @@ _shells({
 	"__tests__/template.marko_4*shell": "__tests__/template.marko_4*shell; ; "
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_client = _any_client_guard($scope0_reason), $cg__input_pages = _client_guard($scope0_reason, 0), $wi__input_pages = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_pages = _client_guard($scope0_reason, 0), $wi__input_pages = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_for_of(input.pages, (page) => {

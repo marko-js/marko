@@ -65,6 +65,7 @@ import {
 } from "./sections";
 import {
   getCreatedSetupId,
+  getGlobalExprs,
   getGlobalSubscriptions,
   getResumeRegistryId,
   isWalkedFromOwner,
@@ -130,8 +131,16 @@ export function linkPatchFills() {
   const programExtra = getProgram().node.extra;
   forEachSection((section) => {
     if (keepsHoles(section)) linkRuntimeFeature("patches/client-branch");
-    // Boundary content no shell creates renders by the renderer its module registers.
-    if (section.boundaryContent && !createsFromShell(section)) {
+    if (
+      // Boundary content no shell creates renders by the renderer its
+      // module registers.
+      (section.boundaryContent && !createsFromShell(section)) ||
+      // No patch pairs a shown `@catch`, which client state lower in the tree shows: its
+      // reads of what a patch fills or writes, or of `$global` keys, update through its module.
+      (inCreatedCatch(section) &&
+        (some(section.referencedClosures, isPatchUpdated) ||
+          getGlobalExprs().has(section)))
+    ) {
       programExtra.registersBoundaryContent = true;
     }
     forEach(section.bindings, recordPatchEntries);
@@ -139,6 +148,11 @@ export function linkPatchFills() {
     recordIntersectionRenders(section);
     forEach(section.bindings, recordClosureRenders);
   });
+}
+
+function isPatchUpdated(closure: Binding) {
+  const root = getCanonicalBinding(closure);
+  return !!getPatchFill(root).fill || !!getPatchWrite(root).write;
 }
 
 // A patch's fills into the binding's scope: one a caller's param decides waits
@@ -340,25 +354,6 @@ export function inCreatedCatch(section: Section) {
     if (cur.boundaryContent === "catch" && patchCreates(cur)) return true;
   }
   return false;
-}
-
-// In a `@catch` of a template with no client work: its client code runs there only where
-// a caller's client state loads the module (`getCallerClientGuard`).
-const [getCatchWithoutClientWork, setCatchWithoutClientWork] =
-  createOutputSectionState<boolean | undefined>();
-export function inCatchWithoutClientWork(section: Section): boolean {
-  let caught = getCatchWithoutClientWork(section);
-  if (caught === undefined) {
-    setCatchWithoutClientWork(
-      section,
-      (caught =
-        isPatch() &&
-        !hasClientWork(getProgram().node.extra) &&
-        (section.boundaryContent === "catch" ||
-          (!!section.parent && inCatchWithoutClientWork(section.parent)))),
-    );
-  }
-  return caught;
 }
 
 // Content the page's bundle registers wherever this template renders: a page
@@ -720,15 +715,9 @@ function hasIds(setup: ShellSetup) {
   return !!(setup[0].length || setup[1].length);
 }
 
-// The setup every created scope of the section runs, which a shell names where its
-// module is sure to load (else the scope's own render does, by its caller's groups).
+// The setup every created scope of the section runs: no patch pairs a created `@catch`,
+// so its scopes subscribe to the `$global` keys they read, as owners of the bodies they walk.
 function getShellSetupIds(section: Section) {
-  return inCatchWithoutClientWork(section) ? [] : getCreatedSetupIds(section);
-}
-
-// What a created scope of the section runs: no patch pairs a created `@catch`, so its
-// scopes subscribe to the `$global` keys they read, as owners of the bodies they walk.
-export function getCreatedSetupIds(section: Section) {
   const ids: string[] = [];
   for (const [ref, setup] of getCreatedSetup(section)) {
     if (setup.setup === "always") {

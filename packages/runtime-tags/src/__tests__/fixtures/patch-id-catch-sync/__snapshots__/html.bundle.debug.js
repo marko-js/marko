@@ -47,7 +47,7 @@ _shells({
 	"__tests__/tags/a-tag.marko": `__tests__/tags/a-tag.marko${_shell_marker($setup$1)};${((_w0, _w1) => `/${_w0}&/${_w1}&%c`)("b", $walks$3)};${((_w0, _w1) => `${_w0}${_w1}<!><!>`)($template$4, $template$3)}`
 });
 var a_tag_default = _template("__tests__/tags/a-tag.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_client = _any_client_guard($scope0_reason);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	plain_default({});

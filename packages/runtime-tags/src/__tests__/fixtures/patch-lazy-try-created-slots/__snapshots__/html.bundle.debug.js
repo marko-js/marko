@@ -11,7 +11,7 @@ _shells({
 	"__tests__/child.marko": "__tests__/child.marko;b%;<!><!><!>"
 });
 var child_default = _template("__tests__/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_client = _any_client_guard($scope0_reason), $wi__input_p = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_p = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_p__closures = new Set();
 	_try($scope0_id, "#text/0", () => {

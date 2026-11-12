@@ -5,16 +5,16 @@ function boom(msg) {
 _shells({
 	a0: "a0;D ;<i> </i>",
 	a1: "a1;D ;<i> </i>",
-	a2: "a2;D l%;<b> </b><!><!>",
+	a2: "a2 a11 a12",
 	a3: "a3;D ;<i> </i>",
 	a4: "a4;D ;<i> </i>",
-	a5: "a5;D l%;<b> </b><!><!>",
+	a5: "a5 a8 a9",
 	a6: "a6;D ;<p> </p>",
 	a7: "a7;D ;<p> </p>",
 	a: "a;b%b%;<!><!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_client = _any_client_guard($scope0_reason), $cg__input_early = _client_guard($scope0_reason, 1), $cg__input_late = _client_guard($scope0_reason, 2), $wi__input_early = _write_if($scope0_reason, 1), $wi__input_late = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_early = _client_guard($scope0_reason, 1), $cg__input_late = _client_guard($scope0_reason, 2), $wi__input_early = _write_if($scope0_reason, 1), $wi__input_late = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_early__closures = /* @__PURE__ */ new Set();
 	const $input_late__closures = /* @__PURE__ */ new Set();
@@ -34,11 +34,9 @@ var template_default = _template("a", (input) => {
 			_html(`<i>${_text_mark($scope4_id, "a", v, 1, 4, 0)}</i>`);
 			_scope($scope4_id, {});
 		}, 1, "a3");
-		$scope0_client && _global_subscribe("a8", $scope3_id);
-		$scope0_client && _global_subscribe("a9", $scope3_id);
+		_global_subscribe("a8", $scope3_id);
+		_global_subscribe("a9", $scope3_id);
 		_patch_write($scope3_id, "we", err?.message, 1);
-		$scope0_client && _patch_render($scope3_id, "a8");
-		$scope0_client && _patch_render($scope3_id, "a9");
 		_scope($scope3_id, { e: _unfilled_if($scope3_reason, 0) && err?.message });
 	}, 0, "a5", "a7", 1, 1, 1);
 	_try($scope0_id, "b", () => {
@@ -56,11 +54,9 @@ var template_default = _template("a", (input) => {
 			_html(`<i>${_text_mark($scope6_id, "a", v, 1, 4, 0)}</i>`);
 			_scope($scope6_id, {});
 		}, 1, "a0");
-		$scope0_client && _global_subscribe("a11", $scope5_id);
-		$scope0_client && _global_subscribe("a12", $scope5_id);
+		_global_subscribe("a11", $scope5_id);
+		_global_subscribe("a12", $scope5_id);
 		_patch_write($scope5_id, "we", err?.message, 1);
-		$scope0_client && _patch_render($scope5_id, "a11");
-		$scope0_client && _patch_render($scope5_id, "a12");
 		_scope($scope5_id, { e: _unfilled_if($scope5_reason, 0) && err?.message });
 	}, 0, "a2", "a6", 1, 1, 1);
 	_scope($scope0_id, {

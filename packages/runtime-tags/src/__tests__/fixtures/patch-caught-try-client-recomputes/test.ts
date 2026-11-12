@@ -1,8 +1,8 @@
 import type { TestConfig } from "../../main.test";
 
-// Two tries whose `@catch` reads its error, one caught by the document and one by a
-// patch, in a template with client work: no later patch pairs either, so the client
-// recomputes the intersection of their error with a param and a child's tag variable.
+// Two tries whose `@catch` reads its error, one caught by the document and one
+// by a patch: no later patch pairs either, so the client recomputes their
+// error joined with a param and a child's tag variable as the params change.
 export const config: TestConfig = {
   patches: true,
   steps: [

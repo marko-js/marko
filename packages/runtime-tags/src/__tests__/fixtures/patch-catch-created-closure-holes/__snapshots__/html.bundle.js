@@ -4,11 +4,11 @@ function boom(msg) {
 }
 _shells({
 	a6: "a6;D ;<p> </p>",
-	a5: "a5; D%c%c%c%;<b><!> <!> <!> <!></b>",
+	a5: "a5",
 	a: "a;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $uf__input_msg = _updates_from($scope0_reason, 1), $scope0_client = _any_client_guard($scope0_reason), $cg__input_msg = _client_guard($scope0_reason, 1), $ui__input_msg__OR__input_fail = _unfilled_if($scope0_reason, 0), $wi__input_msg = _write_if($scope0_reason, 1), $wi__input_fail = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $uf__input_msg = _updates_from($scope0_reason, 1), $cg__input_msg = _client_guard($scope0_reason, 1), $ui__input_msg__OR__input_fail = _unfilled_if($scope0_reason, 0), $wi__input_msg = _write_if($scope0_reason, 1), $wi__input_fail = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_msg__closures = /* @__PURE__ */ new Set();
 	const $input_fail__closures = /* @__PURE__ */ new Set();
@@ -29,13 +29,13 @@ var template_default = _template("a", (input) => {
 		$ui__input_msg && _patch_write($scope1_id, "xh", err?.message);
 		const upper = input.msg.toUpperCase();
 		_html(`<b${_attr("title", input.msg, $scope1_id, "a", $scope0_reason, 1)}>${_text_mark($scope1_id, "b", err.message, 1, 4, 0)} ${_text_mark($scope1_id, "c", input.msg, 2, $scope0_reason, 1)} ${_text_mark($scope1_id, "d", upper, 2, $scope0_reason, 1)} ${_text_mark($scope1_id, "e", err.message + upper, 2, (2 | $uf__input_msg) << 1, 0)}</b>${_el_mark($scope1_id, "a", $uf__input_msg)}`);
-		$scope0_client && _unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a0", $cg__input_msg);
-		$scope0_client && _patch_render($scope1_id, "a1", "h" + (_filled_guard($scope0_reason, 1) ? " i" : ""), (2 | $uf__input_msg) << 1, 0);
-		_subscribe($scope0_client && $ui__input_msg && $input_msg__closures, _scope($scope1_id, {
+		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a0", $cg__input_msg);
+		_patch_render($scope1_id, "a1", "h" + (_filled_guard($scope0_reason, 1) ? " i" : ""), (2 | $uf__input_msg) << 1, 0);
+		_subscribe($ui__input_msg && $input_msg__closures, _scope($scope1_id, {
 			h: $ui__input_msg && err?.message,
 			i: _unfilled_if($scope1_reason, 0) && upper,
 			_: _scope_with_id($scope0_id)
-		}), $scope0_client && $cg__input_msg && "a0");
+		}), $cg__input_msg && "a0");
 	}, 0, "a5", "a6", 1, 1, 1);
 	_scope($scope0_id, {
 		d: input.msg,

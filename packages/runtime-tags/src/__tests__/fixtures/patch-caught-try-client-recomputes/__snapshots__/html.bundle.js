@@ -22,7 +22,7 @@ _shells({
 	a12: `a12${_shell_marker([[], []], ["b>", $setup])}`,
 	a6: "a6;D ;<p> </p>",
 	a5: `a5${_shell_marker([[], []], ["b>", $setup])}`,
-	a: "a !a14;b%b%;<!><!><!><!>"
+	a: "a;b%b%;<!><!><!><!>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $uf__input_label = _updates_from($scope0_reason, 1), $cg__input_label = _client_guard($scope0_reason, 1), $cg__input_count = _client_guard($scope0_reason, 2), $cg__input_early = _client_guard($scope0_reason, 3), $uf__input_label__OR__input_count = _updates_from($scope0_reason, 0), $uf__input_count = _updates_from($scope0_reason, 2), $cg__input_late = _client_guard($scope0_reason, 4), $wi__input_label = _write_if($scope0_reason, 1), $wi__input_count = _write_if($scope0_reason, 2), $wi__input_early = _write_if($scope0_reason, 3), $wi__input_late = _write_if($scope0_reason, 4);
@@ -91,7 +91,6 @@ var template_default = _template("a", (input) => {
 			Cj: $wi__input_count && 1
 		}), $cg__input_label && "a8"), $cg__input_count && "a9");
 	}, 0, "a12", "a13", 1, 1, 1);
-	_script($scope0_id, "a14", 0);
 	_scope($scope0_id, {
 		e: input.label,
 		f: input.count,
@@ -99,5 +98,5 @@ var template_default = _template("a", (input) => {
 		j: $wi__input_count && $input_count__closures,
 		k: $wi__input_early && _unfilled_if($scope0_reason, 3) && $input_early__closures,
 		l: $wi__input_late && _unfilled_if($scope0_reason, 4) && $input_late__closures
-	}) || (_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a15", "e"), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.count, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "a16", "f"));
+	}) || (_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a14", "e"), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.count, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "a15", "f"));
 }, 1);

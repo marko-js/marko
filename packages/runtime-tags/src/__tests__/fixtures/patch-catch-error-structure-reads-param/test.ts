@@ -3,8 +3,9 @@ import type { TestConfig } from "../../main.test";
 const error = (status: number) =>
   Object.assign(new Error("SHOWN_message"), { status });
 
-// Structure a created `@catch`'s error selects reads a param, in a template with client
-// work: a later patch throwing another error keeps the branch and updates the param.
+// Structure a created `@catch`'s error selects reads a param: a later patch
+// throwing another error keeps the branch the first one selected and updates
+// the param, and one rendering the body reloads.
 export const config: TestConfig = {
   // Debug logs the rejection's reason, which optimize cannot.
   skip_parity: true,

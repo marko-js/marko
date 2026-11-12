@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/widget/index.marko": "__tests__/tags/widget/index.marko;b%;<!><!><!>"
 });
 var widget_default = _template("__tests__/tags/widget/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_client = _any_client_guard($scope0_reason);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_try($scope0_id, "#text/0", () => {
 		const $scope1_reason = _scope_reason();

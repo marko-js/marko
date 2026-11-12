@@ -1,7 +1,7 @@
 import type { TestConfig } from "../../main.test";
 
-// A `@catch` a patch created, in a template with client work, reads a param a later
-// patch changes while the `<try>` stays caught; a patch rendering the body reloads.
+// A `@catch` a patch created reads a param a later patch changes while the
+// `<try>` stays caught; a patch rendering the body reloads.
 export const config: TestConfig = {
   // Debug logs the rejection's reason, which optimize cannot.
   skip_parity: true,

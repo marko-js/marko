@@ -47,7 +47,7 @@ _shells({
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `/${_w0}&b`)($walks$1)};${((_w0) => `${_w0}<!>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_client = _any_client_guard($scope0_reason);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $input_fail__closures = new Set();
 	const $input_x__closures = new Set();

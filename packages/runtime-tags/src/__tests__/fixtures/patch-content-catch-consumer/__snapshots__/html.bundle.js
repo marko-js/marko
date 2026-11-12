@@ -41,11 +41,11 @@ function boom() {
 const $setup$1 = [[], []];
 _shells({
 	b3: "b3;D ;<p> </p>",
-	b2: "b2;D l%;<b> </b><!><!>",
+	b2: "b2",
 	b: "b;b%;<!><!><!>"
 });
 var error_wrapper_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_client = _any_client_guard($scope0_reason), $cg__input_fallback = _client_guard($scope0_reason, 0), $cg__input_fail = _client_guard($scope0_reason, 1), $wi__input_fail = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_fallback = _client_guard($scope0_reason, 0), $cg__input_fail = _client_guard($scope0_reason, 1), $wi__input_fail = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_fallback__closures = /* @__PURE__ */ new Set();
 	const $input_fail__closures = /* @__PURE__ */ new Set();
@@ -60,8 +60,8 @@ var error_wrapper_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<b>${_text_mark($scope1_id, "a", err.message, 1, 4, 0)}</b>`);
 		_dynamic_tag($scope1_id, "b", input.fallback, {}, 2, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
-		$scope0_client && _unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b0", $cg__input_fallback);
-		_subscribe($scope0_client && _unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $scope0_client && $cg__input_fallback && "b0");
+		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b0", $cg__input_fallback);
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_fallback && "b0");
 	}, 0, "b2", "b3", 1, 1, 1);
 	_scope($scope0_id, {
 		d: input.fallback,

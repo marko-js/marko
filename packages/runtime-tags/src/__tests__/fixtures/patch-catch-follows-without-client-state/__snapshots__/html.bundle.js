@@ -7,13 +7,13 @@ function boom(msg) {
 const $setup$1 = [[], []];
 _shells({
 	b9: "b9;D ;<p> </p>",
-	b8: "b8;D%c%c%;<b><!> <!> <!></b>",
+	b8: "b8 b5",
 	b4: "b4;D ;<p> </p>",
-	b3: "b3;D%c%c%;<b><!> <!> <!></b>",
+	b3: "b3 b0",
 	b: "b;D l%b%;<p> </p><!><!><!>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_client = _any_client_guard($scope0_reason), $cg__input_label = _client_guard($scope0_reason, 1), $cg__input_early = _client_guard($scope0_reason, 2), $cg__input_late = _client_guard($scope0_reason, 3), $wi__input_label = _write_if($scope0_reason, 1), $wi__input_early = _write_if($scope0_reason, 2), $wi__input_late = _write_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $cg__input_early = _client_guard($scope0_reason, 2), $cg__input_late = _client_guard($scope0_reason, 3), $wi__input_label = _write_if($scope0_reason, 1), $wi__input_early = _write_if($scope0_reason, 2), $wi__input_late = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_early__closures = /* @__PURE__ */ new Set();
@@ -30,10 +30,9 @@ var child_default = _template("b", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<b>${_text_mark($scope1_id, "a", $global$1.label, 1, 4, 0)} ${_text_mark($scope1_id, "b", input.label, 2, $scope0_reason, 1)} ${_text_mark($scope1_id, "c", err.message, 2, 4, 0)}</b>`);
-		$scope0_client && _global_subscribe("b0", $scope1_id);
-		$scope0_client && _patch_render($scope1_id, "b0");
-		$scope0_client && _unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b1", $cg__input_label);
-		_subscribe($scope0_client && _unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $scope0_client && $cg__input_label && "b1");
+		_global_subscribe("b0", $scope1_id);
+		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b1", $cg__input_label);
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_label && "b1");
 	}, 0, "b3", "b4", 1, 1, 1);
 	_try($scope0_id, "c", () => {
 		_scope_reason();
@@ -45,13 +44,12 @@ var child_default = _template("b", (input) => {
 		_scope_reason();
 		const $scope3_id = _scope_id();
 		_html(`<b>${_text_mark($scope3_id, "a", $global$1.label, 1, 4, 0)} ${_text_mark($scope3_id, "b", input.label, 2, $scope0_reason, 1)} ${_text_mark($scope3_id, "c", err.message, 2, 4, 0)}</b>`);
-		$scope0_client && _global_subscribe("b5", $scope3_id);
-		$scope0_client && _patch_render($scope3_id, "b5");
-		$scope0_client && _unfilled_if($scope0_reason, 1) && _patch_subscribe($scope3_id, "b6", $cg__input_label);
-		_subscribe($scope0_client && _unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope3_id, {
+		_global_subscribe("b5", $scope3_id);
+		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope3_id, "b6", $cg__input_label);
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope3_id, {
 			_: _scope_with_id($scope0_id),
 			Cj: $wi__input_label && 1
-		}), $scope0_client && $cg__input_label && "b6");
+		}), $cg__input_label && "b6");
 	}, 0, "b8", "b9", 1, 1, 1);
 	_scope($scope0_id, {
 		g: input.label,

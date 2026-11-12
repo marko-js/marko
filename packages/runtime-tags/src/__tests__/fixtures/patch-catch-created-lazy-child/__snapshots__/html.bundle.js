@@ -21,7 +21,7 @@ const $Child_withLoadAssets = withLoadAssets(() => child_default, "a", flush, "_
 _shells({
 	b3: "b3;D ;<p> </p>",
 	b2: `b2${_shell_marker([[], []], ["c>", $setup])};${/*@__PURE__*/ ((_w0) => `D l%b/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `<b> </b><!>${_w0}<!>`)($template)}`,
-	b: "b !b4;b%;<!><!><!>"
+	b: "b;b%;<!><!><!>"
 });
 var template_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $cg__input_error = _client_guard($scope0_reason, 1), $wi__input_error = _write_if($scope0_reason, 1);
@@ -48,10 +48,9 @@ var template_default = _template("b", (input) => {
 			c: _existing_scope($childScope)
 		}), $cg__input_label && "b0");
 	}, 0, "b2", "b3", 1, 1, 1);
-	_script($scope0_id, "b4", 0);
 	_scope($scope0_id, {
 		d: input.label,
 		f: _write_if($scope0_reason, 0) && $input_label__closures,
 		g: $wi__input_error && _unfilled_if($scope0_reason, 1) && $input_error__closures
-	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "b5", "d");
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "b4", "d");
 }, 1);

@@ -153,7 +153,6 @@ import { withLeadingComment } from "./with-comment";
 import {
   andGuard,
   getBranchWriteReason,
-  getCallerClientGuard,
   getExprIfWritten,
   getWriteGuardForAny,
   getWriteReason,
@@ -699,7 +698,7 @@ export function shipsClosureScopes(closure: Binding) {
 }
 
 // Each section's expressions reading `$global` keys, gathered once.
-const [getGlobalExprs] = createAnalysisState(() => {
+export const [getGlobalExprs] = createAnalysisState(() => {
   const bySection = new Map<Section, Set<ReferencedExtra>>();
   forEachGlobalBinding((binding) => {
     for (const read of binding.reads.keys()) {
@@ -2072,17 +2071,13 @@ export function writeHTMLResumeStatements(
           }
           // In a `@catch` of a template with no client work, only where a caller's client
           // state loads its module.
-          const callerClient = getCallerClientGuard(section);
-          const subscribed = andGuard(
-            callerClient,
-            unfilled
-              ? andGuard(
-                  getCallerGroupGuard(section, "_unfilled_if", readSources) ||
-                    callRuntime("_unfilled_if"),
-                  subscribeArg,
-                )
-              : subscribeArg,
-          );
+          const subscribed = unfilled
+            ? andGuard(
+                getCallerGroupGuard(section, "_unfilled_if", readSources) ||
+                  callRuntime("_unfilled_if"),
+                subscribeArg,
+              )
+            : subscribeArg;
           addWriteScopeBuilder(section, (expr) => {
             const resumeId =
               changeable &&
@@ -2091,20 +2086,12 @@ export function writeHTMLResumeStatements(
               );
             // A value a patch fills can change before the subscriber resumes.
             const resumes = ifEver(
-              resumeId &&
-                andGuard(
-                  callerClient,
-                  callerGroups && !fillSubscribes(closure, section)
-                    ? andGuard(
-                        getCallerGroupGuard(
-                          section,
-                          "_client_guard",
-                          readSources,
-                        ),
-                        resumeId,
-                      )
-                    : resumeId,
-                ),
+              resumeId && callerGroups && !fillSubscribes(closure, section)
+                ? andGuard(
+                    getCallerGroupGuard(section, "_client_guard", readSources),
+                    resumeId,
+                  )
+                : resumeId,
             );
             return callRuntime(
               "_subscribe",
@@ -2129,14 +2116,11 @@ export function writeHTMLResumeStatements(
         : unfilled && getCallerGroupGuard(section, "_client_guard", unfilled);
     body.push(
       t.expressionStatement(
-        andGuard(
-          getCallerClientGuard(section),
-          callRuntime(
-            "_global_subscribe",
-            t.stringLiteral(getResumeRegistryId(section, binding, "subscribe")),
-            walked ? getScopeIdIdentifier(section.parent!) : scopeIdIdentifier,
-            ifEver(clientGuard),
-          ),
+        callRuntime(
+          "_global_subscribe",
+          t.stringLiteral(getResumeRegistryId(section, binding, "subscribe")),
+          walked ? getScopeIdIdentifier(section.parent!) : scopeIdIdentifier,
+          ifEver(clientGuard),
         ),
       ),
     );

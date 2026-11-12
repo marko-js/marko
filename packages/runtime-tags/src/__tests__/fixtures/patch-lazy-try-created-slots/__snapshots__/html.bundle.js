@@ -10,9 +10,7 @@ _shells({
 	a: "a;b%;<!><!><!>"
 });
 var child_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
-	_any_client_guard($scope0_reason);
-	const $wi__input_p = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_p = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_p__closures = /* @__PURE__ */ new Set();
 	_try($scope0_id, "a", () => {

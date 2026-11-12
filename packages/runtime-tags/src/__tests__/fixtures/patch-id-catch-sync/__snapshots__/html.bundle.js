@@ -46,7 +46,6 @@ _shells({
 });
 var a_tag_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
-	_any_client_guard($scope0_reason);
 	const $scope0_id = _scope_id();
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	plain_default({});

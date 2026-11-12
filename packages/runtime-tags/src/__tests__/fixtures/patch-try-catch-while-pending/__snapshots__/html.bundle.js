@@ -8,8 +8,7 @@ _shells({
 	a: "a;D%;<main><!></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
-	_any_client_guard($scope0_reason);
+	_scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html("<main>");

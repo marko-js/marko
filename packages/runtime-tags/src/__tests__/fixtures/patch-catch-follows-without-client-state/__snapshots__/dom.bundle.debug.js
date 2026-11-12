@@ -1,6 +1,22 @@
+// template.marko
+const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1);
+function $setup($scope) {
+	$setup$1($scope["#childScope/0"]);
+	$input_early($scope["#childScope/0"], true);
+	$input_n($scope["#childScope/0"]);
+}
+const $input_late = ($scope, input_late) => $input_late$1($scope["#childScope/0"], input_late);
+const $input_label = ($scope, input_label) => $input_label$1($scope["#childScope/0"], input_label);
+const $input = ($scope, input) => {
+	$input_late($scope, input.late);
+	$input_label($scope, input.label);
+};
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+
 // tags/child.marko
-const $template$1 = "<p> </p><!><!><!>";
-const $walks$1 = "D l%b%c";
+const $template = "<p> </p><!><!><!>";
+const $walks = "D l%b%c";
 function boom(msg) {
 	throw new Error(msg);
 }
@@ -28,36 +44,20 @@ const $catch_content = _content("__tests__/tags/child.marko_1*content", "<b><!> 
 const $input_n = ($scope, input_n) => _text($scope["#text/0"], input_n);
 const $try = /*@__PURE__*/ _try("#text/1", "<p> </p>", "D ", $try_content__setup, 0, $catch_content);
 const $try2 = /*@__PURE__*/ _try("#text/2", "<p> </p>", "D ", $try_content2__setup, 0, $catch_content2);
-function $setup$1($scope) {
+function $setup($scope) {
 	$try($scope);
 	$try2($scope);
 }
-const $input$1 = ($scope, input) => {
+const $input = ($scope, input) => {
 	$input_n($scope, input.n);
-	$input_label$1($scope, input.label);
+	$input_label($scope, input.label);
 	$input_early($scope, input.early);
-	$input_late$1($scope, input.late);
+	$input_late($scope, input.late);
 };
 const $input_label__closure = /*@__PURE__*/ _closure($catch_content__input_label, $catch_content2__input_label);
-const $input_label$1 = /*@__PURE__*/ _const("input_label", $input_label__closure);
+const $input_label = /*@__PURE__*/ _const("input_label", $input_label__closure);
 const $input_early__closure = /*@__PURE__*/ _closure($try_content__input_early);
 const $input_early = /*@__PURE__*/ _const("input_early", $input_early__closure);
 const $input_late__closure = /*@__PURE__*/ _closure($try_content2__input_late);
-const $input_late$1 = /*@__PURE__*/ _const("input_late", $input_late__closure);
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, $setup$1, $input$1);
-
-// template.marko
-const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1);
-function $setup($scope) {
-	$setup$1($scope["#childScope/0"]);
-	$input_early($scope["#childScope/0"], true);
-	$input_n($scope["#childScope/0"]);
-}
-const $input_late = ($scope, input_late) => $input_late$1($scope["#childScope/0"], input_late);
-const $input_label = ($scope, input_label) => $input_label$1($scope["#childScope/0"], input_label);
-const $input = ($scope, input) => {
-	$input_late($scope, input.late);
-	$input_label($scope, input.label);
-};
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+const $input_late = /*@__PURE__*/ _const("input_late", $input_late__closure);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template, $walks, $setup, $input);

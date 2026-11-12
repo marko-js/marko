@@ -9,9 +9,7 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var show_await_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
-	_any_client_guard($scope0_reason);
-	const $cg__input_label = _client_guard($scope0_reason, 2), $wi__input_promise__OR__input_label = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $wi__input_promise__OR__input_label = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_promise__closures = /* @__PURE__ */ new Set();

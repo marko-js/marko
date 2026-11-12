@@ -11,7 +11,6 @@
 ## Change
 ```
 INSERT: div
-UPDATE: body[data-ready] null => "1"
 ```
 
 # Update `{"show":true,"error":{},"label":"b"}`

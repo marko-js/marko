@@ -14,11 +14,7 @@ const $catch_content__if = /*@__PURE__*/ _if("#text/0", "<b> </b>", "D ", $if_co
 const $catch_content__$params = ($scope, $params2) => $catch_content__if($scope, $params2[0]?.status === 404 ? 0 : 1);
 const $catch_content = _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", 0, $catch_content__$params);
 const $try = /*@__PURE__*/ _try("#text/0", "<p> </p>", "D ", $try_content__setup, 0, $catch_content);
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => document.body.dataset.ready = "1");
-function $setup($scope) {
-	$try($scope);
-	$setup__script($scope);
-}
+const $setup = $try;
 const $input = ($scope, input) => {
 	$input_label($scope, input.label);
 	$input_error($scope, input.error);

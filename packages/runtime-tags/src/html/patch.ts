@@ -66,7 +66,6 @@ export { _shell_marker, _shell_setup, _shells } from "./patches/shells";
 export { patchRequestKind, patchResponseHeaders } from "./patches/template";
 export { setPatchBuild } from "./patches/writer";
 export {
-  _any_client_guard,
   _client_guard,
   _client_branch,
   _global_subscribe,

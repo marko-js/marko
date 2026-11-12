@@ -7,10 +7,8 @@ const page = (label: string, late?: true) => ({
 });
 
 // The `@catch`es of a child with no client work, of a try the document caught and of one a
-// patch catches, whose caller passes no client state: no module loads, so each keeps its render.
+// patch catches, whose caller passes no client state: their module loads, so both follow fills.
 export const config: TestConfig = {
   patches: true,
-  // A kept catch shows what a fresh render of a later step does not.
-  skip_fresh_render: true,
   steps: [page("a"), page("b", true), page("c", true)],
 };

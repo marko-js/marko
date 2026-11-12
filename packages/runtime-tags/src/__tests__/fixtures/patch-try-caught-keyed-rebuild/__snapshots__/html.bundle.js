@@ -26,9 +26,7 @@ _shells({
 	a0: "a0; ; "
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
-	_any_client_guard($scope0_reason);
-	const $cg__input_pages = _client_guard($scope0_reason, 0), $wi__input_pages = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_pages = _client_guard($scope0_reason, 0), $wi__input_pages = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_for_of(input.pages, (page) => {

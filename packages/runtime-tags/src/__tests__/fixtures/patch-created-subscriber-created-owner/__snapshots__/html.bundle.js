@@ -15,12 +15,12 @@ const $template = "<!><!><!>";
 function boom(error) {
 	throw error;
 }
-const $setup = [[], ["c6"]];
+const $setup = [[], []];
 _shells({
 	c5: "c5;D ;<p> </p>",
 	c2: "c2",
 	c4: `c4${_shell_marker([[], []], ["a>", $setup$1])}`,
-	c: "c !c6;b%;<!><!><!>"
+	c: "c;b%;<!><!><!>"
 });
 var child_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $cg__input_error = _client_guard($scope0_reason, 1), $wi__input_error = _write_if($scope0_reason, 1);
@@ -53,12 +53,11 @@ var child_default = _template("c", (input) => {
 			a: _existing_scope($childScope)
 		});
 	}, 0, "c4", "c5", 1, 1, 1);
-	_script($scope0_id, "c6", 0);
 	_scope($scope0_id, {
 		d: input.label,
 		f: _write_if($scope0_reason, 0) && $input_label__closures,
 		g: $wi__input_error && _unfilled_if($scope0_reason, 1) && $input_error__closures
-	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "c7", "d");
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "c6", "d");
 });
 
 // template.marko

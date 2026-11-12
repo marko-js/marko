@@ -9,7 +9,7 @@
     }
   }, "a4"],
   xd: "b",
-  Sa7: "d"
+  Sa6: "d"
 }
 ;BgE
 
@@ -23,7 +23,7 @@
     }
   }, "a4"],
   xd: "c",
-  Sa7: "d"
+  Sa6: "d"
 }
 
 // PATCH holding BgE
@@ -32,5 +32,5 @@
     ta: "d"
   }, "a4"],
   xd: "d",
-  Sa7: "d"
+  Sa6: "d"
 }

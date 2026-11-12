@@ -1,5 +1,4 @@
 import { types as t } from "@marko/compiler";
-import { getProgram } from "@marko/compiler/babel-utils";
 
 import { UpdatesFrom } from "../../common/types";
 import {
@@ -30,7 +29,6 @@ import {
   reduceParamGroups,
   type Section,
 } from "./sections";
-import { inCatchWithoutClientWork } from "./shell";
 import { findSectionSlot, findSlot, type Slot, SlotKind } from "./slots";
 import { ALWAYS, compareSources, mergeSources, type Sources } from "./sources";
 import { createOutputSectionState } from "./state";
@@ -75,7 +73,6 @@ interface SharedGuards {
 const [getSectionGuards] = createOutputSectionState<
   SharedGuards & {
     page?: true;
-    client?: true;
     /** The statement binding the reason, once a body has it. */
     statement?: t.Statement;
   }
@@ -687,25 +684,6 @@ function hasGuardedReason(section: Section) {
 
 function isConditionalSlot(slot: Slot) {
   return isGuardedReason(mapBodyParams(slot.section, slot.reason));
-}
-
-// In a `@catch` of a template with no client work, whether a group its caller passes is
-// client-sourced (which loads its module), shared among the root section's guards.
-export function getCallerClientGuard(section: Section) {
-  if (!inCatchWithoutClientWork(section)) return false;
-  const root = getProgram().node.extra.section!;
-  const state = getSectionGuards(root);
-  const id = t.identifier(ensureSharedUid("scope0_client", root));
-  if (!state.client) {
-    state.client = true;
-    state.declarators.push(
-      t.variableDeclarator(
-        t.cloneNode(id),
-        callRuntime("_any_client_guard", scopeReasonIdentifier(root)),
-      ),
-    );
-  }
-  return id;
 }
 
 function scopeReasonIdentifier(section: Section) {

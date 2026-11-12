@@ -11,9 +11,7 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var show_await_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
-	_any_client_guard($scope0_reason);
-	const $cg__input_promise = _client_guard($scope0_reason, 1), $wi__input_promise__OR__input_other = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 1), $wi__input_promise__OR__input_other = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_other__closures = /* @__PURE__ */ new Set();
 	_await($scope0_id, "a", input.promise, (x) => {

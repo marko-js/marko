@@ -18,12 +18,12 @@ const $walks$1 = "b%c";
 function boom(error) {
 	throw error;
 }
-const $setup$1 = [[], ["__tests__/tags/child.marko_0"]];
+const $setup$1 = [[], []];
 _shells({
 	"__tests__/tags/child.marko_3*content": "__tests__/tags/child.marko_3*content;D ;<p> </p>",
 	"__tests__/tags/child.marko_2*content": "__tests__/tags/child.marko_2*content",
 	"__tests__/tags/child.marko_1*content": `__tests__/tags/child.marko_1*content${_shell_marker([[], []], ["#childScope/0>", $setup$2])}`,
-	"__tests__/tags/child.marko": "__tests__/tags/child.marko !__tests__/tags/child.marko_0;b%;<!><!><!>"
+	"__tests__/tags/child.marko": "__tests__/tags/child.marko;b%;<!><!><!>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $cg__input_error = _client_guard($scope0_reason, 1), $wi__input_error = _write_if($scope0_reason, 1);
@@ -56,7 +56,6 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/tags/child.marko", "6:4");
 	}, 0, "__tests__/tags/child.marko_1*content", "__tests__/tags/child.marko_3*content", 1, 1, 1);
-	_script($scope0_id, "__tests__/tags/child.marko_0", 0);
 	_scope($scope0_id, {
 		input_label: input.label,
 		"ClosureScopes:input_label/5": _write_if($scope0_reason, 0) && $input_label__closures,
