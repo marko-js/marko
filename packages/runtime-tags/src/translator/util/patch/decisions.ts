@@ -7,13 +7,20 @@ import {
   type Binding,
   BindingType,
   bindingUtil,
-  compareReferences,
   getCanonicalBinding,
 } from "../bindings";
 import { createPassMemo } from "../cyclic-memo";
 import { mergeInitialValueSources } from "../finalize-references";
 import { isPatch } from "../marko-config";
-import { every, forEach, type Opt, push, reduce, some } from "../optional";
+import {
+  every,
+  forEach,
+  type Opt,
+  push,
+  reduce,
+  some,
+  type SortedOpt,
+} from "../optional";
 import {
   getSourcesForExpr,
   getSourcesForReferencedBindings,
@@ -30,7 +37,7 @@ import {
   type ParamReasonGroup,
   type Section,
 } from "../sections";
-import { hasOwnSetupWork } from "../setup-work";
+import { hasSetupWorkReadingNothing } from "../setup-work";
 import { inCreatedCatch } from "../shell";
 import { getSignals, type Signal } from "../signals";
 import { findSlot, SlotKind, type Slot } from "../slots";
@@ -39,10 +46,12 @@ import {
   hasUngatedSource,
   mergeSources,
   type Sources,
+  sourcesUtil,
   withSources,
 } from "../sources";
 import { createAnalysisState } from "../state";
 import {
+  getCreatedSetup,
   getFilledReads,
   getPatchWrite,
   fillsInitialValue,
@@ -170,32 +179,43 @@ export const hasPatchKeyedNodes = createPassMemo(
   false,
 );
 
-// Which renders of a body its writers' guards leave unwritten where its promise's
-// caller groups update from the client: all, the paired ones (setup work), or none.
+// Which renders of an `<await>` body write a value where its promise's caller groups
+// update from the client (all, the paired ones, none); a `nested` section's entries count.
 export function getUnwrittenBodies(
   section: Section,
   groups: [Section, ParamReasonGroup][],
+  nested?: true,
 ): "all" | "paired" | undefined {
   // `_peek_scope_id` links each known child's patch.
   if (section.knownTags) return;
-  // An effect reading nothing rides its shell (`isEffectOutsideShell`).
-  let unwritten: "all" | "paired" = hasOwnSetupWork(section, isEffect)
+  // An effect reading nothing rides its shell (`isEffectOutsideShell`), and closure
+  // setup writes no value.
+  let unwritten: "all" | "paired" = hasSetupWorkReadingNothing(
+    section,
+    isEffect,
+  )
     ? "paired"
     : "all";
   if (section.slots.some((slot) => isSlotWritten(slot, groups))) return;
-  for (const signal of getSignals(section).values()) {
-    const writes = signal.hasHTMLEffect && getEffectWrites(section, signal);
-    // The client's render runs it, unless it reads a value the server's alone updates:
-    // the server's render then writes its entry.
-    if (
-      writes &&
-      writes.reads.some(
-        (read) =>
-          getSourcesUpdatesFrom(section, read.sources, groups) ===
-          UpdatesFrom.Server,
-      )
-    ) {
-      return;
+  if (nested) {
+    // A filled intersection's render entry rides the copy on every render.
+    for (const [ref, setup] of getCreatedSetup(section)) {
+      if (Array.isArray(ref) && setup.setup === "mixed") return;
+    }
+    for (const signal of getSignals(section).values()) {
+      const writes = signal.hasHTMLEffect && getEffectWrites(section, signal);
+      // The client's render runs it, unless it reads a value the server's alone updates:
+      // the server's render then writes its entry.
+      if (
+        writes &&
+        writes.reads.some(
+          (read) =>
+            getSourcesUpdatesFrom(section, read.sources, groups) ===
+            UpdatesFrom.Server,
+        )
+      ) {
+        return;
+      }
     }
   }
   for (const child of section.children) {
@@ -225,7 +245,7 @@ export function getUnwrittenBodies(
         return;
       }
     }
-    const childUnwritten = getUnwrittenBodies(child, groups);
+    const childUnwritten = getUnwrittenBodies(child, groups, true);
     if (!childUnwritten) return;
     if (childUnwritten === "paired" && !clientRendered) unwritten = "paired";
   }
@@ -287,39 +307,27 @@ export function getSeedWriteGroups(
 }
 
 // What a mask of `write` reads where `groups` hold the client's bit: that bit where it
-// composes just them, with the server's for an ungated source; else the server's, maybe alone.
+// composes them (a seed drops the server's); else the server's, but for a seed.
 function getMaskUpdatesFrom(
   write: WriteGroups | undefined,
   groups: [Section, ParamReasonGroup][],
 ) {
   if (!write) return UpdatesFrom.Server;
   if (!write.groups.length) return 0;
-  // A seed drops the server's bit, so groups beyond theirs leave it the client's.
-  if (write.seed) {
-    return holdsGroups(write.groups, groups) ? UpdatesFrom.Client : 0;
-  }
-  // A group beyond theirs may add the server's bit, where a filled intersection's render writes.
-  if (
-    write.groups.length === groups.length &&
-    groups.every(([section, group]) =>
-      write.groups.some(
-        ([writeSection, writeGroup]) =>
-          writeSection === section && !compareReferences(writeGroup, group),
-      ),
-    )
-  ) {
-    return write.ungated
-      ? UpdatesFrom.Client | UpdatesFrom.Server
-      : UpdatesFrom.Client;
-  }
-  return UpdatesFrom.Server;
+  return holdsGroups(write.groups, groups)
+    ? write.seed
+      ? UpdatesFrom.Client
+      : UpdatesFrom.Client | UpdatesFrom.Server
+    : write.seed
+      ? 0
+      : UpdatesFrom.Server;
 }
 
 // What a patch render writes of an effect (`getEffectEntryArgs`): its entry, where it
 // reads a value the patch writes, under the groups of `written` (none: every render).
 export function getEffectWrites(section: Section, signal: Signal) {
   // Only a value the patch writes in place re-runs it: a server group's.
-  let written: Opt<Sources>;
+  let written: SortedOpt<Sources>;
   let always = false;
   const reads: Binding[] = [];
   const byEntry = runsByEntry(signal.referencedBindings);
@@ -332,7 +340,7 @@ export function getEffectWrites(section: Section, signal: Signal) {
         reads.push(read);
         const sources = getSourcesForReferencedBindings(read);
         if (getWriteGroups(section, sources)) {
-          written = push(written, sources!);
+          written = sourcesUtil.add(written, sources!);
         } else {
           always = true;
         }
@@ -357,11 +365,15 @@ function holdsGroups(
   writeGroups: [Section, ParamReasonGroup][],
   groups: [Section, ParamReasonGroup][],
 ) {
-  return groups.every(([section, group]) =>
-    writeGroups.some(
-      ([writeSection, writeGroup]) =>
-        writeSection === section && bindingUtil.isSuperset(writeGroup, group),
-    ),
+  // With none, no write's mask composes the promise's client bit.
+  return (
+    !!groups.length &&
+    groups.every(([section, group]) =>
+      writeGroups.some(
+        ([writeSection, writeGroup]) =>
+          writeSection === section && bindingUtil.isSuperset(writeGroup, group),
+      ),
+    )
   );
 }
 

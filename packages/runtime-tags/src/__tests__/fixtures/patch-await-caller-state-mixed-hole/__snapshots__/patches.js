@@ -1,19 +1,19 @@
 // PATCH
 {
   cb: {
-    xe: "b",
     cAa: {
       ib1: ">e"
-    }
+    },
+    xe: "b"
   }
 }
 
 // PATCH
 {
   cb: {
-    xe: "c",
     cAa: {
       ib1: ">e"
-    }
+    },
+    xe: "c"
   }
 }

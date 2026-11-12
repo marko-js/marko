@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id(), $ui__input_rows2 = _unfilled_if($scope0_reason, 0);
 		const $for_content__row_label__closures = /* @__PURE__ */ new Set();
 		const $for_content__row_card__closures = /* @__PURE__ */ new Set();
-		_await($scope1_id, "a", row.p, (v) => {
+		const $scope2_id = _await($scope1_id, "a", row.p, (v) => {
 			const $scope2_id = _scope_id();
 			const $await_content__v__closures = /* @__PURE__ */ new Set();
 			_dynamic_tag($scope2_id, "a", row.card ? card_default : "div", {}, 2, _content_resume("a0", () => {
@@ -55,7 +55,8 @@ var template_default = _template("a", (input) => {
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a3", $cg__input_rows);
 			$wi__input_rows && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_card__closures, _scope($scope2_id, { i: $await_content__v__closures }), $cg__input_rows && "a3", $wg__input_rows);
 			_filled_guard($scope0_reason, 0) && _client_branch_if("a0", $scope2_id) && _patch_write($scope2_id, "xc", v, !$sg__input_rows) && _patch_subscribers($scope2_id, "a4", "c");
-		}, 1, "a5", $ui__input_rows2 && 3, 0, 1);
+		}, 1, "a5", $ui__input_rows2 && 2, 0, 1);
+		if ($scope2_id) _unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a3", $cg__input_rows);
 		$wi__input_rows && _scope($scope1_id, {
 			h: $for_content__row_label__closures,
 			g: $ui__input_rows2 && $for_content__row_card__closures

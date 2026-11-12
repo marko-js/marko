@@ -66,6 +66,7 @@ import {
   getClientBranchGuardWrites,
   getPatchScopeCalls,
   hasCallerGroupsAt,
+  getBodyEntries,
   writePatchResumeStatements,
 } from "./patch/writers";
 import { getReadReplacement } from "./read-replacement";
@@ -2019,6 +2020,7 @@ export function writeHTMLResumeStatements(
   // nor its place after the section's body holds one.
   const patches = isPatch();
   const renderScripts = new Map<Intersection, (t.Expression | undefined)[][]>();
+  const entries = getBodyEntries(section);
   for (let i = allSignals.length; i--;) {
     const signal = allSignals[i];
     if (signal.hasHTMLEffect) {
@@ -2031,7 +2033,14 @@ export function writeHTMLResumeStatements(
         getCreatedSetup(section).get(ref)?.setup === "mixed"
           ? ref
           : undefined;
-      const entry = patches && getEffectEntryArgs(section, signal, !!rendered);
+      const entry =
+        patches &&
+        getEffectEntryArgs(
+          section,
+          signal,
+          !!rendered,
+          entries && section.parent,
+        );
       const registryId = t.stringLiteral(getSignalRegistryId(signal));
       const args = entry
         ? [
@@ -2046,7 +2055,10 @@ export function writeHTMLResumeStatements(
         if (!scripts) renderScripts.set(rendered, (scripts = []));
         scripts.push(args);
       } else {
-        body.push(t.expressionStatement(callRuntime("_script", ...args)));
+        const script = t.expressionStatement(callRuntime("_script", ...args));
+        body.push(script);
+        // An effect's entry is one its `<await>` writes where no copy renders.
+        if (entry && entries) entries.push(script);
       }
     }
   }

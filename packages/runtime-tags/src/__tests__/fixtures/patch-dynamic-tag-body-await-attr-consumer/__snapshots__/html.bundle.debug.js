@@ -46,14 +46,18 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_if(() => {
 		if (input.p) {
 			const $scope1_id = _scope_id();
-			_await($scope1_id, "#text/0", input.p, (x) => {
-				const $scope2_id = _scope_id(), $ui__input_content = _unfilled_if($scope0_reason, 2), $fg__input_p = _filled_guard($scope0_reason, 1);
-				$fg__input_p && $ui__input_content && _patch_write($scope2_id, "PatchMarkedWrite:x", x, !_server_guard($scope0_reason, 1));
+			const $scope2_id = _await($scope1_id, "#text/0", input.p, (x) => {
+				const $scope2_id = _scope_id(), $ui__input_content = _unfilled_if($scope0_reason, 2);
+				_filled_guard($scope0_reason, 1) && $ui__input_content && _patch_write($scope2_id, "PatchMarkedWrite:x", x, !_server_guard($scope0_reason, 1));
 				_dynamic_tag($scope2_id, "#text/0", x ? keeper_default : "div", { content: input.content }, 1, 0, 0, $wg__input_p__OR__input_content, $scope0_reason, 0);
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "__tests__/tags/card.marko_2_input_content#0:4/subscribe");
-				_patch_render($scope2_id, "__tests__/tags/card.marko_2_input_content#0:4_x#2/setup", ((_filled_guard($scope0_reason, 2) ? " >>input_content" : "") + ($fg__input_p ? " x" : "")).slice(1), $scope0_reason, 0);
+				_patch_render($scope2_id, "__tests__/tags/card.marko_2_input_content#0:4_x#2/setup", ((_filled_guard($scope0_reason, 2) ? " >>input_content" : "") + (_filled_guard($scope0_reason, 1) ? " x" : "")).slice(1), $scope0_reason, 0);
 				$wi__input_p__OR__input_content && _subscribe($ui__input_content && $input_content__closures, _scope($scope2_id, { x: $wi__input_content && _unfilled_if($scope0_reason, 0) && x }, "__tests__/tags/card.marko", "3:4", { x: "3:10" }), _client_guard($scope0_reason, 2) && "__tests__/tags/card.marko_2_input_content#0:4/subscribe", $wg__input_p__OR__input_content);
-			}, 1, "__tests__/tags/card.marko_2*content", _unfilled_if($scope0_reason, 1), 0, 1);
+			}, 1, "__tests__/tags/card.marko_2*content", _unfilled_if($scope0_reason, 1) && 2, 0, 1);
+			if ($scope2_id) {
+				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "__tests__/tags/card.marko_2_input_content#0:4/subscribe");
+				_patch_render($scope2_id, "__tests__/tags/card.marko_2_input_content#0:4_x#2/setup", ((_filled_guard($scope0_reason, 2) ? " >>input_content" : "") + (_filled_guard($scope0_reason, 1) ? " x" : "")).slice(1), $scope0_reason, 0);
+			}
 			$cg__input_p && _patch_render($scope1_id, "__tests__/tags/card.marko_1_input_p#0:3/setup");
 			$wi__input_p__OR__input_content && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "2:2");
 			return 0;

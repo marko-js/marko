@@ -18,12 +18,15 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 		_for_of([x], (n, i) => {
 			const $scope2_id = _scope_id(), $ui__input_promise = _unfilled_if($scope0_reason, 0);
 			const $for_content__n__closures = new Set();
-			_await($scope2_id, "#text/0", Promise.resolve(i), (y) => {
+			const $scope3_id = _await($scope2_id, "#text/0", Promise.resolve(i), (y) => {
 				const $scope3_id = _scope_id();
 				_html(`<b>${_text_mark($scope3_id, "#text/0", n, 1, $scope0_reason, 0)}:${_text_mark($scope3_id, "#text/1", y, 2, 0, 0)}</b>`);
 				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope3_id, "__tests__/tags/show-await.marko_3_n#2:2/subscribe", $cg__input_promise);
 				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__n__closures, _scope($scope3_id, {}, "__tests__/tags/show-await.marko", "3:6"), $cg__input_promise && "__tests__/tags/show-await.marko_3_n#2:2/subscribe");
-			}, 1, "__tests__/tags/show-await.marko_3*content", $ui__input_promise && 3);
+			}, 1, "__tests__/tags/show-await.marko_3*content", $ui__input_promise && 2);
+			if ($scope3_id) {
+				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope3_id, "__tests__/tags/show-await.marko_3_n#2:2/subscribe", $cg__input_promise);
+			}
 			_write_if($scope0_reason, 0) && _scope($scope2_id, { "ClosureScopes:n/4": $ui__input_promise && $for_content__n__closures }, "__tests__/tags/show-await.marko", "2:4");
 		}, 0, $scope1_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/show-await.marko_2*shell", $scope0_reason, 0);
 		_scope($scope1_id, {}, "__tests__/tags/show-await.marko", "1:2");

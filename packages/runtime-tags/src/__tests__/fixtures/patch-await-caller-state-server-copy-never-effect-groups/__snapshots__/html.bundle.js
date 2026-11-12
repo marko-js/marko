@@ -17,13 +17,14 @@ var show_await_default = _template("b", (input) => {
 	const Row = { content: _content("b3", ({ text }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $uf__text = _updates_from($scope1_reason, 0), $fg__text = _filled_guard($scope1_reason, 0), $wi__text = _write_if($scope1_reason, 0);
-		_await($scope1_id, "a", text && input.promise, (x) => {
+		const $scope2_id = _await($scope1_id, "a", text && input.promise, (x) => {
 			const $scope2_id = _scope_id();
 			_filled_guard(($uf__input_promise | $uf__text) << 1, 0) && _patch_write($scope2_id, "xc", x, !_server_guard(($uf__input_promise | $uf__text) << 1, 0));
 			_html(`<p>${_text_mark($scope2_id, "a", x, 1, ($uf__input_promise | $uf__text) << 1, 0)}</p>`);
-			_script($scope2_id, "b0", 1, (_filled_guard($scope0_reason, 0) || _filled_guard($scope1_reason, 0)) && (_client_guard($scope0_reason, 0) || _client_guard($scope1_reason, 0) ? 2 : 1));
+			_script($scope2_id, "b0", 1, _filled_guard(($uf__input_promise | $uf__text) << 1, 0) && (_client_guard($scope0_reason, 0) || _client_guard($scope1_reason, 0) ? 2 : 1));
 			_scope($scope2_id, { c: x });
 		}, 1, "b1", _unfilled_if(($uf__input_promise | $uf__text) << 1, 0) && 2);
+		if ($scope2_id) _script($scope2_id, "b0", 1, _filled_guard(($uf__input_promise | $uf__text) << 1, 0) && (_client_guard($scope0_reason, 0) || _client_guard($scope1_reason, 0) ? 2 : 1));
 		_unfilled_if(($uf__input_promise | $uf__text) << 1, 0) && _patch_subscribe($scope1_id, "b4", 1);
 		_patch_render($scope1_id, "b5", ((_filled_guard($scope0_reason, 0) ? " >d" : "") + ($fg__text ? " d" : "")).slice(1), ($uf__input_promise | $uf__text) << 1, 0);
 		($wi__input_promise || $wi__text) && _subscribe(_unfilled_if(($uf__input_promise | $uf__text) << 1, 0) && $wi__input_promise && $input_promise__closures, _scope($scope1_id, {

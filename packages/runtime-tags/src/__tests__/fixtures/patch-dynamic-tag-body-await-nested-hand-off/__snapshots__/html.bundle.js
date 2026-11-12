@@ -37,22 +37,26 @@ var card_default = _template("b", (input) => {
 	const $input_p__closures = /* @__PURE__ */ new Set();
 	const $input_content__closures = /* @__PURE__ */ new Set();
 	_await($scope0_id, "a", input.p, (x) => {
-		const $scope1_id = _scope_id(), $ui__input_p = _unfilled_if($scope0_reason, 1), $ui__input_p__OR__input_content3 = _unfilled_if($scope0_reason, 0), $ui__input_content = _unfilled_if($scope0_reason, 2), $fg__input_p2 = _filled_guard($scope0_reason, 1);
+		const $scope1_id = _scope_id(), $ui__input_p = _unfilled_if($scope0_reason, 1), $fg__input_p__OR__input_content = _filled_guard($scope0_reason, 0), $ui__input_p__OR__input_content3 = _unfilled_if($scope0_reason, 0), $ui__input_content = _unfilled_if($scope0_reason, 2), $fg__input_p = _filled_guard($scope0_reason, 1);
 		const $await_content__c__closures = /* @__PURE__ */ new Set();
-		$fg__input_p2 && $ui__input_content && _patch_write($scope1_id, "xc", x, !$sg__input_p);
+		$fg__input_p && $ui__input_content && _patch_write($scope1_id, "xc", x, !$sg__input_p);
 		const c = x && input.content;
-		_filled_guard($scope0_reason, 0) && $ui__input_p && _patch_write($scope1_id, "xe", c, !_server_guard($scope0_reason, 0));
-		_await($scope1_id, "a", input.p, (y) => {
-			const $scope2_id = _scope_id(), $ui__input_p__OR__input_content = _unfilled_if($scope0_reason, 0), $fg__input_p = _filled_guard($scope0_reason, 1);
-			$fg__input_p && $ui__input_p__OR__input_content && _patch_write($scope2_id, "xc", y, !$sg__input_p);
+		$fg__input_p__OR__input_content && $ui__input_p && _patch_write($scope1_id, "xe", c, !_server_guard($scope0_reason, 0));
+		const $scope2_id = _await($scope1_id, "a", input.p, (y) => {
+			const $scope2_id = _scope_id(), $ui__input_p__OR__input_content = _unfilled_if($scope0_reason, 0);
+			_filled_guard($scope0_reason, 1) && $ui__input_p__OR__input_content && _patch_write($scope2_id, "xc", y, !$sg__input_p);
 			_dynamic_tag($scope2_id, "a", y ? keeper_default : "div", { content: c }, 1, 0, 0, $wg__input_p__OR__input_content, $scope0_reason, 0);
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "b0");
-			_patch_render($scope2_id, "b1", ((_filled_guard($scope0_reason, 0) ? " >e" : "") + ($fg__input_p ? " c" : "")).slice(1), $scope0_reason, 0);
+			_patch_render($scope2_id, "b1", (($fg__input_p__OR__input_content ? " >e" : "") + ($fg__input_p ? " c" : "")).slice(1), $scope0_reason, 0);
 			$wi__input_p__OR__input_content && _subscribe($ui__input_p__OR__input_content && $await_content__c__closures, _scope($scope2_id, { c: $ui__input_p__OR__input_content && y }), _client_guard($scope0_reason, 0) && "b0", $wg__input_p__OR__input_content);
-		}, 1, "b2", $ui__input_p, 1, 1);
+		}, 1, "b2", $ui__input_p && 2, 1, 1);
+		if ($scope2_id) {
+			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "b0");
+			_patch_render($scope2_id, "b1", (($fg__input_p__OR__input_content ? " >e" : "") + (_filled_guard($scope0_reason, 1) ? " c" : "")).slice(1), $scope0_reason, 0);
+		}
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b6", 1);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b7");
-		_patch_render($scope1_id, "b8", ((_filled_guard($scope0_reason, 2) ? " >e" : "") + ($fg__input_p2 ? " c" : "")).slice(1), $scope0_reason, 0);
+		_patch_render($scope1_id, "b8", ((_filled_guard($scope0_reason, 2) ? " >e" : "") + ($fg__input_p ? " c" : "")).slice(1), $scope0_reason, 0);
 		$wi__input_p__OR__input_content && _subscribe($ui__input_content && $input_content__closures, _subscribe($ui__input_p && $input_p__closures, _scope($scope1_id, {
 			c: $wi__input_content && $ui__input_p__OR__input_content3 && x,
 			e: $wi__input_p && $ui__input_p__OR__input_content3 && c,

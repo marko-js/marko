@@ -30,21 +30,25 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_p__OR__input_content = _write_guard($scope0_reason, 0), $wi__input_content = _write_if($scope0_reason, 2), $ui__input_p__OR__input_content = _unfilled_if($scope0_reason, 0), $ui__input_p = _unfilled_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_p__OR__input_content = _write_guard($scope0_reason, 0), $wi__input_content = _write_if($scope0_reason, 2), $ui__input_p__OR__input_content = _unfilled_if($scope0_reason, 0), $ui__input_p = _unfilled_if($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $c__closures = /* @__PURE__ */ new Set();
-	_await($scope0_id, "a", input.p, (x) => {
-		const $scope1_id = _scope_id(), $ui__input_content = _unfilled_if($scope0_reason, 2), $fg__input_p = _filled_guard($scope0_reason, 1);
-		$fg__input_p && $ui__input_content && _patch_write($scope1_id, "xc", x, !_server_guard($scope0_reason, 1));
+	const $scope1_id = _await($scope0_id, "a", input.p, (x) => {
+		const $scope1_id = _scope_id(), $ui__input_content = _unfilled_if($scope0_reason, 2);
+		_filled_guard($scope0_reason, 1) && $ui__input_content && _patch_write($scope1_id, "xc", x, !_server_guard($scope0_reason, 1));
 		_dynamic_tag($scope1_id, "a", x ? keeper_default : "div", { content: input.content }, 1, 0, 0, $wg__input_p__OR__input_content, $scope0_reason, 0);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b0");
-		_patch_render($scope1_id, "b1", ((_filled_guard($scope0_reason, 2) ? " >e" : "") + ($fg__input_p ? " c" : "")).slice(1), $scope0_reason, 0);
+		_patch_render($scope1_id, "b1", (($fg__input_content ? " >e" : "") + (_filled_guard($scope0_reason, 1) ? " c" : "")).slice(1), $scope0_reason, 0);
 		_write_if($scope0_reason, 0) && _subscribe($ui__input_content && $c__closures, _scope($scope1_id, { c: $wi__input_content && _unfilled_if($scope0_reason, 0) && x }), _client_guard($scope0_reason, 2) && "b0", $wg__input_p__OR__input_content);
-	}, 1, "b2", $ui__input_p, 1, 1);
+	}, 1, "b2", $ui__input_p && 2, 1, 1);
+	if ($scope1_id) {
+		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b0");
+		_patch_render($scope1_id, "b1", ((_filled_guard($scope0_reason, 2) ? " >e" : "") + (_filled_guard($scope0_reason, 1) ? " c" : "")).slice(1), $scope0_reason, 0);
+	}
 	_scope($scope0_id, {
 		e: _write_if($scope0_reason, 1) && $ui__input_p__OR__input_content && input.content,
 		f: $wi__input_content && $wi__input_content && $ui__input_p__OR__input_content && $c__closures
-	}) || _filled_guard($scope0_reason, 2) && $ui__input_p && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_content && $ui__input_p && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

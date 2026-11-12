@@ -27,10 +27,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_items = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_for_of(input.items, (item) => {
-		const $scope1_id = _scope_id(), $ui__input_items2 = _unfilled_if($scope0_reason, 0);
+		const $scope1_id = _scope_id(), $ui__input_items = _unfilled_if($scope0_reason, 0);
 		const $for_content__item_inner__closures = new Set();
 		_await($scope1_id, "#text/0", item.outer, (outer) => {
-			const $scope2_id = _scope_id(), $ui__input_items = _unfilled_if($scope0_reason, 0);
+			const $scope2_id = _scope_id(), $ui__input_items2 = _unfilled_if($scope0_reason, 0);
 			_await($scope2_id, "#text/0", item.inner, (inner) => {
 				const $scope3_id = _scope_id();
 				_set_scope_reason(_updates_from($scope0_reason, 0) << 3);
@@ -38,12 +38,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				field_default({ name: inner });
 				_patch_child_end();
 				_scope($scope3_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "3:6");
-			}, 1, "__tests__/template.marko_3*content", $ui__input_items);
+			}, 1, "__tests__/template.marko_3*content", $ui__input_items2);
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_item_inner#1:4/subscribe", 1);
-			$wi__input_items && _subscribe($ui__input_items && $for_content__item_inner__closures, _scope($scope2_id, {}, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_2_item_inner#1:4/subscribe", 0);
+			$wi__input_items && _subscribe($ui__input_items2 && $for_content__item_inner__closures, _scope($scope2_id, {}, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_2_item_inner#1:4/subscribe", 0);
 			$wi__input_items && _resume_branch($scope2_id);
-		}, 1, "__tests__/template.marko_2*content", $ui__input_items2);
-		$wi__input_items && _scope($scope1_id, { "ClosureScopes:item_inner/5": $ui__input_items2 && $for_content__item_inner__closures }, "__tests__/template.marko", "1:2");
+		}, 1, "__tests__/template.marko_2*content", $ui__input_items);
+		$wi__input_items && _scope($scope1_id, { "ClosureScopes:item_inner/5": $ui__input_items && $for_content__item_inner__closures }, "__tests__/template.marko", "1:2");
 	}, "key", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

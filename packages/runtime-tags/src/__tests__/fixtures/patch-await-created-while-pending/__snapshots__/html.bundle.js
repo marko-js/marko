@@ -20,12 +20,13 @@ var template_default = _template("a", (input) => {
 		_for_of(input.items, (item) => {
 			const $scope3_id = _scope_id(), $ui__input_items = _unfilled_if($scope0_reason, 0);
 			const $for_content__item_msg__closures = /* @__PURE__ */ new Set();
-			_await($scope3_id, "a", item.promise, () => {
+			const $scope4_id = _await($scope3_id, "a", item.promise, () => {
 				const $scope4_id = _scope_id();
 				_html(`<div>${_text_mark($scope4_id, "a", item.msg, 1, $scope0_reason, 0)} done</div>`);
 				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope4_id, "a0", $cg__input_items);
 				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_msg__closures, _scope($scope4_id, {}), $cg__input_items && "a0");
-			}, 1, "a1", $ui__input_items && 3);
+			}, 1, "a1", $ui__input_items && 2);
+			if ($scope4_id) _unfilled_if($scope0_reason, 0) && _patch_subscribe($scope4_id, "a0", $cg__input_items);
 			$wi__input_items && _scope($scope3_id, { i: $ui__input_items && $for_content__item_msg__closures });
 		}, "id", $scope1_id, "a", 1, 1, 1, 0, 0, "a5", $scope0_reason, 0);
 		_html(`</section>${_el_mark($scope1_id, "a")}`);

@@ -17,21 +17,25 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 	const Row = { content: _content("__tests__/tags/show-await.marko_1*content", ({ text }) => {
 		const $scope1_id = _scope_id(), $ui__input_promise = _unfilled_if($scope0_reason, 0);
 		const $Row_content__text__closures = new Set();
-		const $scope1_reason = _scope_reason(), $wi__text = _write_if($scope1_reason, 0), $uf__text = _updates_from($scope1_reason, 0), $ui__text2 = _unfilled_if($scope1_reason, 0);
-		_await($scope1_id, "#text/0", input.promise, (x) => {
-			const $scope2_id = _scope_id(), $ui__text = _unfilled_if($scope1_reason, 0), $fg__input_promise = _filled_guard($scope0_reason, 0);
-			$fg__input_promise && $ui__text && _patch_write($scope2_id, "PatchMarkedWrite:x", x, !_server_guard($scope0_reason, 0));
+		const $scope1_reason = _scope_reason(), $wi__text = _write_if($scope1_reason, 0), $uf__text = _updates_from($scope1_reason, 0), $ui__text2 = _unfilled_if($scope1_reason, 0), $fg__text = _filled_guard($scope1_reason, 0);
+		const $scope2_id = _await($scope1_id, "#text/0", input.promise, (x) => {
+			const $scope2_id = _scope_id(), $ui__text = _unfilled_if($scope1_reason, 0);
+			_filled_guard($scope0_reason, 0) && $ui__text && _patch_write($scope2_id, "PatchMarkedWrite:x", x, !_server_guard($scope0_reason, 0));
 			_html(`<p>${_text_mark($scope2_id, "#text/0", x + ":" + text, 1, ($uf__input_promise | $uf__text) << 1, 0)}</p>`);
 			_unfilled_if($scope1_reason, 0) && _patch_subscribe($scope2_id, "__tests__/tags/show-await.marko_2_text#1:3/subscribe");
-			_patch_render($scope2_id, "__tests__/tags/show-await.marko_2_text#1:3_x#2/setup", ((_filled_guard($scope1_reason, 0) ? " >text" : "") + ($fg__input_promise ? " x" : "")).slice(1), ($uf__input_promise | $uf__text) << 1, 0);
+			_patch_render($scope2_id, "__tests__/tags/show-await.marko_2_text#1:3_x#2/setup", (($fg__text ? " >text" : "") + (_filled_guard($scope0_reason, 0) ? " x" : "")).slice(1), ($uf__input_promise | $uf__text) << 1, 0);
 			_subscribe($ui__text && $Row_content__text__closures, _scope($scope2_id, { x: $wi__text && ($ui__text || _unfilled_if($scope0_reason, 0)) && x }, "__tests__/tags/show-await.marko", "2:4", { x: "2:10" }), _client_guard($scope1_reason, 0) && "__tests__/tags/show-await.marko_2_text#1:3/subscribe");
-		}, 1, "__tests__/tags/show-await.marko_2*content", $ui__input_promise);
+		}, 1, "__tests__/tags/show-await.marko_2*content", $ui__input_promise && 2);
+		if ($scope2_id) {
+			_unfilled_if($scope1_reason, 0) && _patch_subscribe($scope2_id, "__tests__/tags/show-await.marko_2_text#1:3/subscribe");
+			_patch_render($scope2_id, "__tests__/tags/show-await.marko_2_text#1:3_x#2/setup", ((_filled_guard($scope1_reason, 0) ? " >text" : "") + (_filled_guard($scope0_reason, 0) ? " x" : "")).slice(1), ($uf__input_promise | $uf__text) << 1, 0);
+		}
 		$cg__input_promise && _patch_render($scope1_id, "__tests__/tags/show-await.marko_1_input_promise#0:3/subscribe");
 		($wi__input_promise || $wi__text) && _subscribe($ui__input_promise && $input_promise__closures, _scope($scope1_id, {
 			text: $wi__input_promise && ($ui__input_promise || $ui__text2) && text,
 			_: $wi__input_promise && _scope_with_id($scope0_id),
 			"ClosureScopes:text/6": $wi__text && $wi__text && ($ui__text2 || $ui__input_promise) && $Row_content__text__closures
-		}, "__tests__/tags/show-await.marko", "1:2", { text: "1:15" }), $cg__input_promise && "__tests__/tags/show-await.marko_1_input_promise#0:3/subscribe", 0) || _filled_guard($scope1_reason, 0) && $ui__input_promise && _patch_write($scope1_id, "PatchMarkedWrite:text", text, !_server_guard($scope1_reason, 0));
+		}, "__tests__/tags/show-await.marko", "1:2", { text: "1:15" }), $cg__input_promise && "__tests__/tags/show-await.marko_1_input_promise#0:3/subscribe", 0) || $fg__text && $ui__input_promise && _patch_write($scope1_id, "PatchMarkedWrite:text", text, !_server_guard($scope1_reason, 0));
 		($wi__input_promise || $wi__text) && _resume_branch($scope1_id);
 	}, $scope0_id, 0) };
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);

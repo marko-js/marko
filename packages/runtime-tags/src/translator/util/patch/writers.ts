@@ -198,6 +198,7 @@ export function getEffectEntryArgs(
   section: Section,
   signal: Signal,
   rendered: boolean,
+  checksIn?: Section,
 ) {
   const writes = getEffectWrites(section, signal);
   if (!writes) return;
@@ -219,8 +220,13 @@ export function getEffectEntryArgs(
   // A constant read still mounts the effect where a flush may create.
   const check = queued ? "_server_guard" : "_filled_guard";
   const group = written && getSoleCallerGroup(section, written);
-  const guard =
-    written && orCallerGroupGuards(section, undefined, check, written);
+  // Each read value's own check, as its writes compose it.
+  const guard = reduce(
+    written,
+    (guard: t.Expression | undefined, sources) =>
+      orGuard(guard, getCallerGroupGuard(section, check, sources, checksIn)!),
+    undefined,
+  );
   // No call's patch writes what the effect reads.
   if (!rendered && guard && isNever(guard)) return;
   const callerSources =
@@ -288,6 +294,11 @@ function pushCanonicalSources(list: Opt<Sources>, binding: Binding) {
 export const [getLetChanges] = createOutputSectionState<
   Map<Binding, t.Expression>
 >(() => new Map());
+
+// The entries of an `<await>` body its server copy may not render: they read no value,
+// so where no copy renders its `<await>` writes them too, sharing their checks with it.
+export const [getBodyEntries, setBodyEntries] =
+  createOutputSectionState<t.Statement[]>();
 
 // A section's patch entries beside its resume data: the setup a created scope
 // gets, and the intersection renders, an effect's in its `_script`.
@@ -423,6 +434,8 @@ export function writePatchResumeStatements(
 
   // The setup a flush names: a created or composed scope's where the client contributes
   // the group, a subscriber, and on any scope a filled intersection's render.
+  const entries = getBodyEntries(section);
+  const setupStart = body.length;
   for (const [ref, setup] of getCreatedSetup(section)) {
     if (Array.isArray(ref)) {
       if (setup.setup === "mixed") {
@@ -435,6 +448,8 @@ export function writePatchResumeStatements(
             section,
             toArray(ref, getCanonicalBinding),
             "_filled_guard",
+            undefined,
+            entries && section.parent,
           ) || absentArg(0);
         const groupArgs = getRootGroupArgs(
           section,
@@ -492,6 +507,7 @@ export function writePatchResumeStatements(
       );
     }
   }
+  entries?.push(...body.slice(setupStart));
 
   // A `<return>` handler's slot holds its bind (`buildReturnChangeBind`), which
   // returns the handler: hoisted, a patch render binds it too.
@@ -1069,6 +1085,7 @@ export function getCallerGroupGuard(
   section: Section,
   check: GroupCheck,
   sources: Sources | undefined,
+  checksIn = section,
 ) {
   const write = getWriteGroups(section, sources);
   if (!write) return;
@@ -1079,7 +1096,7 @@ export function getCallerGroupGuard(
   // One caller group's check is shared, as a write guard is.
   if (write.groups.length === 1 && !write.ungated) {
     const [groupSection, group] = write.groups[0];
-    return getOrShareGroupCheck(section, groupSection, group, check);
+    return getOrShareGroupCheck(checksIn, groupSection, group, check);
   }
   // The server's constant alone leaves `_unfilled_if` the render context.
   if (value === UpdatesFrom.Server && check === "_unfilled_if") {
@@ -1418,6 +1435,7 @@ function getReads(
   roots: Binding[],
   check: GroupCheck,
   entryGroup?: ParamReasonGroup | false,
+  checksIn?: Section,
 ) {
   let joined = "";
   const guarded: [t.Expression, string][] = [];
@@ -1431,7 +1449,7 @@ function getReads(
           !sources.global &&
           isGuardedReason(sources) &&
           getSoleCallerGroup(section, sources) === entryGroup
-        ) && getCallerGroupGuard(section, check, sources);
+        ) && getCallerGroupGuard(section, check, sources, checksIn);
       if (!guard || isAlways(guard)) joined += " " + hop;
       // A read no call's patch fills names nothing.
       else if (!isNever(guard)) guarded.push([guard, hop]);

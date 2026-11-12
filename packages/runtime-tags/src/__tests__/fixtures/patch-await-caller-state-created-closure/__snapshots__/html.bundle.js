@@ -7,15 +7,16 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var show_await_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 0), $ui__input_promise = _unfilled_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $ui__input_promise = _unfilled_if($scope0_reason, 0), $cg__input_promise = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
-	_await($scope0_id, "a", input.promise, (x) => {
+	const $scope1_id = _await($scope0_id, "a", input.promise, (x) => {
 		const $scope1_id = _scope_id();
 		_html(`<p>${_text_mark($scope1_id, "a", x, 1, $scope0_reason, 0)}:${_text_mark($scope1_id, "b", input.promise ? "p" : "-", 2, $scope0_reason, 0)}</p>`);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b0", $cg__input_promise);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, {}), $cg__input_promise && "b0");
-	}, 1, "b1", $ui__input_promise && 3, 1);
+	}, 1, "b1", $ui__input_promise && 2, 1);
+	if ($scope1_id) _unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b0", $cg__input_promise);
 	_scope($scope0_id, { e: _write_if($scope0_reason, 0) && $ui__input_promise && $input_promise__closures });
 });
 

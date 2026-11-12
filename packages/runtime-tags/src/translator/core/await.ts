@@ -27,7 +27,11 @@ import {
   patchFillsSection,
   patchMayFillSection,
 } from "../util/patch/structure";
-import { alwaysPairs, getCallerGroupGuard } from "../util/patch/writers";
+import {
+  alwaysPairs,
+  getCallerGroupGuard,
+  setBodyEntries,
+} from "../util/patch/writers";
 import { setDerivedFrom, trackParamsReferences } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
 import {
@@ -149,6 +153,31 @@ export default {
         // `_await` writes the branch marker whenever the body is written, and
         // resume takes the body's owner from it.
         setSectionOwnerResumedByMarker(bodySection);
+        const sources = isPatch()
+          ? getFillSources(bodySection.branchExpr)
+          : undefined;
+        // The client settles a promise of its own state, and one a caller passes where
+        // no patch fills it: the server's copy renders only the body's holes as data.
+        const unfilled =
+          isPatch() &&
+          (hasStatefulBranchExpr(bodySection)
+            ? t.numericLiteral(1)
+            : ifEver(
+                getCallerGroupGuard(
+                  bodySection.parent!,
+                  "_unfilled_if",
+                  sources,
+                ),
+              ));
+        const unwritten =
+          unfilled &&
+          getUnwrittenBodies(
+            bodySection,
+            getCallerParamGroupsAt(sources?.param, bodySection.parent!),
+          );
+        // Where the copy may not render, its `<await>` writes the body's entries.
+        const entries: t.Statement[] | undefined = unwritten ? [] : undefined;
+        if (entries) setBodyEntries(bodySection, entries);
         writeHTMLResumeStatements(tag);
 
         const scopeId = getScopeIdIdentifier(section);
@@ -162,28 +191,46 @@ export default {
         const markerGuard = patchFillsSection(section)
           ? t.numericLiteral(1)
           : getWriteGuard(section, bodySection.reason, true);
-        replaceWithStatements(tag, [
-          t.expressionStatement(
-            isPatch()
-              ? callRuntime(
-                  "_await",
-                  scopeId,
-                  accessor,
-                  valueAttr.value,
-                  content,
-                  markerGuard,
-                  ...getPendingArgs(bodySection),
-                )
-              : callRuntime(
-                  "_await",
-                  scopeId,
-                  accessor,
-                  valueAttr.value,
-                  content,
-                  markerGuard,
-                ),
-          ),
-        ]);
+        if (isPatch()) {
+          const bodyScopeId = getScopeIdIdentifier(bodySection);
+          const awaitCall = callRuntime(
+            "_await",
+            scopeId,
+            accessor,
+            valueAttr.value,
+            content,
+            markerGuard,
+            ...getPendingArgs(bodySection, unfilled, unwritten),
+          );
+          replaceWithStatements(
+            tag,
+            entries?.length
+              ? [
+                  t.variableDeclaration("const", [
+                    t.variableDeclarator(bodyScopeId, awaitCall),
+                  ]),
+                  // Where no copy renders, the scope id it returns takes the entries.
+                  t.ifStatement(
+                    bodyScopeId,
+                    t.blockStatement(entries.map(cloneEntry)),
+                  ),
+                ]
+              : [t.expressionStatement(awaitCall)],
+          );
+        } else {
+          replaceWithStatements(tag, [
+            t.expressionStatement(
+              callRuntime(
+                "_await",
+                scopeId,
+                accessor,
+                valueAttr.value,
+                content,
+                markerGuard,
+              ),
+            ),
+          ]);
+        }
       },
     },
     dom: {
@@ -242,24 +289,20 @@ export default {
   types: runtimeInfo.name + "/tags/await.d.marko",
 } as Tag;
 
-function getPendingArgs(bodySection: Section): Array<t.Expression | Falsy> {
+function cloneEntry(entry: t.Statement) {
+  return t.cloneNode(entry, true);
+}
+
+function getPendingArgs(
+  bodySection: Section,
+  unfilled: t.Expression | undefined | false,
+  unwritten: ReturnType<typeof getUnwrittenBodies> | false | undefined,
+): Array<t.Expression | Falsy> {
   const shellId = findShellId(bodySection);
-  const sources = getFillSources(bodySection.branchExpr);
-  // The client settles a promise of its own state, and one a caller passes where
-  // no patch fills it: the server's copy renders only the body's holes as data.
-  const unfilled = hasStatefulBranchExpr(bodySection)
-    ? t.numericLiteral(1)
-    : ifEver(getCallerGroupGuard(bodySection.parent!, "_unfilled_if", sources));
-  const unwritten =
-    unfilled &&
-    getUnwrittenBodies(
-      bodySection,
-      getCallerParamGroupsAt(sources?.param, bodySection.parent!),
-    );
   return [
     shellId && t.stringLiteral(shellId),
-    // Where the promise updates from the client, `2`: no render of the body writes what the
-    // client lacks; `3`: only a created one does, writing the body's setup work.
+    // Where the promise updates from the client, `2`: no render of the body writes a value
+    // the client lacks; `3`: only a created one does, writing the body's setup work.
     unwritten
       ? andGuard(unfilled, t.numericLiteral(unwritten === "all" ? 2 : 3))
       : unfilled,

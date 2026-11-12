@@ -49,22 +49,25 @@ function setCallSectionSetup(call: KnownTagExtra) {
   }
 }
 
-// Whether the section's own setup runs client work, but for the expressions
+function hasOwnSetupWork(section: Section) {
+  // Setup subscribes the section to the closures it reads, and sets up another
+  // template it renders.
+  return (
+    getSetupInfo(section).always ||
+    !!section.referencedClosures ||
+    callsOtherTemplateSetup(section) ||
+    hasSetupWorkReadingNothing(section)
+  );
+}
+
+// Whether the section's setup runs work reading nothing, but for the expressions
 // `skip` leaves out.
-export function hasOwnSetupWork(
+export function hasSetupWorkReadingNothing(
   section: Section,
   skip?: (extra: t.NodeExtra) => boolean | undefined,
 ) {
   const info = getSetupInfo(section);
-  // Setup subscribes the section to the closures it reads, and sets up another
-  // template it renders.
-  if (
-    info.always ||
-    section.referencedClosures ||
-    callsOtherTemplateSetup(section)
-  ) {
-    return true;
-  }
+  if (info.always) return true;
   for (const expr of info.exprs) {
     const extra = getCanonicalExpr(expr);
     if (!extra.dropped && !getReferencedBindings(extra) && !skip?.(extra)) {

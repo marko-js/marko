@@ -582,9 +582,13 @@ export function _await<T>(
     }
     // Caught even where nothing awaits it, so its rejection is never unhandled.
     const copy = isPromise(promise) ? promise.then(undefined, skip) : promise;
-    // `2`: no render of the body writes what the client lacks; `3`: only a
-    // created one's (setup work).
-    if (unfilled > 2 ? !creatable : unfilled > 1) return;
+    // `2`: no render of the body writes a value the client lacks; `3`: only a created
+    // one's (setup work). Its entries follow the `<await>`, under the scope id returned.
+    if (unfilled > 2 ? !creatable : unfilled > 1) {
+      const bodyId = _scope_id();
+      linkBranch(state, scopeId, accessor, bodyId);
+      return bodyId;
+    }
     const settle = (value: T | typeof skipped) => {
       if (value !== skipped) {
         linkBranch(state, scopeId, accessor, _peek_scope_id());

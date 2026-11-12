@@ -376,6 +376,11 @@ where the group mixes, an entry valued by the writes it reads, which re-renders 
 once one changed: a signal's counterpart of a patch's effect entry (`_script`). Its
 registration is a main helper's patch twin taking the id (`_or_patch`,
 `_if_closure_patch`, `_for_closure_patch`, `_closure_get_patch`), kept with its signal.
+An `<await>` body the client settles reads no value of the server's for its own entries
+(render and effect entries, subscribers). Where the server's copy of the promise (its
+own render of the promise, whose body only writes data) writes no value, the `<await>`
+writes them and awaits no copy; a section inside the body still takes its entries from
+the copy.
 _Avoid_: init, init entry, patch render (the server's rerender)
 
 **Setup envelope**:

@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 			const inner = input.prefix + input.x;
 			$fg__input_prefix__OR__input_x && _patch_write($scope1_id, "xb", inner, !_server_guard($scope0_reason, 2));
 			_patch_render($scope1_id, "a1", ((_filled_guard($scope0_reason, 5) ? " >e" : "") + (_filled_guard($scope0_reason, 6) ? " >f" : "")).slice(1), $scope0_reason, 2);
-			_script($scope1_id, "a0", 0, ($fg__input_suffix || $fg__input_prefix__OR__input_x) && (_client_guard($scope0_reason, 7) || _client_guard($scope0_reason, 2) ? 2 : 1), (($fg__input_suffix ? " >g" : "") + ($fg__input_prefix__OR__input_x ? " b" : "")).slice(1), "a2", $scope0_reason, 3);
+			_script($scope1_id, "a0", 0, ($fg__input_prefix__OR__input_x || $fg__input_suffix) && (_client_guard($scope0_reason, 7) || _client_guard($scope0_reason, 2) ? 2 : 1), (($fg__input_suffix ? " >g" : "") + ($fg__input_prefix__OR__input_x ? " b" : "")).slice(1), "a2", $scope0_reason, 3);
 			_scope($scope1_id, {
 				b: inner,
 				_: _scope_with_id($scope0_id)

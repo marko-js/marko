@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope2_id = _scope_id(), $fg__input_suffix = _filled_guard($scope0_reason, 4), $fg__input_title = _filled_guard($scope0_reason, 2);
 					_html("<span>inner</span>");
 					_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_suffix#0:6/subscribe");
-					_script($scope2_id, "__tests__/template.marko_2_input_suffix#0:6_label#1:2", 0, ($fg__input_suffix || $fg__input_title) && ($cg__input_suffix || $cg__input_title ? 2 : 1), (($fg__input_suffix ? " >>input_suffix" : "") + ($fg__input_title ? " >label" : "")).slice(1), "__tests__/template.marko_2_input_suffix#0:6_label#1:2/setup", $scope0_reason, 0);
+					_script($scope2_id, "__tests__/template.marko_2_input_suffix#0:6_label#1:2", 0, ($fg__input_title || $fg__input_suffix) && ($cg__input_suffix || $cg__input_title ? 2 : 1), (($fg__input_suffix ? " >>input_suffix" : "") + ($fg__input_title ? " >label" : "")).slice(1), "__tests__/template.marko_2_input_suffix#0:6_label#1:2/setup", $scope0_reason, 0);
 					_subscribe(_unfilled_if($scope0_reason, 4) && $input_suffix__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6"), $cg__input_suffix && "__tests__/template.marko_2_input_suffix#0:6/subscribe", 0);
 					_resume_branch($scope2_id);
 					return 0;

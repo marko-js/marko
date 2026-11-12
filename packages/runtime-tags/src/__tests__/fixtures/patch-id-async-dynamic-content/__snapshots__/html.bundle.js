@@ -44,9 +44,9 @@ var template_default = _template("a", (input) => {
 		_try($scope1_id, "a", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id(), $ui__input_items = _unfilled_if($scope0_reason, 1);
-			_await($scope2_id, "a", item.promise, (ready) => {
-				const $scope3_id = _scope_id(), $ui__input_loaded = _unfilled_if($scope0_reason, 2), $fg__input_items = _filled_guard($scope0_reason, 1);
-				$fg__input_items && $ui__input_loaded && _patch_write($scope3_id, "xc", ready, !_server_guard($scope0_reason, 1));
+			const $scope3_id = _await($scope2_id, "a", item.promise, (ready) => {
+				const $scope3_id = _scope_id(), $ui__input_loaded = _unfilled_if($scope0_reason, 2);
+				_filled_guard($scope0_reason, 1) && $ui__input_loaded && _patch_write($scope3_id, "xc", ready, !_server_guard($scope0_reason, 1));
 				_dynamic_tag($scope3_id, "a", input.loaded ? loaded_default : "section", { name: ready }, 17, _content_resume("a0", () => {
 					const $scope4_id = _scope_id();
 					_scope_reason();
@@ -64,9 +64,13 @@ var template_default = _template("a", (input) => {
 					{ _: $scope($scope2_id) }
 				]), 0, $wg__input_items__OR__input_loaded, $scope0_reason, 0);
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope3_id, "a1");
-				_patch_render($scope3_id, "a2", ((_filled_guard($scope0_reason, 2) ? " >>>e" : "") + ($fg__input_items ? " c" : "")).slice(1), $scope0_reason, 0);
+				_patch_render($scope3_id, "a2", ((_filled_guard($scope0_reason, 2) ? " >>>e" : "") + (_filled_guard($scope0_reason, 1) ? " c" : "")).slice(1), $scope0_reason, 0);
 				$wi__input_items__OR__input_loaded && _subscribe($ui__input_loaded && $input_loaded__closures, _scope($scope3_id, { c: $wi__input_loaded && _unfilled_if($scope0_reason, 0) && ready }), _client_guard($scope0_reason, 2) && "a1", $wg__input_items__OR__input_loaded);
-			}, 1, "a3", $ui__input_items, 0, 1);
+			}, 1, "a3", $ui__input_items && 2, 0, 1);
+			if ($scope3_id) {
+				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope3_id, "a1");
+				_patch_render($scope3_id, "a2", ((_filled_guard($scope0_reason, 2) ? " >>>e" : "") + (_filled_guard($scope0_reason, 1) ? " c" : "")).slice(1), $scope0_reason, 0);
+			}
 			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "a7", 1);
 			$wi__input_items__OR__input_loaded && _subscribe($ui__input_items && $for_content__item_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_items && "a7", 0);
 			$wi__input_items__OR__input_loaded && _resume_branch($scope2_id);

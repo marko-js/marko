@@ -21,12 +21,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_try($scope1_id, "#text/0", () => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id(), $ui__input_value = _unfilled_if($scope0_reason, 2);
-				_await($scope2_id, "#text/0", Promise.resolve(input.value), () => {
+				const $scope3_id = _await($scope2_id, "#text/0", Promise.resolve(input.value), () => {
 					const $scope3_id = _scope_id();
 					_html(`<em>${_text_mark($scope3_id, "#text/0", input.value, 1, $scope0_reason, 2)}</em>`);
 					_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_input_value#0:4/subscribe", $cg__input_value);
 					_subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope3_id, { "ClosureSignalIndex:input_value/5": $wi__input_value && 1 }, "__tests__/template.marko", "4:8"), $cg__input_value && "__tests__/template.marko_3_input_value#0:4/subscribe");
-				}, 1, "__tests__/template.marko_3*content", $ui__input_value && 3);
+				}, 1, "__tests__/template.marko_3*content", $ui__input_value && 2);
+				if ($scope3_id) {
+					_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_input_value#0:4/subscribe", $cg__input_value);
+				}
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_value#0:4/subscribe", 1);
 				$wi__input_show__OR__input_value && _subscribe($ui__input_value && $input_value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"), $cg__input_value && "__tests__/template.marko_2_input_value#0:4/subscribe", 0);
 				$wi__input_show__OR__input_value && _resume_branch($scope2_id);

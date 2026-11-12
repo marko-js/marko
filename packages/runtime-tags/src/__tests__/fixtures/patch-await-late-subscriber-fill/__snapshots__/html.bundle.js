@@ -17,13 +17,17 @@ var template_default = _template("a", (input) => {
 	_try($scope0_id, "c", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id(), $ui__input_promise = _unfilled_if($scope0_reason, 0);
-		_await($scope1_id, "a", input.promise, (v) => {
+		const $scope2_id = _await($scope1_id, "a", input.promise, (v) => {
 			const $scope2_id = _scope_id();
 			_html(`<div id=done>${_text_mark($scope2_id, "a", input.label + n)}</div>`);
 			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "a0");
 			_patch_render($scope2_id, "a1", _filled_guard($scope0_reason, 1) && ">>g");
 			_subscribe($n__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, {}), _client_guard($scope0_reason, 1) && "a0"), "a2");
-		}, 1, "a4", $ui__input_promise && 3, 1);
+		}, 1, "a4", $ui__input_promise && 2, 1);
+		if ($scope2_id) {
+			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "a0");
+			_patch_render($scope2_id, "a1", _filled_guard($scope0_reason, 1) && ">>g");
+		}
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a7", 1);
 		_subscribe($ui__input_promise && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a7", 0);
 		_resume_branch($scope1_id);

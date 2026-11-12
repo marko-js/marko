@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const inner = input.prefix + input.x;
 			$fg__input_prefix__OR__input_x && _patch_write($scope1_id, "PatchMarkedWrite:inner", inner, !_server_guard($scope0_reason, 2));
 			_patch_render($scope1_id, "__tests__/template.marko_1_input_prefix#0:4_input_x#0:5/setup", ((_filled_guard($scope0_reason, 5) ? " >input_prefix" : "") + (_filled_guard($scope0_reason, 6) ? " >input_x" : "")).slice(1), $scope0_reason, 2);
-			_script($scope1_id, "__tests__/template.marko_1_input_suffix#0:6_inner#1", 0, ($fg__input_suffix || $fg__input_prefix__OR__input_x) && (_client_guard($scope0_reason, 7) || _client_guard($scope0_reason, 2) ? 2 : 1), (($fg__input_suffix ? " >input_suffix" : "") + ($fg__input_prefix__OR__input_x ? " inner" : "")).slice(1), "__tests__/template.marko_1_input_suffix#0:6_inner#1/setup", $scope0_reason, 3);
+			_script($scope1_id, "__tests__/template.marko_1_input_suffix#0:6_inner#1", 0, ($fg__input_prefix__OR__input_x || $fg__input_suffix) && (_client_guard($scope0_reason, 7) || _client_guard($scope0_reason, 2) ? 2 : 1), (($fg__input_suffix ? " >input_suffix" : "") + ($fg__input_prefix__OR__input_x ? " inner" : "")).slice(1), "__tests__/template.marko_1_input_suffix#0:6_inner#1/setup", $scope0_reason, 3);
 			_scope($scope1_id, {
 				inner,
 				_: _scope_with_id($scope0_id)

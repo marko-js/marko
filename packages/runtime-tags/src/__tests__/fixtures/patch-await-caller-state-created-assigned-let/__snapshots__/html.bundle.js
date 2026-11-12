@@ -10,7 +10,7 @@ var show_await_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
-	_await($scope0_id, "a", input.promise, (x) => {
+	const $scope1_id = _await($scope0_id, "a", input.promise, (x) => {
 		const $scope1_id = _scope_id();
 		let a = x;
 		let l = input.label;
@@ -28,6 +28,7 @@ var show_await_default = _template("b", (input) => {
 			j: f
 		}), $cg__input_label && "b1");
 	}, 1, "b4", _unfilled_if($scope0_reason, 1) && 3, 1);
+	if ($scope1_id) _unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b1", $cg__input_label);
 	_scope($scope0_id, { f: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_label__closures });
 });
 

@@ -23,12 +23,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_for_of(input.items, (item) => {
 			const $scope3_id = _scope_id(), $ui__input_items = _unfilled_if($scope0_reason, 0);
 			const $for_content__item_msg__closures = new Set();
-			_await($scope3_id, "#text/0", item.promise, () => {
+			const $scope4_id = _await($scope3_id, "#text/0", item.promise, () => {
 				const $scope4_id = _scope_id();
 				_html(`<div>${_text_mark($scope4_id, "#text/0", item.msg, 1, $scope0_reason, 0)} done</div>`);
 				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope4_id, "__tests__/template.marko_4_item_msg#3:4/subscribe", $cg__input_items);
 				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_msg__closures, _scope($scope4_id, {}, "__tests__/template.marko", "6:8"), $cg__input_items && "__tests__/template.marko_4_item_msg#3:4/subscribe");
-			}, 1, "__tests__/template.marko_4*content", $ui__input_items && 3);
+			}, 1, "__tests__/template.marko_4*content", $ui__input_items && 2);
+			if ($scope4_id) {
+				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope4_id, "__tests__/template.marko_4_item_msg#3:4/subscribe", $cg__input_items);
+			}
 			$wi__input_items && _scope($scope3_id, { "ClosureScopes:item_msg/8": $ui__input_items && $for_content__item_msg__closures }, "__tests__/template.marko", "5:6");
 		}, "id", $scope1_id, "#section/0", 1, 1, 1, 0, 0, "__tests__/template.marko_3*shell", $scope0_reason, 0);
 		_html(`</section>${_el_mark($scope1_id, "#section/0")}`);

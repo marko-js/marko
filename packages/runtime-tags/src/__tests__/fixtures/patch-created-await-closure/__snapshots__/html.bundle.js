@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<p>${_text_mark($scope2_id, "a", count)} ${_text_mark($scope2_id, "b", v, 2, $scope0_reason, 1)}</p>`);
 				_subscribe($count__closures, _scope($scope2_id, {}), "a0");
-			}, 1, "a1", _unfilled_if($scope0_reason, 1) && 3);
+			}, 1, "a1", _unfilled_if($scope0_reason, 1) && 2);
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a4");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
