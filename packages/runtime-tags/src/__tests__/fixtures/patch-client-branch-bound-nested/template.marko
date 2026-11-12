@@ -1,0 +1,11 @@
+<if=input.show>
+  <card>
+    <const/outer=input.label + "!"/>
+    <define/Inner><b>${outer}</b></define>
+    <card>
+      <define/Inner2><i>${input.label}</i></define>
+      <${input.tag} content=Inner/>
+      <${input.tag} content=Inner2/>
+    </card>
+  </card>
+</if>

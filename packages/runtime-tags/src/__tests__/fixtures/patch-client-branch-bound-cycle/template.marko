@@ -1,0 +1,9 @@
+static function mkArray(f: () => void) { const a: unknown[] = [f]; a.push(a); return a; }
+static function mkSet(f: () => void) { const s = new Set<unknown>([f]); s.add(s); return s; }
+static function mkMap(f: () => void) { const m = new Map<string, unknown>([["f", f]]); m.set("self", m); return m; }
+<if=input.show>
+  <card>
+    <const/f=function() { console.log("fn", input.label) }/>
+    <get a=mkArray(f) s=mkSet(f) m=mkMap(f)/>
+  </card>
+</if>
