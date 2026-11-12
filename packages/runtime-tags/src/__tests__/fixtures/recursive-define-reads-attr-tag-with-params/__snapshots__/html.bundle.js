@@ -27,7 +27,8 @@ var c1_default = _template("b", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "b", $wg__depth, $wg__depth);
-		($wi__input_item || $wi__depth) && _subscribe($wi__input_item && $input_item__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b1", $wg__input_item || $wg__depth);
+		const $scope1_guard = $wg__input_item || $wg__depth;
+		($wi__input_item || $wi__depth) && _subscribe($wi__input_item && $input_item__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b1", $scope1_guard);
 	}, $scope0_id) };
 	D.content({ depth: 1 });
 	$wi__input_item && _scope($scope0_id, { e: $wi__input_item && $input_item__closures });

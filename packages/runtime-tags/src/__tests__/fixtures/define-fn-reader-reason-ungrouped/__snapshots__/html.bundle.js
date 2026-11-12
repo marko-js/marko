@@ -16,10 +16,14 @@ var template_default = _template("a", (input) => {
 						const $scope3_id = _scope_id();
 						let y = f(v);
 						_html(`<p>${_text_mark($scope3_id, "a", y + w, $wg__w)}</p>`);
-						$wi__show__OR__inner__OR__v__OR__w && _subscribe($wi__w && $D_content__w__closures, _subscribe($wi__v && $D_content__v__closures, _scope($scope3_id, {
-							c: $wi__w && y,
-							_: _scope_with_id($scope2_id)
-						}), "a1", $wg__w), "a2", $wg__w);
+						if (_write_if($scope1_reason, 2)) {
+							const $scope3_write = _scope($scope3_id, {
+								c: $wi__w && y,
+								_: _scope_with_id($scope2_id)
+							});
+							_subscribe($wi__v && $D_content__v__closures, $scope3_write, "a1", $wg__w);
+							_subscribe($wi__w && $D_content__w__closures, $scope3_write, "a2", $wg__w);
+						}
 						$wg__w || $wi__show__OR__inner__OR__v__OR__w && _write_guard($scope1_reason, 5) && _resume_branch($scope3_id);
 						return 0;
 					}

@@ -36,7 +36,8 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 		const $scope1_reason = _scope_reason(), $wg__i = _write_guard($scope1_reason, 0);
 		const $scope1_id = _scope_id();
 		_html(`item ${_text_mark($scope1_id, "#text/0", i, $wg__i * 2)} ${_text_mark($scope1_id, "#text/1", input.text, $wg__input_text * 2)}`);
-		($wi__input_type__OR__input_text || _write_if($scope1_reason, 0)) && _subscribe($wi__input_text && $input_text__closures, _scope($scope1_id, { _: $wi__input_type__OR__input_text && _scope_with_id($scope0_id) }, "__tests__/tags/heading.marko", "3:6"), "__tests__/tags/heading.marko_1_input_text#0:4/subscribe", $wg__input_text || $wg__i);
+		const $scope1_guard = $wg__input_text || $wg__i;
+		($wi__input_type__OR__input_text || _write_if($scope1_reason, 0)) && _subscribe($wi__input_text && $input_text__closures, _scope($scope1_id, { _: $wi__input_type__OR__input_text && _scope_with_id($scope0_id) }, "__tests__/tags/heading.marko", "3:6"), "__tests__/tags/heading.marko_1_input_text#0:4/subscribe", $scope1_guard);
 	}, $scope0_id, ($scope) => [{ i }, { input_text: input.text }]) }));
 	_dynamic_tag($scope0_id, "#text/0", input.type, { item: $item }, 0, 0, $wg__input_type);
 	$wi__input_type__OR__input_text && _scope($scope0_id, {

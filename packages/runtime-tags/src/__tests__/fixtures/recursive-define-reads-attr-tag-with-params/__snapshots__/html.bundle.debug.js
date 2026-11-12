@@ -27,7 +27,8 @@ var c1_default = _template("__tests__/tags/c1.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/1", $wg__depth, $wg__depth);
-		($wi__input_item || $wi__depth) && _subscribe($wi__input_item && $input_item__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/c1.marko", "1:2"), "__tests__/tags/c1.marko_1_input_item#0:3/subscribe", $wg__input_item || $wg__depth);
+		const $scope1_guard = $wg__input_item || $wg__depth;
+		($wi__input_item || $wi__depth) && _subscribe($wi__input_item && $input_item__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/c1.marko", "1:2"), "__tests__/tags/c1.marko_1_input_item#0:3/subscribe", $scope1_guard);
 	}, $scope0_id) };
 	D.content({ depth: 1 });
 	$wi__input_item && _scope($scope0_id, { "ClosureScopes:input_item/4": $wi__input_item && $input_item__closures }, "__tests__/tags/c1.marko", 0, { input_item: ["input.item"] });

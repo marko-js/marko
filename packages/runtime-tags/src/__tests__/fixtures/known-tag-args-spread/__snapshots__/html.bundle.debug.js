@@ -9,7 +9,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__a = _write_guard($scope1_reason, 1), $wg__b = _write_guard($scope1_reason, 2);
 		_html(`<div>${_text_mark($scope1_id, "#text/0", a, $wg__a)}|${_text_mark($scope1_id, "#text/1", b, $wg__b * 2)}|${_text_mark($scope1_id, "#text/2", JSON.stringify(input), $wg__input * 2)}</div>`);
-		($wi__input || _write_if($scope1_reason, 0)) && _subscribe($wi__input && $input__closures, _scope($scope1_id, { _: $wi__input && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), "__tests__/template.marko_1_input#0:6/subscribe", $wg__input || $wg__a || $wg__b);
+		const $scope1_guard = $wg__input || $wg__a || $wg__b;
+		($wi__input || _write_if($scope1_reason, 0)) && _subscribe($wi__input && $input__closures, _scope($scope1_id, { _: $wi__input && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), "__tests__/template.marko_1_input#0:6/subscribe", $scope1_guard);
 	}, $scope0_id) };
 	_set_scope_reason(42);
 	const $childScope = _peek_scope_id();

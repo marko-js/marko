@@ -13,10 +13,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope2_id = _scope_id();
 					let y = f(input.v);
 					_html(`<p>${_text_mark($scope2_id, "#text/0", y + input.w, $wg__input_w)}</p>`);
-					$wi__input_show__OR__input_inner__OR__input_v__OR__input_w && _subscribe($wi__input_w && $input_w__closures, _subscribe($wi__input_v && $input_v__closures, _scope($scope2_id, {
-						y: $wi__input_w && y,
-						_: _scope_with_id($scope1_id)
-					}, "__tests__/template.marko", "3:4", { y: "4:10" }), "__tests__/template.marko_2_input_v#0:5/subscribe", $wg__input_w), "__tests__/template.marko_2_input_w#0:6/subscribe", $wg__input_w);
+					if (_write_if($scope0_reason, 2)) {
+						const $scope2_write = _scope($scope2_id, {
+							y: $wi__input_w && y,
+							_: _scope_with_id($scope1_id)
+						}, "__tests__/template.marko", "3:4", { y: "4:10" });
+						_subscribe($wi__input_v && $input_v__closures, $scope2_write, "__tests__/template.marko_2_input_v#0:5/subscribe", $wg__input_w);
+						_subscribe($wi__input_w && $input_w__closures, $scope2_write, "__tests__/template.marko_2_input_w#0:6/subscribe", $wg__input_w);
+					}
 					$wg__input_w || $wi__input_show__OR__input_inner__OR__input_v__OR__input_w && _write_guard($scope0_reason, 5) && _resume_branch($scope2_id);
 					return 0;
 				}

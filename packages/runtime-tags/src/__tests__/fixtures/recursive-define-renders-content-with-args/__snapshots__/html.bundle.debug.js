@@ -20,10 +20,11 @@ var c2_default = _template("__tests__/tags/c2.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/1", $wg__depth, $wg__depth);
+		const $scope1_guard = $wg__input_content || $wg__depth || $wg__depth;
 		($wi__input_content || $wi__depth) && _subscribe($wi__input_content && $input_content__closures, _scope($scope1_id, {
 			depth: $wi__input_content && depth,
 			_: _scope_with_id($scope0_id)
-		}, "__tests__/tags/c2.marko", "1:2", { depth: "1:13" }), "__tests__/tags/c2.marko_1_input_content#0:3/subscribe", $wg__input_content || $wg__depth || $wg__depth);
+		}, "__tests__/tags/c2.marko", "1:2", { depth: "1:13" }), "__tests__/tags/c2.marko_1_input_content#0:3/subscribe", $scope1_guard);
 	}, $scope0_id) };
 	D.content({ depth: 1 });
 	$wi__input_content && _scope($scope0_id, { "ClosureScopes:input_content/4": $wi__input_content && $input_content__closures }, "__tests__/tags/c2.marko", 0, { input_content: ["input.content"] });

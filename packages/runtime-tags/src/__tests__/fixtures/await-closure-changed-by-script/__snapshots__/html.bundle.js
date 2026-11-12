@@ -32,7 +32,11 @@ var template_default = _template("a", (input) => {
 			let local = n;
 			_html(`<p>${_text_mark($scope2_id, "a", 3)}</p><span>${_escape(local)}</span><b>${_text_mark($scope2_id, "c", known)} ${_text_mark($scope2_id, "d", dynamic, 2)}</b>`);
 			_script($scope2_id, "a2");
-			_subscribe($dynamic__closures, _subscribe($known__closures, _subscribe($m__closures, _subscribe($n__closures, _scope($scope2_id, {}), "a3"), "a4"), "a5"), "a6");
+			const $scope2_write = _scope($scope2_id, {});
+			_subscribe($n__closures, $scope2_write, "a3");
+			_subscribe($m__closures, $scope2_write, "a4");
+			_subscribe($known__closures, $scope2_write, "a5");
+			_subscribe($dynamic__closures, $scope2_write, "a6");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, () => {

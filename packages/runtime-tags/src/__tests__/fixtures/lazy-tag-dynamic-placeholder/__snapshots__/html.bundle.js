@@ -23,7 +23,9 @@ var template_default = _template("b", (input) => {
 			label: "x",
 			value
 		});
-		_subscribe($value__closures, _subscribe($show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b0"), "b1");
+		const $scope1_write = _scope($scope1_id, { _: _scope_with_id($scope0_id) });
+		_subscribe($show__closures, $scope1_write, "b0");
+		_subscribe($value__closures, $scope1_write, "b1");
 	}, () => {
 		_scope_reason();
 		_scope_id();

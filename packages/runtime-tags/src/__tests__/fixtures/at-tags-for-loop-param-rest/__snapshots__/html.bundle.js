@@ -52,7 +52,9 @@ var template_default = _template("a", (input) => {
 		const $scope4_id = _scope_id();
 		_html(`<p${_attrs(r2, "a", $scope4_id, "p")}>${_text_mark($scope4_id, "b", r1.b, _write_guard($scope0_reason, 1))}</p>${_el_mark($scope4_id, "a")}`);
 		_script($scope4_id, "a2");
-		_subscribe($wi__input_o && $r__closures, _subscribe($wi__input_o && $b2__closures, _scope($scope4_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), "a3"), "a4");
+		const $scope4_write = _scope($scope4_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
+		_subscribe($wi__input_o && $b2__closures, $scope4_write, "a3");
+		_subscribe($wi__input_o && $r__closures, $scope4_write, "a4");
 	}, $scope0_id) });
 	const $childScope2 = _peek_scope_id();
 	list_default({ item: $item3 });

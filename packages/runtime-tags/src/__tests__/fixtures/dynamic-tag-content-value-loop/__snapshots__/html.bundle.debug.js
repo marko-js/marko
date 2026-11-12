@@ -34,7 +34,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason();
 			_html(`<em>${_text_mark($scope2_id, "#text/0", item, $wg__input_items)} ${_text_mark($scope2_id, "#text/1", input.note, $wg__input_note * 2)}</em>`);
-			$wi__input_items__OR__input_note__OR__input_on && _subscribe($wi__input_items && $for_content__item__closures, _subscribe($wi__input_note && $input_note__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4"), "__tests__/template.marko_2_input_note#0:4/subscribe", $wg__input_items || $wg__input_note), "__tests__/template.marko_2_item#1:2/subscribe", $wg__input_items || $wg__input_note);
+			const $scope2_guard = $wg__input_items || $wg__input_note;
+			if (_write_if($scope0_reason, 1)) {
+				const $scope2_write = _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4");
+				_subscribe($wi__input_note && $input_note__closures, $scope2_write, "__tests__/template.marko_2_input_note#0:4/subscribe", $scope2_guard);
+				_subscribe($wi__input_items && $for_content__item__closures, $scope2_write, "__tests__/template.marko_2_item#1:2/subscribe", $scope2_guard);
+			}
 		}, $scope1_id, ($scope) => [{ input_note: input.note }, {
 			item,
 			_: $scope($scope0_id)
