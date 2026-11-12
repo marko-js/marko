@@ -49,6 +49,7 @@ import {
 } from "../reasons";
 import {
   getCanonicalExpr,
+  getGlobalReads,
   getLazyBindings,
   getNameRead,
   getReferencedBindingsInFunction,
@@ -534,16 +535,21 @@ function derivesByCreatedSetup(binding: Binding) {
   );
 }
 
-// A param a created scope gets as a seed, as no structure brings it: a known child's, a
-// branch's static one (a loop item, an `<await>` value), or a `@catch` error member intersecting a caller's.
+// A param a created scope gets as a seed, as no structure brings it: a known child's, a branch's
+// static one (a loop item, an `<await>` value), or a `@catch` error member read with a caller's or `$global`.
 function seedsParam(binding: Binding) {
   const { section } = binding;
   return (
     isKnownChild(section) ||
     (!!section.branch && !binding.sources?.param) ||
     (section.boundaryContent === "catch" &&
-      hasCallerParamSourceAt(getWriteReason(binding), section))
+      (hasCallerParamSourceAt(getWriteReason(binding), section) ||
+        someBindingRead(binding, readsGlobal)))
   );
+}
+
+function readsGlobal(read: ReferencedExtra) {
+  return !!getGlobalReads(read);
 }
 
 // Why a binding fills: `true` unconditionally, or the run-time conditions

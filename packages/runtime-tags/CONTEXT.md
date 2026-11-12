@@ -516,7 +516,9 @@ A signal's client work that reads `$global` as it renders (each expression
 records the deepest member it reads, as a property alias would), split into a
 function the signal calls. A patch build registers it with the members it
 reads, each as its keys from `$global` (`_fill_global`), so a patch
-changing one re-runs only that work, once, on each scope that ran it. Work
+changing one re-runs only that work, once, on each scope that ran it. A scope a
+flush creates in unpatched structure (a `@catch`, which no later patch pairs) and
+whose reads it fills subscribes by a setup id, as a document's does on resume. Work
 reading under the same keys shares one signal; a script keeps its own, so it
 runs again only when what it reads changes. A loop's rows reading one share a
 single subscription on the loop's owner (`_fill_global_for`, or

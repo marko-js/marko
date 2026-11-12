@@ -14,6 +14,10 @@
   ka: [{
     ta: "g1 early",
     pb: "a3",
+    s: {
+      i: "a8 a9",
+      we: "early"
+    },
     cAb: {
       ta: "x"
     }
@@ -21,6 +25,10 @@
   kb: [{
     ta: "g1 late",
     pb: "a0",
+    s: {
+      i: "a11 a12",
+      we: "late"
+    },
     cAb: {
       ta: "x"
     }

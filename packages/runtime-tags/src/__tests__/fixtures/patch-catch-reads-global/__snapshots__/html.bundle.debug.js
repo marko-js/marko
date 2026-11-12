@@ -39,6 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, 1, "__tests__/template.marko_4*content");
 		_fill_global_subscribe("__tests__/template.marko_3_$global_label#0:10_err_message#4", $scope3_id);
 		_fill_global_subscribe("__tests__/template.marko_3_$global_p#0:14", $scope3_id);
+		_patch_write($scope3_id, "PatchWrite:err_message", err?.message, 1);
 		_scope($scope3_id, { err_message: _unfilled_if($scope3_reason, 0) && err?.message }, "__tests__/template.marko", "6:4", { err_message: ["err.message", "6:11"] });
 	}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", 1, 1);
 	_try($scope0_id, "#text/1", () => {
@@ -58,6 +59,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, 1, "__tests__/template.marko_6*content");
 		_fill_global_subscribe("__tests__/template.marko_5_$global_label#0:10_err_message#4", $scope5_id);
 		_fill_global_subscribe("__tests__/template.marko_5_$global_p#0:14", $scope5_id);
+		_patch_write($scope5_id, "PatchWrite:err_message", err?.message, 1);
 		_scope($scope5_id, { err_message: _unfilled_if($scope5_reason, 0) && err?.message }, "__tests__/template.marko", "13:4", { err_message: ["err.message", "13:11"] });
 	}, 0, "__tests__/template.marko_5*content", "__tests__/template.marko_2*content", 1, 1);
 	_scope($scope0_id, {

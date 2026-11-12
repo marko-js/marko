@@ -828,11 +828,15 @@ export function _fill_global_subscribe(
   unfilled?: 0 | 1,
 ) {
   if (!unfilled && !inUnpatched()) return;
-  // A flush's scopes are live already (paired) or subscribe as they render
-  // (created); the flush re-ships every global they could read.
-  if (getState() instanceof PatchRenderState) return;
-  // The scope subscribes on resume, as a late closure subscriber does.
-  _script(scopeId, id);
+  const state = getState();
+  if (!(state instanceof PatchRenderState)) {
+    // The scope subscribes on resume, as a late closure subscriber does.
+    _script(scopeId, id);
+  } else if (!unfilled) {
+    // A patch writes in unpatched structure only where it creates it (a `@catch`, which no
+    // later patch pairs): a filled read subscribes by a setup id, an unfilled one as it renders.
+    addSetupId(state, scopeId, id);
+  }
 }
 
 // On when no patch fills the group here: client-sourced, or read in unpatched structure

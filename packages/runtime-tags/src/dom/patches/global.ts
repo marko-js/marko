@@ -31,8 +31,8 @@ export function _fill_global(
 ): SignalFn {
   // A retained signal brings the patcher that re-runs it.
   patchers[PatchKey.Global] = patchGlobal;
-  // A scope the document subscribes does so on resume, unless an effect of this id
-  // registered first: it subscribes as it runs.
+  // A scope the document subscribes does so on resume, one a flush creates by a setup id,
+  // unless an effect of this id registered first: it subscribes as it runs.
   _resumed[id] ||= (scope: Scope) =>
     subscribeToScopeSet(globalScopes, id, scope);
   return (globalSignals[id] = [
