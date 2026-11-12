@@ -13,10 +13,10 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $uf__input_title = _updates_from($scope0_reason, 4), $cg__input_title = _client_guard($scope0_reason, 4), $wi__input_title = _write_if($scope0_reason, 4), $ui__input_title = _unfilled_if($scope0_reason, 4), $sg__input_title = _server_guard($scope0_reason, 4), $fg__input_title = _filled_guard($scope0_reason, 4), $fg__input_flag__OR__input_title = _filled_guard($scope0_reason, 0), $fg__input_title__OR__input_alt = _filled_guard($scope0_reason, 1), $fg__input_flag = _filled_guard($scope0_reason, 3), $fg__input_alt = _filled_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	$fg__input_title && _patch_write($scope0_id, "xf", input.title, !$sg__input_title);
-	const fmt = input.flag ? _bind_resume((s) => s + ":" + input.title, "a0", $scope0_id) : _resume((s) => s, "a1");
-	const alt = input.alt || _bind_resume((s) => s + "=" + input.title, "a2", $scope0_id);
-	const last = _bind_resume((s) => s + ";" + input.title, "a3", $scope0_id);
-	const tag = _bind_resume((s) => s + "#" + input.title, "a4", $scope0_id);
+	const fmt = input.flag ? _bind_resume((s) => s + ":" + input.title, "a0", $scope0_id, 1) : _resume((s) => s, "a1");
+	const alt = input.alt || _bind_resume((s) => s + "=" + input.title, "a2", $scope0_id, 1);
+	const last = _bind_resume((s) => s + ";" + input.title, "a3", $scope0_id, 1);
+	const tag = _bind_resume((s) => s + "#" + input.title, "a4", $scope0_id, 1);
 	let show = true;
 	_html("<main>");
 	_if(() => {

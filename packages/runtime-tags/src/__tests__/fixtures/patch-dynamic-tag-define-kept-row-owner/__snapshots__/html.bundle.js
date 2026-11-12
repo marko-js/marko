@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 		_html(`<em>${_text_mark($scope1_id, "a", input.label, 1, $scope0_reason, 1)} ${_text_mark($scope1_id, "b", n, 2)}</em>`);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a4", $cg__input_label);
 		_subscribe($n__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_label && "a4"), "a5");
-	}, $scope0_id, ($scope) => $scope0_page ? [{ f: input.label }] : []) };
+	}, $scope0_id, ($scope) => $scope0_page ? [{ f: input.label }] : [], 1) };
 	_html(`<button>${_text_mark($scope0_id, "b", n)}</button>${_el_mark($scope0_id, "a")}`);
 	_for_of(input.tags, (tag) => {
 		const $scope2_id = _scope_id(), $fg__input_tags = _filled_guard($scope0_reason, 2);

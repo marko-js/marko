@@ -7,7 +7,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_title = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	$fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !_server_guard($scope0_reason, 0));
-	const handler = _bind_resume((event) => event.target.dataset.seen = input.title, "__tests__/child.marko_0/handler", $scope0_id);
+	const handler = _bind_resume((event) => event.target.dataset.seen = input.title, "__tests__/child.marko_0/handler", $scope0_id, 1);
 	const attrs = {
 		title: input.title,
 		onClick: handler

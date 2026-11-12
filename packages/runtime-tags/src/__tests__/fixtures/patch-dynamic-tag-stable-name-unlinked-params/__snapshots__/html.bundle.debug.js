@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html("<b>R</b>");
-	}, $scope0_id) };
+	}, $scope0_id, void 0, 1) };
 	const Box = { content: _content_resume("__tests__/template.marko_2*content", ({ show, content }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $wg__content = _write_guard($scope2_reason, 2), $wg__show = _write_guard($scope2_reason, 1);

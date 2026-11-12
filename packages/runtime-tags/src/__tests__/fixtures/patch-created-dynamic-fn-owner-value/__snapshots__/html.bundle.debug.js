@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 2));
 	_dynamic_tag($scope0_id, "#text/0", input.show && card_default, { fn: _bind_resume(function() {
 		return "f:" + input.label;
-	}, "__tests__/template.marko_0/fn", $scope0_id) }, 1, 0, 0, $wg__input_show__OR__input_label, $scope0_reason, 0);
+	}, "__tests__/template.marko_0/fn", $scope0_id, 1) }, 1, 0, 0, $wg__input_show__OR__input_label, $scope0_reason, 0);
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_show#3_input_label#4/setup", (($fg__input_show ? " input_show" : "") + ($fg__input_label ? " input_label" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_show: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 0) && input.show,

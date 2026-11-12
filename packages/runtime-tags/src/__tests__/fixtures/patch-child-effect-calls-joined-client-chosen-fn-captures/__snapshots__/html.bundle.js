@@ -26,8 +26,8 @@ var template_default = _template("a", (input) => {
 	$fg__input_other && _patch_write($scope0_id, "xe", input.other, !$sg__input_other);
 	$fg__input_title && _patch_write($scope0_id, "xf", input.title, !$sg__input_title);
 	let upper = false;
-	const up = _bind_resume(() => "U" + input.other, "a0", $scope0_id);
-	const low = _bind_resume(() => "l" + input.title, "a1", $scope0_id);
+	const up = _bind_resume(() => "U" + input.other, "a0", $scope0_id, 1);
+	const low = _bind_resume(() => "l" + input.title, "a1", $scope0_id, 1);
 	_set_scope_reason(6630 | ($uf__input_title << 3 | $uf__input_title << 13));
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	label_view_default({

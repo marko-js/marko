@@ -27,7 +27,7 @@ var page_b_default = _template("c", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	field_default({
 		value: text,
-		valueChange: _resume((_new_text) => text = _new_text, "c0", $scope0_id)
+		valueChange: _resume((_new_text) => text = _new_text, "c0", $scope0_id, 1)
 	});
 	_patch_child_end();
 	_html(`<output>${_text_mark($scope0_id, "b", text)}</output>`);

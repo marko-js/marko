@@ -7,7 +7,7 @@ import { getDeclaredBindingExpression } from "./get-declared-binding-expression"
 import { getKnownAttrValues } from "./get-known-attr-values";
 import { getAttributeTagParent } from "./get-parent-tag";
 import { getTagName } from "./get-tag-name";
-import { isOutputHTML } from "./marko-config";
+import { isOutputHTML, isPatch } from "./marko-config";
 import {
   type AttrTagMeta,
   type AttrTagLookup,
@@ -16,7 +16,7 @@ import {
 } from "./nested-attribute-tags";
 import { toArray } from "./optional";
 import { type ParamsTree, getParamsTreeAt } from "./params-tree";
-import { keepsHoles } from "./patch/refresh";
+import { isContentSentAsBindReference, keepsHoles } from "./patch/refresh";
 import { callRuntime } from "./runtime";
 import { getScopeAccessor } from "./scope-accessor";
 import { scopeIdentifier } from "./scope-read";
@@ -437,6 +437,10 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
           : keepsHoles(bodySection)
             ? t.numericLiteral(bodySection.id)
             : shipsContentShell(bodySection) && t.numericLiteral(0),
+        serialized &&
+          isPatch() &&
+          isContentSentAsBindReference(bodySection) &&
+          t.numericLiteral(1),
       );
     } else {
       // Nothing reads content whose renderer is elided, so it has no property.

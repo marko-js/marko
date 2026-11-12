@@ -7,7 +7,7 @@ var card_default = _template("b", (input) => {
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xc", input.label, !_server_guard($scope0_reason, 0));
 	const $return = { fn: _bind_resume(function() {
 		return "f:" + input.label;
-	}, "b0", $scope0_id) };
+	}, "b0", $scope0_id, 1) };
 	_scope($scope0_id, { c: input.label });
 	return $return;
 });

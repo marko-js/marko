@@ -574,9 +574,11 @@ A kept instance's own entry at the site rendering it (`PatchClientBranch:<access
 (`ClientBranchHoles:<accessor>`): the branch there takes it now, and one the client
 creates there later takes the last one, if it renders what the server did: `key` is
 the content's id, or the client `<if>`'s branch index. `seeds` are its own scopes' setup envelopes, where
-a flush may create it; `patch` is all it renders, where an `<id>` some expression
-reads beside a value with sources, or one in a branch below it, varies it, which
-the owner's entry then leaves to it.
+a flush may create it; `patch` is all it renders, where its render differs (_Kept
+content_), which the owner's entry then leaves to it: it renders an `<id>` some expression
+reads beside a value with sources, or one in a branch below it; or a registration bound
+to one of its scopes that a hole may send as a bind reference (`isSentAsBindReference`),
+whose path from the page root runs through the site.
 _Avoid_: instance entry
 
 **Filled intersection**:

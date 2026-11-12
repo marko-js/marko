@@ -20,19 +20,19 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	$fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !$sg__input_title);
 	const { fmt, wrap, quoted, keyed, templated } = {
-		fmt: _bind_resume((s) => s + ":" + input.title, "__tests__/template.marko_0/fmtWrapQuotedKeyedTemplated", $scope0_id),
+		fmt: _bind_resume((s) => s + ":" + input.title, "__tests__/template.marko_0/fmtWrapQuotedKeyedTemplated", $scope0_id, 1),
 		wrap: _bind_resume(function(s) {
 			return "(" + s + input.title + ")";
-		}, "__tests__/template.marko_0/fmtWrapQuotedKeyedTemplated2", $scope0_id),
-		"quoted": _bind_resume((s) => s + "'" + input.title, "__tests__/template.marko_0/fmtWrapQuotedKeyedTemplated3", $scope0_id),
-		["keyed"]: _bind_resume((s) => s + "[" + input.title, "__tests__/template.marko_0/fmtWrapQuotedKeyedTemplated4", $scope0_id),
-		[`templated`]: _bind_resume((s) => s + "`" + input.title, "__tests__/template.marko_0/fmtWrapQuotedKeyedTemplated5", $scope0_id)
+		}, "__tests__/template.marko_0/fmtWrapQuotedKeyedTemplated2", $scope0_id, 1),
+		"quoted": _bind_resume((s) => s + "'" + input.title, "__tests__/template.marko_0/fmtWrapQuotedKeyedTemplated3", $scope0_id, 1),
+		["keyed"]: _bind_resume((s) => s + "[" + input.title, "__tests__/template.marko_0/fmtWrapQuotedKeyedTemplated4", $scope0_id, 1),
+		[`templated`]: _bind_resume((s) => s + "`" + input.title, "__tests__/template.marko_0/fmtWrapQuotedKeyedTemplated5", $scope0_id, 1)
 	};
 	const o = {
-		get: _bind_resume((s) => s + "=" + input.title, "__tests__/template.marko_0/o", $scope0_id),
-		0: _bind_resume((s) => s + "0" + input.title, "__tests__/template.marko_0/o2", $scope0_id)
+		get: _bind_resume((s) => s + "=" + input.title, "__tests__/template.marko_0/o", $scope0_id, 1),
+		0: _bind_resume((s) => s + "0" + input.title, "__tests__/template.marko_0/o2", $scope0_id, 1)
 	};
-	const tag = _bind_resume((s) => s + "#" + input.title, "__tests__/template.marko_0/tag", $scope0_id);
+	const tag = _bind_resume((s) => s + "#" + input.title, "__tests__/template.marko_0/tag", $scope0_id, 1);
 	let show = true;
 	_html("<main>");
 	_if(() => {

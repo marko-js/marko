@@ -27,10 +27,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let last = "none";
 	const fa = _resume(function(v) {
 		last = "a" + v;
-	}, "__tests__/template.marko_0/fa", $scope0_id);
+	}, "__tests__/template.marko_0/fa", $scope0_id, 1);
 	const fb = _resume(function(v) {
 		last = "b" + v;
-	}, "__tests__/template.marko_0/fb", $scope0_id);
+	}, "__tests__/template.marko_0/fb", $scope0_id, 1);
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 2) << 3 | _updates_from($scope0_reason, 1) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	child_default({

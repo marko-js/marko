@@ -58,7 +58,7 @@ const $content = (input) => {
 					_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "__tests__/tags/level.marko_2_input_n#0:4/subscribe", $cg__input_n);
 					_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "__tests__/tags/level.marko_2_input_label#0:5/subscribe", $cg__input_label);
 					_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/level.marko", "2:4"), $cg__input_n && "__tests__/tags/level.marko_2_input_n#0:4/subscribe"), $cg__input_label && "__tests__/tags/level.marko_2_input_label#0:5/subscribe");
-				}, $scope1_id)
+				}, $scope1_id, void 0, 1)
 			});
 			_patch_child_end();
 			$cg__input_n && _patch_render($scope1_id, "__tests__/tags/level.marko_1_input_n#0:4/setup");

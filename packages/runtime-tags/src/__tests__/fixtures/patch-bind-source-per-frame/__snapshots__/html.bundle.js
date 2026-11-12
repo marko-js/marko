@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 	const $handler2__closures = /* @__PURE__ */ new Set();
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.title, !_server_guard($scope0_reason, 0));
 	let count = 0;
-	const handler = _bind_resume((event) => event.target.dataset.seen = input.title, "a0", $scope0_id);
+	const handler = _bind_resume((event) => event.target.dataset.seen = input.title, "a0", $scope0_id, 1);
 	_html("<main>");
 	_await($scope0_id, "a", input.one, () => {
 		const $scope1_id = _scope_id(), $ui__input_title = _unfilled_if($scope0_reason, 0);

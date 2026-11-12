@@ -58,7 +58,7 @@ var template_default = _template("a", (input) => {
 						_unfilled_if($scope1_reason, 0) && _patch_subscribe($scope3_id, "a0");
 						_unfilled_if($scope1_reason, 1) && _patch_subscribe($scope3_id, "a1", $cg__label);
 						_subscribe(_unfilled_if($scope1_reason, 1) && $Level_content__label__closures, _subscribe(_unfilled_if($scope1_reason, 0) && $Level_content__n__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), _client_guard($scope1_reason, 0) && "a0"), $cg__label && "a1");
-					}, $scope2_id)
+					}, $scope2_id, void 0, 1)
 				});
 				_patch_child_end();
 				$cg__label && _patch_render($scope2_id, "a3");

@@ -41,7 +41,7 @@ var store_default = _template("c", (input) => {
 		last,
 		set: _resume(function(next) {
 			last = next;
-		}, "c0", $scope0_id)
+		}, "c0", $scope0_id, 1)
 	};
 	_patch_fill($scope0_id, "vc1", last, 1);
 	return $return;

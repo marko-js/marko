@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 		_html(`<em>${_text_mark($scope1_id, "a", input.label, 1, $scope0_reason, 1)}</em>`);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a1", $cg__input_label);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), $cg__input_label && "a1");
-	}, $scope0_id) };
+	}, $scope0_id, void 0, 1) };
 	_if(() => {
 		if (input.show) {
 			const $scope2_id = _scope_id();

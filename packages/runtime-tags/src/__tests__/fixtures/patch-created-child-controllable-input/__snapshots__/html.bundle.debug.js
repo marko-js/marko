@@ -38,7 +38,7 @@ var page_b_default = _template("__tests__/tags/page-b.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	demo_card_default({
 		tab,
-		tabChange: _resume((_new_tab) => tab = _new_tab, "__tests__/tags/page-b.marko_0/tabChange", $scope0_id)
+		tabChange: _resume((_new_tab) => tab = _new_tab, "__tests__/tags/page-b.marko_0/tabChange", $scope0_id, 1)
 	});
 	_patch_child_end();
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/page-b.marko_0_tab#1/fill", tab, 1);

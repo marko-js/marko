@@ -49,13 +49,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		_html(`<em>${_text_mark($scope1_id, "#text/0", label, 1, 4, 0)}</em>`);
 		_scope($scope1_id, {}, "__tests__/template.marko", "1:2");
-	}, $scope0_id) };
+	}, $scope0_id, void 0, 1) };
 	const B = { content: _content_resume("__tests__/template.marko_2*content", ({ label }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
 		_html(`<b>${_text_mark($scope2_id, "#text/0", label, 1, 4, 0)}</b>`);
 		_scope($scope2_id, {}, "__tests__/template.marko", "4:2");
-	}, $scope0_id) };
+	}, $scope0_id, void 0, 1) };
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	child_default({

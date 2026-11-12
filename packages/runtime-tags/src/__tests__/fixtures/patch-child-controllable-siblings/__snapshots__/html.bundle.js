@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 		show: input.show,
 		onCount: _resume(function(next) {
 			first = next;
-		}, "a0", $scope0_id)
+		}, "a0", $scope0_id, 1)
 	});
 	_patch_child_end();
 	_set_scope_reason($uf__input_show << 1);
@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 		show: input.show,
 		onCount: _resume(function(next) {
 			second = next * 2;
-		}, "a1", $scope0_id)
+		}, "a1", $scope0_id, 1)
 	});
 	_patch_child_end();
 	_html("</main>");

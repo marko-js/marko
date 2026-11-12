@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<output id=out></output>");
 	_dynamic_tag($scope0_id, "#text/0", input.hide ? null : reader_default, { fn: _bind_resume(function() {
 		document.getElementById("out").textContent = "v:" + input.title;
-	}, "__tests__/template.marko_0/fn", $scope0_id) }, 1, 0, 0, $wg__input_hide__OR__input_title, $scope0_reason, 0);
+	}, "__tests__/template.marko_0/fn", $scope0_id, 1) }, 1, 0, 0, $wg__input_hide__OR__input_title, $scope0_reason, 0);
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_hide#3_input_title#4/setup", (($fg__input_hide ? " input_hide" : "") + ($fg__input_title ? " input_title" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_hide: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 0) && input.hide,

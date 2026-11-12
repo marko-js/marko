@@ -39,10 +39,10 @@ var template_default = _template("a", (input) => {
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		reader_default({
-			read: _bind_resume(() => label, "a0", $scope1_id),
+			read: _bind_resume(() => label, "a0", $scope1_id, 1),
 			onRead: _resume(function(value) {
 				shown = value;
-			}, "a1", $scope1_id)
+			}, "a1", $scope1_id, 1)
 		});
 		_patch_child_end();
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {

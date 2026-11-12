@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			text_area_default({
 				value: text,
-				valueChange: _resume((_new_text) => text = _new_text, "__tests__/template.marko_1/valueChange", $scope1_id)
+				valueChange: _resume((_new_text) => text = _new_text, "__tests__/template.marko_1/valueChange", $scope1_id, 1)
 			});
 			_patch_child_end();
 			_scope($scope1_id, {

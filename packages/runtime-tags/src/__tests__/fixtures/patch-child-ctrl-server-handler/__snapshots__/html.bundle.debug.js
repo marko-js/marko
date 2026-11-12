@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_prefix && _patch_write($scope0_id, "PatchMarkedWrite:input_prefix", input.prefix, !$sg__input_prefix);
 	const handle = _bind_resume((next) => {
 		document.querySelector("output").textContent = input.prefix + next;
-	}, "__tests__/template.marko_0/handle", $scope0_id);
+	}, "__tests__/template.marko_0/handle", $scope0_id, 1);
 	let open = false;
 	_html("<main>");
 	_if(() => {

@@ -29,7 +29,9 @@ import {
   _var as _base_var,
   _html,
   _peek_scope_id as _base_peek_scope_id,
-  _resume,
+  _el as _base_el,
+  _hoist as _base_hoist,
+  _resume as _base_resume,
   _scope as _base_scope,
   _script as _base_script,
   $chunk,
@@ -60,15 +62,20 @@ export function _id(declaration: string, readBesideSources?: 1) {
       encodeHop(ids.path[hop * 2] as IdHop, ids.path[hop * 2 + 1]);
   }
   ids.built = ids.depth + 1;
-  // In a kept instance's render, one an expression reads beside a value with sources
-  // (`isIdReadBesideSources`), or one in a branch below it, varies the live instance.
-  if (
-    getContext(kSeedRoot) !== undefined &&
-    (readBesideSources || getContext(kBranchId) !== getContext(kKeptBranch))
-  ) {
-    (getState() as PatchRenderState).liveIds++;
+  // One an expression reads beside a value with sources (`isIdReadBesideSources`), or one
+  // in a branch below a kept instance, makes its render differ.
+  if (readBesideSources || getContext(kBranchId) !== getContext(kKeptBranch)) {
+    keepHolesAtSite();
   }
   return ids.addresses[ids.depth] + (MARKO_DEBUG ? "." : "") + declaration;
+}
+
+// In a kept instance's render, a value of its own makes its render differ: its site entry
+// carries its holes. A patch page's document render reaches here too, with no such count.
+export function keepHolesAtSite() {
+  if (getContext(kSeedRoot) !== undefined) {
+    (getState() as PatchRenderState).holesAtSite++;
+  }
 }
 
 // The hops a render is under, two entries each (kind, value), and the first
@@ -680,8 +687,9 @@ export class PatchRenderState extends PatchPageState {
   // The branches linked into their parent's setup: only the flush creating the
   // parent applies it, so a later flush links them as children.
   setupLinks?: Set<number>;
-  // How many `<id>`s that vary a live kept instance the response has rendered (`_id`).
-  liveIds = 0;
+  // How many values the response has rendered that make a kept instance's render differ, so
+  // its site entry carries its holes (`keepHolesAtSite`).
+  holesAtSite = 0;
   // A scope the flush may create whose client rows render now, from its setup values,
   // which lead its entry; a row settling in a later flush finds them shipped.
   rowsAfterValues?: number;
@@ -1116,9 +1124,11 @@ export function _resume_locals<T extends WeakKey>(
   id: string,
   locals: PartialScope,
   ownerScopeId?: number,
+  bindReference?: 1,
 ): T {
+  if (bindReference) keepHolesAtSite();
   return getState() instanceof PatchRenderState
-    ? _resume(val, id, ownerScopeId ?? ROOT_SCOPE_ID, () => [locals])
+    ? _base_resume(val, id, ownerScopeId ?? ROOT_SCOPE_ID, () => [locals])
     : _base_resume_locals(val, id, locals, ownerScopeId);
 }
 
@@ -1232,13 +1242,38 @@ type EntryReads = string | Falsy;
 // Functions with filled references: their registrations name them (`patches/marked-bind`).
 const FILLED_REFERENCE_FNS = new WeakSet<WeakKey>();
 
+// A function with filled references; one a hole may send as a bind reference has a kept
+// instance's site entry carry its holes.
 export function _bind_resume<T extends WeakKey>(
   val: T,
   id: string,
   scopeId: number,
+  bindReference?: 1,
 ) {
   FILLED_REFERENCE_FNS.add(val);
-  return _resume(val, id, scopeId);
+  return _resume(val, id, scopeId, bindReference);
+}
+
+// Main's registrations: one a hole may send as a bind reference has a kept instance's site
+// entry carry its holes.
+export function _resume<T extends WeakKey>(
+  val: T,
+  id: string,
+  scopeId?: number,
+  bindReference?: 1,
+) {
+  if (bindReference) keepHolesAtSite();
+  return _base_resume(val, id, scopeId);
+}
+
+export function _el(scopeId: number, id: string, bindReference?: 1) {
+  if (bindReference) keepHolesAtSite();
+  return _base_el(scopeId, id);
+}
+
+export function _hoist(scopeId: number, id: string, bindReference?: 1) {
+  if (bindReference) keepHolesAtSite();
+  return _base_hoist(scopeId, id);
 }
 
 // A page render's resume payload rides this; a patch carries fills alone.

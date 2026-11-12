@@ -36,13 +36,13 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope1_id, "a", 1, $wg__label, 1, 0, 0, ["a0"]);
 		$wi__label && _scope($scope1_id, {});
-	}, $scope0_id) };
+	}, $scope0_id, void 0, 1) };
 	const B = { content: _content_resume("a1", ({ label }) => {
 		const $scope3_id = _scope_id();
 		_scope_reason();
 		_html(`<b>${_text_mark($scope3_id, "a", label, 1, 4, 0)}</b>`);
 		_scope($scope3_id, {});
-	}, $scope0_id) };
+	}, $scope0_id, void 0, 1) };
 	let open = false;
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "a")}`);
 	_dynamic_tag($scope0_id, "b", B, { label: "local" });

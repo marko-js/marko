@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let last = 0;
 	let handler = _resume((next) => {
 		last = next;
-	}, "__tests__/template.marko_0/handler", $scope0_id);
+	}, "__tests__/template.marko_0/handler", $scope0_id, 1);
 	_html(`<main><h1>${_text_mark($scope0_id, "#text/0", input.title, 1, $scope0_reason, 0)}</h1><p>Last ${_text_mark($scope0_id, "#text/1", last, 2)}</p>`);
 	_if(() => {
 		if (input.show) {

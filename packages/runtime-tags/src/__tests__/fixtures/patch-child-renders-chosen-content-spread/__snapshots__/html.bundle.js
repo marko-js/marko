@@ -43,13 +43,13 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_html(`<em>${_text_mark($scope1_id, "a", label, 1, 4, 0)}</em>`);
 		_scope($scope1_id, {});
-	}, $scope0_id) };
+	}, $scope0_id, void 0, 1) };
 	const B = { content: _content_resume("a1", ({ label }) => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
 		_html(`<b>${_text_mark($scope2_id, "a", label, 1, 4, 0)}</b>`);
 		_scope($scope2_id, {});
-	}, $scope0_id) };
+	}, $scope0_id, void 0, 1) };
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({

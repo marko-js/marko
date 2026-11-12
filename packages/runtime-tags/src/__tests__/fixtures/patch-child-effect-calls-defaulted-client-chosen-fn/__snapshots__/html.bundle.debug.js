@@ -22,8 +22,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	$fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !$sg__input_title);
 	let upper = false;
-	const up = _bind_resume(() => "U" + input.title, "__tests__/template.marko_0/up", $scope0_id);
-	const low = _bind_resume(() => "l" + input.title, "__tests__/template.marko_0/low", $scope0_id);
+	const up = _bind_resume(() => "U" + input.title, "__tests__/template.marko_0/up", $scope0_id, 1);
+	const low = _bind_resume(() => "l" + input.title, "__tests__/template.marko_0/low", $scope0_id, 1);
 	_set_scope_reason(6);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	label_view_default({ fmt: upper ? up : low });

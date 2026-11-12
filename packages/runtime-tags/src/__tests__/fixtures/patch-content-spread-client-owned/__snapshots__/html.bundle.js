@@ -15,14 +15,14 @@ var frag_host_default = _template("b", (input) => {
 		_scope_id();
 		_scope_reason();
 		_html("<em>one</em>");
-	}, $scope0_id) };
+	}, $scope0_id, void 0, 1) };
 	const two = { content: _content_resume("b1", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<strong>${_text_mark($scope1_id, "a", input.b, 1, $scope0_reason, 0)}</strong>`);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b2", $cg__input_b);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_b__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_b && "b2");
-	}, $scope0_id) };
+	}, $scope0_id, void 0, 1) };
 	const sectionAttrs = { content: input.mode ? one : two };
 	_html("<section");
 	_attrs_content(sectionAttrs, "a", $scope0_id, "section", 0, 1, 0, $scope0_reason, 1);

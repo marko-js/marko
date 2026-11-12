@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			let handler = _resume((next) => {
 				last = next;
-			}, "__tests__/template.marko_1/handler", $scope1_id);
+			}, "__tests__/template.marko_1/handler", $scope1_id, 1);
 			let count = 0;
 			_html(`<span>Seen ${_text_mark($scope1_id, "#text/0", count, 2)}</span><button>+</button>${_el_mark($scope1_id, "#button/1")}`);
 			_script($scope1_id, "__tests__/template.marko_1");

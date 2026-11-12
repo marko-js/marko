@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 		title: input.title,
 		onClick: _bind_resume(function() {
 			n = input.title.length;
-		}, "a0", $scope0_id)
+		}, "a0", $scope0_id, 1)
 	}, 1, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0, 0, 1);
 	_html(`<button>${_text_mark($scope0_id, "c", n)}</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a1");

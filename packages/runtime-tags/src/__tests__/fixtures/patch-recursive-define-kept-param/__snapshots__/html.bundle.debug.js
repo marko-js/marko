@@ -63,7 +63,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						_unfilled_if($scope1_reason, 0) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_n#1:4/subscribe");
 						_unfilled_if($scope1_reason, 1) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_label#1:5/subscribe", $cg__label);
 						_subscribe(_unfilled_if($scope1_reason, 1) && $Level_content__label__closures, _subscribe(_unfilled_if($scope1_reason, 0) && $Level_content__n__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "3:6"), _client_guard($scope1_reason, 0) && "__tests__/template.marko_3_n#1:4/subscribe"), $cg__label && "__tests__/template.marko_3_label#1:5/subscribe");
-					}, $scope2_id)
+					}, $scope2_id, void 0, 1)
 				});
 				_patch_child_end();
 				$cg__label && _patch_render($scope2_id, "__tests__/template.marko_2_label#1:5/setup");

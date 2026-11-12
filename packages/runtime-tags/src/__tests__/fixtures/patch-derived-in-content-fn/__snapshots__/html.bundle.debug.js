@@ -45,10 +45,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		reader_default({
-			read: _bind_resume(() => label, "__tests__/template.marko_1/read", $scope1_id),
+			read: _bind_resume(() => label, "__tests__/template.marko_1/read", $scope1_id, 1),
 			onRead: _resume(function(value) {
 				shown = value;
-			}, "__tests__/template.marko_1/onRead", $scope1_id)
+			}, "__tests__/template.marko_1/onRead", $scope1_id, 1)
 		});
 		_patch_child_end();
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {

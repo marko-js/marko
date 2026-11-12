@@ -24,10 +24,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	reader_default({
-		read: _bind_resume(() => input.label, "__tests__/template.marko_0/read", $scope0_id),
+		read: _bind_resume(() => input.label, "__tests__/template.marko_0/read", $scope0_id, 1),
 		onRead: _resume(function(v) {
 			shown = v;
-		}, "__tests__/template.marko_0/onRead", $scope0_id),
+		}, "__tests__/template.marko_0/onRead", $scope0_id, 1),
 		opt: attrTag({ v: input.label })
 	});
 	_patch_child_end();

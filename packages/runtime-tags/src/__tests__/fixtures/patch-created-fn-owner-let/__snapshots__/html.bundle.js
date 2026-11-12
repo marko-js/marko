@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			outer_default({ fn: _bind_resume(function() {
 				return "f:" + input.label;
-			}, "a0", $scope1_id) });
+			}, "a0", $scope1_id, 1) });
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a1");
 			_scope($scope1_id, {

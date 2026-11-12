@@ -24,7 +24,7 @@ _shells({
 var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_a11yText = _client_guard($scope0_reason, 0), $wi__input_a11yText = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const $btn_getter = _hoist($scope0_id, "__tests__/tags/child/index.marko_0_$btn#1:2/hoist");
+	const $btn_getter = _hoist($scope0_id, "__tests__/tags/child/index.marko_0_$btn#1:2/hoist", 1);
 	const $wrapper_content__subscribers = new Set();
 	const $input_a11yText__closures = new Set();
 	_set_scope_reason(0);

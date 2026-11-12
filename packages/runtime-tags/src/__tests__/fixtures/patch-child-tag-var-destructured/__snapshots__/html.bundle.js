@@ -10,7 +10,7 @@ var counter_default = _template("b", (input) => {
 		value: count,
 		valueChange: _resume(function(v) {
 			count = v;
-		}, "b0", $scope0_id)
+		}, "b0", $scope0_id, 1)
 	};
 	_patch_fill($scope0_id, "vb1", count, 1);
 	_scope($scope0_id, {});

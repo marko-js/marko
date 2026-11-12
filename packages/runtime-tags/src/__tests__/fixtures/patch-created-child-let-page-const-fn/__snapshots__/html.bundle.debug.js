@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_label && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !$sg__input_label);
 	const opts = { fn: _bind_resume(function() {
 		return "f:" + input.label;
-	}, "__tests__/template.marko_0/opts", $scope0_id) };
+	}, "__tests__/template.marko_0/opts", $scope0_id, 1) };
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();

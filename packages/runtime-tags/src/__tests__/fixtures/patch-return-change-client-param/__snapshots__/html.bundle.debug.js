@@ -33,9 +33,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, 1);
 	let count = counter_box_default({ onChange: mode === "a" ? _resume(function(v) {
 		last = "a" + v;
-	}, "__tests__/template.marko_0/onChange", $scope0_id) : _resume(function(v) {
+	}, "__tests__/template.marko_0/onChange", $scope0_id, 1) : _resume(function(v) {
 		last = "b" + v;
-	}, "__tests__/template.marko_0/onChange2", $scope0_id) });
+	}, "__tests__/template.marko_0/onChange2", $scope0_id, 1) });
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_count#5/var");
 	_patch_child_end();
 	_html(`<p>${_text_mark($scope0_id, "#text/2", last)}</p><button class=mode>b</button>${_el_mark($scope0_id, "#button/3")}<button class=set>set</button>${_el_mark($scope0_id, "#button/4")}`);

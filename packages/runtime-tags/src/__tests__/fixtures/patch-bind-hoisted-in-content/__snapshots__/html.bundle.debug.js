@@ -10,7 +10,7 @@ var store_default = _template("__tests__/tags/store.marko", (input) => {
 	_html(`<p>${_text_mark($scope0_id, "#text/0", last, 1, 0, 0, 1)}</p>`);
 	const $return = _resume((next) => {
 		last = next;
-	}, "__tests__/tags/store.marko_0/_return", $scope0_id);
+	}, "__tests__/tags/store.marko_0/_return", $scope0_id, 1);
 	_scope($scope0_id, {}, "__tests__/tags/store.marko", 0);
 	return $return;
 });
@@ -40,7 +40,7 @@ _shells({
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const $setLast_getter = _hoist($scope0_id, "__tests__/template.marko_0_setLast#1:2/hoist");
+	const $setLast_getter = _hoist($scope0_id, "__tests__/template.marko_0_setLast#1:2/hoist", 1);
 	const $frame_content__subscribers = new Set();
 	_set_scope_reason(0);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/0", 1);

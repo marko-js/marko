@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_title = _server_guard($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	$fg__input_title && _patch_write($scope0_id, "xe", input.title, !$sg__input_title);
-	const fmt = _bind_resume((s) => s + ":" + input.title, "a0", $scope0_id);
+	const fmt = _bind_resume((s) => s + ":" + input.title, "a0", $scope0_id, 1);
 	let show = true;
 	_html("<main>");
 	_if(() => {

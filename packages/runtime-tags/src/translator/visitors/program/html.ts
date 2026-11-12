@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { getFile, getProgram } from "@marko/compiler/babel-utils";
 
-import { BindingType } from "../../util/bindings";
+import { type Binding, BindingType } from "../../util/bindings";
 import {
   generateUidIdentifier,
   ensureSharedUid,
@@ -15,6 +15,8 @@ import { first, forEach } from "../../util/optional";
 import {
   getFilledReferences,
   getPatchFillBindings,
+  isBindingSentAsBindReference,
+  isSentAsBindReference,
   patchCreates,
 } from "../../util/patch/refresh";
 import { getReadReplacement } from "../../util/read-replacement";
@@ -73,6 +75,7 @@ export default {
                           t.stringLiteral(
                             getResumeRegistryId(hoistSection, binding, "hoist"),
                           ),
+                          sentAsBindReference(binding),
                         ),
                       )
                     : t.variableDeclarator(
@@ -83,6 +86,7 @@ export default {
                           t.stringLiteral(
                             getResumeRegistryId(section, binding),
                           ),
+                          sentAsBindReference(binding),
                         ),
                       ),
                 ]),
@@ -327,9 +331,24 @@ function registerFunctionDeclarations(body: t.Statement[]) {
   }
 }
 
+// A getter a hole may send as a bind reference: a kept instance it is bound in has its
+// site entry carry its holes.
+function sentAsBindReference(binding: Binding) {
+  return (
+    isPatch() && isBindingSentAsBindReference(binding) && t.numericLiteral(1)
+  );
+}
+
 function buildResumeCall(node: Exclude<t.Function, t.FunctionDeclaration>) {
   const { extra } = node;
   if (isRegisteredFnExtra(extra)) {
+    // A hole sending it as a bind reference: a kept instance it is bound in has its site
+    // entry carry its holes.
+    const bindReference =
+      isPatch() &&
+      extra.referencesScope &&
+      isSentAsBindReference(extra) &&
+      t.numericLiteral(1);
     const referencedLocals = extra.referencedLocalBindingsInFunction;
     if (referencedLocals) {
       // Locals only exist while this render runs, so they're written into a
@@ -351,16 +370,19 @@ function buildResumeCall(node: Exclude<t.Function, t.FunctionDeclaration>) {
         t.stringLiteral(extra.registryId),
         t.objectExpression(localProperties),
         extra.referencesScope && getScopeIdIdentifier(extra.section),
+        bindReference,
       );
     }
 
+    const bind = isPatch() && !!getFilledReferences(extra);
     return callRuntime(
-      isPatch() && getFilledReferences(extra) ? "_bind_resume" : "_resume",
+      bind ? "_bind_resume" : "_resume",
       simplifyFunction(node) as
         | t.FunctionExpression
         | t.ArrowFunctionExpression,
       t.stringLiteral(extra.registryId),
       extra.referencesScope && getScopeIdIdentifier(extra.section),
+      bindReference,
     );
   }
 }

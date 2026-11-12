@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 		const uid = _id("A");
 		_html(`<label${_attr("for", uid, $scope1_id, "a", 0, 0)}>body</label>${_el_mark($scope1_id, "a", 0)}<input${_attr("id", uid, $scope1_id, "b", 0, 0)}>${_el_mark($scope1_id, "b", 0)}`);
 		_scope($scope1_id, {});
-	}, $scope0_id) };
+	}, $scope0_id, void 0, 1) };
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
 		const Tag = item.on ? "p" : "div";

@@ -59,7 +59,7 @@ var template_default = _template("a", (input) => {
 			_html(`A${_text_mark($scope1_id, "a", input.y, 2, $scope0_reason, 2)}`);
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "a0", $cg__input_y);
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_y__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), $cg__input_y && "a0");
-		}, $scope0_id, ($scope) => $scope0_page ? [{ e: input.y }] : [])
+		}, $scope0_id, ($scope) => $scope0_page ? [{ e: input.y }] : [], 1)
 	});
 	_patch_child_end();
 	_scope($scope0_id, {

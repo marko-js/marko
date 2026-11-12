@@ -69,7 +69,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`A${_text_mark($scope1_id, "#text/0", input.y, 2, $scope0_reason, 2)}`);
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_y#0:4/subscribe", $cg__input_y);
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_y__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"), $cg__input_y && "__tests__/template.marko_1_input_y#0:4/subscribe");
-		}, $scope0_id, ($scope) => $scope0_page ? [{ input_y: input.y }] : [])
+		}, $scope0_id, ($scope) => $scope0_page ? [{ input_y: input.y }] : [], 1)
 	});
 	_patch_child_end();
 	_scope($scope0_id, {

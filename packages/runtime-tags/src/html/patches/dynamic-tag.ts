@@ -13,9 +13,10 @@ import {
 } from "../../common/types";
 import {
   _content as _base_content,
+  _content_resume as _base_content_resume,
   _dynamic_tag as _base_dynamic_tag,
 } from "../dynamic-tag";
-import { REGISTRY, register } from "../serializer";
+import { type Locals, REGISTRY, register } from "../serializer";
 import type { ServerRenderer } from "../template";
 import {
   _attr_content as _base_attr_content,
@@ -55,6 +56,7 @@ import {
   withPairedBranchId,
   withUnpatched,
   writePatchEntry,
+  keepHolesAtSite,
 } from "./writer";
 
 // A patch pairs a tag whose renderer it renders (a native tag's body too); one
@@ -325,6 +327,19 @@ export function _content(
     : register("", content, undefined, undefined, "0");
 }
 
+// Registered content a hole may send as a bind reference: in a kept instance's render,
+// its site entry carries its holes (`keepHolesAtSite`).
+export function _content_resume(
+  id: string,
+  fn: ServerRenderer,
+  scopeId?: number,
+  locals?: Locals,
+  bindReference?: 1,
+) {
+  if (bindReference) keepHolesAtSite();
+  return _base_content_resume(id, fn, scopeId, locals);
+}
+
 // Kept content (`elide` its section) takes its instances' holes as data: each one
 // a page renders joins the section's scopes its owner holds, and the client adds those it creates.
 function keepHoles(fn: ServerRenderer, scopeId: number, section: number) {
@@ -335,14 +350,16 @@ function keepHoles(fn: ServerRenderer, scopeId: number, section: number) {
     const instanceId = _peek_scope_id();
     if (state instanceof PatchRenderState) {
       const owner = instanceId === kept.entry;
-      const liveIds = state.liveIds;
+      const holesAtSite = state.holesAtSite;
       const result = renderKeptInstance(fn, owner ? null : instanceId);
       const patch = state.patchTree![instanceId];
       const seeds = state.seedTree?.[instanceId];
-      // The owner's entry carries its holes, none where `<id>`s vary its instances; a
-      // site, its seeds (none at the owner's), beside its holes where they do.
+      // The owner's entry carries its holes, none where an instance's render differs; a site,
+      // its seeds (none at the owner's), beside its holes where it does.
       const holes =
-        owner !== (state.liveIds !== liveIds) && hasKeys(patch) && patch;
+        owner !== (state.holesAtSite !== holesAtSite) &&
+        hasKeys(patch) &&
+        patch;
       const part = holes || seeds;
       if (part) {
         const entry = linkScopePatch(state, instanceId, part);

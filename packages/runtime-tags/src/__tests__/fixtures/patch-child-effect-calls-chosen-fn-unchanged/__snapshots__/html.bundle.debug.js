@@ -24,12 +24,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		flag = 1;
 		const m = document.querySelector("main");
 		m.dataset.a = String(+(m.dataset.a || 0) + 1);
-	}, "__tests__/template.marko_0/fa", $scope0_id);
+	}, "__tests__/template.marko_0/fa", $scope0_id, 1);
 	const fb = _resume(function() {
 		flag = 2;
 		const m = document.querySelector("main");
 		m.dataset.b = String(+(m.dataset.b || 0) + 1);
-	}, "__tests__/template.marko_0/fb", $scope0_id);
+	}, "__tests__/template.marko_0/fb", $scope0_id, 1);
 	_html("<main>");
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);

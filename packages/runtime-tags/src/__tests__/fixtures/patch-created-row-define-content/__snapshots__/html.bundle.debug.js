@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<em>${_text_mark($scope5_id, "#text/0", row.label, 1, $scope0_reason, 0)} ${_text_mark($scope5_id, "#text/1", n, 2)}</em>`);
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope5_id, "__tests__/template.marko_5_row_label#2:7/subscribe", $cg__input_rows);
 			_subscribe($for_content__n__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_label__closures, _scope($scope5_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "6:4"), $cg__input_rows && "__tests__/template.marko_5_row_label#2:7/subscribe"), "__tests__/template.marko_5_n#2:11/subscribe");
-		}, $scope2_id, ($scope) => $scope0_page ? [{ row_label: row?.label }] : []) };
+		}, $scope2_id, ($scope) => $scope0_page ? [{ row_label: row?.label }] : [], 1) };
 		_html(`<section><button>${_text_mark($scope2_id, "#text/1", n)}</button>${_el_mark($scope2_id, "#button/0")}`);
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope2_id, "#childScope/2", 1);

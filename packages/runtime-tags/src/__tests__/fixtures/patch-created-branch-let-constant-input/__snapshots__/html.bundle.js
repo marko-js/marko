@@ -61,7 +61,7 @@ var template_default = _template("a", (input) => {
 			_html(`<em>static ${_text_mark($scope1_id, "a", input.label, 2, $scope0_reason, 2)}</em>`);
 			$cg__input_label && _patch_render($scope1_id, "a0");
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), $cg__input_label && "a0");
-		}, $scope0_id)
+		}, $scope0_id, void 0, 1)
 	});
 	_patch_child_end();
 	_scope($scope0_id, {

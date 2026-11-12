@@ -1,6 +1,7 @@
 // Patch fill decisions: which bindings a patch fills or writes, fill identity,
 // and what a created scope runs.
 import type { types as t } from "@marko/compiler";
+import { getProgram } from "@marko/compiler/babel-utils";
 
 import {
   type Binding,
@@ -47,6 +48,7 @@ import {
   mapBodyParams,
 } from "../reasons";
 import {
+  getCanonicalExpr,
   getLazyBindings,
   getNameRead,
   getReferencedBindingsInFunction,
@@ -56,6 +58,7 @@ import {
   isReferencedExtra,
   type Read,
   type ReferencedExtra,
+  type RegisteredFnExtra,
 } from "../references";
 import { getScopeAccessor } from "../scope-accessor";
 import {
@@ -1239,7 +1242,7 @@ function isRegisteredFnRead(read: Read) {
 }
 
 // An `<id>` an expression (a hole, a `<const>`, a handler) reads beside a value with
-// sources, here or in a template it is passed to: a hole may vary each kept instance.
+// sources, here or in a template it is passed to: a hole may differ in each kept instance.
 export function isIdReadBesideSources(id: Binding) {
   return someReached(id, isReadBesideSources);
 }
@@ -1256,6 +1259,43 @@ function isReadBesideSources(reached: Binding) {
     }
   }
   return false;
+}
+
+// A scope-bound function a hole may send as a bind reference, which names one scope:
+// where it sits (a change handler binds owner-bound), or a read its value reaches.
+export function isSentAsBindReference(fn: RegisteredFnExtra) {
+  const extra = getCanonicalExpr(fn.exprRoot);
+  return (
+    (!fn.exprRoot.changeHandler && isBindReferenceRead(extra, true)) ||
+    someRead(exprReaders(extra), isBindReferenceRead)
+  );
+}
+
+// An element or hoisted getter a hole may send as a bind reference: a read of its binding.
+export function isBindingSentAsBindReference(binding: Binding) {
+  return someRead(bindingReaders(binding, undefined), isBindReferenceRead);
+}
+
+// Content a hole may send as a bind reference: a read of what it derives. Content that
+// derives from nothing is a dynamic tag's body, which ships as its id, not its value.
+export function isContentSentAsBindReference(section: Section) {
+  return (
+    !!section.derives &&
+    someRead(getDerivedReaders(section.derives), isBindReferenceRead)
+  );
+}
+
+// A read a patch writes a value at as is: retained, a known call's argument not shipped
+// whole, or the template's return, which a caller it cannot see takes.
+function isBindReferenceRead(read: t.NodeExtra, asInput: boolean) {
+  return (
+    asInput &&
+    (!!read.retained ||
+      (!!read.callSiteExprs &&
+        !isTrackedFunction(read) &&
+        !(read.read && holdsRegisteredFn(read.read.binding))) ||
+      read === getProgram().node.extra.section!.returnValueExpr)
+  );
 }
 
 // Kept content with nodes of its own: its instances take their holes as data.

@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "a5", 1);
 		$wi__input_p__OR__input_label__OR__input_show && _subscribe($ui__input_p && $input_p__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 3) && "a5", 0);
 		$wi__input_p__OR__input_label__OR__input_show && _resume_branch($scope1_id);
-	}, $scope0_id) };
+	}, $scope0_id, void 0, 1) };
 	_if(() => {
 		if (input.show) {
 			const $scope3_id = _scope_id();

@@ -119,7 +119,7 @@ var route_pg_default = _template("__tests__/tags/route-pg.marko", (input) => {
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/2", 1);
 	file_host_default({
 		files,
-		filesChange: _resume((_new_files) => files = _new_files, "__tests__/tags/route-pg.marko_0/filesChange", $scope0_id)
+		filesChange: _resume((_new_files) => files = _new_files, "__tests__/tags/route-pg.marko_0/filesChange", $scope0_id, 1)
 	});
 	_patch_child_end();
 	_scope($scope0_id, {

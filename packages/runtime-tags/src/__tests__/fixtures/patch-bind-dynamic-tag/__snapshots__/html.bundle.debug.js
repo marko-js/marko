@@ -47,7 +47,7 @@ var store_default = _template("__tests__/tags/store.marko", (input) => {
 		last,
 		set: _resume(function(next) {
 			last = next;
-		}, "__tests__/tags/store.marko_0/_return", $scope0_id)
+		}, "__tests__/tags/store.marko_0/_return", $scope0_id, 1)
 	};
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/store.marko_0_last#0/fill", last, 1);
 	return $return;

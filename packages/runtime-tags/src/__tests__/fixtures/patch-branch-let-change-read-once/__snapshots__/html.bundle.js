@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 	let last = 0;
 	const onCount = _resume((next) => {
 		last = next;
-	}, "a0", $scope0_id);
+	}, "a0", $scope0_id, 1);
 	_html(`<main><p>last ${_text_mark($scope0_id, "a", last, 2)}</p>`);
 	_if(() => {
 		if (input.show) {

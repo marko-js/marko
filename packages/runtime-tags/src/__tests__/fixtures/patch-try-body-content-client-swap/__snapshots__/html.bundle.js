@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 		_html(`<em>A ${_text_mark($scope1_id, "a", input.label, 2, $scope0_reason, 0)}</em>`);
 		$cg__input_label && _patch_render($scope1_id, "a1");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_label && "a1");
-	}, $scope0_id) };
+	}, $scope0_id, void 0, 1) };
 	const B = { content: _content_resume("a2", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
@@ -63,7 +63,7 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			Ck: $wi__input_label && 1
 		}), $cg__input_label && "a3");
-	}, $scope0_id) };
+	}, $scope0_id, void 0, 1) };
 	_set_scope_reason(10);
 	const $childScope = _peek_scope_id($scope0_id, "c", 0);
 	wrapper_default({

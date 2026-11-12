@@ -12,7 +12,7 @@ var picker_default = _template("b", (input) => {
 		if (refresh) refreshing = true;
 		catalog = ["a", "b"];
 		if (refresh) refreshing = false;
-	}, "b0", $scope0_id);
+	}, "b0", $scope0_id, 1);
 	const $return = load;
 	_html(`<button>load</button>${_el_mark($scope0_id, "a")}<ul>`);
 	_for_of(catalog || [], (item) => {
@@ -46,7 +46,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	let refresh = picker_default({ refreshingChange: _resume(function(v) {
 		busy = v;
-	}, "a0", $scope0_id) });
+	}, "a0", $scope0_id, 1) });
 	_patch_child_end();
 	_html(`<p>${_text_mark($scope0_id, "c", busy ? "busy" : "idle")}</p><button id=outer>outer</button>${_el_mark($scope0_id, "d")}`);
 	_script($scope0_id, "a1");

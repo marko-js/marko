@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 	_html("<output id=out></output>");
 	_dynamic_tag($scope0_id, "a", input.hide ? null : reader_default, { fn: _bind_resume(function() {
 		document.getElementById("out").textContent = "v:" + input.title;
-	}, "a0", $scope0_id) }, 1, 0, 0, $wg__input_hide__OR__input_title, $scope0_reason, 0);
+	}, "a0", $scope0_id, 1) }, 1, 0, 0, $wg__input_hide__OR__input_title, $scope0_reason, 0);
 	_patch_render($scope0_id, "a1", (($fg__input_hide ? " d" : "") + ($fg__input_title ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 0) && input.hide,

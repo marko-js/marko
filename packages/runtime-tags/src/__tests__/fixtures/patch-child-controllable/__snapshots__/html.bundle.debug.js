@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		show: input.show,
 		onCount: _resume(function(next) {
 			last = next;
-		}, "__tests__/template.marko_0/onCount", $scope0_id)
+		}, "__tests__/template.marko_0/onCount", $scope0_id, 1)
 	});
 	_patch_child_end();
 	_html("</main>");
