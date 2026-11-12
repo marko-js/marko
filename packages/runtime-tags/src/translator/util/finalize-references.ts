@@ -11,11 +11,14 @@ import {
   bindingUtil,
   compareIntersections,
   getAliasRoot,
+  getGlobalKey,
+  withoutGlobals,
   getBindings,
   getCanonicalBinding,
   getAssignedObject,
   getPropertyPath,
   isDirectAlias,
+  isGlobalBinding,
   isRest,
   propertiesUtil,
 } from "./bindings";
@@ -58,7 +61,6 @@ import {
   getAssignments,
   getCanonicalExpr,
   getFunctionReadsByExpression,
-  getGlobalReads,
   getReadsByExpression,
   getReferencedBindings,
   getReferenceFinalizers,
@@ -83,7 +85,6 @@ import {
 } from "./sections";
 import { addSetupWork } from "./setup-work";
 import { ensureSectionSlot, ensureSlot, SlotKind } from "./slots";
-import { addGlobalReadReasons } from "./solve-reasons";
 import {
   ALWAYS,
   type Sources,
@@ -184,14 +185,10 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
         exprBindings.referencedBindings,
         exprBindings.lazyBindings,
         exprBindings.constantBindings,
-        exprBindings.globalBindings,
       );
-      if (exprBindings.globalBindings) {
-        (expr.section.globalReadExprs ||= []).push(expr);
-      }
-      if (!exprBindings.referencedBindings) {
-        // With no resolved references, any statement this expression keys
-        // lands in its section's setup signal.
+      if (every(exprBindings.referencedBindings, isGlobalBinding)) {
+        // With no resolved references but `$global` members, which never arrive, setup
+        // runs any statement this expression keys.
         addSetupWork(expr.section);
       }
       forEach(exprBindings.lazyBindings, markLazyRead);
@@ -247,7 +244,7 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
               fn,
               fn === expr
                 ? bindingUtil.union(
-                    fnBindings.referencedBindings,
+                    withoutGlobals(fnBindings.referencedBindings),
                     exprBindings.lazyBindings,
                   )
                 : fnBindings.referencedBindings,
@@ -367,8 +364,6 @@ function addSectionReasons(section: Section) {
       section.branchExpr,
     );
   }
-
-  addGlobalReadReasons(section);
 }
 
 // Dense per-section ids for bindings, intersections, and closure accessors.
@@ -656,9 +651,6 @@ function resolveDerivedSources(binding: Binding) {
   if (exprs) {
     const refs = getValueReferences(exprs);
     binding.sources = reduce(refs, mergeResolvedSources, binding.sources);
-    if (some(exprs, readsGlobalValue)) {
-      binding.sources = mergeSources(binding.sources, globalSources);
-    }
     binding.intersection = Array.isArray(refs)
       ? refs
       : refs && getRootIntersection(refs);
@@ -696,12 +688,6 @@ function mapReturnedParams(
       withSources(sources, sources.state, params),
     );
   }
-}
-
-// A `<let>`'s initial value reads `$global` once, at creation, as `getValueReferences`
-// reads its bindings.
-function readsGlobalValue(expr: t.NodeExtra) {
-  return !expr.initialValue && !!getGlobalReads(expr);
 }
 
 function mergeResolvedSources(sources: Sources | undefined, ref: Binding) {
@@ -908,7 +894,6 @@ function resolveReferencedBindings(
   let constantBindings: ReferencedBindings;
   let allBindings: ReferencedBindings;
   let lazyBindings: ReferencedBindings;
-  let globalBindings: ReferencedBindings;
   let referencedClosures: ReferencedBindings;
   let referencedConstants: ReferencedBindings;
   let closureSection: Section | undefined;
@@ -940,13 +925,15 @@ function resolveReferencedBindings(
           resolveExpressionReference(expr, read));
       }
       if (binding.type === BindingType.global) {
-        // `$global` reads stay verbatim member chains: no read slot,
-        // no signal, no register-id participation.
+        // `$global` reads stay verbatim member chains, with no read slot.
         getProgram().node.extra.hasGlobalRead = true;
-        // Only a patch changes `$global` after the page renders: it keeps the paths
-        // read as the expression evaluates (a lazy read reads it live).
+        // Only a patch changes `$global` after the page renders: a read as the expression
+        // evaluates references its key, an effect's what it reads, which re-runs it.
         if (isPatch() && !isLazyRead(read, binding, isChangeHandlerRead)) {
-          globalBindings = bindingUtil.add(globalBindings, binding);
+          referencedBindings = bindingUtil.add(
+            referencedBindings,
+            getCanonicalExpr(expr).isEffect ? binding : getGlobalKey(binding),
+          );
         }
       } else if (binding.type !== BindingType.dom) {
         // A read outside a getter is from this section or an enclosing one.
@@ -986,6 +973,16 @@ function resolveReferencedBindings(
   // A binding also read live by this expression stays subscribed.
   lazyBindings = bindingUtil.difference(lazyBindings, referencedBindings);
 
+  // A `$global` member read beside one it is part of re-runs with that one.
+  if (Array.isArray(referencedBindings)) {
+    referencedBindings = bindingUtil.filter(
+      referencedBindings,
+      (binding) =>
+        !isGlobalBinding(binding) ||
+        !hasReadAncestor(binding, referencedBindings),
+    );
+  }
+
   if (Array.isArray(referencedBindings)) {
     referencedBindings = getCanonicalIntersection(
       intersectionsBySection,
@@ -1007,12 +1004,18 @@ function resolveReferencedBindings(
     constantBindings,
     allBindings,
     lazyBindings,
-    globalBindings,
     referencedClosures,
     referencedConstants,
     closureSection,
     hoistedSection,
   };
+}
+
+function hasReadAncestor(binding: Binding, reads: ReferencedBindings) {
+  for (let cur = binding.aliasOf; cur; cur = cur.aliasOf) {
+    if (bindingUtil.has(reads, cur)) return true;
+  }
+  return false;
 }
 
 // A dynamic tag's name that is one read as written.

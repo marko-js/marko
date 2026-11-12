@@ -511,18 +511,16 @@ call site hands the param to the client, a changed `$global` key re-runs the
 signal there instead: the page ships the value and subscribes the scope.
 _Avoid_: server-required param
 
-**`$global` signal**:
-A signal's client work that reads `$global` as it renders (each expression
-records the deepest member it reads, as a property alias would), split into a
-function the signal calls. A patch build registers it with the members it
-reads, each as its keys from `$global` (`_fill_global`), so a patch
-changing one re-runs only that work, once, on each scope that ran it. Work
-reading under the same keys shares one signal; a script keeps its own, so it
-runs again only when what it reads changes. A loop's rows reading one share a
-single subscription on the loop's owner (`_fill_global_for`, or
-`_fill_global_path_for` for a member path), which walks the rows on a change,
-so a row the client creates subscribes to none.
-_Avoid_: part, global part, `$global` join
+**`$global` member**:
+In a patch build, the binding a read of `$global` references as its expression
+evaluates: the key it reads under (an effect's, the deepest member it reads, so
+it runs again only when that changes). It has no slot and never arrives; the
+signals keyed by it are main's, each section's reader of it, which setup runs,
+and its joins, which the other members run. A reader registers under the paths
+its reads take (`_fill_global`, `_fill_global_script`) and subscribes each scope
+it runs on, so a patch changing a key re-runs only its readers, once, on those
+scopes; a document subscribes a scope only where the client re-runs the reader.
+_Avoid_: part, global part, `$global` join, `$global` signal
 
 **Stable**:
 A binding or expression with no sources, so fixed for its scope's lifetime: a

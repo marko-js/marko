@@ -8,6 +8,7 @@ import {
   bindingUtil,
   getCanonicalBinding,
   isDirectAlias,
+  isGlobalBinding,
   isIndexProperty,
   propertiesUtil,
 } from "./bindings";
@@ -48,9 +49,7 @@ import {
   type Read,
   type ReferencedExtra,
   getFunctionReadsByExpression,
-  getConstantBindings,
   getConstantBindingsInFunction,
-  getReferencedBindings,
   getReferencedBindingsInFunction,
   getBindingsDerivedFrom,
 } from "./references";
@@ -155,25 +154,13 @@ function addIntersectionMemberReason(
   );
 }
 
-// A changed `$global` key re-runs what reads it wherever the client holds the
-// values it reads, so each value's own sources say where it is read.
-export function addGlobalReadReasons(section: Section) {
-  for (const expr of section.globalReadExprs || []) {
-    forEach(getReferencedBindings(expr), (member) => {
-      addMemberReason(section, member, member.sources);
-    });
-    forEach(getConstantBindings(expr), (key) => {
-      addMemberReason(section, key, key.sources);
-    });
-  }
-}
-
 function addMemberReason(
   section: Section,
   member: Binding,
   reason: Reason | undefined | false,
 ) {
-  if (reason) {
+  // A `$global` member is read off the scope's globals: no slot, no owner chain.
+  if (reason && !isGlobalBinding(member)) {
     // A member of an ancestor, even one always written, is read through the
     // owner chain, so a change that re-runs it needs that chain written.
     if (member.section !== section) {

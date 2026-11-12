@@ -81,7 +81,6 @@ function seedsOnly(section: Section, sources: Sources | undefined) {
   return (
     !!sources?.state &&
     !sources.param &&
-    !sources.global &&
     patchCreatesOrComposes(section) &&
     every(sources.state, (state) => holdsInitialValue(state, section))
   );

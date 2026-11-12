@@ -79,9 +79,7 @@ export {
 export { _on } from "./dom/event";
 export {
   _fill_global,
-  _fill_global_for,
   _fill_global_path,
-  _fill_global_path_for,
   _fill_global_path_script,
   _fill_global_script,
 } from "./dom/patches/global";

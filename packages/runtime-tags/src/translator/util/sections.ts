@@ -195,8 +195,6 @@ export interface Section {
   /** Count of distinct `$signal` expression roots; analyze allocates each
    * root's abort id from this so translates read, never re-derive. */
   abortSignalExprs: number;
-  /** Its expressions that read `$global` keys as they evaluate. */
-  globalReadExprs: ReferencedExtra[] | undefined;
   readsOwner: boolean;
   /** Whether analysis found work keyed by setup in the section, or in a
    * `<define>` body or template it calls in place. */
@@ -327,7 +325,6 @@ export function ensureBodySection(
       dropped: !!extra.dropped,
       hasAbortSignal: false,
       abortSignalExprs: 0,
-      globalReadExprs: undefined,
       readsOwner: false,
       hasSetupWork: false,
       branch: undefined,

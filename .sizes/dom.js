@@ -1,4 +1,4 @@
-// size: 27266 (min) 10073 (brotli)
+// size: 27150 (min) 10029 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -2037,36 +2037,18 @@ function _fill_global(id, signal, ...keys) {
     ])[0]
   );
 }
-function _fill_global_for(id, ownerLoopNodeAccessor, signal, ...keys) {
-  let rows = "A" + decodeAccessor(ownerLoopNodeAccessor);
-  return (
-    _fill_global(
-      id,
-      (owner) => {
-        for (let row of toArray(owner[rows])) signal(row);
-      },
-      ...keys,
-    ),
-    (scope) => {
-      (signal(scope), subscribeToScopeSet(globalScopes, id, scope._));
-    }
-  );
-}
 function _fill_global_script(id, fn, ...keys) {
   let effect = (_resumed[id] = (scope) => {
       (fn(scope), subscribeToScopeSet(globalScopes, id, scope));
     }),
-    queue = (scope) => queueEffect(scope, effect);
+    queued = /* @__PURE__ */ new WeakMap(),
+    queue = (scope) => {
+      queued.get(scope) !== runId && (queued.set(scope, runId), queueEffect(scope, effect));
+    };
   return (_fill_global(id, queue, ...keys), queue);
 }
 function _fill_global_path(id, signal, ...keys) {
   return ((changesMember = membersChanged), _fill_global(id, signal, ...keys, 0));
-}
-function _fill_global_path_for(id, ownerLoopNodeAccessor, signal, ...keys) {
-  return (
-    (changesMember = membersChanged),
-    _fill_global_for(id, ownerLoopNodeAccessor, signal, ...keys, 0)
-  );
 }
 function _fill_global_path_script(id, fn, ...keys) {
   return ((changesMember = membersChanged), _fill_global_script(id, fn, ...keys, 0));
@@ -2081,8 +2063,7 @@ function patchGlobal(live, _accessor, value, order = 0) {
         ? changesMember(globalSignals[id][1], changed, live.$, value)
         : globalSignals[id][1].some((key) => changed.includes(key))) &&
         globalScopes[id]?.forEach(
-          (scope) =>
-            scope.H && scope.$ === live.$ && queueRender(scope, globalSignals[id][0], order),
+          (scope) => scope.$ === live.$ && queueRender(scope, globalSignals[id][0], order),
         ));
   Object.assign(live.$, value);
 }

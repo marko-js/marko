@@ -73,7 +73,6 @@ export interface ResolvedRead {
 const kReferencedBindings = Symbol("referenced bindings");
 const kLazyBindings = Symbol("lazy bindings");
 const kConstantBindings = Symbol("constant bindings");
-const kGlobalReads = Symbol("global reads");
 const kReferencedBindingsInFunction = Symbol("referenced bindings in function");
 const kConstantBindingsInFunction = Symbol("constant bindings in function");
 const kNameRead = Symbol("name read");
@@ -94,7 +93,6 @@ declare module "@marko/compiler/dist/types" {
     [kReferencedBindings]?: ReferencedBindings;
     [kLazyBindings]?: ReferencedBindings;
     [kConstantBindings]?: ReferencedBindings;
-    [kGlobalReads]?: ReferencedBindings;
     [kNameRead]?: ResolvedRead;
     /** The bindings it derives, in the order it derives them: call sites
      * derive a child template's, so no one template's order sorts them. */
@@ -1476,18 +1474,10 @@ export function setResolvedReads(
   referencedBindings: ReferencedBindings,
   lazyBindings: ReferencedBindings,
   constantBindings: ReferencedBindings,
-  globalBindings: ReferencedBindings,
 ) {
   extra[kReferencedBindings] = referencedBindings;
   extra[kLazyBindings] = lazyBindings;
   extra[kConstantBindings] = constantBindings;
-  extra[kGlobalReads] = globalBindings;
-}
-
-// The `$global` reads an expression makes as it evaluates, each the deepest
-// alias of `$global` it reads (the whole object is `$global` itself).
-export function getGlobalReads(extra: t.NodeExtra | undefined) {
-  return extra && getCanonicalExpr(extra)[kGlobalReads];
 }
 
 export function getCanonicalExpr<T extends t.NodeExtra>(extra: T): T {

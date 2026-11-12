@@ -65,8 +65,8 @@ import {
 } from "./sections";
 import {
   getCreatedSetupId,
+  getGlobalReaders,
   getResumeRegistryId,
-  getSignalRegistryId,
   getSignals,
 } from "./signals";
 import { bindingReaders } from "./solve-reasons";
@@ -353,6 +353,16 @@ export function inCreatedCatch(section: Section) {
   return false;
 }
 
+// In a `@catch` of a template with no client work, whose module a page may never load:
+// no client code updates a caught one, which keeps what it rendered.
+export function inCatchWithoutClientWork(section: Section) {
+  if (hasClientWork(getProgram().node.extra)) return false;
+  for (let cur: Section | undefined = section; cur; cur = cur.parent) {
+    if (cur.boundaryContent === "catch") return true;
+  }
+  return false;
+}
+
 // Content the page's bundle registers wherever this template renders: a page
 // with it links the module, which registers it.
 function clientRegisters(section: Section) {
@@ -548,7 +558,7 @@ function getSectionEffectRegistryIds(section: Section) {
   for (let i = allSignals.length; i--;) {
     const { hasHTMLEffect, referencedBindings } = allSignals[i];
     if (hasHTMLEffect && !isEffectOutsideShell(section, referencedBindings)) {
-      ids.push(getSignalRegistryId(allSignals[i]));
+      ids.push(getResumeRegistryId(section, referencedBindings));
     }
   }
   return ids;
@@ -712,12 +722,18 @@ function hasIds(setup: ShellSetup) {
   return !!(setup[0].length || setup[1].length);
 }
 
-// The setup every created scope of the section runs.
+// The setup every created scope of the section runs: no patch pairs a created
+// `@catch`, so its scopes subscribe to the `$global` members they read.
 function getShellSetupIds(section: Section) {
   const ids: string[] = [];
   for (const [ref, setup] of getCreatedSetup(section)) {
     if (setup.setup === "always") {
       ids.push(getCreatedSetupId(section, ref));
+    }
+  }
+  if (inCreatedCatch(section)) {
+    for (const referencedBindings of getGlobalReaders(section).keys()) {
+      ids.push(getResumeRegistryId(section, referencedBindings, "subscribe"));
     }
   }
   return ids;

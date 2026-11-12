@@ -1343,9 +1343,7 @@ function getUnfilledPatchWrite(section: Section, binding: Binding) {
               section,
               [binding],
               "_filled_guard",
-              isGuardedReason(sources) &&
-                !sources.global &&
-                getSoleCallerGroup(section, sources),
+              isGuardedReason(sources) && getSoleCallerGroup(section, sources),
             ),
           ),
         ),
@@ -1446,7 +1444,6 @@ function getReads(
       const guard =
         !(
           entryGroup &&
-          !sources.global &&
           isGuardedReason(sources) &&
           getSoleCallerGroup(section, sources) === entryGroup
         ) && getCallerGroupGuard(section, check, sources, checksIn);

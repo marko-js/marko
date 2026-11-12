@@ -212,6 +212,40 @@ export function createBinding(
   return binding;
 }
 
+// `$global` or a member of it: no slot, never arriving, re-run by registration.
+export function isGlobalBinding(binding: Binding) {
+  return binding.type === BindingType.global;
+}
+
+// The `$global` key a read of `$global` is read under, or `$global` itself.
+export function getGlobalKey(binding: Binding) {
+  while (binding.aliasOf?.aliasOf) binding = binding.aliasOf;
+  return binding;
+}
+
+// The bindings but `$global`'s members: an intersection's that arrive, a function's
+// captures (it reads `$global` live).
+export function withoutGlobals(bindings: ReferencedBindings) {
+  return bindingUtil.filter(bindings, isNotGlobal);
+}
+
+function isNotGlobal(binding: Binding) {
+  return !isGlobalBinding(binding);
+}
+
+// Each `$global` binding the template reads through: the object, then its members.
+export function forEachGlobalMember(cb: (member: Binding) => void) {
+  const { globalBinding } = getProgram().node.extra;
+  if (globalBinding) visitGlobalMember(globalBinding, cb);
+}
+
+function visitGlobalMember(member: Binding, cb: (member: Binding) => void) {
+  cb(member);
+  for (const part of member.propertyAliases.values()) {
+    visitGlobalMember(part, cb);
+  }
+}
+
 // Holds the scope id at `offset` past its own for what the runtime keeps there.
 export function reserveId(binding: Binding, offset: ReservedId) {
   binding.reserveSize = Math.max(binding.reserveSize, offset);

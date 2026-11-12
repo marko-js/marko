@@ -1,10 +1,15 @@
 import { types as t } from "@marko/compiler";
 
-import { type Binding, BindingType, getAliasRoot } from "./bindings";
+import {
+  type Binding,
+  BindingType,
+  getAliasRoot,
+  isGlobalBinding,
+} from "./bindings";
 import { getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputDOM } from "./marko-config";
-import { reduce, size } from "./optional";
+import { every, reduce, size } from "./optional";
 import {
   getReferencedBindings,
   isRegisteredFnExtra,
@@ -45,10 +50,10 @@ export function getReadReplacement(
     !node.computed &&
     node.property.type === "Identifier" &&
     node.object.extra?.binding?.type === BindingType.global &&
-    getReferencedBindings(node.object.extra.exprRoot)
+    !every(getReferencedBindings(node.object.extra.exprRoot), isGlobalBinding)
   ) {
-    // A debug build checks each `$global` key a signal reads, since a signal
-    // re-runs against the resumed globals, which hold only serialized keys.
+    // A debug build checks each `$global` key a signal reads, since one re-running on
+    // another change reads the resumed globals, which hold only serialized keys.
     return callRuntime(
       "_global_read",
       node.object,

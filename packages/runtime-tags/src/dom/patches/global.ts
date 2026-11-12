@@ -1,13 +1,5 @@
-import { decodeAccessor } from "../../common/helpers";
-import { toArray } from "../../common/opt";
-import {
-  AccessorPrefix,
-  AccessorProp,
-  type EncodedAccessor,
-  PatchKey,
-  type Scope,
-} from "../../common/types";
-import { queueEffect, queueRender } from "../queue";
+import { AccessorProp, PatchKey, type Scope } from "../../common/types";
+import { queueEffect, queueRender, runId } from "../queue";
 import { _resumed } from "../resume";
 import { type SignalFn, subscribeToScopeSet } from "../signals";
 import { patchers } from "./apply";
@@ -44,35 +36,8 @@ export function _fill_global(
   ])[0];
 }
 
-// A signal a loop's rows read: the loop's owner subscribes once and a changed member
-// walks its rows, as a loop closure does, so a row the client creates subscribes to none.
-export function _fill_global_for(
-  id: string,
-  ownerLoopNodeAccessor: EncodedAccessor,
-  signal: SignalFn,
-  ...keys: (string | 0)[]
-): SignalFn {
-  const rows =
-    AccessorPrefix.BranchScopes +
-    (MARKO_DEBUG
-      ? ownerLoopNodeAccessor
-      : decodeAccessor(ownerLoopNodeAccessor as number));
-  _fill_global(
-    id,
-    (owner: Scope) => {
-      for (const row of toArray(owner[rows as keyof Scope] as Scope))
-        signal(row);
-    },
-    ...keys,
-  );
-  return (scope: Scope) => {
-    signal(scope);
-    subscribeToScopeSet(globalScopes, id, scope[AccessorProp.Owner]!);
-  };
-}
-
 // Like `_script`, but a change to a `$global` member it reads re-runs it on every
-// scope it ran on.
+// scope it ran on, once per run however many readers queue it.
 export function _fill_global_script(
   id: string,
   fn: (scope: Scope) => void,
@@ -82,7 +47,13 @@ export function _fill_global_script(
     fn(scope);
     subscribeToScopeSet(globalScopes, id, scope);
   });
-  const queue = (scope: Scope) => queueEffect(scope, effect);
+  const queued = new WeakMap<Scope, number>();
+  const queue = (scope: Scope) => {
+    if (queued.get(scope) !== runId) {
+      queued.set(scope, runId);
+      queueEffect(scope, effect);
+    }
+  };
   _fill_global(id, queue, ...keys);
   return queue;
 }
@@ -96,15 +67,6 @@ export function _fill_global_path(
 ): SignalFn {
   changesMember = membersChanged;
   return _fill_global(id, signal, ...keys, 0);
-}
-export function _fill_global_path_for(
-  id: string,
-  ownerLoopNodeAccessor: EncodedAccessor,
-  signal: SignalFn,
-  ...keys: (string | 0)[]
-): SignalFn {
-  changesMember = membersChanged;
-  return _fill_global_for(id, ownerLoopNodeAccessor, signal, ...keys, 0);
 }
 export function _fill_global_path_script(
   id: string,
@@ -147,7 +109,6 @@ function patchGlobal(
       // Only this render's scopes: another's reads its own `$global`.
       globalScopes[id]?.forEach(
         (scope) =>
-          scope[AccessorProp.Gen] &&
           scope[AccessorProp.Global] === live[AccessorProp.Global] &&
           queueRender(scope, globalSignals[id][0], order),
       );

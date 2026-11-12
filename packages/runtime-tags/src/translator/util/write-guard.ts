@@ -414,9 +414,7 @@ export function isWrittenForCall(
 // The constant a reason's guard folds to: `0` unwritten, `1` always written.
 export function getWriteBit(section: Section, reason: undefined | Reason) {
   if (!isDynamicWriteGuard(section, reason)) return reason ? 1 : 0;
-  const bit = getGroupsBit(reason.param, "_write_guard");
-  // A patch build's global dimension gates a page render apart from the params.
-  return bit === 0 && reason.global ? undefined : bit;
+  return getGroupsBit(reason.param, "_write_guard");
 }
 
 // `1` where some group's `check` always holds, `0` where every group's never does.
