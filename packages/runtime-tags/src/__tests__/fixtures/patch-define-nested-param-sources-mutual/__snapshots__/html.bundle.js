@@ -8,6 +8,8 @@ const $Wrapper_content__template = /*@__PURE__*/ ((_w0) => `${_w0}<!><!>`)($Oute
 const $Relay_content__walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($Wrapper_content__walks);
 const $Relay_content__template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($Wrapper_content__template);
 _shells({
+	a5: `a5 >>a>>a>a>;${((_w0) => `/${_w0}&b`)($Wrapper_content__walks)};${((_w0) => `${_w0}<!>`)($Wrapper_content__template)}`,
+	a0: `a0;${$Inner_content__walks};${$Inner_content__template}`,
 	a: `a a>>a>a>!a10;${((_w0) => `/${_w0}& b`)($Wrapper_content__walks)};${((_w0) => `${_w0}<button>+</button>`)($Wrapper_content__template)}`,
 	a8: `a8 >a>>>a>>a>a>;${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($Relay_content__walks)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($Relay_content__template)}`
 });
@@ -31,7 +33,7 @@ var template_default = _template("a", (input) => {
 				d: ($wi__input_label || $wi__x) && ($ui__input_label || $ui__x || _unfilled_if($scope2_reason, 0)) && z,
 				_: ($wi__input_label || $wi__x || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)
 			}), _client_guard(($uf__input_label | $uf__x | $uf__z) << 1, 0) && "a1"), _client_guard(($uf__x | $uf__z) << 1, 0) && "a2") || $fg__z && ($ui__input_label || $ui__x) && _patch_write($scope2_id, "xd", z, !_server_guard($scope2_reason, 0));
-		}, $scope1_id) };
+		}, $scope1_id, 0) };
 		_set_scope_reason(_updates_from($scope1_reason, 2) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		Inner.content({ z: y });
@@ -61,7 +63,7 @@ var template_default = _template("a", (input) => {
 				_: $wi__depth && _scope_with_id($scope3_id),
 				a: _existing_scope($childScope2)
 			});
-		}, $scope3_id) };
+		}, $scope3_id, 0) };
 		_set_scope_reason($uf__a__OR__b << 1 | $uf__a << 3 | $uf__b << 5);
 		const $childScope3 = _peek_scope_id($scope3_id, "a", 2, 0, $scope0_id);
 		Outer.content({
