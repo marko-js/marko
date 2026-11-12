@@ -2,7 +2,7 @@
 const $template = "<button>t</button><!><!>";
 const $walks = " b%c";
 const $global_brand_key = /*@__PURE__*/ _global_key("brand");
-const $if_content__$global_brand = /*@__PURE__*/ _global_if($global_brand_key, "#text/1", 0, 0, ($scope) => _text($scope["#text/0"], $scope.$global.brand));
+const $if_content__$global_brand = /*@__PURE__*/ _global_if($global_brand_key, "#text/1", 0, "__tests__/template.marko_1_$global_brand#0:7/subscribe", ($scope) => _text($scope["#text/0"], $scope.$global.brand));
 const $if_content__$global_brand__script = _global_script("__tests__/template.marko_1_$global_brand#0:7", ($scope) => {
 	{
 		const p = document.querySelector("p");

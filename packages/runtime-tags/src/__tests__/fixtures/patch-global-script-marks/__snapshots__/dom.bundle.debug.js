@@ -17,7 +17,7 @@ const $input_v10 = ($scope, input_v10) => _text($scope["#text/9"], input_v10);
 const $input_v11 = ($scope, input_v11) => _text($scope["#text/10"], input_v11);
 const $input_v12 = ($scope, input_v12) => _text($scope["#text/11"], input_v12);
 const $global_brand_key = /*@__PURE__*/ _global_key("brand");
-const $global_brand = /*@__PURE__*/ _global_closure($global_brand_key, 0, ($scope) => _text($scope["#text/13"], $scope.$global.brand));
+const $global_brand = /*@__PURE__*/ _global_closure($global_brand_key, "__tests__/template.marko_0_$global_brand#30/subscribe", ($scope) => _text($scope["#text/13"], $scope.$global.brand));
 const $global_brand__script = _global_script("__tests__/template.marko_0_$global_brand#30", ($scope) => {
 	{
 		const el = document.querySelector("main");

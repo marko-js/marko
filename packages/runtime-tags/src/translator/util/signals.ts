@@ -720,9 +720,18 @@ export const [getGlobalSubscriptions] = createAnalysisMemo(
     const subscriptions = new Map<Binding, true | Sources | undefined>();
     // Kept content's scopes never subscribe: no client code reads for them.
     if (inKeptContent(section)) return subscriptions;
+    // An effect's resume subscribes its scope, by a signal of its own where the section reads
+    // the key alone (`getEffectSignal`), which leaves that read's subscription.
     const effects = new Set<Binding>();
+    const alone = new Set<Binding>();
     for (const expr of getGlobalExprs().get(section) || []) {
       const referencedBindings = getReferencedBindings(expr);
+      if (expr.isEffect) {
+        forEach(referencedBindings, (binding) => {
+          if (isGlobalBinding(binding)) effects.add(binding);
+        });
+        continue;
+      }
       // The client runs a filled intersection wherever its group has a client value, one
       // with state always, and derives one a patch writes only for a caller's state.
       const unfilled =
@@ -737,8 +746,7 @@ export const [getGlobalSubscriptions] = createAnalysisMemo(
           getSourcesForReferencedBindings(referencedBindings));
       forEach(referencedBindings, (binding) => {
         if (isGlobalBinding(binding)) {
-          // An effect's resume subscribes its scope to the keys it reads.
-          if (expr.isEffect) effects.add(binding);
+          if (binding === referencedBindings) alone.add(binding);
           const prev = subscriptions.get(binding);
           subscriptions.set(
             binding,
@@ -749,7 +757,9 @@ export const [getGlobalSubscriptions] = createAnalysisMemo(
         }
       });
     }
-    for (const binding of effects) subscriptions.delete(binding);
+    for (const binding of effects) {
+      if (!alone.has(binding)) subscriptions.delete(binding);
+    }
     return subscriptions;
   },
   new Map<Binding, true | Sources | undefined>(),

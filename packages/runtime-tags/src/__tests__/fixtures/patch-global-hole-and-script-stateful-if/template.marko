@@ -1,0 +1,6 @@
+<let/show=true/>
+<button onClick() { show = !show }>t</button>
+<if=show>
+  <p>${$global.x}</p>
+  <script>document.body.dataset.x = $global.x</script>
+</if>
