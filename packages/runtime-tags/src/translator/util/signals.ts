@@ -633,16 +633,16 @@ const [getGlobalSignals] = createAnalysisMemo((section: Section) => {
       effects.add(id);
       continue;
     }
-    // The client runs a filled intersection wherever its group has a client member, and
-    // derives a value a patch writes only where a caller passes it client state.
+    const sources = getSourcesForReferencedBindings(referencedBindings);
+    // The client runs a read of state on every instance, a filled intersection wherever its
+    // group has a client member, and derives a value a patch writes where a caller passes state.
     const unfilled =
+      !!sources?.state ||
       getUnfillableSources(referencedBindings) ||
-      (some(expr.derives, hasGuardedSources)
-        ? getSourcesForReferencedBindings(referencedBindings)
-        : isResumedRead(expr)) ||
+      (some(expr.derives, hasGuardedSources) ? sources : isResumedRead(expr)) ||
       (Array.isArray(referencedBindings) &&
         isFilledIntersection(referencedBindings) &&
-        getSourcesForReferencedBindings(referencedBindings));
+        sources);
     const prev = signals.get(id);
     signals.set(
       id,
