@@ -8,7 +8,7 @@ var path_child_default = _template("__tests__/tags/path-child.marko", (input) =>
 	const $scope0_id = _scope_id();
 	const $global$2 = $global();
 	_html(`<p>${_text_mark($scope0_id, "#text/0", $global$2.o.x, 1, 4, 0)}</p>`);
-	_fill_global_subscribe("__tests__/tags/path-child.marko_0_$global_o#4", $scope0_id);
+	_fill_global_subscribe("__tests__/tags/path-child.marko_0_$global_o#4/subscribe", $scope0_id);
 	_scope($scope0_id, {}, "__tests__/tags/path-child.marko", 0);
 });
 
@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_patch_child(0, "#childScope/1");
 			path_child_default({});
 			_patch_child_end();
-			_fill_global_subscribe("__tests__/template.marko_1_$global_k#0:7", $scope1_id, 1);
+			_fill_global_subscribe("__tests__/template.marko_1_$global_k#0:7/subscribe", $scope1_id, 1);
 			_scope($scope1_id, {}, "__tests__/template.marko", "3:2");
 			return 0;
 		}

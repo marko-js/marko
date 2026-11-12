@@ -38,8 +38,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/3", 1, 1, 0, 0, 1);
 	_html(`<p>${_text_mark($scope0_id, "#text/4", on ? user.name : "-")}</p>`);
-	_fill_global_subscribe("__tests__/template.marko_0_$global_flag#6", $scope0_id);
-	_fill_global_subscribe("__tests__/template.marko_0_$global#5", $scope0_id);
+	_fill_global_subscribe("__tests__/template.marko_0_$global#5/subscribe", $scope0_id);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_flag#6/subscribe", $scope0_id);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_render($scope0_id, "__tests__/template.marko_0_on#5_flag#6/setup", "flag");
 	_patch_render($scope0_id, "__tests__/template.marko_0_on#5_off#8/setup", "off");

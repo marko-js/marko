@@ -157,8 +157,8 @@ UPDATE: div:nth-of-type(2)[data-runs] "1" => "2"
 ```
 ## Change
 ```
-UPDATE: ul > li::text "a1c1" => "a1c2"
 UPDATE: b::text "a1c1" => "a1c2"
+UPDATE: ul > li::text "a1c1" => "a1c2"
 REMOVE: div:nth-of-type(1)::text("a1c1")
 INSERT: div:nth-of-type(1)::text("a1c2")
 UPDATE: div:nth-of-type(4)[data-runs] "3" => "4"
@@ -201,8 +201,8 @@ UPDATE: div:nth-of-type(4)[data-runs] "3" => "4"
 ```
 ## Change
 ```
-UPDATE: ul > li::text "a1c2" => "a2c2"
 UPDATE: b::text "a1c2" => "a2c2"
+UPDATE: ul > li::text "a1c2" => "a2c2"
 REMOVE: div:nth-of-type(1)::text("a1c2")
 INSERT: div:nth-of-type(1)::text("a2c2")
 UPDATE: div:nth-of-type(4)[data-runs] "4" => "5"

@@ -1,8 +1,8 @@
 // tags/show-await.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $await_content__x__$global_flag = /*@__PURE__*/ _fill_global("__tests__/tags/show-await.marko_1_$global_flag#0:8_x#2", ($scope) => _text($scope["#text/0"], $scope.x + ":" + _global_read($scope.$global, "flag")), "flag");
-const $await_content__x = /*@__PURE__*/ _const("x", $await_content__x__$global_flag);
+const $await_content__$global_flag__OR__x = /*@__PURE__*/ _fill_global("__tests__/tags/show-await.marko_1_$global_flag#0:8_x#2/subscribe", ($scope) => _text($scope["#text/0"], $scope.x + ":" + _global_read($scope.$global, "flag")), "flag");
+const $await_content__x = /*@__PURE__*/ _const("x", $await_content__$global_flag__OR__x);
 const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<p> </p>", "D ");
 const $await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);

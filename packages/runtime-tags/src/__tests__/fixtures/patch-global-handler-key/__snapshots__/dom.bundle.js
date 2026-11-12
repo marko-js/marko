@@ -7,4 +7,4 @@ const handlers = {
 		document.body.dataset.ran = "b";
 	}
 };
-const $setup__$global_mode = _fill_global_script("a0", ($scope) => _on($scope.a, "click", handlers[$scope.$.mode]), "mode");
+const $global_mode = _fill_global_script("a0", ($scope) => _on($scope.a, "click", handlers[$scope.$.mode]), "mode");

@@ -20,7 +20,7 @@ var gate_default = _template("__tests__/tags/gate.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, $scope0_page || _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/tags/gate.marko_1*shell"], (2 | $uf__input_on) << 1, 0);
 	_html(`<p>${_text_mark($scope0_id, "#text/1", flag && input.on ? "on" : "off", 1, (2 | $uf__input_on) << 1, 0)}</p>`);
-	_fill_global_subscribe("__tests__/tags/gate.marko_0_$global_flag#5", $scope0_id);
+	_fill_global_subscribe("__tests__/tags/gate.marko_0_$global_flag#5/subscribe", $scope0_id);
 	$ui__input_on && _patch_write($scope0_id, "PatchWrite:input_on", input.on, 1);
 	_patch_render($scope0_id, "__tests__/tags/gate.marko_0_input_on#4_flag#5/setup", "flag" + (_filled_guard($scope0_reason, 0) ? " input_on" : ""), (2 | $uf__input_on) << 1, 0);
 	_scope($scope0_id, {

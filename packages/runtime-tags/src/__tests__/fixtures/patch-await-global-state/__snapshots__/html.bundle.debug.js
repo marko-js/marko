@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope($scope1_id, {}, "__tests__/template.marko", "2:2");
 	}, 1, "__tests__/template.marko_1*content", 2, 1);
 	_html(`<button>${_text_mark($scope0_id, "#text/2", count)}</button>${_el_mark($scope0_id, "#button/1")}`);
-	_fill_global_subscribe("__tests__/template.marko_0_count#3_$global_suffix#7", $scope0_id, 1);
+	_fill_global_subscribe("__tests__/template.marko_0_count#3_$global_suffix#7/subscribe", $scope0_id, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
 }, 1);

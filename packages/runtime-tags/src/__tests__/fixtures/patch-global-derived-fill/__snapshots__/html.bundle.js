@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "b", 1, 1, 0, 0, 1);
-	_fill_global_subscribe("a1", $scope0_id, _client_guard($scope0_reason, 0));
+	_fill_global_subscribe("a1", $scope0_id, _client_guard((2 | $uf__input_name) << 1, 0));
 	_script($scope0_id, "a2");
 	_filled_guard((2 | $uf__input_name) << 1, 0) && _patch_render($scope0_id, "a0", _filled_guard((2 | $uf__input_name) << 1, 0) && "f");
 	_scope($scope0_id, {

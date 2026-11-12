@@ -2,15 +2,15 @@
 const $template$1 = "<p></p><!><!>";
 const $walks$1 = " b%c";
 const $setup$1 = ($_) => {};
-const $if_content__z__$global_mark = /*@__PURE__*/ _fill_global("__tests__/tags/gm/index.marko_1_z#0:6_$global_mark#0:10", ($scope) => _attr($scope["#i/0"], "data-z", $scope._.z + _global_read($scope.$global, "mark")), "mark");
-const $if_content__z = /*@__PURE__*/ _if_closure_patch("__tests__/tags/gm/index.marko_1_z#0:6/setup", "#text/1", 0, $if_content__z__$global_mark);
+const $if_content__z__OR__$global_mark = /*@__PURE__*/ _fill_global("__tests__/tags/gm/index.marko_1_z#0:6_$global_mark#0:10/subscribe", ($scope) => _attr($scope["#i/0"], "data-z", $scope._.z + _global_read($scope.$global, "mark")), "mark");
+const $if_content__z = /*@__PURE__*/ _if_closure_patch("__tests__/tags/gm/index.marko_1_z#0:6/setup", "#text/1", 0, $if_content__z__OR__$global_mark);
 const $if_content__setup$1 = $if_content__z;
 const $z = /*@__PURE__*/ _const("z", $if_content__z);
-const $input_v__$global_flag = /*@__PURE__*/ _fill_global("__tests__/tags/gm/index.marko_0_input_v#4_$global_flag#6", ($scope) => $z($scope, $scope.input_v + _global_read($scope.$global, "flag")), "flag");
+const $input_v__OR__$global_flag = /*@__PURE__*/ _fill_global("__tests__/tags/gm/index.marko_0_input_v#4_$global_flag#6/subscribe", ($scope) => $z($scope, $scope.input_v + _global_read($scope.$global, "flag")), "flag");
 const $if$1 = /*@__PURE__*/ _if("#text/1", "<i></i>", " ", $if_content__setup$1);
 const $input_v = /*@__PURE__*/ _const("input_v", ($scope) => {
 	$if$1($scope, $scope.input_v ? 0 : 1);
-	$input_v__$global_flag($scope);
+	$input_v__OR__$global_flag($scope);
 });
 const $input_w$1 = ($scope, input_w) => _attr($scope["#p/0"], "data-w", input_w);
 const $input$1 = ($scope, input) => {

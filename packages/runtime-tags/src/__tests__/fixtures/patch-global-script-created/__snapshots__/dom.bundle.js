@@ -1,7 +1,7 @@
 // tags/logger.marko
 const $template = "<div></div>";
-const $setup__$global_brand = _fill_global_script("b0", ($scope) => document.querySelector("div").dataset.log = "ran:" + $scope.$.brand, "brand");
-const $setup = $setup__$global_brand;
+const $global_brand = _fill_global_script("b0", ($scope) => document.querySelector("div").dataset.log = "ran:" + $scope.$.brand, "brand");
+const $setup = $global_brand;
 
 // template.marko
 const $if_content__setup = ($scope) => $setup($scope.a);

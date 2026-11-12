@@ -9,6 +9,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $global$1 = $global();
 	let seed = $global$1.suffix;
 	_html(`<p>${_text_mark($scope0_id, "#text/0", seed)}</p>`);
-	_fill_global_subscribe("__tests__/template.marko_0_$global_suffix#4", $scope0_id);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_suffix#4/subscribe", $scope0_id);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

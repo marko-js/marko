@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 			_patch_fill($scope1_id, "va3", x, 1);
 			_scope($scope1_id, {
 				d: x,
-				e: y
+				f: y
 			});
 			return 0;
 		}

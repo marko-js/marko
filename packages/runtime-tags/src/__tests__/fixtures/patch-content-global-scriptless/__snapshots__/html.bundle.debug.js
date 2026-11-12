@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_text_mark($scope1_id, "#text/0", $global$1.brand, 1, 4, 0)}</em>`);
-			_fill_global_subscribe("__tests__/template.marko_1_$global_brand#0:7", $scope1_id);
+			_fill_global_subscribe("__tests__/template.marko_1_$global_brand#0:7/subscribe", $scope1_id);
 			_scope($scope1_id, {}, "__tests__/template.marko", "2:4");
 		}, $scope0_id)
 	});
@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope3_reason = _scope_reason();
 					const $scope3_id = _scope_id();
 					_html(`<i>${_text_mark($scope3_id, "#text/0", $global$1.brand, 1, 4, 0)}</i>`);
-					_fill_global_subscribe("__tests__/template.marko_3_$global_brand#0:7", $scope3_id);
+					_fill_global_subscribe("__tests__/template.marko_3_$global_brand#0:7/subscribe", $scope3_id);
 					_scope($scope3_id, {}, "__tests__/template.marko", "6:6");
 				}, $scope2_id, 0)
 			});

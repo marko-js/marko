@@ -16,7 +16,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_html("<p>promo</p>");
 			_script($scope1_id, "__tests__/template.marko_1_input_value#0:6_$global_brand#0:8", 0, _filled_guard($scope0_reason, 2));
-			_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "__tests__/template.marko_1_input_value#0:6/setup");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}

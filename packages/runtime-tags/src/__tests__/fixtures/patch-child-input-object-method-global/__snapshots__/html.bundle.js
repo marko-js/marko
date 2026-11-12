@@ -29,7 +29,7 @@ var code_block_default = _template("b", (input) => {
 			return 1;
 		}
 	}, $scope0_id, "a", 1, $wg__input_text_length, 1, 0, 0, ["b3", "b4"], $scope0_reason, 3);
-	_fill_global_subscribe("b5", $scope0_id, _client_guard($scope0_reason, 1));
+	_fill_global_subscribe("b5", $scope0_id, _client_guard((2 | $uf__input_cursor) << 1, 0));
 	$fg__input_text && $cg__input_text_length && _patch_render($scope0_id, "b6", "e");
 	$fg__input_text && $cg__input_text_length && _patch_render($scope0_id, "b7", "e");
 	_filled_guard((2 | $uf__input_cursor) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "b8", ((_filled_guard((2 | $uf__input_cursor) << 1, 0) ? " g" : "") + ($fg__input_cursor ? " d" : "")).slice(1));

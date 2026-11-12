@@ -1,6 +1,6 @@
 // tags/gm-badge/index.marko
-const $input_value__$global_flag = /*@__PURE__*/ _fill_global("b0", ($scope) => _text($scope.a, $scope.d + $scope.$.flag), "flag");
-const $input_value = /*@__PURE__*/ _const(3, $input_value__$global_flag);
+const $input_value__OR__$global_flag = /*@__PURE__*/ _fill_global("b0", ($scope) => _text($scope.a, $scope.d + $scope.$.flag), "flag");
+const $input_value = /*@__PURE__*/ _const(3, $input_value__OR__$global_flag);
 
 // template.marko
 const $if_content__count = /*@__PURE__*/ _if_closure_patch("a3", 0, 0, ($scope) => $input_value($scope.a, $scope._.f));

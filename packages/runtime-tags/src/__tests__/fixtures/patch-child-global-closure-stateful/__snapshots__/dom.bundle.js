@@ -1,14 +1,14 @@
 // tags/gm/index.marko
 const $template = "<p></p><!><!>";
 const $walks = " b%c";
-const $if_content__z = /*@__PURE__*/ _if_closure_patch("b1", 1, 0, /* @__PURE__ */ _fill_global("b0", ($scope) => _attr($scope.a, "data-z", $scope._.g + $scope.$.mark), "mark"));
+const $if_content__z = /*@__PURE__*/ _if_closure_patch("b4", 1, 0, /* @__PURE__ */ _fill_global("b0", ($scope) => _attr($scope.a, "data-z", $scope._.g + $scope.$.mark), "mark"));
 const $if_content__setup$1 = $if_content__z;
 const $z = /*@__PURE__*/ _const(6, $if_content__z);
-const $input_v__$global_flag = /*@__PURE__*/ _fill_global("b3", ($scope) => $z($scope, $scope.e + $scope.$.flag), "flag");
+const $input_v__OR__$global_flag = /*@__PURE__*/ _fill_global("b2", ($scope) => $z($scope, $scope.e + $scope.$.flag), "flag");
 const $if$1 = /*@__PURE__*/ _if(1, "<i></i>", " ", $if_content__setup$1);
 const $input_v = /*@__PURE__*/ _const(4, ($scope) => {
 	$if$1($scope, $scope.e ? 0 : 1);
-	$input_v__$global_flag($scope);
+	$input_v__OR__$global_flag($scope);
 });
 const $input_w = ($scope, input_w) => _attr($scope.a, "data-w", input_w);
 

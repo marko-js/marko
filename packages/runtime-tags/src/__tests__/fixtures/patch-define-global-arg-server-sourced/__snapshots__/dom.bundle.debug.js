@@ -18,7 +18,7 @@ const $Label_content__$params = ($scope, $params2) => $Label_content__$temp($sco
 const $Label_content__$temp = ($scope, $temp) => $Label_content__text($scope, $temp.text);
 const $open__closure = /*@__PURE__*/ _closure($Label_content__open);
 const $open = _let("open/2", $open__closure);
-const $setup__$global_text = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_$global_text#12", ($scope) => $Label_content__text($scope["#childScope/0"], $scope.$global.text), "text");
+const $global_text = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_$global_text#12/subscribe", ($scope) => $Label_content__text($scope["#childScope/0"], $scope.$global.text), "text");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$open($scope, !$scope.open);
 }));
@@ -26,7 +26,7 @@ function $setup($scope) {
 	$scope["#childScope/0"]._ = $scope;
 	$Label_content__setup($scope["#childScope/0"]);
 	$open($scope, false);
-	$setup__$global_text($scope);
 	$setup__script($scope);
+	$global_text($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

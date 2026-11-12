@@ -9,6 +9,7 @@ var logger_default = _template("__tests__/tags/logger.marko", (input) => {
 	const $global$1 = $global();
 	_html("<div></div>");
 	_script($scope0_id, "__tests__/tags/logger.marko_0_$global_brand#3", 0);
+	_scope($scope0_id, {}, "__tests__/tags/logger.marko", 0);
 });
 
 // template.marko

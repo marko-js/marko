@@ -50,7 +50,7 @@ var mid_default = _template("__tests__/tags/mid.marko", (input) => {
 		b: input.b
 	});
 	_patch_child_end();
-	_fill_global_subscribe("__tests__/tags/mid.marko_0_$global_x#5", $scope0_id);
+	_fill_global_subscribe("__tests__/tags/mid.marko_0_$global_x#5/subscribe", $scope0_id);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/mid.marko", 0);
 });
 

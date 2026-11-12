@@ -1,7 +1,7 @@
 // tags/outer/tags/inner/index.marko
 const $template$1 = "<em> </em>";
-const $setup__$global_brand = /*@__PURE__*/ _fill_global("c0", ($scope) => _text($scope.a, $scope.$.brand), "brand");
-const $setup$1 = $setup__$global_brand;
+const $global_brand = /*@__PURE__*/ _fill_global("c0", ($scope) => _text($scope.a, $scope.$.brand), "brand");
+const $setup$1 = $global_brand;
 
 // tags/outer/index.marko
 const $template = $template$1;

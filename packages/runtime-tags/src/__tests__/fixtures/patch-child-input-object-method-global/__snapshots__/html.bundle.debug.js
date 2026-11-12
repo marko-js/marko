@@ -30,7 +30,7 @@ var code_block_default = _template("__tests__/tags/code-block.marko", (input) =>
 			return 1;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_text_length, 1, 0, 0, ["__tests__/tags/code-block.marko_1*shell", "__tests__/tags/code-block.marko_2*shell"], $scope0_reason, 3);
-	_fill_global_subscribe("__tests__/tags/code-block.marko_0_input_cursor#3_$global_theme#8", $scope0_id, _client_guard($scope0_reason, 1));
+	_fill_global_subscribe("__tests__/tags/code-block.marko_0_input_cursor#3_$global_theme#8/subscribe", $scope0_id, _client_guard((2 | $uf__input_cursor) << 1, 0));
 	$fg__input_text && $cg__input_text_length && _patch_render($scope0_id, "__tests__/tags/code-block.marko_1_input_text#0:4/setup", "input_text");
 	$fg__input_text && $cg__input_text_length && _patch_render($scope0_id, "__tests__/tags/code-block.marko_2_input_text#0:4/setup", "input_text");
 	_filled_guard((2 | $uf__input_cursor) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "__tests__/tags/code-block.marko_1_highlight#0:6/setup", ((_filled_guard((2 | $uf__input_cursor) << 1, 0) ? " highlight" : "") + ($fg__input_cursor ? " input_cursor" : "")).slice(1));

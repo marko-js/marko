@@ -6,15 +6,15 @@ const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope
 }));
 const $if_content__setup = $if_content__setup__script;
 const $title = /*@__PURE__*/ _const("title");
-const $setup__$global_title = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_$global_title#4", ($scope) => $title($scope, $scope.$global.title + "!"), "title");
+const $global_title = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_$global_title#4/subscribe", ($scope) => $title($scope, $scope.$global.title + "!"), "title");
 const $if = /*@__PURE__*/ _if("#text/0", "<button class=read>read</button>", " ", $if_content__setup);
 const $show = _let("show/3", ($scope) => $if($scope, $scope.show ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$show($scope, true);
 }));
 function $setup($scope) {
+	$global_title($scope);
 	$show($scope, false);
-	$setup__$global_title($scope);
 	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

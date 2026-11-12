@@ -20,7 +20,7 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<span>${_text_mark($scope2_id, "#text/0", $global$1.brand, 1, 4, 0)}</span>`);
-			_fill_global_subscribe("__tests__/tags/show-await.marko_2_$global_brand#0:10", $scope2_id);
+			_fill_global_subscribe("__tests__/tags/show-await.marko_2_$global_brand#0:10/subscribe", $scope2_id);
 			_scope($scope2_id, {}, "__tests__/tags/show-await.marko", "3:4");
 		}, void 0, () => {
 			const $scope3_reason = _scope_reason();

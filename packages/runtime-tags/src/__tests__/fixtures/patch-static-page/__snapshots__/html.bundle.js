@@ -6,4 +6,5 @@ var template_default = _template("a", (input) => {
 	$global();
 	_html("<h1>Hello</h1>");
 	_script($scope0_id, "a0", 0);
+	_scope($scope0_id, {});
 }, 1);

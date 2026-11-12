@@ -9,4 +9,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $global$1 = $global();
 	_html("<h1>Hello</h1>");
 	_script($scope0_id, "__tests__/template.marko_0_$global#2", 0);
+	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

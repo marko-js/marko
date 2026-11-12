@@ -13,7 +13,7 @@ var rows_default = _template("b", (input) => {
 	_for_until(input.n, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_mark($scope1_id, "a", i + ":" + $global$1.x, 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</li>`);
-		_fill_global_subscribe("b0", $scope0_id);
+		_fill_global_subscribe("b0", $scope1_id);
 		_scope($scope1_id, { M: _unfilled_if($scope0_reason, 0) && i });
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b1", $scope0_reason, 0);
 	_html(`</ul>${_el_mark($scope0_id, "a")}`);

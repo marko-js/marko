@@ -18,14 +18,14 @@ const $pattern2 = ($scope, $pattern) => {
 	_text($scope["#text/1"], $pattern[0]);
 	_text($scope["#text/2"], $pattern[1] ? "!" : "");
 };
-const $setup__$global_search = /*@__PURE__*/ _fill_global("__tests__/page-b.marko_0_$global_search#6", ($scope) => $pattern2($scope, $scope.$global.search), "search");
+const $global_search = /*@__PURE__*/ _fill_global("__tests__/page-b.marko_0_$global_search#6/subscribe", ($scope) => $pattern2($scope, $scope.$global.search), "search");
 const $count = /*@__PURE__*/ _fill_let("__tests__/page-b.marko_0_count#7/fill", "count/7", ($scope) => _text($scope["#text/3"], $scope.count));
 const $setup__script = _script("__tests__/page-b.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
-	$setup__$global_search($scope);
 	$setup__script($scope);
+	$global_search($scope);
 	$count($scope, 0);
 }
 var page_b_default = /*@__PURE__*/ _template("__tests__/page-b.marko", $template, $walks, $setup);
@@ -58,12 +58,12 @@ const $Layout_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%/&", $i
 const $Layout_content__input_page = /*@__PURE__*/ _closure_get("input_page/4", ($scope) => $Layout_content__if($scope, $scope._.input_page <= 0 ? 0 : 1), 0, "__tests__/template.marko_1_input_page#0:3/subscribe");
 const $Layout_content__setup = $Layout_content__input_page;
 const $Layout_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", $Layout_content__setup);
-const $setup__$global__script = _fill_global_script("__tests__/template.marko_0_$global#3", ($scope) => $scope.$global.log?.("router"), "");
-const $setup__$global = $setup__$global__script;
+const $global2__script = _fill_global_script("__tests__/template.marko_0_$global#3", ($scope) => $scope.$global.log?.("router"), "");
+const $global2 = $global2__script;
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input_content_direct($scope["#childScope/0"], $Layout_content($scope));
-	$setup__$global($scope);
+	$global2($scope);
 }
 const $input = ($scope, input) => $input_page($scope, input.page);
 const $input_page__closure = /*@__PURE__*/ _closure($Layout_content__input_page);

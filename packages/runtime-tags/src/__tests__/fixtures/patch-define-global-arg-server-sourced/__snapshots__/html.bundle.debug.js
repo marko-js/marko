@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	Label.content({ text: $global$1.text });
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/1")}`);
-	_fill_global_subscribe("__tests__/template.marko_0_$global_text#12", $scope0_id);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_text#12/subscribe", $scope0_id);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		open,

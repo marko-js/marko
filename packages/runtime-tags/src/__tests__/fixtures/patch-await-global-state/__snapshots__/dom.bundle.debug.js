@@ -4,10 +4,10 @@ const $walks = "b%b D l";
 const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<p> </p>", "D ");
 const $await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $count__$global_suffix = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_count#3_$global_suffix#7", ($scope) => $await_promise($scope, Promise.resolve($scope.count + _global_read($scope.$global, "suffix"))), "suffix");
+const $count__OR__$global_suffix = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_count#3_$global_suffix#7/subscribe", ($scope) => $await_promise($scope, Promise.resolve($scope.count + _global_read($scope.$global, "suffix"))), "suffix");
 const $count = _let("count/3", ($scope) => {
 	_text($scope["#text/2"], $scope.count);
-	$count__$global_suffix($scope);
+	$count__OR__$global_suffix($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);

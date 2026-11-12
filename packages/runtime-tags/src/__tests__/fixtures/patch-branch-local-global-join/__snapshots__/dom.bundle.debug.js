@@ -5,11 +5,11 @@ const $setup$1 = ($_) => {};
 const $if_content__input_a__OR__input_b__OR__c = /*@__PURE__*/ _or_patch("__tests__/tags/child.marko_1_input_a#0:4_input_b#0:5_c#1/setup", 2, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope._.input_b + $scope.c), 2);
 const $if_content__input_a = /*@__PURE__*/ _if_closure_patch("__tests__/tags/child.marko_1_input_a#0:4/setup", "#text/0", 0, $if_content__input_a__OR__input_b__OR__c);
 const $if_content__c = /*@__PURE__*/ _const("c", $if_content__input_a__OR__input_b__OR__c);
-const $if_content__setup__$global_g = /*@__PURE__*/ _fill_global("__tests__/tags/child.marko_1_$global_g#0:8", ($scope) => $if_content__c($scope, $scope.$global.g + "!"), "g");
+const $if_content__$global_g = /*@__PURE__*/ _fill_global("__tests__/tags/child.marko_1_$global_g#0:8/subscribe", ($scope) => $if_content__c($scope, $scope.$global.g + "!"), "g");
 const $if_content__setup = ($scope) => {
 	$if_content__input_a._($scope);
 	$if_content__input_b._($scope);
-	$if_content__setup__$global_g($scope);
+	$if_content__$global_g($scope);
 };
 const $if_content__input_b = /*@__PURE__*/ _if_closure_patch("__tests__/tags/child.marko_1_input_b#0:5/setup", "#text/0", 0, $if_content__input_a__OR__input_b__OR__c);
 const $if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);

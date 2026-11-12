@@ -186,7 +186,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		other: input.other
 	});
 	_patch_child_end();
-	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#8", $scope0_id);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#8/subscribe", $scope0_id);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		input_label: input.label,

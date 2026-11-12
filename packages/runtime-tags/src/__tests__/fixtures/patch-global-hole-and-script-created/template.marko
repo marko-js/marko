@@ -1,0 +1,9 @@
+<let/show=false/>
+<button onClick() { show = !show }>t</button>
+<if=show>
+  <p>${$global.brand}</p>
+  <script>
+    const p = document.querySelector("p")!;
+    p.dataset.log = (p.dataset.log || "") + "[" + $global.brand + "]";
+  </script>
+</if>

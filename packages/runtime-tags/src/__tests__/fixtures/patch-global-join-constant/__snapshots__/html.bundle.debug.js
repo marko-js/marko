@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_reason = _scope_reason();
 			const b = value + y;
 			_html(`<p>${_text_mark($scope2_id, "#text/0", b + $global$1.suffix, 1, 4, 0)}</p>`);
-			_fill_global_subscribe("__tests__/template.marko_2_$global_suffix#0:16_b#5", $scope2_id);
+			_fill_global_subscribe("__tests__/template.marko_2_$global_suffix#0:16_b#5/subscribe", $scope2_id);
 			_patch_write($scope2_id, "PatchWrite:y", y, 1);
 			_unfilled_if() && _patch_write($scope2_id, "PatchWrite:b", b, 1);
 			_unfilled_if(4, 0) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_value#1:5/subscribe");

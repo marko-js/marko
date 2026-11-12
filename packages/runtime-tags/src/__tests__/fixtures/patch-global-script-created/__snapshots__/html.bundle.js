@@ -6,6 +6,7 @@ var logger_default = _template("b", (input) => {
 	$global();
 	_html("<div></div>");
 	_script($scope0_id, "b0", 0);
+	_scope($scope0_id, {});
 });
 
 // template.marko

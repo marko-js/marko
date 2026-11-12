@@ -17,13 +17,13 @@ const $Wrap_content__$params = ($scope, $params2) => $Wrap_content__content($sco
 const $Wrap_content__content = /*@__PURE__*/ _const("content", $if_content__content);
 const $Wrap_content = /*@__PURE__*/ _content("__tests__/tags/fwd.marko_2*content", "<button class=toggle>t</button><!><!>", " b%", $Wrap_content__setup, $Wrap_content__$params);
 const $globalppWrap_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $globalppWrap_content__input_content = /*@__PURE__*/ _closure_get_patch("__tests__/tags/fwd.marko_1_input_content#0:3/subscribe", "input_content/5", ($scope) => $globalppWrap_content__dynamicTag($scope, $scope._.input_content), 0, "__tests__/tags/fwd.marko_0_input_content#3/subscribers", 0);
+const $globalppWrap_content__input_content = /*@__PURE__*/ _closure_get_patch("__tests__/tags/fwd.marko_1_input_content#0:3/subscribe", "input_content/6", ($scope) => $globalppWrap_content__dynamicTag($scope, $scope._.input_content), 0, "__tests__/tags/fwd.marko_0_input_content#3/subscribers", 0);
 const $globalppWrap_content__setup = $globalppWrap_content__input_content;
 const $globalppWrap_content = _content("__tests__/tags/fwd.marko_1*content", "<!><!><!>", "b%", $globalppWrap_content__setup);
 _content_resume($globalppWrap_content);
 const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0", $globalppWrap_content);
-const $Wrap__$global_p = /*@__PURE__*/ _fill_global("__tests__/tags/fwd.marko_0_Wrap#4_$global_p#13", ($scope) => $dynamicTag$1($scope, _global_read($scope.$global, "p") ? "p" : $scope.Wrap), "p");
-const $Wrap = /*@__PURE__*/ _const("Wrap", $Wrap__$global_p);
+const $Wrap__OR__$global_p = /*@__PURE__*/ _fill_global("__tests__/tags/fwd.marko_0_Wrap#4_$global_p#13/subscribe", ($scope) => $dynamicTag$1($scope, _global_read($scope.$global, "p") ? "p" : $scope.Wrap), "p");
+const $Wrap = /*@__PURE__*/ _const("Wrap", $Wrap__OR__$global_p);
 function $setup$1($scope) {
 	$Wrap($scope, { content: $Wrap_content($scope) });
 }

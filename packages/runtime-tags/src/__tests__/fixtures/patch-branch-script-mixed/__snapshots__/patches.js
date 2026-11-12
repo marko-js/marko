@@ -1,5 +1,5 @@
 // PATCH
-`a2,<p>promo</p>`
+`a1,<p>promo</p>`
 {
   $: {
     brand: "Marko"
@@ -7,7 +7,7 @@
   ta: "Store",
   bb: [{
     e: "a0"
-  }, "a2"],
+  }, "a1"],
   xg: "b"
 }
 ;BAE
@@ -20,7 +20,7 @@
   ta: "Store!",
   bb: [{
     e: "a0"
-  }, "a2"],
+  }, "a1"],
   xg: "b"
 }
 
@@ -32,7 +32,7 @@
   ta: "Store",
   bb: [{
     e: "a0"
-  }, "a2"],
+  }, "a1"],
   xg: "b"
 }
 
@@ -44,6 +44,6 @@
   ta: "Store",
   bb: [{
     e: "a0"
-  }, "a2"],
+  }, "a1"],
   xg: "c"
 }

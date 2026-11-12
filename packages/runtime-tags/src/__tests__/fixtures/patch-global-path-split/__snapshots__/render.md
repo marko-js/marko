@@ -25,8 +25,8 @@
 ```
 ## Change
 ```
-REMOVE: div:nth-of-type(3)::text("a{\"x\":\"a\",\"y\":1}")
-INSERT: div:nth-of-type(3)::text("a{\"x\":\"a\",\"y\":2}")
 REMOVE: div:nth-of-type(2)::text("{\"x\":\"a\",\"y\":1}")
 INSERT: div:nth-of-type(2)::text("{\"x\":\"a\",\"y\":2}")
+REMOVE: div:nth-of-type(3)::text("a{\"x\":\"a\",\"y\":1}")
+INSERT: div:nth-of-type(3)::text("a{\"x\":\"a\",\"y\":2}")
 ```

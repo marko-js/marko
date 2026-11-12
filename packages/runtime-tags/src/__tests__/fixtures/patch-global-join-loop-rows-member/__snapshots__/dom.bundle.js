@@ -1,8 +1,8 @@
 // template.marko
-const $for_content__setup__$global_o = /*@__PURE__*/ _fill_global_path_for("a0", 2, ($scope) => _text($scope.b, $scope.$.o.x), "o", "x");
+const $for_content__$global_o = /*@__PURE__*/ _fill_global_path("a0", ($scope) => _text($scope.b, $scope.$.o.x), "o", "x");
 const $for_content__setup = ($scope) => {
 	_text($scope.a, $scope.M);
-	$for_content__setup__$global_o($scope);
+	$for_content__$global_o($scope);
 };
 const $for = /*@__PURE__*/ _for_until_unkeyed(2, "<li><!>:<!></li>", "D%c%", $for_content__setup);
 const $n = _let(3, ($scope) => $for($scope, [$scope.d]));

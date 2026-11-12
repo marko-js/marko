@@ -1,8 +1,8 @@
 // card.marko
 const $template = "<em> </em>";
 const $walks = "D l";
-const $setup__$global_brand = /*@__PURE__*/ _fill_global("a0", ($scope) => _text($scope.a, $scope.$.brand), "brand");
-const $setup = $setup__$global_brand;
+const $global_brand = /*@__PURE__*/ _fill_global("a0", ($scope) => _text($scope.a, $scope.$.brand), "brand");
+const $setup = $global_brand;
 var card_default = /*@__PURE__*/ _template("a", $template, "D l", $setup);
 
 // template.marko

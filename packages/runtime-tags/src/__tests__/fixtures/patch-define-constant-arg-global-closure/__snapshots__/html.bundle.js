@@ -37,10 +37,10 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id) });
 		_patch_child_end();
 		_fill_global_subscribe("a4", $scope1_id);
-		_unfilled_if() && _patch_write($scope1_id, "we", z, 1);
+		_unfilled_if() && _patch_write($scope1_id, "wf", z, 1);
 		_scope($scope1_id, {
-			e: _unfilled_if() && z,
-			f: $scope1_page && _unfilled_if() && $D_content__z__closures,
+			f: _unfilled_if() && z,
+			g: $scope1_page && _unfilled_if() && $D_content__z__closures,
 			a: _existing_scope($childScope)
 		});
 	}, $scope0_id) };

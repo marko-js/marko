@@ -2,8 +2,8 @@
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
 const $if = /*@__PURE__*/ _if("#text/0", "<p>big</p>");
-const $count__$global_enabled = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_count#2_$global_enabled#5", ($scope) => $if($scope, _global_read($scope.$global, "enabled") && $scope.count > 1 ? 0 : 1), "enabled");
-const $count = _let("count/2", $count__$global_enabled);
+const $count__OR__$global_enabled = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_count#2_$global_enabled#5/subscribe", ($scope) => $if($scope, _global_read($scope.$global, "enabled") && $scope.count > 1 ? 0 : 1), "enabled");
+const $count = _let("count/2", $count__OR__$global_enabled);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

@@ -16,7 +16,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			const c = $global$1.g + "!";
 			$ui__input_a__OR__input_b && _patch_write($scope1_id, "PatchMarkedWrite:c", c);
 			_html(`<p>${_text_mark($scope1_id, "#text/0", input.a + input.b + c, 1, (2 | $uf__input_a__OR__input_b) << 1, 0)}</p>`);
-			_fill_global_subscribe("__tests__/tags/child.marko_1_$global_g#0:8", $scope1_id);
+			_fill_global_subscribe("__tests__/tags/child.marko_1_$global_g#0:8/subscribe", $scope1_id);
 			_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_a#0:4_input_b#0:5_c#1/setup", "c" + (_filled_guard($scope0_reason, 3) ? " >input_a" : "") + (_filled_guard($scope0_reason, 4) ? " >input_b" : ""), (2 | $uf__input_a__OR__input_b) << 1, 0);
 			_scope($scope1_id, {
 				c: $ui__input_a__OR__input_b && c,

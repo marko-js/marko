@@ -14,7 +14,7 @@ var rows_default = _template("__tests__/tags/rows.marko", (input) => {
 	_for_until(input.n, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_mark($scope1_id, "#text/0", i + ":" + $global$1.x, 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</li>`);
-		_fill_global_subscribe("__tests__/tags/rows.marko_1_$global_x#0:8", $scope0_id);
+		_fill_global_subscribe("__tests__/tags/rows.marko_1_$global_x#0:8/subscribe", $scope1_id);
 		_scope($scope1_id, { "#LoopKey": _unfilled_if($scope0_reason, 0) && i }, "__tests__/tags/rows.marko", "2:4", { "#LoopKey": "2:8" });
 	}, 0, $scope0_id, "#ul/0", 1, 1, 1, 0, 0, "__tests__/tags/rows.marko_1*shell", $scope0_reason, 0);
 	_html(`</ul>${_el_mark($scope0_id, "#ul/0")}`);
