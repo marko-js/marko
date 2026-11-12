@@ -4,9 +4,8 @@ function fail() {
 }
 _shells({
 	a0: "a0;D ;<em> </em>",
-	a1: "a1,<p>oops</p>",
-	a2: "a2;D ;<em> </em>",
-	a3: "a3;b%;<!><!><!>",
+	a1: "a1;D ;<em> </em>",
+	a2: "a2;b%;<!><!><!>",
 	a: "a;E l%;<main><p> </p><!></main>"
 });
 var template_default = _template("a", (input) => {
@@ -25,7 +24,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<p>oops</p>");
-	}, 0, "a1", "a3", 0, 0, 1);
+	}, 0, "a3", "a2");
 	_html("</main>");
 	_scope($scope0_id, {});
 }, 1);

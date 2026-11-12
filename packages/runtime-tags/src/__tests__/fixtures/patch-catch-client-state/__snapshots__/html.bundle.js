@@ -36,7 +36,7 @@ var panel_default = _template("b", (input) => {
 			h: n,
 			_: _scope_with_id($scope0_id)
 		}), _client_guard($scope0_reason, 0) && "b1");
-	}, 0, "b5", "b6", 1, 1, 1);
+	}, 0, "b5", "b6", 1, 1);
 	_scope($scope0_id, {
 		d: input.label,
 		f: _write_if($scope0_reason, 0) && $input_label__closures,

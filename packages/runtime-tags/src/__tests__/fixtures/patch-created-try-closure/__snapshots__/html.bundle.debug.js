@@ -3,7 +3,6 @@ const $template = "<button>+</button><!><!>";
 const $walks = " b%c";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
-	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content",
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content __tests__/template.marko_2_count#0:6/subscribe;D%c%;<p><!> <!></p>",
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; b%;<button>+</button><!><!>",
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
@@ -28,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope3_reason = _scope_reason();
 				const $scope3_id = _scope_id();
 				_html("caught");
-			}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content", 0, 0, 1);
+			}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");
 			return 0;
 		}

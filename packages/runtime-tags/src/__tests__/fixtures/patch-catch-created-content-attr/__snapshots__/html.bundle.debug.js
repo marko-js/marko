@@ -29,7 +29,7 @@ var error_wrapper_default = _template("__tests__/tags/error-wrapper.marko", (inp
 		_html(`</div>${_el_mark($scope1_id, "#div/1", _updates_from($scope0_reason, 0))}`);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/tags/error-wrapper.marko_1_input_fallback#0:3/subscribe", $cg__input_fallback);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/error-wrapper.marko", "6:4"), $cg__input_fallback && "__tests__/tags/error-wrapper.marko_1_input_fallback#0:3/subscribe");
-	}, 0, "__tests__/tags/error-wrapper.marko_1*content", "__tests__/tags/error-wrapper.marko_2*content", 1, 1, 1);
+	}, 0, "__tests__/tags/error-wrapper.marko_1*content", "__tests__/tags/error-wrapper.marko_2*content", 1, 1);
 	_scope($scope0_id, {
 		input_fallback: input.fallback,
 		"ClosureScopes:input_fallback/5": _write_if($scope0_reason, 0) && $input_fallback__closures,

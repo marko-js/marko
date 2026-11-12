@@ -1,11 +1,9 @@
 // template.marko
 _shells({
 	a0: "a0;D ;<em> </em>",
-	a1: "a1,<em>inner</em>",
-	a2: "a2,<em>outer</em>",
-	a3: "a3;D ;<em> </em>",
-	a4: "a4;b%;<!><!><!>",
-	a5: "a5;b%;<!><!><!>",
+	a1: "a1;D ;<em> </em>",
+	a2: "a2;b%;<!><!><!>",
+	a3: "a3;b%;<!><!><!>",
 	a: "a;D%;<main><!></main>"
 });
 var template_default = _template("a", (input) => {
@@ -24,20 +22,20 @@ var template_default = _template("a", (input) => {
 				_html(`<em>${_text_mark($scope5_id, "a", value, 1, $scope0_reason, 0)}</em>`);
 				_scope($scope5_id, {});
 			}, 1, "a0", $ui__input_promise && 2, 1);
-			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a6", 1);
-			$wi__input_promise && _subscribe($ui__input_promise && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 0) && "a6", 0);
+			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a4", 1);
+			$wi__input_promise && _subscribe($ui__input_promise && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 0) && "a4", 0);
 			$wi__input_promise && _resume_branch($scope2_id);
 		}, void 0, () => {
 			_scope_reason();
 			_scope_id();
 			_html("<em>inner</em>");
-		}, 0, "a1", "a4", 1, 0, 1);
+		}, 0, "a5", "a2", 1);
 		$wi__input_promise && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, void 0, () => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>outer</em>");
-	}, 0, "a2", "a5", 1, 0, 1);
+	}, 0, "a6", "a3", 1);
 	_html("</main>");
 	_scope($scope0_id, { e: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures });
 }, 1);

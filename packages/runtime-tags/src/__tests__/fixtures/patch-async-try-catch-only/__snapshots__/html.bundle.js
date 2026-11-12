@@ -1,6 +1,5 @@
 // template.marko
 _shells({
-	a1: "a1,<em>bad</em>",
 	a2: "a2;D ;<em> </em>",
 	a: "a;D%;<main><!></main>"
 });
@@ -19,7 +18,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>bad</em>");
-	}, 0, "a1", "a2", 1, 0, 1);
+	}, 0, "a1", "a2", 1);
 	_html("</main>");
 	_scope($scope0_id, { e: $wi__input_message && _unfilled_if($scope0_reason, 0) && $input_message__closures });
 }, 1);

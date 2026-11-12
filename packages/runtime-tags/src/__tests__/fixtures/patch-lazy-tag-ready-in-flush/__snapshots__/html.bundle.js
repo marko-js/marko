@@ -19,10 +19,9 @@ const $setup = _shell_setup([[], []], ["b>", $setup$1]);
 _shells({
 	b0: "b0;D ;<em> </em>",
 	b1: "b1;D ;<b> </b>",
-	b2: "b2",
-	b3: "b3;D ;<b> </b>",
-	b4: "b4;D ;<em> </em>",
-	b5: `b5${_shell_marker([[], []], ["c>", $setup$1])};${/*@__PURE__*/ ((_w0) => `b%b%b/${_w0}&%c`)($walks)};${/*@__PURE__*/ ((_w0) => `<!><!><!>${_w0}<!><!>`)($template)}`,
+	b2: "b2;D ;<b> </b>",
+	b3: "b3;D ;<em> </em>",
+	b4: `b4${_shell_marker([[], []], ["c>", $setup$1])};${/*@__PURE__*/ ((_w0) => `b%b%b/${_w0}&%c`)($walks)};${/*@__PURE__*/ ((_w0) => `<!><!><!>${_w0}<!><!>`)($template)}`,
 	b: `b${_shell_marker($setup)};${((_w0) => `b%b/${_w0}&%c`)($walks)};${((_w0) => `<!><!>${_w0}<!><!>`)($template)}`
 });
 var template_default = _template("b", (input) => {
@@ -51,18 +50,18 @@ var template_default = _template("b", (input) => {
 			_html(`<em>${_text_mark($scope4_id, "a", b, 1, $scope0_reason, 3)}</em>`);
 			_scope($scope4_id, {});
 		}, 1, "b0", $ui__input_b && 2, 1);
-		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b6", 1);
-		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "b7", 1);
+		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b5", 1);
+		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "b6", 1);
 		_subscribe($ui__input_b && $input_b__closures, _subscribe($ui__input_a && $input_a__closures, _scope($scope1_id, {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			c: _existing_scope($childScope2)
-		}), _client_guard($scope0_reason, 2) && "b6", 0), _client_guard($scope0_reason, 3) && "b7", 0);
+		}), _client_guard($scope0_reason, 2) && "b5", 0), _client_guard($scope0_reason, 3) && "b6", 0);
 		_resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("<i>loading</i>");
-	}, void 0, "b2", void 0, "b5", 1, 0, 2);
+	}, void 0, "b7", void 0, "b4", 1);
 	_scope($scope0_id, {
 		b: _existing_scope($childScope),
 		i: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_a__closures,

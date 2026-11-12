@@ -3,7 +3,6 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = [[], []];
 _shells({
-	"__tests__/tags/widget/index.marko_2*content": "__tests__/tags/widget/index.marko_2*content,<em>bad</em>",
 	"__tests__/tags/widget/index.marko_1*content": "__tests__/tags/widget/index.marko_1*content,<em>ok</em>",
 	"__tests__/tags/widget/index.marko": "__tests__/tags/widget/index.marko;b%;<!><!><!>"
 });
@@ -18,7 +17,7 @@ var widget_default = _template("__tests__/tags/widget/index.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html("<em>bad</em>");
-	}, 0, "__tests__/tags/widget/index.marko_2*content", "__tests__/tags/widget/index.marko_1*content", 0, 0, 1);
+	}, 0, "__tests__/tags/widget/index.marko_2*content", "__tests__/tags/widget/index.marko_1*content");
 });
 
 // template.marko

@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-id-catch-rows/template.marko_3*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-catch-rows/template.marko_4*content;D ;<p> </p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-catch-rows/template.marko_1*shell;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-catch-rows/template.marko_2*content;/ D l b&;<label> </label><input>`]
+[`packages/runtime-tags/src/__tests__/fixtures/patch-id-catch-rows/template.marko_3*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-catch-rows/template.marko_4*content;D ;<p> </p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-catch-rows/template.marko_1*shell;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-catch-rows/template.marko_2*content`]
 {
   "PatchLoop:#text/1": ["a", {
     "PatchChild:BranchScopes:#text/0": [0, _.b = "packages/runtime-tags/src/__tests__/fixtures/patch-id-catch-rows/template.marko_2*content", _.c = "packages/runtime-tags/src/__tests__/fixtures/patch-id-catch-rows/template.marko_3*content"],

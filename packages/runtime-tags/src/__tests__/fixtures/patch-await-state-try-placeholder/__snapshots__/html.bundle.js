@@ -1,11 +1,10 @@
 // template.marko
 _shells({
-	a1: "a1",
+	a1: "a1;D%c%;<p><!>:<!></p>",
 	a2: "a2;D%c%;<p><!>:<!></p>",
-	a3: "a3;D%c%;<p><!>:<!></p>",
-	a4: "a4 a6;b%;<!><!><!>",
+	a3: "a3 a5;b%;<!><!><!>",
 	a: "a !a7; b%;<button class=open>inc</button><!><!>",
-	a5: "a5;b%;<!><!><!>"
+	a4: "a4;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 1), $ui__input_label = _unfilled_if($scope0_reason, 2), $wi__input_label = _write_if($scope0_reason, 2);
@@ -25,18 +24,18 @@ var template_default = _template("a", (input) => {
 					_html(`<p>${_text_mark($scope3_id, "a", input.label, 1, $scope0_reason, 2)}:${_text_mark($scope3_id, "b", x, 2)}</p>`);
 					_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope3_id, "a0", $cg__input_label);
 					_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope3_id, {}), $cg__input_label && "a0");
-				}, 1, "a2", 1);
-				_subscribe($n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a6", 0);
+				}, 1, "a1", 1);
+				_subscribe($n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a5", 0);
 				_resume_branch($scope2_id);
 			}, () => {
 				_scope_reason();
 				_scope_id();
 				_html("loading");
-			}, void 0, "a1", void 0, "a4", 0, 0, 2);
+			}, void 0, "a6", void 0, "a3");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a5"], $scope0_reason, 1);
+	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a4"], $scope0_reason, 1);
 	_script($scope0_id, "a7");
 	_scope($scope0_id, {
 		f: _write_if($scope0_reason, 1) && ($ui__input_show || $ui__input_label) && input.label,

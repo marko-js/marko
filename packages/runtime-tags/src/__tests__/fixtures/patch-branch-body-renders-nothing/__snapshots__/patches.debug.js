@@ -15,4 +15,4 @@
     "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-body-renders-nothing/template.marko_5_input_n#0:7"
   }
 }
-;E3g
+;EXg

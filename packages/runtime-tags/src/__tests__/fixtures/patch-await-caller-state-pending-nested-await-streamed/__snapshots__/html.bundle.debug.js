@@ -4,7 +4,6 @@ const $walks$1 = "b%c";
 const $setup$1 = [[], []];
 _shells({
 	"__tests__/tags/show-await.marko_4*content": "__tests__/tags/show-await.marko_4*content;D ;<em> </em>",
-	"__tests__/tags/show-await.marko_3*content": "__tests__/tags/show-await.marko_3*content,<i>inner loading</i>",
 	"__tests__/tags/show-await.marko_2_#text#0/await": "__tests__/tags/show-await.marko_2_#text#0/await;D ;<em> </em>",
 	"__tests__/tags/show-await.marko_2*content": "__tests__/tags/show-await.marko_2*content;b%;<!><!><!>",
 	"__tests__/tags/show-await.marko_1*content": "__tests__/tags/show-await.marko_1*content;D%c%l%;<p><!>:<!></p><!><!>",
@@ -34,7 +33,7 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 			const $scope3_reason = _scope_reason();
 			const $scope3_id = _scope_id();
 			_html("<i>inner loading</i>");
-		}, void 0, "__tests__/tags/show-await.marko_3*content", void 0, "__tests__/tags/show-await.marko_2*content", 1, 0, 2);
+		}, void 0, "__tests__/tags/show-await.marko_3*content", void 0, "__tests__/tags/show-await.marko_2*content", 1);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/tags/show-await.marko_1_input_label#0:4/subscribe", $cg__input_label);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, {}, "__tests__/tags/show-await.marko", "1:2"), $cg__input_label && "__tests__/tags/show-await.marko_1_input_label#0:4/subscribe");
 	}, 1, "__tests__/tags/show-await.marko_1*content", _unfilled_if($scope0_reason, 1), 1);

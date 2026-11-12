@@ -22,7 +22,6 @@ function throwIt() {
 }
 const $setup = [[], []];
 _shells({
-	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content",
 	"__tests__/template.marko_2*content": `__tests__/template.marko_2*content${_shell_marker([[], []], ["#childScope/2>", $setup$1])};${/*@__PURE__*/ ((_w0) => `D%c%l/${_w0}&%c`)($walks$1)};${/*@__PURE__*/ ((_w0) => `<p><!> <!></p>${_w0}<!><!>`)($template$1)}`,
 	"__tests__/template.marko": "__tests__/template.marko; ;<main></main>",
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>",
@@ -61,7 +60,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope3_reason = _scope_reason();
 			const $scope3_id = _scope_id();
 			_html("caught");
-		}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content", 0, 0, 1);
+		}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content");
 		$wi__input_pages && _scope($scope1_id, {
 			"ClosureScopes:page_title/5": $ui__input_pages && $for_content__page_title__closures,
 			"ClosureScopes:page_fail/6": $ui__input_pages && $for_content__page_fail__closures

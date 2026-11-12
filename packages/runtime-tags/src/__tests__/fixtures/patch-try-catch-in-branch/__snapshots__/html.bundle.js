@@ -3,7 +3,7 @@ function boom() {
 	throw new Error("boom");
 }
 _shells({
-	a2: "a2;D ;<b> </b>",
+	a2: "a2",
 	a3: "a3;D%b%;<em><!><!></em>",
 	a: "a; ;<main></main>",
 	a4: "a4;b%;<!><!><!>"
@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`<b>${_text_mark($scope3_id, "a", err.message, 1, 4, 0)}</b>`);
 				_scope($scope3_id, {});
-			}, 0, "a2", "a3", 0, 1, 1);
+			}, 0, "a2", "a3", 0, 1);
 			$wi__input_show__OR__input_message__OR__input_boom && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

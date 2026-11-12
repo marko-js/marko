@@ -1,6 +1,5 @@
 // tags/widget/index.marko
 _shells({
-	b0: "b0,<em>bad</em>",
 	b1: "b1,<em>ok</em>",
 	b: "b;b%;<!><!><!>"
 });
@@ -15,7 +14,7 @@ var widget_default = _template("b", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>bad</em>");
-	}, 0, "b0", "b1", 0, 0, 1);
+	}, 0, "b0", "b1");
 });
 
 // template.marko

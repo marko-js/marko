@@ -15,7 +15,6 @@ const $walks$1 = "b%c";
 const registry = { p: plain_default };
 const $setup$1 = [[], []];
 _shells({
-	"__tests__/tags/card.marko_2*content": "__tests__/tags/card.marko_2*content,<em>loading</em>",
 	"__tests__/tags/card.marko_1*content": "__tests__/tags/card.marko_1*content;b%;<!><!><!>",
 	"__tests__/tags/card.marko": "__tests__/tags/card.marko;b%;<!><!><!>"
 });
@@ -33,7 +32,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html("<em>loading</em>");
-	}, void 0, "__tests__/tags/card.marko_2*content", void 0, "__tests__/tags/card.marko_1*content", 1, 0, 2);
+	}, void 0, "__tests__/tags/card.marko_2*content", void 0, "__tests__/tags/card.marko_1*content", 1);
 	_scope($scope0_id, { "ClosureScopes:input_kind/4": $wi__input_kind && _unfilled_if($scope0_reason, 0) && $input_kind__closures }, "__tests__/tags/card.marko", 0);
 });
 

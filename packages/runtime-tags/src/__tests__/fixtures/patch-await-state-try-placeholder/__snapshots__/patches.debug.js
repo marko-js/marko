@@ -12,9 +12,9 @@
     }, $, "packages/runtime-tags/src/__tests__/fixtures/patch-await-state-try-placeholder/template.marko_2*content", "packages/runtime-tags/src/__tests__/fixtures/patch-await-state-try-placeholder/template.marko_4*content"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-state-try-placeholder/template.marko_1*shell"]
 }
-;DRY
+;CxY
 
-// PATCH holding DRY
+// PATCH holding CxY
 {
   "PatchBranch:#text/1": [{
     "PatchChild:BranchScopes:#text/0": [{

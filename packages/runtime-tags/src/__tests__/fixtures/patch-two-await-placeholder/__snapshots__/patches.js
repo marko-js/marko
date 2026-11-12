@@ -1,5 +1,4 @@
 // PATCH
-`a2,<em>loading</em>`
 {
   cAa: {
     pa: 1,
@@ -20,4 +19,3 @@
     }
   }
 }
-;DgM

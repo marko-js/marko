@@ -2,7 +2,6 @@
 const $template = "<!><!><!>";
 const $setup$1 = [[], []];
 _shells({
-	b3: "b3,failed",
 	b4: "b4;D ;<p> </p>",
 	b5: "b5;b%;<!><!><!>",
 	b6: "b6;b%;<!><!><!>",
@@ -28,7 +27,7 @@ var show_await_default = _template("b", (input) => {
 			_scope_reason();
 			_scope_id();
 			_html("failed");
-		}, 0, "b3", "b4", 1, 0, 1);
+		}, 0, "b3", "b4", 1);
 		$wi__input_promise__OR__input_label && _scope($scope1_id, {
 			c: $wi__input_label && $ui__input_promise__OR__input_label && x,
 			g: $wi__input_promise && $wi__input_promise && $ui__input_promise__OR__input_label && $await_content__x__closures

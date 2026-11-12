@@ -3,9 +3,8 @@ const $template = "<!><!><!>";
 const $setup$1 = [[], []];
 _shells({
 	b0: "b0;D ;<p> </p>",
-	b1: "b1,<em>caught</em>",
-	b2: "b2;D ;<p> </p>",
-	b3: "b3;b%;<!><!><!>",
+	b1: "b1;D ;<p> </p>",
+	b2: "b2;b%;<!><!><!>",
 	b: "b;b%;<!><!><!>"
 });
 var show_await_default = _template("b", (input) => {
@@ -20,14 +19,14 @@ var show_await_default = _template("b", (input) => {
 			_html(`<p>${_text_mark($scope3_id, "a", x, 1, $scope0_reason, 0)}</p>`);
 			_scope($scope3_id, {});
 		}, 1, "b0", $ui__input_promise && 2, 1);
-		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b4", 1);
-		$wi__input_promise && _subscribe($ui__input_promise && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "b4", 0);
+		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b3", 1);
+		$wi__input_promise && _subscribe($ui__input_promise && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "b3", 0);
 		$wi__input_promise && _resume_branch($scope1_id);
 	}, void 0, () => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>caught</em>");
-	}, 0, "b1", "b3", 1, 0, 1);
+	}, 0, "b4", "b2", 1);
 	_scope($scope0_id, { e: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures });
 });
 

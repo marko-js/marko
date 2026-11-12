@@ -3,9 +3,6 @@ const $template = "<button> </button><!><!>";
 const $walks = " D l%c";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
-	"__tests__/template.marko_7*content": "__tests__/template.marko_7*content",
-	"__tests__/template.marko_6*content": "__tests__/template.marko_6*content",
-	"__tests__/template.marko_5*content": "__tests__/template.marko_5*content",
 	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content;D%c%;<div id=inner><!> <!></div>",
 	"__tests__/template.marko_3_#text#0/await": "__tests__/template.marko_3_#text#0/await;D%c%;<div id=inner><!> <!></div>",
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;b%;<!><!><!>",
@@ -48,7 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope7_reason = _scope_reason();
 				const $scope7_id = _scope_id();
 				_html("<em>inner failed</em>");
-			}, "__tests__/template.marko_6*content", "__tests__/template.marko_7*content", "__tests__/template.marko_3*content", 1, 0, 3);
+			}, "__tests__/template.marko_6*content", "__tests__/template.marko_7*content", "__tests__/template.marko_3*content", 1);
 			_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_msg#0:6/subscribe", $cg__input_msg);
 			_subscribe(_unfilled_if($scope0_reason, 3) && $input_msg__closures, _scope($scope2_id, {}, "__tests__/template.marko", "4:4"), $cg__input_msg && "__tests__/template.marko_2_input_msg#0:6/subscribe");
 		}, 1, "__tests__/template.marko_2*content", $ui__input_outer, 1);
@@ -59,7 +56,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope5_reason = _scope_reason();
 		const $scope5_id = _scope_id();
 		_html("<em>outer loading</em>");
-	}, void 0, "__tests__/template.marko_5*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
+	}, void 0, "__tests__/template.marko_5*content", void 0, "__tests__/template.marko_1*content", 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		count,

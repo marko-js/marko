@@ -1,5 +1,4 @@
 // PATCH
-`packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-shares-client-await-count/template.marko_4*content`
 {
   "PatchChild:BranchScopes:#text/0": {
     "PatchChild:BranchScopes:#text/0": [{
@@ -15,4 +14,4 @@
     }, _(0)["PatchChild:BranchScopes:#text/0"]["PatchChild:BranchScopes:#text/0"][1]]
   }
 }
-;DzA
+;DAQ

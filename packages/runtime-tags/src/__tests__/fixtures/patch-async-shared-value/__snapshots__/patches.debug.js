@@ -1,5 +1,4 @@
 // PATCH
-`packages/runtime-tags/src/__tests__/fixtures/patch-async-shared-value/template.marko_3*content`
 {
   "PatchChild:#childScope/0": {
     "PatchEffect:": _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-async-shared-value/child.marko_0_input_name#3_input_item#4",
@@ -26,4 +25,3 @@
     }
   }
 }
-;DAU

@@ -10,4 +10,4 @@
     }, $, "packages/runtime-tags/src/__tests__/fixtures/patch-async-try-in-branch-scriptless/template.marko_2*content", "packages/runtime-tags/src/__tests__/fixtures/patch-async-try-in-branch-scriptless/template.marko_4*content"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-async-try-in-branch-scriptless/template.marko_1*shell"]
 }
-;DRY
+;CxY

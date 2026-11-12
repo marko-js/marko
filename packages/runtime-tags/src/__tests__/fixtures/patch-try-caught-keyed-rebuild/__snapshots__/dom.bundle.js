@@ -5,4 +5,4 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 }));
 
 // template.marko
-const $catch_content = _content$1("a1", "caught");
+const $catch_content = _content$1("a5", "caught");

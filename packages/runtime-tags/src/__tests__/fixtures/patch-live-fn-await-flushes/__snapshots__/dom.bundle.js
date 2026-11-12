@@ -1,5 +1,5 @@
 // template.marko
-const $placeholder_content = _content$1("a5", "loading");
+const $placeholder_content = _content$1("a9", "loading");
 const $Use_content__fn__OR__where__script = _script_patch("a2 c >e d", ($scope) => {
 	{
 		const el = document.getElementById("log");

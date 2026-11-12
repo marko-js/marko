@@ -1,5 +1,5 @@
 // PATCH
-[`a3;b%;<!><!><!>`, `a2;D ;<p> </p>`, `b1;D%;<section><!></section>`]
+[`a3`, `a2;D ;<p> </p>`, `b1;D%;<section><!></section>`]
 {
   ca: {
     ba: [{
@@ -12,16 +12,16 @@
     }, "b1"]
   }
 }
-;DSw
+;CxY
 
-// PATCH holding DSw
+// PATCH holding CxY
 {
   ca: {
     ba: 0
   }
 }
 
-// PATCH holding DSw
+// PATCH holding CxY
 {
   ca: {
     ba: [{

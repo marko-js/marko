@@ -29,9 +29,8 @@ const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
 const $setup = _shell_setup([[], []], ["#childScope/0>", $setup$1]);
 _shells({
-	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content,failed",
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;D ;<p> </p>",
-	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;b%;<!><!><!>",
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content",
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
@@ -55,7 +54,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope3_reason = _scope_reason();
 				const $scope3_id = _scope_id();
 				_html("failed");
-			}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content", 0, 0, 1);
+			}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content");
 			$wi__input_show__OR__input_id && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2");
 		}, $scope0_id)
 	});

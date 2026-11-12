@@ -2,10 +2,9 @@
 _shells({
 	a0: "a0;D ;<span> </span>",
 	a1: "a1;D ;<span> </span>",
-	a2: "a2,<em>loading</em>",
+	a2: "a2;D ;<span> </span>",
 	a3: "a3;D ;<span> </span>",
-	a4: "a4;D ;<span> </span>",
-	a5: "a5;b%b%;<!><!><!><!>",
+	a4: "a4;b%b%;<!><!><!><!>",
 	a: "a;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
@@ -26,15 +25,15 @@ var template_default = _template("a", (input) => {
 			_html(`<span>${_text_mark($scope4_id, "a", b, 1, $scope0_reason, 2)}</span>`);
 			_scope($scope4_id, {});
 		}, 1, "a0", $ui__input_b && 2, 1);
-		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a6", 1);
-		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "a7", 1);
-		$wi__input_a__OR__input_b && _subscribe($ui__input_b && $input_b__closures, _subscribe($ui__input_a && $input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a6", 0), _client_guard($scope0_reason, 2) && "a7", 0);
+		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a5", 1);
+		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "a6", 1);
+		$wi__input_a__OR__input_b && _subscribe($ui__input_b && $input_b__closures, _subscribe($ui__input_a && $input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a5", 0), _client_guard($scope0_reason, 2) && "a6", 0);
 		$wi__input_a__OR__input_b && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>loading</em>");
-	}, void 0, "a2", void 0, "a5", 1, 0, 2);
+	}, void 0, "a7", void 0, "a4", 1);
 	_scope($scope0_id, {
 		f: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_a__closures,
 		g: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_b__closures

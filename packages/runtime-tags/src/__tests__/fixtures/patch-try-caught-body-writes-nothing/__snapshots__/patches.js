@@ -1,5 +1,5 @@
 // PATCH
-`a1;D ;<b> </b>`
+`a1`
 {
   ka: [{
     ta: "boom"

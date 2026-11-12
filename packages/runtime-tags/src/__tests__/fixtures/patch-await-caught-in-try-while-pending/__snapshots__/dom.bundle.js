@@ -1,6 +1,6 @@
 // template.marko
-const $catch_content = _content$1("a1", "<p>oops</p>");
-const $placeholder_content = _content$1("a2", "<em>loading</em>");
+const $catch_content = _content$1("a6", "<p>oops</p>");
+const $placeholder_content = _content$1("a7", "<em>loading</em>");
 const $count = _let(7, ($scope) => _text($scope.b, $scope.h));
 const $setup__script = _script("a8", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, +$scope.h + 1);

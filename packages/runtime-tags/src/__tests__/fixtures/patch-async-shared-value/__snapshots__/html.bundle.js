@@ -16,10 +16,9 @@ var child_default = _template("a", (input) => {
 // template.marko
 const $setup = _shell_setup([[], []], ["a>", $setup$1], ["b>", $setup$1]);
 _shells({
-	b1: "b1",
-	b2: `b2${_shell_marker([[], []], ["b>", $setup$1])};${/*@__PURE__*/ ((_w0) => `D l/${_w0}&`)(" b")};${/*@__PURE__*/ ((_w0) => `<span> </span>${_w0}`)($template)}`,
-	b3: `b3${_shell_marker([[], []], ["b>", $setup$1])};${((_w0) => `D l/${_w0}&`)(" b")};${((_w0) => `<span> </span>${_w0}`)($template)}`,
-	b4: "b4;b%;<!><!><!>",
+	b1: `b1${_shell_marker([[], []], ["b>", $setup$1])};${/*@__PURE__*/ ((_w0) => `D l/${_w0}&`)(" b")};${/*@__PURE__*/ ((_w0) => `<span> </span>${_w0}`)($template)}`,
+	b2: `b2${_shell_marker([[], []], ["b>", $setup$1])};${((_w0) => `D l/${_w0}&`)(" b")};${((_w0) => `<span> </span>${_w0}`)($template)}`,
+	b3: "b3;b%;<!><!><!>",
 	b: `b${_shell_marker($setup)};${((_w0, _w1) => `D/${_w0}&/${_w1}&%l`)(" b", " b")};${((_w0, _w1) => `<main>${_w0}${_w1}<!></main>`)($template, $template)}`
 });
 var template_default = _template("b", (input) => {
@@ -58,15 +57,15 @@ var template_default = _template("b", (input) => {
 			_patch_child_end();
 			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "b0", $cg__input_label);
 			_subscribe(_unfilled_if($scope0_reason, 1) && $item__closures, _scope($scope2_id, { b: _existing_scope($childScope3) }), $cg__input_label && "b0");
-		}, 1, "b2", $ui__input_promise, 1);
-		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b5", 1);
-		$wi__input_label__OR__input_promise && _subscribe($ui__input_promise && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "b5", 0);
+		}, 1, "b1", $ui__input_promise, 1);
+		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b4", 1);
+		$wi__input_label__OR__input_promise && _subscribe($ui__input_promise && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "b4", 0);
 		$wi__input_label__OR__input_promise && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading");
-	}, void 0, "b1", void 0, "b4", 1, 0, 2);
+	}, void 0, "b5", void 0, "b3", 1);
 	_html("</main>");
 	_scope($scope0_id, {
 		a: _existing_scope($childScope),

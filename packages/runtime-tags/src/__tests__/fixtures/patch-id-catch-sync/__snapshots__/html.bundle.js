@@ -40,7 +40,6 @@ const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}<!><!>`)($template$3
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&%c`)("b", $walks$1);
 const $setup = _shell_setup([[], []], ["a>", $setup$3], ["b>", $setup$2]);
 _shells({
-	b0: "b0,caught",
 	b1: `b1${_shell_marker([[], []], ["a>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l")};${$template$1}`,
 	b: `b${_shell_marker($setup)};${((_w0, _w1) => `/${_w0}&/${_w1}&%c`)("b", $walks$1)};${((_w0, _w1) => `${_w0}${_w1}<!><!>`)($template$3, $template$2)}`
 });
@@ -65,7 +64,7 @@ var a_tag_default = _template("b", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("caught");
-	}, 0, "b0", "b1", 1, 0, 1);
+	}, 0, "b0", "b1", 1);
 	_scope($scope0_id, {
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2)

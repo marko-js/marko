@@ -1,9 +1,8 @@
 // template.marko
 _shells({
-	a1: "a1",
+	a1: "a1;b%;<!><!><!>",
 	a2: "a2;b%;<!><!><!>",
 	a3: "a3;b%;<!><!><!>",
-	a4: "a4;b%;<!><!><!>",
 	a: "a !a7; b%;<button>go</button><!><!>",
 	a0: "a0; D ;<a> </a>"
 });
@@ -24,13 +23,13 @@ var template_default = _template("a", (input) => {
 				_scope($scope3_id, {});
 			}, 0, $scope2_id, "a", 1, 1, 1, 0, 0, "a0");
 			_scope($scope2_id, {});
-		}, 1, "a2", void 0, 1);
-		_fill_global_subscribe("a5", $scope1_id);
+		}, 1, "a1", void 0, 1);
+		_fill_global_subscribe("a4", $scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("Loading");
-	}, void 0, "a1", void 0, "a4", 0, 0, 2);
+	}, void 0, "a5", void 0, "a3");
 	_fill_global_subscribe("a6", $scope0_id);
 	_script($scope0_id, "a7");
 	_scope($scope0_id, {});

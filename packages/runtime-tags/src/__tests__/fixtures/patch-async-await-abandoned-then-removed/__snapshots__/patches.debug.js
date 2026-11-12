@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-async-await-abandoned-then-removed/template.marko_4*content;D ;<b> </b>`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-await-abandoned-then-removed/template.marko_2*shell;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-await-abandoned-then-removed/template.marko_3*content,<i>loading</i>`]
+[`packages/runtime-tags/src/__tests__/fixtures/patch-async-await-abandoned-then-removed/template.marko_4*content;D ;<b> </b>`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-await-abandoned-then-removed/template.marko_2*shell;b%;<!><!><!>`]
 {
   "PatchChild:BranchScopes:#text/0": {
     "PatchBranch:#text/0": [{

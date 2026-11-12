@@ -40,7 +40,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 			_script($scope3_id, "__tests__/tags/wrap.marko_3_x#1:1");
 			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope3_id, "__tests__/tags/wrap.marko_3_x#1:1/subscribe", $cg__input_label);
 			_subscribe(_unfilled_if($scope0_reason, 1) && $Card_content__x__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/wrap.marko", "5:6"), $cg__input_label && "__tests__/tags/wrap.marko_3_x#1:1/subscribe");
-		}, 0, "__tests__/tags/wrap.marko_3*content", "__tests__/tags/wrap.marko_2*content", 0, 1, 1);
+		}, 0, "__tests__/tags/wrap.marko_3*content", "__tests__/tags/wrap.marko_2*content", 0, 1);
 		$cg__input_label && _patch_render($scope1_id, "__tests__/tags/wrap.marko_1_input_label#0:3/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, {
 			x,

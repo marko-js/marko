@@ -88,7 +88,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "8:3");
-	}, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", 1, 1, 1);
+	}, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", 1, 1);
 	_scope($scope0_id, {
 		heading,
 		"ClosureScopes:input_promise/6": $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures

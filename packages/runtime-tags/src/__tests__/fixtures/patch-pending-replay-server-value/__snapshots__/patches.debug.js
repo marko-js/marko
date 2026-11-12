@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-pending-replay-server-value/template.marko_1*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-pending-replay-server-value/template.marko_4*content`]
+`packages/runtime-tags/src/__tests__/fixtures/patch-pending-replay-server-value/template.marko_1*content;b%;<!><!><!>`
 {
   "PatchChild:BranchScopes:#text/1": [{
     "PatchPending:#text/0": 1
@@ -19,4 +19,4 @@
     }
   }, $, _(0)["PatchChild:BranchScopes:#text/1"][2], _(0)["PatchChild:BranchScopes:#text/1"][3]]
 }
-;DTI
+;CxI

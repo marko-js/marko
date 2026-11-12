@@ -1,11 +1,9 @@
 // template.marko
-const $D_content__walks = "b%c";
-const $D_content__template = "<!><!><!>";
 function boom(error) {
 	throw error;
 }
 _shells({
-	a1: `a1;${/*@__PURE__*/ ((_w0) => `D l/${_w0}&b`)($D_content__walks)};${/*@__PURE__*/ ((_w0) => `<b> </b>${_w0}<!>`)($D_content__template)}`,
+	a1: "a1",
 	a2: "a2;D ;<p> </p>",
 	a: "a;b%;<!><!><!>",
 	a0: "a0;D ;<span> </span>"
@@ -44,6 +42,6 @@ var template_default = _template("a", (input) => {
 		D.content({ on: true });
 		_patch_child_end();
 		_scope($scope3_id, { b: _existing_scope($childScope) });
-	}, 0, "a1", "a2", 1, 1, 1);
+	}, 0, "a1", "a2", 1, 1);
 	_scope($scope0_id, { e: $wi__input_error && _unfilled_if($scope0_reason, 0) && $input_error__closures });
 }, 1);

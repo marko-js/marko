@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 			const $scope3_id = _scope_id();
 			_html(`<b>${_text_mark($scope3_id, "a", err.message, 1, 4, 0)}</b>`);
 			_scope($scope3_id, {});
-		}, 0, "a3", "a4", 0, 1, 1);
+		}, 0, "a3", "a4", 0, 1);
 		$wi__input_items && _scope($scope1_id, { f: _unfilled_if($scope0_reason, 0) && $for_content__item_fail__closures });
 	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a5", $scope0_reason, 0);
 	_scope($scope0_id, {});

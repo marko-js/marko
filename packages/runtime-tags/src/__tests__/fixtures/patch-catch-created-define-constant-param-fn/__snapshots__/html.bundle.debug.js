@@ -1,6 +1,4 @@
 // template.marko
-const $D_content__walks = "b%c";
-const $D_content__template = "<!><!><!>";
 const $template = "<!><!><!>";
 const $walks = "b%c";
 function boom(error) {
@@ -8,7 +6,7 @@ function boom(error) {
 }
 const $setup = [[], []];
 _shells({
-	"__tests__/template.marko_3*content": `__tests__/template.marko_3*content;${/*@__PURE__*/ ((_w0) => `D l/${_w0}&b`)($D_content__walks)};${/*@__PURE__*/ ((_w0) => `<b> </b>${_w0}<!>`)($D_content__template)}`,
+	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;D ;<p> </p>",
 	"__tests__/template.marko": "__tests__/template.marko;b%;<!><!><!>",
 	"__tests__/template.marko_4*shell": "__tests__/template.marko_4*shell;D ;<span> </span>"
@@ -47,6 +45,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		D.content({ on: true });
 		_patch_child_end();
 		_scope($scope3_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", "10:4");
-	}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", 1, 1, 1);
+	}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", 1, 1);
 	_scope($scope0_id, { "ClosureScopes:input_error/4": $wi__input_error && _unfilled_if($scope0_reason, 0) && $input_error__closures }, "__tests__/template.marko", 0);
 }, 1);

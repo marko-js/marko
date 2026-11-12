@@ -32,7 +32,7 @@ var card_default = _template("b", (input) => {
 			}
 		}, $scope1_id, "b", 1, _write_guard($scope1_reason, 0), 1, 0, 0, ["b1"]);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, 0, "b3", "b2", 1, 1, 1);
+	}, 0, "b3", "b2", 1, 1);
 	_script($scope0_id, "b5");
 	_patch_fill($scope0_id, "vb7", fail, 1);
 	_scope($scope0_id, {

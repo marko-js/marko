@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 			i: _unfilled_if($scope1_reason, 0) && upper,
 			_: _scope_with_id($scope0_id)
 		}), $cg__input_msg && "a0");
-	}, 0, "a5", "a6", 1, 1, 1);
+	}, 0, "a5", "a6", 1, 1);
 	_scope($scope0_id, {
 		d: input.msg,
 		e: $wi__input_msg && $ui__input_msg__OR__input_fail && input.fail,

@@ -4,8 +4,7 @@ const $walks$1 = "b%c";
 const $setup$1 = [[], []];
 _shells({
 	"__tests__/child.marko_4*content": "__tests__/child.marko_4*content;D ;<em> </em>",
-	"__tests__/child.marko_3*content": "__tests__/child.marko_3*content;D ;<b> </b>",
-	"__tests__/child.marko_2*content": "__tests__/child.marko_2*content,<i>loading</i>",
+	"__tests__/child.marko_3*content": "__tests__/child.marko_3*content",
 	"__tests__/child.marko_1_#text#0/await": "__tests__/child.marko_1_#text#0/await;D ;<em> </em>",
 	"__tests__/child.marko_1*content": "__tests__/child.marko_1*content;b%;<!><!><!>",
 	"__tests__/child.marko": "__tests__/child.marko;b%;<!><!><!>"
@@ -34,7 +33,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 		const $scope3_id = _scope_id();
 		_html(`<b>${_text_mark($scope3_id, "#text/0", e.message, 1, 4, 0)}</b>`);
 		_scope($scope3_id, {}, "__tests__/child.marko", "6:4");
-	}, "__tests__/child.marko_2*content", "__tests__/child.marko_3*content", "__tests__/child.marko_1*content", 1, 1, 3);
+	}, "__tests__/child.marko_2*content", "__tests__/child.marko_3*content", "__tests__/child.marko_1*content", 1, 1);
 	_scope($scope0_id, { "ClosureScopes:input_p/4": $wi__input_p && _unfilled_if($scope0_reason, 0) && $input_p__closures }, "__tests__/child.marko", 0);
 });
 

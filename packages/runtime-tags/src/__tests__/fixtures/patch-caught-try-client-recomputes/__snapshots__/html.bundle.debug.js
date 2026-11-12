@@ -67,7 +67,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: _scope_with_id($scope0_id),
 			"#childScope/1": _existing_scope($childScope)
 		}, "__tests__/template.marko", "6:4", { err_message: ["err.message", "6:11"] }), $cg__input_label && "__tests__/template.marko_1_input_label#0:4/subscribe"), $cg__input_count && "__tests__/template.marko_1_input_count#0:5/subscribe");
-	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 1, 1);
+	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 1);
 	_try($scope0_id, "#text/1", () => {
 		const $scope4_reason = _scope_reason();
 		const $scope4_id = _scope_id();
@@ -98,7 +98,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"ClosureSignalIndex:input_label/8": $wi__input_label && 1,
 			"ClosureSignalIndex:input_count/9": $wi__input_count && 1
 		}, "__tests__/template.marko", "14:4", { err_message: ["err.message", "14:11"] }), $cg__input_label && "__tests__/template.marko_3_input_label#0:4/subscribe"), $cg__input_count && "__tests__/template.marko_3_input_count#0:5/subscribe");
-	}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_4*content", 1, 1, 1);
+	}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_4*content", 1, 1);
 	_scope($scope0_id, {
 		input_label: input.label,
 		input_count: input.count,

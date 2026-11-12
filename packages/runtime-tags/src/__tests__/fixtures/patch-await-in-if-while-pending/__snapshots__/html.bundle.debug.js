@@ -3,7 +3,6 @@ const $template = "<button> </button><!><!>";
 const $walks = " D l%c";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
-	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content",
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;D%;<div id=done><!> done</div>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content; ;<section></section>",
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l%;<button> </button><!><!>",
@@ -45,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope4_reason = _scope_reason();
 		const $scope4_id = _scope_id();
 		_html("<em>loading</em>");
-	}, void 0, "__tests__/template.marko_4*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
+	}, void 0, "__tests__/template.marko_4*content", void 0, "__tests__/template.marko_1*content", 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		input_promise: $wi__input_show && ($ui__input_show || $ui__input_promise2) && input.promise,

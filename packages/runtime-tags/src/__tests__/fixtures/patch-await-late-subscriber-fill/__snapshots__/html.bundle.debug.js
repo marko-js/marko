@@ -3,7 +3,6 @@ const $template = "<button> </button><!><!>";
 const $walks = " D l%c";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
-	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content",
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content __tests__/template.marko_2_n#0:7/subscribe;D ;<div id=done> </div>",
 	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await __tests__/template.marko_2_n#0:7/subscribe;D ;<div id=done> </div>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;b%;<!><!><!>",
@@ -38,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
 		_html("<em>loading</em>");
-	}, void 0, "__tests__/template.marko_3*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
+	}, void 0, "__tests__/template.marko_3*content", void 0, "__tests__/template.marko_1*content", 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		input_label: input.label,

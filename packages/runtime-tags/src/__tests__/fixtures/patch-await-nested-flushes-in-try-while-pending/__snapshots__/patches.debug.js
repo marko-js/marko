@@ -1,5 +1,4 @@
 // PATCH
-`packages/runtime-tags/src/__tests__/fixtures/patch-await-nested-flushes-in-try-while-pending/template.marko_7*content`
 {
   "PatchChild:BranchScopes:#text/2": [{
     "PatchChild:BranchScopes:#text/0": {
@@ -7,7 +6,6 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-nested-flushes-in-try-while-pending/template.marko_6*content"]
 }
-`packages/runtime-tags/src/__tests__/fixtures/patch-await-nested-flushes-in-try-while-pending/template.marko_8*content`
 {
   "PatchChild:BranchScopes:#text/2": [{
     "PatchChild:BranchScopes:#text/0": {
@@ -35,4 +33,3 @@
     }
   }, _.a = _(0)["PatchChild:BranchScopes:#text/2"][1]]
 }
-;FgkA

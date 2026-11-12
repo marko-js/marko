@@ -18,7 +18,6 @@ const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&%c`)($walks$1);
 const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/2>", $setup$1]);
 _shells({
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;D ;<em> </em>",
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content",
 	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await;D ;<em> </em>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;b%;<!><!><!>",
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => ` Db%l/${_w0}&%c`)($walks$1)};${((_w0) => `<button>Count <!></button>${_w0}<!><!>`)($template$1)}`
@@ -48,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html("<span class=loading>...</span>");
-	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
+	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		count,

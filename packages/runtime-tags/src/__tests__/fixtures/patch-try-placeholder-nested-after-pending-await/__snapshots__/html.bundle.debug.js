@@ -4,9 +4,7 @@ const $walks = "D%l";
 const $setup = [[], []];
 _shells({
 	"__tests__/template.marko_6*content": "__tests__/template.marko_6*content;D ;<span> </span>",
-	"__tests__/template.marko_5*content": "__tests__/template.marko_5*content,<i>inner</i>",
 	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content;D ;<p> </p>",
-	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content,<i>outer</i>",
 	"__tests__/template.marko_2_#text#0/await": "__tests__/template.marko_2_#text#0/await;D ;<span> </span>",
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;b%;<!><!><!>",
 	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await;D ;<p> </p>",
@@ -42,7 +40,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope5_reason = _scope_reason();
 			const $scope5_id = _scope_id();
 			_html("<i>inner</i>");
-		}, void 0, "__tests__/template.marko_5*content", void 0, "__tests__/template.marko_2*content", 1, 0, 2);
+		}, void 0, "__tests__/template.marko_5*content", void 0, "__tests__/template.marko_2*content", 1);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_a#0:3/subscribe", 1);
 		$wi__input_a__OR__input_b && _subscribe($ui__input_a && $input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_a#0:3/subscribe", 0);
 		$wi__input_a__OR__input_b && _resume_branch($scope1_id);
@@ -50,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
 		_html("<i>outer</i>");
-	}, void 0, "__tests__/template.marko_3*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
+	}, void 0, "__tests__/template.marko_3*content", void 0, "__tests__/template.marko_1*content", 1);
 	_html("</main>");
 	_scope($scope0_id, {
 		"ClosureScopes:input_b/6": $wi__input_b && _unfilled_if($scope0_reason, 2) && $input_b__closures,

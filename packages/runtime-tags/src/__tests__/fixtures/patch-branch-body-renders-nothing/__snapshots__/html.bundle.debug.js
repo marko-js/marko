@@ -3,7 +3,6 @@ const $template = "<!><!><!><!><!><!>";
 const $walks = "b%b%b%b%c";
 const $setup = [[], []];
 _shells({
-	"__tests__/template.marko_6*content": "__tests__/template.marko_6*content",
 	"__tests__/template.marko_5*content": "__tests__/template.marko_5*content,",
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content,",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content,",
@@ -27,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope6_reason = _scope_reason();
 		const $scope6_id = _scope_id();
 		_html("<em>loading</em>");
-	}, void 0, "__tests__/template.marko_6*content", void 0, "__tests__/template.marko_2*content", 0, 0, 2);
+	}, void 0, "__tests__/template.marko_6*content", void 0, "__tests__/template.marko_2*content");
 	_for_to(input.n, 0, 1, (i) => {
 		const $scope3_id = _scope_id();
 		_for_to(i, 0, 1, (j) => {

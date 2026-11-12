@@ -3,8 +3,6 @@ function boom(m) {
 	throw new Error(m);
 }
 _shells({
-	a1: "a1,<em>loading</em>",
-	a3: "a3,<em>caught</em>",
 	a2: "a2;D ;<p> </p>",
 	a4: "a4;b%;<!><!><!>",
 	a: "a;b%;<!><!><!>"
@@ -26,12 +24,12 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			_scope_id();
 			_html("<em>loading</em>");
-		}, void 0, "a1", void 0, "a2", 1, 0, 2);
+		}, void 0, "a1", void 0, "a2", 1);
 		$wi__input_err && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, void 0, () => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>caught</em>");
-	}, 0, "a3", "a4", 1, 0, 1);
+	}, 0, "a3", "a4", 1);
 	_scope($scope0_id, { e: $wi__input_err && _unfilled_if($scope0_reason, 0) && $input_err__closures });
 }, 1);

@@ -1,5 +1,4 @@
 // PATCH
-`packages/runtime-tags/src/__tests__/fixtures/patch-live-fn-await-flushes/template.marko_4*content`
 {
   "PatchMarkedWrite:input_x": 2,
   "PatchChild:#childScope/0": {
@@ -20,4 +19,3 @@
     }
   }
 }
-;CgQ

@@ -675,9 +675,7 @@ export class State implements Channel {
   public resumes = "";
   public nonceAttr = "";
   public serializer = new SerializerState();
-  // The settled reorders the next flush streams; `false` for a state that
-  // never reorders.
-  public writeReorders: Chunk[] | null | false = null;
+  public writeReorders: Chunk[] | null = null;
   public scopes = new Map<number, ScopeInternals>();
   // A scope by id, for the locals of registered content once it is sent.
   public scope = (scopeId: number) => scopeWithId(this, scopeId);
@@ -1063,13 +1061,7 @@ export class Chunk {
     const { state } = boundary;
     restart: for (;;) {
       let reorders: Chunk[] | null | false = null;
-      // A state that never reorders decides the placeholders past pending
-      // content too.
-      for (
-        let cur: Chunk = this;
-        cur.next && (!cur.async || state.writeReorders === false);
-        cur = cur.next
-      ) {
+      for (let cur: Chunk = this; cur.next && !cur.async; cur = cur.next) {
         if (cur.renderPlaceholder(state)) {
           if (boundary.aborted) return;
           continue restart;
@@ -1114,13 +1106,6 @@ export class Chunk {
     const { body } = placeholder;
     let end = body;
     while (end.next && !end.async) end = end.next;
-
-    if (end.async && state.writeReorders === false) {
-      // A state that never reorders keeps the whole body in order: past each
-      // `<await>` is the rest it forked.
-      placeholder.render();
-      while (end.next) end = end.next;
-    }
 
     if (!end.async) {
       end.next = this.next;

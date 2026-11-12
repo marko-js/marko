@@ -1,6 +1,4 @@
 // tags/field.marko
-const $template = "<label> </label><input>";
-const $walks = " D l b";
 const $setup = [[], []];
 _shells({ b: "b; D l ;<label> </label><input>" });
 var field_default = _template("b", (input) => {
@@ -16,7 +14,7 @@ _shells({
 	a0: "a0;D ;<p> </p>",
 	a1: "a1;D ;<p> </p>",
 	a2: "a2;b%;<!><!><!>",
-	a3: `a3${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`,
+	a3: `a3${_shell_marker([[], []], ["a>", $setup])}`,
 	a: "a; b%;<h1>Fields</h1><!><!>",
 	a4: "a4;b%;<!><!><!>"
 });
@@ -53,7 +51,7 @@ var template_default = _template("a", (input) => {
 				_: _scope_with_id($scope1_id),
 				a: _existing_scope($childScope)
 			});
-		}, 0, "a3", "a2", 0, 1, 1);
+		}, 0, "a3", "a2", 0, 1);
 		_scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			h: $wi__input_rows && _unfilled_if($scope0_reason, 0) && $for_content__row_promise__closures

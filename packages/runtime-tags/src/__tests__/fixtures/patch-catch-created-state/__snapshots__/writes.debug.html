@@ -5,7 +5,9 @@
   WALKER_RUNTIME("M")("_").patchBuild = "b";
   M._.r = [_ => [2, {
     _: _(1),
-    "#CatchContent": "packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-state/template.marko_2*content"
+    "#CatchContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-state/template.marko_2*content"
+      ]
   }]];
   M._.w()
 </script>

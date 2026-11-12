@@ -1,11 +1,10 @@
 // template.marko
 _shells({
 	a1: "a1;D%;<div><!> done</div>",
-	a2: "a2",
-	a3: "a3; ;<section></section>",
+	a2: "a2; ;<section></section>",
 	a: "a !a7; D l%;<button> </button><!><!>",
-	a4: "a4;D%;<div><!> done</div>",
-	a5: "a5;b%;<!><!><!>"
+	a3: "a3;D%;<div><!> done</div>",
+	a4: "a4;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 0), $wi__input_items = _write_if($scope0_reason, 0);
@@ -28,15 +27,15 @@ var template_default = _template("a", (input) => {
 			}, 1, "a1", $ui__input_items && 2);
 			if ($scope4_id) _unfilled_if($scope0_reason, 0) && _patch_subscribe($scope4_id, "a0", $cg__input_items);
 			$wi__input_items && _scope($scope3_id, { i: $ui__input_items && $for_content__item_msg__closures });
-		}, "id", $scope1_id, "a", 1, 1, 1, 0, 0, "a5", $scope0_reason, 0);
+		}, "id", $scope1_id, "a", 1, 1, 1, 0, 0, "a4", $scope0_reason, 0);
 		_html(`</section>${_el_mark($scope1_id, "a")}`);
-		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a6", $cg__input_items);
-		_subscribe(_unfilled_if($scope0_reason, 0) && $input_items__closures, _scope($scope1_id, { _: $wi__input_items && _scope_with_id($scope0_id) }), $cg__input_items && "a6");
+		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a5", $cg__input_items);
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_items__closures, _scope($scope1_id, { _: $wi__input_items && _scope_with_id($scope0_id) }), $cg__input_items && "a5");
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>loading</em>");
-	}, void 0, "a2", void 0, "a3", 1, 0, 2);
+	}, void 0, "a6", void 0, "a2", 1);
 	_script($scope0_id, "a7");
 	_scope($scope0_id, {
 		g: count,

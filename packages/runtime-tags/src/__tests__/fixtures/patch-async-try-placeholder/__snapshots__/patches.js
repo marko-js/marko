@@ -1,5 +1,4 @@
 // PATCH
-`a1,<em>loading</em>`
 {
   ta: "Store!",
   cAb: {
@@ -13,4 +12,3 @@
     }
   }
 }
-;CgI

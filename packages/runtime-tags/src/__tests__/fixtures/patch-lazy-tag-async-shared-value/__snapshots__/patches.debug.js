@@ -1,6 +1,5 @@
 // PATCH
-"ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/child.marko", `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/template.marko_3*content`
-{
+"ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/child.marko", {
   "PatchChild:#childScope/1": {
     "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/child.marko_0_input_name#3_input_item#4",
     "PatchMarkedWrite:input_item": {
@@ -22,4 +21,3 @@
     }
   }
 }
-;DAU

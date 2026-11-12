@@ -19,7 +19,6 @@ const $Probe_withLoadAssets = withLoadAssets(() => probe_default, "__tests__/pro
 const $setup = _shell_setup([[], []], ["#childScope/1>", $setup$1]);
 _shells({
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;D ;<em> </em>",
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content",
 	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await;D ;<em> </em>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;b%;<!><!><!>",
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `b%b/${_w0}&%c`)("D l")};${((_w0) => `<!><!>${_w0}<!><!>`)($template$1)}`
@@ -47,7 +46,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html("<span class=loading>...</span>");
-	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
+	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 1);
 	_scope($scope0_id, {
 		"#childScope/1": _existing_scope($childScope),
 		"ClosureScopes:input_promise/6": $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures

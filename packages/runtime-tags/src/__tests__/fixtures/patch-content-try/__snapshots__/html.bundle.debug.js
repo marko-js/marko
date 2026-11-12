@@ -17,7 +17,6 @@ const $template = "<main></main>";
 const $walks = " b";
 const $setup = [[], []];
 _shells({
-	"__tests__/template.marko_5*content": "__tests__/template.marko_5*content,loading",
 	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content;D ;<em> </em>",
 	"__tests__/template.marko_3_#text#0/await": "__tests__/template.marko_3_#text#0/await;D ;<em> </em>",
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;b%;<!><!><!>",
@@ -57,7 +56,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope5_reason = _scope_reason();
 					const $scope5_id = _scope_id();
 					_html("loading");
-				}, void 0, "__tests__/template.marko_5*content", void 0, "__tests__/template.marko_3*content", 0, 0, 2);
+				}, void 0, "__tests__/template.marko_5*content", void 0, "__tests__/template.marko_3*content");
 				$wi__input_show__OR__input_value && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6");
 			}, $scope1_id, 0) });
 			_patch_child_end();

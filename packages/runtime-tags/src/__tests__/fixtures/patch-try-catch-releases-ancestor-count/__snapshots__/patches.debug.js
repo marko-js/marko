@@ -1,5 +1,4 @@
 // PATCH
-`packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-releases-ancestor-count/template.marko_3*content,<i>loading</i>`
 {
   "PatchChild:BranchScopes:#text/0": {
     "PatchChild:BranchScopes:#text/0": [{
@@ -8,7 +7,7 @@
     "PatchPending:#text/1": 1
   }
 }
-`packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-releases-ancestor-count/template.marko_4*content;D ;<s> </s>`
+`packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-releases-ancestor-count/template.marko_4*content`
 {
   "PatchChild:BranchScopes:#text/0": {
     "PatchCatch:#text/0": [{
@@ -23,4 +22,4 @@
     }
   }
 }
-;E2A
+;EAU

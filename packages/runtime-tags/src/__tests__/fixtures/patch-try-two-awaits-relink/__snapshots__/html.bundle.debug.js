@@ -5,7 +5,6 @@ const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
 	"__tests__/template.marko_5*content": "__tests__/template.marko_5*content;D ;<em> </em>",
 	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content;D ;<b> </b>",
-	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content",
 	"__tests__/template.marko_1_#text#1/await": "__tests__/template.marko_1_#text#1/await;D ;<em> </em>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;D%b%;<div><!><!></div>",
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>x</button></main>",
@@ -51,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
 		_html("<i>loading</i>");
-	}, void 0, "__tests__/template.marko_3*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
+	}, void 0, "__tests__/template.marko_3*content", void 0, "__tests__/template.marko_1*content", 1);
 	_html(`<button>x</button>${_el_mark($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

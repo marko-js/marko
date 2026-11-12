@@ -1,9 +1,8 @@
 // template.marko
 _shells({
 	a0: "a0,<em>static</em>",
-	a1: "a1,<s>caught</s>",
-	a2: "a2,<em>static</em>",
-	a3: "a3;b%;<!><!><!>",
+	a1: "a1,<em>static</em>",
+	a2: "a2;b%;<!><!><!>",
 	a: "a;E l%;<main><p> </p><!></main>"
 });
 var template_default = _template("a", (input) => {
@@ -18,12 +17,12 @@ var template_default = _template("a", (input) => {
 			_scope_id();
 			_html("<em>static</em>");
 		}, 1, "a0");
-		_fill_global_subscribe("a4", $scope1_id);
+		_fill_global_subscribe("a3", $scope1_id);
 	}, void 0, () => {
 		_scope_reason();
 		_scope_id();
 		_html("<s>caught</s>");
-	}, 0, "a1", "a3", 0, 0, 1);
+	}, 0, "a4", "a2");
 	_html("</main>");
 	_scope($scope0_id, {});
 }, 1);

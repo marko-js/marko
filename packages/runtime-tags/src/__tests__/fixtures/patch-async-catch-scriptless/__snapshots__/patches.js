@@ -1,5 +1,5 @@
 // PATCH
-`a1;D ;<em> </em>`
+`a1`
 {
   cAa: 0,
   ka: [{

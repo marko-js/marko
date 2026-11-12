@@ -28,7 +28,6 @@ var rows_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a2: "a2",
 	a3: `a3${_shell_marker([["a1"], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template)}`,
 	a: "a !a4; b%;<button>drop</button><!><!>"
 });
@@ -59,7 +58,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<i>loading</i>");
-	}, void 0, "a2", void 0, "a3", 1, 0, 2);
+	}, void 0, "a2", void 0, "a3", 1);
 	_script($scope0_id, "a4");
 	_scope($scope0_id, {
 		f: items,

@@ -17,7 +17,6 @@ const $template = /*@__PURE__*/ ((_w0) => `<button> </button>${_w0}`)($template$
 const $walks = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&`)("D%l");
 const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/2>", $setup$1]);
 _shells({
-	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content",
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;D%;<div id=done><!> done</div>",
 	"__tests__/template.marko_2_#text#0/await": "__tests__/template.marko_2_#text#0/await;D%;<div id=done><!> done</div>",
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;b%;<!><!><!>",
@@ -51,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope4_reason = _scope_reason();
 			const $scope4_id = _scope_id();
 			_html("<em>loading</em>");
-		}, void 0, "__tests__/template.marko_4*content", void 0, "__tests__/template.marko_2*content", 0, 0, 2);
+		}, void 0, "__tests__/template.marko_4*content", void 0, "__tests__/template.marko_2*content");
 		$wi__input_promise__OR__input_msg && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");
 	}, $scope0_id) });
 	_patch_child_end();

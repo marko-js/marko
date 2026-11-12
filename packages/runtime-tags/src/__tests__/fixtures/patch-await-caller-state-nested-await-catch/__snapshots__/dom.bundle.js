@@ -1,5 +1,5 @@
 // tags/show-await.marko
-const $catch_content = _content$1("b1", "<span>caught</span>");
+const $catch_content = _content$1("b7", "<span>caught</span>");
 const $await_content2__x = /*@__PURE__*/ _closure_get_patch("b0", 6, ($scope) => _text($scope.a, $scope._._.d), ($scope) => $scope._._);
 const $await_content__x__closure = /*@__PURE__*/ _closure($await_content2__x);
 const $await_content__x = /*@__PURE__*/ _const(3, ($scope) => {

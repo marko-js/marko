@@ -6,7 +6,7 @@ function boom() {
 }
 const $setup = [[], []];
 _shells({
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;D ;<b> </b>",
+	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;D%b%;<em><!><!></em>",
 	"__tests__/template.marko": "__tests__/template.marko;D%;<main><!></main>"
 });
@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<b>${_text_mark($scope2_id, "#text/0", err.message, 1, 4, 0)}</b>`);
 		_scope($scope2_id, {}, "__tests__/template.marko", "7:6");
-	}, 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 1, 1, 1);
+	}, 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 1, 1);
 	_html("</main>");
 	_scope($scope0_id, {
 		"ClosureScopes:input_message/5": _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_message__closures,

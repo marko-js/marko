@@ -4,7 +4,6 @@ const $walks = "E l%l";
 const $setup = [[], []];
 _shells({
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;D ;<em> </em>",
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content,<em>loading</em>",
 	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await;D ;<em> </em>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;b%;<!><!><!>",
 	"__tests__/template.marko": "__tests__/template.marko;E l%;<main><h1> </h1><!></main>"
@@ -29,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html("<em>loading</em>");
-	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
+	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 1);
 	_html("</main>");
 	_scope($scope0_id, { "ClosureScopes:input_promise/6": $wi__input_promise && _unfilled_if($scope0_reason, 1) && $input_promise__closures }, "__tests__/template.marko", 0);
 }, 1);

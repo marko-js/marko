@@ -1,9 +1,8 @@
 // template.marko
 _shells({
-	a1: "a1",
+	a1: "a1;D%;<div id=done><!> done</div>",
 	a2: "a2;D%;<div id=done><!> done</div>",
-	a3: "a3;D%;<div id=done><!> done</div>",
-	a4: "a4;b%;<!><!><!>",
+	a3: "a3;b%;<!><!><!>",
 	a: "a !a6; D l%;<button> </button><!><!>"
 });
 var template_default = _template("a", (input) => {
@@ -21,15 +20,15 @@ var template_default = _template("a", (input) => {
 			_html(`<div id=done>${_text_mark($scope2_id, "a", input.msg, 1, $scope0_reason, 2)} done</div>`);
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a0", $cg__input_msg);
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_msg__closures, _scope($scope2_id, {}), $cg__input_msg && "a0");
-		}, 1, "a2", $ui__input_promise, 1);
-		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a5", 1);
-		$wi__input_promise__OR__input_msg && _subscribe($ui__input_promise && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a5", 0);
+		}, 1, "a1", $ui__input_promise, 1);
+		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a4", 1);
+		$wi__input_promise__OR__input_msg && _subscribe($ui__input_promise && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a4", 0);
 		$wi__input_promise__OR__input_msg && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>loading</em>");
-	}, void 0, "a1", void 0, "a4", 1, 0, 2);
+	}, void 0, "a5", void 0, "a3", 1);
 	_script($scope0_id, "a6");
 	_scope($scope0_id, {
 		h: count,

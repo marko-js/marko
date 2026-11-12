@@ -4,7 +4,6 @@ const $walks = "D%l";
 const $setup = [[], []];
 _shells({
 	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content;D ;<strong> </strong>",
-	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content,<i>loading</i>",
 	"__tests__/template.marko_2_#text#1/await": "__tests__/template.marko_2_#text#1/await;D ;<strong> </strong>",
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;D l%;<em> </em><!><!>",
 	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await;D l%;<em> </em><!><!>",
@@ -38,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
 		_html("<i>loading</i>");
-	}, void 0, "__tests__/template.marko_3*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
+	}, void 0, "__tests__/template.marko_3*content", void 0, "__tests__/template.marko_1*content", 1);
 	_html("</main>");
 	_scope($scope0_id, {
 		"ClosureScopes:input_b/6": _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_b__closures,

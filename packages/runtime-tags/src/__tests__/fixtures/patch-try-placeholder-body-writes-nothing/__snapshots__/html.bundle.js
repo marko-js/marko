@@ -11,7 +11,6 @@ const $template = "<!><!><!>";
 const registry = { p: plain_default };
 const $setup$1 = [[], []];
 _shells({
-	b1: "b1,<em>loading</em>",
 	b2: "b2;b%;<!><!><!>",
 	b: "b;b%;<!><!><!>"
 });
@@ -29,7 +28,7 @@ var card_default = _template("b", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>loading</em>");
-	}, void 0, "b1", void 0, "b2", 1, 0, 2);
+	}, void 0, "b1", void 0, "b2", 1);
 	_scope($scope0_id, { e: $wi__input_kind && _unfilled_if($scope0_reason, 0) && $input_kind__closures });
 });
 

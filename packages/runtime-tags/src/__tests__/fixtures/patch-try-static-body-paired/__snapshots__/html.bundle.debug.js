@@ -3,9 +3,8 @@ const $template = "<main><p> </p><!><!></main>";
 const $walks = "E l%b%l";
 const $setup = [[], []];
 _shells({
-	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content;D ;<s> </s>",
+	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content",
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content,<b>static</b>",
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content,<i>loading</i>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content,<em>static</em>",
 	"__tests__/template.marko": "__tests__/template.marko;E l%b%;<main><p> </p><!><!></main>"
 });
@@ -21,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html("<i>loading</i>");
-	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 0, 0, 2);
+	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content");
 	_try($scope0_id, "#text/2", () => {
 		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
@@ -31,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope4_id = _scope_id();
 		_html(`<s>${_text_mark($scope4_id, "#text/0", e.message, 1, 4, 0)}</s>`);
 		_scope($scope4_id, {}, "__tests__/template.marko", "9:6");
-	}, 0, "__tests__/template.marko_4*content", "__tests__/template.marko_3*content", 0, 1, 1);
+	}, 0, "__tests__/template.marko_4*content", "__tests__/template.marko_3*content", 0, 1);
 	_html("</main>");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

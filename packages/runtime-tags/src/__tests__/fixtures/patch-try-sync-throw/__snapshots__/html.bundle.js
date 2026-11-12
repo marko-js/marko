@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<b>${_text_mark($scope2_id, "a", err.message, 1, 4, 0)}</b>`);
 		_scope($scope2_id, {});
-	}, 0, "a2", "a3", 1, 1, 1);
+	}, 0, "a2", "a3", 1, 1);
 	_html(`<button>${_text_mark($scope0_id, "c", count)}</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a4");
 	_scope($scope0_id, {

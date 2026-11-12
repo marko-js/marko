@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope1_id, "a", 1, $wg__err_status, 1, 0, 0, ["a2", "a5"]);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, 0, "a4", "a3", 1, 1, 1);
+	}, 0, "a4", "a3", 1, 1);
 	_scope($scope0_id, {
 		d: input.label,
 		f: $wi__input_label && $input_label__closures,

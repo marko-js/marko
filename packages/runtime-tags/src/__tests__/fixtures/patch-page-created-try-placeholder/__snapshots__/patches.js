@@ -1,11 +1,11 @@
 // PATCH
-[`b !b5; b%;<button>go</button><!><!>`, `b3;b%;<!><!><!>`, `b0;D ;<p> </p>`, `b1`]
+[`b !b5; b%;<button>go</button><!><!>`, `b2;b%;<!><!><!>`, `b0;D ;<p> </p>`]
 {
   fa: "b",
   cAa: {
     cAb: [{
       pa: "b0"
-    }, $, "b3", "b1"]
+    }, $, "b2", "b4"]
   }
 }
 {
@@ -14,14 +14,14 @@
       cAa: {
         ta: "slow"
       }
-    }, $, "b3", "b1"]
+    }, $, "b2", "b4"]
   }
 }
-;Dy4
+;DRY
 
-// PATCH holding Dy4
+// PATCH holding DRY
 `a,<h1>A</h1>`
 {
   fa: "a"
 }
-;Dy8
+;DRc

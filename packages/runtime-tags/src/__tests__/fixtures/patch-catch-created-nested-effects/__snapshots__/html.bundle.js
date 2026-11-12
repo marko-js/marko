@@ -98,7 +98,7 @@ var template_default = _template("a", (input) => {
 			n: $wi__input_v && $wi__input_v && ($ui__input_v2 || $ui__input_show) && $catch_content__w__closures,
 			d: _existing_scope($childScope)
 		}), $cg__input_v && "a15"), $cg__input_show && "a16"), $cg__input_items && "a17");
-	}, 0, "a6", "a4", 1, 1, 1);
+	}, 0, "a6", "a4", 1, 1);
 	_scope($scope0_id, {
 		d: input.v,
 		e: input.show,

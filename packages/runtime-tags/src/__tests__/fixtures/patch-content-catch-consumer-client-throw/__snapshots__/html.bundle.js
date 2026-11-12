@@ -62,7 +62,7 @@ var error_wrapper_default = _template("b", (input) => {
 		_dynamic_tag($scope1_id, "b", input.fallback, {}, 2, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b0", $cg__input_fallback);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_fallback && "b0");
-	}, 0, "b2", "b3", 1, 1, 1);
+	}, 0, "b2", "b3", 1, 1);
 	_scope($scope0_id, {
 		d: input.fallback,
 		f: _write_if($scope0_reason, 0) && $input_fallback__closures,

@@ -15,9 +15,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-placeholder-pending/template.marko_1*shell"]
 }
-;D0o
+;DSo
 
-// PATCH holding D0o
+// PATCH holding DSo
 {
   "PatchBranch:#text/2": [{
     "PatchChild:#childScope/0": {

@@ -62,7 +62,7 @@ var template_default = _template("a", (input) => {
 				_: _scope_with_id($scope1_id),
 				a: _existing_scope($childScope)
 			});
-		}, "a6", "a3", "a2", 0, 1, 1);
+		}, "a6", "a3", "a2", 0, 1);
 		_scope($scope1_id, {
 			M: row?.key,
 			_: _scope_with_id($scope0_id),

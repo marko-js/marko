@@ -1,5 +1,5 @@
 // PATCH
-[`a1;D l/b%c&b;<b> </b><!><!><!><!>`, `a0;D ;<span> </span>`]
+[`a1`, `a0;D ;<span> </span>`]
 {
   ka: [{
     ta: "SHOWN_x",

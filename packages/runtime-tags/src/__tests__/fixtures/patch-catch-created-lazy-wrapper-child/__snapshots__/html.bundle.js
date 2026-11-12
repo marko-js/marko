@@ -62,7 +62,7 @@ var template_default = _template("b", (input) => {
 			_: _scope_with_id($scope0_id),
 			b: _existing_scope($childScope)
 		}), $cg__input_label && "b0");
-	}, 0, "b2", "b3", 1, 1, 1);
+	}, 0, "b2", "b3", 1, 1);
 	_scope($scope0_id, {
 		d: input.label,
 		f: _write_if($scope0_reason, 0) && $input_label__closures,

@@ -6,4 +6,4 @@
     "PatchChild:BranchScopes:#text/1": [{}, $, "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-effect/template.marko_4*content", "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-effect/template.marko_5*content"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-body-effect/template.marko_1*shell"]
 }
-;DRY
+;CQ4

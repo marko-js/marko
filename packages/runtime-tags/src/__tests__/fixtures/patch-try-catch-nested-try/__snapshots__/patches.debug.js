@@ -1,13 +1,13 @@
 // PATCH
-`packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-nested-try/template.marko_3*content;D ;<span> </span>`
+`packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-nested-try/template.marko_3*content`
 {
   "PatchCatch:#text/0": [{
     "PatchText:#text/0": "boom"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-nested-try/template.marko_3*content"]
 }
-;DgQ
+;DAQ
 
-// PATCH holding DgQ
+// PATCH holding DAQ
 {
   "PatchChild:BranchScopes:#text/0": [{
     "PatchText:#text/0": "ok",

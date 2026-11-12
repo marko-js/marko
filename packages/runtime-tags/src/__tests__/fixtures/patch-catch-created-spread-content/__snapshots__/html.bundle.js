@@ -30,7 +30,7 @@ var error_wrapper_default = _template("b", (input) => {
 		_script($scope1_id, "b0");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b1", $cg__input_fallback);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_fallback && "b1");
-	}, 0, "b3", "b4", 1, 1, 1);
+	}, 0, "b3", "b4", 1, 1);
 	_scope($scope0_id, {
 		d: input.fallback,
 		f: _write_if($scope0_reason, 0) && $input_fallback__closures,

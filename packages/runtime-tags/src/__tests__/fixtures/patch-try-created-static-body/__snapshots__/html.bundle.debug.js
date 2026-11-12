@@ -3,7 +3,7 @@ const $template = "<main></main>";
 const $walks = " b";
 const $setup = [[], []];
 _shells({
-	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;D ;<b> </b>",
+	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content",
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content,<em>static</em>",
 	"__tests__/template.marko": "__tests__/template.marko; ;<main></main>",
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`<b>${_text_mark($scope3_id, "#text/0", err.message, 1, 4, 0)}</b>`);
 				_scope($scope3_id, {}, "__tests__/template.marko", "5:8");
-			}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content", 0, 1, 1);
+			}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content", 0, 1);
 			_write_if($scope0_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "2:4");
 			return 0;
 		}

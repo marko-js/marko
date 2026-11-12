@@ -1,5 +1,4 @@
 // PATCH
-`packages/runtime-tags/src/__tests__/fixtures/patch-try-nested-await-settle/template.marko_3*content,<i>loading</i>`
 {
   "PatchChild:BranchScopes:#text/0": {
     "PatchPending:#text/0": 1
@@ -22,4 +21,3 @@
     }
   }
 }
-;DgU

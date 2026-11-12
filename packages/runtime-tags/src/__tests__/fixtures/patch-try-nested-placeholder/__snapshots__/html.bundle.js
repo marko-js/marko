@@ -1,11 +1,10 @@
 // template.marko
 _shells({
-	a1: "a1;D ;<em> </em>",
+	a1: "a1",
 	a2: "a2;D ;<span> </span>",
 	a3: "a3;b%;<!><!><!>",
-	a4: "a4,loading",
+	a4: "a4;b%;<!><!><!>",
 	a5: "a5;b%;<!><!><!>",
-	a6: "a6;b%;<!><!><!>",
 	a: "a;D%;<main><!></main>"
 });
 var template_default = _template("a", (input) => {
@@ -30,17 +29,17 @@ var template_default = _template("a", (input) => {
 				const $scope5_id = _scope_id();
 				_html(`<em>${_text_mark($scope5_id, "a", err.message, 1, 4, 0)}</em>`);
 				_scope($scope5_id, {});
-			}, 0, "a1", "a2", 1, 1, 1);
+			}, 0, "a1", "a2", 1, 1);
 			$wi__input_promise && _scope($scope3_id, { f: _unfilled_if($scope0_reason, 0) && $await_content__value__closures });
 		}, 1, "a3", $ui__input_promise, 1);
-		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a7", 1);
-		$wi__input_promise && _subscribe($ui__input_promise && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_promise && "a7", 0);
+		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a6", 1);
+		$wi__input_promise && _subscribe($ui__input_promise && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_promise && "a6", 0);
 		$wi__input_promise && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading");
-	}, void 0, "a4", void 0, "a6", 1, 0, 2);
+	}, void 0, "a7", void 0, "a5", 1);
 	_html("</main>");
 	_scope($scope0_id, { e: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures });
 }, 1);

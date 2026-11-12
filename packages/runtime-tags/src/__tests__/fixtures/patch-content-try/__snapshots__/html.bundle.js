@@ -13,13 +13,12 @@ var card_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a1: "a1,loading",
+	a1: "a1;D ;<em> </em>",
 	a2: "a2;D ;<em> </em>",
-	a3: "a3;D ;<em> </em>",
+	a3: "a3;b%;<!><!><!>",
 	a4: "a4;b%;<!><!><!>",
-	a5: "a5;b%;<!><!><!>",
 	a: "a; ;<main></main>",
-	a6: `a6${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${$template}`
+	a5: `a5${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${$template}`
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_value = _write_if($scope0_reason, 2), $cg__input_value = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_value = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $ui__input_value2 = _unfilled_if($scope0_reason, 2);
@@ -31,7 +30,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
-			card_default({ content: _content("a5", () => {
+			card_default({ content: _content("a4", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_try($scope2_id, "a", () => {
@@ -42,16 +41,16 @@ var template_default = _template("a", (input) => {
 						_html(`<em>${_text_mark($scope4_id, "a", input.value, 1, $scope0_reason, 2)}</em>`);
 						$cg__input_value && _patch_render($scope4_id, "a0");
 						_subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope4_id, { Cf: $wi__input_value && 1 }), $cg__input_value && "a0");
-					}, 1, "a2", $ui__input_value && 2);
+					}, 1, "a1", $ui__input_value && 2);
 					if ($scope4_id) $cg__input_value && _patch_render($scope4_id, "a0");
-					$cg__input_value && _patch_render($scope3_id, "a7");
-					$wi__input_show__OR__input_value && _subscribe($ui__input_value && $input_value__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), $cg__input_value && "a7", 0);
+					$cg__input_value && _patch_render($scope3_id, "a6");
+					$wi__input_show__OR__input_value && _subscribe($ui__input_value && $input_value__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), $cg__input_value && "a6", 0);
 					$wi__input_show__OR__input_value && _resume_branch($scope3_id);
 				}, () => {
 					_scope_reason();
 					_scope_id();
 					_html("loading");
-				}, void 0, "a1", void 0, "a4", 0, 0, 2);
+				}, void 0, "a7", void 0, "a3");
 				$wi__input_show__OR__input_value && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
 			}, $scope1_id, 0) });
 			_patch_child_end();
@@ -61,7 +60,7 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a6"], $scope0_reason, 1);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a5"], $scope0_reason, 1);
 	_html(`</main>${_el_mark($scope0_id, "a", $wg__input_show)}`);
 	_scope($scope0_id, {
 		e: _write_if($scope0_reason, 1) && ($ui__input_show || $ui__input_value2) && input.value,

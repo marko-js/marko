@@ -55,7 +55,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			"ClosureScopes:err_message/7": $wi__err_message && _unfilled_if($scope1_reason, 0) && $catch_content__err_message__closures,
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/tags/child.marko", "6:4");
-	}, 0, "__tests__/tags/child.marko_1*content", "__tests__/tags/child.marko_3*content", 1, 1, 1);
+	}, 0, "__tests__/tags/child.marko_1*content", "__tests__/tags/child.marko_3*content", 1, 1);
 	_scope($scope0_id, {
 		input_label: input.label,
 		"ClosureScopes:input_label/5": _write_if($scope0_reason, 0) && $input_label__closures,

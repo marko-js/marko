@@ -1,8 +1,8 @@
 // tags/show-await.marko
-const $placeholder_content = _content$1("b1", "<p>waiting</p>");
+const $placeholder_content = _content$1("b5", "<p>waiting</p>");
 const $await_content__$params = ($scope, $params2) => _text($scope.b, $params2[0]);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);
-const $try_content__input_promise = /*@__PURE__*/ _closure_get_patch("b5", 5, ($scope) => $try_content__await_promise($scope, $scope._.d));
+const $try_content__input_promise = /*@__PURE__*/ _closure_get_patch("b4", 5, ($scope) => $try_content__await_promise($scope, $scope._.d));
 const $input_promise__closure = /*@__PURE__*/ _closure($try_content__input_promise);
 const $input_promise = /*@__PURE__*/ _const(3, $input_promise__closure);
 

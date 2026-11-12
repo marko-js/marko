@@ -298,14 +298,10 @@ const builder = {
 
 export default builder;
 
-// A template whose page links its roots' modules: one with client side work, a
-// client statement, or boundary content it registers for a page to reach by id.
+// A template whose page links its roots' modules: one with client side work or
+// a client statement.
 export function hasClientWork(programExtra: t.ProgramExtra) {
-  return !!(
-    programExtra.isInteractive ||
-    programExtra.hasClientStatement ||
-    programExtra.registersBoundaryContent
-  );
+  return !!(programExtra.isInteractive || programExtra.hasClientStatement);
 }
 
 export function assertVisited<S>(

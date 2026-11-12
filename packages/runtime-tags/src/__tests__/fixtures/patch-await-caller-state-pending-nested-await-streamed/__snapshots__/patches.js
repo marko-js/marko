@@ -14,7 +14,6 @@
 }
 
 // PATCH
-`b1,<i>inner loading</i>`
 {
   cc: {
     cAa: {
@@ -36,4 +35,3 @@
     }
   }
 }
-;EAM

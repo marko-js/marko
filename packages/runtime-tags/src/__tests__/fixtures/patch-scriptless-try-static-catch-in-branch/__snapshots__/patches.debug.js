@@ -10,14 +10,12 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-try-static-catch-in-branch/template.marko_3*content", "packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-try-static-catch-in-branch/template.marko_2*content"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-try-static-catch-in-branch/template.marko_1*shell"]
 }
-;DSY
+;CxY
 
-// PATCH holding DSY
-`packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-try-static-catch-in-branch/template.marko_3*content,<p>oops</p>`
+// PATCH holding CxY
 {
   "PatchBranch:#main/0": [{
     "PatchChild:BranchScopes:#text/0": [0, "packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-try-static-catch-in-branch/template.marko_3*content", "packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-try-static-catch-in-branch/template.marko_2*content"],
     "PatchCatch:#text/0": []
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-try-static-catch-in-branch/template.marko_1*shell"]
 }
-;DTY

@@ -1,5 +1,4 @@
 // PATCH
-`packages/runtime-tags/src/__tests__/fixtures/patch-try-nested-placeholder-streamed/template.marko_4*content,inner`
 {
   "PatchChild:BranchScopes:#text/0": {
     "PatchChild:BranchScopes:#text/0": [{
@@ -16,4 +15,3 @@
     }, _(0)["PatchChild:BranchScopes:#text/0"]["PatchChild:BranchScopes:#text/0"][1]]
   }
 }
-;EAU

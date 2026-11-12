@@ -42,7 +42,6 @@ const $template$1 = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}<!><!>`)($template
 const $walks$1 = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&%c`)("b", $walks$3);
 const $setup$1 = _shell_setup([[], []], ["#childScope/0>", $setup$4], ["#childScope/1>", $setup$3]);
 _shells({
-	"__tests__/tags/a-tag.marko_2*content": "__tests__/tags/a-tag.marko_2*content,caught",
 	"__tests__/tags/a-tag.marko_1*content": `__tests__/tags/a-tag.marko_1*content${_shell_marker([[], []], ["#childScope/0>", $setup$2])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l")};${$template$2}`,
 	"__tests__/tags/a-tag.marko": `__tests__/tags/a-tag.marko${_shell_marker($setup$1)};${((_w0, _w1) => `/${_w0}&/${_w1}&%c`)("b", $walks$3)};${((_w0, _w1) => `${_w0}${_w1}<!><!>`)($template$4, $template$3)}`
 });
@@ -67,7 +66,7 @@ var a_tag_default = _template("__tests__/tags/a-tag.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html("caught");
-	}, 0, "__tests__/tags/a-tag.marko_2*content", "__tests__/tags/a-tag.marko_1*content", 1, 0, 1);
+	}, 0, "__tests__/tags/a-tag.marko_2*content", "__tests__/tags/a-tag.marko_1*content", 1);
 	_scope($scope0_id, {
 		"#childScope/0": _existing_scope($childScope),
 		"#childScope/1": _existing_scope($childScope2)

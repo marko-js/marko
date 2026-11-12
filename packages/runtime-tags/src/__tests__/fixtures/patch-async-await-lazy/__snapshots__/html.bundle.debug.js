@@ -5,7 +5,6 @@ const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
 	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content;D ;<span> </span>",
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;D ;<em> </em>",
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content",
 	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await;D ;<em> </em>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;b%;<!><!><!>",
 	"__tests__/template.marko_0_#text#2/await": "__tests__/template.marko_0_#text#2/await;D ;<span> </span>",
@@ -35,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html("loading");
-	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
+	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 1);
 	_html("</section><footer>");
 	_await($scope0_id, "#text/2", resolveAfter(input.note, input.slow ? 2 : 0), (note) => {
 		const $scope4_id = _scope_id();

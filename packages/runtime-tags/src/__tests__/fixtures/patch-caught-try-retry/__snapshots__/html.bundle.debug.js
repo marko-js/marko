@@ -6,7 +6,6 @@ function check(fail) {
 }
 const $setup = [[], []];
 _shells({
-	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content,Unavailable",
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content,<p>Ready</p>",
 	"__tests__/template.marko": "__tests__/template.marko; ;<main></main>",
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
@@ -31,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope3_reason = _scope_reason();
 				const $scope3_id = _scope_id();
 				_html("Unavailable");
-			}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content", 0, 0, 1);
+			}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content");
 			$wi__input_show__OR__input_fail && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4");
 			return 0;
 		}

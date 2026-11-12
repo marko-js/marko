@@ -2,7 +2,6 @@
 const $template = "<!><!><!>";
 const $setup = [[], []];
 _shells({
-	b0: "b0,err",
 	b1: "b1,<b>static</b>",
 	b2: "b2;D l%;<p> </p><!><!>",
 	b3: "b3;D l%;<p> </p><!><!>",
@@ -22,7 +21,7 @@ var show_await_default = _template("b", (input) => {
 			_scope_reason();
 			_scope_id();
 			_html("err");
-		}, 0, "b0", "b1", 0, 0, 1);
+		}, 0, "b0", "b1");
 		_scope($scope1_id, {});
 	}, 1, "b2", _unfilled_if($scope0_reason, 0) && 3, 1);
 });

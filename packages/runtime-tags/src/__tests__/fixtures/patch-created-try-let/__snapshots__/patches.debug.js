@@ -9,4 +9,4 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-let/template.marko_3*content", "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-let/template.marko_2*content"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-let/template.marko_1*shell"]
 }
-;CQY
+;BwY

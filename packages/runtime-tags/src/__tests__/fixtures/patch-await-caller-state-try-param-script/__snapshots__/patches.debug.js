@@ -18,9 +18,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-try-param-script/template.marko_1*shell"]
 }
-;D0w
+;DSw
 
-// PATCH holding D0w
+// PATCH holding DSw
 {
   "PatchBranch:#text/1": [{
     "PatchChild:#childScope/0": {

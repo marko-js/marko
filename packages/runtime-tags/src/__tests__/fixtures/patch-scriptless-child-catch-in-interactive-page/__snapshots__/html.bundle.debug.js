@@ -4,7 +4,7 @@ const $walks$1 = "b%c";
 const $setup$1 = [[], []];
 _shells({
 	"__tests__/tags/card/index.marko_3*content": "__tests__/tags/card/index.marko_3*content;D ;<em> </em>",
-	"__tests__/tags/card/index.marko_2*content": "__tests__/tags/card/index.marko_2*content;D ;<b> </b>",
+	"__tests__/tags/card/index.marko_2*content": "__tests__/tags/card/index.marko_2*content",
 	"__tests__/tags/card/index.marko_1_#text#0/await": "__tests__/tags/card/index.marko_1_#text#0/await;D ;<em> </em>",
 	"__tests__/tags/card/index.marko_1*content": "__tests__/tags/card/index.marko_1*content;b%;<!><!><!>",
 	"__tests__/tags/card/index.marko": "__tests__/tags/card/index.marko;b%;<!><!><!>"
@@ -29,7 +29,7 @@ var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<b>${_text_mark($scope2_id, "#text/0", err.message, 1, 4, 0)}</b>`);
 		_scope($scope2_id, {}, "__tests__/tags/card/index.marko", "5:4");
-	}, 0, "__tests__/tags/card/index.marko_2*content", "__tests__/tags/card/index.marko_1*content", 1, 1, 1);
+	}, 0, "__tests__/tags/card/index.marko_2*content", "__tests__/tags/card/index.marko_1*content", 1, 1);
 	_scope($scope0_id, { "ClosureScopes:input_promise/4": $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures }, "__tests__/tags/card/index.marko", 0);
 });
 

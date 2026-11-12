@@ -1,5 +1,4 @@
 // PATCH
-`packages/runtime-tags/src/__tests__/fixtures/patch-two-await-placeholder/template.marko_2*content,<em>loading</em>`
 {
   "PatchChild:BranchScopes:#text/0": {
     "PatchPending:#text/0": 1,
@@ -20,4 +19,3 @@
     }
   }
 }
-;DgQ

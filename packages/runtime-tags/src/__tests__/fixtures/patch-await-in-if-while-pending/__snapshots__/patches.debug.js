@@ -10,4 +10,4 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-in-if-while-pending/template.marko_2*shell"]
   }
 }
-;DRQ
+;CxQ

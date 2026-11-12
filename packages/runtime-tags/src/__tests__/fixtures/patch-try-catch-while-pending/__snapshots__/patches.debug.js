@@ -9,4 +9,4 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-while-pending/template.marko_3*content", "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-while-pending/template.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-while-pending/template.marko_2*content"]
 }
-;DAE
+;CAE

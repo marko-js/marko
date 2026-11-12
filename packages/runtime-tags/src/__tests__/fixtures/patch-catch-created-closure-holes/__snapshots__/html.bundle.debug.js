@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			err_message: ["err.message", "6:11"],
 			upper: "7:12"
 		}), $cg__input_msg && "__tests__/template.marko_1_input_msg#0:3/subscribe");
-	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 1, 1);
+	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 1);
 	_scope($scope0_id, {
 		input_msg: input.msg,
 		input_fail: $wi__input_msg && $ui__input_msg__OR__input_fail && input.fail,

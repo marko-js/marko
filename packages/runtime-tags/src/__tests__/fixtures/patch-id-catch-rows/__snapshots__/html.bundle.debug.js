@@ -19,7 +19,7 @@ _shells({
 	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content;D ;<p> </p>",
 	"__tests__/template.marko_3_#text#0/await": "__tests__/template.marko_3_#text#0/await;D ;<p> </p>",
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;b%;<!><!><!>",
-	"__tests__/template.marko_2*content": `__tests__/template.marko_2*content${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`,
+	"__tests__/template.marko_2*content": `__tests__/template.marko_2*content${_shell_marker([[], []], ["#childScope/0>", $setup$1])}`,
 	"__tests__/template.marko": "__tests__/template.marko; b%;<h1>Fields</h1><!><!>",
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });
@@ -56,7 +56,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_: _scope_with_id($scope1_id),
 				"#childScope/0": _existing_scope($childScope)
 			}, "__tests__/template.marko", "5:4");
-		}, 0, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content", 0, 1, 1);
+		}, 0, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content", 0, 1);
 		_scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			"ClosureScopes:row_promise/7": $wi__input_rows && _unfilled_if($scope0_reason, 0) && $for_content__row_promise__closures

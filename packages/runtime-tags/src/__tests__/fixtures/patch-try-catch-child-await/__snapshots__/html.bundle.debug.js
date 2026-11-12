@@ -24,7 +24,7 @@ const $template = "<main><!></main>";
 const $walks = "D%l";
 const $setup = [[], []];
 _shells({
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;D ;<b> </b>",
+	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content",
 	"__tests__/template.marko_1*content": `__tests__/template.marko_1*content${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${$template$1}`,
 	"__tests__/template.marko": "__tests__/template.marko;D%;<main><!></main>"
 });
@@ -51,7 +51,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<b>${_text_mark($scope2_id, "#text/0", err.message, 1, 4, 0)}</b>`);
 		_scope($scope2_id, {}, "__tests__/template.marko", "4:6");
-	}, 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 1, 1, 1);
+	}, 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 1, 1);
 	_html("</main>");
 	_scope($scope0_id, { "ClosureScopes:input_promise/4": $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures }, "__tests__/template.marko", 0);
 }, 1);

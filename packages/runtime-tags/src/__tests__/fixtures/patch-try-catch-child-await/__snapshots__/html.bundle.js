@@ -20,7 +20,7 @@ var loader_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a1: "a1;D ;<b> </b>",
+	a1: "a1",
 	a2: `a2${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${$template}`,
 	a: "a;D%;<main><!></main>"
 });
@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<b>${_text_mark($scope2_id, "a", err.message, 1, 4, 0)}</b>`);
 		_scope($scope2_id, {});
-	}, 0, "a1", "a2", 1, 1, 1);
+	}, 0, "a1", "a2", 1, 1);
 	_html("</main>");
 	_scope($scope0_id, { e: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures });
 }, 1);

@@ -70,7 +70,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "8:4"), $cg__input_msg && "__tests__/template.marko_1_input_msg#0:5/subscribe", 0), "__tests__/template.marko_1_count#0:7/subscribe", 0);
 		_resume_branch($scope1_id);
-	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 1, 1);
+	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		input_msg: input.msg,

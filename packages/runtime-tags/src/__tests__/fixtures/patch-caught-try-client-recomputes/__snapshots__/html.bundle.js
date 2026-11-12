@@ -59,7 +59,7 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			b: _existing_scope($childScope)
 		}), $cg__input_label && "a1"), $cg__input_count && "a2");
-	}, 0, "a5", "a6", 1, 1, 1);
+	}, 0, "a5", "a6", 1, 1);
 	_try($scope0_id, "b", () => {
 		_scope_reason();
 		const $scope4_id = _scope_id();
@@ -90,7 +90,7 @@ var template_default = _template("a", (input) => {
 			Ci: $wi__input_label && 1,
 			Cj: $wi__input_count && 1
 		}), $cg__input_label && "a8"), $cg__input_count && "a9");
-	}, 0, "a12", "a13", 1, 1, 1);
+	}, 0, "a12", "a13", 1, 1);
 	_scope($scope0_id, {
 		e: input.label,
 		f: input.count,

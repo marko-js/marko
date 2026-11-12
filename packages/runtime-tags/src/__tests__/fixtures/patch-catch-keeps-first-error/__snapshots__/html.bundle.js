@@ -51,7 +51,7 @@ var template_default = _template("a", (input) => {
 			a: _existing_scope($childScope)
 		}), $cg__input_label && "a0", 0), "a1", 0);
 		_resume_branch($scope1_id);
-	}, 0, "a5", "a6", 1, 1, 1);
+	}, 0, "a5", "a6", 1, 1);
 	_script($scope0_id, "a7");
 	_scope($scope0_id, {
 		f: input.label,

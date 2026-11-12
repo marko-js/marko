@@ -1,11 +1,9 @@
 // PATCH
-`a2,<em>outer loading</em>`
 {
   cAa: {
     pa: 1
   }
 }
-`a1,<em>inner loading</em>`
 {
   cAa: {
     cAa: {
@@ -29,4 +27,3 @@
     }
   }
 }
-;EwY

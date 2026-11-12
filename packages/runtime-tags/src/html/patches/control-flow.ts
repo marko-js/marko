@@ -21,8 +21,6 @@ import {
   iterateForTo,
   iterateForUntil,
   tryBoundary,
-  tryPlaceholder,
-  writeTryRenderers,
 } from "../control-flow";
 import type { ServerRenderer } from "../template";
 import {
@@ -646,8 +644,6 @@ export function _try(
   alwaysPairs?: 1,
   // Set where a flush creates the catch.
   createsCatch?: 1,
-  // Content created from its shell, by id: 1 the catch, 2 the placeholder.
-  shellContent = 0,
 ) {
   const state = getState();
   // Its catch renders at its depth: a throw skips the pops of the calls it
@@ -666,11 +662,8 @@ export function _try(
         }),
       placeholderId,
       catchId,
-      shellContent,
     );
   }
-  // The placeholder's branch id precedes the body's, as in a document.
-  const placeholderBranchId = placeholderContent ? _scope_id() : 0;
   const branchId = _peek_scope_id();
   // In its branch, the body's own setup rides its shell; it is creatable
   // only where the try's scope is.
@@ -709,30 +702,8 @@ export function _try(
   );
   const chunk = $chunk;
   const beforeBranch = deferBranchStart(chunk);
-  // A flush that leaves the body pending ships the placeholder's shell, as a
-  // document renders the placeholder.
-  const bodyContent = placeholderContent
-    ? () =>
-        tryPlaceholder(
-          branchContent,
-          () => shipShell(state, placeholderId),
-          branchId,
-          scopeId,
-          placeholderBranchId,
-        )
-    : branchContent;
-  const renderers = (): void =>
-    writeTryRenderers(
-      branchId,
-      catchContent,
-      placeholderContent,
-      catchId,
-      placeholderId,
-      shellContent,
-    );
-  // A patch shows `@placeholder` from received client state and creates
-  // `@catch` in its entry, so no document reorder rides the flush stream.
-  let writesRenderers: boolean;
+  // The client renders `@placeholder` by its module's renderer and a flush creates
+  // `@catch` by its entry, so nothing reorders and no renderers are written.
   if (catchContent) {
     // Its entry goes out whenever the body renders, so a try the page caught
     // learns it; a body that throws leaves its patch out (or voids the entry).
@@ -741,11 +712,11 @@ export function _try(
     if (create) shipShell(state, bodyId);
     let entry: unknown[] | undefined;
     let settled = false;
-    writesRenderers = tryBoundary(
-      bodyContent,
+    tryBoundary(
+      branchContent,
       catchContent,
       branchId,
-      renderers,
+      NOOP,
       (err) => {
         getIds().depth = depth;
         settled = true;
@@ -766,7 +737,6 @@ export function _try(
         }
         // The client renders a catch no flush creates; one reading its error
         // sits where no patch renders its try (stateful or off the branch path).
-        if (shellContent & 1) shipShell(state, catchId);
         writePatchEntry(
           state,
           scopeId,
@@ -788,15 +758,9 @@ export function _try(
     // nothing.
     if (create) ensureScopePatch(state, branchId);
     // Its body's own boundary passes a throw on to the enclosing `<try>`.
-    writesRenderers = tryBoundary(
-      bodyContent,
-      catchContent,
-      branchId,
-      renderers,
-    );
+    tryBoundary(branchContent, catchContent, branchId, NOOP);
   }
   applyBranchStart(chunk, beforeBranch, true);
-  if (!writesRenderers) renderers();
 }
 
 // The `@catch` renders as a branch the flush creates in the body's place, from its
@@ -810,6 +774,7 @@ function writeCatch(
   catchId: string,
 ) {
   const catchBranchId = _peek_scope_id();
+  shipShell(state, catchId);
   linkBranch(state, scopeId, accessor, catchBranchId);
   const patch = openScopePatch(state, catchBranchId);
   withBranchId(catchBranchId, withUnpatched, catchContent, err);

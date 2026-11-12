@@ -1,9 +1,8 @@
 // template.marko
 _shells({
-	a5: "a5",
+	a5: "a5;/&;",
 	a6: "a6;/&;",
-	a7: "a7;/&;",
-	a8: "a8;b%;<!><!><!>",
+	a7: "a7;b%;<!><!><!>",
 	a: "a;/&b%;<pre id=log></pre><!><!>"
 });
 var template_default = _template("a", (input) => {
@@ -45,15 +44,15 @@ var template_default = _template("a", (input) => {
 			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "a4", $cg__input_x);
 			_subscribe(_unfilled_if($scope0_reason, 1) && $fn2__closures, _scope($scope2_id, { a: _existing_scope($childScope2) }), $cg__input_x && "a4", 0);
 			_resume_branch($scope2_id);
-		}, 1, "a6", $ui__input_promise, 1);
-		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "a9", 1);
-		$wi__input_x__OR__input_promise && _subscribe($ui__input_promise && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "a9", 0);
+		}, 1, "a5", $ui__input_promise, 1);
+		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "a8", 1);
+		$wi__input_x__OR__input_promise && _subscribe($ui__input_promise && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "a8", 0);
 		$wi__input_x__OR__input_promise && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading");
-	}, void 0, "a5", void 0, "a8", 1, 0, 2);
+	}, void 0, "a9", void 0, "a7", 1);
 	_scope($scope0_id, {
 		e: input.x,
 		a: _existing_scope($childScope),

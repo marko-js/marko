@@ -2,10 +2,9 @@
 const $template = "<!><!><!>";
 const $setup$1 = [[], []];
 _shells({
-	b1: "b1,<em>loading</em>",
+	b1: "b1;D%c%;<p><!>:<!></p>",
 	b2: "b2;D%c%;<p><!>:<!></p>",
-	b3: "b3;D%c%;<p><!>:<!></p>",
-	b4: "b4;b%;<!><!><!>",
+	b3: "b3;b%;<!><!><!>",
 	b: "b;b%;<!><!><!>"
 });
 var show_await_default = _template("b", (input) => {
@@ -21,15 +20,15 @@ var show_await_default = _template("b", (input) => {
 			_html(`<p>${_text_mark($scope2_id, "a", input.label, 1, $scope0_reason, 2)}:${_text_mark($scope2_id, "b", x, 2, $scope0_reason, 1)}</p>`);
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "b0", $cg__input_label);
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, {}), $cg__input_label && "b0");
-		}, 1, "b2", $ui__input_promise, 1);
-		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b5", 1);
-		$wi__input_promise__OR__input_label && _subscribe($ui__input_promise && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b5", 0);
+		}, 1, "b1", $ui__input_promise, 1);
+		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b4", 1);
+		$wi__input_promise__OR__input_label && _subscribe($ui__input_promise && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b4", 0);
 		$wi__input_promise__OR__input_label && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>loading</em>");
-	}, void 0, "b1", void 0, "b4", 1, 0, 2);
+	}, void 0, "b5", void 0, "b3", 1);
 	_scope($scope0_id, {
 		g: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_label__closures,
 		f: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_promise__closures

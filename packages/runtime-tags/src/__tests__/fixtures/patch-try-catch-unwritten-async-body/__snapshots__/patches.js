@@ -1,8 +1,8 @@
 // PATCH
-[`a3;b%;<!><!><!>`, `a0,<em>static</em>`, `a1,<s>caught</s>`]
+[`a2;b%;<!><!><!>`, `a0,<em>static</em>`]
 {
   ta: "b",
-  cAb: [0, "a1", "a3"],
+  cAb: [0, "a4", "a2"],
   kb: []
 }
-;CxY
+;CQo

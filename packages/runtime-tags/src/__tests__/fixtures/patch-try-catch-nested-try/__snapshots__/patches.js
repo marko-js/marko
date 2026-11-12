@@ -1,13 +1,13 @@
 // PATCH
-`a2;D ;<span> </span>`
+`a1`
 {
   ka: [{
     ta: "boom"
-  }, "a2"]
+  }, "a1"]
 }
-;DgM
+;DAI
 
-// PATCH holding DgM
+// PATCH holding DAI
 {
   cAa: [{
     ta: "ok",
@@ -16,6 +16,6 @@
       cAa: {
         ta: "v3"
       }
-    }, "a1"]
-  }, "a2"]
+    }, "a6"]
+  }, "a1"]
 }

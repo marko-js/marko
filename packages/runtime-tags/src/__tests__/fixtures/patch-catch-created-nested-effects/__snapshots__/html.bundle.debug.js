@@ -103,7 +103,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"ClosureScopes:w/13": $wi__input_v && $wi__input_v && ($ui__input_v2 || $ui__input_show) && $catch_content__w__closures,
 			"#childScope/3": _existing_scope($childScope)
 		}, "__tests__/template.marko", "6:4", { w: "7:12" }), $cg__input_v && "__tests__/template.marko_1_input_v#0:3/subscribe"), $cg__input_show && "__tests__/template.marko_1_input_show#0:4/subscribe"), $cg__input_items && "__tests__/template.marko_1_input_items#0:5/subscribe");
-	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_5*content", 1, 1, 1);
+	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_5*content", 1, 1);
 	_scope($scope0_id, {
 		input_v: input.v,
 		input_show: input.show,

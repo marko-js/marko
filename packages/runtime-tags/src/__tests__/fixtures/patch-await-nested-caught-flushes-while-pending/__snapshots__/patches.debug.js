@@ -1,11 +1,9 @@
 // PATCH
-`packages/runtime-tags/src/__tests__/fixtures/patch-await-nested-caught-flushes-while-pending/template.marko_5*content`
 {
   "PatchChild:BranchScopes:#text/2": {
     "PatchPending:#text/0": 1
   }
 }
-`packages/runtime-tags/src/__tests__/fixtures/patch-await-nested-caught-flushes-while-pending/template.marko_6*content`
 {
   "PatchChild:BranchScopes:#text/2": {
     "PatchChild:BranchScopes:#text/0": {
@@ -29,4 +27,3 @@
     }
   }
 }
-;FAcA

@@ -4,8 +4,6 @@ const $walks = "D%l";
 const $setup = [[], []];
 _shells({
 	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content;D%c%;<em><!> <!></em>",
-	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content,<s>caught</s>",
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content,<i>loading</i>",
 	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await;D%c%;<em><!> <!></em>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;b%;<!><!><!>",
 	"__tests__/template.marko": "__tests__/template.marko;D%;<main><!></main>"
@@ -33,6 +31,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
 		_html("<s>caught</s>");
-	}, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", 0, 0, 3);
+	}, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content", "__tests__/template.marko_1*content");
 	_html("</main>");
 }, 1);

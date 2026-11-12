@@ -3,9 +3,7 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = [[], []];
 _shells({
-	"__tests__/template.marko_5*content": "__tests__/template.marko_5*content",
 	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content !__tests__/template.marko_4,<p>placeholder</p>",
-	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content",
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content !__tests__/template.marko_2,<p>caught</p>",
 	"__tests__/template.marko": "__tests__/template.marko;b%;<!><!><!>",
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%b%;<!><!><!><!>"
@@ -25,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope3_reason = _scope_reason();
 				const $scope3_id = _scope_id();
 				_html("failed");
-			}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content", 0, 0, 1);
+			}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content");
 			_try($scope1_id, "#text/1", () => {
 				const $scope4_reason = _scope_reason();
 				const $scope4_id = _scope_id();
@@ -35,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope5_reason = _scope_reason();
 				const $scope5_id = _scope_id();
 				_html("loading");
-			}, void 0, "__tests__/template.marko_5*content", void 0, "__tests__/template.marko_4*content", 0, 0, 2);
+			}, void 0, "__tests__/template.marko_5*content", void 0, "__tests__/template.marko_4*content");
 			_write_if($scope0_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "1:2");
 			return 0;
 		}

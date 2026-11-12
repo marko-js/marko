@@ -3,7 +3,7 @@ const $template = "<!><!><!>";
 const $setup$1 = [[], []];
 _shells({
 	b0: "b0;D ;<em> </em>",
-	b1: "b1;D ;<b> </b>",
+	b1: "b1",
 	b2: "b2;D ;<em> </em>",
 	b3: "b3;b%;<!><!><!>",
 	b: "b;b%;<!><!><!>"
@@ -28,7 +28,7 @@ var card_default = _template("b", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<b>${_text_mark($scope2_id, "a", err.message, 1, 4, 0)}</b>`);
 		_scope($scope2_id, {});
-	}, 0, "b1", "b3", 1, 1, 1);
+	}, 0, "b1", "b3", 1, 1);
 	_scope($scope0_id, { e: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures });
 });
 

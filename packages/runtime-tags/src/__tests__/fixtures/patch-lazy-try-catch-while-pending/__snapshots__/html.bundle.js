@@ -3,10 +3,8 @@ const $template = "<!><!><!>";
 const $setup$1 = [[], []];
 _shells({
 	a1: "a1;D%c%;<em><!> <!></em>",
-	a2: "a2,<s>caught</s>",
-	a3: "a3,<i>loading</i>",
-	a4: "a4;D%c%;<em><!> <!></em>",
-	a5: "a5;b%;<!><!><!>",
+	a2: "a2;D%c%;<em><!> <!></em>",
+	a3: "a3;b%;<!><!><!>",
 	a: "a;b%;<!><!><!>"
 });
 var child_default = _template("a", (input) => {
@@ -22,7 +20,7 @@ var child_default = _template("a", (input) => {
 			_fill_global_subscribe("a0", $scope4_id);
 			_scope($scope4_id, {});
 		}, 1, "a1", void 0, 1);
-		_fill_global_subscribe("a6", $scope1_id);
+		_fill_global_subscribe("a4", $scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();
@@ -31,7 +29,7 @@ var child_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<s>caught</s>");
-	}, "a3", "a2", "a5", 0, 0, 3);
+	}, "a5", "a6", "a3");
 });
 
 // template.marko

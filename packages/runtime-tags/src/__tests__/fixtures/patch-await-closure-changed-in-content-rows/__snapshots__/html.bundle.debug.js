@@ -15,7 +15,6 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = [[], []];
 _shells({
-	"__tests__/template.marko_5*content": "__tests__/template.marko_5*content",
 	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content __tests__/template.marko_4_n#2:1/subscribe;D ;<p> </p>",
 	"__tests__/template.marko_3_#text#0/await": "__tests__/template.marko_3_#text#0/await __tests__/template.marko_4_n#2:1/subscribe;D ;<p> </p>",
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;b%;<!><!><!>",
@@ -48,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope5_reason = _scope_reason();
 				const $scope5_id = _scope_id();
 				_html("loading");
-			}, void 0, "__tests__/template.marko_5*content", void 0, "__tests__/template.marko_3*content", 0, 0, 2);
+			}, void 0, "__tests__/template.marko_5*content", void 0, "__tests__/template.marko_3*content");
 			_script($scope2_id, "__tests__/template.marko_2", 0);
 			_scope($scope2_id, { "ClosureScopes:n/2": $wrap_content__n__closures }, "__tests__/template.marko", "3:4");
 			_resume_branch($scope2_id);

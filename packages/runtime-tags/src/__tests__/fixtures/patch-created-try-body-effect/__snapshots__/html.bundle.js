@@ -1,8 +1,6 @@
 // template.marko
 _shells({
-	a4: "a4",
 	a5: "a5 !a3,<p>placeholder</p>",
-	a1: "a1",
 	a2: "a2 !a0,<p>caught</p>",
 	a: "a;b%;<!><!><!>",
 	a6: "a6;b%b%;<!><!><!><!>"
@@ -22,7 +20,7 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				_scope_id();
 				_html("failed");
-			}, 0, "a1", "a2", 0, 0, 1);
+			}, 0, "a1", "a2");
 			_try($scope1_id, "b", () => {
 				_scope_reason();
 				const $scope4_id = _scope_id();
@@ -32,7 +30,7 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				_scope_id();
 				_html("loading");
-			}, void 0, "a4", void 0, "a5", 0, 0, 2);
+			}, void 0, "a4", void 0, "a5");
 			_write_if($scope0_reason, 0) && _scope($scope1_id, {});
 			return 0;
 		}

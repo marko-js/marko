@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 		}, 0, $scope2_id, "b", 1, 1, 1, 0, 0, "a4");
 		_script($scope2_id, "a5");
 		_scope($scope2_id, { f: _unfilled_if($scope2_reason, 0) && err?.message });
-	}, 0, "a1", "a2", 1, 1, 1);
+	}, 0, "a1", "a2", 1, 1);
 	_html(`<button>${_text_mark($scope0_id, "c", count)}</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a7");
 	_scope($scope0_id, {

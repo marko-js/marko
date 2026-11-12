@@ -4,7 +4,7 @@ function check(x) {
 	return 1;
 }
 _shells({
-	a1: "a1;D ;<b> </b>",
+	a1: "a1",
 	a2: "a2,<em>ok</em>",
 	a: "a;D%;<main><!></main>"
 });
@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<b>${_text_mark($scope2_id, "a", err.message, 1, 4, 0)}</b>`);
 		_scope($scope2_id, {});
-	}, 0, "a1", "a2", 1, 1, 1);
+	}, 0, "a1", "a2", 1, 1);
 	_html("</main>");
 	_scope($scope0_id, { e: $wi__input_boom && _unfilled_if($scope0_reason, 0) && $input_boom__closures });
 }, 1);

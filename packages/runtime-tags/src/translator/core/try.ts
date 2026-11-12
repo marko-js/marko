@@ -35,12 +35,10 @@ import {
   ensureBodySection,
   getScopeIdIdentifier,
   getSection,
-  type Section,
   getSectionForBody,
   mayMergeWithText,
   type ControlFlowTagExtra,
 } from "../util/sections";
-import { createsFromShell } from "../util/shell";
 import {
   addValue,
   getResumeRegistryId,
@@ -136,6 +134,8 @@ export default {
       tag: tagExtra,
     });
     if (isPatch()) {
+      // A patch build loads the module registering every `@catch` and `@placeholder`.
+      getProgram().node.extra.isInteractive = true;
       // A `<try>` a patch may reach applies its body through `patches/try`, and
       // a `@catch` a patch creates from its shell, `patches/catch-created`.
       onReasonsSettled(() => {
@@ -148,9 +148,6 @@ export default {
                 ? "patches/catch-created"
                 : "patches/catch",
             );
-            // An empty `@catch` renders by the renderer its module registers.
-            if (!catchSection)
-              getProgram().node.extra.registersBoundaryContent = true;
           }
         }
       });
@@ -204,7 +201,6 @@ export default {
             catchSection && patchCreates(catchSection)
               ? t.numericLiteral(1)
               : absentArg(0),
-            getShellContentArg(catchSection, placeholderSection),
           );
         }
 
@@ -304,16 +300,4 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
       ...body.node.body,
     ]),
   );
-}
-
-// The content a patch creates from its shell, as `_try`'s bits: 1 the catch,
-// 2 the placeholder.
-function getShellContentArg(
-  catchSection: Section | undefined,
-  placeholderSection: Section | undefined,
-) {
-  const bits =
-    (catchSection && createsFromShell(catchSection) ? 1 : 0) |
-    (placeholderSection && createsFromShell(placeholderSection) ? 2 : 0);
-  return bits && t.numericLiteral(bits);
 }

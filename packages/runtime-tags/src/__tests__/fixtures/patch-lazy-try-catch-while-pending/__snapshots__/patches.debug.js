@@ -11,4 +11,4 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-catch-while-pending/child.marko_3*content", "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-catch-while-pending/child.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-catch-while-pending/child.marko_2*content"]
   }
 }
-;DgE
+;CgE

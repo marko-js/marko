@@ -13,7 +13,7 @@
 ;DTI
 
 // PATCH holding DTI
-`a1;D ;<p> </p>`
+`a1`
 {
   ba: [{
     cAa: [0, "a1", "a3"],

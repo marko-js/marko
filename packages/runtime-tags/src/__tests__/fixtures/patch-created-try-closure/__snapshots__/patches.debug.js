@@ -7,4 +7,4 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-closure/template.marko_3*content", "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-closure/template.marko_2*content"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-try-closure/template.marko_1*shell"]
 }
-;CQY
+;BwY

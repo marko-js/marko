@@ -1,5 +1,4 @@
 // PATCH
-`b1,<span>caught</span>`
 {
   cb: {
     cAa: {
@@ -8,4 +7,3 @@
     }
   }
 }
-;EAI

@@ -1,6 +1,5 @@
 // template.marko
 _shells({
-	a2: "a2",
 	a3: "a3 !a0; D ;<button> </button>",
 	a: "a;E l%;<main><h1> </h1><!></main>",
 	a4: "a4;b%;<!><!><!>"
@@ -24,7 +23,7 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				_scope_id();
 				_html("loading");
-			}, void 0, "a2", void 0, "a3", 0, 0, 2);
+			}, void 0, "a2", void 0, "a3");
 			_write_if($scope0_reason, 1) && _scope($scope1_id, {});
 			return 0;
 		}

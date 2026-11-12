@@ -26,9 +26,8 @@ var wrap_default = _template("b", (input) => {
 // template.marko
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({
-	a1: "a1,failed",
 	a2: "a2;D ;<p> </p>",
-	a3: "a3;b%;<!><!><!>",
+	a3: "a3",
 	a: `a${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
@@ -52,7 +51,7 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				_scope_id();
 				_html("failed");
-			}, 0, "a1", "a2", 0, 0, 1);
+			}, 0, "a1", "a2");
 			$wi__input_show__OR__input_id && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 		}, $scope0_id)
 	});

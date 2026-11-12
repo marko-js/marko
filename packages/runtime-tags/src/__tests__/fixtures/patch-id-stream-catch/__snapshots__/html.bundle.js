@@ -85,7 +85,7 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		});
-	}, "a6", "a2", "a4", 1, 1, 1);
+	}, "a6", "a2", "a4", 1, 1);
 	_scope($scope0_id, {
 		f: heading,
 		g: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures

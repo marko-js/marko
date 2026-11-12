@@ -11,7 +11,7 @@
 ;CQY
 
 // PATCH holding CQY
-`packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-in-branch/template.marko_3*content;D ;<b> </b>`
+`packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-in-branch/template.marko_3*content`
 {
   "PatchBranch:#main/0": [{
     "PatchChild:BranchScopes:#text/0": [0, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-in-branch/template.marko_3*content", "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-in-branch/template.marko_2*content"],

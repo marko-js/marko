@@ -1,5 +1,5 @@
 // tags/show-await.marko
-const $placeholder_content = _content$1("b1", "<i>inner loading</i>");
+const $placeholder_content = _content$1("b6", "<i>inner loading</i>");
 const $await_content__$params = ($scope, $params2) => _text($scope.b, $params2[0]);
 const $await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);
 const $input_promise = $await_promise;

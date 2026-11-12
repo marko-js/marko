@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_script($scope1_id, "__tests__/template.marko_1");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_label#0:3/subscribe", $cg__input_label);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4", { "ControlledHandler:#input/1": ["valueChange", "8:30"] }), $cg__input_label && "__tests__/template.marko_1_input_label#0:3/subscribe");
-	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 1, 1);
+	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 1);
 	_scope($scope0_id, {
 		input_label: input.label,
 		"ClosureScopes:input_label/5": _write_if($scope0_reason, 0) && $input_label__closures,

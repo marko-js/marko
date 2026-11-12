@@ -23,7 +23,6 @@ const $walks = /*@__PURE__*/ ((_w0) => `D%b/${_w0}&%l`)(" b");
 const $Child_withLoadAssets = withLoadAssets(() => child_default, "__tests__/child.marko", flush, "ready:__tests__/child.marko");
 const $setup = _shell_setup([[], []], ["#childScope/1>", $setup$1]);
 _shells({
-	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content",
 	"__tests__/template.marko_2*content": `__tests__/template.marko_2*content${_shell_marker([[], []], ["#childScope/2>", $setup$1])};${/*@__PURE__*/ ((_w0) => `D l%b/${_w0}&b`)(" b")};${/*@__PURE__*/ ((_w0) => `<span> </span><!>${_w0}<!>`)($template$1)}`,
 	"__tests__/template.marko_1_#text#0/await": `__tests__/template.marko_1_#text#0/await${_shell_marker([[], []], ["#childScope/2>", $setup$1])};${((_w0) => `D l%b/${_w0}&b`)(" b")};${((_w0) => `<span> </span><!>${_w0}<!>`)($template$1)}`,
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;b%;<!><!><!>",
@@ -66,7 +65,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
 		_html("loading");
-	}, void 0, "__tests__/template.marko_3*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
+	}, void 0, "__tests__/template.marko_3*content", void 0, "__tests__/template.marko_1*content", 1);
 	_html("</main>");
 	_scope($scope0_id, {
 		"#childScope/1": _existing_scope($childScope),

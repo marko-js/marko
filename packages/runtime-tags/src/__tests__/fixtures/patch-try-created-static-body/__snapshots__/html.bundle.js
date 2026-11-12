@@ -1,6 +1,6 @@
 // template.marko
 _shells({
-	a0: "a0;D ;<b> </b>",
+	a0: "a0",
 	a1: "a1,<em>static</em>",
 	a: "a; ;<main></main>",
 	a2: "a2;b%;<!><!><!>"
@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`<b>${_text_mark($scope3_id, "a", err.message, 1, 4, 0)}</b>`);
 				_scope($scope3_id, {});
-			}, 0, "a0", "a1", 0, 1, 1);
+			}, 0, "a0", "a1", 0, 1);
 			_write_if($scope0_reason, 0) && _scope($scope1_id, {});
 			return 0;
 		}

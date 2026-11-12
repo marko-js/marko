@@ -1,5 +1,5 @@
 // PATCH
-a, [`a4;b%;<!><!><!>`, `a0;D ;<em> </em>`, `b1;b%b/b%c&b;<!><!><!><!><!><!>`]
+a, [`a3;b%;<!><!><!>`, `a0;D ;<em> </em>`, `b1;b%b/b%c&b;<!><!><!><!><!><!>`]
 {
   ba: [{
     cb: {
@@ -8,24 +8,23 @@ a, [`a4;b%;<!><!><!>`, `a0;D ;<em> </em>`, `b1;b%b/b%c&b;<!><!><!><!><!><!>`]
         cAa: {
           ta: "a"
         }
-      }, "a1", "a4", "a2"]
+      }, "a1", "a3", "a5"]
     }
   }, "b1"]
 }
-;EaI
+;D1I
 
-// PATCH holding EaI
-a, `a2,<i>loading</i>`
-{
+// PATCH holding D1I
+a, {
   ba: [{
     cb: {
       cAa: [{
         pa: "a0"
-      }, "a1", "a4", "a2"]
+      }, "a1", "a3", "a5"]
     }
   }, "b1"]
 }
-`a1;D ;<b> </b>`
+`a1`
 {
   cAa: {
     cb: {
@@ -35,9 +34,9 @@ a, `a2,<i>loading</i>`
     }
   }
 }
-;Ea4
+;D1Y
 
-// PATCH holding Ea4
+// PATCH holding D1Y
 a, {
   ba: [{
     cb: {
@@ -46,7 +45,7 @@ a, {
         cAa: {
           ta: "c"
         }
-      }, "a1", "a4", "a2"]
+      }, "a1", "a3", "a5"]
     }
   }, "b1"]
 }

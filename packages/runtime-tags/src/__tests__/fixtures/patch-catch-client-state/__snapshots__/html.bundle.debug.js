@@ -40,7 +40,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 			err_message: ["err.message", "6:11"],
 			n: "7:10"
 		}), _client_guard($scope0_reason, 0) && "__tests__/tags/panel.marko_1_input_label#0:3/subscribe");
-	}, 0, "__tests__/tags/panel.marko_1*content", "__tests__/tags/panel.marko_2*content", 1, 1, 1);
+	}, 0, "__tests__/tags/panel.marko_1*content", "__tests__/tags/panel.marko_2*content", 1, 1);
 	_scope($scope0_id, {
 		input_label: input.label,
 		"ClosureScopes:input_label/5": _write_if($scope0_reason, 0) && $input_label__closures,

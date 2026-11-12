@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-id-catch-sync/tags/a-tag.marko_1*content;/D l&;<p> </p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-catch-sync/tags/a-tag.marko_2*content,caught`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-catch-sync/template.marko_1*shell;//b&/ D l b&%c&/ D l b&;<span>plain</span><label> </label><input><!><!><label> </label><input>`]
+[`packages/runtime-tags/src/__tests__/fixtures/patch-id-catch-sync/tags/a-tag.marko_1*content;/D l&;<p> </p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-catch-sync/template.marko_1*shell;//b&/ D l b&%c&/ D l b&;<span>plain</span><label> </label><input><!><!><label> </label><input>`]
 {
   "PatchLoop:#text/0": [1, {
     "PatchChild:#childScope/0": {
@@ -45,4 +45,4 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-id-catch-sync/template.marko_1*shell"]
 }
-;EYY
+;D0I

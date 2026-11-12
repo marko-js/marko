@@ -37,7 +37,6 @@ import {
 import {
   inStatefulStructure,
   isStatefulStructure,
-  patchMayFillSection,
   patchFillsSection,
 } from "./patch/structure";
 import {
@@ -80,14 +79,6 @@ import { getSectionMeta, trimTrailingExits } from "./structure";
 import { TagNameType } from "./tag-name-type";
 import { getWriteReason } from "./write-guard";
 
-declare module "@marko/compiler/dist/types" {
-  export interface ProgramExtra {
-    /** Its module registers a `<try>`'s boundary content a page reaches by id:
-     * a renderer no shell creates whole, or a created `@catch`'s subscriptions. */
-    registersBoundaryContent?: true;
-  }
-}
-
 // The id a section ships its shell under (an await body may be kept as
 // boundary content or through its enclosing shell's chain).
 export function findShellId(section: Section) {
@@ -109,7 +100,7 @@ export const [getShells] = createOutputState(() => {
     } else if (
       !isOptionalBranch(section) &&
       (section.boundaryContent
-        ? createsFromShell(section)
+        ? patchCreates(section)
         : section.branch
           ? shipsBoundaryShell(section)
           : shipsContentShell(section))
@@ -126,30 +117,13 @@ export const [getShells] = createOutputState(() => {
 // At analyze exit, what a page links for the module's patches: the fills a
 // caller's params decide (read in its compile) and the module's registrations.
 export function linkPatchFills() {
-  const programExtra = getProgram().node.extra;
   forEachSection((section) => {
     if (keepsHoles(section)) linkRuntimeFeature("patches/client-branch");
-    if (
-      // Boundary content no shell creates renders by the renderer its
-      // module registers.
-      (section.boundaryContent && !createsFromShell(section)) ||
-      // No patch pairs a shown `@catch`, which client state lower in the tree shows: its
-      // reads of what a patch fills or writes update through what its module registers.
-      (inCreatedCatch(section) &&
-        some(section.referencedClosures, isPatchUpdated))
-    ) {
-      programExtra.registersBoundaryContent = true;
-    }
     forEach(section.bindings, recordPatchEntries);
     forEach(section.bindings, recordClientBranchContents);
     recordIntersectionRenders(section);
     forEach(section.bindings, recordClosureRenders);
   });
-}
-
-function isPatchUpdated(closure: Binding) {
-  const root = getCanonicalBinding(closure);
-  return !!getPatchFill(root).fill || !!getPatchWrite(root).write;
 }
 
 // A patch's fills into the binding's scope: one a caller's param decides waits
@@ -329,19 +303,6 @@ export function addParamFill(section: Section, fill: ParamFill) {
   }
   fills.push(fill);
   return true;
-}
-
-// Boundary content a patch creates from its shell: a `@catch` a flush creates, or
-// static content (no binding, closure, child section or setup) in a reachable `<try>`.
-export function createsFromShell(section: Section) {
-  return (
-    patchCreates(section) ||
-    (!section.bindings &&
-      !section.referencedClosures &&
-      !section.children.length &&
-      !section.hasSetupWork &&
-      patchMayFillSection(section.parent!))
-  );
 }
 
 // Inside a `@catch` a flush creates (inclusive): the flush creates its scopes with

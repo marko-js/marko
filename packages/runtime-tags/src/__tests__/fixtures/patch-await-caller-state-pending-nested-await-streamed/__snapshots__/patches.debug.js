@@ -14,7 +14,6 @@
 }
 
 // PATCH
-`packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-pending-nested-await-streamed/tags/show-await.marko_3*content,<i>inner loading</i>`
 {
   "PatchChild:#childScope/2": {
     "PatchChild:BranchScopes:#text/0": {
@@ -36,4 +35,3 @@
     }
   }
 }
-;EAU

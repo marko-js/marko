@@ -40,7 +40,7 @@ var wrap_default = _template("b", (input) => {
 			_script($scope3_id, "b0");
 			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope3_id, "b1", $cg__input_label);
 			_subscribe(_unfilled_if($scope0_reason, 1) && $Card_content__x__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }), $cg__input_label && "b1");
-		}, 0, "b3", "b5", 0, 1, 1);
+		}, 0, "b3", "b5", 0, 1);
 		$cg__input_label && _patch_render($scope1_id, "b9");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, {
 			b: x,

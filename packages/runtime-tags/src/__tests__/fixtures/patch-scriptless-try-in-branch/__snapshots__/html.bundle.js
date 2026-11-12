@@ -1,7 +1,7 @@
 // template.marko
 _shells({
 	a0: "a0;D ;<em> </em>",
-	a1: "a1;D ;<p> </p>",
+	a1: "a1",
 	a2: "a2;D ;<em> </em>",
 	a3: "a3;b%;<!><!><!>",
 	a: "a; ;<main></main>",
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`<p>${_text_mark($scope3_id, "a", err.message, 1, 4, 0)}</p>`);
 				_scope($scope3_id, {});
-			}, 0, "a1", "a3", 0, 1, 1);
+			}, 0, "a1", "a3", 0, 1);
 			$wi__input_show__OR__input_promise && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

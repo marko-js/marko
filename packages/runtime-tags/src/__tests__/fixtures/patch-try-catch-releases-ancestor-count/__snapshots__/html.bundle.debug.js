@@ -5,8 +5,7 @@ const $setup = [[], []];
 _shells({
 	"__tests__/template.marko_6*content": "__tests__/template.marko_6*content;D ;<em> </em>",
 	"__tests__/template.marko_5*content": "__tests__/template.marko_5*content;D ;<b> </b>",
-	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content;D ;<s> </s>",
-	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content,<i>loading</i>",
+	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content",
 	"__tests__/template.marko_2_#text#0/await": "__tests__/template.marko_2_#text#0/await;D ;<b> </b>",
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;b%;<!><!><!>",
 	"__tests__/template.marko_1_#text#1/await": "__tests__/template.marko_1_#text#1/await;D ;<em> </em>",
@@ -38,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope4_id = _scope_id();
 			_html(`<s>${_text_mark($scope4_id, "#text/0", err.message, 1, 4, 0)}</s>`);
 			_scope($scope4_id, {}, "__tests__/template.marko", "5:8");
-		}, 0, "__tests__/template.marko_4*content", "__tests__/template.marko_2*content", 1, 1, 1);
+		}, 0, "__tests__/template.marko_4*content", "__tests__/template.marko_2*content", 1, 1);
 		_await($scope1_id, "#text/1", input.b, (b) => {
 			const $scope6_id = _scope_id();
 			_html(`<em>${_text_mark($scope6_id, "#text/0", b, 1, $scope0_reason, 2)}</em>`);
@@ -51,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
 		_html("<i>loading</i>");
-	}, void 0, "__tests__/template.marko_3*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
+	}, void 0, "__tests__/template.marko_3*content", void 0, "__tests__/template.marko_1*content", 1);
 	_html("</main>");
 	_scope($scope0_id, {
 		"ClosureScopes:input_a/5": $wi__input_a && _unfilled_if($scope0_reason, 1) && $input_a__closures,

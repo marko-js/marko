@@ -554,9 +554,6 @@ export function _try(
   catchContent?: ServerRenderer,
   placeholderId?: string,
   catchId?: string,
-  // A patch page's content created from its shell (1 the catch, 2 the
-  // placeholder), which the client finds by id.
-  shellContent?: number,
 ) {
   // The placeholder's branch id precedes the body's so the walker parents it
   // to the try's enclosing branch (a sibling of the try), as CSR does.
@@ -570,11 +567,8 @@ export function _try(
   const renderers = (): void =>
     writeTryRenderers(
       branchId,
-      catchContent,
-      placeholderContent,
-      catchId,
-      placeholderId,
-      shellContent,
+      catchContent && _resume(catchContent, catchId!),
+      placeholderContent && _resume(placeholderContent, placeholderId!),
     );
   // Whether `tryBoundary` writes the renderers itself once the body settles,
   // or not at all once its `@catch` rendered.
@@ -607,7 +601,7 @@ export function _try(
   );
 }
 
-export function tryPlaceholder(
+function tryPlaceholder(
   content: () => void,
   placeholder: () => void,
   branchId: number,
@@ -783,24 +777,13 @@ function clearTryRenderers(branchId: number) {
   });
 }
 
-// Each content's renderer, or its id where a patch page creates it from its
-// shell (`shellContent`: 1 the catch, 2 the placeholder).
 export function writeTryRenderers(
   branchId: number,
-  catchContent: ServerRenderer | undefined,
-  placeholderContent: ServerRenderer | undefined,
-  catchId: string | undefined,
-  placeholderId: string | undefined,
-  shellContent = 0,
+  catchContent: unknown,
+  placeholderContent: unknown,
 ) {
   writeScope(branchId, {
-    [AccessorProp.CatchContent]:
-      catchContent &&
-      (shellContent & 1 ? catchId : _resume(catchContent, catchId!)),
-    [AccessorProp.PlaceholderContent]:
-      placeholderContent &&
-      (shellContent & 2
-        ? placeholderId
-        : _resume(placeholderContent, placeholderId!)),
+    [AccessorProp.CatchContent]: catchContent,
+    [AccessorProp.PlaceholderContent]: placeholderContent,
   });
 }

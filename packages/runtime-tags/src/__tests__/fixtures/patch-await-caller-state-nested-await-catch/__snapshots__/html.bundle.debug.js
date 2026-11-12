@@ -3,7 +3,6 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = [[], []];
 _shells({
-	"__tests__/tags/show-await.marko_4*content": "__tests__/tags/show-await.marko_4*content,<span>caught</span>",
 	"__tests__/tags/show-await.marko_3*content": "__tests__/tags/show-await.marko_3*content;D ;<b> </b>",
 	"__tests__/tags/show-await.marko_2_#text#0/await": "__tests__/tags/show-await.marko_2_#text#0/await;D ;<b> </b>",
 	"__tests__/tags/show-await.marko_2*content": "__tests__/tags/show-await.marko_2*content;b%;<!><!><!>",
@@ -35,7 +34,7 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 			const $scope4_reason = _scope_reason();
 			const $scope4_id = _scope_id();
 			_html("<span>caught</span>");
-		}, 0, "__tests__/tags/show-await.marko_4*content", "__tests__/tags/show-await.marko_2*content", 1, 0, 1);
+		}, 0, "__tests__/tags/show-await.marko_4*content", "__tests__/tags/show-await.marko_2*content", 1);
 		_scope($scope1_id, { "ClosureScopes:x/6": _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $await_content__x__closures }, "__tests__/tags/show-await.marko", "1:2");
 	}, 1, "__tests__/tags/show-await.marko_1*content", _unfilled_if($scope0_reason, 1), 1);
 	_scope($scope0_id, { "ClosureScopes:input_other/5": _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_other__closures }, "__tests__/tags/show-await.marko", 0);

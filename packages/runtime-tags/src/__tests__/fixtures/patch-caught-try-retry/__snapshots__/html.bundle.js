@@ -3,7 +3,6 @@ function check(fail) {
 	if (fail) throw new Error("down");
 }
 _shells({
-	a1: "a1,Unavailable",
 	a2: "a2,<p>Ready</p>",
 	a: "a; ;<main></main>",
 	a3: "a3;b%;<!><!><!>"
@@ -28,7 +27,7 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				_scope_id();
 				_html("Unavailable");
-			}, 0, "a1", "a2", 0, 0, 1);
+			}, 0, "a1", "a2");
 			$wi__input_show__OR__input_fail && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

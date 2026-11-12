@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 			a: _existing_scope($childScope)
 		}), "a0", 0);
 		_resume_branch($scope2_id);
-	}, 0, "a4", "a5", 1, 1, 1);
+	}, 0, "a4", "a5", 1, 1);
 	_script($scope0_id, "a6");
 	_scope($scope0_id, {
 		f: $wi__input_msg && $ui__input_fail__OR__input_msg && input.fail,

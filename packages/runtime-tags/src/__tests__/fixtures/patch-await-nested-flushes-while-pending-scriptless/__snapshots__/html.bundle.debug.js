@@ -3,8 +3,6 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = [[], []];
 _shells({
-	"__tests__/template.marko_6*content": "__tests__/template.marko_6*content,<em>inner loading</em>",
-	"__tests__/template.marko_5*content": "__tests__/template.marko_5*content,<em>outer loading</em>",
 	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content;D%c%;<div id=inner><!> <!></div>",
 	"__tests__/template.marko_3_#text#0/await": "__tests__/template.marko_3_#text#0/await;D%c%;<div id=inner><!> <!></div>",
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;b%;<!><!><!>",
@@ -41,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope6_reason = _scope_reason();
 				const $scope6_id = _scope_id();
 				_html("<em>inner loading</em>");
-			}, void 0, "__tests__/template.marko_6*content", void 0, "__tests__/template.marko_3*content", 1, 0, 2);
+			}, void 0, "__tests__/template.marko_6*content", void 0, "__tests__/template.marko_3*content", 1);
 			_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_msg#0:4/subscribe", $cg__input_msg);
 			_subscribe(_unfilled_if($scope0_reason, 3) && $input_msg__closures, _scope($scope2_id, {}, "__tests__/template.marko", "2:4"), $cg__input_msg && "__tests__/template.marko_2_input_msg#0:4/subscribe");
 		}, 1, "__tests__/template.marko_2*content", $ui__input_outer, 1);
@@ -52,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope5_reason = _scope_reason();
 		const $scope5_id = _scope_id();
 		_html("<em>outer loading</em>");
-	}, void 0, "__tests__/template.marko_5*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
+	}, void 0, "__tests__/template.marko_5*content", void 0, "__tests__/template.marko_1*content", 1);
 	_scope($scope0_id, {
 		"ClosureScopes:input_msg/7": $wi__input_msg && _unfilled_if($scope0_reason, 3) && $input_msg__closures,
 		"ClosureScopes:input_inner/8": _write_if($scope0_reason, 4) && _unfilled_if($scope0_reason, 4) && $input_inner__closures,

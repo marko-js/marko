@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 				_html(`<em>${_text_mark($scope2_id, "a", err.message, 1, 4, 0)} ${_text_mark($scope2_id, "b", input.title, 2, $scope0_reason, 2)}</em>`);
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a0", $cg__input_title);
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_title && "a0");
-			}, 0, "a4", "a3", 0, 1, 1);
+			}, 0, "a4", "a3", 0, 1);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

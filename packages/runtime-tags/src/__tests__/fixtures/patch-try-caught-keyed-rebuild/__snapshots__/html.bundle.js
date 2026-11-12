@@ -19,10 +19,9 @@ function throwIt() {
 	throw new Error("boom");
 }
 _shells({
-	a1: "a1",
-	a2: `a2${_shell_marker([[], []], ["c>", $setup])};${/*@__PURE__*/ ((_w0) => `D%c%l/${_w0}&%c`)($walks)};${/*@__PURE__*/ ((_w0) => `<p><!> <!></p>${_w0}<!><!>`)($template)}`,
+	a1: `a1${_shell_marker([[], []], ["c>", $setup])};${/*@__PURE__*/ ((_w0) => `D%c%l/${_w0}&%c`)($walks)};${/*@__PURE__*/ ((_w0) => `<p><!> <!></p>${_w0}<!><!>`)($template)}`,
 	a: "a; ;<main></main>",
-	a3: "a3;b%;<!><!><!>",
+	a2: "a2;b%;<!><!><!>",
 	a0: "a0; ; "
 });
 var template_default = _template("a", (input) => {
@@ -48,22 +47,22 @@ var template_default = _template("a", (input) => {
 					return 0;
 				}
 			}, $scope2_id, "d", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a0"], $scope0_reason, 0);
+			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a3", $cg__input_pages);
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a4", $cg__input_pages);
-			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a5", $cg__input_pages);
 			_subscribe($ui__input_pages2 && $for_content__page_fail__closures, _subscribe($ui__input_pages2 && $for_content__page_title__closures, _scope($scope2_id, {
 				_: $wi__input_pages && _scope_with_id($scope1_id),
 				c: _existing_scope($childScope)
-			}), $cg__input_pages && "a4"), $cg__input_pages && "a5");
+			}), $cg__input_pages && "a3"), $cg__input_pages && "a4");
 		}, void 0, () => {
 			_scope_reason();
 			_scope_id();
 			_html("caught");
-		}, 0, "a1", "a2", 0, 0, 1);
+		}, 0, "a5", "a1");
 		$wi__input_pages && _scope($scope1_id, {
 			f: $ui__input_pages && $for_content__page_title__closures,
 			g: $ui__input_pages && $for_content__page_fail__closures
 		});
-	}, "key", $scope0_id, "a", 1, 1, 1, 0, 0, "a3", $scope0_reason, 0);
+	}, "key", $scope0_id, "a", 1, 1, 1, 0, 0, "a2", $scope0_reason, 0);
 	_html(`</main>${_el_mark($scope0_id, "a")}`);
 	_scope($scope0_id, {});
 }, 1);

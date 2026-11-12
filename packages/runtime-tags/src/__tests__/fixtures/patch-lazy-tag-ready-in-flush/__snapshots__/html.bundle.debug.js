@@ -21,7 +21,6 @@ const $setup = _shell_setup([[], []], ["#childScope/1>", $setup$1]);
 _shells({
 	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content;D ;<em> </em>",
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;D ;<b> </b>",
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content",
 	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await;D ;<b> </b>",
 	"__tests__/template.marko_1_#text#3/await": "__tests__/template.marko_1_#text#3/await;D ;<em> </em>",
 	"__tests__/template.marko_1*content": `__tests__/template.marko_1*content${_shell_marker([[], []], ["#childScope/2>", $setup$1])};${/*@__PURE__*/ ((_w0) => `b%b%b/${_w0}&%c`)($walks$1)};${/*@__PURE__*/ ((_w0) => `<!><!><!>${_w0}<!><!>`)($template$1)}`,
@@ -64,7 +63,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html("<i>loading</i>");
-	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
+	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 1);
 	_scope($scope0_id, {
 		"#childScope/1": _existing_scope($childScope),
 		"ClosureScopes:input_a/8": _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_a__closures,

@@ -3,11 +3,10 @@ const $template = "<!><!><!>";
 const $setup$1 = [[], []];
 _shells({
 	b0: "b0;D ;<em> </em>",
-	b1: "b1,<i>inner loading</i>",
-	b2: "b2;D ;<em> </em>",
-	b3: "b3;b%;<!><!><!>",
+	b1: "b1;D ;<em> </em>",
+	b2: "b2;b%;<!><!><!>",
+	b3: "b3;D%c%l%;<p><!>:<!></p><!><!>",
 	b4: "b4;D%c%l%;<p><!>:<!></p><!><!>",
-	b5: "b5;D%c%l%;<p><!>:<!></p><!><!>",
 	b: "b;b%;<!><!><!>"
 });
 var show_await_default = _template("b", (input) => {
@@ -26,17 +25,17 @@ var show_await_default = _template("b", (input) => {
 				_html(`<em>${_text_mark($scope4_id, "a", y, 1, $scope0_reason, 3)}</em>`);
 				_scope($scope4_id, {});
 			}, 1, "b0", $ui__input_inner && 2, 1);
-			_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "b6", 1);
-			$wi__input_inner && _subscribe($ui__input_inner && $input_inner__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 3) && "b6", 0);
+			_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "b5", 1);
+			$wi__input_inner && _subscribe($ui__input_inner && $input_inner__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 3) && "b5", 0);
 			$wi__input_inner && _resume_branch($scope2_id);
 		}, () => {
 			_scope_reason();
 			_scope_id();
 			_html("<i>inner loading</i>");
-		}, void 0, "b1", void 0, "b3", 1, 0, 2);
+		}, void 0, "b6", void 0, "b2", 1);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b7", $cg__input_label);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, {}), $cg__input_label && "b7");
-	}, 1, "b4", _unfilled_if($scope0_reason, 1), 1);
+	}, 1, "b3", _unfilled_if($scope0_reason, 1), 1);
 	_scope($scope0_id, {
 		h: $wi__input_inner && _unfilled_if($scope0_reason, 3) && $input_inner__closures,
 		g: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_label__closures

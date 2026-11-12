@@ -1,5 +1,4 @@
 // PATCH
-`a2`
 {
   ta: "Store!",
   cAb: {
@@ -19,4 +18,3 @@
     ta: "backordered"
   }
 }
-;DgM

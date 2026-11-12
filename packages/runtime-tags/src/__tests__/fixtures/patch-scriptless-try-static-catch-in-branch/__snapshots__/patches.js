@@ -1,5 +1,5 @@
 // PATCH
-[`a3;b%;<!><!><!>`, `a0;D ;<em> </em>`, `a4;b%;<!><!><!>`]
+[`a2;b%;<!><!><!>`, `a0;D ;<em> </em>`, `a3;b%;<!><!><!>`]
 {
   ba: [{
     cAa: [{
@@ -7,17 +7,15 @@
       cAa: {
         ta: "hi"
       }
-    }, "a1", "a3"]
-  }, "a4"]
+    }, "a5", "a2"]
+  }, "a3"]
 }
-;DTI
+;Cxo
 
-// PATCH holding DTI
-`a1,<p>oops</p>`
+// PATCH holding Cxo
 {
   ba: [{
-    cAa: [0, "a1", "a3"],
+    cAa: [0, "a5", "a2"],
     ka: []
-  }, "a4"]
+  }, "a3"]
 }
-;DTY

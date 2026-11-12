@@ -4,7 +4,6 @@ const $walks = "D%l";
 const $setup = [[], []];
 _shells({
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;D ;<span id=v> </span>",
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content",
 	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await;D ;<span id=v> </span>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;b%;<!><!><!>",
 	"__tests__/template.marko": "__tests__/template.marko;D%;<main><!></main>"
@@ -34,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html("loading");
-	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
+	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 1);
 	_html("</main>");
 	_scope($scope0_id, { "ClosureScopes:input_promise/4": $wi__input_promise && $input_promise__closures }, "__tests__/template.marko", 0);
 }, 1);

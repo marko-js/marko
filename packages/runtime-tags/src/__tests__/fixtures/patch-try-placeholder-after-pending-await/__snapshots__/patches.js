@@ -1,5 +1,4 @@
 // PATCH
-`a1,<i>loading</i>`
 {
   pa: 1,
   cAb: {
@@ -18,4 +17,3 @@
     ta: 3
   }
 }
-;DgI

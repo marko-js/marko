@@ -13,7 +13,7 @@
 ;DSY
 
 // PATCH holding DSY
-`packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-try-in-branch/template.marko_3*content;D ;<p> </p>`
+`packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-try-in-branch/template.marko_3*content`
 {
   "PatchBranch:#main/0": [{
     "PatchChild:BranchScopes:#text/0": [0, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-try-in-branch/template.marko_3*content", "packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-try-in-branch/template.marko_2*content"],

@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-try-two-awaits-relink/template.marko_4*content;D ;<b> </b>`, `packages/runtime-tags/src/__tests__/fixtures/patch-try-two-awaits-relink/template.marko_2*shell;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-try-two-awaits-relink/template.marko_3*content`]
+[`packages/runtime-tags/src/__tests__/fixtures/patch-try-two-awaits-relink/template.marko_4*content;D ;<b> </b>`, `packages/runtime-tags/src/__tests__/fixtures/patch-try-two-awaits-relink/template.marko_2*shell;b%;<!><!><!>`]
 {
   "PatchChild:BranchScopes:#text/0": {
     "PatchBranch:#text/0": [{
@@ -24,4 +24,4 @@
     }
   }
 }
-;EWg
+;Dyg

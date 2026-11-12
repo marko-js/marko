@@ -67,7 +67,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_: _scope_with_id($scope1_id),
 				"#childScope/0": _existing_scope($childScope)
 			}, "__tests__/template.marko", "6:4");
-		}, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content", "__tests__/template.marko_4*content", 0, 1, 1);
+		}, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content", "__tests__/template.marko_4*content", 0, 1);
 		_scope($scope1_id, {
 			"#LoopKey": row?.key,
 			_: _scope_with_id($scope0_id),

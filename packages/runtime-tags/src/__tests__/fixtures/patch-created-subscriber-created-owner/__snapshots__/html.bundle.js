@@ -52,7 +52,7 @@ var child_default = _template("c", (input) => {
 			h: $wi__err_message && _unfilled_if($scope1_reason, 0) && $catch_content__err_message__closures,
 			a: _existing_scope($childScope)
 		});
-	}, 0, "c4", "c5", 1, 1, 1);
+	}, 0, "c4", "c5", 1, 1);
 	_scope($scope0_id, {
 		d: input.label,
 		f: _write_if($scope0_reason, 0) && $input_label__closures,

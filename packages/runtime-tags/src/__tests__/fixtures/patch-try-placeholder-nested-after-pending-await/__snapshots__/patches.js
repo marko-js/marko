@@ -1,5 +1,4 @@
 // PATCH
-[`a3,<i>outer</i>`, `a1,<i>inner</i>`]
 {
   cAa: {
     pa: 1,
@@ -24,4 +23,3 @@
     }
   }
 }
-;ExQ

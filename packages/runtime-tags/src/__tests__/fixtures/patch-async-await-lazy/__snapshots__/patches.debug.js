@@ -1,5 +1,4 @@
 // PATCH
-`packages/runtime-tags/src/__tests__/fixtures/patch-async-await-lazy/template.marko_2*content`
 {
   "PatchText:#text/0": "Store!",
   "PatchChild:BranchScopes:#text/1": {
@@ -19,4 +18,3 @@
     "PatchText:#text/0": "backordered"
   }
 }
-;DgQ

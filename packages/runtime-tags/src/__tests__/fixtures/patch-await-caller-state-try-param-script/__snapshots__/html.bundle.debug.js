@@ -3,7 +3,6 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = [[], []];
 _shells({
-	"__tests__/tags/show-await.marko_3*content": "__tests__/tags/show-await.marko_3*content",
 	"__tests__/tags/show-await.marko_2*content": "__tests__/tags/show-await.marko_2*content,",
 	"__tests__/tags/show-await.marko_1*content": "__tests__/tags/show-await.marko_1*content;D l%;<p> </p><!><!>",
 	"__tests__/tags/show-await.marko_0_#text#0/await": "__tests__/tags/show-await.marko_0_#text#0/await;D l%;<p> </p><!><!>",
@@ -30,7 +29,7 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 			const $scope3_reason = _scope_reason();
 			const $scope3_id = _scope_id();
 			_html("failed");
-		}, 0, "__tests__/tags/show-await.marko_3*content", "__tests__/tags/show-await.marko_2*content", 1, 0, 1);
+		}, 0, "__tests__/tags/show-await.marko_3*content", "__tests__/tags/show-await.marko_2*content", 1);
 		_scope($scope1_id, {
 			x,
 			"ClosureScopes:x/6": _write_if($scope0_reason, 1) && $await_content__x__closures

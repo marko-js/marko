@@ -17,7 +17,6 @@ const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
 	"__tests__/template.marko_8*content": "__tests__/template.marko_8*content;D ;<p> </p>",
 	"__tests__/template.marko_7*content": `__tests__/template.marko_7*content${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l")};${$template$1}`,
-	"__tests__/template.marko_6*content": "__tests__/template.marko_6*content",
 	"__tests__/template.marko_5*content": "__tests__/template.marko_5*content;D ;<p> </p>",
 	"__tests__/template.marko_4_#text#0/await": "__tests__/template.marko_4_#text#0/await;D ;<p> </p>",
 	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content",
@@ -69,7 +68,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope6_reason = _scope_reason();
 				const $scope6_id = _scope_id();
 				_html("<b>failed</b>");
-			}, 0, "__tests__/template.marko_6*content", "__tests__/template.marko_3*content", 0, 0, 1);
+			}, 0, "__tests__/template.marko_6*content", "__tests__/template.marko_3*content");
 			$wi__input_show__OR__input_card && _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2");
 			return 0;
 		}

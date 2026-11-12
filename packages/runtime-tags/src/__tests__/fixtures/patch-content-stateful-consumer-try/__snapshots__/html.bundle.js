@@ -54,7 +54,7 @@ var template_default = _template("a", (input) => {
 			const $scope3_id = _scope_id();
 			_html(`<b>${_text_mark($scope3_id, "a", err.message, 1, 4, 0)}</b>`);
 			_scope($scope3_id, {});
-		}, 0, "a3", "a4", 0, 1, 1);
+		}, 0, "a3", "a4", 0, 1);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id) });
 	_patch_child_end();

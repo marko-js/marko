@@ -3,7 +3,7 @@ function boom() {
 	throw new Error("boom");
 }
 _shells({
-	a2: "a2;D ;<b> </b>",
+	a2: "a2",
 	a3: "a3;D%b%;<em><!><!></em>",
 	a: "a;D%;<main><!></main>"
 });
@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<b>${_text_mark($scope2_id, "a", err.message, 1, 4, 0)}</b>`);
 		_scope($scope2_id, {});
-	}, 0, "a2", "a3", 1, 1, 1);
+	}, 0, "a2", "a3", 1, 1);
 	_html("</main>");
 	_scope($scope0_id, {
 		f: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_message__closures,
