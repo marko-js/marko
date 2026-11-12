@@ -576,9 +576,11 @@ creates there later takes the last one, if it renders what the server did: `key`
 the content's id, or the client `<if>`'s branch index. `seeds` are its own scopes' setup envelopes, where
 a flush may create it; `patch` is all it renders, where its render differs (_Kept
 content_), which the owner's entry then leaves to it: it renders an `<id>` some expression
-reads beside a value with sources, or one in a branch below it; or a registration bound
-to one of its scopes that a hole may send as a bind reference (`isSentAsBindReference`),
-whose path from the page root runs through the site.
+reads beside a value with sources, or one in a branch below it; a registration bound to
+one of its scopes that a hole may send as a bind reference (`isSentAsBindReference`),
+whose path from the page root runs through the site; or an `<await>`, which settles at
+the site, as a document renders each instance's there, while the owner's entry (decided
+before it settles) renders none of it, nor does a kept instance it renders.
 _Avoid_: instance entry
 
 **Filled intersection**:

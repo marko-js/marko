@@ -43,6 +43,7 @@ import {
   getIds,
   getUpdatesFrom,
   inCreatable,
+  inKeptOwnerEntry,
   pairedBranch,
   openScopePatch,
   linkScopePatch,
@@ -61,6 +62,7 @@ import {
   withPairedBranchId,
   withUnpatched,
   writePatchEntry,
+  keepHolesAtSite,
 } from "./writer";
 
 // Main's helpers as a patch build runs them: a patch response writes its
@@ -562,6 +564,10 @@ export function _await<T>(
   if (!(state instanceof PatchRenderState)) {
     return _base_await(scopeId, accessor, promise, content, markerGuard);
   }
+  // In a kept instance's render it settles at the site, as a document renders each one's: its
+  // site entry carries its holes, and the owner's entry (decided before it settles) none of it.
+  keepHolesAtSite();
+  if (inKeptOwnerEntry()) return;
   // No patch fills the promise: the client settles it, and the server's copy only
   // renders the body's holes as data. A rejected copy writes nothing.
   if (unfilled) {

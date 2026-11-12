@@ -70,6 +70,12 @@ export function _id(declaration: string, readBesideSources?: 1) {
   return ids.addresses[ids.depth] + (MARKO_DEBUG ? "." : "") + declaration;
 }
 
+// Whether this renders a kept content's owner's entry, which every instance applies, or a
+// kept instance inside one.
+export function inKeptOwnerEntry() {
+  return getContext(kSeedRoot) === null;
+}
+
 // In a kept instance's render, a value of its own makes its render differ: its site entry
 // carries its holes. A patch page's document render reaches here too, with no such count.
 export function keepHolesAtSite() {
@@ -194,7 +200,7 @@ const kSeedRoot = Symbol("Seed Root");
 
 export function renderKeptInstance(
   content: ServerRenderer,
-  // None for its owner's entry, which carries no instance's seeds.
+  // None for its owner's entry, which carries no instance's seeds, nor does one inside it.
   seedRoot: number | null,
 ) {
   return withContext(
@@ -202,7 +208,7 @@ export function renderKeptInstance(
     getContext(kBranchId),
     withSeedRoot,
     content,
-    seedRoot,
+    inKeptOwnerEntry() ? null : seedRoot,
   );
 }
 
