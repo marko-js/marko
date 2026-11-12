@@ -13,199 +13,199 @@ declare global {
       renderBody?: Marko.Body<[], void>;
 
       /** @deprecated Use `onAnimationCancel` instead. */
-      onAnimationcancel?: this["onAnimationCancel"];
+      onAnimationcancel?: HTMLAttributes<T>["onAnimationCancel"];
 
       /** @deprecated Use `onAnimationEnd` instead. */
-      onAnimationend?: this["onAnimationEnd"];
+      onAnimationend?: HTMLAttributes<T>["onAnimationEnd"];
 
       /** @deprecated Use `onAnimationIteration` instead. */
-      onAnimationiteration?: this["onAnimationIteration"];
+      onAnimationiteration?: HTMLAttributes<T>["onAnimationIteration"];
 
       /** @deprecated Use `onAnimationStart` instead. */
-      onAnimationstart?: this["onAnimationStart"];
+      onAnimationstart?: HTMLAttributes<T>["onAnimationStart"];
 
       /** @deprecated Use `onAuxClick` instead. */
-      onAuxclick?: this["onAuxClick"];
+      onAuxclick?: HTMLAttributes<T>["onAuxClick"];
 
       /** @deprecated Use `onBeforeInput` instead. */
-      onBeforeinput?: this["onBeforeInput"];
+      onBeforeinput?: HTMLAttributes<T>["onBeforeInput"];
 
       /** @deprecated Use `onBeforeMatch` instead. */
-      onBeforematch?: this["onBeforeMatch"];
+      onBeforematch?: HTMLAttributes<T>["onBeforeMatch"];
 
       /** @deprecated Use `onBeforeToggle` instead. */
-      onBeforetoggle?: this["onBeforeToggle"];
+      onBeforetoggle?: HTMLAttributes<T>["onBeforeToggle"];
 
       /** @deprecated Use `onCanPlay` instead. */
-      onCanplay?: this["onCanPlay"];
+      onCanplay?: HTMLAttributes<T>["onCanPlay"];
 
       /** @deprecated Use `onCanPlayThrough` instead. */
-      onCanplaythrough?: this["onCanPlayThrough"];
+      onCanplaythrough?: HTMLAttributes<T>["onCanPlayThrough"];
 
       /** @deprecated Use `onCompositionEnd` instead. */
-      onCompositionend?: this["onCompositionEnd"];
+      onCompositionend?: HTMLAttributes<T>["onCompositionEnd"];
 
       /** @deprecated Use `onCompositionStart` instead. */
-      onCompositionstart?: this["onCompositionStart"];
+      onCompositionstart?: HTMLAttributes<T>["onCompositionStart"];
 
       /** @deprecated Use `onCompositionUpdate` instead. */
-      onCompositionupdate?: this["onCompositionUpdate"];
+      onCompositionupdate?: HTMLAttributes<T>["onCompositionUpdate"];
 
       /** @deprecated Use `onContextLost` instead. */
-      onContextlost?: this["onContextLost"];
+      onContextlost?: HTMLAttributes<T>["onContextLost"];
 
       /** @deprecated Use `onContextMenu` instead. */
-      onContextmenu?: this["onContextMenu"];
+      onContextmenu?: HTMLAttributes<T>["onContextMenu"];
 
       /** @deprecated Use `onContextRestored` instead. */
-      onContextrestored?: this["onContextRestored"];
+      onContextrestored?: HTMLAttributes<T>["onContextRestored"];
 
       /** @deprecated Use `onCueChange` instead. */
-      onCuechange?: this["onCueChange"];
+      onCuechange?: HTMLAttributes<T>["onCueChange"];
 
       /** @deprecated Use `onDblClick` instead. */
-      onDblclick?: this["onDblClick"];
+      onDblclick?: HTMLAttributes<T>["onDblClick"];
 
       /** @deprecated Use `onDragEnd` instead. */
-      onDragend?: this["onDragEnd"];
+      onDragend?: HTMLAttributes<T>["onDragEnd"];
 
       /** @deprecated Use `onDragEnter` instead. */
-      onDragenter?: this["onDragEnter"];
+      onDragenter?: HTMLAttributes<T>["onDragEnter"];
 
       /** @deprecated Use `onDragLeave` instead. */
-      onDragleave?: this["onDragLeave"];
+      onDragleave?: HTMLAttributes<T>["onDragLeave"];
 
       /** @deprecated Use `onDragOver` instead. */
-      onDragover?: this["onDragOver"];
+      onDragover?: HTMLAttributes<T>["onDragOver"];
 
       /** @deprecated Use `onDragStart` instead. */
-      onDragstart?: this["onDragStart"];
+      onDragstart?: HTMLAttributes<T>["onDragStart"];
 
       /** @deprecated Use `onDurationChange` instead. */
-      onDurationchange?: this["onDurationChange"];
+      onDurationchange?: HTMLAttributes<T>["onDurationChange"];
 
       /** @deprecated Use `onFocusIn` instead. */
-      onFocusin?: this["onFocusIn"];
+      onFocusin?: HTMLAttributes<T>["onFocusIn"];
 
       /** @deprecated Use `onFocusOut` instead. */
-      onFocusout?: this["onFocusOut"];
+      onFocusout?: HTMLAttributes<T>["onFocusOut"];
 
       /** @deprecated Use `onFormData` instead. */
-      onFormdata?: this["onFormData"];
+      onFormdata?: HTMLAttributes<T>["onFormData"];
 
       /** @deprecated Use `onFullscreenChange` instead. */
-      onFullscreenchange?: this["onFullscreenChange"];
+      onFullscreenchange?: HTMLAttributes<T>["onFullscreenChange"];
 
       /** @deprecated Use `onFullscreenError` instead. */
-      onFullscreenerror?: this["onFullscreenError"];
+      onFullscreenerror?: HTMLAttributes<T>["onFullscreenError"];
 
       /** @deprecated Use `onGotPointerCapture` instead. */
-      onGotpointercapture?: this["onGotPointerCapture"];
+      onGotpointercapture?: HTMLAttributes<T>["onGotPointerCapture"];
 
       /** @deprecated Use `onKeyDown` instead. */
-      onKeydown?: this["onKeyDown"];
+      onKeydown?: HTMLAttributes<T>["onKeyDown"];
 
       /** @deprecated Use `onKeyPress` instead. */
-      onKeypress?: this["onKeyPress"];
+      onKeypress?: HTMLAttributes<T>["onKeyPress"];
 
       /** @deprecated Use `onKeyUp` instead. */
-      onKeyup?: this["onKeyUp"];
+      onKeyup?: HTMLAttributes<T>["onKeyUp"];
 
       /** @deprecated Use `onLoadedData` instead. */
-      onLoadeddata?: this["onLoadedData"];
+      onLoadeddata?: HTMLAttributes<T>["onLoadedData"];
 
       /** @deprecated Use `onLoadedMetadata` instead. */
-      onLoadedmetadata?: this["onLoadedMetadata"];
+      onLoadedmetadata?: HTMLAttributes<T>["onLoadedMetadata"];
 
       /** @deprecated Use `onLoadStart` instead. */
-      onLoadstart?: this["onLoadStart"];
+      onLoadstart?: HTMLAttributes<T>["onLoadStart"];
 
       /** @deprecated Use `onLostPointerCapture` instead. */
-      onLostpointercapture?: this["onLostPointerCapture"];
+      onLostpointercapture?: HTMLAttributes<T>["onLostPointerCapture"];
 
       /** @deprecated Use `onMouseDown` instead. */
-      onMousedown?: this["onMouseDown"];
+      onMousedown?: HTMLAttributes<T>["onMouseDown"];
 
       /** @deprecated Use `onMouseEnter` instead. */
-      onMouseenter?: this["onMouseEnter"];
+      onMouseenter?: HTMLAttributes<T>["onMouseEnter"];
 
       /** @deprecated Use `onMouseLeave` instead. */
-      onMouseleave?: this["onMouseLeave"];
+      onMouseleave?: HTMLAttributes<T>["onMouseLeave"];
 
       /** @deprecated Use `onMouseMove` instead. */
-      onMousemove?: this["onMouseMove"];
+      onMousemove?: HTMLAttributes<T>["onMouseMove"];
 
       /** @deprecated Use `onMouseOut` instead. */
-      onMouseout?: this["onMouseOut"];
+      onMouseout?: HTMLAttributes<T>["onMouseOut"];
 
       /** @deprecated Use `onMouseOver` instead. */
-      onMouseover?: this["onMouseOver"];
+      onMouseover?: HTMLAttributes<T>["onMouseOver"];
 
       /** @deprecated Use `onMouseUp` instead. */
-      onMouseup?: this["onMouseUp"];
+      onMouseup?: HTMLAttributes<T>["onMouseUp"];
 
       /** @deprecated Use `onPointerCancel` instead. */
-      onPointercancel?: this["onPointerCancel"];
+      onPointercancel?: HTMLAttributes<T>["onPointerCancel"];
 
       /** @deprecated Use `onPointerDown` instead. */
-      onPointerdown?: this["onPointerDown"];
+      onPointerdown?: HTMLAttributes<T>["onPointerDown"];
 
       /** @deprecated Use `onPointerEnter` instead. */
-      onPointerenter?: this["onPointerEnter"];
+      onPointerenter?: HTMLAttributes<T>["onPointerEnter"];
 
       /** @deprecated Use `onPointerLeave` instead. */
-      onPointerleave?: this["onPointerLeave"];
+      onPointerleave?: HTMLAttributes<T>["onPointerLeave"];
 
       /** @deprecated Use `onPointerMove` instead. */
-      onPointermove?: this["onPointerMove"];
+      onPointermove?: HTMLAttributes<T>["onPointerMove"];
 
       /** @deprecated Use `onPointerOut` instead. */
-      onPointerout?: this["onPointerOut"];
+      onPointerout?: HTMLAttributes<T>["onPointerOut"];
 
       /** @deprecated Use `onPointerOver` instead. */
-      onPointerover?: this["onPointerOver"];
+      onPointerover?: HTMLAttributes<T>["onPointerOver"];
 
       /** @deprecated Use `onPointerUp` instead. */
-      onPointerup?: this["onPointerUp"];
+      onPointerup?: HTMLAttributes<T>["onPointerUp"];
 
       /** @deprecated Use `onRateChange` instead. */
-      onRatechange?: this["onRateChange"];
+      onRatechange?: HTMLAttributes<T>["onRateChange"];
 
       /** @deprecated Use `onScrollEnd` instead. */
-      onScrollend?: this["onScrollEnd"];
+      onScrollend?: HTMLAttributes<T>["onScrollEnd"];
 
       /** @deprecated Use `onSlotChange` instead. */
-      onSlotchange?: this["onSlotChange"];
+      onSlotchange?: HTMLAttributes<T>["onSlotChange"];
 
       /** @deprecated Use `onTimeUpdate` instead. */
-      onTimeupdate?: this["onTimeUpdate"];
+      onTimeupdate?: HTMLAttributes<T>["onTimeUpdate"];
 
       /** @deprecated Use `onTouchCancel` instead. */
-      onTouchcancel?: this["onTouchCancel"];
+      onTouchcancel?: HTMLAttributes<T>["onTouchCancel"];
 
       /** @deprecated Use `onTouchEnd` instead. */
-      onTouchend?: this["onTouchEnd"];
+      onTouchend?: HTMLAttributes<T>["onTouchEnd"];
 
       /** @deprecated Use `onTouchMove` instead. */
-      onTouchmove?: this["onTouchMove"];
+      onTouchmove?: HTMLAttributes<T>["onTouchMove"];
 
       /** @deprecated Use `onTouchStart` instead. */
-      onTouchstart?: this["onTouchStart"];
+      onTouchstart?: HTMLAttributes<T>["onTouchStart"];
 
       /** @deprecated Use `onTransitionCancel` instead. */
-      onTransitioncancel?: this["onTransitionCancel"];
+      onTransitioncancel?: HTMLAttributes<T>["onTransitionCancel"];
 
       /** @deprecated Use `onTransitionEnd` instead. */
-      onTransitionend?: this["onTransitionEnd"];
+      onTransitionend?: HTMLAttributes<T>["onTransitionEnd"];
 
       /** @deprecated Use `onTransitionRun` instead. */
-      onTransitionrun?: this["onTransitionRun"];
+      onTransitionrun?: HTMLAttributes<T>["onTransitionRun"];
 
       /** @deprecated Use `onTransitionStart` instead. */
-      onTransitionstart?: this["onTransitionStart"];
+      onTransitionstart?: HTMLAttributes<T>["onTransitionStart"];
 
       /** @deprecated Use `onVolumeChange` instead. */
-      onVolumechange?: this["onVolumeChange"];
+      onVolumechange?: HTMLAttributes<T>["onVolumeChange"];
     }
 
     // Marko 6 types SVG tags from a base shared with HTML tags, so they need their
