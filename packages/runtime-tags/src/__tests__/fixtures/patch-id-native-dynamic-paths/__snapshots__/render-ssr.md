@@ -2,62 +2,62 @@
 ```html
 <p>
   <label
-    for="sM_0VB"
+    for="sM_0UB"
   >
     attr
   </label>
   <input
-    id="sM_0VB"
+    id="sM_0UB"
   />
 </p>
 <p>
   <label
-    for="sM_0WUA"
+    for="sM_0VTA"
   >
     body
   </label>
   <input
-    id="sM_0WUA"
+    id="sM_0VTA"
   />
 </p>
 <p>
   <label
-    for="sM_0XA"
+    for="sM_0WA"
   >
     body
   </label>
   <input
-    id="sM_0XA"
+    id="sM_0WA"
   />
 </p>
 <div>
   <label
-    for="sM_1VB"
+    for="sM_1UB"
   >
     attr
   </label>
   <input
-    id="sM_1VB"
+    id="sM_1UB"
   />
 </div>
 <div>
   <label
-    for="sM_1WUA"
+    for="sM_1VTA"
   >
     body
   </label>
   <input
-    id="sM_1WUA"
+    id="sM_1VTA"
   />
 </div>
 <div>
   <label
-    for="sM_1XA"
+    for="sM_1WA"
   >
     body
   </label>
   <input
-    id="sM_1XA"
+    id="sM_1WA"
   />
 </div>
 ```

@@ -55,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`A${_text_mark($scope1_id, "#text/0", input.y, 2, $scope0_reason, 0)}`);
 			$cg__input_y && _patch_render($scope1_id, "__tests__/template.marko_1_input_y#0:4/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $input_y__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), $cg__input_y && "__tests__/template.marko_1_input_y#0:4/subscribe");
-		}, $scope0_id, void 0, 1)
+		}, $scope0_id)
 	});
 	_patch_child_end();
 	_script($scope0_id, "__tests__/template.marko_0");

@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		title: input.label,
 		onClick: _bind_resume(function() {
 			console.log("clicked " + input.label);
-		}, "__tests__/template.marko_0/attrs", $scope0_id, 1)
+		}, "__tests__/template.marko_0/attrs", $scope0_id)
 	};
 	_html(`<p>${_text_mark($scope0_id, "#text/0", input.label, 1, $scope0_reason, 0)}</p><div`);
 	_attrs_content(attrs, "#div/1", $scope0_id, "div", 0, 1, 0, $scope0_reason, 0);

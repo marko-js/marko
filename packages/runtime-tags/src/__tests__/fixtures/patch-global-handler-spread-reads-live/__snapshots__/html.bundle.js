@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	read_button_default({ onClick: _resume(function() {
 		out = $global$1.brand;
-	}, "a0", $scope0_id, 1) });
+	}, "a0", $scope0_id) });
 	_patch_child_end();
 	_html(`<output>${_text_mark($scope0_id, "b", out)}</output>`);
 	_scope($scope0_id, { a: _existing_scope($childScope) });

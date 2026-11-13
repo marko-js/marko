@@ -19,6 +19,10 @@
 ## Change
 ```
 INSERT: section
+UPDATE: section > i::text@0 "" => "b"
+INSERT: section > i + span
+INSERT: section > span > b
+UPDATE: section > span > b::text " " => "b"
 ```
 
 # Update

@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/tags/outer.marko_1*content|1;D%;<b><!></b>`, `packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/template.marko_2*content;Db%;<em>static <!></em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/template.marko_1*shell !#childScope/0>#childScope/0>packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/tags/card.marko_0;//D b%l&&;<section><button>clear</button><!></section>`]
+`packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/template.marko_1*shell !#childScope/0>#childScope/0>packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/tags/card.marko_0;//D b%l&&;<section><button>clear</button><!></section>`
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
@@ -8,18 +8,17 @@
           "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/tags/outer.marko_1*content"
         }
       },
-      "PatchClientBranch:1": {
-        "PatchDynamicTag:#text/0": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/template.marko_2*content",
-        "PatchChild:BranchScopes:#text/0": {
-          "PatchText:#text/0": "b"
-        }
+      "PatchSetup:": {
+        "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/template.marko_2*content"
       }
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/template.marko_1*shell"]
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/template.marko_1*shell"],
+  "PatchMarkedWrite:input_label": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/template.marko_0_input_label#4/subscribers": "input_label"
 }
-;DTQ
+;CAM
 
-// PATCH holding DTQ
+// PATCH holding CAM
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
@@ -28,17 +27,16 @@
           "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/tags/outer.marko_1*content"
         }
       },
-      "PatchClientBranch:1": {
-        "PatchDynamicTag:#text/0": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/template.marko_2*content",
-        "PatchChild:BranchScopes:#text/0": {
-          "PatchText:#text/0": "c"
-        }
+      "PatchSetup:": {
+        "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/template.marko_2*content"
       }
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/template.marko_1*shell"]
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/template.marko_1*shell"],
+  "PatchMarkedWrite:input_label": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/template.marko_0_input_label#4/subscribers": "input_label"
 }
 
-// PATCH holding DTQ
+// PATCH holding CAM
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
@@ -47,12 +45,11 @@
           "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/tags/outer.marko_1*content"
         }
       },
-      "PatchClientBranch:1": {
-        "PatchDynamicTag:#text/0": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/template.marko_2*content",
-        "PatchChild:BranchScopes:#text/0": {
-          "PatchText:#text/0": "d"
-        }
+      "PatchSetup:": {
+        "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/template.marko_2*content"
       }
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/template.marko_1*shell"]
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/template.marko_1*shell"],
+  "PatchMarkedWrite:input_label": "d",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/template.marko_0_input_label#4/subscribers": "input_label"
 }

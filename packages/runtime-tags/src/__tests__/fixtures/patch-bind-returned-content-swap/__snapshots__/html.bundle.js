@@ -17,7 +17,7 @@ var child_default = _template("b", (input) => {
 		_script($scope1_id, "b1");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b2", $cg__input_label);
 		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_label && "b2"), "b3");
-	}, $scope0_id, void 0, 1) };
+	}, $scope0_id) };
 	_patch_fill($scope0_id, "vb5", count, 1);
 	_scope($scope0_id, {
 		c: input.label,

@@ -12,7 +12,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/2", c, {}, 10, 0, 0, 1, $cg__input_content << 1, 0, 1);
 	_html("</section>");
 	_script($scope0_id, "__tests__/tags/card.marko_0");
-	_scope($scope0_id, {}, "__tests__/tags/card.marko", 0) || _client_branch(input.content);
+	_scope($scope0_id, {}, "__tests__/tags/card.marko", 0);
 });
 
 // template.marko
@@ -22,7 +22,6 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = [[], []];
 _shells({
-	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content|3;D ;<span> </span>",
 	"__tests__/template.marko": "__tests__/template.marko;b%;<!><!><!>",
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", _shell_setup([[], []], ["#childScope/0>", $setup$1])])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($Tree_content__walks)};${$Tree_content__template}`
 });
@@ -32,21 +31,22 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Tree = { content: _content("__tests__/template.marko_2*content", ({ label }) => {
 		const $scope2_id = _scope_id();
 		const $Tree_content__label__closures = new Set();
-		const $scope2_reason = _scope_reason(), $wi__label = _write_if($scope2_reason, 0), $cg__label = _client_guard($scope2_reason, 0);
+		const $scope2_reason = _scope_reason(), $wg__label = _write_guard($scope2_reason, 0), $cg__label = _client_guard($scope2_reason, 0), $wi__label = _write_if($scope2_reason, 0);
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope2_id, "#childScope/0", 0);
-		card_default({ content: _content("__tests__/template.marko_3*content", () => {
+		card_default({ content: _content_resume("__tests__/template.marko_3*content", () => {
 			const $scope3_reason = _scope_reason();
 			const $scope3_id = _scope_id();
-			_html(`<span>${_text_mark($scope3_id, "#text/0", label, 1, $scope2_reason, 0)}</span>`);
+			_html(`<span>${_text_mark($scope3_id, "#text/0", label, $wg__label)}</span>`);
 			$cg__label && _patch_render($scope3_id, "__tests__/template.marko_3_label#2:3/subscribe");
-			_subscribe(_unfilled_if($scope2_reason, 0) && $Tree_content__label__closures, _scope($scope3_id, { _: $wi__label && _scope_with_id($scope2_id) }, "__tests__/template.marko", "2:4"), $cg__label && "__tests__/template.marko_3_label#2:3/subscribe");
-		}, $scope2_id, 3) });
+			_subscribe($wi__label && $Tree_content__label__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "2:4"), $cg__label && "__tests__/template.marko_3_label#2:3/subscribe", $wg__label);
+		}, $scope2_id) });
 		_patch_child_end();
 		_scope($scope2_id, {
-			"ClosureScopes:label/6": $wi__label && $wi__label && (_unfilled_if($scope2_reason, 0) || _unfilled_if($scope0_reason, 0)) && $Tree_content__label__closures,
+			label,
+			"ClosureScopes:label/6": $wi__label && $Tree_content__label__closures,
 			"#childScope/0": _existing_scope($childScope)
-		}, "__tests__/template.marko", "1:2");
+		}, "__tests__/template.marko", "1:2", { label: "1:16" }) || _filled_guard($scope2_reason, 0) && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !_server_guard($scope2_reason, 0)) && _patch_subscribers($scope2_id, "__tests__/template.marko_2_label#3/subscribers", "label");
 	}, $scope0_id) };
 	_if(() => {
 		if (input.show) {

@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_scope_reason($uf__input_label << 1 | $uf__input_label << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	child_default({
-		fn: _bind_resume(() => input.label, "__tests__/template.marko_0/fn", $scope0_id, 1),
+		fn: _bind_resume(() => input.label, "__tests__/template.marko_0/fn", $scope0_id),
 		label: input.label
 	});
 	_patch_child_end();

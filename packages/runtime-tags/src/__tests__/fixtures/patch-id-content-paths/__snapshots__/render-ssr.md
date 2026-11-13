@@ -1,68 +1,68 @@
 # Render `{"flip":false,"items":[{"key":"a"},{"key":"b"}]}`
 ```html
 <label
-  for="sM_WUA"
+  for="sM_VTA"
 >
   other
 </label>
 <input
-  id="sM_WUA"
+  id="sM_VTA"
 />
 <section
   name="dynamic"
 >
   <label
-    for="sM_YXA"
+    for="sM_XWA"
   >
     content
   </label>
   <input
-    id="sM_YXA"
+    id="sM_XWA"
   />
 </section>
 <label
-  for="sM__0VZA"
+  for="sM_Z0UYA"
 >
   a
 </label>
 <input
-  id="sM__0VZA"
+  id="sM_Z0UYA"
 />
 <label
-  for="sM__1VZA"
+  for="sM_Z1UYA"
 >
   b
 </label>
 <input
-  id="sM__1VZA"
+  id="sM_Z1UYA"
 />
 <section>
   <label
-    for="sM_-1U-0A"
+    for="sM_-0T_A"
   >
     forwarded
   </label>
   <input
-    id="sM_-1U-0A"
+    id="sM_-0T_A"
   />
 </section>
 <aside>
   <label
-    for="sM_-1V-0A"
+    for="sM_-0U_A"
   >
     forwarded
   </label>
   <input
-    id="sM_-1V-0A"
+    id="sM_-0U_A"
   />
 </aside>
 <label
-  for="sM_-2UUA"
+  for="sM_-1TTA"
 >
   nested
 </label>
 <input
-  id="sM_-2UUA"
+  id="sM_-1TTA"
 />
 ```
 
@@ -85,89 +85,89 @@ for (const input of document.querySelectorAll(
 # Update `{"flip":true,"items":[{"key":"b"},{"key":"c"}]}`
 ```html
 <label
-  for="sM_WUA"
+  for="sM_VTA"
 >
   first
 </label>
 <input
-  id="sM_WUA"
+  id="sM_VTA"
 />
 <label
-  for="sM_YA"
+  for="sM_XA"
 >
   dynamic
 </label>
 <input
-  id="sM_YA"
+  id="sM_XA"
 />
 <label
-  for="sM_YUXA"
+  for="sM_XTWA"
 >
   content
 </label>
 <input
-  id="sM_YUXA"
+  id="sM_XTWA"
 />
 <label
-  for="sM__0VZA"
+  for="sM_Z0UYA"
 >
   b
 </label>
 <input
-  id="sM__0VZA"
+  id="sM_Z0UYA"
 />
 <label
-  for="sM__1VZA"
+  for="sM_Z1UYA"
 >
   c
 </label>
 <input
-  id="sM__1VZA"
+  id="sM_Z1UYA"
 />
 <section>
   <label
-    for="sM_-1U-0A"
+    for="sM_-0T_A"
   >
     forwarded
   </label>
   <input
-    id="sM_-1U-0A"
+    id="sM_-0T_A"
   />
 </section>
 <aside>
   <label
-    for="sM_-1V-0A"
+    for="sM_-0U_A"
   >
     forwarded
   </label>
   <input
-    id="sM_-1V-0A"
+    id="sM_-0U_A"
   />
 </aside>
 <label
-  for="sM_-2UUA"
+  for="sM_-1TTA"
 >
   nested
 </label>
 <input
-  id="sM_-2UUA"
+  id="sM_-1TTA"
 />
 ```
 ## Change
 ```
 INSERT: label
-INSERT: label:nth-of-type(1) + #sM_WUA
-REMOVE: #sM_WUA + label
-REMOVE: #sM_WUA + #sM_WUA
-INSERT: #sM_WUA + :is(label, #sM_YA)
-REMOVE: #sM_YUXA + section
-UPDATE: label:nth-of-type(2)[for] null => "sM_YA"
+INSERT: label:nth-of-type(1) + #sM_VTA
+REMOVE: #sM_VTA + label
+REMOVE: #sM_VTA + #sM_VTA
+INSERT: #sM_VTA + :is(label, #sM_XA)
+REMOVE: #sM_XTWA + section
+UPDATE: label:nth-of-type(2)[for] null => "sM_XA"
 UPDATE: label:nth-of-type(2)::text " " => "dynamic"
-UPDATE: #sM_YA[id] null => "sM_YA"
-INSERT: #sM_YA + :is(label, #sM_YUXA)
-UPDATE: label:nth-of-type(3)[for] null => "sM_YUXA"
+UPDATE: #sM_XA[id] null => "sM_XA"
+INSERT: #sM_XA + :is(label, #sM_XTWA)
+UPDATE: label:nth-of-type(3)[for] null => "sM_XTWA"
 UPDATE: label:nth-of-type(3)::text " " => "content"
-UPDATE: #sM_YUXA[id] null => "sM_YUXA"
+UPDATE: #sM_XTWA[id] null => "sM_XTWA"
 UPDATE: label:nth-of-type(4)::text "a" => "b"
 UPDATE: label:nth-of-type(5)::text "b" => "c"
 ```
@@ -191,85 +191,85 @@ for (const input of document.querySelectorAll(
 # Update `{"flip":false,"items":[{"key":"c"},{"key":"a"}]}`
 ```html
 <label
-  for="sM_WUA"
+  for="sM_VTA"
 >
   other
 </label>
 <input
-  id="sM_WUA"
+  id="sM_VTA"
 />
 <section
   name="dynamic"
 >
   <label
-    for="sM_YXA"
+    for="sM_XWA"
   >
     content
   </label>
   <input
-    id="sM_YXA"
+    id="sM_XWA"
   />
 </section>
 <label
-  for="sM__0VZA"
+  for="sM_Z0UYA"
 >
   c
 </label>
 <input
-  id="sM__0VZA"
+  id="sM_Z0UYA"
 />
 <label
-  for="sM__1VZA"
+  for="sM_Z1UYA"
 >
   a
 </label>
 <input
-  id="sM__1VZA"
+  id="sM_Z1UYA"
 />
 <section>
   <label
-    for="sM_-1U-0A"
+    for="sM_-0T_A"
   >
     forwarded
   </label>
   <input
-    id="sM_-1U-0A"
+    id="sM_-0T_A"
   />
 </section>
 <aside>
   <label
-    for="sM_-1V-0A"
+    for="sM_-0U_A"
   >
     forwarded
   </label>
   <input
-    id="sM_-1V-0A"
+    id="sM_-0U_A"
   />
 </aside>
 <label
-  for="sM_-2UUA"
+  for="sM_-1TTA"
 >
   nested
 </label>
 <input
-  id="sM_-2UUA"
+  id="sM_-1TTA"
 />
 ```
 ## Change
 ```
 INSERT: label
-INSERT: label:nth-of-type(1) + #sM_WUA
-REMOVE: #sM_WUA + label
-REMOVE: #sM_WUA + #sM_WUA
-INSERT: #sM_WUA + section
+INSERT: label:nth-of-type(1) + #sM_VTA
+REMOVE: #sM_VTA + label
+REMOVE: #sM_VTA + #sM_VTA
+INSERT: #sM_VTA + section
 REMOVE: section:nth-of-type(1) + label
-REMOVE: section:nth-of-type(1) + #sM_YA
+REMOVE: section:nth-of-type(1) + #sM_XA
 REMOVE: section:nth-of-type(1) + label
-REMOVE: section:nth-of-type(1) + #sM_YUXA
+REMOVE: section:nth-of-type(1) + #sM_XTWA
 UPDATE: section:nth-of-type(1)[name] null => "dynamic"
-UPDATE: section:nth-of-type(1) > label[for] null => "sM_YXA"
+UPDATE: section:nth-of-type(1) > label[for] null => "sM_XWA"
 UPDATE: section:nth-of-type(1) > label::text " " => "content"
-UPDATE: #sM_YXA[id] null => "sM_YXA"
+UPDATE: #sM_XWA[id] null => "sM_XWA"
 UPDATE: label:nth-of-type(2)::text "b" => "c"
 UPDATE: label:nth-of-type(3)::text "c" => "a"
 ```

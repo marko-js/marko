@@ -7,9 +7,9 @@
       la: ["a", {
         ca: {
           s: {
-            aa$for: "sM_gaXA",
+            aa$for: "sM_gaWA",
             tb: "a",
-            ac$id: "sM_gaXA",
+            ac$id: "sM_gaWA",
             "ac$aria-describedby": "sM_A"
           }
         }

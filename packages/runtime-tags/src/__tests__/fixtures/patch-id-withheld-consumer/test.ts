@@ -2,8 +2,8 @@ import assert from "node:assert/strict";
 
 import type { TestConfig } from "../../main.test";
 
-// Kept content a created row renders, beside its consumer's own id: each is
-// the first id of its template.
+// Content a `<let>` holds that a created row renders, beside the holding
+// template's own id: each is the first id of its template.
 export const config: TestConfig = {
   patches: true,
   skip_fresh_render: true,

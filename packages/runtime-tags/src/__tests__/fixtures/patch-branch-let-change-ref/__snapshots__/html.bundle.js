@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			let handler = _resume((next) => {
 				last = next;
-			}, "a0", $scope1_id, 1);
+			}, "a0", $scope1_id);
 			let count = 0;
 			_html(`<span>Seen ${_text_mark($scope1_id, "a", count, 2)}</span><button>+</button>${_el_mark($scope1_id, "b")}`);
 			_script($scope1_id, "a1");

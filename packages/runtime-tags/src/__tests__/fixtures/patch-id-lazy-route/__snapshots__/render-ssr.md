@@ -1,12 +1,12 @@
 # Render `{"$global":{"n":5}}`
 ```html
 <label
-  for="sM_UU1A"
+  for="sM_TT1A"
 >
   field
 </label>
 <input
-  id="sM_UU1A"
+  id="sM_TT1A"
 />
 <span
   class="v"
@@ -33,12 +33,12 @@ document.querySelector("button").click();
 ```
 ```html
 <label
-  for="sM_UU1A"
+  for="sM_TT1A"
 >
   field
 </label>
 <input
-  id="sM_UU1A"
+  id="sM_TT1A"
 />
 <span
   class="v"
@@ -59,12 +59,12 @@ UPDATE: .v::text "5" => "6"
 # Update `{"$global":{"n":6}}`
 ```html
 <label
-  for="sM_UU1A"
+  for="sM_TT1A"
 >
   field
 </label>
 <input
-  id="sM_UU1A"
+  id="sM_TT1A"
 />
 <span
   class="v"

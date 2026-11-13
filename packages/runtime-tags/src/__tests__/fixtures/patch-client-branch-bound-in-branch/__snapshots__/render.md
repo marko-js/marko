@@ -16,6 +16,9 @@
 ## Change
 ```
 INSERT: section
+INSERT: section > button + span
+INSERT: section > span > b
+UPDATE: section > span > b::text " " => "b"
 ```
 
 # Update `{"show":true,"inner":true,"label":"c","tag":"i"}`

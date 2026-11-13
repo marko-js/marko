@@ -22,7 +22,14 @@
 ## Change
 ```
 INSERT: section
-INSERT: section > span:nth-of-type(1) + :is(span, ::text("y"))
+INSERT: section > button + span
+INSERT: section > span:nth-of-type(1) > b
+UPDATE: section > span:nth-of-type(1) > b::text " " => "b"
+INSERT: section > span:nth-of-type(1) + ::text("y")
+UPDATE: section::text "" => "y"
+INSERT: section > span:nth-of-type(1) + span
+INSERT: section > span:nth-of-type(2) > b
+UPDATE: section > span:nth-of-type(2) > b::text " " => "b"
 ```
 
 # Update

@@ -10,7 +10,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_html(`<button>clear</button>${_el_mark($scope0_id, "#button/0")}`);
 	_dynamic_tag($scope0_id, "#text/1", c, {}, 2, 0, 0, 1, _client_guard($scope0_reason, 0) << 1, 0, 1);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
-	_scope($scope0_id, {}, "__tests__/tags/card.marko", 0) || _client_branch(input.content);
+	_scope($scope0_id, {}, "__tests__/tags/card.marko", 0);
 });
 
 // template.marko
@@ -18,7 +18,6 @@ const $template = "<!><!><!><!><!><!>";
 const $walks = "b%b%b%b%c";
 const $setup = [[], []];
 _shells({
-	"__tests__/template.marko_6*content": "__tests__/template.marko_6*content|6; b D ;<input><label> </label>",
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content",
 	"__tests__/template.marko": "__tests__/template.marko;b%b%b%b%;<!><!><!><!><!><!>",
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell; b%;<input><!><!>",
@@ -76,15 +75,18 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope5_id = _scope_id();
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope5_id, "#childScope/0", 2);
-		card_default({ content: _content("__tests__/template.marko_6*content", () => {
+		card_default({ content: _content_resume("__tests__/template.marko_6*content", () => {
 			const $scope6_reason = _scope_reason();
 			const $scope6_id = _scope_id();
 			const uid = _id("uid~2");
-			_html(`<input${_attr("id", uid, $scope6_id, "#input/0", 0, 0)}>${_el_mark($scope6_id, "#input/0", 0)}<label${_attr("for", uid, $scope6_id, "#label/1", 0, 0)}>${_text_mark($scope6_id, "#text/2", row.id, 1, $scope0_reason, 5)}</label>${_el_mark($scope6_id, "#label/1", 0)}`);
-			_scope($scope6_id, {}, "__tests__/template.marko", "14:4");
-		}, $scope5_id, 6) });
+			_html(`<input${_attr("id", uid)}><label${_attr("for", uid)}>${_escape(row.id)}</label>`);
+			_scope($scope6_id, { _: _scope_with_id($scope5_id) }, "__tests__/template.marko", "14:4");
+		}, $scope5_id) });
 		_patch_child_end();
-		_scope($scope5_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "13:2");
+		_scope($scope5_id, {
+			"#LoopKey": row?.id,
+			"#childScope/0": _existing_scope($childScope)
+		}, "__tests__/template.marko", "13:2", { "#LoopKey": ["row.id", "13:6"] });
 	}, "id", $scope0_id, "#text/3", 1, 1, 1, 0, 0, "__tests__/template.marko_5*shell", $scope0_reason, 5);
 	$fg__input_show && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "__tests__/template.marko_1_input_show#0:7/setup", "input_show");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_show#7_input_on#8_Field#10/setup", (($fg__input_show ? " input_show" : "") + ($fg__input_on ? " input_on" : "")).slice(1), $scope0_reason, 1);

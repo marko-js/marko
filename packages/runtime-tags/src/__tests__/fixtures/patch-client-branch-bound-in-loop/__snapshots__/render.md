@@ -28,6 +28,15 @@
 ## Change
 ```
 INSERT: section
+INSERT: section > ul > li
+INSERT: section > ul > li:nth-of-type(1) + li
+INSERT: section > ul > li:nth-of-type(2) + li
+INSERT: section > ul > li:nth-of-type(1) > span
+INSERT: section > ul > li:nth-of-type(2) > span
+INSERT: section > ul > li:nth-of-type(3) > span
+UPDATE: section > ul > li:nth-of-type(1) > span::text " " => "r1"
+UPDATE: section > ul > li:nth-of-type(2) > span::text " " => "r2"
+UPDATE: section > ul > li:nth-of-type(3) > span::text " " => "r3"
 ```
 
 # Update
@@ -68,12 +77,12 @@ LOG "r3" "b"
 REMOVE: section > ul > li:nth-of-type(2) + li
 REMOVE: section > ul > li:nth-of-type(2) + li
 INSERT: section > ul > li
-INSERT: section > ul > li:nth-of-type(1) > i
-REMOVE: section > ul > li:nth-of-type(1) > i + span
-UPDATE: section > ul > li:nth-of-type(1) > i::text " " => "r3"
 INSERT: section > ul > li:nth-of-type(2) > i
 REMOVE: section > ul > li:nth-of-type(2) > i + span
+INSERT: section > ul > li:nth-of-type(1) > i
+REMOVE: section > ul > li:nth-of-type(1) > i + span
 UPDATE: section > ul > li:nth-of-type(2) > i::text " " => "r1"
+UPDATE: section > ul > li:nth-of-type(1) > i::text " " => "r3"
 ```
 
 # Update
@@ -123,8 +132,8 @@ LOG "r1" "c"
 INSERT: section > ul > li:nth-of-type(3) + li
 INSERT: section > ul > li
 INSERT: section > ul > li:nth-of-type(1) > i
-UPDATE: section > ul > li:nth-of-type(1) > i::text " " => "r2"
 INSERT: section > ul > li:nth-of-type(4) > i
+UPDATE: section > ul > li:nth-of-type(1) > i::text " " => "r2"
 UPDATE: section > ul > li:nth-of-type(4) > i::text " " => "r4"
 ```
 

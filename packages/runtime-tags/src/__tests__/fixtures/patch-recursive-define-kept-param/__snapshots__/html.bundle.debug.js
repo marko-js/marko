@@ -36,7 +36,6 @@ const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}</main>`)($Level_content_
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)($Level_content__walks);
 const $setup = _shell_setup([[], []], ["#childScope/0>", _shell_setup([[], []], ["#childScope/1>", $setup$1])]);
 _shells({
-	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content",
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `D/${_w0}&l`)($Level_content__walks)};${((_w0) => `<main>${_w0}</main>`)($Level_content__template)}`,
 	"__tests__/template.marko_2*shell": `__tests__/template.marko_2*shell${_shell_marker([[], []], ["#childScope/0>", _shell_setup([[], []], ["#childScope/1>", $setup$1])])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Level_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Level_content__template)}`
 });
@@ -47,7 +46,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $Level_content__n__closures = new Set();
 		const $Level_content__label__closures = new Set();
-		const $scope1_reason = _scope_reason(), $cg__label = _client_guard($scope1_reason, 1), $wg__n = _write_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $wg__n = _write_guard($scope1_reason, 0), $wg__label = _write_guard($scope1_reason, 1), $cg__label = _client_guard($scope1_reason, 1), $wi__n = _write_if($scope1_reason, 0), $wi__label = _write_if($scope1_reason, 1);
 		_if(() => {
 			if (n) {
 				const $scope2_id = _scope_id();
@@ -59,11 +58,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					content: _content_resume("__tests__/template.marko_3*content", () => {
 						const $scope3_reason = _scope_reason();
 						const $scope3_id = _scope_id();
-						_html(`<em>${_text_mark($scope3_id, "#text/0", n, 1, $scope1_reason, 0)}:${_text_mark($scope3_id, "#text/1", label, 2, $scope1_reason, 1)}</em>`);
-						_unfilled_if($scope1_reason, 0) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_n#1:4/subscribe");
-						_unfilled_if($scope1_reason, 1) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_label#1:5/subscribe", $cg__label);
-						_subscribe(_unfilled_if($scope1_reason, 1) && $Level_content__label__closures, _subscribe(_unfilled_if($scope1_reason, 0) && $Level_content__n__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "3:6"), _client_guard($scope1_reason, 0) && "__tests__/template.marko_3_n#1:4/subscribe"), $cg__label && "__tests__/template.marko_3_label#1:5/subscribe");
-					}, $scope2_id, void 0, 1)
+						_html(`<em>${_text_mark($scope3_id, "#text/0", n, $wg__n)}:${_text_mark($scope3_id, "#text/1", label, $wg__label * 2)}</em>`);
+						$cg__label && _patch_render($scope3_id, "__tests__/template.marko_3_label#1:5/subscribe");
+						_subscribe($wi__label && $Level_content__label__closures, _subscribe($wi__n && $Level_content__n__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "3:6"), _client_guard($scope1_reason, 0) && "__tests__/template.marko_3_n#1:4/subscribe", $wg__n || $wg__label), $cg__label && "__tests__/template.marko_3_label#1:5/subscribe", $wg__n || $wg__label);
+					}, $scope2_id)
 				});
 				_patch_child_end();
 				$cg__label && _patch_render($scope2_id, "__tests__/template.marko_2_label#1:5/setup");
@@ -81,8 +79,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope($scope1_id, {
 			n,
 			label,
-			"ClosureScopes:n/7": _write_if($scope1_reason, 0) && $Level_content__n__closures,
-			"ClosureScopes:label/8": _write_if($scope1_reason, 1) && $Level_content__label__closures,
+			"ClosureScopes:n/7": $wi__n && $Level_content__n__closures,
+			"ClosureScopes:label/8": $wi__label && $Level_content__label__closures,
 			"#childScope/1": _existing_scope($childScope2)
 		}, "__tests__/template.marko", "1:2", {
 			n: "1:17",

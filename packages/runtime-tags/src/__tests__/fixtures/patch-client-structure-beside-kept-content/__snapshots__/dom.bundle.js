@@ -19,6 +19,8 @@ const $for_content__input_tag = /*@__PURE__*/ _for_closure_patch("a3", 2, ($scop
 const $for_content__setup = $for_content__input_tag;
 const $if_content__input_tag = /*@__PURE__*/ _if_closure_patch("a2", 1, 0, ($scope) => $input_tag($scope.a, $scope._.h));
 const $if_content__setup = $if_content__input_tag;
+const $card_content__input_label = /*@__PURE__*/ _closure_get_patch("a0", 10, ($scope) => _text($scope.a, $scope._.g), 0, "a5", 0);
+const $card_content = _content$1("a1", "<em> </em>", "D ", $card_content__input_label);
 const $if = /*@__PURE__*/ _if(1, /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template), /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks), $if_content__setup);
 const $show = _let(8, ($scope) => $if($scope, $scope.i ? 0 : 1));
 const $for = /*@__PURE__*/ _for_of_unkeyed(2, /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template), /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks), $for_content__setup);

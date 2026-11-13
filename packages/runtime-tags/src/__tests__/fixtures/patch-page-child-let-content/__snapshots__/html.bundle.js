@@ -11,7 +11,7 @@ var card_default = _template("b", (input) => {
 	_dynamic_tag($scope0_id, "b", c, {}, 2, 0, 0, 1, _client_guard($scope0_reason, 0) << 1, 0, 1);
 	_html(`<p>${_text_mark($scope0_id, "c", input.user.name, 1, $scope0_reason, 1)}</p></section>`);
 	_script($scope0_id, "b0");
-	_scope($scope0_id, {}) || _client_branch(input.content);
+	_scope($scope0_id, {});
 });
 
 // template.marko
@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	card_default({
 		user: input.user,
-		content: _content("a0", () => {
+		content: _content_resume("a0", () => {
 			_scope_reason();
 			_scope_id();
 			_html("<em>static</em>");

@@ -4,10 +4,7 @@
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": [{
       "PatchSetup:": {
-        "PatchDynamicTag:#text/1": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-child-branch-let-content/template.marko_1*content",
-        "PatchChild:BranchScopes:#text/1": {
-          "PatchText:#text/0": "b"
-        }
+        "PatchDynamicTag:#text/1": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-child-branch-let-content/template.marko_1*content"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-branch-let-content/tags/card.marko_1*shell"]
   },
@@ -21,10 +18,7 @@
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": [{
       "PatchSetup:": {
-        "PatchDynamicTag:#text/1": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-child-branch-let-content/template.marko_1*content",
-        "PatchChild:BranchScopes:#text/1": {
-          "PatchText:#text/0": "c"
-        }
+        "PatchDynamicTag:#text/1": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-child-branch-let-content/template.marko_1*content"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-branch-let-content/tags/card.marko_1*shell"]
   },
@@ -37,10 +31,7 @@
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": [{
       "PatchSetup:": {
-        "PatchDynamicTag:#text/1": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-child-branch-let-content/template.marko_1*content",
-        "PatchChild:BranchScopes:#text/1": {
-          "PatchText:#text/0": "d"
-        }
+        "PatchDynamicTag:#text/1": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-child-branch-let-content/template.marko_1*content"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-branch-let-content/tags/card.marko_1*shell"]
   },

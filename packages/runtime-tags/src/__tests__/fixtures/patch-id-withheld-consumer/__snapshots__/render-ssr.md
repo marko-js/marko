@@ -1,10 +1,10 @@
 # Render `{"rows":[{"id":1}]}`
 ```html
 <input
-  id="sM_1UA"
+  id="sM_1TA"
 />
 <label
-  for="sM_1UA"
+  for="sM_1TA"
 >
   own
 </label>
@@ -12,10 +12,10 @@
   clear
 </button>
 <input
-  id="sM_1UUA"
+  id="sM_1TTA"
 />
 <label
-  for="sM_1UUA"
+  for="sM_1TTA"
 >
   1
 </label>
@@ -37,10 +37,10 @@ assert.equal(ids.size, document.querySelectorAll("input").length);
 # Update `{"rows":[{"id":1},{"id":2}]}`
 ```html
 <input
-  id="sM_1UA"
+  id="sM_1TA"
 />
 <label
-  for="sM_1UA"
+  for="sM_1TA"
 >
   own
 </label>
@@ -48,18 +48,18 @@ assert.equal(ids.size, document.querySelectorAll("input").length);
   clear
 </button>
 <input
-  id="sM_1UUA"
+  id="sM_1TTA"
 />
 <label
-  for="sM_1UUA"
+  for="sM_1TTA"
 >
   1
 </label>
 <input
-  id="sM_2UA"
+  id="sM_2TA"
 />
 <label
-  for="sM_2UA"
+  for="sM_2TA"
 >
   own
 </label>
@@ -67,23 +67,20 @@ assert.equal(ids.size, document.querySelectorAll("input").length);
   clear
 </button>
 <input
-  id="sM_2UUA"
+  id="cM_0"
 />
 <label
-  for="sM_2UUA"
+  for="cM_0"
 >
   2
 </label>
 ```
 ## Change
 ```
-INSERT: label:nth-of-type(2) + :is(#sM_2UA, label, button)
-UPDATE: #sM_2UA[id] null => "sM_2UA"
-UPDATE: label:nth-of-type(3)[for] null => "sM_2UA"
-INSERT: button:nth-of-type(2) + :is(#sM_2UUA, label)
-UPDATE: #sM_2UUA[id] null => "sM_2UUA"
-UPDATE: label:nth-of-type(4)[for] null => "sM_2UUA"
-UPDATE: label:nth-of-type(4)::text " " => "2"
+INSERT: label:nth-of-type(2) + :is(#sM_2TA, label, button)
+UPDATE: #sM_2TA[id] null => "sM_2TA"
+UPDATE: label:nth-of-type(3)[for] null => "sM_2TA"
+INSERT: button:nth-of-type(2) + :is(#cM_0, label)
 ```
 
 # Update

@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 		_html(`<em>one ${_text_mark($scope1_id, "a", input.b, $wg__input_b * 2)}${_escape(rendering())}</em>`);
 		$cg__input_b && _patch_render($scope1_id, "a1");
 		_subscribe($wi__input_b && $input_b__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_b && "a1", $wg__input_b);
-	}, $scope0_id, void 0, 1) };
+	}, $scope0_id) };
 	const two = { content: _content_resume("a2", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			Co: $wi__input_b && 1
 		}), $cg__input_b && "a3", $wg__input_b);
-	}, $scope0_id, void 0, 1) };
+	}, $scope0_id) };
 	_html("<section>");
 	_attr_content("b", $scope0_id, two, 0);
 	const attrs = {

@@ -25,7 +25,7 @@ const $Inn_content__setup = ($scope) => {
 };
 const $Inn_content = _content("__tests__/template.marko_4*content", "<b> </b>", " D ", $Inn_content__setup);
 const $Outer_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $Outer_content__input_tag__OR__Inn = /*@__PURE__*/ _or_patch("__tests__/template.marko_3_input_tag#0:5_Inn#1/setup", 2, ($scope) => $Outer_content__dynamicTag($scope, $scope._._._.input_tag, ($_) => ({ content: $scope.Inn })));
+const $Outer_content__input_tag__OR__Inn = /*@__PURE__*/ _or(2, ($scope) => $Outer_content__dynamicTag($scope, $scope._._._.input_tag, ($_) => ({ content: $scope.Inn })));
 const $Outer_content__input_tag = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_3_input_tag#0:5/subscribe", "input_tag/7", $Outer_content__input_tag__OR__Inn, ($scope) => $scope._._._, "__tests__/template.marko_0_input_tag#5/subscribers", 1);
 const $Outer_content__Inn = /*@__PURE__*/ _const("Inn", $Outer_content__input_tag__OR__Inn);
 const $Outer_content__setup = ($scope) => {
@@ -33,16 +33,15 @@ const $Outer_content__setup = ($scope) => {
 	$Outer_content__Inn($scope, { content: $Inn_content($scope) });
 };
 const $Outer_content = _content("__tests__/template.marko_3*content", "<!><!><!>", "b%", $Outer_content__setup);
-_content_resume($Outer_content);
 const $card_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $card_content__input_tag__OR__Outer = /*@__PURE__*/ _or_patch("__tests__/template.marko_2_input_tag#0:5_Outer#1/setup", 2, ($scope) => $card_content__dynamicTag($scope, $scope._._.input_tag, ($_) => ({ content: $scope.Outer })));
+const $card_content__input_tag__OR__Outer = /*@__PURE__*/ _or(2, ($scope) => $card_content__dynamicTag($scope, $scope._._.input_tag, ($_) => ({ content: $scope.Outer })));
 const $card_content__input_tag = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_input_tag#0:5/subscribe", "input_tag/7", $card_content__input_tag__OR__Outer, ($scope) => $scope._._, "__tests__/template.marko_0_input_tag#5/subscribers", 0);
 const $card_content__Outer = /*@__PURE__*/ _const("Outer", $card_content__input_tag__OR__Outer);
 const $card_content__setup = ($scope) => {
 	$card_content__input_tag($scope);
 	$card_content__Outer($scope, { content: $Outer_content($scope) });
 };
-const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $card_content__setup);
+const $card_content = _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $card_content__setup);
 const $if_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $card_content($scope));
@@ -51,8 +50,8 @@ const $if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
 	$input_label($scope, input.label);
-	$input_show($scope, input.show);
 	$input_tag($scope, input.tag);
+	$input_show($scope, input.show);
 };
 const $input_label__closure = /*@__PURE__*/ _closure($Inn_content__input_label);
 const $input_label = /*@__PURE__*/ _const("input_label", $input_label__closure);

@@ -5,9 +5,9 @@
   bb: [{
     ca: {
       s: {
-        aa$for: "sM_VA",
+        aa$for: "sM_UA",
         tb: "right",
-        ac$id: "sM_VA"
+        ac$id: "sM_UA"
       }
     }
   }, "a1"],
@@ -15,9 +15,9 @@
     ba: [{
       ca: {
         s: {
-          aa$for: "sM_XWA",
+          aa$for: "sM_WVA",
           tb: "repeat",
-          ac$id: "sM_XWA"
+          ac$id: "sM_WVA"
         }
       }
     }, "a2"]
@@ -26,9 +26,9 @@
     ba: [{
       ca: {
         s: {
-          aa$for: "sM_YWA",
+          aa$for: "sM_XVA",
           tb: "repeat",
-          ac$id: "sM_YWA"
+          ac$id: "sM_XVA"
         }
       }
     }, "a2"]
@@ -42,18 +42,18 @@
   ba: [{
     ca: {
       s: {
-        aa$for: "sM_UA",
+        aa$for: "sM_TA",
         tb: "left",
-        ac$id: "sM_UA"
+        ac$id: "sM_TA"
       }
     }
   }, "a0"],
   bb: [{
     ca: {
       s: {
-        aa$for: "sM_VA",
+        aa$for: "sM_UA",
         tb: "right",
-        ac$id: "sM_VA"
+        ac$id: "sM_UA"
       }
     }
   }, "a1"],
@@ -61,9 +61,9 @@
     ba: [{
       ca: {
         s: {
-          aa$for: "sM_XWA",
+          aa$for: "sM_WVA",
           tb: "repeat",
-          ac$id: "sM_XWA"
+          ac$id: "sM_WVA"
         }
       }
     }, "a2"]
@@ -72,9 +72,9 @@
     ba: [{
       ca: {
         s: {
-          aa$for: "sM_YWA",
+          aa$for: "sM_XVA",
           tb: "repeat",
-          ac$id: "sM_YWA"
+          ac$id: "sM_XVA"
         }
       }
     }, "a2"]

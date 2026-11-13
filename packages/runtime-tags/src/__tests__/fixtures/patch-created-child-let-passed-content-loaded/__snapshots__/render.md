@@ -26,6 +26,7 @@
 ```
 INSERT: button:nth-of-type(1) + button
 INSERT: button:nth-of-type(2) + section
+UPDATE: section > em::text@7 "" => "b"
 ```
 
 # Update `{"show":true,"label":"c"}`

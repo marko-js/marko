@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	read_button_default({ onClick: _resume(function() {
 		out = $global$1.brand;
-	}, "__tests__/template.marko_0/onClick", $scope0_id, 1) });
+	}, "__tests__/template.marko_0/onClick", $scope0_id) });
 	_patch_child_end();
 	_html(`<output>${_text_mark($scope0_id, "#text/1", out)}</output>`);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);

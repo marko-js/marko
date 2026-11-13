@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-created-define-kept-content/template.marko_3*content|3;D ;<span> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-created-define-kept-content/template.marko_1*shell !#childScope/0>#childScope/0>packages/runtime-tags/src/__tests__/fixtures/patch-created-define-kept-content/tags/card.marko_0;//D b%b%l&&;<section><button>clear</button><!><!></section>`]
+`packages/runtime-tags/src/__tests__/fixtures/patch-created-define-kept-content/template.marko_1*shell !#childScope/0>#childScope/0>packages/runtime-tags/src/__tests__/fixtures/patch-created-define-kept-content/tags/card.marko_0;//D b%b%l&&;<section><button>clear</button><!><!></section>`
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
@@ -9,15 +9,14 @@
           "PatchDynamicTag:#text/2": _.a
         }
       },
-      "PatchClientBranch:3": {
-        "PatchText:#text/0": "b"
-      }
+      "PatchMarkedWrite:label": "b",
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-kept-content/template.marko_2_label#3/subscribers": "label"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-kept-content/template.marko_1*shell"]
 }
-;CQw
+;BgI
 
-// PATCH holding CQw
+// PATCH holding BgI
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
@@ -27,9 +26,8 @@
           "PatchDynamicTag:#text/2": _.a
         }
       },
-      "PatchClientBranch:3": {
-        "PatchText:#text/0": "c"
-      }
+      "PatchMarkedWrite:label": "c",
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-kept-content/template.marko_2_label#3/subscribers": "label"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-kept-content/template.marko_1*shell"]
 }

@@ -23,6 +23,8 @@
 ## Change
 ```
 INSERT: section
+UPDATE: section > div:nth-of-type(1)::text " " => "b"
+UPDATE: section > div:nth-of-type(2)::text " " => "b"
 ```
 
 # Update

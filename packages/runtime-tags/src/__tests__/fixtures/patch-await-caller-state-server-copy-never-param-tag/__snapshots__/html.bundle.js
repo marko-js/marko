@@ -71,5 +71,5 @@ var template_default = _template("a", (input) => {
 	_scope($scope0_id, {
 		g: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.label,
 		h: $wi__input_show && p
-	}) || (_client_branch(input.promise), $fg__input_label && $ui__input_show && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 2)));
+	}) || $fg__input_label && $ui__input_show && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 2));
 }, 1);

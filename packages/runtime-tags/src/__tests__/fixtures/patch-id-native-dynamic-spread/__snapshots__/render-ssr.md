@@ -2,22 +2,22 @@
 ```html
 <p>
   <label
-    for="sM_0UA"
+    for="sM_0TA"
   >
     body
   </label>
   <input
-    id="sM_0UA"
+    id="sM_0TA"
   />
 </p>
 <div>
   <label
-    for="sM_1UA"
+    for="sM_1TA"
   >
     body
   </label>
   <input
-    id="sM_1UA"
+    id="sM_1TA"
   />
 </div>
 ```
@@ -42,22 +42,22 @@ for (const input of document.querySelectorAll(
 ```html
 <div>
   <label
-    for="sM_0UA"
+    for="sM_0TA"
   >
     body
   </label>
   <input
-    id="sM_0UA"
+    id="sM_0TA"
   />
 </div>
 <p>
   <label
-    for="sM_1UA"
+    for="sM_1TA"
   >
     body
   </label>
   <input
-    id="sM_1UA"
+    id="sM_1TA"
   />
 </p>
 ```
@@ -65,14 +65,14 @@ for (const input of document.querySelectorAll(
 ```
 INSERT: div
 REMOVE: div + p
-INSERT: div > :is(label, #sM_0UA)
-UPDATE: div > label[for] "cM_0" => "sM_0UA"
-UPDATE: #sM_0UA[id] "cM_0" => "sM_0UA"
+INSERT: div > :is(label, #sM_0TA)
+UPDATE: div > label[for] "cM_0" => "sM_0TA"
+UPDATE: #sM_0TA[id] "cM_0" => "sM_0TA"
 INSERT: div + p
 REMOVE: p + div
-INSERT: p > :is(label, #sM_1UA)
-UPDATE: p > label[for] "cM_1" => "sM_1UA"
-UPDATE: #sM_1UA[id] "cM_1" => "sM_1UA"
+INSERT: p > :is(label, #sM_1TA)
+UPDATE: p > label[for] "cM_1" => "sM_1TA"
+UPDATE: #sM_1TA[id] "cM_1" => "sM_1TA"
 ```
 
 # Update
@@ -95,12 +95,12 @@ for (const input of document.querySelectorAll(
 ```html
 <p>
   <label
-    for="sM_0UA"
+    for="sM_0TA"
   >
     body
   </label>
   <input
-    id="sM_0UA"
+    id="sM_0TA"
   />
 </p>
 ```
@@ -109,9 +109,9 @@ for (const input of document.querySelectorAll(
 REMOVE: p + p
 INSERT: p
 REMOVE: p + div
-INSERT: p > :is(label, #sM_0UA)
-UPDATE: p > label[for] "cM_2" => "sM_0UA"
-UPDATE: #sM_0UA[id] "cM_2" => "sM_0UA"
+INSERT: p > :is(label, #sM_0TA)
+UPDATE: p > label[for] "cM_2" => "sM_0TA"
+UPDATE: #sM_0TA[id] "cM_2" => "sM_0TA"
 ```
 
 # Update

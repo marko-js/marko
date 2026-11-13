@@ -1,12 +1,12 @@
 // PATCH
-[`a3`, `a1;D ;<em> </em>`]
+[`a2`, `a0;D ;<em> </em>`]
 {
-  fa: [">div", "a3", {
+  fa: [">div", "a2", {
     class: "box"
   }],
   cAa: {
     cAa: {
-      pa: "a1"
+      pa: "a0"
     }
   },
   xh: (p => p = new Promise((f, r) => _.a = {
@@ -16,7 +16,7 @@
       r(e)
     }
   }))(),
-  Sa9: "h"
+  Sa8: "h"
 }
 {
   cAa: {
@@ -28,16 +28,16 @@
   }
 }
 (_.a.f("b"), 0)
-;DRQ
+;Cwo
 
-// PATCH holding DRQ
+// PATCH holding Cwo
 {
-  fa: [">section", "a3", {
+  fa: [">section", "a2", {
     class: "box"
   }],
   cAa: {
     cAa: {
-      pa: "a1"
+      pa: "a0"
     }
   },
   xh: (p => p = new Promise((f, r) => _.a = {
@@ -47,7 +47,7 @@
       r(e)
     }
   }))(),
-  Sa9: "h"
+  Sa8: "h"
 }
 {
   cAa: {

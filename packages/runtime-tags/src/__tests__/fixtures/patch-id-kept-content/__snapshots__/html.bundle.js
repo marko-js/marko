@@ -23,7 +23,7 @@ var keeper_default = _template("b", (input) => {
 	_scope($scope0_id, {
 		f: content,
 		g: show
-	}) || _client_branch(input.content);
+	});
 });
 
 // template.marko
@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 	keeper_default({ content: _content_resume("a1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		const uid = _id("A", 1);
+		const uid = _id("A");
 		_html(`<label${_attr("for", uid)}>${_text_mark($scope1_id, "b", input.prefix + " " + uid, $wg__input_prefix)}</label><input${_attr("id", uid)}${_attr("title", input.prefix + " " + uid)}>${_el_mark($scope1_id, "c", $wg__input_prefix)}`);
 		_subscribe($wi__input_prefix && $input_prefix__closures, _scope($scope1_id, {
 			d: $wi__input_prefix && uid,

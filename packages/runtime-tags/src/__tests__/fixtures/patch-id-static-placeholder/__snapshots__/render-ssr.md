@@ -1,36 +1,52 @@
 # Render `{"promise":{"value":"ready"}}`
 ```html
 <label
-  for="sM_0UA"
+  for="sM_0TA"
 >
   loading
 </label>
 <input
-  id="sM_0UA"
+  id="sM_0TA"
 />
 <label
-  for="sM_1UA"
+  for="sM_1TA"
 >
   loading
 </label>
 <input
-  id="sM_1UA"
+  id="sM_1TA"
 />
 <label
-  for="sM_gaVA"
+  for="sM_gaUA"
 >
   loading
 </label>
 <input
-  id="sM_gaVA"
+  id="sM_gaUA"
 />
 <label
-  for="sM_gbVA"
+  for="sM_gbUA"
 >
   loading
 </label>
 <input
-  id="sM_gbVA"
+  id="sM_gbUA"
+/>
+<label
+  for="sM_0VA"
+>
+  loading
+</label>
+<input
+  id="sM_0VA"
+/>
+<label
+  for="sM_1VA"
+>
+  loading
+</label>
+<input
+  id="sM_1VA"
 />
 <label
   for="sM_0WA"
@@ -49,52 +65,36 @@
   id="sM_1WA"
 />
 <label
-  for="sM_0XA"
->
-  loading
-</label>
-<input
-  id="sM_0XA"
-/>
-<label
-  for="sM_1XA"
->
-  loading
-</label>
-<input
-  id="sM_1XA"
-/>
-<label
-  for="sM_00YA"
+  for="sM_00XA"
 >
   nested
 </label>
 <input
-  id="sM_00YA"
+  id="sM_00XA"
 />
 <label
-  for="sM_01YA"
+  for="sM_01XA"
 >
   nested
 </label>
 <input
-  id="sM_01YA"
+  id="sM_01XA"
 />
 <label
-  for="sM_10YA"
+  for="sM_10XA"
 >
   nested
 </label>
 <input
-  id="sM_10YA"
+  id="sM_10XA"
 />
 <label
-  for="sM_11YA"
+  for="sM_11XA"
 >
   nested
 </label>
 <input
-  id="sM_11YA"
+  id="sM_11XA"
 />
 ```
 
@@ -118,29 +118,29 @@ assert.equal(ids.size, 12);
 ## Change
 ```
 INSERT: p::text("ready")
-REMOVE: t > label:nth-of-type(12) + #sM_11YA
-REMOVE: #sM_10YA + label
-REMOVE: t > label:nth-of-type(11) + #sM_10YA
-REMOVE: #sM_01YA + label
-REMOVE: t > label:nth-of-type(10) + #sM_01YA
-REMOVE: #sM_00YA + label
-REMOVE: t > label:nth-of-type(9) + #sM_00YA
-REMOVE: #sM_1XA + label
-REMOVE: t > label:nth-of-type(8) + #sM_1XA
-REMOVE: #sM_0XA + label
-REMOVE: t > label:nth-of-type(7) + #sM_0XA
+REMOVE: t > label:nth-of-type(12) + #sM_11XA
+REMOVE: #sM_10XA + label
+REMOVE: t > label:nth-of-type(11) + #sM_10XA
+REMOVE: #sM_01XA + label
+REMOVE: t > label:nth-of-type(10) + #sM_01XA
+REMOVE: #sM_00XA + label
+REMOVE: t > label:nth-of-type(9) + #sM_00XA
 REMOVE: #sM_1WA + label
-REMOVE: t > label:nth-of-type(6) + #sM_1WA
+REMOVE: t > label:nth-of-type(8) + #sM_1WA
 REMOVE: #sM_0WA + label
-REMOVE: t > label:nth-of-type(5) + #sM_0WA
-REMOVE: #sM_gbVA + label
-REMOVE: t > label:nth-of-type(4) + #sM_gbVA
-REMOVE: #sM_gaVA + label
-REMOVE: t > label:nth-of-type(3) + #sM_gaVA
-REMOVE: #sM_1UA + label
-REMOVE: t > label:nth-of-type(2) + #sM_1UA
-REMOVE: #sM_0UA + label
-REMOVE: t > label:nth-of-type(1) + #sM_0UA
+REMOVE: t > label:nth-of-type(7) + #sM_0WA
+REMOVE: #sM_1VA + label
+REMOVE: t > label:nth-of-type(6) + #sM_1VA
+REMOVE: #sM_0VA + label
+REMOVE: t > label:nth-of-type(5) + #sM_0VA
+REMOVE: #sM_gbUA + label
+REMOVE: t > label:nth-of-type(4) + #sM_gbUA
+REMOVE: #sM_gaUA + label
+REMOVE: t > label:nth-of-type(3) + #sM_gaUA
+REMOVE: #sM_1TA + label
+REMOVE: t > label:nth-of-type(2) + #sM_1TA
+REMOVE: #sM_0TA + label
+REMOVE: t > label:nth-of-type(1) + #sM_0TA
 REMOVE: label
 INSERT: p
 ```

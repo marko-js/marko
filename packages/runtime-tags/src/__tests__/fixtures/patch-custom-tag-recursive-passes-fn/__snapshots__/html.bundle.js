@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $uf__input_title = _updates_from($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 0), $sg__input_title = _server_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	$fg__input_title && _patch_write($scope0_id, "xd", input.title, !$sg__input_title);
-	const getTitle = _bind_resume(() => input.title, "a0", $scope0_id, 1);
+	const getTitle = _bind_resume(() => input.title, "a0", $scope0_id);
 	_set_scope_reason($uf__input_title << 1 | $uf__input_title << 5);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	tree_default({

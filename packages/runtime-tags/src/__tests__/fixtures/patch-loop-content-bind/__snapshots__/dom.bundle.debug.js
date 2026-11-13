@@ -38,8 +38,8 @@ const $input_labels = /*@__PURE__*/ _const("input_labels", ($scope) => {
 	$input_item($scope["#childScope/0"], $item);
 });
 const $input = ($scope, input) => {
-	$input_labels($scope, input.labels);
 	$input_note($scope, input.note);
+	$input_labels($scope, input.labels);
 };
 const $input_note__closure = /*@__PURE__*/ _closure($item_content__input_note);
 const $input_note = /*@__PURE__*/ _const("input_note", $input_note__closure);

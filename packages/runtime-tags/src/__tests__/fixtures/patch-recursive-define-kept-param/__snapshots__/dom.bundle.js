@@ -8,10 +8,10 @@ const $setup__script = _script("b1", ($scope) => _on($scope.a, "click", function
 }));
 
 // template.marko
-const $Level_content2__n = /*@__PURE__*/ _closure_get_patch("a0", 7, ($scope) => _text($scope.a, $scope._._.e), ($scope) => $scope._._, "a6", 0);
+const $Level_content2__n = /*@__PURE__*/ _closure_get_patch("a1", 7, ($scope) => _text($scope.a, $scope._._.e), ($scope) => $scope._._, "a6", 0);
 const $Level_content2__setup = ($scope) => {
 	$Level_content2__n($scope);
 	$Level_content2__label($scope);
 };
-const $Level_content2__label = /*@__PURE__*/ _closure_get_patch("a1", 8, ($scope) => _text($scope.b, $scope._._.f), ($scope) => $scope._._, "a7", 0);
+const $Level_content2__label = /*@__PURE__*/ _closure_get_patch("a0", 8, ($scope) => _text($scope.b, $scope._._.f), ($scope) => $scope._._, "a7", 0);
 const $Level_content2 = _content$1("a2", "<em><!>:<!></em>", "D%c%", $Level_content2__setup);

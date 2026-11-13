@@ -1,13 +1,11 @@
 // PATCH
 {
-  W1: {
-    ta: "b"
-  }
+  xf: "b",
+  Sb3: "f"
 }
 
 // PATCH
 {
-  W1: {
-    ta: "c"
-  }
+  xf: "c",
+  Sb3: "f"
 }

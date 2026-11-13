@@ -29,7 +29,7 @@ var route_pg_default = _template("b", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	tab_editor_default({
 		tab,
-		tabChange: _resume((_new_tab) => tab = _new_tab, "b0", $scope0_id, 1)
+		tabChange: _resume((_new_tab) => tab = _new_tab, "b0", $scope0_id)
 	});
 	_patch_child_end();
 	_html(`<button>+</button>${_el_mark($scope0_id, "b")}`);

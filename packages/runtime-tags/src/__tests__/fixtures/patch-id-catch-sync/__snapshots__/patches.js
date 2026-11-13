@@ -5,9 +5,9 @@
     ca: {
       cb: {
         s: {
-          aa$for: "sM_1UVA",
+          aa$for: "sM_1TUA",
           tb: 1,
-          ac$id: "sM_1UVA",
+          ac$id: "sM_1TUA",
           "ac$aria-describedby": $
         }
       },
@@ -16,9 +16,9 @@
     },
     cb: {
       s: {
-        aa$for: "sM_1VA",
+        aa$for: "sM_1UA",
         tb: "row 1",
-        ac$id: "sM_1VA",
+        ac$id: "sM_1UA",
         "ac$aria-describedby": $
       }
     }
@@ -26,9 +26,9 @@
     ca: {
       cb: {
         s: {
-          aa$for: "sM_2UVA",
+          aa$for: "sM_2TUA",
           tb: 2,
-          ac$id: "sM_2UVA",
+          ac$id: "sM_2TUA",
           "ac$aria-describedby": $
         }
       },
@@ -37,9 +37,9 @@
     },
     cb: {
       s: {
-        aa$for: "sM_2VA",
+        aa$for: "sM_2UA",
         tb: "row 2",
-        ac$id: "sM_2VA",
+        ac$id: "sM_2UA",
         "ac$aria-describedby": $
       }
     }

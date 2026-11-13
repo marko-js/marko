@@ -40,7 +40,7 @@ const $card_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2", $inputta
 const $card_content__input_tag__OR__get = /*@__PURE__*/ _or_patch("__tests__/template.marko_2_input_tag#0:5_get#3/setup", 4, ($scope) => $card_content__dynamicTag($scope, $scope._._.input_tag, ($_) => ({ onClick: $scope.get })), 1, "#scopeOffset/1");
 const $card_content__input_tag = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_input_tag#0:5/subscribe", "input_tag/7", $card_content__input_tag__OR__get, ($scope) => $scope._._, "__tests__/template.marko_0_input_tag#5/subscribers", 0);
 const $card_content__get = _var_resume("__tests__/template.marko_2_get#3/var", /*@__PURE__*/ _const("get", $card_content__input_tag__OR__get));
-const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><!>`)(""), /*@__PURE__*/ ((_w0) => `0${_w0}&b%c`)(""), $card_content__setup);
+const $card_content = _content("__tests__/template.marko_2*content", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><!>`)(""), /*@__PURE__*/ ((_w0) => `0${_w0}&b%c`)(""), $card_content__setup);
 const $if_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $card_content($scope));
@@ -48,9 +48,9 @@ const $if_content__setup = ($scope) => {
 const $if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_label($scope, input.label);
 	$input_tag($scope, input.tag);
+	$input_show($scope, input.show);
 };
 const $input_label__closure = /*@__PURE__*/ _closure($card_content__input_label);
 const $input_label = /*@__PURE__*/ _const("input_label", $input_label__closure);

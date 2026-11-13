@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 		title: input.label,
 		onClick: _bind_resume(function() {
 			console.log("clicked " + input.label);
-		}, "a0", $scope0_id, 1)
+		}, "a0", $scope0_id)
 	};
 	_html(`<p>${_text_mark($scope0_id, "a", input.label, 1, $scope0_reason, 0)}</p><div`);
 	_attrs_content(attrs, "b", $scope0_id, "div", 0, 1, 0, $scope0_reason, 0);

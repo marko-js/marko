@@ -6,8 +6,8 @@
     ka: [{
       ca: {
         s: {
-          aa$for: "sM_gaUA",
-          ac$id: "sM_gaUA",
+          aa$for: "sM_gaTA",
+          ac$id: "sM_gaTA",
           "ac$aria-describedby": "sM_A"
         },
         tb: "x"
@@ -18,8 +18,8 @@
     ka: [{
       ca: {
         s: {
-          aa$for: "sM_gbUA",
-          ac$id: "sM_gbUA",
+          aa$for: "sM_gbTA",
+          ac$id: "sM_gbTA",
           "ac$aria-describedby": "sM_A"
         },
         tb: "y"

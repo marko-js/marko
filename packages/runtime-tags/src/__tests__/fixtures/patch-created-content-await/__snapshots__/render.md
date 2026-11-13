@@ -15,6 +15,8 @@
 ```
 INSERT: section
 INSERT: section > button + b
+UPDATE: section > b::text@0 "" => "y"
+UPDATE: section > b::text@1 "" => "b"
 ```
 
 # Update

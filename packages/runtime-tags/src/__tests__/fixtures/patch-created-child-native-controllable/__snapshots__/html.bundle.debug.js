@@ -32,7 +32,7 @@ var page_b_default = _template("__tests__/tags/page-b.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	field_default({
 		value: text,
-		valueChange: _resume((_new_text) => text = _new_text, "__tests__/tags/page-b.marko_0/valueChange", $scope0_id, 1)
+		valueChange: _resume((_new_text) => text = _new_text, "__tests__/tags/page-b.marko_0/valueChange", $scope0_id)
 	});
 	_patch_child_end();
 	_html(`<output>${_text_mark($scope0_id, "#text/1", text)}</output>`);

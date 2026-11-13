@@ -1,0 +1,7 @@
+<define/Row|{ n }|>
+  <em>${input.label} ${n}</em>
+</define>
+<Row n=0/>
+<for|i| of=input.items>
+  <card content=Row n=i/>
+</for>

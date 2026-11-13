@@ -6,22 +6,22 @@
   Fields
 </h1>
 <label
-  for="sM_gaUA"
+  for="sM_gaTA"
 >
   a
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_gaUA"
+  id="sM_gaTA"
 />
 <label
-  for="sM_gbUA"
+  for="sM_gbTA"
 >
   b
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_gbUA"
+  id="sM_gbTA"
 />
 ```
 
@@ -44,34 +44,34 @@ assert.equal(seen.size, 2);
   Fields
 </h1>
 <label
-  for="sM_gaVA"
+  for="sM_gaUA"
 >
   x
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_gaVA"
+  id="sM_gaUA"
 />
 <label
-  for="sM_gbVA"
+  for="sM_gbUA"
 >
   y
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_gbVA"
+  id="sM_gbUA"
 />
 ```
 ## Change
 ```
 INSERT: label:nth-of-type(1)::text("x")
 INSERT: label:nth-of-type(2)::text("y")
-REMOVE: t > label + #sM_gaUA
+REMOVE: t > label + #sM_gaTA
 REMOVE: label
-INSERT: #sM_A + :is(label, #sM_gaVA)
-REMOVE: t > label + #sM_gbUA
+INSERT: #sM_A + :is(label, #sM_gaUA)
+REMOVE: t > label + #sM_gbTA
 REMOVE: label
-INSERT: #sM_gaVA + :is(label, #sM_gbVA)
+INSERT: #sM_gaUA + :is(label, #sM_gbUA)
 ```
 
 # Update

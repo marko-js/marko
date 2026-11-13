@@ -4,24 +4,24 @@
   name="a"
 >
   <label
-    for="sM_gaWVA"
+    for="sM_gaVUA"
   >
     a
   </label>
   <input
-    id="sM_gaWVA"
+    id="sM_gaVUA"
   />
 </section>
 <section
   name="b"
 >
   <label
-    for="sM_gbWVA"
+    for="sM_gbVUA"
   >
     b
   </label>
   <input
-    id="sM_gbWVA"
+    id="sM_gbVUA"
   />
 </section>
 ```
@@ -88,46 +88,46 @@ for (const input of document.querySelectorAll(
 # Update `{"loaded":true,"items":[{"key":"b","promise":{"value":"b"}},{"key":"c","promise":{"value":"c"}}]}`
 ```html
 <label
-  for="sM_gbWUA"
+  for="sM_gbVTA"
 >
   b
 </label>
 <input
-  id="sM_gbWUA"
+  id="sM_gbVTA"
 />
 <label
-  for="sM_gbWVVA"
+  for="sM_gbVUUA"
 >
   b
 </label>
 <input
-  id="sM_gbWVVA"
+  id="sM_gbVUUA"
 />
 <label
-  for="sM_gcWUA"
+  for="sM_gcVTA"
 >
   c
 </label>
 <input
-  id="sM_gcWUA"
+  id="sM_gcVTA"
 />
 <label
-  for="sM_gcWVVA"
+  for="sM_gcVUUA"
 >
   c
 </label>
 <input
-  id="sM_gcWVVA"
+  id="sM_gcVUUA"
 />
 ```
 ## Change
 ```
-INSERT: label, #sM_gbWUA, label, #sM_gbWVVA
-REMOVE: #sM_gbWVVA + label
-REMOVE: #sM_gbWVVA + #cM_0
-INSERT: #sM_gbWVVA + :is(label, #sM_gcWUA, label, #sM_gcWVVA)
-REMOVE: #sM_gcWVVA + label
-REMOVE: #sM_gcWVVA + #cM_1
+INSERT: label, #sM_gbVTA, label, #sM_gbVUUA
+REMOVE: #sM_gbVUUA + label
+REMOVE: #sM_gbVUUA + #cM_0
+INSERT: #sM_gbVUUA + :is(label, #sM_gcVTA, label, #sM_gcVUUA)
+REMOVE: #sM_gcVUUA + label
+REMOVE: #sM_gcVUUA + #cM_1
 ```
 
 # Update
@@ -160,27 +160,27 @@ for (const input of document.querySelectorAll(
   name="a"
 >
   <label
-    for="sM_gaWVA"
+    for="sM_gaVUA"
   >
     a
   </label>
   <input
-    id="sM_gaWVA"
+    id="sM_gaVUA"
   />
 </section>
 ```
 ## Change
 ```
 REMOVE: label
-REMOVE: #sM_gbWUA
+REMOVE: #sM_gbVTA
 REMOVE: label
-REMOVE: #sM_gbWVVA
+REMOVE: #sM_gbVUUA
 INSERT: #cM_2 + section
 INSERT: label, #cM_2
 REMOVE: #cM_2 + label
-REMOVE: #cM_2 + #sM_gcWUA
+REMOVE: #cM_2 + #sM_gcVTA
 REMOVE: #cM_2 + label
-REMOVE: #cM_2 + #sM_gcWVVA
+REMOVE: #cM_2 + #sM_gcVUUA
 ```
 
 # Update
@@ -205,24 +205,24 @@ for (const input of document.querySelectorAll(
   name="c"
 >
   <label
-    for="sM_gcWVA"
+    for="sM_gcVUA"
   >
     c
   </label>
   <input
-    id="sM_gcWVA"
+    id="sM_gcVUA"
   />
 </section>
 <section
   name="a"
 >
   <label
-    for="sM_gaWVA"
+    for="sM_gaVUA"
   >
     a
   </label>
   <input
-    id="sM_gaWVA"
+    id="sM_gaVUA"
   />
 </section>
 ```

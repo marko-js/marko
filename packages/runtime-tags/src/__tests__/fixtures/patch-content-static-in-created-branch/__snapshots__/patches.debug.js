@@ -13,9 +13,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-static-in-created-branch/template.marko_1*shell"]
 }
-;CAI
+;BgI
 
-// PATCH holding CAI
+// PATCH holding BgI
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {

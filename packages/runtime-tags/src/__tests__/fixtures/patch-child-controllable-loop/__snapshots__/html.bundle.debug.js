@@ -55,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			show: input.show,
 			onCount: _resume(function(next) {
 				hits = next;
-			}, "__tests__/template.marko_1/onCount", $scope1_id, 1)
+			}, "__tests__/template.marko_1/onCount", $scope1_id)
 		});
 		_patch_child_end();
 		_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "__tests__/template.marko_1_input_show#0:5/setup");

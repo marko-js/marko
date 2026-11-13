@@ -1,16 +1,13 @@
 // PATCH
-[`a9|2;b%;<!><!><!>`, `a7;b%;<!><!><!>`, `a10 !a>b0;/D b%l&;<section><button>clear</button><!></section>`]
+`a5 !a>b0;/D b%l&;<section><button>clear</button><!></section>`
 {
   ba: [{
     ca: {
       s: {
-        fb: "^^a9"
-      },
-      Wb: [{
-        pa: "a7"
-      }, "a9"]
+        fb: "^^a7"
+      }
     }
-  }, "a10"],
+  }, "a5"],
   xe: (p => p = new Promise((f, r) => _.a = {
     f,
     r(e) {
@@ -18,47 +15,24 @@
       r(e)
     }
   }))(),
+  Sa8: "e",
   xf: "b",
-  Sa13: "f",
-  xg: "span"
+  Sa9: "f",
+  xg: "span",
+  Sa10: "g"
 }
-[{
-  cAa: {
-    ca: {
-      Wb: [{
-        cAa: {
-          xc: "y",
-          Sa4: "c",
-          fa: [">span", 0, {
-            content: {
-              content: _(["Aa", "a", "Ab", "Aa"], "a0", 1)
-            }
-          }],
-          cAa: {
-            cAa: {
-              tb: "y",
-              tc: "b"
-            }
-          }
-        }
-      }, "a9"]
-    }
-  }
-}, _.a.f("y")][0]
-;Dyw
+(_.a.f("y"), 0)
+;BgE
 
-// PATCH holding Dyw
+// PATCH holding BgE
 {
   ba: [{
     ca: {
       s: {
-        fb: "^^a9"
-      },
-      Wb: [{
-        pa: "a7"
-      }, "a9"]
+        fb: "^^a7"
+      }
     }
-  }, "a10"],
+  }, "a5"],
   xe: (p => p = new Promise((f, r) => _.a = {
     f,
     r(e) {
@@ -66,30 +40,10 @@
       r(e)
     }
   }))(),
+  Sa8: "e",
   xf: "c",
-  Sa13: "f",
-  xg: "i"
+  Sa9: "f",
+  xg: "i",
+  Sa10: "g"
 }
-[{
-  cAa: {
-    ca: {
-      Wb: [{
-        cAa: {
-          xc: "z",
-          Sa4: "c",
-          fa: [">i", 0, {
-            content: {
-              content: _(["Aa", "a", "Ab", "Aa"], "a0", 1)
-            }
-          }],
-          cAa: {
-            cAa: {
-              tb: "z",
-              tc: "c"
-            }
-          }
-        }
-      }, "a9"]
-    }
-  }
-}, _.a.f("z")][0]
+(_.a.f("z"), 0)

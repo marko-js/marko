@@ -17,6 +17,8 @@
 ## Change
 ```
 INSERT: section
+UPDATE: section > span:nth-of-type(1)::text " " => "b"
+UPDATE: section > span:nth-of-type(2)::text " " => "b"
 ```
 
 # Update `{"show":true,"label":"c"}`

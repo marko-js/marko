@@ -11,12 +11,11 @@ var card_default = _template("b", (input) => {
 	_dynamic_tag($scope0_id, "b", c, {}, 2, 0, 0, 1, _client_guard($scope0_reason, 0) << 1, 0, 1);
 	_html("</section>");
 	_script($scope0_id, "b0");
-	_scope($scope0_id, {}) || _client_branch(input.content);
+	_scope($scope0_id, {});
 });
 
 // template.marko
 _shells({
-	a0: "a0,<em>static</em>",
 	a: "a;b%;<!><!><!>",
 	a1: `a1${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
@@ -28,11 +27,11 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
-			card_default({ content: _content("a0", () => {
+			card_default({ content: _content_resume("a0", () => {
 				_scope_reason();
 				_scope_id();
 				_html("<em>static</em>");
-			}, $scope1_id, 0) });
+			}, $scope1_id) });
 			_patch_child_end();
 			_scope($scope1_id, { a: _existing_scope($childScope) });
 			return 0;

@@ -1,12 +1,12 @@
 # Render `{"show":true}`
 ```html
 <label
-  for="sM_UA"
+  for="sM_TA"
 >
   child
 </label>
 <input
-  id="sM_UA"
+  id="sM_TA"
 />
 <input
   id="sM_A"
@@ -17,12 +17,12 @@
   after child
 </label>
 <label
-  for="sM_VA"
+  for="sM_UA"
 >
   dynamic
 </label>
 <input
-  id="sM_VA"
+  id="sM_UA"
 />
 <input
   id="sM_B"
@@ -71,9 +71,9 @@ assert.deepEqual(after, (first ??= after));
 ## Change
 ```
 REMOVE: label
-REMOVE: #sM_UA
+REMOVE: #sM_TA
 REMOVE: label:nth-of-type(1) + label
-REMOVE: label:nth-of-type(1) + #sM_VA
+REMOVE: label:nth-of-type(1) + #sM_UA
 ```
 
 # Update
@@ -94,12 +94,12 @@ assert.deepEqual(after, (first ??= after));
 # Update `{"show":true}`
 ```html
 <label
-  for="sM_UA"
+  for="sM_TA"
 >
   child
 </label>
 <input
-  id="sM_UA"
+  id="sM_TA"
 />
 <input
   id="sM_A"
@@ -110,12 +110,12 @@ assert.deepEqual(after, (first ??= after));
   after child
 </label>
 <label
-  for="sM_VA"
+  for="sM_UA"
 >
   dynamic
 </label>
 <input
-  id="sM_VA"
+  id="sM_UA"
 />
 <input
   id="sM_B"
@@ -129,11 +129,11 @@ assert.deepEqual(after, (first ??= after));
 ## Change
 ```
 INSERT: label
-INSERT: label:nth-of-type(1) + #sM_UA
-INSERT: label:nth-of-type(2) + :is(label, #sM_VA)
-UPDATE: label:nth-of-type(3)[for] null => "sM_VA"
+INSERT: label:nth-of-type(1) + #sM_TA
+INSERT: label:nth-of-type(2) + :is(label, #sM_UA)
+UPDATE: label:nth-of-type(3)[for] null => "sM_UA"
 UPDATE: label:nth-of-type(3)::text " " => "dynamic"
-UPDATE: #sM_VA[id] null => "sM_VA"
+UPDATE: #sM_UA[id] null => "sM_UA"
 ```
 
 # Update

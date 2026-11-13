@@ -4,3 +4,6 @@ const $c = _let(5, ($scope) => $dynamicTag($scope, $scope.f));
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$c($scope, void 0);
 }));
+
+// template.marko
+const $card_content = _content$1("a0", "<em>static</em>");

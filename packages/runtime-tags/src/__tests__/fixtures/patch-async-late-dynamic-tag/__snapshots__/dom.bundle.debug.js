@@ -44,9 +44,9 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $input = ($scope, input) => {
+	$input_q($scope, input.q);
 	$input_as($scope, input.as);
 	$input_p($scope, input.p);
-	$input_q($scope, input.q);
 };
 const $input_p__closure = /*@__PURE__*/ _closure($inputas_content__input_p);
 const $input_p = /*@__PURE__*/ _const("input_p", $input_p__closure);

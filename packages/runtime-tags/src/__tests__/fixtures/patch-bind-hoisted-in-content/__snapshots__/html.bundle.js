@@ -7,7 +7,7 @@ var store_default = _template("c", (input) => {
 	_html(`<p>${_text_mark($scope0_id, "a", last, 1, 0, 0, 1)}</p>`);
 	const $return = _resume((next) => {
 		last = next;
-	}, "c0", $scope0_id, 1);
+	}, "c0", $scope0_id);
 	_scope($scope0_id, {});
 	return $return;
 });
@@ -34,7 +34,7 @@ _shells({
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const $setLast_getter = _hoist($scope0_id, "a0", 1);
+	const $setLast_getter = _hoist($scope0_id, "a0");
 	const $frame_content__subscribers = /* @__PURE__ */ new Set();
 	_set_scope_reason(0);
 	const $childScope2 = _peek_scope_id($scope0_id, "a", 1);

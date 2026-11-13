@@ -3,30 +3,30 @@
 # Update
 ```html
 <label
-  for="sM_gaUA"
+  for="sM_gaTA"
 >
   a
 </label>
 <input
-  id="sM_gaUA"
+  id="sM_gaTA"
 />
 <label
-  for="sM_gbUA"
+  for="sM_gbTA"
 >
   b
 </label>
 <input
-  id="sM_gbUA"
+  id="sM_gbTA"
 />
 ```
 ## Change
 ```
 INSERT: label
 INSERT: label:nth-of-type(1)::text("a")
-INSERT: label:nth-of-type(1) + #sM_gaUA
-INSERT: #sM_gaUA + label
+INSERT: label:nth-of-type(1) + #sM_gaTA
+INSERT: #sM_gaTA + label
 INSERT: label:nth-of-type(2)::text("b")
-INSERT: label:nth-of-type(2) + #sM_gbUA
+INSERT: label:nth-of-type(2) + #sM_gbTA
 ```
 
 # Update

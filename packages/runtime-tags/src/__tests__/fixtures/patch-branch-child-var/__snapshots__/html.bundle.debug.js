@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/box.marko": "^__tests__/tags/box.marko; D ;<div class=
 var box_default = _template("__tests__/tags/box.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const root = _el($scope0_id, "__tests__/tags/box.marko_0_#div#0", 1);
+	const root = _el($scope0_id, "__tests__/tags/box.marko_0_#div#0");
 	_html(`<div class=box>${_text_mark($scope0_id, "#text/1", input.label, 1, $scope0_reason, 0)}</div>${_el_mark($scope0_id, "#div/0")}`);
 	const $return = root;
 	_scope($scope0_id, {}, "__tests__/tags/box.marko", 0);

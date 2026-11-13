@@ -1,5 +1,5 @@
 // PATCH
-[`a0; D ;<label> </label>`, `a3; b%;<input><!><!>`, `a2`, `a4; ;<label>field</label>`, `a1|6; b D ;<input><label> </label>`, `a5 !a>b0;/ b%c&b;<button>clear</button><!><!><!>`]
+[`a0; D ;<label> </label>`, `a2; b%;<input><!><!>`, `a1`, `a3; ;<label>field</label>`, `a4 !a>b0;/ b%c&b;<button>clear</button><!><!><!>`]
 {
   la: ["b", {
     s: {
@@ -21,9 +21,21 @@
       },
       tb: "a"
     }, "a0"]
-  }, "a3"],
-  fb: "^a2",
+  }, "a2"],
+  fb: "^a1",
   cAb: {
+    s: {
+      aa$id: "sM_TB",
+      wf: "sM_TB"
+    },
+    bb: [{
+      s: {
+        aa$for: "sM_TB"
+      }
+    }, "a3"]
+  },
+  fc: "^a1",
+  cAc: {
     s: {
       aa$id: "sM_UB",
       wf: "sM_UB"
@@ -32,50 +44,20 @@
       s: {
         aa$for: "sM_UB"
       }
-    }, "a4"]
-  },
-  fc: "^a2",
-  cAc: {
-    s: {
-      aa$id: "sM_VB",
-      wf: "sM_VB"
-    },
-    bb: [{
-      s: {
-        aa$for: "sM_VB"
-      }
-    }, "a4"]
+    }, "a3"]
   },
   ld: [1, {
     ca: {
       s: {
-        fb: "^^a1"
-      },
-      Wb: [{
-        s: {
-          aa$id: "sM_1WUC",
-          ab$for: "sM_1WUC"
-        }
-      }, "a1"]
-    },
-    W6: {
-      tc: 1
+        fb: "^^a6"
+      }
     }
   }, 2, {
     ca: {
       s: {
-        fb: "^^a1"
-      },
-      Wb: [{
-        s: {
-          aa$id: "sM_2WUC",
-          ab$for: "sM_2WUC"
-        }
-      }, "a1"]
-    },
-    W6: {
-      tc: 2
+        fb: "^^a6"
+      }
     }
-  }, "a5"]
+  }, "a4"]
 }
-;EX4
+;Dz4

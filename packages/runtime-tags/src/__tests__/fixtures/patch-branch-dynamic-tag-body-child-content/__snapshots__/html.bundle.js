@@ -24,13 +24,12 @@ var card_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a1: "a1",
 	a2: `a2${_shell_marker([[], []], ["a>", $setup])}`,
 	a: "a;b%;<!><!><!>",
 	a4: "a4;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $wg__input_el = _write_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_el = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 2), $cg__input_label = _client_guard($scope0_reason, 2), $wg__input_el = _write_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_el = _filled_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	_if(() => {
@@ -44,9 +43,9 @@ var template_default = _template("a", (input) => {
 				card_default({ content: _content_resume("a1", () => {
 					_scope_reason();
 					const $scope3_id = _scope_id();
-					_html(`<em>static ${_text_mark($scope3_id, "a", input.label, 2, $scope0_reason, 2)}</em>`);
-					_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope3_id, "a0", $cg__input_label);
-					_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), $cg__input_label && "a0");
+					_html(`<em>static ${_text_mark($scope3_id, "a", input.label, $wg__input_label * 2)}</em>`);
+					$cg__input_label && _patch_render($scope3_id, "a0");
+					_subscribe($wi__input_label && $input_label__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), $cg__input_label && "a0", $wg__input_label);
 				}, $scope2_id) });
 				_patch_child_end();
 				_scope($scope2_id, {
@@ -63,6 +62,6 @@ var template_default = _template("a", (input) => {
 	_scope($scope0_id, {
 		e: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.el,
 		f: input.label,
-		h: _write_if($scope0_reason, 2) && $input_label__closures
+		h: $wi__input_label && $input_label__closures
 	}) || ($fg__input_el && $ui__input_show && _patch_write($scope0_id, "xe", input.el, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "a5", "f"));
 }, 1);

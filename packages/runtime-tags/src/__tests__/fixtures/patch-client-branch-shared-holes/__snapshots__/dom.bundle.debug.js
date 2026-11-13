@@ -39,7 +39,7 @@ const $card_content__h = ($scope, h) => {
 };
 const $card_content__input_label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_input_label#0:3/subscribe", "input_label/8", ($scope) => $card_content__h($scope, $h($scope)), ($scope) => $scope._._, "__tests__/template.marko_0_input_label#3/subscribers", 0);
 const $card_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $card_content__input_flag__OR__Note = /*@__PURE__*/ _or_patch("__tests__/template.marko_2_input_flag#0:5_Note#8/setup", 9, ($scope) => $card_content__dynamicTag($scope, $scope._._.input_flag ? $scope.Note : "b", ($_) => ({ x: 1 })));
+const $card_content__input_flag__OR__Note = /*@__PURE__*/ _or(9, ($scope) => $card_content__dynamicTag($scope, $scope._._.input_flag ? $scope.Note : "b", ($_) => ({ x: 1 })));
 const $card_content__Note = /*@__PURE__*/ _const("Note", $card_content__input_flag__OR__Note);
 const $card_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/1"], "click", function() {
 	console.log("own", $scope._._.input_label);
@@ -50,8 +50,8 @@ const $card_content__setup = ($scope) => {
 	$card_content__input_tag($scope);
 	$card_content__top($scope);
 	$input_onPress($scope["#childScope/4"], $onPress($scope));
-	$card_content__setup__script($scope);
 	$card_content__Note($scope, { content: $Note_content($scope) });
+	$card_content__setup__script($scope);
 };
 const $card_content__input_flag = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_input_flag#0:5/subscribe", "input_flag/9", $card_content__input_flag__OR__Note, ($scope) => $scope._._, "__tests__/template.marko_0_input_flag#5/subscribers", 0);
 const $card_content__dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/2", $inputtag_content);
@@ -62,7 +62,7 @@ const $card_content__input_tag = /*@__PURE__*/ _closure_get_patch("__tests__/tem
 	$card_content__input_tag__OR__top($scope);
 }, ($scope) => $scope._._, "__tests__/template.marko_0_input_tag#6/subscribers", 0);
 const $card_content__top = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_top#0:7/subscribe", "top/11", $card_content__input_tag__OR__top, ($scope) => $scope._._, "__tests__/template.marko_0_top#7/subscribers", 0);
-const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", /*@__PURE__*/ ((_w0, _w1) => `<!><!><button>own</button><!><!>${_w0}${_w1}<span> </span>`)($template$2, $template$2), /*@__PURE__*/ ((_w0, _w1) => `b%b b%b%b/${_w0}&/${_w1}&D l`)(" b", " b"), $card_content__setup);
+const $card_content = _content("__tests__/template.marko_2*content", /*@__PURE__*/ ((_w0, _w1) => `<!><!><button>own</button><!><!>${_w0}${_w1}<span> </span>`)($template$2, $template$2), /*@__PURE__*/ ((_w0, _w1) => `b%b b%b%b/${_w0}&/${_w1}&D l`)(" b", " b"), $card_content__setup);
 const $if_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $card_content($scope));
@@ -71,16 +71,16 @@ const $top2__closure = /*@__PURE__*/ _closure($card_content__top);
 const $top2 = /*@__PURE__*/ _const("top", $top2__closure);
 const $input_label__closure = /*@__PURE__*/ _closure($card_content__input_label, $Note_content__input_label);
 const $input_label = /*@__PURE__*/ _const("input_label", ($scope) => {
-	$input_label__closure($scope);
 	$top2($scope, $top($scope));
+	$input_label__closure($scope);
 });
 const $if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
 	$input_label($scope, input.label);
-	$input_show($scope, input.show);
 	$input_flag($scope, input.flag);
 	$input_tag($scope, input.tag);
+	$input_show($scope, input.show);
 };
 const $input_flag__closure = /*@__PURE__*/ _closure($card_content__input_flag);
 const $input_flag = /*@__PURE__*/ _const("input_flag", $input_flag__closure);

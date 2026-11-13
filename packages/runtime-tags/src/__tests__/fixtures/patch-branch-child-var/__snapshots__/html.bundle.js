@@ -6,7 +6,7 @@ _shells({ b: "b; D ;<div class=box> </div>" });
 var box_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const root = _el($scope0_id, "b0", 1);
+	const root = _el($scope0_id, "b0");
 	_html(`<div class=box>${_text_mark($scope0_id, "b", input.label, 1, $scope0_reason, 0)}</div>${_el_mark($scope0_id, "a")}`);
 	const $return = root;
 	_scope($scope0_id, {});

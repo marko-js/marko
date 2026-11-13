@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 		_scope_id();
 		_scope_reason();
 		_html("<b>R</b>");
-	}, $scope0_id, void 0, 1) };
+	}, $scope0_id) };
 	const Box = { content: _content_resume("a2", ({ show, content }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $wg__content = _write_guard($scope2_reason, 2), $wg__show = _write_guard($scope2_reason, 1);

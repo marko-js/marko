@@ -1,83 +1,17 @@
 // PATCH
-[`a5|3;b%;<!><!><!>`, `a3 !a>a>b0;//D b%b%l&%c&b;<section><button>clear</button><!><!></section><!><!><!>`, `a6 !a>a>b0;//D b%b%l&%c&b;<section><button>clear</button><!><!></section><!><!><!>`]
+`a16 !a>a>b0;//D b%b%l&%c&b;<section><button>clear</button><!><!></section><!><!><!>`
 {
   ba: [{
     ca: {
       ca: {
         s: {
-          fb: "^^a5",
-          fc: "^^a5"
-        },
-        Wb: [{
-          ba: [{
-            ca: {
-              ca: {
-                s: {
-                  fb: "^^a5",
-                  fc: "^^a5"
-                }
-              },
-              W3: {
-                ba: 0
-              },
-              fb: [">span", 0, {
-                content: {
-                  content: _(["Aa", "a", "a", "Ab", "Aa", "a"], "a4", 1)
-                }
-              }],
-              cAb: {
-                cAa: {
-                  s: {
-                    tb: 0
-                  },
-                  tc: "b"
-                }
-              },
-              s: {
-                we: 0
-              },
-              xf: "b",
-              Sa13: "f"
-            }
-          }, "a3"]
-        }, "a5"],
-        Wc: [{
-          ba: [{
-            ca: {
-              ca: {
-                s: {
-                  fb: "^^a5",
-                  fc: "^^a5"
-                }
-              },
-              W3: {
-                ba: 0
-              },
-              fb: [">span", 0, {
-                content: {
-                  content: _(["Aa", "a", "a", "Ac", "Aa", "a"], "a4", 1)
-                }
-              }],
-              cAb: {
-                cAa: {
-                  s: {
-                    tb: 0
-                  },
-                  tc: "b"
-                }
-              },
-              s: {
-                we: 0
-              },
-              xf: "b",
-              Sa13: "f"
-            }
-          }, "a3"]
-        }, "a5"]
+          fb: "^^a4",
+          fc: "^^a4"
+        }
       },
       fb: [">span", 0, {
         content: {
-          content: _(["Aa", "a"], "a4", 1)
+          content: _(["Aa", "a"], "a5", 1)
         }
       }],
       cAb: {
@@ -92,91 +26,27 @@
         we: 1
       },
       xf: "b",
-      Sa13: "f"
+      Sa11: "f",
+      xg: "span",
+      Sa12: "g"
     }
-  }, "a6"]
+  }, "a16"]
 }
-;DRo
+;CAE
 
-// PATCH holding DRo
+// PATCH holding CAE
 {
   ba: [{
     ca: {
       ca: {
         s: {
-          fb: "^^a5",
-          fc: "^^a5"
-        },
-        Wb: [{
-          ba: [{
-            ca: {
-              ca: {
-                s: {
-                  fb: "^^a5",
-                  fc: "^^a5"
-                }
-              },
-              W3: {
-                ba: 0
-              },
-              fb: [">i", 0, {
-                content: {
-                  content: _(["Aa", "a", "a", "Ab", "Aa", "a"], "a4", 1)
-                }
-              }],
-              cAb: {
-                cAa: {
-                  s: {
-                    tb: 0
-                  },
-                  tc: "c"
-                }
-              },
-              s: {
-                we: 0
-              },
-              xf: "c",
-              Sa13: "f"
-            }
-          }, "a3"]
-        }, "a5"],
-        Wc: [{
-          ba: [{
-            ca: {
-              ca: {
-                s: {
-                  fb: "^^a5",
-                  fc: "^^a5"
-                }
-              },
-              W3: {
-                ba: 0
-              },
-              fb: [">i", 0, {
-                content: {
-                  content: _(["Aa", "a", "a", "Ac", "Aa", "a"], "a4", 1)
-                }
-              }],
-              cAb: {
-                cAa: {
-                  s: {
-                    tb: 0
-                  },
-                  tc: "c"
-                }
-              },
-              s: {
-                we: 0
-              },
-              xf: "c",
-              Sa13: "f"
-            }
-          }, "a3"]
-        }, "a5"]
+          fb: "^^a4",
+          fc: "^^a4"
+        }
       },
       fb: [">i", 0, {
         content: {
-          content: _(["Aa", "a"], "a4", 1)
+          content: _(["Aa", "a"], "a5", 1)
         }
       }],
       cAb: {
@@ -191,7 +61,9 @@
         we: 1
       },
       xf: "c",
-      Sa13: "f"
+      Sa11: "f",
+      xg: "i",
+      Sa12: "g"
     }
-  }, "a6"]
+  }, "a16"]
 }

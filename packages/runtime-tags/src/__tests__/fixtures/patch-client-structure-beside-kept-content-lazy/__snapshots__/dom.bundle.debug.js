@@ -31,9 +31,9 @@ const Note = _load_template("__tests__/note.marko", ($_) => import("./note.mjs")
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $if_content__T = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.T));
 const $if_content__setup = $if_content__T;
-const $card_content__input_label = /*@__PURE__*/ _closure_get("input_label/8", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:5/subscribe");
+const $card_content__input_label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_1_input_label#0:5/subscribe", "input_label/8", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_0_input_label#5/subscribers", 0);
 const $card_content__setup = $card_content__input_label;
-const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $card_content__setup);
+const $card_content = _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $card_content__setup);
 const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup);
 const $show = _let("show/6", ($scope) => $if($scope, $scope.show ? 0 : 1));
 const $T = _let("T/7", $if_content__T);

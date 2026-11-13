@@ -4,13 +4,13 @@
   toggle
 </button>
 <label
-  for="sM_UUA"
+  for="sM_TTA"
 >
-  old sM_UUA
+  old sM_TTA
 </label>
 <input
-  id="sM_UUA"
-  title="old sM_UUA"
+  id="sM_TTA"
+  title="old sM_TTA"
 />
 ```
 
@@ -29,19 +29,19 @@ assert.equal(input.labels [0].textContent, input.title);
   toggle
 </button>
 <label
-  for="sM_UUA"
+  for="sM_TTA"
 >
-  next sM_UUA
+  next sM_TTA
 </label>
 <input
-  id="sM_UUA"
-  title="next sM_UUA"
+  id="sM_TTA"
+  title="next sM_TTA"
 />
 ```
 ## Change
 ```
-UPDATE: label::text "old sM_UUA" => "next sM_UUA"
-UPDATE: #sM_UUA[title] "old sM_UUA" => "next sM_UUA"
+UPDATE: label::text "old sM_TTA" => "next sM_TTA"
+UPDATE: #sM_TTA[title] "old sM_TTA" => "next sM_TTA"
 ```
 
 # Update
@@ -65,7 +65,7 @@ document.querySelector("button").click();
 ## Change
 ```
 REMOVE: button + label
-REMOVE: button + #sM_UUA
+REMOVE: button + #sM_TTA
 ```
 
 # Update

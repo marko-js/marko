@@ -18,6 +18,10 @@
 ## Change
 ```
 INSERT: section
+INSERT: section > button + span
+INSERT: section > span > span
+INSERT: section > span > span > b
+UPDATE: section > span > span > b::text " " => "b"
 ```
 
 # Update

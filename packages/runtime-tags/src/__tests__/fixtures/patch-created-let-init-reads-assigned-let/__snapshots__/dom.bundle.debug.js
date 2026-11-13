@@ -55,8 +55,8 @@ const $if_content__setup = ($scope) => {
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$2, $template$1), /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)($walks$2, $walks$1), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_label($scope, input.label);
+	$input_show($scope, input.show);
 };
 const $input_label__closure = /*@__PURE__*/ _closure($card_content__input_label, $relay_content__input_label);
 const $input_label = /*@__PURE__*/ _const("input_label", $input_label__closure);

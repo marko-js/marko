@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			text_area_default({
 				value: text,
-				valueChange: _resume((_new_text) => text = _new_text, "a0", $scope1_id, 1)
+				valueChange: _resume((_new_text) => text = _new_text, "a0", $scope1_id)
 			});
 			_patch_child_end();
 			_scope($scope1_id, {

@@ -31,7 +31,6 @@ const $Level_content__walks = /*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks);
 const $Level_content__template = /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template);
 const $setup = _shell_setup([[], []], ["a>", _shell_setup([[], []], ["b>", $setup$1])]);
 _shells({
-	a2: "a2",
 	a: `a${_shell_marker($setup)};${((_w0) => `D/${_w0}&l`)($Level_content__walks)};${((_w0) => `<main>${_w0}</main>`)($Level_content__template)}`,
 	a4: `a4${_shell_marker([[], []], ["a>", _shell_setup([[], []], ["b>", $setup$1])])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Level_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Level_content__template)}`
 });
@@ -42,7 +41,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $Level_content__n__closures = /* @__PURE__ */ new Set();
 		const $Level_content__label__closures = /* @__PURE__ */ new Set();
-		const $scope1_reason = _scope_reason(), $cg__label = _client_guard($scope1_reason, 1), $wg__n = _write_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $wg__n = _write_guard($scope1_reason, 0), $wg__label = _write_guard($scope1_reason, 1), $cg__label = _client_guard($scope1_reason, 1), $wi__n = _write_if($scope1_reason, 0), $wi__label = _write_if($scope1_reason, 1);
 		_if(() => {
 			if (n) {
 				const $scope2_id = _scope_id();
@@ -54,11 +53,10 @@ var template_default = _template("a", (input) => {
 					content: _content_resume("a2", () => {
 						_scope_reason();
 						const $scope3_id = _scope_id();
-						_html(`<em>${_text_mark($scope3_id, "a", n, 1, $scope1_reason, 0)}:${_text_mark($scope3_id, "b", label, 2, $scope1_reason, 1)}</em>`);
-						_unfilled_if($scope1_reason, 0) && _patch_subscribe($scope3_id, "a0");
-						_unfilled_if($scope1_reason, 1) && _patch_subscribe($scope3_id, "a1", $cg__label);
-						_subscribe(_unfilled_if($scope1_reason, 1) && $Level_content__label__closures, _subscribe(_unfilled_if($scope1_reason, 0) && $Level_content__n__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), _client_guard($scope1_reason, 0) && "a0"), $cg__label && "a1");
-					}, $scope2_id, void 0, 1)
+						_html(`<em>${_text_mark($scope3_id, "a", n, $wg__n)}:${_text_mark($scope3_id, "b", label, $wg__label * 2)}</em>`);
+						$cg__label && _patch_render($scope3_id, "a0");
+						_subscribe($wi__label && $Level_content__label__closures, _subscribe($wi__n && $Level_content__n__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), _client_guard($scope1_reason, 0) && "a1", $wg__n || $wg__label), $cg__label && "a0", $wg__n || $wg__label);
+					}, $scope2_id)
 				});
 				_patch_child_end();
 				$cg__label && _patch_render($scope2_id, "a3");
@@ -76,8 +74,8 @@ var template_default = _template("a", (input) => {
 		_scope($scope1_id, {
 			e: n,
 			f: label,
-			h: _write_if($scope1_reason, 0) && $Level_content__n__closures,
-			i: _write_if($scope1_reason, 1) && $Level_content__label__closures,
+			h: $wi__n && $Level_content__n__closures,
+			i: $wi__label && $Level_content__label__closures,
 			b: _existing_scope($childScope2)
 		}) || (_filled_guard($scope1_reason, 0) && _patch_write($scope1_id, "xe", n, !_server_guard($scope1_reason, 0)) && _patch_subscribers($scope1_id, "a6", "e"), _filled_guard($scope1_reason, 1) && _patch_write($scope1_id, "xf", label, !_server_guard($scope1_reason, 1)) && _patch_subscribers($scope1_id, "a7", "f"));
 	}, $scope0_id) };

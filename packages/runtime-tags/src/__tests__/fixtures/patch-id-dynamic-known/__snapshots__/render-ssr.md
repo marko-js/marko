@@ -1,46 +1,46 @@
 # Render `{"items":[{"key":"a","on":true},{"key":"b","on":false}]}`
 ```html
 <label
-  for="sM_0UA"
+  for="sM_0TA"
 >
   a
 </label>
 <input
-  id="sM_0UA"
+  id="sM_0TA"
 />
 <span>
   b
 </span>
 <p>
   <label
-    for="sM_0VA"
+    for="sM_0UA"
   >
     a
   </label>
   <input
-    id="sM_0VA"
+    id="sM_0UA"
   />
 </p>
 <div>
   <label
-    for="sM_1VA"
+    for="sM_1UA"
   >
     b
   </label>
   <input
-    id="sM_1VA"
+    id="sM_1UA"
   />
 </div>
 <span>
   a
 </span>
 <label
-  for="sM_1WB"
+  for="sM_1VB"
 >
   b
 </label>
 <input
-  id="sM_1WB"
+  id="sM_1VB"
 />
 ```
 
@@ -63,46 +63,46 @@ for (const input of document.querySelectorAll(
 # Update `{"items":[{"key":"b","on":true},{"key":"c","on":false}]}`
 ```html
 <label
-  for="sM_0UA"
+  for="sM_0TA"
 >
   b
 </label>
 <input
-  id="sM_0UA"
+  id="sM_0TA"
 />
 <span>
   c
 </span>
 <p>
   <label
-    for="sM_0VA"
+    for="sM_0UA"
   >
     b
   </label>
   <input
-    id="sM_0VA"
+    id="sM_0UA"
   />
 </p>
 <div>
   <label
-    for="sM_1VA"
+    for="sM_1UA"
   >
     c
   </label>
   <input
-    id="sM_1VA"
+    id="sM_1UA"
   />
 </div>
 <span>
   b
 </span>
 <label
-  for="sM_1WB"
+  for="sM_1VB"
 >
   c
 </label>
 <input
-  id="sM_1WB"
+  id="sM_1VB"
 />
 ```
 ## Change
@@ -134,21 +134,21 @@ for (const input of document.querySelectorAll(
 # Update `{"items":[{"key":"c","on":true}]}`
 ```html
 <label
-  for="sM_0UA"
+  for="sM_0TA"
 >
   c
 </label>
 <input
-  id="sM_0UA"
+  id="sM_0TA"
 />
 <p>
   <label
-    for="sM_0VA"
+    for="sM_0UA"
   >
     c
   </label>
   <input
-    id="sM_0VA"
+    id="sM_0UA"
   />
 </p>
 <span>
@@ -157,12 +157,12 @@ for (const input of document.querySelectorAll(
 ```
 ## Change
 ```
-REMOVE: #sM_0UA + span
+REMOVE: #sM_0TA + span
 UPDATE: label::text "b" => "c"
 REMOVE: p + div
 UPDATE: p > label::text "b" => "c"
 REMOVE: span + label
-REMOVE: span + #sM_1WB
+REMOVE: span + #sM_1VB
 UPDATE: span::text "b" => "c"
 ```
 

@@ -43,8 +43,8 @@ function $setup($scope) {
 }
 const $input_title = ($scope, input_title) => $input_title$1($scope["#childScope/0"], input_title);
 const $input = ($scope, input) => {
-	$input_title($scope, input.title);
 	$input_note($scope, input.note);
+	$input_title($scope, input.title);
 };
 const $input_note__closure = /*@__PURE__*/ _closure($child_content__input_note);
 const $input_note = /*@__PURE__*/ _const("input_note", $input_note__closure);

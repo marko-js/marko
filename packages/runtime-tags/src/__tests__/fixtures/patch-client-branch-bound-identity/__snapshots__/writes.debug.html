@@ -4,7 +4,11 @@
   WALKER_RUNTIME("M")("_").patchBuild = "b";
   M._.r = [_ => [1, {
     input_label: "a",
-    "ClosureScopes:input_label/8": new Set
+    input_obj: {
+      n: 1
+    },
+    "ClosureScopes:input_label/8": new Set,
+    "ClosureScopes:input_obj/9": new Set
   }]];
   M._.w()
 </script>

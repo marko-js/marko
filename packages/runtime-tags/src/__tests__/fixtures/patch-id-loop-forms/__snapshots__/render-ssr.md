@@ -6,22 +6,40 @@
   Fields
 </h1>
 <label
-  for="sM_0UA"
+  for="sM_0TA"
 >
   a
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_0UA"
+  id="sM_0TA"
 />
 <label
-  for="sM_1UA"
+  for="sM_1TA"
 >
   b
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_1UA"
+  id="sM_1TA"
+/>
+<label
+  for="sM_gaUA"
+>
+  a
+</label>
+<input
+  aria-describedby="sM_A"
+  id="sM_gaUA"
+/>
+<label
+  for="sM_gbUA"
+>
+  b
+</label>
+<input
+  aria-describedby="sM_A"
+  id="sM_gbUA"
 />
 <label
   for="sM_gaVA"
@@ -42,148 +60,130 @@
   id="sM_gbVA"
 />
 <label
-  for="sM_gaWA"
->
-  a
-</label>
-<input
-  aria-describedby="sM_A"
-  id="sM_gaWA"
-/>
-<label
-  for="sM_gbWA"
->
-  b
-</label>
-<input
-  aria-describedby="sM_A"
-  id="sM_gbWA"
-/>
-<label
-  for="sM_kkey-aXA"
+  for="sM_kkey-aWA"
 >
   1
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_kkey-aXA"
+  id="sM_kkey-aWA"
 />
 <label
-  for="sM_kkey-bXA"
+  for="sM_kkey-bWA"
 >
   2
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_kkey-bXA"
+  id="sM_kkey-bWA"
 />
 <label
-  for="sM_0YA"
+  for="sM_0XA"
 >
   0
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_0YA"
+  id="sM_0XA"
 />
 <label
-  for="sM_1YA"
+  for="sM_1XA"
 >
   1
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_1YA"
+  id="sM_1XA"
 />
 <label
-  for="sM_2YA"
+  for="sM_2XA"
 >
   2
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_2YA"
+  id="sM_2XA"
 />
 <label
-  for="sM_3YA"
+  for="sM_3XA"
 >
   3
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_3YA"
+  id="sM_3XA"
 />
 <label
-  for="sM_jto-0ZA"
+  for="sM_jto-0YA"
 >
   0
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_jto-0ZA"
+  id="sM_jto-0YA"
 />
 <label
-  for="sM_jto-1ZA"
+  for="sM_jto-1YA"
 >
   1
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_jto-1ZA"
+  id="sM_jto-1YA"
 />
 <label
-  for="sM_jto-2ZA"
+  for="sM_jto-2YA"
 >
   2
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_jto-2ZA"
+  id="sM_jto-2YA"
 />
 <label
-  for="sM_jto-3ZA"
+  for="sM_jto-3YA"
 >
   3
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_jto-3ZA"
+  id="sM_jto-3YA"
 />
 <label
-  for="sM_0_A"
+  for="sM_0ZA"
 >
   0
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_0_A"
+  id="sM_0ZA"
 />
 <label
-  for="sM_2_A"
+  for="sM_2ZA"
 >
   2
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_2_A"
+  id="sM_2ZA"
 />
 <label
-  for="sM_muntil-0-0A"
+  for="sM_muntil-0_A"
 >
   0
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_muntil-0-0A"
+  id="sM_muntil-0_A"
 />
 <label
-  for="sM_muntil-2-0A"
+  for="sM_muntil-2_A"
 >
   2
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_muntil-2-0A"
+  id="sM_muntil-2_A"
 />
 ```
 
@@ -204,22 +204,40 @@ assert.equal(
   Fields
 </h1>
 <label
-  for="sM_0UA"
+  for="sM_0TA"
 >
   b
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_0UA"
+  id="sM_0TA"
 />
 <label
-  for="sM_1UA"
+  for="sM_1TA"
 >
   c
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_1UA"
+  id="sM_1TA"
+/>
+<label
+  for="sM_gbUA"
+>
+  b
+</label>
+<input
+  aria-describedby="sM_A"
+  id="sM_gbUA"
+/>
+<label
+  for="sM_gcUA"
+>
+  c
+</label>
+<input
+  aria-describedby="sM_A"
+  id="sM_gcUA"
 />
 <label
   for="sM_gbVA"
@@ -240,244 +258,226 @@ assert.equal(
   id="sM_gcVA"
 />
 <label
-  for="sM_gbWA"
->
-  b
-</label>
-<input
-  aria-describedby="sM_A"
-  id="sM_gbWA"
-/>
-<label
-  for="sM_gcWA"
->
-  c
-</label>
-<input
-  aria-describedby="sM_A"
-  id="sM_gcWA"
-/>
-<label
-  for="sM_kkey-bXA"
+  for="sM_kkey-bWA"
 >
   2
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_kkey-bXA"
+  id="sM_kkey-bWA"
 />
 <label
-  for="sM_kkey-cXA"
+  for="sM_kkey-cWA"
 >
   3
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_kkey-cXA"
+  id="sM_kkey-cWA"
 />
 <label
-  for="sM_1YA"
+  for="sM_1XA"
 >
   1
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_1YA"
+  id="sM_1XA"
 />
 <label
-  for="sM_2YA"
+  for="sM_2XA"
 >
   2
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_2YA"
+  id="sM_2XA"
 />
 <label
-  for="sM_3YA"
+  for="sM_3XA"
 >
   3
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_3YA"
+  id="sM_3XA"
 />
 <label
-  for="sM_4YA"
+  for="sM_4XA"
 >
   4
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_4YA"
+  id="sM_4XA"
 />
 <label
-  for="sM_5YA"
+  for="sM_5XA"
 >
   5
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_5YA"
+  id="sM_5XA"
 />
 <label
-  for="sM_jto-1ZA"
+  for="sM_jto-1YA"
 >
   1
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_jto-1ZA"
+  id="sM_jto-1YA"
 />
 <label
-  for="sM_jto-2ZA"
+  for="sM_jto-2YA"
 >
   2
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_jto-2ZA"
+  id="sM_jto-2YA"
 />
 <label
-  for="sM_jto-3ZA"
+  for="sM_jto-3YA"
 >
   3
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_jto-3ZA"
+  id="sM_jto-3YA"
 />
 <label
-  for="sM_jto-4ZA"
+  for="sM_jto-4YA"
 >
   4
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_jto-4ZA"
+  id="sM_jto-4YA"
 />
 <label
-  for="sM_jto-5ZA"
+  for="sM_jto-5YA"
 >
   5
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_jto-5ZA"
+  id="sM_jto-5YA"
 />
 <label
-  for="sM_1_A"
+  for="sM_1ZA"
 >
   1
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_1_A"
+  id="sM_1ZA"
 />
 <label
-  for="sM_3_A"
+  for="sM_3ZA"
 >
   3
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_3_A"
+  id="sM_3ZA"
 />
 <label
-  for="sM_muntil-1-0A"
+  for="sM_muntil-1_A"
 >
   1
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_muntil-1-0A"
+  id="sM_muntil-1_A"
 />
 <label
-  for="sM_muntil-3-0A"
+  for="sM_muntil-3_A"
 >
   3
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_muntil-3-0A"
+  id="sM_muntil-3_A"
 />
 ```
 ## Change
 ```
 UPDATE: label:nth-of-type(1)::text "a" => "b"
 UPDATE: label:nth-of-type(2)::text "b" => "c"
-REMOVE: #sM_1UA + label
-REMOVE: #sM_1UA + #sM_gaVA
-INSERT: #sM_gbVA + :is(label, #sM_gcVA)
-UPDATE: label:nth-of-type(4)[for] null => "sM_gcVA"
+REMOVE: #sM_1TA + label
+REMOVE: #sM_1TA + #sM_gaUA
+INSERT: #sM_gbUA + :is(label, #sM_gcUA)
+UPDATE: label:nth-of-type(4)[for] null => "sM_gcUA"
 UPDATE: label:nth-of-type(4)::text " " => "c"
+UPDATE: #sM_gcUA[id] null => "sM_gcUA"
+UPDATE: #sM_gcUA[aria-describedby] null => "sM_A"
+REMOVE: #sM_gcUA + label
+REMOVE: #sM_gcUA + #sM_gaVA
+INSERT: #sM_gbVA + :is(label, #sM_gcVA)
+UPDATE: label:nth-of-type(6)[for] null => "sM_gcVA"
+UPDATE: label:nth-of-type(6)::text " " => "c"
 UPDATE: #sM_gcVA[id] null => "sM_gcVA"
 UPDATE: #sM_gcVA[aria-describedby] null => "sM_A"
 REMOVE: #sM_gcVA + label
-REMOVE: #sM_gcVA + #sM_gaWA
-INSERT: #sM_gbWA + :is(label, #sM_gcWA)
-UPDATE: label:nth-of-type(6)[for] null => "sM_gcWA"
-UPDATE: label:nth-of-type(6)::text " " => "c"
-UPDATE: #sM_gcWA[id] null => "sM_gcWA"
-UPDATE: #sM_gcWA[aria-describedby] null => "sM_A"
-REMOVE: #sM_gcWA + label
-REMOVE: #sM_gcWA + #sM_kkey-aXA
-INSERT: #sM_kkey-bXA + :is(label, #sM_kkey-cXA)
-UPDATE: label:nth-of-type(8)[for] null => "sM_kkey-cXA"
-UPDATE: #sM_kkey-cXA[id] null => "sM_kkey-cXA"
-UPDATE: #sM_kkey-cXA[aria-describedby] null => "sM_A"
+REMOVE: #sM_gcVA + #sM_kkey-aWA
+INSERT: #sM_kkey-bWA + :is(label, #sM_kkey-cWA)
+UPDATE: label:nth-of-type(8)[for] null => "sM_kkey-cWA"
+UPDATE: #sM_kkey-cWA[id] null => "sM_kkey-cWA"
+UPDATE: #sM_kkey-cWA[aria-describedby] null => "sM_A"
 UPDATE: label:nth-of-type(8)::text " " => "3"
-REMOVE: #sM_kkey-cXA + label
-REMOVE: #sM_kkey-cXA + #sM_0YA
-INSERT: #sM_3YA + :is(label, #sM_5YA)
-INSERT: #sM_3YA + :is(label, #sM_4YA)
-UPDATE: label:nth-of-type(12)[for] null => "sM_4YA"
+REMOVE: #sM_kkey-cWA + label
+REMOVE: #sM_kkey-cWA + #sM_0XA
+INSERT: #sM_3XA + :is(label, #sM_5XA)
+INSERT: #sM_3XA + :is(label, #sM_4XA)
+UPDATE: label:nth-of-type(12)[for] null => "sM_4XA"
 UPDATE: label:nth-of-type(12)::text " " => "4"
-UPDATE: #sM_4YA[id] null => "sM_4YA"
-UPDATE: #sM_4YA[aria-describedby] null => "sM_A"
-UPDATE: label:nth-of-type(13)[for] null => "sM_5YA"
+UPDATE: #sM_4XA[id] null => "sM_4XA"
+UPDATE: #sM_4XA[aria-describedby] null => "sM_A"
+UPDATE: label:nth-of-type(13)[for] null => "sM_5XA"
 UPDATE: label:nth-of-type(13)::text " " => "5"
-UPDATE: #sM_5YA[id] null => "sM_5YA"
-UPDATE: #sM_5YA[aria-describedby] null => "sM_A"
-REMOVE: #sM_5YA + label
-REMOVE: #sM_5YA + #sM_jto-0ZA
-INSERT: #sM_jto-3ZA + :is(label, #sM_jto-5ZA)
-INSERT: #sM_jto-3ZA + :is(label, #sM_jto-4ZA)
-UPDATE: label:nth-of-type(17)[for] null => "sM_jto-4ZA"
-UPDATE: #sM_jto-4ZA[id] null => "sM_jto-4ZA"
-UPDATE: #sM_jto-4ZA[aria-describedby] null => "sM_A"
+UPDATE: #sM_5XA[id] null => "sM_5XA"
+UPDATE: #sM_5XA[aria-describedby] null => "sM_A"
+REMOVE: #sM_5XA + label
+REMOVE: #sM_5XA + #sM_jto-0YA
+INSERT: #sM_jto-3YA + :is(label, #sM_jto-5YA)
+INSERT: #sM_jto-3YA + :is(label, #sM_jto-4YA)
+UPDATE: label:nth-of-type(17)[for] null => "sM_jto-4YA"
+UPDATE: #sM_jto-4YA[id] null => "sM_jto-4YA"
+UPDATE: #sM_jto-4YA[aria-describedby] null => "sM_A"
 UPDATE: label:nth-of-type(17)::text " " => "4"
-UPDATE: label:nth-of-type(18)[for] null => "sM_jto-5ZA"
-UPDATE: #sM_jto-5ZA[id] null => "sM_jto-5ZA"
-UPDATE: #sM_jto-5ZA[aria-describedby] null => "sM_A"
+UPDATE: label:nth-of-type(18)[for] null => "sM_jto-5YA"
+UPDATE: #sM_jto-5YA[id] null => "sM_jto-5YA"
+UPDATE: #sM_jto-5YA[aria-describedby] null => "sM_A"
 UPDATE: label:nth-of-type(18)::text " " => "5"
-REMOVE: #sM_jto-5ZA + label
-REMOVE: #sM_jto-5ZA + #sM_0_A
-REMOVE: #sM_jto-5ZA + label
-REMOVE: #sM_jto-5ZA + #sM_2_A
-INSERT: #sM_jto-5ZA + :is(label, #sM_1_A)
-INSERT: #sM_1_A + :is(label, #sM_3_A)
-UPDATE: label:nth-of-type(19)[for] null => "sM_1_A"
+REMOVE: #sM_jto-5YA + label
+REMOVE: #sM_jto-5YA + #sM_0ZA
+REMOVE: #sM_jto-5YA + label
+REMOVE: #sM_jto-5YA + #sM_2ZA
+INSERT: #sM_jto-5YA + :is(label, #sM_1ZA)
+INSERT: #sM_1ZA + :is(label, #sM_3ZA)
+UPDATE: label:nth-of-type(19)[for] null => "sM_1ZA"
 UPDATE: label:nth-of-type(19)::text " " => "1"
-UPDATE: #sM_1_A[id] null => "sM_1_A"
-UPDATE: #sM_1_A[aria-describedby] null => "sM_A"
-UPDATE: label:nth-of-type(20)[for] null => "sM_3_A"
+UPDATE: #sM_1ZA[id] null => "sM_1ZA"
+UPDATE: #sM_1ZA[aria-describedby] null => "sM_A"
+UPDATE: label:nth-of-type(20)[for] null => "sM_3ZA"
 UPDATE: label:nth-of-type(20)::text " " => "3"
-UPDATE: #sM_3_A[id] null => "sM_3_A"
-UPDATE: #sM_3_A[aria-describedby] null => "sM_A"
-REMOVE: #sM_3_A + label
-REMOVE: #sM_3_A + #sM_muntil-0-0A
-REMOVE: #sM_3_A + label
-REMOVE: #sM_3_A + #sM_muntil-2-0A
-INSERT: #sM_3_A + :is(label, #sM_muntil-1-0A)
-INSERT: #sM_muntil-1-0A + :is(label, #sM_muntil-3-0A)
-UPDATE: label:nth-of-type(21)[for] null => "sM_muntil-1-0A"
-UPDATE: #sM_muntil-1-0A[id] null => "sM_muntil-1-0A"
-UPDATE: #sM_muntil-1-0A[aria-describedby] null => "sM_A"
+UPDATE: #sM_3ZA[id] null => "sM_3ZA"
+UPDATE: #sM_3ZA[aria-describedby] null => "sM_A"
+REMOVE: #sM_3ZA + label
+REMOVE: #sM_3ZA + #sM_muntil-0_A
+REMOVE: #sM_3ZA + label
+REMOVE: #sM_3ZA + #sM_muntil-2_A
+INSERT: #sM_3ZA + :is(label, #sM_muntil-1_A)
+INSERT: #sM_muntil-1_A + :is(label, #sM_muntil-3_A)
+UPDATE: label:nth-of-type(21)[for] null => "sM_muntil-1_A"
+UPDATE: #sM_muntil-1_A[id] null => "sM_muntil-1_A"
+UPDATE: #sM_muntil-1_A[aria-describedby] null => "sM_A"
 UPDATE: label:nth-of-type(21)::text " " => "1"
-UPDATE: label:nth-of-type(22)[for] null => "sM_muntil-3-0A"
-UPDATE: #sM_muntil-3-0A[id] null => "sM_muntil-3-0A"
-UPDATE: #sM_muntil-3-0A[aria-describedby] null => "sM_A"
+UPDATE: label:nth-of-type(22)[for] null => "sM_muntil-3_A"
+UPDATE: #sM_muntil-3_A[id] null => "sM_muntil-3_A"
+UPDATE: #sM_muntil-3_A[aria-describedby] null => "sM_A"
 UPDATE: label:nth-of-type(22)::text " " => "3"
 ```
 
@@ -498,80 +498,80 @@ assert.equal(
   Fields
 </h1>
 <label
-  for="sM_0YA"
+  for="sM_0XA"
 >
   0
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_0YA"
+  id="sM_0XA"
 />
 <label
-  for="sM_jto-0ZA"
+  for="sM_jto-0YA"
 >
   0
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_jto-0ZA"
+  id="sM_jto-0YA"
 />
 ```
 ## Change
 ```
 REMOVE: #sM_A + label
-REMOVE: #sM_A + #sM_0UA
+REMOVE: #sM_A + #sM_0TA
 REMOVE: #sM_A + label
-REMOVE: #sM_A + #sM_1UA
+REMOVE: #sM_A + #sM_1TA
+REMOVE: #sM_A + label
+REMOVE: #sM_A + #sM_gbUA
+REMOVE: #sM_A + label
+REMOVE: #sM_A + #sM_gcUA
 REMOVE: #sM_A + label
 REMOVE: #sM_A + #sM_gbVA
 REMOVE: #sM_A + label
 REMOVE: #sM_A + #sM_gcVA
 REMOVE: #sM_A + label
-REMOVE: #sM_A + #sM_gbWA
+REMOVE: #sM_A + #sM_kkey-bWA
 REMOVE: #sM_A + label
-REMOVE: #sM_A + #sM_gcWA
+REMOVE: #sM_A + #sM_kkey-cWA
 REMOVE: #sM_A + label
-REMOVE: #sM_A + #sM_kkey-bXA
+REMOVE: #sM_A + #sM_1XA
 REMOVE: #sM_A + label
-REMOVE: #sM_A + #sM_kkey-cXA
+REMOVE: #sM_A + #sM_2XA
 REMOVE: #sM_A + label
-REMOVE: #sM_A + #sM_1YA
+REMOVE: #sM_A + #sM_3XA
 REMOVE: #sM_A + label
-REMOVE: #sM_A + #sM_2YA
+REMOVE: #sM_A + #sM_4XA
 REMOVE: #sM_A + label
-REMOVE: #sM_A + #sM_3YA
-REMOVE: #sM_A + label
-REMOVE: #sM_A + #sM_4YA
-REMOVE: #sM_A + label
-REMOVE: #sM_A + #sM_5YA
-INSERT: #sM_A + :is(label, #sM_0YA)
-UPDATE: label:nth-of-type(1)[for] null => "sM_0YA"
+REMOVE: #sM_A + #sM_5XA
+INSERT: #sM_A + :is(label, #sM_0XA)
+UPDATE: label:nth-of-type(1)[for] null => "sM_0XA"
 UPDATE: label:nth-of-type(1)::text " " => "0"
-UPDATE: #sM_0YA[id] null => "sM_0YA"
-UPDATE: #sM_0YA[aria-describedby] null => "sM_A"
-REMOVE: #sM_0YA + label
-REMOVE: #sM_0YA + #sM_jto-1ZA
-REMOVE: #sM_0YA + label
-REMOVE: #sM_0YA + #sM_jto-2ZA
-REMOVE: #sM_0YA + label
-REMOVE: #sM_0YA + #sM_jto-3ZA
-REMOVE: #sM_0YA + label
-REMOVE: #sM_0YA + #sM_jto-4ZA
-REMOVE: #sM_0YA + label
-REMOVE: #sM_0YA + #sM_jto-5ZA
-INSERT: #sM_0YA + :is(label, #sM_jto-0ZA)
-UPDATE: label:nth-of-type(2)[for] null => "sM_jto-0ZA"
-UPDATE: #sM_jto-0ZA[id] null => "sM_jto-0ZA"
-UPDATE: #sM_jto-0ZA[aria-describedby] null => "sM_A"
+UPDATE: #sM_0XA[id] null => "sM_0XA"
+UPDATE: #sM_0XA[aria-describedby] null => "sM_A"
+REMOVE: #sM_0XA + label
+REMOVE: #sM_0XA + #sM_jto-1YA
+REMOVE: #sM_0XA + label
+REMOVE: #sM_0XA + #sM_jto-2YA
+REMOVE: #sM_0XA + label
+REMOVE: #sM_0XA + #sM_jto-3YA
+REMOVE: #sM_0XA + label
+REMOVE: #sM_0XA + #sM_jto-4YA
+REMOVE: #sM_0XA + label
+REMOVE: #sM_0XA + #sM_jto-5YA
+INSERT: #sM_0XA + :is(label, #sM_jto-0YA)
+UPDATE: label:nth-of-type(2)[for] null => "sM_jto-0YA"
+UPDATE: #sM_jto-0YA[id] null => "sM_jto-0YA"
+UPDATE: #sM_jto-0YA[aria-describedby] null => "sM_A"
 UPDATE: label:nth-of-type(2)::text " " => "0"
-REMOVE: #sM_jto-0ZA + label
-REMOVE: #sM_jto-0ZA + #sM_1_A
-REMOVE: #sM_jto-0ZA + label
-REMOVE: #sM_jto-0ZA + #sM_3_A
-REMOVE: #sM_jto-0ZA + label
-REMOVE: #sM_jto-0ZA + #sM_muntil-1-0A
-REMOVE: #sM_jto-0ZA + label
-REMOVE: #sM_jto-0ZA + #sM_muntil-3-0A
+REMOVE: #sM_jto-0YA + label
+REMOVE: #sM_jto-0YA + #sM_1ZA
+REMOVE: #sM_jto-0YA + label
+REMOVE: #sM_jto-0YA + #sM_3ZA
+REMOVE: #sM_jto-0YA + label
+REMOVE: #sM_jto-0YA + #sM_muntil-1_A
+REMOVE: #sM_jto-0YA + label
+REMOVE: #sM_jto-0YA + #sM_muntil-3_A
 ```
 
 # Update
@@ -591,13 +591,22 @@ assert.equal(
   Fields
 </h1>
 <label
-  for="sM_0UA"
+  for="sM_0TA"
 >
   c
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_0UA"
+  id="sM_0TA"
+/>
+<label
+  for="sM_gcUA"
+>
+  c
+</label>
+<input
+  aria-describedby="sM_A"
+  id="sM_gcUA"
 />
 <label
   for="sM_gcVA"
@@ -609,231 +618,222 @@ assert.equal(
   id="sM_gcVA"
 />
 <label
-  for="sM_gcWA"
->
-  c
-</label>
-<input
-  aria-describedby="sM_A"
-  id="sM_gcWA"
-/>
-<label
-  for="sM_kkey-cXA"
+  for="sM_kkey-cWA"
 >
   4
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_kkey-cXA"
+  id="sM_kkey-cWA"
 />
 <label
-  for="sM_S2-2YA"
+  for="sM_S2-2XA"
 >
   -2
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_S2-2YA"
+  id="sM_S2-2XA"
 />
 <label
-  for="sM_S2-1YA"
+  for="sM_S2-1XA"
 >
   -1
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_S2-1YA"
+  id="sM_S2-1XA"
 />
 <label
-  for="sM_0YA"
+  for="sM_0XA"
 >
   0
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_0YA"
+  id="sM_0XA"
 />
 <label
-  for="sM_1YA"
+  for="sM_1XA"
 >
   1
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_1YA"
+  id="sM_1XA"
 />
 <label
-  for="sM_2YA"
+  for="sM_2XA"
 >
   2
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_2YA"
+  id="sM_2XA"
 />
 <label
-  for="sM_kto--2ZA"
+  for="sM_kto--2YA"
 >
   -2
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_kto--2ZA"
+  id="sM_kto--2YA"
 />
 <label
-  for="sM_kto--1ZA"
+  for="sM_kto--1YA"
 >
   -1
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_kto--1ZA"
+  id="sM_kto--1YA"
 />
 <label
-  for="sM_jto-0ZA"
+  for="sM_jto-0YA"
 >
   0
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_jto-0ZA"
+  id="sM_jto-0YA"
 />
 <label
-  for="sM_jto-1ZA"
+  for="sM_jto-1YA"
 >
   1
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_jto-1ZA"
+  id="sM_jto-1YA"
 />
 <label
-  for="sM_jto-2ZA"
+  for="sM_jto-2YA"
 >
   2
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_jto-2ZA"
+  id="sM_jto-2YA"
 />
 <label
-  for="sM_S2-2_A"
+  for="sM_S2-2ZA"
 >
   -2
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_S2-2_A"
+  id="sM_S2-2ZA"
 />
 <label
-  for="sM_0_A"
+  for="sM_0ZA"
 >
   0
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_0_A"
+  id="sM_0ZA"
 />
 <label
-  for="sM_nuntil--2-0A"
+  for="sM_nuntil--2_A"
 >
   -2
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_nuntil--2-0A"
+  id="sM_nuntil--2_A"
 />
 <label
-  for="sM_muntil-0-0A"
+  for="sM_muntil-0_A"
 >
   0
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_muntil-0-0A"
+  id="sM_muntil-0_A"
 />
 ```
 ## Change
 ```
-INSERT: #sM_A + :is(label, #sM_0UA)
-UPDATE: label:nth-of-type(1)[for] null => "sM_0UA"
-UPDATE: #sM_0UA[id] null => "sM_0UA"
-UPDATE: #sM_0UA[aria-describedby] null => "sM_A"
+INSERT: #sM_A + :is(label, #sM_0TA)
+UPDATE: label:nth-of-type(1)[for] null => "sM_0TA"
+UPDATE: #sM_0TA[id] null => "sM_0TA"
+UPDATE: #sM_0TA[aria-describedby] null => "sM_A"
 UPDATE: label:nth-of-type(1)::text " " => "c"
-INSERT: #sM_0UA + :is(label, #sM_gcVA)
-UPDATE: label:nth-of-type(2)[for] null => "sM_gcVA"
+INSERT: #sM_0TA + :is(label, #sM_gcUA)
+UPDATE: label:nth-of-type(2)[for] null => "sM_gcUA"
 UPDATE: label:nth-of-type(2)::text " " => "c"
+UPDATE: #sM_gcUA[id] null => "sM_gcUA"
+UPDATE: #sM_gcUA[aria-describedby] null => "sM_A"
+INSERT: #sM_gcUA + :is(label, #sM_gcVA)
+UPDATE: label:nth-of-type(3)[for] null => "sM_gcVA"
+UPDATE: label:nth-of-type(3)::text " " => "c"
 UPDATE: #sM_gcVA[id] null => "sM_gcVA"
 UPDATE: #sM_gcVA[aria-describedby] null => "sM_A"
-INSERT: #sM_gcVA + :is(label, #sM_gcWA)
-UPDATE: label:nth-of-type(3)[for] null => "sM_gcWA"
-UPDATE: label:nth-of-type(3)::text " " => "c"
-UPDATE: #sM_gcWA[id] null => "sM_gcWA"
-UPDATE: #sM_gcWA[aria-describedby] null => "sM_A"
-INSERT: #sM_gcWA + :is(label, #sM_kkey-cXA)
-UPDATE: label:nth-of-type(4)[for] null => "sM_kkey-cXA"
-UPDATE: #sM_kkey-cXA[id] null => "sM_kkey-cXA"
-UPDATE: #sM_kkey-cXA[aria-describedby] null => "sM_A"
+INSERT: #sM_gcVA + :is(label, #sM_kkey-cWA)
+UPDATE: label:nth-of-type(4)[for] null => "sM_kkey-cWA"
+UPDATE: #sM_kkey-cWA[id] null => "sM_kkey-cWA"
+UPDATE: #sM_kkey-cWA[aria-describedby] null => "sM_A"
 UPDATE: label:nth-of-type(4)::text " " => "4"
-INSERT: #sM_0YA + :is(label, #sM_2YA)
-INSERT: #sM_0YA + :is(label, #sM_1YA)
-INSERT: #sM_kkey-cXA + :is(label, #sM_S2-1YA)
-INSERT: #sM_kkey-cXA + :is(label, #sM_S2-2YA)
-UPDATE: label:nth-of-type(5)[for] null => "sM_S2-2YA"
+INSERT: #sM_0XA + :is(label, #sM_2XA)
+INSERT: #sM_0XA + :is(label, #sM_1XA)
+INSERT: #sM_kkey-cWA + :is(label, #sM_S2-1XA)
+INSERT: #sM_kkey-cWA + :is(label, #sM_S2-2XA)
+UPDATE: label:nth-of-type(5)[for] null => "sM_S2-2XA"
 UPDATE: label:nth-of-type(5)::text " " => "-2"
-UPDATE: #sM_S2-2YA[id] null => "sM_S2-2YA"
-UPDATE: #sM_S2-2YA[aria-describedby] null => "sM_A"
-UPDATE: label:nth-of-type(6)[for] null => "sM_S2-1YA"
+UPDATE: #sM_S2-2XA[id] null => "sM_S2-2XA"
+UPDATE: #sM_S2-2XA[aria-describedby] null => "sM_A"
+UPDATE: label:nth-of-type(6)[for] null => "sM_S2-1XA"
 UPDATE: label:nth-of-type(6)::text " " => "-1"
-UPDATE: #sM_S2-1YA[id] null => "sM_S2-1YA"
-UPDATE: #sM_S2-1YA[aria-describedby] null => "sM_A"
-UPDATE: label:nth-of-type(8)[for] null => "sM_1YA"
+UPDATE: #sM_S2-1XA[id] null => "sM_S2-1XA"
+UPDATE: #sM_S2-1XA[aria-describedby] null => "sM_A"
+UPDATE: label:nth-of-type(8)[for] null => "sM_1XA"
 UPDATE: label:nth-of-type(8)::text " " => "1"
-UPDATE: #sM_1YA[id] null => "sM_1YA"
-UPDATE: #sM_1YA[aria-describedby] null => "sM_A"
-UPDATE: label:nth-of-type(9)[for] null => "sM_2YA"
+UPDATE: #sM_1XA[id] null => "sM_1XA"
+UPDATE: #sM_1XA[aria-describedby] null => "sM_A"
+UPDATE: label:nth-of-type(9)[for] null => "sM_2XA"
 UPDATE: label:nth-of-type(9)::text " " => "2"
-UPDATE: #sM_2YA[id] null => "sM_2YA"
-UPDATE: #sM_2YA[aria-describedby] null => "sM_A"
-INSERT: #sM_jto-0ZA + :is(label, #sM_jto-2ZA)
-INSERT: #sM_jto-0ZA + :is(label, #sM_jto-1ZA)
-INSERT: #sM_2YA + :is(label, #sM_kto--1ZA)
-INSERT: #sM_2YA + :is(label, #sM_kto--2ZA)
-UPDATE: label:nth-of-type(10)[for] null => "sM_kto--2ZA"
-UPDATE: #sM_kto--2ZA[id] null => "sM_kto--2ZA"
-UPDATE: #sM_kto--2ZA[aria-describedby] null => "sM_A"
+UPDATE: #sM_2XA[id] null => "sM_2XA"
+UPDATE: #sM_2XA[aria-describedby] null => "sM_A"
+INSERT: #sM_jto-0YA + :is(label, #sM_jto-2YA)
+INSERT: #sM_jto-0YA + :is(label, #sM_jto-1YA)
+INSERT: #sM_2XA + :is(label, #sM_kto--1YA)
+INSERT: #sM_2XA + :is(label, #sM_kto--2YA)
+UPDATE: label:nth-of-type(10)[for] null => "sM_kto--2YA"
+UPDATE: #sM_kto--2YA[id] null => "sM_kto--2YA"
+UPDATE: #sM_kto--2YA[aria-describedby] null => "sM_A"
 UPDATE: label:nth-of-type(10)::text " " => "-2"
-UPDATE: label:nth-of-type(11)[for] null => "sM_kto--1ZA"
-UPDATE: #sM_kto--1ZA[id] null => "sM_kto--1ZA"
-UPDATE: #sM_kto--1ZA[aria-describedby] null => "sM_A"
+UPDATE: label:nth-of-type(11)[for] null => "sM_kto--1YA"
+UPDATE: #sM_kto--1YA[id] null => "sM_kto--1YA"
+UPDATE: #sM_kto--1YA[aria-describedby] null => "sM_A"
 UPDATE: label:nth-of-type(11)::text " " => "-1"
-UPDATE: label:nth-of-type(13)[for] null => "sM_jto-1ZA"
-UPDATE: #sM_jto-1ZA[id] null => "sM_jto-1ZA"
-UPDATE: #sM_jto-1ZA[aria-describedby] null => "sM_A"
+UPDATE: label:nth-of-type(13)[for] null => "sM_jto-1YA"
+UPDATE: #sM_jto-1YA[id] null => "sM_jto-1YA"
+UPDATE: #sM_jto-1YA[aria-describedby] null => "sM_A"
 UPDATE: label:nth-of-type(13)::text " " => "1"
-UPDATE: label:nth-of-type(14)[for] null => "sM_jto-2ZA"
-UPDATE: #sM_jto-2ZA[id] null => "sM_jto-2ZA"
-UPDATE: #sM_jto-2ZA[aria-describedby] null => "sM_A"
+UPDATE: label:nth-of-type(14)[for] null => "sM_jto-2YA"
+UPDATE: #sM_jto-2YA[id] null => "sM_jto-2YA"
+UPDATE: #sM_jto-2YA[aria-describedby] null => "sM_A"
 UPDATE: label:nth-of-type(14)::text " " => "2"
-INSERT: #sM_jto-2ZA + :is(label, #sM_S2-2_A)
-INSERT: #sM_S2-2_A + :is(label, #sM_0_A)
-UPDATE: label:nth-of-type(15)[for] null => "sM_S2-2_A"
+INSERT: #sM_jto-2YA + :is(label, #sM_S2-2ZA)
+INSERT: #sM_S2-2ZA + :is(label, #sM_0ZA)
+UPDATE: label:nth-of-type(15)[for] null => "sM_S2-2ZA"
 UPDATE: label:nth-of-type(15)::text " " => "-2"
-UPDATE: #sM_S2-2_A[id] null => "sM_S2-2_A"
-UPDATE: #sM_S2-2_A[aria-describedby] null => "sM_A"
-UPDATE: label:nth-of-type(16)[for] null => "sM_0_A"
+UPDATE: #sM_S2-2ZA[id] null => "sM_S2-2ZA"
+UPDATE: #sM_S2-2ZA[aria-describedby] null => "sM_A"
+UPDATE: label:nth-of-type(16)[for] null => "sM_0ZA"
 UPDATE: label:nth-of-type(16)::text " " => "0"
-UPDATE: #sM_0_A[id] null => "sM_0_A"
-UPDATE: #sM_0_A[aria-describedby] null => "sM_A"
-INSERT: #sM_0_A + :is(label, #sM_nuntil--2-0A)
-INSERT: #sM_nuntil--2-0A + :is(label, #sM_muntil-0-0A)
-UPDATE: label:nth-of-type(17)[for] null => "sM_nuntil--2-0A"
-UPDATE: #sM_nuntil--2-0A[id] null => "sM_nuntil--2-0A"
-UPDATE: #sM_nuntil--2-0A[aria-describedby] null => "sM_A"
+UPDATE: #sM_0ZA[id] null => "sM_0ZA"
+UPDATE: #sM_0ZA[aria-describedby] null => "sM_A"
+INSERT: #sM_0ZA + :is(label, #sM_nuntil--2_A)
+INSERT: #sM_nuntil--2_A + :is(label, #sM_muntil-0_A)
+UPDATE: label:nth-of-type(17)[for] null => "sM_nuntil--2_A"
+UPDATE: #sM_nuntil--2_A[id] null => "sM_nuntil--2_A"
+UPDATE: #sM_nuntil--2_A[aria-describedby] null => "sM_A"
 UPDATE: label:nth-of-type(17)::text " " => "-2"
-UPDATE: label:nth-of-type(18)[for] null => "sM_muntil-0-0A"
-UPDATE: #sM_muntil-0-0A[id] null => "sM_muntil-0-0A"
-UPDATE: #sM_muntil-0-0A[aria-describedby] null => "sM_A"
+UPDATE: label:nth-of-type(18)[for] null => "sM_muntil-0_A"
+UPDATE: #sM_muntil-0_A[id] null => "sM_muntil-0_A"
+UPDATE: #sM_muntil-0_A[aria-describedby] null => "sM_A"
 UPDATE: label:nth-of-type(18)::text " " => "0"
 ```
 
@@ -854,31 +854,58 @@ assert.equal(
   Fields
 </h1>
 <label
-  for="sM_0UA"
+  for="sM_0TA"
 >
   a
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_0UA"
+  id="sM_0TA"
 />
 <label
-  for="sM_1UA"
+  for="sM_1TA"
 >
   b
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_1UA"
+  id="sM_1TA"
 />
 <label
-  for="sM_2UA"
+  for="sM_2TA"
 >
   c
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_2UA"
+  id="sM_2TA"
+/>
+<label
+  for="sM_gaUA"
+>
+  a
+</label>
+<input
+  aria-describedby="sM_A"
+  id="sM_gaUA"
+/>
+<label
+  for="sM_gbUA"
+>
+  b
+</label>
+<input
+  aria-describedby="sM_A"
+  id="sM_gbUA"
+/>
+<label
+  for="sM_gcUA"
+>
+  c
+</label>
+<input
+  aria-describedby="sM_A"
+  id="sM_gcUA"
 />
 <label
   for="sM_gaVA"
@@ -908,271 +935,244 @@ assert.equal(
   id="sM_gcVA"
 />
 <label
-  for="sM_gaWA"
->
-  a
-</label>
-<input
-  aria-describedby="sM_A"
-  id="sM_gaWA"
-/>
-<label
-  for="sM_gbWA"
->
-  b
-</label>
-<input
-  aria-describedby="sM_A"
-  id="sM_gbWA"
-/>
-<label
-  for="sM_gcWA"
->
-  c
-</label>
-<input
-  aria-describedby="sM_A"
-  id="sM_gcWA"
-/>
-<label
-  for="sM_kkey-aXA"
+  for="sM_kkey-aWA"
 >
   1
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_kkey-aXA"
+  id="sM_kkey-aWA"
 />
 <label
-  for="sM_kkey-bXA"
+  for="sM_kkey-bWA"
 >
   2
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_kkey-bXA"
+  id="sM_kkey-bWA"
 />
 <label
-  for="sM_kkey-cXA"
+  for="sM_kkey-cWA"
 >
   3
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_kkey-cXA"
+  id="sM_kkey-cWA"
 />
 <label
-  for="sM_0YA"
+  for="sM_0XA"
 >
   0
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_0YA"
+  id="sM_0XA"
 />
 <label
-  for="sM_1YA"
+  for="sM_1XA"
 >
   1
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_1YA"
+  id="sM_1XA"
 />
 <label
-  for="sM_2YA"
+  for="sM_2XA"
 >
   2
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_2YA"
+  id="sM_2XA"
 />
 <label
-  for="sM_3YA"
+  for="sM_3XA"
 >
   3
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_3YA"
+  id="sM_3XA"
 />
 <label
-  for="sM_4YA"
+  for="sM_4XA"
 >
   4
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_4YA"
+  id="sM_4XA"
 />
 <label
-  for="sM_jto-0ZA"
+  for="sM_jto-0YA"
 >
   0
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_jto-0ZA"
+  id="sM_jto-0YA"
 />
 <label
-  for="sM_jto-1ZA"
+  for="sM_jto-1YA"
 >
   1
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_jto-1ZA"
+  id="sM_jto-1YA"
 />
 <label
-  for="sM_jto-2ZA"
+  for="sM_jto-2YA"
 >
   2
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_jto-2ZA"
+  id="sM_jto-2YA"
 />
 <label
-  for="sM_jto-3ZA"
+  for="sM_jto-3YA"
 >
   3
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_jto-3ZA"
+  id="sM_jto-3YA"
 />
 <label
-  for="sM_jto-4ZA"
+  for="sM_jto-4YA"
 >
   4
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_jto-4ZA"
+  id="sM_jto-4YA"
 />
 <label
-  for="sM_0_A"
+  for="sM_0ZA"
 >
   0
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_0_A"
+  id="sM_0ZA"
 />
 <label
-  for="sM_2_A"
+  for="sM_2ZA"
 >
   2
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_2_A"
+  id="sM_2ZA"
 />
 <label
-  for="sM_muntil-0-0A"
+  for="sM_muntil-0_A"
 >
   0
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_muntil-0-0A"
+  id="sM_muntil-0_A"
 />
 <label
-  for="sM_muntil-2-0A"
+  for="sM_muntil-2_A"
 >
   2
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_muntil-2-0A"
+  id="sM_muntil-2_A"
 />
 ```
 ## Change
 ```
-INSERT: #sM_0UA + :is(label, #sM_1UA)
-INSERT: #sM_1UA + :is(label, #sM_2UA)
+INSERT: #sM_0TA + :is(label, #sM_1TA)
+INSERT: #sM_1TA + :is(label, #sM_2TA)
 UPDATE: label:nth-of-type(1)::text "c" => "a"
-UPDATE: label:nth-of-type(2)[for] null => "sM_1UA"
-UPDATE: #sM_1UA[id] null => "sM_1UA"
-UPDATE: #sM_1UA[aria-describedby] null => "sM_A"
+UPDATE: label:nth-of-type(2)[for] null => "sM_1TA"
+UPDATE: #sM_1TA[id] null => "sM_1TA"
+UPDATE: #sM_1TA[aria-describedby] null => "sM_A"
 UPDATE: label:nth-of-type(2)::text " " => "b"
-UPDATE: label:nth-of-type(3)[for] null => "sM_2UA"
-UPDATE: #sM_2UA[id] null => "sM_2UA"
-UPDATE: #sM_2UA[aria-describedby] null => "sM_A"
+UPDATE: label:nth-of-type(3)[for] null => "sM_2TA"
+UPDATE: #sM_2TA[id] null => "sM_2TA"
+UPDATE: #sM_2TA[aria-describedby] null => "sM_A"
 UPDATE: label:nth-of-type(3)::text " " => "c"
-INSERT: #sM_2UA + :is(label, #sM_gaVA)
-INSERT: #sM_gaVA + :is(label, #sM_gbVA)
-UPDATE: label:nth-of-type(4)[for] null => "sM_gaVA"
+INSERT: #sM_2TA + :is(label, #sM_gaUA)
+INSERT: #sM_gaUA + :is(label, #sM_gbUA)
+UPDATE: label:nth-of-type(4)[for] null => "sM_gaUA"
 UPDATE: label:nth-of-type(4)::text " " => "a"
+UPDATE: #sM_gaUA[id] null => "sM_gaUA"
+UPDATE: #sM_gaUA[aria-describedby] null => "sM_A"
+UPDATE: label:nth-of-type(5)[for] null => "sM_gbUA"
+UPDATE: label:nth-of-type(5)::text " " => "b"
+UPDATE: #sM_gbUA[id] null => "sM_gbUA"
+UPDATE: #sM_gbUA[aria-describedby] null => "sM_A"
+INSERT: #sM_gcUA + :is(label, #sM_gaVA)
+INSERT: #sM_gaVA + :is(label, #sM_gbVA)
+UPDATE: label:nth-of-type(7)[for] null => "sM_gaVA"
+UPDATE: label:nth-of-type(7)::text " " => "a"
 UPDATE: #sM_gaVA[id] null => "sM_gaVA"
 UPDATE: #sM_gaVA[aria-describedby] null => "sM_A"
-UPDATE: label:nth-of-type(5)[for] null => "sM_gbVA"
-UPDATE: label:nth-of-type(5)::text " " => "b"
+UPDATE: label:nth-of-type(8)[for] null => "sM_gbVA"
+UPDATE: label:nth-of-type(8)::text " " => "b"
 UPDATE: #sM_gbVA[id] null => "sM_gbVA"
 UPDATE: #sM_gbVA[aria-describedby] null => "sM_A"
-INSERT: #sM_gcVA + :is(label, #sM_gaWA)
-INSERT: #sM_gaWA + :is(label, #sM_gbWA)
-UPDATE: label:nth-of-type(7)[for] null => "sM_gaWA"
-UPDATE: label:nth-of-type(7)::text " " => "a"
-UPDATE: #sM_gaWA[id] null => "sM_gaWA"
-UPDATE: #sM_gaWA[aria-describedby] null => "sM_A"
-UPDATE: label:nth-of-type(8)[for] null => "sM_gbWA"
-UPDATE: label:nth-of-type(8)::text " " => "b"
-UPDATE: #sM_gbWA[id] null => "sM_gbWA"
-UPDATE: #sM_gbWA[aria-describedby] null => "sM_A"
-INSERT: #sM_gcWA + :is(label, #sM_kkey-aXA)
-INSERT: #sM_kkey-aXA + :is(label, #sM_kkey-bXA)
-UPDATE: label:nth-of-type(10)[for] null => "sM_kkey-aXA"
-UPDATE: #sM_kkey-aXA[id] null => "sM_kkey-aXA"
-UPDATE: #sM_kkey-aXA[aria-describedby] null => "sM_A"
+INSERT: #sM_gcVA + :is(label, #sM_kkey-aWA)
+INSERT: #sM_kkey-aWA + :is(label, #sM_kkey-bWA)
+UPDATE: label:nth-of-type(10)[for] null => "sM_kkey-aWA"
+UPDATE: #sM_kkey-aWA[id] null => "sM_kkey-aWA"
+UPDATE: #sM_kkey-aWA[aria-describedby] null => "sM_A"
 UPDATE: label:nth-of-type(10)::text " " => "1"
-UPDATE: label:nth-of-type(11)[for] null => "sM_kkey-bXA"
-UPDATE: #sM_kkey-bXA[id] null => "sM_kkey-bXA"
-UPDATE: #sM_kkey-bXA[aria-describedby] null => "sM_A"
+UPDATE: label:nth-of-type(11)[for] null => "sM_kkey-bWA"
+UPDATE: #sM_kkey-bWA[id] null => "sM_kkey-bWA"
+UPDATE: #sM_kkey-bWA[aria-describedby] null => "sM_A"
 UPDATE: label:nth-of-type(11)::text " " => "2"
 UPDATE: label:nth-of-type(12)::text "4" => "3"
-REMOVE: #sM_kkey-cXA + label
-REMOVE: #sM_kkey-cXA + #sM_S2-2YA
-REMOVE: #sM_kkey-cXA + label
-REMOVE: #sM_kkey-cXA + #sM_S2-1YA
-INSERT: #sM_2YA + :is(label, #sM_4YA)
-INSERT: #sM_2YA + :is(label, #sM_3YA)
-UPDATE: label:nth-of-type(16)[for] null => "sM_3YA"
+REMOVE: #sM_kkey-cWA + label
+REMOVE: #sM_kkey-cWA + #sM_S2-2XA
+REMOVE: #sM_kkey-cWA + label
+REMOVE: #sM_kkey-cWA + #sM_S2-1XA
+INSERT: #sM_2XA + :is(label, #sM_4XA)
+INSERT: #sM_2XA + :is(label, #sM_3XA)
+UPDATE: label:nth-of-type(16)[for] null => "sM_3XA"
 UPDATE: label:nth-of-type(16)::text " " => "3"
-UPDATE: #sM_3YA[id] null => "sM_3YA"
-UPDATE: #sM_3YA[aria-describedby] null => "sM_A"
-UPDATE: label:nth-of-type(17)[for] null => "sM_4YA"
+UPDATE: #sM_3XA[id] null => "sM_3XA"
+UPDATE: #sM_3XA[aria-describedby] null => "sM_A"
+UPDATE: label:nth-of-type(17)[for] null => "sM_4XA"
 UPDATE: label:nth-of-type(17)::text " " => "4"
-UPDATE: #sM_4YA[id] null => "sM_4YA"
-UPDATE: #sM_4YA[aria-describedby] null => "sM_A"
-REMOVE: #sM_4YA + label
-REMOVE: #sM_4YA + #sM_kto--2ZA
-REMOVE: #sM_4YA + label
-REMOVE: #sM_4YA + #sM_kto--1ZA
-INSERT: #sM_jto-2ZA + :is(label, #sM_jto-4ZA)
-INSERT: #sM_jto-2ZA + :is(label, #sM_jto-3ZA)
-UPDATE: label:nth-of-type(21)[for] null => "sM_jto-3ZA"
-UPDATE: #sM_jto-3ZA[id] null => "sM_jto-3ZA"
-UPDATE: #sM_jto-3ZA[aria-describedby] null => "sM_A"
+UPDATE: #sM_4XA[id] null => "sM_4XA"
+UPDATE: #sM_4XA[aria-describedby] null => "sM_A"
+REMOVE: #sM_4XA + label
+REMOVE: #sM_4XA + #sM_kto--2YA
+REMOVE: #sM_4XA + label
+REMOVE: #sM_4XA + #sM_kto--1YA
+INSERT: #sM_jto-2YA + :is(label, #sM_jto-4YA)
+INSERT: #sM_jto-2YA + :is(label, #sM_jto-3YA)
+UPDATE: label:nth-of-type(21)[for] null => "sM_jto-3YA"
+UPDATE: #sM_jto-3YA[id] null => "sM_jto-3YA"
+UPDATE: #sM_jto-3YA[aria-describedby] null => "sM_A"
 UPDATE: label:nth-of-type(21)::text " " => "3"
-UPDATE: label:nth-of-type(22)[for] null => "sM_jto-4ZA"
-UPDATE: #sM_jto-4ZA[id] null => "sM_jto-4ZA"
-UPDATE: #sM_jto-4ZA[aria-describedby] null => "sM_A"
+UPDATE: label:nth-of-type(22)[for] null => "sM_jto-4YA"
+UPDATE: #sM_jto-4YA[id] null => "sM_jto-4YA"
+UPDATE: #sM_jto-4YA[aria-describedby] null => "sM_A"
 UPDATE: label:nth-of-type(22)::text " " => "4"
-REMOVE: #sM_jto-4ZA + label
-REMOVE: #sM_jto-4ZA + #sM_S2-2_A
-INSERT: #sM_0_A + :is(label, #sM_2_A)
-UPDATE: label:nth-of-type(24)[for] null => "sM_2_A"
+REMOVE: #sM_jto-4YA + label
+REMOVE: #sM_jto-4YA + #sM_S2-2ZA
+INSERT: #sM_0ZA + :is(label, #sM_2ZA)
+UPDATE: label:nth-of-type(24)[for] null => "sM_2ZA"
 UPDATE: label:nth-of-type(24)::text " " => "2"
-UPDATE: #sM_2_A[id] null => "sM_2_A"
-UPDATE: #sM_2_A[aria-describedby] null => "sM_A"
-REMOVE: #sM_2_A + label
-REMOVE: #sM_2_A + #sM_nuntil--2-0A
-INSERT: #sM_muntil-0-0A + :is(label, #sM_muntil-2-0A)
-UPDATE: label:nth-of-type(26)[for] null => "sM_muntil-2-0A"
-UPDATE: #sM_muntil-2-0A[id] null => "sM_muntil-2-0A"
-UPDATE: #sM_muntil-2-0A[aria-describedby] null => "sM_A"
+UPDATE: #sM_2ZA[id] null => "sM_2ZA"
+UPDATE: #sM_2ZA[aria-describedby] null => "sM_A"
+REMOVE: #sM_2ZA + label
+REMOVE: #sM_2ZA + #sM_nuntil--2_A
+INSERT: #sM_muntil-0_A + :is(label, #sM_muntil-2_A)
+UPDATE: label:nth-of-type(26)[for] null => "sM_muntil-2_A"
+UPDATE: #sM_muntil-2_A[id] null => "sM_muntil-2_A"
+UPDATE: #sM_muntil-2_A[aria-describedby] null => "sM_A"
 UPDATE: label:nth-of-type(26)::text " " => "2"
 ```
 

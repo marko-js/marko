@@ -1,6 +1,14 @@
 # Render `{"mode":0,"nested":true,"other":true}`
 ```html
 <label
+  for="sM_TA"
+>
+  field
+</label>
+<input
+  id="sM_TA"
+/>
+<label
   for="sM_UA"
 >
   field
@@ -17,12 +25,12 @@
   id="sM_VA"
 />
 <label
-  for="sM_WA"
+  for="sM_XA"
 >
   field
 </label>
 <input
-  id="sM_WA"
+  id="sM_XA"
 />
 <label
   for="sM_YA"
@@ -40,14 +48,6 @@
 <input
   id="sM_ZA"
 />
-<label
-  for="sM__A"
->
-  field
-</label>
-<input
-  id="sM__A"
-/>
 ```
 
 # Update
@@ -62,6 +62,14 @@ for (const input of document.querySelectorAll("input")) {
 
 # Update `{"mode":1,"nested":true,"other":true}`
 ```html
+<label
+  for="sM_TA"
+>
+  field
+</label>
+<input
+  id="sM_TA"
+/>
 <label
   for="sM_UA"
 >
@@ -110,31 +118,23 @@ for (const input of document.querySelectorAll("input")) {
 <input
   id="sM_ZA"
 />
-<label
-  for="sM__A"
->
-  field
-</label>
-<input
-  id="sM__A"
-/>
 ```
 ## Change
 ```
 INSERT: label
-INSERT: label:nth-of-type(1) + #sM_UA
+INSERT: label:nth-of-type(1) + #sM_TA
+INSERT: #sM_TA + label
+INSERT: label:nth-of-type(2) + #sM_UA
 INSERT: #sM_UA + label
-INSERT: label:nth-of-type(2) + #sM_VA
+INSERT: label:nth-of-type(3) + #sM_VA
 INSERT: #sM_VA + label
-INSERT: label:nth-of-type(3) + #sM_WA
-INSERT: #sM_WA + label
-INSERT: label:nth-of-type(4) + #sM_XA
-REMOVE: #sM_XA + label
-REMOVE: #sM_XA + #sM_UA
-REMOVE: #sM_XA + label
-REMOVE: #sM_XA + #sM_VA
-REMOVE: #sM_XA + label
-REMOVE: #sM_XA + #sM_WA
+INSERT: label:nth-of-type(4) + #sM_WA
+REMOVE: #sM_WA + label
+REMOVE: #sM_WA + #sM_TA
+REMOVE: #sM_WA + label
+REMOVE: #sM_WA + #sM_UA
+REMOVE: #sM_WA + label
+REMOVE: #sM_WA + #sM_VA
 ```
 
 # Update
@@ -150,12 +150,20 @@ for (const input of document.querySelectorAll("input")) {
 # Update `{"mode":2,"nested":false,"other":true}`
 ```html
 <label
-  for="sM_UA"
+  for="sM_TA"
 >
   field
 </label>
 <input
-  id="sM_UA"
+  id="sM_TA"
+/>
+<label
+  for="sM_XA"
+>
+  field
+</label>
+<input
+  id="sM_XA"
 />
 <label
   for="sM_YA"
@@ -173,27 +181,19 @@ for (const input of document.querySelectorAll("input")) {
 <input
   id="sM_ZA"
 />
-<label
-  for="sM__A"
->
-  field
-</label>
-<input
-  id="sM__A"
-/>
 ```
 ## Change
 ```
 INSERT: label
-INSERT: label:nth-of-type(1) + #sM_UA
-REMOVE: #sM_UA + label
-REMOVE: #sM_UA + #sM_UA
-REMOVE: #sM_UA + label
-REMOVE: #sM_UA + #sM_VA
-REMOVE: #sM_UA + label
-REMOVE: #sM_UA + #sM_WA
-REMOVE: #sM_UA + label
-REMOVE: #sM_UA + #sM_XA
+INSERT: label:nth-of-type(1) + #sM_TA
+REMOVE: #sM_TA + label
+REMOVE: #sM_TA + #sM_TA
+REMOVE: #sM_TA + label
+REMOVE: #sM_TA + #sM_UA
+REMOVE: #sM_TA + label
+REMOVE: #sM_TA + #sM_VA
+REMOVE: #sM_TA + label
+REMOVE: #sM_TA + #sM_WA
 ```
 
 # Update
@@ -209,12 +209,20 @@ for (const input of document.querySelectorAll("input")) {
 # Update `{"mode":0,"nested":false,"other":false}`
 ```html
 <label
-  for="sM_UA"
+  for="sM_TA"
 >
   field
 </label>
 <input
-  id="sM_UA"
+  id="sM_TA"
+/>
+<label
+  for="sM_XA"
+>
+  field
+</label>
+<input
+  id="sM_XA"
 />
 <label
   for="sM_YA"
@@ -224,23 +232,15 @@ for (const input of document.querySelectorAll("input")) {
 <input
   id="sM_YA"
 />
-<label
-  for="sM_ZA"
->
-  field
-</label>
-<input
-  id="sM_ZA"
-/>
 ```
 ## Change
 ```
 INSERT: label
-INSERT: label:nth-of-type(1) + #sM_UA
-REMOVE: #sM_UA + label
-REMOVE: #sM_UA + #sM_UA
-REMOVE: #sM_ZA + label
-REMOVE: #sM_ZA + #sM__A
+INSERT: label:nth-of-type(1) + #sM_TA
+REMOVE: #sM_TA + label
+REMOVE: #sM_TA + #sM_TA
+REMOVE: #sM_YA + label
+REMOVE: #sM_YA + #sM_ZA
 ```
 
 # Update

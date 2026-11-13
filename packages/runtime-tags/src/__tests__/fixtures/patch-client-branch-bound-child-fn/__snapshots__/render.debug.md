@@ -17,6 +17,10 @@
 ## Change
 ```
 INSERT: section
+INSERT: section > button + span
+INSERT: section > span:nth-of-type(1) + span
+UPDATE: section > span:nth-of-type(1)::text " " => "b"
+UPDATE: section > span:nth-of-type(2)::text " " => "b"
 ```
 
 # Update
@@ -51,9 +55,9 @@ LOG "x" "b"
 ```
 INSERT: section > button + i
 REMOVE: section > i:nth-of-type(1) + span
-UPDATE: section > i:nth-of-type(1)::text " " => "c"
 INSERT: section > i:nth-of-type(1) + i
 REMOVE: section > i:nth-of-type(2) + span
+UPDATE: section > i:nth-of-type(1)::text " " => "c"
 UPDATE: section > i:nth-of-type(2)::text " " => "c"
 ```
 

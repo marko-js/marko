@@ -1,5 +1,5 @@
 // PATCH
-[`a0,<em>static</em>`, `a1 !a>b0;/D b%l&;<section><button>clear</button><!></section>`]
+`a1 !a>b0;/D b%l&;<section><button>clear</button><!></section>`
 {
   ba: [{
     ca: {
@@ -9,4 +9,4 @@
     }
   }, "a1"]
 }
-;CQY
+;BgE

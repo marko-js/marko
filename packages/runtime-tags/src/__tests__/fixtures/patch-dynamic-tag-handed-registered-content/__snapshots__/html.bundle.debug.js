@@ -42,13 +42,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope1_id, "#text/0", 1, $wg__label, 1, 0, 0, ["__tests__/template.marko_2*shell"]);
 		$wi__label && _scope($scope1_id, {}, "__tests__/template.marko", "1:2");
-	}, $scope0_id, void 0, 1) };
+	}, $scope0_id) };
 	const B = { content: _content_resume("__tests__/template.marko_3*content", ({ label }) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
 		_html(`<b>${_text_mark($scope3_id, "#text/0", label, 1, 4, 0)}</b>`);
 		_scope($scope3_id, {}, "__tests__/template.marko", "6:2");
-	}, $scope0_id, void 0, 1) };
+	}, $scope0_id) };
 	let open = false;
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/0")}`);
 	_dynamic_tag($scope0_id, "#text/1", open ? A : B, { label: "local" });

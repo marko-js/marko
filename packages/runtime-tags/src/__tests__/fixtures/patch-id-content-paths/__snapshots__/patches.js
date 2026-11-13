@@ -5,9 +5,9 @@
     ca: {
       ca: {
         s: {
-          aa$for: "sM_WUA",
+          aa$for: "sM_VTA",
           tb: "first",
-          ac$id: "sM_WUA",
+          ac$id: "sM_VTA",
           "ac$aria-describedby": $
         },
         fd: 0
@@ -16,17 +16,17 @@
   }, "a4"],
   fb: ["b", "a3"],
   cAb: {
-    aa$for: "sM_YA",
+    aa$for: "sM_XA",
     tb: "dynamic",
-    ac$id: "sM_YA",
+    ac$id: "sM_XA",
     "ac$aria-describedby": $,
     fd: "^^a3",
     cAd: {
       ca: {
         s: {
-          aa$for: "sM_YUXA",
+          aa$for: "sM_XTWA",
           tb: "content",
-          ac$id: "sM_YUXA",
+          ac$id: "sM_XTWA",
           "ac$aria-describedby": $
         },
         fd: 0
@@ -39,8 +39,8 @@
       cAa: {
         ca: {
           s: {
-            aa$for: "sM__0VZA",
-            ac$id: "sM__0VZA",
+            aa$for: "sM_Z0UYA",
+            ac$id: "sM_Z0UYA",
             "ac$aria-describedby": $
           },
           tb: "b",
@@ -52,8 +52,8 @@
       cAa: {
         ca: {
           s: {
-            aa$for: "sM__1VZA",
-            ac$id: "sM__1VZA",
+            aa$for: "sM_Z1UYA",
+            ac$id: "sM_Z1UYA",
             "ac$aria-describedby": $
           },
           tb: "c",
@@ -72,9 +72,9 @@
     ca: {
       ca: {
         s: {
-          aa$for: "sM_WUA",
+          aa$for: "sM_VTA",
           tb: "other",
-          ac$id: "sM_WUA",
+          ac$id: "sM_VTA",
           "ac$aria-describedby": $
         },
         fd: 0
@@ -88,9 +88,9 @@
     cAa: {
       ca: {
         s: {
-          aa$for: "sM_YXA",
+          aa$for: "sM_XWA",
           tb: "content",
-          ac$id: "sM_YXA",
+          ac$id: "sM_XWA",
           "ac$aria-describedby": $
         },
         fd: 0
@@ -103,8 +103,8 @@
       cAa: {
         ca: {
           s: {
-            aa$for: "sM__0VZA",
-            ac$id: "sM__0VZA",
+            aa$for: "sM_Z0UYA",
+            ac$id: "sM_Z0UYA",
             "ac$aria-describedby": $
           },
           tb: "c",
@@ -116,8 +116,8 @@
       cAa: {
         ca: {
           s: {
-            aa$for: "sM__1VZA",
-            ac$id: "sM__1VZA",
+            aa$for: "sM_Z1UYA",
+            ac$id: "sM_Z1UYA",
             "ac$aria-describedby": $
           },
           tb: "a",

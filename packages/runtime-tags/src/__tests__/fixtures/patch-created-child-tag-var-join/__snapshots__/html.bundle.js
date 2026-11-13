@@ -111,7 +111,7 @@ var route_pg_default = _template("f", (input) => {
 	const $childScope2 = _peek_scope_id($scope0_id, "c", 1);
 	file_host_default({
 		files,
-		filesChange: _resume((_new_files) => files = _new_files, "f0", $scope0_id, 1)
+		filesChange: _resume((_new_files) => files = _new_files, "f0", $scope0_id)
 	});
 	_patch_child_end();
 	_scope($scope0_id, {

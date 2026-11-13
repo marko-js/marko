@@ -11,18 +11,18 @@
       la: ["b", {
         ca: {
           s: {
-            aa$for: "sM_gbXA",
+            aa$for: "sM_gbWA",
             tb: "b",
-            ac$id: "sM_gbXA",
+            ac$id: "sM_gbWA",
             "ac$aria-describedby": "sM_A"
           }
         }
       }, "c", {
         ca: {
           s: {
-            aa$for: "sM_gcXA",
+            aa$for: "sM_gcWA",
             tb: "c",
-            ac$id: "sM_gcXA",
+            ac$id: "sM_gcWA",
             "ac$aria-describedby": "sM_A"
           }
         }
@@ -43,8 +43,8 @@
   kb: [{
     ca: {
       s: {
-        aa$for: "sM_VA",
-        ac$id: "sM_VA",
+        aa$for: "sM_UA",
+        ac$id: "sM_UA",
         "ac$aria-describedby": "sM_A"
       },
       tb: "caught"

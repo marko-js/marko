@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 			_html(`<em>${_text_mark($scope5_id, "a", row.label, 1, $scope0_reason, 0)} ${_text_mark($scope5_id, "b", n, 2)}</em>`);
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope5_id, "a7", $cg__input_rows);
 			_subscribe($for_content__n__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_label__closures, _scope($scope5_id, { _: _scope_with_id($scope2_id) }), $cg__input_rows && "a7"), "a8");
-		}, $scope2_id, ($scope) => $scope0_page ? [{ h: row?.label }] : [], 1) };
+		}, $scope2_id, ($scope) => $scope0_page ? [{ h: row?.label }] : []) };
 		_html(`<section><button>${_text_mark($scope2_id, "b", n)}</button>${_el_mark($scope2_id, "a")}`);
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope2_id, "c", 1);

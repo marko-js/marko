@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 		_html(`<em>${_text_mark($scope1_id, "a", input.label, 1, $scope0_reason, 2)}</em>`);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "a5", $cg__input_label);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }), $cg__input_label && "a5");
-	}, $scope0_id, ($scope) => $scope0_page ? [{ d: input.label }] : [], 1) };
+	}, $scope0_id, ($scope) => $scope0_page ? [{ d: input.label }] : []) };
 	_dynamic_tag($scope0_id, "a", input.card ? Card : "span", {
 		label: input.tag,
 		content: Label

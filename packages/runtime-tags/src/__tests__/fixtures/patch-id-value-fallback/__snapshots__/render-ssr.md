@@ -23,13 +23,13 @@
   id="provided-a"
 />
 <label
-  for="sM_gbUA"
+  for="sM_gbTA"
 >
   b
 </label>
 <input
   aria-describedby="provided-heading"
-  id="sM_gbUA"
+  id="sM_gbTA"
 />
 <label
   for="given"
@@ -76,13 +76,13 @@ for (const input of document.querySelectorAll(
   id="sM_B"
 />
 <label
-  for="sM_gbUA"
+  for="sM_gbTA"
 >
   b
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_gbUA"
+  id="sM_gbTA"
 />
 <label
   for="provided-c"
@@ -110,8 +110,8 @@ for (const input of document.querySelectorAll(
 UPDATE: #sM_A[id] "provided-heading" => "sM_A"
 REMOVE: #sM_B + label
 REMOVE: #sM_B + #provided-a
-INSERT: #sM_gbUA + :is(label, #provided-c)
-UPDATE: #sM_gbUA[aria-describedby] "provided-heading" => "sM_A"
+INSERT: #sM_gbTA + :is(label, #provided-c)
+UPDATE: #sM_gbTA[aria-describedby] "provided-heading" => "sM_A"
 UPDATE: label:nth-of-type(3)[for] null => "provided-c"
 UPDATE: label:nth-of-type(3)::text " " => "c"
 UPDATE: #provided-c[id] null => "provided-c"
@@ -153,13 +153,13 @@ document.querySelector("button").click();
   id="sM_B"
 />
 <label
-  for="sM_gbUA"
+  for="sM_gbTA"
 >
   b
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_gbUA"
+  id="sM_gbTA"
 />
 <label
   for="provided-c"
@@ -229,13 +229,13 @@ for (const input of document.querySelectorAll(
   id="provided-b"
 />
 <label
-  for="sM_gcUA"
+  for="sM_gcTA"
 >
   c
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_gcUA"
+  id="sM_gcTA"
 />
 <label
   for="cM_0"
@@ -251,10 +251,10 @@ for (const input of document.querySelectorAll(
 ```
 ## Change
 ```
-UPDATE: label:nth-of-type(2)[for] "sM_gbUA" => "provided-b"
-UPDATE: #provided-b[id] "sM_gbUA" => "provided-b"
-UPDATE: label:nth-of-type(3)[for] "provided-c" => "sM_gcUA"
-UPDATE: #sM_gcUA[id] "provided-c" => "sM_gcUA"
+UPDATE: label:nth-of-type(2)[for] "sM_gbTA" => "provided-b"
+UPDATE: #provided-b[id] "sM_gbTA" => "provided-b"
+UPDATE: label:nth-of-type(3)[for] "provided-c" => "sM_gcTA"
+UPDATE: #sM_gcTA[id] "provided-c" => "sM_gcTA"
 ```
 
 # Update
@@ -301,13 +301,13 @@ document.querySelector("button").click();
   id="provided-b"
 />
 <label
-  for="sM_gcUA"
+  for="sM_gcTA"
 >
   c
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_gcUA"
+  id="sM_gcTA"
 />
 <label
   for="given"
@@ -359,22 +359,22 @@ for (const input of document.querySelectorAll(
   id="sM_B"
 />
 <label
-  for="sM_gcUA"
+  for="sM_gcTA"
 >
   c
 </label>
 <input
   aria-describedby="provided-heading"
-  id="sM_gcUA"
+  id="sM_gcTA"
 />
 <label
-  for="sM_gdUA"
+  for="sM_gdTA"
 >
   d
 </label>
 <input
   aria-describedby="provided-heading"
-  id="sM_gdUA"
+  id="sM_gdTA"
 />
 <label
   for="given"
@@ -393,12 +393,12 @@ for (const input of document.querySelectorAll(
 UPDATE: #provided-heading[id] "sM_A" => "provided-heading"
 REMOVE: #sM_B + label
 REMOVE: #sM_B + #provided-b
-INSERT: #sM_gcUA + :is(label, #sM_gdUA)
-UPDATE: #sM_gcUA[aria-describedby] "sM_A" => "provided-heading"
-UPDATE: label:nth-of-type(3)[for] null => "sM_gdUA"
+INSERT: #sM_gcTA + :is(label, #sM_gdTA)
+UPDATE: #sM_gcTA[aria-describedby] "sM_A" => "provided-heading"
+UPDATE: label:nth-of-type(3)[for] null => "sM_gdTA"
 UPDATE: label:nth-of-type(3)::text " " => "d"
-UPDATE: #sM_gdUA[id] null => "sM_gdUA"
-UPDATE: #sM_gdUA[aria-describedby] null => "provided-heading"
+UPDATE: #sM_gdTA[id] null => "sM_gdTA"
+UPDATE: #sM_gdTA[aria-describedby] null => "provided-heading"
 ```
 
 # Update

@@ -4,3 +4,12 @@ const $c = _let(8, ($scope) => $dynamicTag($scope, $scope.i));
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$c($scope, void 0);
 }));
+
+// template.marko
+const $card_content__input_label = /*@__PURE__*/ _closure_get_patch("a0", 5, ($scope) => _text($scope.b, $scope._._.e), ($scope) => $scope._._, "a5", 0);
+const $card_content__setup = ($scope) => {
+	$card_content__input_label($scope);
+	$card_content__row_id($scope);
+};
+const $card_content__row_id = /*@__PURE__*/ _closure_get_patch("a1", 6, ($scope) => _text($scope.a, $scope._.e), 0, "a3", 0);
+const $card_content = _content$1("a2", "<em><!> <!></em>", "D%c%", $card_content__setup);

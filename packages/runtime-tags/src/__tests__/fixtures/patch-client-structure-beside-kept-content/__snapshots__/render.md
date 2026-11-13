@@ -43,9 +43,9 @@
 ```
 ## Change
 ```
-UPDATE: em::text "a" => "b"
 UPDATE: span:nth-of-type(2)::text "t1" => "t2"
 UPDATE: span:nth-of-type(3)::text "t1" => "t2"
+UPDATE: em::text "a" => "b"
 UPDATE: span:nth-of-type(1)::text "t1" => "t2"
 ```
 

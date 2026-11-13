@@ -15,11 +15,11 @@ var template_default = _template("a", (input) => {
 	$fg__input_title && _patch_write($scope0_id, "xf", input.title, !$sg__input_title);
 	const key = input.key;
 	const o = {
-		[key]: _bind_resume((s) => s + ":" + input.title, "a0", $scope0_id, 1),
+		[key]: _bind_resume((s) => s + ":" + input.title, "a0", $scope0_id),
 		key: input.title
 	};
-	const [first] = [...input.pre, _bind_resume((s) => s + "=" + input.title, "a1", $scope0_id, 1)];
-	const tag = _bind_resume((s) => s + "#" + input.title, "a2", $scope0_id, 1);
+	const [first] = [...input.pre, _bind_resume((s) => s + "=" + input.title, "a1", $scope0_id)];
+	const tag = _bind_resume((s) => s + "#" + input.title, "a2", $scope0_id);
 	let show = true;
 	_html("<main>");
 	_if(() => {

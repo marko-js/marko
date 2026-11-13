@@ -2,8 +2,16 @@
 <script>
   WALKER_RUNTIME("M")("_").patchBuild = "b";
   M._.r = [_ => [1, {
+    input_p: (p => p = new Promise((f, r) => _.a = {
+      f,
+      r(e) {
+        p.catch(_ => 0);
+        r(e)
+      }
+    }))(),
+    input_label: "a",
     "ClosureScopes:input_label/9": new Set,
     "ClosureScopes:input_p/8": new Set
-  }]];
+  }], _ => (_.a.f("x"), 0)];
   M._.w()
 </script>

@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !$sg__input_title);
 	const fn = _bind_resume(() => {
 		document.getElementById("out").textContent = "v:" + input.title;
-	}, "__tests__/template.marko_0/fn", $scope0_id, 1);
+	}, "__tests__/template.marko_0/fn", $scope0_id);
 	_html("<output id=out></output>");
 	_dynamic_tag($scope0_id, "#text/0", input.alt || reader_default, { fn }, 1, 0, 0, $wg__input_title__OR__input_alt, $scope0_reason, 0);
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_alt#4_fn#5/setup", (($fg__input_alt ? " input_alt" : "") + ($fg__input_title ? " fn" : "") + ($fg__input_title ? " input_title" : "")).slice(1), $scope0_reason, 0);

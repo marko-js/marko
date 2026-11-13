@@ -2,6 +2,26 @@
 ```html
 <div>
   <label
+    for="sM_0TA"
+  >
+    body
+  </label>
+  <input
+    id="sM_0TA"
+  />
+</div>
+<div>
+  <label
+    for="sM_1TA"
+  >
+    body
+  </label>
+  <input
+    id="sM_1TA"
+  />
+</div>
+<section>
+  <label
     for="sM_0UA"
   >
     body
@@ -9,8 +29,8 @@
   <input
     id="sM_0UA"
   />
-</div>
-<div>
+</section>
+<section>
   <label
     for="sM_1UA"
   >
@@ -18,26 +38,6 @@
   </label>
   <input
     id="sM_1UA"
-  />
-</div>
-<section>
-  <label
-    for="sM_0VA"
-  >
-    body
-  </label>
-  <input
-    id="sM_0VA"
-  />
-</section>
-<section>
-  <label
-    for="sM_1VA"
-  >
-    body
-  </label>
-  <input
-    id="sM_1VA"
   />
 </section>
 ```
@@ -80,22 +80,22 @@ for (const input of document.querySelectorAll(
 ```html
 <div>
   <label
+    for="sM_0TA"
+  >
+    body
+  </label>
+  <input
+    id="sM_0TA"
+  />
+</div>
+<section>
+  <label
     for="sM_0UA"
   >
     body
   </label>
   <input
     id="sM_0UA"
-  />
-</div>
-<section>
-  <label
-    for="sM_0VA"
-  >
-    body
-  </label>
-  <input
-    id="sM_0VA"
   />
 </section>
 ```

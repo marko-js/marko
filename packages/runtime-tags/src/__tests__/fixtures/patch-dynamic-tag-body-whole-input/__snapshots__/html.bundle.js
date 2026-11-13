@@ -61,7 +61,7 @@ var template_default = _template("a", (input) => {
 		_html(`<em>${_text_mark($scope1_id, "a", input.note, 1, $scope0_reason, 1)}</em>`);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a1", $cg__input_note);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), $cg__input_note && "a1");
-	}, $scope0_id, ($scope) => $scope0_page ? [{ d: input.note }] : [], 1) };
+	}, $scope0_id, ($scope) => $scope0_page ? [{ d: input.note }] : []) };
 	_html("<main>");
 	_dynamic_tag($scope0_id, "a", input.on ? card_default : plain_default, { header: H }, 1, 0, 0, $wg__input_on, $scope0_reason, 2, 0, void 0, 0, 0, "a0");
 	_html("</main>");

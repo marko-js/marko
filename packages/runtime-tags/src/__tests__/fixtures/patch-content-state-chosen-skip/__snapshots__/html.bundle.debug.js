@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<em>one ${_text_mark($scope1_id, "#text/0", input.b, $wg__input_b * 2)}${_escape(rendering())}</em>`);
 		$cg__input_b && _patch_render($scope1_id, "__tests__/template.marko_1_input_b#0:6/subscribe");
 		_subscribe($wi__input_b && $input_b__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "14:2"), $cg__input_b && "__tests__/template.marko_1_input_b#0:6/subscribe", $wg__input_b);
-	}, $scope0_id, void 0, 1) };
+	}, $scope0_id) };
 	const two = { content: _content_resume("__tests__/template.marko_2*content", () => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: _scope_with_id($scope0_id),
 			"ClosureSignalIndex:input_b/14": $wi__input_b && 1
 		}, "__tests__/template.marko", "17:2"), $cg__input_b && "__tests__/template.marko_2_input_b#0:6/subscribe", $wg__input_b);
-	}, $scope0_id, void 0, 1) };
+	}, $scope0_id) };
 	_html("<section>");
 	_attr_content("#section/1", $scope0_id, mode ? one : two, 0);
 	const attrs = {

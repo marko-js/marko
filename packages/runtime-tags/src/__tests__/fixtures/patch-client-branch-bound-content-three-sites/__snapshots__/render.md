@@ -26,6 +26,15 @@
 ## Change
 ```
 INSERT: section
+INSERT: section > button + span
+INSERT: section > span:nth-of-type(1) > b
+INSERT: section > span:nth-of-type(1) + span
+INSERT: section > span:nth-of-type(2) > b
+INSERT: section > span:nth-of-type(2) + span
+INSERT: section > span:nth-of-type(3) > b
+UPDATE: section > span:nth-of-type(1) > b::text " " => "b"
+UPDATE: section > span:nth-of-type(2) > b::text " " => "b"
+UPDATE: section > span:nth-of-type(3) > b::text " " => "b"
 ```
 
 # Update
@@ -67,14 +76,14 @@ LOG "inner" "b"
 INSERT: section > button + i
 REMOVE: section > i:nth-of-type(1) + span
 INSERT: section > i:nth-of-type(1) > b
-UPDATE: section > i:nth-of-type(1) > b::text " " => "c"
 INSERT: section > i:nth-of-type(1) + i
 REMOVE: section > i:nth-of-type(2) + span
 INSERT: section > i:nth-of-type(2) > b
-UPDATE: section > i:nth-of-type(2) > b::text " " => "c"
 INSERT: section > i:nth-of-type(2) + i
 REMOVE: section > i:nth-of-type(3) + span
 INSERT: section > i:nth-of-type(3) > b
+UPDATE: section > i:nth-of-type(1) > b::text " " => "c"
+UPDATE: section > i:nth-of-type(2) > b::text " " => "c"
 UPDATE: section > i:nth-of-type(3) > b::text " " => "c"
 ```
 

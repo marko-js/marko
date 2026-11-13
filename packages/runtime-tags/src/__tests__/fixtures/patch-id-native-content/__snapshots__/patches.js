@@ -5,6 +5,23 @@
     Ca: "^^a0",
     cAa: {
       s: {
+        aa$for: "sM_0TA",
+        ab$id: "sM_0TA"
+      }
+    }
+  }, {
+    Ca: "^^a0",
+    cAa: {
+      s: {
+        aa$for: "sM_1TA",
+        ab$id: "sM_1TA"
+      }
+    }
+  }, "a1"],
+  lb: [{
+    Ca: "^^a0",
+    cAa: {
+      s: {
         aa$for: "sM_0UA",
         ab$id: "sM_0UA"
       }
@@ -17,23 +34,6 @@
         ab$id: "sM_1UA"
       }
     }
-  }, "a1"],
-  lb: [{
-    Ca: "^^a0",
-    cAa: {
-      s: {
-        aa$for: "sM_0VA",
-        ab$id: "sM_0VA"
-      }
-    }
-  }, {
-    Ca: "^^a0",
-    cAa: {
-      s: {
-        aa$for: "sM_1VA",
-        ab$id: "sM_1VA"
-      }
-    }
   }, "a2"]
 }
 ;CQ4
@@ -44,8 +44,8 @@
     Ca: "^^a0",
     cAa: {
       s: {
-        aa$for: "sM_0UA",
-        ab$id: "sM_0UA"
+        aa$for: "sM_0TA",
+        ab$id: "sM_0TA"
       }
     }
   }, "a1"],
@@ -53,8 +53,8 @@
     Ca: "^^a0",
     cAa: {
       s: {
-        aa$for: "sM_0VA",
-        ab$id: "sM_0VA"
+        aa$for: "sM_0UA",
+        ab$id: "sM_0UA"
       }
     }
   }, "a2"]

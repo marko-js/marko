@@ -23,12 +23,12 @@ var template_default = _template("a", (input) => {
 		flag = 1;
 		const m = document.querySelector("main");
 		m.dataset.a = String(+(m.dataset.a || 0) + 1);
-	}, "a0", $scope0_id, 1);
+	}, "a0", $scope0_id);
 	const fb = _resume(function() {
 		flag = 2;
 		const m = document.querySelector("main");
 		m.dataset.b = String(+(m.dataset.b || 0) + 1);
-	}, "a1", $scope0_id, 1);
+	}, "a1", $scope0_id);
 	_html("<main>");
 	_if(() => {
 		if (input.show) {

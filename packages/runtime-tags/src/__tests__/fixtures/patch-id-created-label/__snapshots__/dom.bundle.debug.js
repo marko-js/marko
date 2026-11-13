@@ -22,7 +22,7 @@ const $card_content__setup = ($scope) => {
 	_text($scope["#text/2"], $scope._["#LoopKey"]);
 	$card_content__uid($scope, _id($scope));
 };
-const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_6*content", "<input><label> </label>", " b D ", $card_content__setup);
+const $card_content = _content("__tests__/template.marko_6*content", "<input><label> </label>", " b D ", $card_content__setup);
 const $for_content2__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $card_content($scope));

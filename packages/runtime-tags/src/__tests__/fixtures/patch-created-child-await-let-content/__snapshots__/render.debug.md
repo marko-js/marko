@@ -12,6 +12,7 @@
 ## Change
 ```
 INSERT: button, em
+UPDATE: em::text@7 "" => "b"
 ```
 
 # Update `{"show":true,"label":"c"}`
@@ -25,7 +26,6 @@ INSERT: button, em
 ```
 ## Change
 ```
-UPDATE: em::text@7 "b" => "c"
 REMOVE: button
 REMOVE: button + em
 INSERT: button, em

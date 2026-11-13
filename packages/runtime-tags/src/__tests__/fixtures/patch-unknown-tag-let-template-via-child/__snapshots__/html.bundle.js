@@ -22,7 +22,7 @@ var frame_default = _template("b", (input) => {
 	_scope($scope0_id, {
 		f: input.label,
 		g: _write_if($scope0_reason, 1) && T
-	}) || (_client_branch(input.item), $fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)));
+	}) || $fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1));
 });
 
 // tags/host.marko

@@ -23,7 +23,6 @@ var toggle_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a0: "a0",
 	a: "a !a2;D%b D ;<main><!><button class=count> </button></main>",
 	a1: `a1${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });

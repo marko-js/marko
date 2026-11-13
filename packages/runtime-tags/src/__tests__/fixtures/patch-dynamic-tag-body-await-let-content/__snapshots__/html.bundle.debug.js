@@ -58,7 +58,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			c: "3:8"
 		}), $cg__input_content && "__tests__/tags/card.marko_1_input_content#0:4/subscribe");
 	}, 1, "__tests__/tags/card.marko_1*content", _unfilled_if($scope0_reason, 0), 1);
-	_scope($scope0_id, { "ClosureScopes:input_content/5": _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_content__closures }, "__tests__/tags/card.marko", 0) || _client_branch(input.content);
+	_scope($scope0_id, { "ClosureScopes:input_content/5": _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_content__closures }, "__tests__/tags/card.marko", 0);
 });
 
 // template.marko

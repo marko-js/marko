@@ -21,6 +21,12 @@
 ## Change
 ```
 INSERT: section
+INSERT: section > button + span
+INSERT: section > span:nth-of-type(1) > b
+INSERT: section > span:nth-of-type(1) + span
+INSERT: section > span:nth-of-type(2) > b
+UPDATE: section > span:nth-of-type(1) > b::text " " => "b"
+UPDATE: section > span:nth-of-type(2) > b::text " " => "b"
 ```
 
 # Update `{"show":true,"label":"c","tag":"i"}`

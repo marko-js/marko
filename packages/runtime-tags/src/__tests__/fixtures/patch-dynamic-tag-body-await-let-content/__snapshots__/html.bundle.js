@@ -46,7 +46,7 @@ var card_default = _template("b", (input) => {
 			d: _write_if($scope0_reason, 0) && c
 		}), $cg__input_content && "b0");
 	}, 1, "b3", _unfilled_if($scope0_reason, 0), 1);
-	_scope($scope0_id, { f: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_content__closures }) || _client_branch(input.content);
+	_scope($scope0_id, { f: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_content__closures });
 });
 
 // template.marko

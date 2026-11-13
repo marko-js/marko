@@ -7,7 +7,7 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 }));
 
 // template.marko
-const $if_content__input_label = /*@__PURE__*/ _closure_get_patch("a0", 7, ($scope) => _text($scope.a, $scope._._.d), ($scope) => $scope._._, "a5", 1);
+const $if_content__input_label = /*@__PURE__*/ _closure_get_patch("a0", 7, ($scope) => _text($scope.a, $scope._._.d), ($scope) => $scope._._, "a4", 1);
 const $Body_content__if = /*@__PURE__*/ _if(0, "<em> </em>", "D ", $if_content__input_label);
-const $Body_content__input_label = /*@__PURE__*/ _closure_get_patch("a4", 7, ($scope) => $Body_content__if($scope, $scope._.d !== "x" ? 0 : 1), 0, "a5", 0);
-const $Body_content = _content$1("a2", "<!><!><!>", "b%", $Body_content__input_label);
+const $Body_content__input_label = /*@__PURE__*/ _closure_get_patch("a2", 7, ($scope) => $Body_content__if($scope, $scope._.d !== "x" ? 0 : 1), 0, "a4", 0);
+const $Body_content = _content$1("a1", "<!><!><!>", "b%", $Body_content__input_label);

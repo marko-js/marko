@@ -23,6 +23,14 @@
 ## Change
 ```
 INSERT: section
+INSERT: section > button + span
+INSERT: section > span:nth-of-type(1) + span
+INSERT: section > span:nth-of-type(2) + span
+INSERT: section > span:nth-of-type(3) + span
+UPDATE: section > span:nth-of-type(1)::text " " => "x"
+UPDATE: section > span:nth-of-type(2)::text " " => "y"
+UPDATE: section > span:nth-of-type(3)::text " " => "x"
+UPDATE: section > span:nth-of-type(4)::text " " => "y"
 ```
 
 # Update
@@ -62,15 +70,15 @@ LOG "y" "b"
 ```
 INSERT: section > button + i
 REMOVE: section > i:nth-of-type(1) + span
-UPDATE: section > i:nth-of-type(1)::text " " => "x"
 INSERT: section > i:nth-of-type(1) + i
 REMOVE: section > i:nth-of-type(2) + span
-UPDATE: section > i:nth-of-type(2)::text " " => "y"
 INSERT: section > i:nth-of-type(2) + i
 REMOVE: section > i:nth-of-type(3) + span
-UPDATE: section > i:nth-of-type(3)::text " " => "x"
 INSERT: section > i:nth-of-type(3) + i
 REMOVE: section > i:nth-of-type(4) + span
+UPDATE: section > i:nth-of-type(1)::text " " => "x"
+UPDATE: section > i:nth-of-type(2)::text " " => "y"
+UPDATE: section > i:nth-of-type(3)::text " " => "x"
 UPDATE: section > i:nth-of-type(4)::text " " => "y"
 ```
 

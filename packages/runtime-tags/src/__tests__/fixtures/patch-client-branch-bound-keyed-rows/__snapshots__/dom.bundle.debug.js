@@ -30,7 +30,7 @@ const $Inner_content__setup = ($scope) => {
 const $Inner_content__r_label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_3_r_label#1:3/subscribe", "r_label/8", ($scope) => _text($scope["#text/1"], $scope._._.r_label), ($scope) => $scope._._, "__tests__/template.marko_1_r_label#3/subscribers", 1);
 const $Inner_content = _content("__tests__/template.marko_3*content", "<b><!><!></b>", " D%b%", $Inner_content__setup);
 const $card_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $card_content__input_tag__OR__Inner = /*@__PURE__*/ _or_patch("__tests__/template.marko_2_input_tag#0:5_Inner#3/setup", 4, ($scope) => $card_content__dynamicTag($scope, $scope._._.input_tag, ($_) => ({ content: $scope.Inner })));
+const $card_content__input_tag__OR__Inner = /*@__PURE__*/ _or(4, ($scope) => $card_content__dynamicTag($scope, $scope._._.input_tag, ($_) => ({ content: $scope.Inner })));
 const $card_content__dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/1", $inputtag_content);
 const $card_content__input_tag__OR__r_label = /*@__PURE__*/ _or_patch("__tests__/template.marko_2_input_tag#0:5_r_label#1:3/setup", 2, ($scope) => $card_content__dynamicTag2($scope, $scope._._.input_tag, ($_) => ({ onClick: $onClick($scope) })));
 const $card_content__input_tag = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_input_tag#0:5/subscribe", "input_tag/7", ($scope) => {
@@ -43,8 +43,8 @@ const $card_content__setup = ($scope) => {
 	$card_content__r_label($scope);
 	$card_content__Inner($scope, { content: $Inner_content($scope) });
 };
-const $card_content__r_label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_r_label#1:3/subscribe", "r_label/8", $card_content__input_tag__OR__r_label);
-const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!><!><!><!>", "b%b%", $card_content__setup);
+const $card_content__r_label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_r_label#1:3/subscribe", "r_label/8", $card_content__input_tag__OR__r_label, 0, "__tests__/template.marko_1_r_label#3/subscribers", 0);
+const $card_content = _content("__tests__/template.marko_2*content", "<!><!><!><!>", "b%b%", $card_content__setup);
 const $for_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $card_content($scope));

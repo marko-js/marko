@@ -14,12 +14,12 @@ var template_default = _template("a", (input) => {
 		_scope_id();
 		_scope_reason();
 		_html("a");
-	}, $scope0_id, void 0, 1) };
+	}, $scope0_id) };
 	const B = { content: _content_resume("a1", () => {
 		_scope_id();
 		_scope_reason();
 		_html("b");
-	}, $scope0_id, void 0, 1) };
+	}, $scope0_id) };
 	const Wrap = { content: _content("a2", ({ n, content }) => {
 		const $scope1_id = _scope_id(), $ui__input_t = _unfilled_if($scope0_reason, 0);
 		const $scope1_reason = _scope_reason(), $uf__content = _updates_from($scope1_reason, 1), $fg__content = _filled_guard($scope1_reason, 1);

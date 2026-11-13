@@ -17,6 +17,8 @@
 ## Change
 ```
 INSERT: section
+INSERT: section > button + span
+INSERT: section > span:nth-of-type(1) + span
 ```
 
 # Update

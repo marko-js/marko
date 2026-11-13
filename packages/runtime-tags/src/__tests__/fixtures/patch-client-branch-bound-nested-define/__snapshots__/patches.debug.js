@@ -1,32 +1,11 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-bound-nested-define/template.marko_2*content|2;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-bound-nested-define/template.marko_1*shell !#childScope/0>packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-bound-nested-define/tags/card.marko_0;/D b%l&;<section><button>clear</button><!></section>`]
+`packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-bound-nested-define/template.marko_1*shell !#childScope/0>packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-bound-nested-define/tags/card.marko_0;/D b%l&;<section><button>clear</button><!></section>`
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
         "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-bound-nested-define/template.marko_2*content"
-      },
-      "PatchClientBranch:#text/1": [{
-        "PatchDynamicTag:#text/0": [">span", 0, {
-          content: {
-            content: _(["BranchScopes:#text/0", "#childScope/0", "BranchScopes:#text/1"], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-bound-nested-define/template.marko_3*content", 1)
-          }
-        }],
-        "PatchChild:BranchScopes:#text/0": {
-          "PatchChild:BranchScopes:#span/0": {
-            "PatchDynamicTag:#text/0": [">span", 0, {
-              content: {
-                content: _(["BranchScopes:#text/0", "#childScope/0", "BranchScopes:#text/1", "BranchScopes:#text/0", "BranchScopes:#span/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-bound-nested-define/template.marko_4*content", 1)
-              }
-            }],
-            "PatchChild:BranchScopes:#text/0": {
-              "PatchChild:BranchScopes:#span/0": {
-                "PatchText:#text/1": "b"
-              }
-            }
-          }
-        }
-      }, "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-bound-nested-define/template.marko_2*content"]
+      }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-bound-nested-define/template.marko_1*shell"],
   "PatchMarkedWrite:input_label": "b",
@@ -34,36 +13,15 @@
   "PatchMarkedWrite:input_tag": "span",
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-bound-nested-define/template.marko_0_input_tag#5/subscribers": "input_tag"
 }
-;DQw
+;BgI
 
-// PATCH holding DQw
+// PATCH holding BgI
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
         "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-bound-nested-define/template.marko_2*content"
-      },
-      "PatchClientBranch:#text/1": [{
-        "PatchDynamicTag:#text/0": [">i", 0, {
-          content: {
-            content: _(["BranchScopes:#text/0", "#childScope/0", "BranchScopes:#text/1"], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-bound-nested-define/template.marko_3*content", 1)
-          }
-        }],
-        "PatchChild:BranchScopes:#text/0": {
-          "PatchChild:BranchScopes:#i/0": {
-            "PatchDynamicTag:#text/0": [">i", 0, {
-              content: {
-                content: _(["BranchScopes:#text/0", "#childScope/0", "BranchScopes:#text/1", "BranchScopes:#text/0", "BranchScopes:#i/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-bound-nested-define/template.marko_4*content", 1)
-              }
-            }],
-            "PatchChild:BranchScopes:#text/0": {
-              "PatchChild:BranchScopes:#i/0": {
-                "PatchText:#text/1": "c"
-              }
-            }
-          }
-        }
-      }, "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-bound-nested-define/template.marko_2*content"]
+      }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-bound-nested-define/template.marko_1*shell"],
   "PatchMarkedWrite:input_label": "c",

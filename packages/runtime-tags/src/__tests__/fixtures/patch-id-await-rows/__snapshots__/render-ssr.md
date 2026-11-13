@@ -1,50 +1,50 @@
 # Render `{"items":[{"promise":{"value":"a"}},{"promise":{"value":"b"}}]}`
 ```html
 <label
-  for="sM_0UA"
+  for="sM_0TA"
 >
   before
 </label>
 <input
-  id="sM_0UA"
+  id="sM_0TA"
 />
 ```
 
 # Update
 ```html
 <label
-  for="sM_0UA"
+  for="sM_0TA"
 >
   before
+</label>
+<input
+  id="sM_0TA"
+/>
+<label
+  for="sM_0UA"
+>
+  a
 </label>
 <input
   id="sM_0UA"
 />
 <label
-  for="sM_0VA"
->
-  a
-</label>
-<input
-  id="sM_0VA"
-/>
-<label
-  for="sM_1UA"
+  for="sM_1TA"
 >
   before
 </label>
 <input
-  id="sM_1UA"
+  id="sM_1TA"
 />
 ```
 ## Change
 ```
-INSERT: #sM_0UA + label
+INSERT: #sM_0TA + label
 INSERT: label:nth-of-type(2)::text("a")
-INSERT: label:nth-of-type(2) + #sM_0VA
-INSERT: #sM_0VA + label
+INSERT: label:nth-of-type(2) + #sM_0UA
+INSERT: #sM_0UA + label
 INSERT: label:nth-of-type(3)::text("before")
-INSERT: label:nth-of-type(3) + #sM_1UA
+INSERT: label:nth-of-type(3) + #sM_1TA
 ```
 
 # Update
@@ -61,88 +61,88 @@ assert(ids.size > 0);
 # Update
 ```html
 <label
-  for="sM_0UA"
+  for="sM_0TA"
 >
   before
+</label>
+<input
+  id="sM_0TA"
+/>
+<label
+  for="sM_0UA"
+>
+  a
 </label>
 <input
   id="sM_0UA"
 />
 <label
-  for="sM_0VA"
->
-  a
-</label>
-<input
-  id="sM_0VA"
-/>
-<label
-  for="sM_1UA"
+  for="sM_1TA"
 >
   before
 </label>
 <input
-  id="sM_1UA"
+  id="sM_1TA"
 />
 <label
-  for="sM_1VA"
+  for="sM_1UA"
 >
   b
 </label>
 <input
-  id="sM_1VA"
+  id="sM_1UA"
 />
 ```
 ## Change
 ```
-INSERT: #sM_1UA + label
+INSERT: #sM_1TA + label
 INSERT: label:nth-of-type(4)::text("b")
-INSERT: label:nth-of-type(4) + #sM_1VA
+INSERT: label:nth-of-type(4) + #sM_1UA
 ```
 
 # Update `{"items":[{"promise":{"value":"b"}},{"promise":{"value":"c"}}]}`
 ```html
 <label
-  for="sM_0UA"
+  for="sM_0TA"
 >
   before
+</label>
+<input
+  id="sM_0TA"
+/>
+<label
+  for="sM_0UA"
+>
+  b
 </label>
 <input
   id="sM_0UA"
 />
 <label
-  for="sM_0VA"
->
-  b
-</label>
-<input
-  id="sM_0VA"
-/>
-<label
-  for="sM_1UA"
+  for="sM_1TA"
 >
   before
 </label>
 <input
-  id="sM_1UA"
+  id="sM_1TA"
 />
 <label
-  for="sM_1VA"
+  for="sM_1UA"
 >
   c
 </label>
 <input
-  id="sM_1VA"
+  id="sM_1UA"
 />
 ```
 ## Change
 ```
-REMOVE: #sM_0UA + label
-REMOVE: label:nth-of-type(2) + #sM_0VA
-REMOVE: #sM_1UA + label
-REMOVE: label:nth-of-type(4) + #sM_1VA
-INSERT: #sM_0UA + :is(label, #sM_0VA)
-INSERT: #sM_1UA + :is(label, #sM_1VA)
+REMOVE: #sM_0TA + label
+REMOVE: label:nth-of-type(2) + #sM_0UA
+REMOVE: #sM_1TA + label
+REMOVE: label:nth-of-type(4) + #sM_1UA
+INSERT: #sM_0TA + :is(label, #sM_0UA)
+INSERT: #sM_1TA + :is(label, #sM_1UA)
 ```
 
 # Update

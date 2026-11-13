@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_prefix && _patch_write($scope0_id, "xe", input.prefix, !$sg__input_prefix);
 	const onChange = _bind_resume((next) => {
 		document.querySelector("output").textContent = input.prefix + next;
-	}, "a0", $scope0_id, 1);
+	}, "a0", $scope0_id);
 	let open = false;
 	_html("<main>");
 	_if(() => {}, $scope0_id, "a", 1, 1, 0, 0, 1);

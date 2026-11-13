@@ -6,7 +6,7 @@ var child_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_title = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	$fg__input_title && _patch_write($scope0_id, "xd", input.title, !_server_guard($scope0_reason, 0));
-	const handler = _bind_resume((event) => event.target.dataset.seen = input.title, "a0", $scope0_id, 1);
+	const handler = _bind_resume((event) => event.target.dataset.seen = input.title, "a0", $scope0_id);
 	const attrs = {
 		title: input.title,
 		onClick: handler

@@ -35,7 +35,7 @@ var card_default = _template("b", (input) => {
 	_scope($scope0_id, {
 		e: input.p,
 		f: _write_if($scope0_reason, 1) && c
-	}) || (_client_branch(input.content), $fg__input_p && _patch_write($scope0_id, "xe", input.p, !_server_guard($scope0_reason, 1)));
+	}) || $fg__input_p && _patch_write($scope0_id, "xe", input.p, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

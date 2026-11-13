@@ -34,12 +34,11 @@ const $template$1 = /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$2);
 const $walks$1 = /*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$2);
 const $setup$1 = _shell_setup([[], []], ["#childScope/1>", $setup$2]);
 _shells({
-	"__tests__/tags/level.marko_2*content": "__tests__/tags/level.marko_2*content",
 	"__tests__/tags/level.marko": `__tests__/tags/level.marko${_shell_marker($setup$1)};${((_w0) => `b%b/${_w0}&b`)($walks$2)};${((_w0) => `<!><!>${_w0}<!>`)($template$2)}`,
 	"__tests__/tags/level.marko_1*shell": `__tests__/tags/level.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks$1)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1)}`
 });
 const $content = (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_n = _write_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_n = _write_guard($scope0_reason, 0), $wg__input_label = _write_guard($scope0_reason, 1), $cg__input_n = _client_guard($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $wi__input_n = _write_if($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_n__closures = new Set();
 	const $input_label__closures = new Set();
@@ -54,11 +53,11 @@ const $content = (input) => {
 				content: _content_resume("__tests__/tags/level.marko_2*content", () => {
 					const $scope2_reason = _scope_reason();
 					const $scope2_id = _scope_id();
-					_html(`<em>${_text_mark($scope2_id, "#text/0", input.n, 1, $scope0_reason, 0)}:${_text_mark($scope2_id, "#text/1", input.label, 2, $scope0_reason, 1)}</em>`);
-					_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "__tests__/tags/level.marko_2_input_n#0:4/subscribe", $cg__input_n);
-					_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "__tests__/tags/level.marko_2_input_label#0:5/subscribe", $cg__input_label);
-					_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/level.marko", "2:4"), $cg__input_n && "__tests__/tags/level.marko_2_input_n#0:4/subscribe"), $cg__input_label && "__tests__/tags/level.marko_2_input_label#0:5/subscribe");
-				}, $scope1_id, void 0, 1)
+					_html(`<em>${_text_mark($scope2_id, "#text/0", input.n, $wg__input_n)}:${_text_mark($scope2_id, "#text/1", input.label, $wg__input_label * 2)}</em>`);
+					$cg__input_n && _patch_render($scope2_id, "__tests__/tags/level.marko_2_input_n#0:4/subscribe");
+					$cg__input_label && _patch_render($scope2_id, "__tests__/tags/level.marko_2_input_label#0:5/subscribe");
+					_subscribe($wi__input_label && $input_label__closures, _subscribe($wi__input_n && $input_n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/level.marko", "2:4"), $cg__input_n && "__tests__/tags/level.marko_2_input_n#0:4/subscribe", $wg__input_n || $wg__input_label), $cg__input_label && "__tests__/tags/level.marko_2_input_label#0:5/subscribe", $wg__input_n || $wg__input_label);
+				}, $scope1_id)
 			});
 			_patch_child_end();
 			$cg__input_n && _patch_render($scope1_id, "__tests__/tags/level.marko_1_input_n#0:4/setup");
@@ -78,8 +77,8 @@ const $content = (input) => {
 	_scope($scope0_id, {
 		input_n: input.n,
 		input_label: input.label,
-		"ClosureScopes:input_n/7": _write_if($scope0_reason, 0) && $input_n__closures,
-		"ClosureScopes:input_label/8": _write_if($scope0_reason, 1) && $input_label__closures,
+		"ClosureScopes:input_n/7": $wi__input_n && $input_n__closures,
+		"ClosureScopes:input_label/8": $wi__input_label && $input_label__closures,
 		"#childScope/1": _existing_scope($childScope2)
 	}, "__tests__/tags/level.marko", 0, {
 		input_n: ["input.n"],

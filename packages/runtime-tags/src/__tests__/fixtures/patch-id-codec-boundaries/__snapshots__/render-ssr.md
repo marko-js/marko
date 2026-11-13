@@ -553,6 +553,14 @@
   id="sM_E1"
 />
 <label
+  for="sM_TA"
+>
+  field
+</label>
+<input
+  id="sM_TA"
+/>
+<label
   for="sM_UA"
 >
   field
@@ -639,14 +647,6 @@
 </label>
 <input
   id="sM_-3A"
-/>
-<label
-  for="sM_-4A"
->
-  field
-</label>
-<input
-  id="sM_-4A"
 />
 ```
 
@@ -735,6 +735,14 @@ for (const input of document.querySelectorAll("input")) {
   id="sM_PaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaA"
 />
 <label
+  for="sM_TA"
+>
+  field
+</label>
+<input
+  id="sM_TA"
+/>
+<label
   for="sM_UA"
 >
   field
@@ -821,14 +829,6 @@ for (const input of document.querySelectorAll("input")) {
 </label>
 <input
   id="sM_-3A"
-/>
-<label
-  for="sM_-4A"
->
-  field
-</label>
-<input
-  id="sM_-4A"
 />
 ```
 ## Change
@@ -1544,6 +1544,14 @@ for (const input of document.querySelectorAll("input")) {
   id="sM_E1"
 />
 <label
+  for="sM_TA"
+>
+  field
+</label>
+<input
+  id="sM_TA"
+/>
+<label
   for="sM_UA"
 >
   field
@@ -1630,14 +1638,6 @@ for (const input of document.querySelectorAll("input")) {
 </label>
 <input
   id="sM_-3A"
-/>
-<label
-  for="sM_-4A"
->
-  field
-</label>
-<input
-  id="sM_-4A"
 />
 ```
 ## Change

@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		label: x.name,
 		onPick: _resume_locals(function() {
 			picked = x.name;
-		}, "__tests__/template.marko_0/onPick", { "x/6": x }, $scope0_id, 1)
+		}, "__tests__/template.marko_0/onPick", { "x/6": x }, $scope0_id)
 	}));
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	menu_default({ item: $item });

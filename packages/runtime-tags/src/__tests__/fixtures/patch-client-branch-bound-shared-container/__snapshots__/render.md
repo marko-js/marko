@@ -31,6 +31,12 @@
 ## Change
 ```
 INSERT: section
+INSERT: section > section:nth-of-type(1) > button + span
+INSERT: section > section:nth-of-type(1) > span > b
+INSERT: section > section:nth-of-type(2) > button + span
+INSERT: section > section:nth-of-type(2) > span > b
+UPDATE: section > section:nth-of-type(1) > span > b::text " " => "b"
+UPDATE: section > section:nth-of-type(2) > span > b::text " " => "b"
 ```
 
 # Update

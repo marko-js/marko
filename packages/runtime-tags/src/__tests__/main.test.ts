@@ -656,18 +656,21 @@ function testFixtures(interop?: true) {
               const freshFlush = fresh.stream(freshChunks);
               while (freshFlush());
               await fresh.runAsyncScripts();
-              const expected = formatPage(
+              // Ids compare by the nodes sharing them: content the client renders mints its own.
+              const expected = formatClientPage(
                 fresh.window.document,
                 config.compare_defaults,
+                config.runtime_id,
               );
               // Effects the patch re-ran render on the scheduler's next
               // frame turn, as the fresh page's did before its snapshot.
               browser.flush("raf");
               await timers.setImmediate();
               await timers.setImmediate();
-              const actual = formatPage(
+              const actual = formatClientPage(
                 browser.window.document,
                 config.compare_defaults,
+                config.runtime_id,
               );
               if (expected !== actual) {
                 throw new Error(

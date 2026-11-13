@@ -1,12 +1,12 @@
 # Render
 ```html
 <label
-  for="sM_UA"
+  for="sM_TA"
 >
   caught
 </label>
 <input
-  id="sM_UA"
+  id="sM_TA"
 />
 <button>
   +
@@ -33,12 +33,12 @@ document.querySelector("button").click();
 ```
 ```html
 <label
-  for="sM_UA"
+  for="sM_TA"
 >
   caught
 </label>
 <input
-  id="sM_UA"
+  id="sM_TA"
 />
 <button>
   +

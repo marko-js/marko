@@ -32,8 +32,8 @@ function $setup($scope) {
 }
 const $input_show = ($scope, input_show) => $input_show$1($scope["#childScope/0"], input_show);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_label($scope, input.label);
+	$input_show($scope, input.show);
 };
 const $input_label__closure = /*@__PURE__*/ _closure($card_content__input_label);
 const $input_label = /*@__PURE__*/ _const("input_label", $input_label__closure);

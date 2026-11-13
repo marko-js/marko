@@ -36,7 +36,7 @@ var rowsy_default = _template("__tests__/tags/rowsy.marko", (input) => {
 		_html(`<em>${_text_mark($scope1_id, "#text/0", input.label, 1, $scope0_reason, 1)} ${_text_mark($scope1_id, "#text/1", n, 2)}</em>`);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/rowsy.marko_1_input_label#0:5/subscribe", $cg__input_label);
 		_subscribe($n__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/rowsy.marko", "5:2"), $cg__input_label && "__tests__/tags/rowsy.marko_1_input_label#0:5/subscribe"), "__tests__/tags/rowsy.marko_1_n#0:9/subscribe");
-	}, $scope0_id, ($scope) => $scope0_page ? [{ input_label: input.label }] : [], 1) };
+	}, $scope0_id, ($scope) => $scope0_page ? [{ input_label: input.label }] : []) };
 	_html(`<button>${_text_mark($scope0_id, "#text/1", n)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_for_of(input.tags, (tag) => {
 		const $scope2_id = _scope_id(), $fg__input_tags = _filled_guard($scope0_reason, 2);

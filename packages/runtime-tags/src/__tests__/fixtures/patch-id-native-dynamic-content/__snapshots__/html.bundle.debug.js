@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const uid = _id("uid");
 		_html(`<label${_attr("for", uid, $scope1_id, "#label/0", 0, 0)}>body</label>${_el_mark($scope1_id, "#label/0", 0)}<input${_attr("id", uid, $scope1_id, "#input/1", 0, 0)}>${_el_mark($scope1_id, "#input/1", 0)}`);
 		_scope($scope1_id, {}, "__tests__/template.marko", "1:2");
-	}, $scope0_id, void 0, 1) };
+	}, $scope0_id) };
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
 		const Tag = item.on ? "p" : "div";

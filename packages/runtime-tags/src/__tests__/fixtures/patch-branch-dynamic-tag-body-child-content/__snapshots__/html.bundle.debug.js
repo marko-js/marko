@@ -29,13 +29,12 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = [[], []];
 _shells({
-	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content",
 	"__tests__/template.marko_2*content": `__tests__/template.marko_2*content${_shell_marker([[], []], ["#childScope/0>", $setup$1])}`,
 	"__tests__/template.marko": "__tests__/template.marko;b%;<!><!><!>",
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $wg__input_el = _write_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_el = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 2), $cg__input_label = _client_guard($scope0_reason, 2), $wg__input_el = _write_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_el = _filled_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	_if(() => {
@@ -49,9 +48,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				card_default({ content: _content_resume("__tests__/template.marko_3*content", () => {
 					const $scope3_reason = _scope_reason();
 					const $scope3_id = _scope_id();
-					_html(`<em>static ${_text_mark($scope3_id, "#text/0", input.label, 2, $scope0_reason, 2)}</em>`);
-					_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_input_label#0:5/subscribe", $cg__input_label);
-					_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "3:6"), $cg__input_label && "__tests__/template.marko_3_input_label#0:5/subscribe");
+					_html(`<em>static ${_text_mark($scope3_id, "#text/0", input.label, $wg__input_label * 2)}</em>`);
+					$cg__input_label && _patch_render($scope3_id, "__tests__/template.marko_3_input_label#0:5/subscribe");
+					_subscribe($wi__input_label && $input_label__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "3:6"), $cg__input_label && "__tests__/template.marko_3_input_label#0:5/subscribe", $wg__input_label);
 				}, $scope2_id) });
 				_patch_child_end();
 				_scope($scope2_id, {
@@ -68,7 +67,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		input_el: _write_if($scope0_reason, 0) && ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.el,
 		input_label: input.label,
-		"ClosureScopes:input_label/7": _write_if($scope0_reason, 2) && $input_label__closures
+		"ClosureScopes:input_label/7": $wi__input_label && $input_label__closures
 	}, "__tests__/template.marko", 0, {
 		input_el: ["input.el"],
 		input_label: ["input.label"]

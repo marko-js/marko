@@ -1,76 +1,41 @@
 // PATCH
-[`a15|2 !a8;b%b b%b%b/ b&/ b&D l;<!><!><button>own</button><!><!><button>press</button><button>press</button><span> </span>`, `a4`, `a6`, `a7`, `a16 !a>b0;/D b%b%l&;<section><button>clear</button><!><!></section>`]
+`a15 !a>b0;/D b%b%l&;<section><button>clear</button><!><!></section>`
 {
   xd: "b",
-  Sa17: "d",
+  Sa16: "d",
   ba: [{
     ca: {
       s: {
-        fb: "^^a15",
-        fc: "^^a15"
+        fb: "^^a14",
+        fc: "^^a14"
       }
-    },
-    W2: {
-      fa: "^a4",
-      cAa: {
-        ta: "b"
-      },
-      fc: [">span", "a6", {
-        onClick: _._.a2
-      }],
-      fd: [">span", "a7", {
-        onClick: _([], "a0")
-      }],
-      ce: {
-        e: "c0",
-        dd: "^a3"
-      },
-      cf: {
-        e: "c0",
-        dd: "^a1"
-      },
-      tg: "function"
     }
-  }, "a16"],
+  }, "a15"],
   xf: !0,
+  Sa17: "f",
   xg: "span",
-  dh: "a0"
+  Sa18: "g",
+  dh: "a0",
+  Sa19: "h d"
 }
-;ET4
+;CAE
 
-// PATCH holding ET4
+// PATCH holding CAE
 {
   xd: "c",
-  Sa17: "d",
+  Sa16: "d",
   ba: [{
     ca: {
       s: {
-        fb: "^^a15",
-        fc: "^^a15"
+        fb: "^^a14",
+        fc: "^^a14"
       }
-    },
-    W2: {
-      fa: [">b", 0, {
-        x: 1
-      }],
-      fc: [">em", "a6", {
-        onClick: _._.a2
-      }],
-      fd: [">em", "a7", {
-        onClick: _([], "a0")
-      }],
-      ce: {
-        e: "c0",
-        dd: "^a3"
-      },
-      cf: {
-        e: "c0",
-        dd: "^a1"
-      },
-      tg: "function"
     }
-  }, "a16"],
+  }, "a15"],
   xf: !1,
+  Sa17: "f",
   xg: "em",
-  dh: "a0"
+  Sa18: "g",
+  dh: "a0",
+  Sa19: "h d"
 }

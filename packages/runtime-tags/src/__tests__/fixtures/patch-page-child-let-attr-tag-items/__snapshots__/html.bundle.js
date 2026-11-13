@@ -16,7 +16,7 @@ var card_default = _template("b", (input) => {
 	_html("</section>");
 	_script($scope0_id, "b0");
 	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb1", items, 1);
-	_scope($scope0_id, {}) || _client_branch(input.item);
+	_scope($scope0_id, {});
 });
 
 // template.marko

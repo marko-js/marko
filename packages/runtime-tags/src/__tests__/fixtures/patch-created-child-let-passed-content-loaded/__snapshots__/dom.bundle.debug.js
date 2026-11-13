@@ -31,7 +31,7 @@ const $template = "<button> </button><!><!>";
 const $walks = " D l%c";
 const $outer_content__input_label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_input_label#0:6/subscribe", "input_label/8", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_0_input_label#6/subscribers", 0);
 const $outer_content__setup = $outer_content__input_label;
-const $outer_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<em>static <!></em>", "Db%", $outer_content__setup);
+const $outer_content = _content("__tests__/template.marko_2*content", "<em>static <!></em>", "Db%", $outer_content__setup);
 const $if_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $outer_content($scope));
@@ -47,8 +47,8 @@ function $setup($scope) {
 const $if = /*@__PURE__*/ _if("#text/2", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_label($scope, input.label);
+	$input_show($scope, input.show);
 };
 const $input_label__closure = /*@__PURE__*/ _closure($outer_content__input_label);
 const $input_label = /*@__PURE__*/ _const("input_label", $input_label__closure);

@@ -4,20 +4,20 @@
   toggle
 </button>
 <label
-  for="sM_UA"
+  for="sM_TA"
 >
   a
 </label>
 <input
-  id="sM_UA"
+  id="sM_TA"
 />
 <label
-  for="sM_VA"
+  for="sM_UA"
 >
   b
 </label>
 <input
-  id="sM_VA"
+  id="sM_UA"
 />
 <input
   id="sM_A"
@@ -60,9 +60,9 @@ document.querySelector("button").click();
 ## Change
 ```
 REMOVE: button + label
-REMOVE: button + #sM_UA
+REMOVE: button + #sM_TA
 REMOVE: button + label
-REMOVE: button + #sM_VA
+REMOVE: button + #sM_UA
 ```
 
 # Update

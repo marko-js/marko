@@ -4,25 +4,25 @@
   toggle
 </button>
 <label
-  for="sM_UUA"
+  for="sM_TTA"
 >
-  old sM_UUA
+  old sM_TTA
 </label>
 <input
-  id="sM_UUA"
-  title="old sM_UUA"
+  id="sM_TTA"
+  title="old sM_TTA"
 />
 <button>
   toggle
 </button>
 <label
-  for="sM_VUB"
+  for="sM_UTB"
 >
-  old sM_VUB
+  old sM_UTB
 </label>
 <input
-  id="sM_VUB"
-  title="old sM_VUB"
+  id="sM_UTB"
+  title="old sM_UTB"
 />
 ```
 
@@ -45,33 +45,33 @@ assert.equal(ids.size, 2);
   toggle
 </button>
 <label
-  for="sM_UUA"
+  for="sM_TTA"
 >
-  next sM_UUA
+  next sM_TTA
 </label>
 <input
-  id="sM_UUA"
-  title="next sM_UUA"
+  id="sM_TTA"
+  title="next sM_TTA"
 />
 <button>
   toggle
 </button>
 <label
-  for="sM_VUB"
+  for="sM_UTB"
 >
-  next sM_VUB
+  next sM_UTB
 </label>
 <input
-  id="sM_VUB"
-  title="next sM_VUB"
+  id="sM_UTB"
+  title="next sM_UTB"
 />
 ```
 ## Change
 ```
-UPDATE: label:nth-of-type(1)::text "old sM_UUA" => "next sM_UUA"
-UPDATE: #sM_UUA[title] "old sM_UUA" => "next sM_UUA"
-UPDATE: label:nth-of-type(2)::text "old sM_VUB" => "next sM_VUB"
-UPDATE: #sM_VUB[title] "old sM_VUB" => "next sM_VUB"
+UPDATE: label:nth-of-type(1)::text "old sM_TTA" => "next sM_TTA"
+UPDATE: #sM_TTA[title] "old sM_TTA" => "next sM_TTA"
+UPDATE: label:nth-of-type(2)::text "old sM_UTB" => "next sM_UTB"
+UPDATE: #sM_UTB[title] "old sM_UTB" => "next sM_UTB"
 ```
 
 # Update
@@ -102,9 +102,9 @@ for (const button of document.querySelectorAll("button")) button.click();
 ## Change
 ```
 REMOVE: button:nth-of-type(1) + label
-REMOVE: button:nth-of-type(1) + #sM_UUA
+REMOVE: button:nth-of-type(1) + #sM_TTA
 REMOVE: button:nth-of-type(2) + label
-REMOVE: button:nth-of-type(2) + #sM_VUB
+REMOVE: button:nth-of-type(2) + #sM_UTB
 ```
 
 # Update

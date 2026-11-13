@@ -26,9 +26,8 @@ const $if_content__setup = ($scope) => {
 const $Inner_content__input_label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_input_label#0:3/subscribe", "input_label/8", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_0_input_label#3/subscribers", 0);
 const $Inner_content__setup = $Inner_content__input_label;
 const $Inner_content = _content("__tests__/template.marko_2*content", "<b> </b>", "D ", $Inner_content__setup);
-_content_resume($Inner_content);
 const $Body_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $Body_content__input_tag__OR__Inner = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_tag#0:4_Inner#1/setup", 2, ($scope) => $Body_content__dynamicTag($scope, $scope._.input_tag, ($_) => ({ content: $scope.Inner })));
+const $Body_content__input_tag__OR__Inner = /*@__PURE__*/ _or(2, ($scope) => $Body_content__dynamicTag($scope, $scope._.input_tag, ($_) => ({ content: $scope.Inner })));
 const $Body_content__input_tag = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_1_input_tag#0:4/subscribe", "input_tag/9", $Body_content__input_tag__OR__Inner, 0, "__tests__/template.marko_0_input_tag#4/subscribers", 0);
 const $Body_content__Inner = /*@__PURE__*/ _const("Inner", $Body_content__input_tag__OR__Inner);
 const $Body_content__setup = ($scope) => {

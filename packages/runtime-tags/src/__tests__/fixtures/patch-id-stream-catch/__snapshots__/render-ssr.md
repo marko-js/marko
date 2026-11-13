@@ -6,13 +6,13 @@
   Fields
 </h1>
 <label
-  for="sM_UA"
+  for="sM_TA"
 >
   loading
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_UA"
+  id="sM_TA"
 />
 ```
 
@@ -36,24 +36,24 @@ assert(seen.size > 0);
   Fields
 </h1>
 <label
-  for="sM_VA"
+  for="sM_UA"
 >
   initial
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_VA"
+  id="sM_UA"
 />
 ```
 ## Change
 ```
 INSERT: label::text("initial")
-REMOVE: t > label + #sM_UA
+REMOVE: t > label + #sM_TA
 REMOVE: label
-INSERT: label, #sM_WA
-REMOVE: t > label + #sM_WA
+INSERT: label, #sM_VA
+REMOVE: t > label + #sM_VA
 REMOVE: label
-INSERT: #sM_A + :is(label, #sM_VA)
+INSERT: #sM_A + :is(label, #sM_UA)
 ```
 
 # Update `{"promise":{}}`

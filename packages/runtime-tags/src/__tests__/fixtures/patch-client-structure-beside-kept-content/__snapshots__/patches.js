@@ -1,29 +1,26 @@
 // PATCH
 {
-  W1: {
-    ta: "b"
-  },
   ia2: "h",
   ia3: "h",
+  xg: "b",
+  Sa5: "g",
   xh: "t2"
 }
 
 // PATCH
 {
-  W1: {
-    ta: "c"
-  },
   ia2: "h",
   ia3: "h",
+  xg: "c",
+  Sa5: "g",
   xh: "t3"
 }
 
 // PATCH
 {
-  W1: {
-    ta: "d"
-  },
   ia2: "h",
   ia3: "h",
+  xg: "d",
+  Sa5: "g",
   xh: "t4"
 }

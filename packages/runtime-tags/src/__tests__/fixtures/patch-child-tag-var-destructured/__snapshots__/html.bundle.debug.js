@@ -13,7 +13,7 @@ var counter_default = _template("__tests__/tags/counter/index.marko", (input) =>
 		value: count,
 		valueChange: _resume(function(v) {
 			count = v;
-		}, "__tests__/tags/counter/index.marko_0/_return", $scope0_id, 1)
+		}, "__tests__/tags/counter/index.marko_0/_return", $scope0_id)
 	};
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/counter/index.marko_0_count#1/fill", count, 1);
 	_scope($scope0_id, {}, "__tests__/tags/counter/index.marko", 0);

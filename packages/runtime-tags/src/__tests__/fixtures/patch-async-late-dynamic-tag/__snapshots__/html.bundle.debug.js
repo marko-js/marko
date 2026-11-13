@@ -27,14 +27,13 @@ const $template = /*@__PURE__*/ ((_w0) => `<main><!>${_w0}<button>interactive</b
 const $walks = /*@__PURE__*/ ((_w0) => `D%b/${_w0}& l`)(" b");
 const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/1>", $setup$1]);
 _shells({
-	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content;D ;<b> </b>",
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;D ;<em> </em>",
 	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await;D ;<em> </em>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content",
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `D%b/${_w0}& l`)(" b")};${((_w0) => `<main><!>${_w0}<button>interactive</button></main>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_as__OR__input_p = _write_if($scope0_reason, 0), $cg__input_q = _client_guard($scope0_reason, 3), $ui__input_as = _unfilled_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_as__OR__input_p = _write_if($scope0_reason, 0), $wg__input_q = _write_guard($scope0_reason, 3), $wi__input_q = _write_if($scope0_reason, 3), $cg__input_q = _client_guard($scope0_reason, 3), $ui__input_as = _unfilled_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_p__closures = new Set();
 	const $input_q__closures = new Set();
@@ -55,15 +54,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	frame_default({ content: _content_resume("__tests__/template.marko_2*content", () => {
 		const $scope2_reason = _scope_reason();
-		const $scope2_id = _scope_id(), $ui__input_q = _unfilled_if($scope0_reason, 3);
+		const $scope2_id = _scope_id();
 		_await($scope2_id, "#text/0", input.q, (w) => {
 			const $scope4_id = _scope_id();
-			_html(`<b>${_text_mark($scope4_id, "#text/0", w, 1, $scope0_reason, 3)}</b>`);
-			_scope($scope4_id, {}, "__tests__/template.marko", "6:6");
-		}, 1, "__tests__/template.marko_4*content", $ui__input_q && 2);
+			_html(`<b>${_text_mark($scope4_id, "#text/0", w, $wg__input_q)}</b>`);
+			$wi__input_q && _scope($scope4_id, {}, "__tests__/template.marko", "6:6");
+		}, $wg__input_q, void 0, 2);
 		$cg__input_q && _patch_render($scope2_id, "__tests__/template.marko_2_input_q#0:7/subscribe");
-		_subscribe($ui__input_q && $input_q__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"), $cg__input_q && "__tests__/template.marko_2_input_q#0:7/subscribe", 0);
-		_resume_branch($scope2_id);
+		_subscribe($wi__input_q && $input_q__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"), $cg__input_q && "__tests__/template.marko_2_input_q#0:7/subscribe", 0);
+		$wg__input_q && _resume_branch($scope2_id);
 	}, $scope0_id) });
 	_patch_child_end();
 	_html(`<button>interactive</button>${_el_mark($scope0_id, "#button/2")}</main>`);
@@ -72,7 +71,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_p: _write_if($scope0_reason, 1) && ($ui__input_as || _unfilled_if($scope0_reason, 2)) && input.p,
 		input_q: input.q,
 		"ClosureScopes:input_p/8": _write_if($scope0_reason, 2) && $input_p__closures,
-		"ClosureScopes:input_q/9": _write_if($scope0_reason, 3) && $input_q__closures,
+		"ClosureScopes:input_q/9": $wi__input_q && $input_q__closures,
 		"#childScope/1": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {
 		input_p: ["input.p"],

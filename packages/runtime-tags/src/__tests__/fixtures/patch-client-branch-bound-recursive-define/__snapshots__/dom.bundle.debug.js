@@ -32,19 +32,19 @@ const $Inner_content__setup = ($scope) => {
 };
 const $Inner_content__label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_5_label#2:5/subscribe", "label/10", ($scope) => _text($scope["#text/2"], $scope._.label), 0, "__tests__/template.marko_2_label#5/subscribers", 1);
 const $Inner_content = _content("__tests__/template.marko_5*content", "<b><!><!></b>", " D%b%", $Inner_content__setup);
-const $if_content2__n = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_4_n#2:4/subscribe", "n/9", ($scope) => $Tree_content__tag_input_n($scope["#childScope/0"], $scope._._.n - 1), ($scope) => $scope._._);
+const $if_content2__n = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_4_n#2:4/subscribe", "n/9", ($scope) => $Tree_content__tag_input_n($scope["#childScope/0"], $scope._._.n - 1), ($scope) => $scope._._, "__tests__/template.marko_2_n#4/subscribers", 1);
 const $if_content2__setup = ($scope) => {
 	$if_content2__n($scope);
 	$if_content2__label($scope);
 	$if_content2__tag($scope);
 	$Tree_content__setup($scope["#childScope/0"]);
 };
-const $if_content2__label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_4_label#2:5/subscribe", "label/10", ($scope) => $Tree_content__tag_input_label($scope["#childScope/0"], $scope._._.label), ($scope) => $scope._._);
-const $if_content2__tag = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_4_tag#2:6/subscribe", "tag/11", ($scope) => $Tree_content__tag_input_tag($scope["#childScope/0"], $scope._._.tag), ($scope) => $scope._._);
+const $if_content2__label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_4_label#2:5/subscribe", "label/10", ($scope) => $Tree_content__tag_input_label($scope["#childScope/0"], $scope._._.label), ($scope) => $scope._._, "__tests__/template.marko_2_label#5/subscribers", 0);
+const $if_content2__tag = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_4_tag#2:6/subscribe", "tag/11", ($scope) => $Tree_content__tag_input_tag($scope["#childScope/0"], $scope._._.tag), ($scope) => $scope._._, "__tests__/template.marko_2_tag#6/subscribers", 0);
 const $card_content__if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($Tree_content__template), /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($Tree_content__walks), $if_content2__setup);
-const $card_content__n = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_3_n#2:4/subscribe", "n/9", ($scope) => $card_content__if($scope, $scope._.n ? 0 : 1));
+const $card_content__n = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_3_n#2:4/subscribe", "n/9", ($scope) => $card_content__if($scope, $scope._.n ? 0 : 1), 0, "__tests__/template.marko_2_n#4/subscribers", 0);
 const $card_content__setup = $card_content__n;
-const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_3*content", "<!><!><!>", "b%", $card_content__setup);
+const $card_content = _content("__tests__/template.marko_3*content", "<!><!><!>", "b%", $card_content__setup);
 const $Tree_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $Tree_content__tag__OR__Inner = /*@__PURE__*/ _or_patch("__tests__/template.marko_2_tag#6_Inner#7/setup", 8, ($scope) => $Tree_content__dynamicTag($scope, $scope.tag, ($_) => ({ content: $scope.Inner })));
 const $Tree_content__Inner = /*@__PURE__*/ _const("Inner", $Tree_content__tag__OR__Inner);

@@ -5,7 +5,7 @@ function type(d: Document) {
     e.dispatchEvent(new d.defaultView!.Event("input", { bubbles: true }));
   }
 }
-// A change handler ships owner-bound (`bindEntry`): its holes stay in the owner's entry.
+// Content a `<let>` holds passes a change handler: each instance binds its own.
 export const config: TestConfig = {
   patches: true,
   steps: [

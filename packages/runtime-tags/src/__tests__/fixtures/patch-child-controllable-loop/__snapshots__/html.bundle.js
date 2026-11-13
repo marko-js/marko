@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 			show: input.show,
 			onCount: _resume(function(next) {
 				hits = next;
-			}, "a0", $scope1_id, 1)
+			}, "a0", $scope1_id)
 		});
 		_patch_child_end();
 		_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a1");

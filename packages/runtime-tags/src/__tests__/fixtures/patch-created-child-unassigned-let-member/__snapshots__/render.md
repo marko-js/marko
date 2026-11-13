@@ -11,6 +11,7 @@
 ## Change
 ```
 INSERT: section
+UPDATE: section > em::text@7 "" => "b"
 ```
 
 # Update `{"show":true,"label":"c"}`

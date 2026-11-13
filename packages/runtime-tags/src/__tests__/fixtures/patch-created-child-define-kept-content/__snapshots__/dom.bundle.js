@@ -8,3 +8,7 @@ const $c = _let(6, ($scope) => {
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$c($scope, void 0);
 }));
+
+// tags/child.marko
+const $card_content__input_label = /*@__PURE__*/ _closure_get_patch("c0", 4, ($scope) => _text($scope.a, $scope._._.d), ($scope) => $scope._._, "c3", 0);
+const $card_content = _content$1("c1", "<span> </span>", "D ", $card_content__input_label);

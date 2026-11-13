@@ -24,9 +24,9 @@
   "PatchMarkedWrite:input_label": "b",
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let/template.marko_0_input_label#4/subscribers": "input_label"
 }
-;DAM
+;CAM
 
-// PATCH holding DAM
+// PATCH holding CAM
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
@@ -52,7 +52,7 @@
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let/template.marko_0_input_label#4/subscribers": "input_label"
 }
 
-// PATCH holding DAM
+// PATCH holding CAM
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {

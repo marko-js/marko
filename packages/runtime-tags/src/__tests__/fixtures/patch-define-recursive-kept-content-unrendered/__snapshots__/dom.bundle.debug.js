@@ -31,7 +31,7 @@ const $await_content__setup = ($scope) => {
 };
 const $card_content__input_label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_input_label#0:3/subscribe", "input_label/6", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_0_input_label#3/subscribers", 0);
 const $card_content__setup = $card_content__input_label;
-const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<span> </span>", "D ", $card_content__setup);
+const $card_content = _content("__tests__/template.marko_2*content", "<span> </span>", "D ", $card_content__setup);
 const $await_content = /*@__PURE__*/ _await_content("#text/1", /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($Tree_content__template), /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($Tree_content__walks), $await_content__setup);
 const $Tree_content__await_promise = /*@__PURE__*/ _await_promise("#text/1");
 const $Tree_content__input_next = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_1_input_next#0:4/subscribe", "input_next/7", ($scope) => $Tree_content__await_promise($scope, $scope._.input_next), 0, "__tests__/template.marko_0_input_next#4/subscribers", 0);
@@ -44,8 +44,8 @@ const $Tree_content__setup = ($scope) => {
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($Tree_content__template), /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($Tree_content__walks), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_next($scope, input.next);
 	$input_label($scope, input.label);
+	$input_next($scope, input.next);
 	$input_show($scope, input.show);
 };
 const $input_label__closure = /*@__PURE__*/ _closure($card_content__input_label);

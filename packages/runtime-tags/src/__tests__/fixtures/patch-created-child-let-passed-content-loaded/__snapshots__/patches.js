@@ -1,46 +1,40 @@
 // PATCH
-[`a1|2;Db%;<em>static <!></em>`, `a2 !a>b>b0 a>c0;/ b/D b%l&&;<button>drop</button><section><button>clear</button><!></section>`]
+`a2 !a>b>b0 a>c0;/ b/D b%l&&;<button>drop</button><section><button>clear</button><!></section>`
 {
   bc: [{
-    W2: {
-      ta: "b"
-    },
     ca: {
       o: {
-        uc1: "^=a1"
+        uc1: "^a1"
       }
     }
   }, "a2"],
-  xg: "b"
+  xg: "b",
+  Sa4: "g"
 }
-;CwY
+;CAE
 
-// PATCH holding CwY
+// PATCH holding CAE
 {
   bc: [{
-    W2: {
-      ta: "c"
-    },
     ca: {
       o: {
-        uc1: "^=a1"
+        uc1: "^a1"
       }
     }
   }, "a2"],
-  xg: "c"
+  xg: "c",
+  Sa4: "g"
 }
 
-// PATCH holding CwY
+// PATCH holding CAE
 {
   bc: [{
-    W2: {
-      ta: "d"
-    },
     ca: {
       o: {
-        uc1: "^=a1"
+        uc1: "^a1"
       }
     }
   }, "a2"],
-  xg: "d"
+  xg: "d",
+  Sa4: "g"
 }

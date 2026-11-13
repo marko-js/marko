@@ -66,13 +66,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`A${_text_mark($scope1_id, "#text/0", input.x, 2, $scope0_reason, 2)}`);
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_x#0:5/subscribe", $cg__input_x);
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_x__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4"), $cg__input_x && "__tests__/template.marko_1_input_x#0:5/subscribe");
-		}, $scope0_id, void 0, 1) }),
+		}, $scope0_id) }),
 		b: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`B${_text_mark($scope2_id, "#text/0", s, 2)}`);
 			_subscribe($s__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"), "__tests__/template.marko_2_s#0:7/subscribe");
-		}, $scope0_id, void 0, 1) })
+		}, $scope0_id) })
 	});
 	_patch_child_end();
 	_script($scope0_id, "__tests__/template.marko_0");

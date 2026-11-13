@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-created-child-define-kept-content/tags/child.marko_2*content|2;D ;<span> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-created-child-define-kept-content/template.marko_1*shell #childScope/0>#childScope/0>!#childScope/0>#childScope/0>#childScope/0>packages/runtime-tags/src/__tests__/fixtures/patch-created-child-define-kept-content/tags/card.marko_0;///D b%b%l&&&;<section><button>clear</button><!><!></section>`]
+`packages/runtime-tags/src/__tests__/fixtures/patch-created-child-define-kept-content/template.marko_1*shell #childScope/0>#childScope/0>!#childScope/0>#childScope/0>#childScope/0>packages/runtime-tags/src/__tests__/fixtures/patch-created-child-define-kept-content/tags/card.marko_0;///D b%b%l&&&;<section><button>clear</button><!><!></section>`
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
@@ -9,17 +9,16 @@
             "PatchDynamicTag:#text/1": _.a = "^^packages/runtime-tags/src/__tests__/fixtures/patch-created-child-define-kept-content/tags/child.marko_2*content",
             "PatchDynamicTag:#text/2": _.a
           }
-        },
-        "PatchClientBranch:2": {
-          "PatchText:#text/0": "b"
         }
-      }
+      },
+      "PatchMarkedWrite:input_label": "b",
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-define-kept-content/tags/child.marko_0_input_label#3/subscribers": "input_label"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-define-kept-content/template.marko_1*shell"]
 }
-;DSg
+;CgQ
 
-// PATCH holding DSg
+// PATCH holding CgQ
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
@@ -29,11 +28,10 @@
             "PatchDynamicTag:#text/1": _.a = "^^packages/runtime-tags/src/__tests__/fixtures/patch-created-child-define-kept-content/tags/child.marko_2*content",
             "PatchDynamicTag:#text/2": _.a
           }
-        },
-        "PatchClientBranch:2": {
-          "PatchText:#text/0": "c"
         }
-      }
+      },
+      "PatchMarkedWrite:input_label": "c",
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-define-kept-content/tags/child.marko_0_input_label#3/subscribers": "input_label"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-define-kept-content/template.marko_1*shell"]
 }

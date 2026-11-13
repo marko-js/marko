@@ -19,6 +19,8 @@
 ## Change
 ```
 INSERT: section
+INSERT: section > div:nth-of-type(1) + span
+INSERT: section > div:nth-of-type(2) + span
 ```
 
 # Update

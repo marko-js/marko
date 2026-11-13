@@ -38,24 +38,24 @@ var list_default = _template("b", (input) => {
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}&b`)($walks)};${((_w0) => `${_w0}<!>`)($template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_note = _write_guard($scope0_reason, 1), $cg__input_note = _client_guard($scope0_reason, 1), $wi__input_note = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	let $item;
 	forOf(input.labels, (label) => $item = attrTags($item, { content: _content_resume("a1", () => {
-		_scope_reason();
+		const $scope1_reason = _scope_reason(), $wg__label = _write_guard($scope1_reason, 0);
 		const $scope1_id = _scope_id();
-		_html(`<em>${_text_mark($scope1_id, "a", label, 1, 4, 0)}:${_text_mark($scope1_id, "b", input.note, 2, $scope0_reason, 1)}</em>`);
+		_html(`<em>${_text_mark($scope1_id, "a", label, $wg__label)}:${_text_mark($scope1_id, "b", input.note, $wg__input_note * 2)}</em>`);
 		$cg__input_note && _patch_render($scope1_id, "a0");
-		_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_note && "a0");
+		_subscribe($wi__input_note && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_note && "a0", $wg__input_note || $wg__label);
 	}, $scope0_id, () => [{ 2: label }]) }));
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	list_default({ item: $item });
 	_patch_child_end();
 	_scope($scope0_id, {
 		e: input.note,
-		f: _write_if($scope0_reason, 1) && $input_note__closures,
+		f: $wi__input_note && $input_note__closures,
 		a: _existing_scope($childScope)
 	}) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "a2", "e");
 }, 1);

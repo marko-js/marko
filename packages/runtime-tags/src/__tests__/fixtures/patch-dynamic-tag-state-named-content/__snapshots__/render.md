@@ -40,9 +40,9 @@ b.click();
 ```
 INSERT: div:nth-of-type(1) + :is(button, div)
 INSERT: div:nth-of-type(2) > :is(::text("2"), ::text(":"), ::text("b"))
-UPDATE: div:nth-of-type(2)::text@0 "" => "2"
-UPDATE: div:nth-of-type(2)::text@2 "" => "b"
 UPDATE: div:nth-of-type(1)::text@2 "a" => "b"
+UPDATE: div:nth-of-type(2)::text@2 "" => "b"
+UPDATE: div:nth-of-type(2)::text@0 "" => "2"
 ```
 
 # Update `{"bs":[1,2],"note":"c"}`

@@ -1,59 +1,35 @@
 // PATCH
-[`a5|2;b%;<!><!><!>`, `a4;b%;<!><!><!>`, `a6 !a>b0;/D b%l&;<section><button>clear</button><!></section>`]
+`a5 !a>b0;/D b%l&;<section><button>clear</button><!></section>`
 {
   ba: [{
     ca: {
       s: {
-        fb: "^^a5"
-      },
-      Wb: [{
-        ba: [{
-          fa: [">span", 0, {
-            content: {
-              content: _(["Aa", "a", "Ab", "Aa"], "a0", 1)
-            }
-          }],
-          cAa: {
-            cAa: {
-              ta: "b"
-            }
-          }
-        }, "a4"]
-      }, "a5"]
+        fb: "^^a4"
+      }
     }
-  }, "a6"],
+  }, "a5"],
   xe: !0,
+  Sa6: "e",
   xf: "b",
-  Sa9: "f",
-  xg: "span"
+  Sa7: "f",
+  xg: "span",
+  Sa8: "g"
 }
-;DRw
+;BgE
 
-// PATCH holding DRw
+// PATCH holding BgE
 {
   ba: [{
     ca: {
       s: {
-        fb: "^^a5"
-      },
-      Wb: [{
-        ba: [{
-          fa: [">i", 0, {
-            content: {
-              content: _(["Aa", "a", "Ab", "Aa"], "a0", 1)
-            }
-          }],
-          cAa: {
-            cAa: {
-              ta: "c"
-            }
-          }
-        }, "a4"]
-      }, "a5"]
+        fb: "^^a4"
+      }
     }
-  }, "a6"],
+  }, "a5"],
   xe: !0,
+  Sa6: "e",
   xf: "c",
-  Sa9: "f",
-  xg: "i"
+  Sa7: "f",
+  xg: "i",
+  Sa8: "g"
 }

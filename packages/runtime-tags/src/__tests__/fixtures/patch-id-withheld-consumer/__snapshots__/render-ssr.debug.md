@@ -67,10 +67,10 @@ assert.equal(ids.size, document.querySelectorAll("input").length);
   clear
 </button>
 <input
-  id="sM_[2].#childScope/0@0.#text/3@0.uid"
+  id="cM_0"
 />
 <label
-  for="sM_[2].#childScope/0@0.#text/3@0.uid"
+  for="cM_0"
 >
   2
 </label>
@@ -80,10 +80,7 @@ assert.equal(ids.size, document.querySelectorAll("input").length);
 INSERT: label:nth-of-type(2) + :is(#sM_[2].#childScope/0@0.own, label, button)
 UPDATE: #sM_[2].#childScope/0@0.own[id] null => "sM_[2].#childScope/0@0.own"
 UPDATE: label:nth-of-type(3)[for] null => "sM_[2].#childScope/0@0.own"
-INSERT: button:nth-of-type(2) + :is(#sM_[2].#childScope/0@0.#text/3@0.uid, label)
-UPDATE: #sM_[2].#childScope/0@0.#text/3@0.uid[id] null => "sM_[2].#childScope/0@0.#text/3@0.uid"
-UPDATE: label:nth-of-type(4)[for] null => "sM_[2].#childScope/0@0.#text/3@0.uid"
-UPDATE: label:nth-of-type(4)::text " " => "2"
+INSERT: button:nth-of-type(2) + :is(#cM_0, label)
 ```
 
 # Update

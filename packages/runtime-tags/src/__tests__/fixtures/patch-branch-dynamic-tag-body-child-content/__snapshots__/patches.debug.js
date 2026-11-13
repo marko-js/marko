@@ -20,9 +20,9 @@
   "PatchMarkedWrite:input_label": "b",
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-branch-dynamic-tag-body-child-content/template.marko_0_input_label#5/subscribers": "input_label"
 }
-;Cww
+;CQw
 
-// PATCH holding Cww
+// PATCH holding CQw
 {
   "PatchBranch:#text/0": [{
     "PatchDynamicTag:#text/0": [">div", "packages/runtime-tags/src/__tests__/fixtures/patch-branch-dynamic-tag-body-child-content/template.marko_2*content"],
@@ -44,7 +44,7 @@
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-branch-dynamic-tag-body-child-content/template.marko_0_input_label#5/subscribers": "input_label"
 }
 
-// PATCH holding Cww
+// PATCH holding CQw
 {
   "PatchBranch:#text/0": [{
     "PatchDynamicTag:#text/0": [">div", "packages/runtime-tags/src/__tests__/fixtures/patch-branch-dynamic-tag-body-child-content/template.marko_2*content"],

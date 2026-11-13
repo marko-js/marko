@@ -46,7 +46,7 @@ var template_default = _template("a", (input) => {
 			_html(`<em>${_text_mark($scope1_id, "a", input.note, $wg__input_note)}</em>`);
 			$cg__input_note && _patch_render($scope1_id, "a0");
 			_subscribe($wi__input_note && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_note && "a0", $wg__input_note);
-		}, $scope0_id, void 0, 1)
+		}, $scope0_id)
 	});
 	_patch_child_end();
 	_scope($scope0_id, {

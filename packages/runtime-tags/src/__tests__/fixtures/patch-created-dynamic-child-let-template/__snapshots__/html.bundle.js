@@ -22,7 +22,7 @@ var outer_default = _template("c", (input) => {
 	_scope($scope0_id, {
 		f: input.label,
 		g: _write_if($scope0_reason, 1) && T
-	}) || (_client_branch(input.tag), $fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)));
+	}) || $fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

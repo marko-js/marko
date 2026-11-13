@@ -7,19 +7,19 @@
   id="sM_gbA"
 />
 <input
-  id="sM_UB"
+  id="sM_TB"
 />
 <input
-  id="sM_VB"
+  id="sM_UB"
 />
 <button>
   clear
 </button>
 <input
-  id="sM_1WUC"
+  id="sM_1VTC"
 />
 <label
-  for="sM_1WUC"
+  for="sM_1VTC"
 >
   1
 </label>
@@ -56,6 +56,14 @@ for (const label of document.querySelectorAll("label")) {
   a
 </label>
 <input
+  id="sM_TB"
+/>
+<label
+  for="sM_TB"
+>
+  field
+</label>
+<input
   id="sM_UB"
 />
 <label
@@ -63,22 +71,14 @@ for (const label of document.querySelectorAll("label")) {
 >
   field
 </label>
-<input
-  id="sM_VB"
-/>
-<label
-  for="sM_VB"
->
-  field
-</label>
 <button>
   clear
 </button>
 <input
-  id="sM_1WUC"
+  id="sM_1VTC"
 />
 <label
-  for="sM_1WUC"
+  for="sM_1VTC"
 >
   1
 </label>
@@ -86,10 +86,10 @@ for (const label of document.querySelectorAll("label")) {
   clear
 </button>
 <input
-  id="sM_2WUC"
+  id="cM_0"
 />
 <label
-  for="sM_2WUC"
+  for="cM_0"
 >
   2
 </label>
@@ -100,13 +100,10 @@ REMOVE: label:nth-of-type(2) + #sM_gbA
 INSERT: #sM_gbA
 INSERT: #sM_gbA + label
 INSERT: #sM_gaA + label
+INSERT: #sM_TB + label
 INSERT: #sM_UB + label
-INSERT: #sM_VB + label
 INSERT: label:nth-of-type(5) + button
-INSERT: button:nth-of-type(2) + :is(#sM_2WUC, label)
-UPDATE: #sM_2WUC[id] null => "sM_2WUC"
-UPDATE: label:nth-of-type(6)[for] null => "sM_2WUC"
-UPDATE: label:nth-of-type(6)::text " " => "2"
+INSERT: button:nth-of-type(2) + :is(#cM_0, label)
 ```
 
 # Update

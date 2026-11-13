@@ -6,13 +6,13 @@
   Fields
 </h1>
 <label
-  for="sM_UA"
+  for="sM_TA"
 >
   loading
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_UA"
+  id="sM_TA"
 />
 ```
 
@@ -40,40 +40,40 @@ for (const input of document.querySelectorAll(
   Fields
 </h1>
 <label
-  for="sM_WA"
+  for="sM_VA"
 >
   before
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_WA"
+  id="sM_VA"
 />
 <label
-  for="sM_gaXA"
+  for="sM_gaWA"
 >
   a
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_gaXA"
+  id="sM_gaWA"
 />
 <label
-  for="sM_gbXA"
+  for="sM_gbWA"
 >
   b
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_gbXA"
+  id="sM_gbWA"
 />
 ```
 ## Change
 ```
 INSERT: label:nth-of-type(2)::text("a")
 INSERT: label:nth-of-type(3)::text("b")
-REMOVE: t > label + #sM_UA
+REMOVE: t > label + #sM_TA
 REMOVE: label
-INSERT: #sM_A + :is(label, #sM_WA, label, #sM_gaXA, label, #sM_gbXA)
+INSERT: #sM_A + :is(label, #sM_VA, label, #sM_gaWA, label, #sM_gbWA)
 ```
 
 # Update `{"promise":{"value":[{"key":"b"},{"key":"c"}]}}`
@@ -97,11 +97,11 @@ INSERT: #sM_A + :is(label, #sM_WA, label, #sM_gaXA, label, #sM_gbXA)
 ```
 INSERT: #sM_A + :is(label, #cM_0)
 REMOVE: #cM_0 + label
-REMOVE: #cM_0 + #sM_WA
+REMOVE: #cM_0 + #sM_VA
 REMOVE: #cM_0 + label
-REMOVE: #cM_0 + #sM_gaXA
+REMOVE: #cM_0 + #sM_gaWA
 REMOVE: #cM_0 + label
-REMOVE: #cM_0 + #sM_gbXA
+REMOVE: #cM_0 + #sM_gbWA
 UPDATE: #cM_0[aria-describedby] null => "sM_A"
 ```
 
@@ -129,38 +129,38 @@ for (const input of document.querySelectorAll(
   Fields
 </h1>
 <label
-  for="sM_WA"
+  for="sM_VA"
 >
   before
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_WA"
+  id="sM_VA"
 />
 <label
-  for="sM_gbXA"
+  for="sM_gbWA"
 >
   b
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_gbXA"
+  id="sM_gbWA"
 />
 <label
-  for="sM_gcXA"
+  for="sM_gcWA"
 >
   c
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_gcXA"
+  id="sM_gcWA"
 />
 ```
 ## Change
 ```
-INSERT: #sM_A + :is(label, #sM_WA, label, #sM_gbXA, label, #sM_gcXA)
-REMOVE: #sM_gcXA + label
-REMOVE: #sM_gcXA + #cM_0
+INSERT: #sM_A + :is(label, #sM_VA, label, #sM_gbWA, label, #sM_gcWA)
+REMOVE: #sM_gcWA + label
+REMOVE: #sM_gcWA + #cM_0
 ```
 
 # Update
@@ -200,11 +200,11 @@ for (const input of document.querySelectorAll(
 ```
 INSERT: #sM_A + :is(label, #cM_1)
 REMOVE: #cM_1 + label
-REMOVE: #cM_1 + #sM_WA
+REMOVE: #cM_1 + #sM_VA
 REMOVE: #cM_1 + label
-REMOVE: #cM_1 + #sM_gbXA
+REMOVE: #cM_1 + #sM_gbWA
 REMOVE: #cM_1 + label
-REMOVE: #cM_1 + #sM_gcXA
+REMOVE: #cM_1 + #sM_gcWA
 UPDATE: #cM_1[aria-describedby] null => "sM_A"
 ```
 
@@ -232,23 +232,23 @@ for (const input of document.querySelectorAll(
   Fields
 </h1>
 <label
-  for="sM_VA"
+  for="sM_UA"
 >
   caught
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_VA"
+  id="sM_UA"
 />
 ```
 ## Change
 ```
-INSERT: #sM_A + :is(label, #sM_VA)
-REMOVE: #sM_VA + label
-REMOVE: #sM_VA + #cM_1
-UPDATE: label[for] null => "sM_VA"
-UPDATE: #sM_VA[id] null => "sM_VA"
-UPDATE: #sM_VA[aria-describedby] null => "sM_A"
+INSERT: #sM_A + :is(label, #sM_UA)
+REMOVE: #sM_UA + label
+REMOVE: #sM_UA + #cM_1
+UPDATE: label[for] null => "sM_UA"
+UPDATE: #sM_UA[id] null => "sM_UA"
+UPDATE: #sM_UA[aria-describedby] null => "sM_A"
 UPDATE: label::text " " => "caught"
 ```
 

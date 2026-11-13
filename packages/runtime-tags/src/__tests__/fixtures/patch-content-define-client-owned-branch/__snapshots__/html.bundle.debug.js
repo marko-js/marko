@@ -6,7 +6,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)($Panel_content__walks);
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": `__tests__/template.marko !__tests__/template.marko_0;${((_w0) => `D/${_w0}& l`)($Panel_content__walks)};${((_w0) => `<main>${_w0}<button>+</button></main>`)($Panel_content__template)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_title = _write_guard($scope0_reason, 0), $cg__input_title = _client_guard($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	let count = 0;
@@ -32,9 +32,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		body: attrTag({ content: _content_resume("__tests__/template.marko_1*content", () => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<em>${_text_mark($scope1_id, "#text/0", input.title, 1, $scope0_reason, 0)}</em>`);
+			_html(`<em>${_text_mark($scope1_id, "#text/0", input.title, $wg__input_title)}</em>`);
 			$cg__input_title && _patch_render($scope1_id, "__tests__/template.marko_1_input_title#0:4/subscribe");
-			_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "9:6"), $cg__input_title && "__tests__/template.marko_1_input_title#0:4/subscribe");
+			_subscribe($wi__input_title && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "9:6"), $cg__input_title && "__tests__/template.marko_1_input_title#0:4/subscribe", $wg__input_title);
 		}, $scope0_id) })
 	});
 	_patch_child_end();
@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		input_title: input.title,
 		count,
-		"ClosureScopes:input_title/6": _write_if($scope0_reason, 0) && $input_title__closures,
+		"ClosureScopes:input_title/6": $wi__input_title && $input_title__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],

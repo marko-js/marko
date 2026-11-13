@@ -41,11 +41,11 @@
 ## Change
 ```
 INSERT: section:nth-of-type(1) + section
-UPDATE: section:nth-of-type(1) > em::text@2 "a" => "b"
 INSERT: section:nth-of-type(2) > button + em
 UPDATE: section:nth-of-type(2) > p::text " " => "SHOWN_b"
-UPDATE: section:nth-of-type(2) > em::text@0 "" => "2"
+UPDATE: section:nth-of-type(1) > em::text@2 "a" => "b"
 UPDATE: section:nth-of-type(2) > em::text@2 "" => "b"
+UPDATE: section:nth-of-type(2) > em::text@0 "" => "2"
 ```
 
 # Update

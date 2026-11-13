@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 		label: x.name,
 		onPick: _resume_locals(function() {
 			picked = x.name;
-		}, "a0", { g: x }, $scope0_id, 1)
+		}, "a0", { g: x }, $scope0_id)
 	}));
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	menu_default({ item: $item });

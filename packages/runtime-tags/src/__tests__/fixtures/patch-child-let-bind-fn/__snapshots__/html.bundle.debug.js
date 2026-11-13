@@ -12,7 +12,7 @@ var picker_default = _template("__tests__/tags/picker.marko", (input) => {
 		if (refresh) refreshing = true;
 		catalog = ["a", "b"];
 		if (refresh) refreshing = false;
-	}, "__tests__/tags/picker.marko_0/load", $scope0_id, 1);
+	}, "__tests__/tags/picker.marko_0/load", $scope0_id);
 	const $return = load;
 	_html(`<button>load</button>${_el_mark($scope0_id, "#button/0")}<ul>`);
 	_for_of(catalog || [], (item) => {
@@ -53,7 +53,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	let refresh = picker_default({ refreshingChange: _resume(function(v) {
 		busy = v;
-	}, "__tests__/template.marko_0/refreshingChange", $scope0_id, 1) });
+	}, "__tests__/template.marko_0/refreshingChange", $scope0_id) });
 	_patch_child_end();
 	_html(`<p>${_text_mark($scope0_id, "#text/2", busy ? "busy" : "idle")}</p><button id=outer>outer</button>${_el_mark($scope0_id, "#button/3")}`);
 	_script($scope0_id, "__tests__/template.marko_0");

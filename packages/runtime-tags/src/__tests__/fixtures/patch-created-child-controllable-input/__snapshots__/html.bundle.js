@@ -33,7 +33,7 @@ var page_b_default = _template("c", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	demo_card_default({
 		tab,
-		tabChange: _resume((_new_tab) => tab = _new_tab, "c0", $scope0_id, 1)
+		tabChange: _resume((_new_tab) => tab = _new_tab, "c0", $scope0_id)
 	});
 	_patch_child_end();
 	_patch_fill($scope0_id, "vc1", tab, 1);

@@ -1,36 +1,36 @@
 # Render `{"left":true,"right":true}`
 ```html
 <label
-  for="sM_UA"
+  for="sM_TA"
 >
   left
+</label>
+<input
+  id="sM_TA"
+/>
+<label
+  for="sM_UA"
+>
+  right
 </label>
 <input
   id="sM_UA"
 />
 <label
-  for="sM_VA"
->
-  right
-</label>
-<input
-  id="sM_VA"
-/>
-<label
-  for="sM_XWA"
+  for="sM_WVA"
 >
   repeat
 </label>
 <input
-  id="sM_XWA"
+  id="sM_WVA"
 />
 <label
-  for="sM_YWA"
+  for="sM_XVA"
 >
   repeat
 </label>
 <input
-  id="sM_YWA"
+  id="sM_XVA"
 />
 ```
 
@@ -48,34 +48,34 @@ for (const input of document.querySelectorAll("input")) {
 # Update `{"left":false,"right":true}`
 ```html
 <label
-  for="sM_VA"
+  for="sM_UA"
 >
   right
 </label>
 <input
-  id="sM_VA"
+  id="sM_UA"
 />
 <label
-  for="sM_XWA"
+  for="sM_WVA"
 >
   repeat
 </label>
 <input
-  id="sM_XWA"
+  id="sM_WVA"
 />
 <label
-  for="sM_YWA"
+  for="sM_XVA"
 >
   repeat
 </label>
 <input
-  id="sM_YWA"
+  id="sM_XVA"
 />
 ```
 ## Change
 ```
 REMOVE: label
-REMOVE: #sM_UA
+REMOVE: #sM_TA
 ```
 
 # Update
@@ -92,42 +92,42 @@ for (const input of document.querySelectorAll("input")) {
 # Update `{"left":true,"right":true}`
 ```html
 <label
-  for="sM_UA"
+  for="sM_TA"
 >
   left
+</label>
+<input
+  id="sM_TA"
+/>
+<label
+  for="sM_UA"
+>
+  right
 </label>
 <input
   id="sM_UA"
 />
 <label
-  for="sM_VA"
->
-  right
-</label>
-<input
-  id="sM_VA"
-/>
-<label
-  for="sM_XWA"
+  for="sM_WVA"
 >
   repeat
 </label>
 <input
-  id="sM_XWA"
+  id="sM_WVA"
 />
 <label
-  for="sM_YWA"
+  for="sM_XVA"
 >
   repeat
 </label>
 <input
-  id="sM_YWA"
+  id="sM_XVA"
 />
 ```
 ## Change
 ```
 INSERT: label
-INSERT: label:nth-of-type(1) + #sM_UA
+INSERT: label:nth-of-type(1) + #sM_TA
 ```
 
 # Update

@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 				...input.attrs,
 				onClick: _resume(function() {
 					count++;
-				}, "a0", $scope1_id, 1)
+				}, "a0", $scope1_id)
 			}, "a", $scope1_id, "a", 0, $scope0_reason, 1)}>go</a>${_el_mark($scope1_id, "a")}`);
 			_script($scope1_id, "a1");
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a2");

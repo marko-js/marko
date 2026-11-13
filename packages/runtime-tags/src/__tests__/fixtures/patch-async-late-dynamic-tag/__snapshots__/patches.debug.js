@@ -28,9 +28,9 @@
   }
 }
 (_.a.f("b"), 0)
-;DRQ
+;CxQ
 
-// PATCH holding DRQ
+// PATCH holding CxQ
 {
   "PatchDynamicTag:#text/0": [">section", "packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_1*content", {
     class: "box"

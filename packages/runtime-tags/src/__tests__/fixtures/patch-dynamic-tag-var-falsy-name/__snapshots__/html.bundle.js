@@ -23,7 +23,7 @@ _shells({
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_a11yText = _client_guard($scope0_reason, 0), $wi__input_a11yText = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const $btn_getter = _hoist($scope0_id, "b0", 1);
+	const $btn_getter = _hoist($scope0_id, "b0");
 	const $wrapper_content__subscribers = /* @__PURE__ */ new Set();
 	const $input_a11yText__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(0);

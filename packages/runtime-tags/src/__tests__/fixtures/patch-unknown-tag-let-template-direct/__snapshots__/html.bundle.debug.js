@@ -31,7 +31,7 @@ var frame_default = _template("__tests__/tags/frame.marko", (input) => {
 	}, "__tests__/tags/frame.marko", 0, {
 		input_label: ["input.label"],
 		T: "1:6"
-	}) || (_client_branch(input.item), $fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1)));
+	}) || $fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

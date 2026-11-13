@@ -49,21 +49,21 @@ INSERT: section:nth-of-type(1) + section
 INSERT: section:nth-of-type(2) + section
 INSERT: section:nth-of-type(1) > button + span
 INSERT: section:nth-of-type(1) > span:nth-of-type(1) > b
-UPDATE: section:nth-of-type(1) > span:nth-of-type(1) > b::text@0 "" => "r1"
-UPDATE: section:nth-of-type(1) > span:nth-of-type(1) > b::text@2 "" => "b"
 INSERT: section:nth-of-type(1) > span:nth-of-type(1) + span
-UPDATE: section:nth-of-type(1) > span:nth-of-type(2)::text " " => "r1"
 INSERT: section:nth-of-type(2) > button + span
 INSERT: section:nth-of-type(2) > span:nth-of-type(1) > b
-UPDATE: section:nth-of-type(2) > span:nth-of-type(1) > b::text@0 "" => "r2"
-UPDATE: section:nth-of-type(2) > span:nth-of-type(1) > b::text@2 "" => "b"
 INSERT: section:nth-of-type(2) > span:nth-of-type(1) + span
-UPDATE: section:nth-of-type(2) > span:nth-of-type(2)::text " " => "r2"
 INSERT: section:nth-of-type(3) > button + span
 INSERT: section:nth-of-type(3) > span:nth-of-type(1) > b
-UPDATE: section:nth-of-type(3) > span:nth-of-type(1) > b::text@0 "" => "r3"
-UPDATE: section:nth-of-type(3) > span:nth-of-type(1) > b::text@2 "" => "b"
 INSERT: section:nth-of-type(3) > span:nth-of-type(1) + span
+UPDATE: section:nth-of-type(1) > span:nth-of-type(1) > b::text@0 "" => "r1"
+UPDATE: section:nth-of-type(1) > span:nth-of-type(1) > b::text@2 "" => "b"
+UPDATE: section:nth-of-type(1) > span:nth-of-type(2)::text " " => "r1"
+UPDATE: section:nth-of-type(2) > span:nth-of-type(1) > b::text@2 "" => "b"
+UPDATE: section:nth-of-type(2) > span:nth-of-type(1) > b::text@0 "" => "r2"
+UPDATE: section:nth-of-type(2) > span:nth-of-type(2)::text " " => "r2"
+UPDATE: section:nth-of-type(3) > span:nth-of-type(1) > b::text@2 "" => "b"
+UPDATE: section:nth-of-type(3) > span:nth-of-type(1) > b::text@0 "" => "r3"
 UPDATE: section:nth-of-type(3) > span:nth-of-type(2)::text " " => "r3"
 ```
 
@@ -114,22 +114,22 @@ LOG "direct" "r3"
 REMOVE: section:nth-of-type(2) + section
 REMOVE: section:nth-of-type(2) + section
 INSERT: section
-INSERT: section:nth-of-type(1) > button + i
-REMOVE: section:nth-of-type(1) > i:nth-of-type(1) + span
-INSERT: section:nth-of-type(1) > i:nth-of-type(1) > b
-UPDATE: section:nth-of-type(1) > i:nth-of-type(1) > b::text@0 "" => "r3"
-UPDATE: section:nth-of-type(1) > i:nth-of-type(1) > b::text@2 "" => "c"
-INSERT: section:nth-of-type(1) > i:nth-of-type(1) + i
-REMOVE: section:nth-of-type(1) > i:nth-of-type(2) + span
-UPDATE: section:nth-of-type(1) > i:nth-of-type(2)::text " " => "r3"
+INSERT: section:nth-of-type(2) > i:nth-of-type(1) + i
+REMOVE: section:nth-of-type(2) > i:nth-of-type(2) + span
 INSERT: section:nth-of-type(2) > button + i
 REMOVE: section:nth-of-type(2) > i:nth-of-type(1) + span
 INSERT: section:nth-of-type(2) > i:nth-of-type(1) > b
+INSERT: section:nth-of-type(1) > i:nth-of-type(1) + i
+REMOVE: section:nth-of-type(1) > i:nth-of-type(2) + span
+INSERT: section:nth-of-type(1) > button + i
+REMOVE: section:nth-of-type(1) > i:nth-of-type(1) + span
+INSERT: section:nth-of-type(1) > i:nth-of-type(1) > b
+UPDATE: section:nth-of-type(2) > i:nth-of-type(2)::text " " => "r1"
 UPDATE: section:nth-of-type(2) > i:nth-of-type(1) > b::text@0 "" => "r1"
 UPDATE: section:nth-of-type(2) > i:nth-of-type(1) > b::text@2 "" => "c"
-INSERT: section:nth-of-type(2) > i:nth-of-type(1) + i
-REMOVE: section:nth-of-type(2) > i:nth-of-type(2) + span
-UPDATE: section:nth-of-type(2) > i:nth-of-type(2)::text " " => "r1"
+UPDATE: section:nth-of-type(1) > i:nth-of-type(2)::text " " => "r3"
+UPDATE: section:nth-of-type(1) > i:nth-of-type(1) > b::text@2 "" => "c"
+UPDATE: section:nth-of-type(1) > i:nth-of-type(1) > b::text@0 "" => "r3"
 ```
 
 # Update
@@ -203,19 +203,19 @@ LOG "direct" "r1"
 ```
 INSERT: section:nth-of-type(3) + section
 INSERT: section
+UPDATE: section:nth-of-type(3) > i:nth-of-type(1) > b::text@2 "c" => "d"
+UPDATE: section:nth-of-type(2) > i:nth-of-type(1) > b::text@2 "c" => "d"
 INSERT: section:nth-of-type(1) > button + i
 INSERT: section:nth-of-type(1) > i:nth-of-type(1) > b
-UPDATE: section:nth-of-type(1) > i:nth-of-type(1) > b::text@0 "" => "r2"
-UPDATE: section:nth-of-type(1) > i:nth-of-type(1) > b::text@2 "" => "d"
 INSERT: section:nth-of-type(1) > i:nth-of-type(1) + i
-UPDATE: section:nth-of-type(1) > i:nth-of-type(2)::text " " => "r2"
-UPDATE: section:nth-of-type(2) > i:nth-of-type(1) > b::text@2 "c" => "d"
-UPDATE: section:nth-of-type(3) > i:nth-of-type(1) > b::text@2 "c" => "d"
 INSERT: section:nth-of-type(4) > button + i
 INSERT: section:nth-of-type(4) > i:nth-of-type(1) > b
-UPDATE: section:nth-of-type(4) > i:nth-of-type(1) > b::text@0 "" => "r4"
-UPDATE: section:nth-of-type(4) > i:nth-of-type(1) > b::text@2 "" => "d"
 INSERT: section:nth-of-type(4) > i:nth-of-type(1) + i
+UPDATE: section:nth-of-type(1) > i:nth-of-type(1) > b::text@2 "" => "d"
+UPDATE: section:nth-of-type(1) > i:nth-of-type(1) > b::text@0 "" => "r2"
+UPDATE: section:nth-of-type(1) > i:nth-of-type(2)::text " " => "r2"
+UPDATE: section:nth-of-type(4) > i:nth-of-type(1) > b::text@2 "" => "d"
+UPDATE: section:nth-of-type(4) > i:nth-of-type(1) > b::text@0 "" => "r4"
 UPDATE: section:nth-of-type(4) > i:nth-of-type(2)::text " " => "r4"
 ```
 
@@ -263,9 +263,9 @@ REMOVE: section
 INSERT: section
 INSERT: section > button + b
 INSERT: section > b:nth-of-type(1) > b
-UPDATE: section > b:nth-of-type(1) > b::text@0 "" => "r5"
-UPDATE: section > b:nth-of-type(1) > b::text@2 "" => "f"
 INSERT: section > b:nth-of-type(1) + b
+UPDATE: section > b:nth-of-type(1) > b::text@2 "" => "f"
+UPDATE: section > b:nth-of-type(1) > b::text@0 "" => "r5"
 UPDATE: section > b:nth-of-type(2)::text " " => "r5"
 ```
 

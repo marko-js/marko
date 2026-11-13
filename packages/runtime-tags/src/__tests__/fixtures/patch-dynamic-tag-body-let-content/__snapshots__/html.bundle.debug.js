@@ -47,7 +47,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	}, "__tests__/tags/card.marko", 0, {
 		input_p: ["input.p"],
 		c: "2:6"
-	}) || (_client_branch(input.content), $fg__input_p && _patch_write($scope0_id, "PatchMarkedWrite:input_p", input.p, !_server_guard($scope0_reason, 1)));
+	}) || $fg__input_p && _patch_write($scope0_id, "PatchMarkedWrite:input_p", input.p, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

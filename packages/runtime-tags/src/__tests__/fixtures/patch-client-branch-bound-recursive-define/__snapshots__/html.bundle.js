@@ -12,31 +12,29 @@ var card_default = _template("b", (input) => {
 	_dynamic_tag($scope0_id, "c", c, {}, 10, 0, 0, 1, $cg__input_content << 1, 0, 1);
 	_html("</section>");
 	_script($scope0_id, "b0");
-	_scope($scope0_id, {}) || _client_branch(input.content);
+	_scope($scope0_id, {});
 });
 
 // template.marko
 const $Tree_content__walks = /*@__PURE__*/ ((_w0) => `/${_w0}&%c`)($walks);
 const $Tree_content__template = /*@__PURE__*/ ((_w0) => `${_w0}<!><!>`)($template);
 _shells({
-	a4: "a4 !a8",
-	a5: "a5|3;b%;<!><!><!>",
+	a5: "a5 !a6",
 	a: "a;b%;<!><!><!>",
-	a6: `a6${_shell_marker([[], []], ["a>", _shell_setup([[], []], ["a>", $setup])])};${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($Tree_content__walks)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($Tree_content__template)}`,
-	a3: `a3${_shell_marker([[], []], ["a>", _shell_setup([[], []], ["a>", $setup])])};${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($Tree_content__walks)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($Tree_content__template)}`
+	a16: `a16${_shell_marker([[], []], ["a>", _shell_setup([[], []], ["a>", $setup])])};${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($Tree_content__walks)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($Tree_content__template)}`
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2), $fg__input_tag = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
-	const Tree = { content: _content("a11", ({ n, label, tag }) => {
+	const Tree = { content: _content("a9", ({ n, label, tag }) => {
 		const $scope2_id = _scope_id();
 		const $Tree_content__n__closures = /* @__PURE__ */ new Set();
 		const $Tree_content__label__closures = /* @__PURE__ */ new Set();
 		const $Tree_content__tag__closures = /* @__PURE__ */ new Set();
-		const $scope2_reason = _scope_reason(), $cg__label = _client_guard($scope2_reason, 2), $cg__tag = _client_guard($scope2_reason, 3), $wg__n = _write_guard($scope2_reason, 1), $cg__n = _client_guard($scope2_reason, 1), $wi__n__OR__label__OR__tag = _write_if($scope2_reason, 0), $wi__n = _write_if($scope2_reason, 1), $wg__tag = _write_guard($scope2_reason, 3), $ui__n = _unfilled_if($scope2_reason, 1), $ui__tag = _unfilled_if($scope2_reason, 3), $wi__label = _write_if($scope2_reason, 2), $wi__tag = _write_if($scope2_reason, 3);
+		const $scope2_reason = _scope_reason(), $wi__n = _write_if($scope2_reason, 1), $cg__label = _client_guard($scope2_reason, 2), $cg__tag = _client_guard($scope2_reason, 3), $wg__n = _write_guard($scope2_reason, 1), $cg__n = _client_guard($scope2_reason, 1), $wi__label = _write_if($scope2_reason, 2), $wg__tag = _write_guard($scope2_reason, 3), $ui__tag = _unfilled_if($scope2_reason, 3), $wi__tag = _write_if($scope2_reason, 3);
 		_set_scope_reason(0);
 		const $childScope2 = _peek_scope_id($scope2_id, "a", 1);
-		card_default({ content: _content("a5", () => {
+		card_default({ content: _content_resume("a4", () => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
 			_if(() => {
@@ -52,46 +50,44 @@ var template_default = _template("a", (input) => {
 					_patch_child_end();
 					$cg__label && _patch_render($scope4_id, "a0");
 					$cg__tag && _patch_render($scope4_id, "a1");
-					_subscribe(_unfilled_if($scope2_reason, 3) && $Tree_content__tag__closures, _subscribe(_unfilled_if($scope2_reason, 2) && $Tree_content__label__closures, _subscribe(_unfilled_if($scope2_reason, 1) && $Tree_content__n__closures, _scope($scope4_id, {
-						_: $wi__n__OR__label__OR__tag && _scope_with_id($scope3_id),
-						a: _existing_scope($childScope),
+					_subscribe($wi__tag && $Tree_content__tag__closures, _subscribe($wi__label && $Tree_content__label__closures, _subscribe($wi__n && $Tree_content__n__closures, _scope($scope4_id, {
+						_: _scope_with_id($scope3_id),
+						a: _write_if($scope2_reason, 0) && _existing_scope($childScope),
 						Cj: $wi__n && 1
 					}), $cg__n && "a2", 0), $cg__label && "a0", 0), $cg__tag && "a1", 0);
-					_resume_branch($scope4_id);
+					($wg__n || _write_guard($scope2_reason, 2) || $wg__tag) && _resume_branch($scope4_id);
 					return 0;
 				}
-			}, $scope3_id, "a", 1, $wg__n, 1, 0, 0, ["a3"], $scope2_reason, 1);
-			$wi__n__OR__label__OR__tag && _subscribe(_unfilled_if($scope2_reason, 1) && $Tree_content__n__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), $cg__n && "a7", $wg__n);
-			$wg__n || $wi__n__OR__label__OR__tag && _resume_branch($scope3_id);
-		}, $scope2_id, 3) });
+			}, $scope3_id, "a", $wg__n, $wg__n);
+			_subscribe($wi__n && $Tree_content__n__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), $cg__n && "a3", $wg__n);
+		}, $scope2_id) });
 		_patch_child_end();
-		const Inner = { content: _content_resume("a4", () => {
+		const Inner = { content: _content_resume("a5", () => {
 			const $scope5_id = _scope_id();
 			_scope_reason();
 			_html(`<b>${_text_mark($scope5_id, "b", n, 1, $scope2_reason, 1)}${_text_mark($scope5_id, "c", label, 2, $scope2_reason, 2)}</b>${_el_mark($scope5_id, "a")}`);
-			_script($scope5_id, "a8");
-			_unfilled_if($scope2_reason, 1) && _patch_subscribe($scope5_id, "a9");
-			_unfilled_if($scope2_reason, 2) && _patch_subscribe($scope5_id, "a10", $cg__label);
+			_script($scope5_id, "a6");
+			_unfilled_if($scope2_reason, 1) && _patch_subscribe($scope5_id, "a7");
+			_unfilled_if($scope2_reason, 2) && _patch_subscribe($scope5_id, "a8", $cg__label);
 			_subscribe(_unfilled_if($scope2_reason, 2) && $Tree_content__label__closures, _subscribe(_unfilled_if($scope2_reason, 1) && $Tree_content__n__closures, _scope($scope5_id, {
 				_: _scope_with_id($scope2_id),
 				Cj: $wi__n && 2,
 				Ck: $wi__label && 1
-			}), $cg__n && "a9"), $cg__label && "a10");
-		}, $scope2_id, void 0, 1) };
+			}), $cg__n && "a7"), $cg__label && "a8");
+		}, $scope2_id) };
 		_dynamic_tag($scope2_id, "b", tag, { content: Inner }, 17, 0, 0, $wg__tag, $scope2_reason, 3);
-		$ui__n && _patch_write($scope2_id, "wg", tag, 1);
 		$ui__tag && _patch_write($scope2_id, "wh", Inner, 1);
-		$cg__tag && _patch_render($scope2_id, "a14");
+		$cg__tag && _patch_render($scope2_id, "a13");
 		_scope($scope2_id, {
 			e: n,
 			f: label,
-			g: $wi__n && ($ui__n || $ui__tag) && tag,
+			g: tag,
 			h: $ui__tag && Inner,
 			j: $wi__n && $Tree_content__n__closures,
 			k: $wi__label && $Tree_content__label__closures,
-			l: $wi__tag && $wi__tag && ($ui__tag || _unfilled_if($scope0_reason, 1) || $ui__n) && $Tree_content__tag__closures,
+			l: $wi__tag && $Tree_content__tag__closures,
 			a: _existing_scope($childScope2)
-		}) || (_filled_guard($scope2_reason, 1) && _patch_write($scope2_id, "xe", n, !_server_guard($scope2_reason, 1)) && _patch_subscribers($scope2_id, "a12", "e"), _filled_guard($scope2_reason, 2) && _patch_write($scope2_id, "xf", label, !_server_guard($scope2_reason, 2)) && _patch_subscribers($scope2_id, "a13", "f"));
+		}) || (_filled_guard($scope2_reason, 1) && _patch_write($scope2_id, "xe", n, !_server_guard($scope2_reason, 1)) && _patch_subscribers($scope2_id, "a10", "e"), _filled_guard($scope2_reason, 2) && _patch_write($scope2_id, "xf", label, !_server_guard($scope2_reason, 2)) && _patch_subscribers($scope2_id, "a11", "f"), _filled_guard($scope2_reason, 3) && _patch_write($scope2_id, "xg", tag, !_server_guard($scope2_reason, 3)) && _patch_subscribers($scope2_id, "a12", "g"));
 	}, $scope0_id) };
 	_if(() => {
 		if (input.show) {
@@ -104,17 +100,17 @@ var template_default = _template("a", (input) => {
 				tag: input.tag
 			});
 			_patch_child_end();
-			_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "a15");
-			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "a16");
+			_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "a14");
+			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "a15");
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 				a: _existing_scope($childScope3)
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a6"], $scope0_reason, 1);
-	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "a15", "e");
-	$fg__input_tag && $cg__input_show && _patch_render($scope0_id, "a16", "f");
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a16"], $scope0_reason, 1);
+	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "a14", "e");
+	$fg__input_tag && $cg__input_show && _patch_render($scope0_id, "a15", "f");
 	_scope($scope0_id, {
 		e: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.label,
 		f: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.tag

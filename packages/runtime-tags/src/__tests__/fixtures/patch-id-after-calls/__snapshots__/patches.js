@@ -10,18 +10,18 @@
   ba: [{
     ca: {
       s: {
-        aa$for: "sM_UA",
+        aa$for: "sM_TA",
         tb: "child",
-        ac$id: "sM_UA",
+        ac$id: "sM_TA",
         "ac$aria-describedby": $
       }
     }
   }, "a0"],
   fd: "b",
   cAd: {
-    aa$for: "sM_VA",
+    aa$for: "sM_UA",
     tb: "dynamic",
-    ac$id: "sM_VA",
+    ac$id: "sM_UA",
     "ac$aria-describedby": $
   }
 }

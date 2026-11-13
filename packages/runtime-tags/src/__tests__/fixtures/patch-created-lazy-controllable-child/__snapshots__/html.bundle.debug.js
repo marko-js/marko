@@ -32,7 +32,7 @@ var route_pg_default = _template("__tests__/tags/route-pg.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	tab_editor_default({
 		tab,
-		tabChange: _resume((_new_tab) => tab = _new_tab, "__tests__/tags/route-pg.marko_0/tabChange", $scope0_id, 1)
+		tabChange: _resume((_new_tab) => tab = _new_tab, "__tests__/tags/route-pg.marko_0/tabChange", $scope0_id)
 	});
 	_patch_child_end();
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}`);

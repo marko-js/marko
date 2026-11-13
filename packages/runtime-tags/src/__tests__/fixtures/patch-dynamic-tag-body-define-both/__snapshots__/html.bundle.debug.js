@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<em>${_text_mark($scope1_id, "#text/0", input.note, 1, $scope0_reason, 2)}</em>`);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_note#0:4/subscribe", $cg__input_note);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"), $cg__input_note && "__tests__/template.marko_1_input_note#0:4/subscribe");
-	}, $scope0_id, ($scope) => $scope0_page ? [{ input_note: input.note }] : [], 1) };
+	}, $scope0_id, ($scope) => $scope0_page ? [{ input_note: input.note }] : []) };
 	_html("<main>");
 	_dynamic_tag($scope0_id, "#text/0", input.x ? Label : "span", {}, 2, 0, 0, $wg__input_x, $scope0_reason, 3);
 	_dynamic_tag($scope0_id, "#text/1", input.on ? card_default : "div", { content: Label }, 9, 0, 0, $wg__input_on, $scope0_reason, 4, 0, void 0, 0, 0, "__tests__/template.marko_1*content");

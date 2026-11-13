@@ -2,12 +2,12 @@
 ```html
 <section>
   <label
-    for="sM_WUVA"
+    for="sM_VTUA"
   >
     direct
   </label>
   <input
-    id="sM_WUVA"
+    id="sM_VTUA"
   />
 </section>
 <section>
@@ -17,12 +17,12 @@
 </section>
 <section>
   <label
-    for="sM_ZVUUYA"
+    for="sM_YUTTXA"
   >
     body
   </label>
   <input
-    id="sM_ZVUUYA"
+    id="sM_YUTTXA"
   />
 </section>
 <section>
@@ -32,53 +32,53 @@
 </section>
 <section>
   <label
-    for="sM_-1UU-0A"
+    for="sM_-0TT_A"
   >
     attr
   </label>
   <input
-    id="sM_-1UU-0A"
+    id="sM_-0TT_A"
   />
 </section>
 <section>
   <label
-    for="sM_-2UUA"
+    for="sM_-1TTA"
   >
     defined
   </label>
   <input
-    id="sM_-2UUA"
+    id="sM_-1TTA"
   />
 </section>
 <label
-  for="sM_-4WUV-3A"
+  for="sM_-3VTU-2A"
 >
   define
 </label>
 <input
-  id="sM_-4WUV-3A"
+  id="sM_-3VTU-2A"
 />
 <em>
   none
 </em>
 <label
-  for="sM_-7VU-6A"
+  for="sM_-6UT-5A"
 >
   inner
 </label>
 <input
-  id="sM_-7VU-6A"
+  id="sM_-6UT-5A"
 />
 <em>
   none
 </em>
 <label
-  for="sM_-9UA"
+  for="sM_-8TA"
 >
   named
 </label>
 <input
-  id="sM_-9UA"
+  id="sM_-8TA"
 />
 ```
 
@@ -96,12 +96,12 @@ for (const input of document.querySelectorAll("input")) {
 ```html
 <section>
   <label
-    for="sM_WUVA"
+    for="sM_VTUA"
   >
     direct
   </label>
   <input
-    id="sM_WUVA"
+    id="sM_VTUA"
   />
 </section>
 <section>
@@ -111,12 +111,12 @@ for (const input of document.querySelectorAll("input")) {
 </section>
 <section>
   <label
-    for="sM_ZVUUYA"
+    for="sM_YUTTXA"
   >
     body
   </label>
   <input
-    id="sM_ZVUUYA"
+    id="sM_YUTTXA"
   />
 </section>
 <section>
@@ -126,68 +126,68 @@ for (const input of document.querySelectorAll("input")) {
 </section>
 <section>
   <label
-    for="sM_-1UU-0A"
+    for="sM_-0TT_A"
   >
     attr
   </label>
   <input
-    id="sM_-1UU-0A"
+    id="sM_-0TT_A"
   />
 </section>
 <section>
   <label
-    for="sM_-2UUA"
+    for="sM_-1TTA"
   >
     defined
   </label>
   <input
-    id="sM_-2UUA"
+    id="sM_-1TTA"
   />
 </section>
 <label
-  for="sM_-4WUV-3A"
+  for="sM_-3VTU-2A"
 >
   define
 </label>
 <input
-  id="sM_-4WUV-3A"
+  id="sM_-3VTU-2A"
 />
 <em>
   none
 </em>
 <label
-  for="sM_-7VU-6A"
+  for="sM_-6UT-5A"
 >
   inner
 </label>
 <input
-  id="sM_-7VU-6A"
+  id="sM_-6UT-5A"
 />
 <em>
   none
 </em>
 <label
-  for="sM_-9UA"
+  for="sM_-8TA"
 >
   named
 </label>
 <input
-  id="sM_-9UA"
+  id="sM_-8TA"
 />
 <section>
   <label
-    for="sM_-abVUU-aaA"
+    for="sM_-aaUTT-9A"
   >
     created
   </label>
   <input
-    id="sM_-abVUU-aaA"
+    id="sM_-aaUTT-9A"
   />
 </section>
 ```
 ## Change
 ```
-INSERT: #sM_-9UA + section
+INSERT: #sM_-8TA + section
 ```
 
 # Update

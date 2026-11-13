@@ -1,47 +1,29 @@
 // PATCH
-[`a2|2 !a>b0;/ b&;<button>call</button>`, `a3 !a>c0;/D b%b%l&;<section><button>clear</button><!><!></section>`]
+`a3 !a>c0;/D b%b%l&;<section><button>clear</button><!><!></section>`
 {
   xe: "b",
+  Sa4: "e",
   ba: [{
     ca: {
       s: {
         fb: "^^a2",
         fc: "^^a2"
-      },
-      Wb: [{
-        ca: {
-          xd: [_(["Aa", "a", "Ab"], "a0")]
-        }
-      }, "a2"],
-      Wc: [{
-        ca: {
-          xd: [_(["Aa", "a", "Ac"], "a0")]
-        }
-      }, "a2"]
+      }
     }
   }, "a3"]
 }
-;CwY
+;CAE
 
-// PATCH holding CwY
+// PATCH holding CAE
 {
   xe: "c",
+  Sa4: "e",
   ba: [{
     ca: {
       s: {
         fb: "^^a2",
         fc: "^^a2"
-      },
-      Wb: [{
-        ca: {
-          xd: [_(["Aa", "a", "Ab"], "a0")]
-        }
-      }, "a2"],
-      Wc: [{
-        ca: {
-          xd: [_(["Aa", "a", "Ac"], "a0")]
-        }
-      }, "a2"]
+      }
     }
   }, "a3"]
 }

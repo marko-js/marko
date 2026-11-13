@@ -4,12 +4,12 @@
   toggle
 </button>
 <label
-  for="sM_UA"
+  for="sM_TA"
 >
   client
 </label>
 <input
-  id="sM_UA"
+  id="sM_TA"
 />
 <input
   id="sM_A"

@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $handler2__closures = new Set();
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !_server_guard($scope0_reason, 0));
 	let count = 0;
-	const handler = _bind_resume((event) => event.target.dataset.seen = input.title, "__tests__/template.marko_0/handler", $scope0_id, 1);
+	const handler = _bind_resume((event) => event.target.dataset.seen = input.title, "__tests__/template.marko_0/handler", $scope0_id);
 	_html("<main>");
 	_await($scope0_id, "#text/0", input.one, () => {
 		const $scope1_id = _scope_id(), $ui__input_title = _unfilled_if($scope0_reason, 0);

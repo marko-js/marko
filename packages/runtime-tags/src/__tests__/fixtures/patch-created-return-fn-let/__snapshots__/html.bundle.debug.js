@@ -9,7 +9,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 0));
 	const $return = { fn: _bind_resume(function() {
 		return "f:" + input.label;
-	}, "__tests__/tags/card.marko_0/_return", $scope0_id, 1) };
+	}, "__tests__/tags/card.marko_0/_return", $scope0_id) };
 	_scope($scope0_id, { input_label: input.label }, "__tests__/tags/card.marko", 0, { input_label: ["input.label"] });
 	return $return;
 });

@@ -11,8 +11,6 @@ const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>+</button>`)($Wrapper_c
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)($Wrapper_content__walks);
 const $setup = [["#childScope/0>>#childScope/0>#childScope/0>"], ["__tests__/template.marko_0"]];
 _shells({
-	"__tests__/template.marko_4*content": `__tests__/template.marko_4*content >>#childScope/0>>#childScope/0>#childScope/0>;${((_w0) => `/${_w0}&b`)($Wrapper_content__walks)};${((_w0) => `${_w0}<!>`)($Wrapper_content__template)}`,
-	"__tests__/template.marko_2*content": `__tests__/template.marko_2*content;${$Inner_content__walks};${$Inner_content__template}`,
 	"__tests__/template.marko": `__tests__/template.marko #childScope/0>>#childScope/0>#childScope/0>!__tests__/template.marko_0;${((_w0) => `/${_w0}& b`)($Wrapper_content__walks)};${((_w0) => `${_w0}<button>+</button>`)($Wrapper_content__template)}`,
 	"__tests__/template.marko_5*shell": `__tests__/template.marko_5*shell >#childScope/0>>>#childScope/0>>#childScope/0>#childScope/0>;${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($Relay_content__walks)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($Relay_content__template)}`
 });
@@ -36,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				z: ($wi__input_label || $wi__x) && ($ui__input_label || $ui__x || _unfilled_if($scope2_reason, 0)) && z,
 				_: ($wi__input_label || $wi__x || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)
 			}, "__tests__/template.marko", "3:4", { z: "3:19" }), _client_guard(($uf__input_label | $uf__x | $uf__z) << 1, 0) && "__tests__/template.marko_2_input_label#0:4/subscribe"), _client_guard(($uf__x | $uf__z) << 1, 0) && "__tests__/template.marko_2_x#1:3/subscribe") || $fg__z && ($ui__input_label || $ui__x) && _patch_write($scope2_id, "PatchMarkedWrite:z", z, !_server_guard($scope2_reason, 0));
-		}, $scope1_id, 0) };
+		}, $scope1_id) };
 		_set_scope_reason(_updates_from($scope1_reason, 2) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		Inner.content({ z: y });
@@ -66,7 +64,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_: $wi__depth && _scope_with_id($scope3_id),
 				"#childScope/0": _existing_scope($childScope2)
 			}, "__tests__/template.marko", "9:4");
-		}, $scope3_id, 0) };
+		}, $scope3_id) };
 		_set_scope_reason($uf__a__OR__b << 1 | $uf__a << 3 | $uf__b << 5);
 		const $childScope3 = _peek_scope_id($scope3_id, "#childScope/0", 2, 0, $scope0_id);
 		Outer.content({

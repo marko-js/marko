@@ -13,6 +13,7 @@
 ```
 INSERT: button
 INSERT: button + em
+UPDATE: em::text@7 "" => "b"
 ```
 
 # Update

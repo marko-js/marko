@@ -17,6 +17,7 @@
 INSERT: button
 INSERT: button + p
 INSERT: p + section
+UPDATE: section > em::text@7 "" => "b"
 ```
 
 # Update `{"show":true,"label":"c"}`

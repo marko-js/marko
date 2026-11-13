@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0, 1);
 	counter_box_default({ onChange: _resume(function(v) {
 		last = "a" + v;
-	}, "a0", $scope0_id, 1) });
+	}, "a0", $scope0_id) });
 	_var($scope0_id, "b", $childScope, "a2");
 	_patch_child_end();
 	_html(`<p>${_text_mark($scope0_id, "c", last)}</p><button class=mode>b</button>${_el_mark($scope0_id, "d")}<button class=set>set</button>${_el_mark($scope0_id, "e")}`);

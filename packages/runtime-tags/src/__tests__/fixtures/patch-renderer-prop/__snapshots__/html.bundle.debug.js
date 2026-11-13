@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<em>${_text_mark($scope1_id, "#text/0", input.title, 1, $scope0_reason, 0)}</em>`);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_title#0:4/subscribe", $cg__input_title);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"), $cg__input_title && "__tests__/template.marko_1_input_title#0:4/subscribe");
-	}, $scope0_id, void 0, 1) };
+	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(10);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);

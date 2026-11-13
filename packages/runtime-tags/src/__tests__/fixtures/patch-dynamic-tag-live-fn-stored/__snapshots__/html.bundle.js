@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_title && _patch_write($scope0_id, "xd", input.title, !$sg__input_title);
 	const fn = _bind_resume(() => {
 		document.getElementById("out").textContent = "v:" + input.title;
-	}, "a0", $scope0_id, 1);
+	}, "a0", $scope0_id);
 	_html("<output id=out></output>");
 	_dynamic_tag($scope0_id, "a", input.alt || reader_default, { fn }, 1, 0, 0, $wg__input_title__OR__input_alt, $scope0_reason, 0);
 	_patch_render($scope0_id, "a1", (($fg__input_alt ? " e" : "") + ($fg__input_title ? " f" : "") + ($fg__input_title ? " d" : "")).slice(1), $scope0_reason, 0);

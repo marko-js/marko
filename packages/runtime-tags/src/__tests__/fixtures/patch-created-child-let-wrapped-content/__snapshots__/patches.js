@@ -1,5 +1,5 @@
 // PATCH
-[`c1|1;D%;<b><!></b>`, `a1;Db%;<em>static <!></em>`, `a2 !a>a>b0;//D b%l&&;<section><button>clear</button><!></section>`]
+`a2 !a>a>b0;//D b%l&&;<section><button>clear</button><!></section>`
 {
   ba: [{
     ca: {
@@ -8,18 +8,17 @@
           fb: "^^c1"
         }
       },
-      W1: {
-        fa: "^^^a1",
-        cAa: {
-          ta: "b"
-        }
+      s: {
+        dd: "^a1"
       }
     }
-  }, "a2"]
+  }, "a2"],
+  xe: "b",
+  Sa3: "e"
 }
-;DSY
+;CAE
 
-// PATCH holding DSY
+// PATCH holding CAE
 {
   ba: [{
     ca: {
@@ -28,17 +27,16 @@
           fb: "^^c1"
         }
       },
-      W1: {
-        fa: "^^^a1",
-        cAa: {
-          ta: "c"
-        }
+      s: {
+        dd: "^a1"
       }
     }
-  }, "a2"]
+  }, "a2"],
+  xe: "c",
+  Sa3: "e"
 }
 
-// PATCH holding DSY
+// PATCH holding CAE
 {
   ba: [{
     ca: {
@@ -47,12 +45,11 @@
           fb: "^^c1"
         }
       },
-      W1: {
-        fa: "^^^a1",
-        cAa: {
-          ta: "d"
-        }
+      s: {
+        dd: "^a1"
       }
     }
-  }, "a2"]
+  }, "a2"],
+  xe: "d",
+  Sa3: "e"
 }

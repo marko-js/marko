@@ -18,7 +18,7 @@ var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/tags/frag-host.marko_1_input_mode#0:3/subscribe", $cg__input_mode);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/frag-host.marko_1_input_b#0:4/subscribe", $cg__input_b);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_mode__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/frag-host.marko", "1:2"), $cg__input_mode && "__tests__/tags/frag-host.marko_1_input_mode#0:3/subscribe"), $cg__input_b && "__tests__/tags/frag-host.marko_1_input_b#0:4/subscribe");
-	}, $scope0_id, void 0, 1) };
+	}, $scope0_id) };
 	const attrs = { content: input.mode ? one : null };
 	_html("<section");
 	_attrs_content(attrs, "#section/0", $scope0_id, "section", 0, 1, 0, $scope0_reason, 0);

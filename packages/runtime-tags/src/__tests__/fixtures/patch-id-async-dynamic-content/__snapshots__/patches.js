@@ -21,8 +21,8 @@
           cAa: {
             ca: {
               s: {
-                aa$for: "sM_gbWUA",
-                ac$id: "sM_gbWUA",
+                aa$for: "sM_gbVTA",
+                ac$id: "sM_gbVTA",
                 "ac$aria-describedby": $
               },
               tb: "b"
@@ -31,9 +31,9 @@
             cAb: {
               ca: {
                 s: {
-                  aa$for: "sM_gbWVVA",
+                  aa$for: "sM_gbVUUA",
                   tb: "b",
-                  ac$id: "sM_gbWVVA",
+                  ac$id: "sM_gbVUUA",
                   "ac$aria-describedby": $
                 }
               }
@@ -49,8 +49,8 @@
           cAa: {
             ca: {
               s: {
-                aa$for: "sM_gcWUA",
-                ac$id: "sM_gcWUA",
+                aa$for: "sM_gcVTA",
+                ac$id: "sM_gcVTA",
                 "ac$aria-describedby": $
               },
               tb: "c"
@@ -59,9 +59,9 @@
             cAb: {
               ca: {
                 s: {
-                  aa$for: "sM_gcWVVA",
+                  aa$for: "sM_gcVUUA",
                   tb: "c",
-                  ac$id: "sM_gcWVVA",
+                  ac$id: "sM_gcVUUA",
                   "ac$aria-describedby": $
                 }
               }
@@ -91,9 +91,9 @@
           cAa: {
             ca: {
               s: {
-                aa$for: "sM_gaWVA",
+                aa$for: "sM_gaVUA",
                 tb: "a",
-                ac$id: "sM_gaWVA",
+                ac$id: "sM_gaVUA",
                 "ac$aria-describedby": $
               }
             }
@@ -115,9 +115,9 @@
             cAa: {
               ca: {
                 s: {
-                  aa$for: "sM_gcWVA",
+                  aa$for: "sM_gcVUA",
                   tb: "c",
-                  ac$id: "sM_gcWVA",
+                  ac$id: "sM_gcVUA",
                   "ac$aria-describedby": $
                 }
               }

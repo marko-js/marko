@@ -21,11 +21,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !$sg__input_title);
 	const key = input.key;
 	const o = {
-		[key]: _bind_resume((s) => s + ":" + input.title, "__tests__/template.marko_0/o", $scope0_id, 1),
+		[key]: _bind_resume((s) => s + ":" + input.title, "__tests__/template.marko_0/o", $scope0_id),
 		key: input.title
 	};
-	const [first] = [...input.pre, _bind_resume((s) => s + "=" + input.title, "__tests__/template.marko_0/first", $scope0_id, 1)];
-	const tag = _bind_resume((s) => s + "#" + input.title, "__tests__/template.marko_0/tag", $scope0_id, 1);
+	const [first] = [...input.pre, _bind_resume((s) => s + "=" + input.title, "__tests__/template.marko_0/first", $scope0_id)];
+	const tag = _bind_resume((s) => s + "#" + input.title, "__tests__/template.marko_0/tag", $scope0_id);
 	let show = true;
 	_html("<main>");
 	_if(() => {

@@ -2,8 +2,8 @@ import assert from "node:assert/strict";
 
 import type { TestConfig } from "../../main.test";
 
-// A label a patch creates names its scope's id: in a kept row, in dynamic
-// content, and in kept content a created row renders.
+// A label a patch creates names its scope's id: in a paired row, in dynamic
+// content, and in content a `<let>` holds that a created row renders.
 export const config: TestConfig = {
   skip_fresh_render: true,
   equivalent: false,

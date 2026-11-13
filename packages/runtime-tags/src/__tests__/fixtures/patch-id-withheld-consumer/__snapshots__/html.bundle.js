@@ -11,12 +11,11 @@ var card_default = _template("b", (input) => {
 	_html(`<input${_attr("id", own, $scope0_id, "a", 0, 0)}>${_el_mark($scope0_id, "a", 0)}<label${_attr("for", own, $scope0_id, "b", 0, 0)}>own</label>${_el_mark($scope0_id, "b", 0)}<button>clear</button>${_el_mark($scope0_id, "c")}`);
 	_dynamic_tag($scope0_id, "d", c, {}, 2, 0, 0, 1, _client_guard($scope0_reason, 0) << 1, 0, 1);
 	_script($scope0_id, "b0");
-	_scope($scope0_id, {}) || _client_branch(input.content);
+	_scope($scope0_id, {});
 });
 
 // template.marko
 _shells({
-	a0: "a0|2; b D ;<input><label> </label>",
 	a: "a;b%;<!><!><!>",
 	a1: `a1${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template)}`
 });
@@ -27,15 +26,18 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
-		card_default({ content: _content("a0", () => {
+		card_default({ content: _content_resume("a0", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			const uid = _id("A");
-			_html(`<input${_attr("id", uid, $scope2_id, "a", 0, 0)}>${_el_mark($scope2_id, "a", 0)}<label${_attr("for", uid, $scope2_id, "b", 0, 0)}>${_text_mark($scope2_id, "c", row.id, 1, $scope0_reason, 0)}</label>${_el_mark($scope2_id, "b", 0)}`);
-			_scope($scope2_id, {});
-		}, $scope1_id, 2) });
+			_html(`<input${_attr("id", uid)}><label${_attr("for", uid)}>${_escape(row.id)}</label>`);
+			_scope($scope2_id, { _: _scope_with_id($scope1_id) });
+		}, $scope1_id) });
 		_patch_child_end();
-		_scope($scope1_id, { a: _existing_scope($childScope) });
+		_scope($scope1_id, {
+			M: row?.id,
+			a: _existing_scope($childScope)
+		});
 	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a1", $scope0_reason, 0);
 	_scope($scope0_id, {});
 }, 1);

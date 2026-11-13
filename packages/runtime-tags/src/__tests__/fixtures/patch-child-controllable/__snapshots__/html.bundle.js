@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 		show: input.show,
 		onCount: _resume(function(next) {
 			last = next;
-		}, "a0", $scope0_id, 1)
+		}, "a0", $scope0_id)
 	});
 	_patch_child_end();
 	_html("</main>");

@@ -53,6 +53,16 @@
 ## Change
 ```
 INSERT: section
+UPDATE: section > span:nth-of-type(3)::text " " => "function"
+INSERT: section > button:nth-of-type(2) + span
+INSERT: section > span:nth-of-type(1) + span
+INSERT: section > button:nth-of-type(1) + i
+INSERT: section > button:nth-of-type(5) + span
+INSERT: section > span:nth-of-type(3) + i
+INSERT: section > span:nth-of-type(4) + span
+UPDATE: section > span:nth-of-type(6)::text " " => "function"
+UPDATE: section > i:nth-of-type(1)::text " " => "b"
+UPDATE: section > i:nth-of-type(2)::text " " => "b"
 ```
 
 # Update
@@ -129,20 +139,20 @@ LOG "h" "b"
 ```
 ## Change
 ```
-INSERT: section > button:nth-of-type(1) + b
-REMOVE: section > b:nth-of-type(1) + i
-UPDATE: section > b:nth-of-type(1)[x] null => "1"
 INSERT: section > button:nth-of-type(2) + em
 REMOVE: section > em:nth-of-type(1) + span
 INSERT: section > em:nth-of-type(1) + em
 REMOVE: section > em:nth-of-type(2) + span
-INSERT: section > span:nth-of-type(1) + b
-REMOVE: section > b:nth-of-type(2) + i
-UPDATE: section > b:nth-of-type(2)[x] null => "1"
+INSERT: section > button:nth-of-type(1) + b
+REMOVE: section > b:nth-of-type(1) + i
+UPDATE: section > b:nth-of-type(1)[x] null => "1"
 INSERT: section > button:nth-of-type(5) + em
 REMOVE: section > em:nth-of-type(3) + span
 INSERT: section > em:nth-of-type(3) + em
 REMOVE: section > em:nth-of-type(4) + span
+INSERT: section > span:nth-of-type(1) + b
+REMOVE: section > b:nth-of-type(2) + i
+UPDATE: section > b:nth-of-type(2)[x] null => "1"
 ```
 
 # Update

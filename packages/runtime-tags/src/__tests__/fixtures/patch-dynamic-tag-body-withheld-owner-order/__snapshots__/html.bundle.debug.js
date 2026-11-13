@@ -65,7 +65,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<em>${_text_mark($scope2_id, "#text/0", label, 1, $scope1_reason, 1)}</em>`);
 			_unfilled_if($scope1_reason, 1) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_label#1:4/subscribe", $cg__label);
 			_subscribe(_unfilled_if($scope1_reason, 1) && $D_content__label__closures, _scope($scope2_id, { _: ($wi__input_on || $wi__label) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4"), $cg__label && "__tests__/template.marko_2_label#1:4/subscribe");
-		}, $scope1_id, ($scope) => $scope1_page ? [{ label }] : [], 1) };
+		}, $scope1_id, ($scope) => $scope1_page ? [{ label }] : []) };
 		_dynamic_tag($scope1_id, "#text/0", input.on ? keeper_default : plain_default, { content: X }, 1, 0, 0, $wg__input_on, $scope0_reason, 0, 0, void 0, 0, 0, "__tests__/template.marko_2*content");
 		_dynamic_tag($scope1_id, "#text/1", input.on ? keeper_default : plain_default, { content: prev }, 9, 0, 0, $wg__input_on || $wg__prev, $uf__input_on << 1, 0, 0, void 0, 0, 0, "__tests__/template.marko_2*content");
 		const $return = X;

@@ -23,7 +23,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/tags/outer.marko_1*shell"], $scope0_reason, 1);
 	_script($scope0_id, "__tests__/tags/outer.marko_0");
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:value_content", value?.content, 1);
-	_scope($scope0_id, { value_content: _write_if($scope0_reason, 1) && value?.content }, "__tests__/tags/outer.marko", 0, { value_content: ["value.content", "1:6"] }) || _client_branch(input.data);
+	_scope($scope0_id, { value_content: _write_if($scope0_reason, 1) && value?.content }, "__tests__/tags/outer.marko", 0, { value_content: ["value.content", "1:6"] });
 });
 
 // template.marko
@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<em>${_text_mark($scope1_id, "#text/0", input.label, $wg__input_label)}</em>`);
 		$cg__input_label && _patch_render($scope1_id, "__tests__/template.marko_1_input_label#0:3/subscribe");
 		_subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), $cg__input_label && "__tests__/template.marko_1_input_label#0:3/subscribe", $wg__input_label);
-	}, $scope0_id, void 0, 1) };
+	}, $scope0_id) };
 	_if(() => {
 		if (input.show) {
 			const $scope2_id = _scope_id();

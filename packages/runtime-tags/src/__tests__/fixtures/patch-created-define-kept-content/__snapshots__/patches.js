@@ -1,5 +1,5 @@
 // PATCH
-[`a1|3;D ;<span> </span>`, `a4 !a>a>b0;//D b%b%l&&;<section><button>clear</button><!><!></section>`]
+`a5 !a>a>b0;//D b%b%l&&;<section><button>clear</button><!><!></section>`
 {
   ba: [{
     ca: {
@@ -9,15 +9,14 @@
           fc: "^^a1"
         }
       },
-      W3: {
-        ta: "b"
-      }
+      xd: "b",
+      Sa3: "d"
     }
-  }, "a4"]
+  }, "a5"]
 }
-;CQY
+;BgE
 
-// PATCH holding CQY
+// PATCH holding BgE
 {
   ba: [{
     ca: {
@@ -27,9 +26,8 @@
           fc: "^^a1"
         }
       },
-      W3: {
-        ta: "c"
-      }
+      xd: "c",
+      Sa3: "d"
     }
-  }, "a4"]
+  }, "a5"]
 }

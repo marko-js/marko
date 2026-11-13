@@ -6,6 +6,15 @@
   Fields
 </h2>
 <label
+  for="sM_gaTA"
+>
+  a
+</label>
+<input
+  aria-describedby="sM_A"
+  id="sM_gaTA"
+/>
+<label
   for="sM_gaUA"
 >
   a
@@ -15,13 +24,13 @@
   id="sM_gaUA"
 />
 <label
-  for="sM_gaVA"
+  for="sM_gbTA"
 >
-  a
+  b
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_gaVA"
+  id="sM_gbTA"
 />
 <label
   for="sM_gbUA"
@@ -31,15 +40,6 @@
 <input
   aria-describedby="sM_A"
   id="sM_gbUA"
-/>
-<label
-  for="sM_gbVA"
->
-  b
-</label>
-<input
-  aria-describedby="sM_A"
-  id="sM_gbVA"
 />
 ```
 
@@ -51,6 +51,15 @@
   Fields
 </h2>
 <label
+  for="sM_gbTA"
+>
+  b
+</label>
+<input
+  aria-describedby="sM_A"
+  id="sM_gbTA"
+/>
+<label
   for="sM_gbUA"
 >
   b
@@ -60,13 +69,13 @@
   id="sM_gbUA"
 />
 <label
-  for="sM_gbVA"
+  for="sM_gcTA"
 >
-  b
+  c
 </label>
 <input
   aria-describedby="sM_A"
-  id="sM_gbVA"
+  id="sM_gcTA"
 />
 <label
   for="sM_gcUA"
@@ -77,31 +86,22 @@
   aria-describedby="sM_A"
   id="sM_gcUA"
 />
-<label
-  for="sM_gcVA"
->
-  c
-</label>
-<input
-  aria-describedby="sM_A"
-  id="sM_gcVA"
-/>
 ```
 ## Change
 ```
 REMOVE: #sM_A + label
-REMOVE: #sM_A + #sM_gaUA
+REMOVE: #sM_A + #sM_gaTA
 REMOVE: #sM_A + label
-REMOVE: #sM_A + #sM_gaVA
-INSERT: #sM_gbVA + :is(label, #sM_gcUA, label, #sM_gcVA)
-UPDATE: label:nth-of-type(3)[for] null => "sM_gcUA"
+REMOVE: #sM_A + #sM_gaUA
+INSERT: #sM_gbUA + :is(label, #sM_gcTA, label, #sM_gcUA)
+UPDATE: label:nth-of-type(3)[for] null => "sM_gcTA"
 UPDATE: label:nth-of-type(3)::text " " => "c"
+UPDATE: #sM_gcTA[id] null => "sM_gcTA"
+UPDATE: #sM_gcTA[aria-describedby] null => "sM_A"
+UPDATE: label:nth-of-type(4)[for] null => "sM_gcUA"
+UPDATE: label:nth-of-type(4)::text " " => "c"
 UPDATE: #sM_gcUA[id] null => "sM_gcUA"
 UPDATE: #sM_gcUA[aria-describedby] null => "sM_A"
-UPDATE: label:nth-of-type(4)[for] null => "sM_gcVA"
-UPDATE: label:nth-of-type(4)::text " " => "c"
-UPDATE: #sM_gcVA[id] null => "sM_gcVA"
-UPDATE: #sM_gcVA[aria-describedby] null => "sM_A"
 ```
 
 # Update

@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		show: input.show,
 		onCount: _resume(function(next) {
 			first = next;
-		}, "__tests__/template.marko_0/onCount", $scope0_id, 1)
+		}, "__tests__/template.marko_0/onCount", $scope0_id)
 	});
 	_patch_child_end();
 	_set_scope_reason($uf__input_show << 1);
@@ -59,7 +59,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		show: input.show,
 		onCount: _resume(function(next) {
 			second = next * 2;
-		}, "__tests__/template.marko_0/onCount2", $scope0_id, 1)
+		}, "__tests__/template.marko_0/onCount2", $scope0_id)
 	});
 	_patch_child_end();
 	_html("</main>");

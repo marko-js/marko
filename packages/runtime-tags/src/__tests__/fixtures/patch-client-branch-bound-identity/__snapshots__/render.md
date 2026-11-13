@@ -29,6 +29,7 @@
 ```
 INSERT: section
 UPDATE: p::text "1" => "2"
+UPDATE: section > p::text@5 "" => "same"
 UPDATE: section > b:nth-of-type(1)::text " " => "b"
 UPDATE: section > b:nth-of-type(2)::text " " => "b"
 ```

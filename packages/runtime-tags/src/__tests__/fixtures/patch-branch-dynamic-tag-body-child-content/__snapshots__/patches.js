@@ -20,9 +20,9 @@
   xf: "b",
   Sa5: "f"
 }
-;Cww
+;CQY
 
-// PATCH holding Cww
+// PATCH holding CQY
 {
   ba: [{
     fa: [">div", "a2"],
@@ -44,7 +44,7 @@
   Sa5: "f"
 }
 
-// PATCH holding Cww
+// PATCH holding CQY
 {
   ba: [{
     fa: [">div", "a2"],

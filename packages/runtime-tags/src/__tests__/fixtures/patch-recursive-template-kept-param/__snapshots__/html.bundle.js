@@ -31,12 +31,11 @@ const $template = /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$1);
 const $setup$1 = _shell_setup([[], []], ["b>", $setup$2]);
 _shells({
-	c2: "c2",
 	c: `c${_shell_marker($setup$1)};${((_w0) => `b%b/${_w0}&b`)($walks$1)};${((_w0) => `<!><!>${_w0}<!>`)($template$1)}`,
 	c5: `c5${_shell_marker([[], []], ["a>", $setup$1])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template)}`
 });
 const $content = (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_n = _write_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_n = _write_guard($scope0_reason, 0), $wg__input_label = _write_guard($scope0_reason, 1), $cg__input_n = _client_guard($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $wi__input_n = _write_if($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_n__closures = /* @__PURE__ */ new Set();
 	const $input_label__closures = /* @__PURE__ */ new Set();
@@ -51,11 +50,11 @@ const $content = (input) => {
 				content: _content_resume("c2", () => {
 					_scope_reason();
 					const $scope2_id = _scope_id();
-					_html(`<em>${_text_mark($scope2_id, "a", input.n, 1, $scope0_reason, 0)}:${_text_mark($scope2_id, "b", input.label, 2, $scope0_reason, 1)}</em>`);
-					_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "c0", $cg__input_n);
-					_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "c1", $cg__input_label);
-					_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_n && "c0"), $cg__input_label && "c1");
-				}, $scope1_id, void 0, 1)
+					_html(`<em>${_text_mark($scope2_id, "a", input.n, $wg__input_n)}:${_text_mark($scope2_id, "b", input.label, $wg__input_label * 2)}</em>`);
+					$cg__input_n && _patch_render($scope2_id, "c0");
+					$cg__input_label && _patch_render($scope2_id, "c1");
+					_subscribe($wi__input_label && $input_label__closures, _subscribe($wi__input_n && $input_n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_n && "c0", $wg__input_n || $wg__input_label), $cg__input_label && "c1", $wg__input_n || $wg__input_label);
+				}, $scope1_id)
 			});
 			_patch_child_end();
 			$cg__input_n && _patch_render($scope1_id, "c3");
@@ -75,8 +74,8 @@ const $content = (input) => {
 	_scope($scope0_id, {
 		e: input.n,
 		f: input.label,
-		h: _write_if($scope0_reason, 0) && $input_n__closures,
-		i: _write_if($scope0_reason, 1) && $input_label__closures,
+		h: $wi__input_n && $input_n__closures,
+		i: $wi__input_label && $input_label__closures,
 		b: _existing_scope($childScope2)
 	}) || (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.n, !_server_guard($scope0_reason, 0)) && _patch_subscribers($scope0_id, "c6", "e"), $fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "c7", "f"));
 };

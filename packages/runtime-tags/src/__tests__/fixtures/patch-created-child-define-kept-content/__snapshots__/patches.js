@@ -1,5 +1,5 @@
 // PATCH
-[`c1|2;D ;<span> </span>`, `a1 a>a>!a>a>a>b0;///D b%b%l&&&;<section><button>clear</button><!><!></section>`]
+`a1 a>a>!a>a>a>b0;///D b%b%l&&&;<section><button>clear</button><!><!></section>`
 {
   ba: [{
     ca: {
@@ -9,17 +9,16 @@
             fb: "^^c1",
             fc: "^^c1"
           }
-        },
-        W2: {
-          ta: "b"
         }
-      }
+      },
+      xd: "b",
+      Sc3: "d"
     }
   }, "a1"]
 }
-;DRI
+;CgE
 
-// PATCH holding DRI
+// PATCH holding CgE
 {
   ba: [{
     ca: {
@@ -29,11 +28,10 @@
             fb: "^^c1",
             fc: "^^c1"
           }
-        },
-        W2: {
-          ta: "c"
         }
-      }
+      },
+      xd: "c",
+      Sc3: "d"
     }
   }, "a1"]
 }

@@ -4,21 +4,21 @@
   plain
 </span>
 <label
-  for="sM_1UVA"
+  for="sM_1TUA"
 >
   1
 </label>
 <input
-  id="sM_1UVA"
+  id="sM_1TUA"
 />
 caught
 <label
-  for="sM_1VA"
+  for="sM_1UA"
 >
   row 1
 </label>
 <input
-  id="sM_1VA"
+  id="sM_1UA"
 />
 ```
 
@@ -39,55 +39,55 @@ assert.equal(ids.size, document.querySelectorAll("input").length);
   plain
 </span>
 <label
-  for="sM_1UVA"
+  for="sM_1TUA"
 >
   1
 </label>
 <input
-  id="sM_1UVA"
+  id="sM_1TUA"
 />
 caught
 <label
-  for="sM_1VA"
+  for="sM_1UA"
 >
   row 1
 </label>
 <input
-  id="sM_1VA"
+  id="sM_1UA"
 />
 <span>
   plain
 </span>
 <label
-  for="sM_2UVA"
+  for="sM_2TUA"
 >
   2
 </label>
 <input
-  id="sM_2UVA"
+  id="sM_2TUA"
 />
 caught
 <label
-  for="sM_2VA"
+  for="sM_2UA"
 >
   row 2
 </label>
 <input
-  id="sM_2VA"
+  id="sM_2UA"
 />
 ```
 ## Change
 ```
-INSERT: #sM_1VA + :is(span, label, #sM_2UVA, label, #sM_2VA)
-UPDATE: label:nth-of-type(3)[for] null => "sM_2UVA"
+INSERT: #sM_1UA + :is(span, label, #sM_2TUA, label, #sM_2UA)
+UPDATE: label:nth-of-type(3)[for] null => "sM_2TUA"
 UPDATE: label:nth-of-type(3)::text " " => "2"
-UPDATE: #sM_2UVA[id] null => "sM_2UVA"
-INSERT: #sM_2UVA + p
-INSERT: #sM_2UVA + ::text("caught")
+UPDATE: #sM_2TUA[id] null => "sM_2TUA"
+INSERT: #sM_2TUA + p
+INSERT: #sM_2TUA + ::text("caught")
 REMOVE: ::text@6 + p
-UPDATE: label:nth-of-type(4)[for] null => "sM_2VA"
+UPDATE: label:nth-of-type(4)[for] null => "sM_2UA"
 UPDATE: label:nth-of-type(4)::text " " => "row 2"
-UPDATE: #sM_2VA[id] null => "sM_2VA"
+UPDATE: #sM_2UA[id] null => "sM_2UA"
 ```
 
 # Update

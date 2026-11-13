@@ -19,8 +19,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $ui__input_title__OR__input_upper = _unfilled_if($scope0_reason, 0), $wi__input_upper = _write_if($scope0_reason, 2), $sg__input_title = _server_guard($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 1), $ui__input_upper = _unfilled_if($scope0_reason, 2), $fg__input_upper = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	$fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !$sg__input_title);
-	const up = _bind_resume(() => "U" + input.title, "__tests__/template.marko_0/up", $scope0_id, 1);
-	const low = _bind_resume(() => "l" + input.title, "__tests__/template.marko_0/low", $scope0_id, 1);
+	const up = _bind_resume(() => "U" + input.title, "__tests__/template.marko_0/up", $scope0_id);
+	const low = _bind_resume(() => "l" + input.title, "__tests__/template.marko_0/low", $scope0_id);
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	label_default({ get: input.upper ? up : low });

@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_label && $ui__input_show && _patch_write($scope0_id, "xd", input.label, !$sg__input_label);
 	const opts = { fn: _bind_resume(function() {
 		return "f:" + input.label;
-	}, "a0", $scope0_id, 1) };
+	}, "a0", $scope0_id) };
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();

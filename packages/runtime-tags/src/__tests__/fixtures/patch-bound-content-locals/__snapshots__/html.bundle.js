@@ -15,7 +15,7 @@ var list_default = _template("b", (input) => {
 	}, 0, $scope0_id, "b");
 	_script($scope0_id, "b0");
 	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb1", items, 1);
-	_scope($scope0_id, { f: items }) || _client_branch(input.item);
+	_scope($scope0_id, { f: items });
 });
 
 // template.marko

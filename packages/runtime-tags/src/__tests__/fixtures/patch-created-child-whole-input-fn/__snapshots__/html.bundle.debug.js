@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			card_default({ fn: _bind_resume(function() {
 				return "f:" + input.label;
-			}, "__tests__/template.marko_1/fn", $scope1_id, 1) });
+			}, "__tests__/template.marko_1/fn", $scope1_id) });
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "__tests__/template.marko_1_input_label#0:4/setup");
 			_scope($scope1_id, {

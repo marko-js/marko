@@ -2,22 +2,22 @@
 ```html
 <p>
   <label
-    for="sM_0UA"
+    for="sM_0TA"
   >
     body
   </label>
   <input
-    id="sM_0UA"
+    id="sM_0TA"
   />
 </p>
 <div>
   <label
-    for="sM_1UA"
+    for="sM_1TA"
   >
     body
   </label>
   <input
-    id="sM_1UA"
+    id="sM_1TA"
   />
 </div>
 ```

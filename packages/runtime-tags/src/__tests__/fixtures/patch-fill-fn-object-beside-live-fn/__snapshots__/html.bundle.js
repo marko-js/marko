@@ -14,19 +14,19 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	$fg__input_title && _patch_write($scope0_id, "xe", input.title, !$sg__input_title);
 	const { fmt, wrap, quoted, keyed, templated } = {
-		fmt: _bind_resume((s) => s + ":" + input.title, "a0", $scope0_id, 1),
+		fmt: _bind_resume((s) => s + ":" + input.title, "a0", $scope0_id),
 		wrap: _bind_resume(function(s) {
 			return "(" + s + input.title + ")";
-		}, "a1", $scope0_id, 1),
-		"quoted": _bind_resume((s) => s + "'" + input.title, "a2", $scope0_id, 1),
-		["keyed"]: _bind_resume((s) => s + "[" + input.title, "a3", $scope0_id, 1),
-		[`templated`]: _bind_resume((s) => s + "`" + input.title, "a4", $scope0_id, 1)
+		}, "a1", $scope0_id),
+		"quoted": _bind_resume((s) => s + "'" + input.title, "a2", $scope0_id),
+		["keyed"]: _bind_resume((s) => s + "[" + input.title, "a3", $scope0_id),
+		[`templated`]: _bind_resume((s) => s + "`" + input.title, "a4", $scope0_id)
 	};
 	const o = {
-		get: _bind_resume((s) => s + "=" + input.title, "a5", $scope0_id, 1),
-		0: _bind_resume((s) => s + "0" + input.title, "a6", $scope0_id, 1)
+		get: _bind_resume((s) => s + "=" + input.title, "a5", $scope0_id),
+		0: _bind_resume((s) => s + "0" + input.title, "a6", $scope0_id)
 	};
-	const tag = _bind_resume((s) => s + "#" + input.title, "a7", $scope0_id, 1);
+	const tag = _bind_resume((s) => s + "#" + input.title, "a7", $scope0_id);
 	let show = true;
 	_html("<main>");
 	_if(() => {

@@ -7,7 +7,7 @@ var make_default = _template("c", (input) => {
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xc", input.title, !_server_guard($scope0_reason, 0));
 	const $return = _bind_resume(() => {
 		document.getElementById("out").textContent = "v:" + input.title;
-	}, "c0", $scope0_id, 1);
+	}, "c0", $scope0_id);
 	_scope($scope0_id, { c: input.title });
 	return $return;
 });

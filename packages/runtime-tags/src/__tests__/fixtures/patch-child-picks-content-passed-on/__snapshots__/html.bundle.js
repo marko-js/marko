@@ -60,13 +60,13 @@ var template_default = _template("a", (input) => {
 			_html(`A${_text_mark($scope1_id, "a", input.x, 2, $scope0_reason, 2)}`);
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "a0", $cg__input_x);
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_x__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), $cg__input_x && "a0");
-		}, $scope0_id, void 0, 1) }),
+		}, $scope0_id) }),
 		b: attrTag({ content: _content_resume("a3", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`B${_text_mark($scope2_id, "a", s, 2)}`);
 			_subscribe($s__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), "a1");
-		}, $scope0_id, void 0, 1) })
+		}, $scope0_id) })
 	});
 	_patch_child_end();
 	_script($scope0_id, "a4");

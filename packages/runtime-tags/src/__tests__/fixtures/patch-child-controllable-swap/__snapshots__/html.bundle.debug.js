@@ -44,10 +44,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let last = 0;
 	const plain = _resume((next) => {
 		last = next;
-	}, "__tests__/template.marko_0/plain", $scope0_id, 1);
+	}, "__tests__/template.marko_0/plain", $scope0_id);
 	const tenfold = _resume((next) => {
 		last = next * 10;
-	}, "__tests__/template.marko_0/tenfold", $scope0_id, 1);
+	}, "__tests__/template.marko_0/tenfold", $scope0_id);
 	_html(`<main><h1>${_text_mark($scope0_id, "#text/0", input.title, 1, $scope0_reason, 0)}</h1><p>Last ${_text_mark($scope0_id, "#text/1", last, 2)}</p>`);
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 2) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/2", 0);

@@ -9,7 +9,7 @@ var make_default = _template("__tests__/tags/make.marko", (input) => {
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !_server_guard($scope0_reason, 0));
 	const $return = _bind_resume(() => {
 		document.getElementById("out").textContent = "v:" + input.title;
-	}, "__tests__/tags/make.marko_0/_return", $scope0_id, 1);
+	}, "__tests__/tags/make.marko_0/_return", $scope0_id);
 	_scope($scope0_id, { input_title: input.title }, "__tests__/tags/make.marko", 0, { input_title: ["input.title"] });
 	return $return;
 });

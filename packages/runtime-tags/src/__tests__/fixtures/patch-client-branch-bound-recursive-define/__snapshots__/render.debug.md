@@ -37,6 +37,16 @@
 ```
 INSERT: section
 INSERT: section + span
+INSERT: section > button + section
+INSERT: section > span:nth-of-type(1) + section
+INSERT: section > section:nth-of-type(1) + span
+INSERT: section > span:nth-of-type(1) > b
+INSERT: section > section:nth-of-type(2) + span
+INSERT: section > span:nth-of-type(2) > b
+UPDATE: section > span:nth-of-type(1) > b::text@0 "" => "0"
+UPDATE: section > span:nth-of-type(1) > b::text@1 "" => "b"
+UPDATE: section > span:nth-of-type(2) > b::text@0 "" => "0"
+UPDATE: section > span:nth-of-type(2) > b::text@1 "" => "b"
 ```
 
 # Update
@@ -85,21 +95,21 @@ LOG "tree" 1 "b"
 ```
 ## Change
 ```
-INSERT: section > section:nth-of-type(1) + i
-REMOVE: section > i:nth-of-type(1) + span
-INSERT: section > i:nth-of-type(1) > b
-UPDATE: section > i:nth-of-type(1) > b::text@0 "" => "0"
-UPDATE: section > i:nth-of-type(1) > b::text@1 "" => "c"
-INSERT: section > section:nth-of-type(2) + i
-REMOVE: section > i:nth-of-type(2) + span
-INSERT: section > i:nth-of-type(2) > b
-UPDATE: section > i:nth-of-type(2) > b::text@0 "" => "0"
-UPDATE: section > i:nth-of-type(2) > b::text@1 "" => "c"
 INSERT: section + i
 REMOVE: i + span
 INSERT: i > b
 UPDATE: i > b::text@0 "" => "1"
 UPDATE: i > b::text@1 "" => "c"
+INSERT: section > section:nth-of-type(1) + i
+REMOVE: section > i:nth-of-type(1) + span
+INSERT: section > i:nth-of-type(1) > b
+INSERT: section > section:nth-of-type(2) + i
+REMOVE: section > i:nth-of-type(2) + span
+INSERT: section > i:nth-of-type(2) > b
+UPDATE: section > i:nth-of-type(1) > b::text@1 "" => "c"
+UPDATE: section > i:nth-of-type(1) > b::text@0 "" => "0"
+UPDATE: section > i:nth-of-type(2) > b::text@1 "" => "c"
+UPDATE: section > i:nth-of-type(2) > b::text@0 "" => "0"
 ```
 
 # Update

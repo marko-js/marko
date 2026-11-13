@@ -6,7 +6,6 @@ const $Outer_content__template = $Inner_content__template;
 const $Wrapper_content__walks = /*@__PURE__*/ ((_w0) => `/${_w0}&%c`)($Outer_content__walks);
 const $Wrapper_content__template = /*@__PURE__*/ ((_w0) => `${_w0}<!><!>`)($Outer_content__template);
 _shells({
-	a0: `a0;${$Inner_content__walks};${$Inner_content__template}`,
 	a: `a a>>a>a>!a9;${((_w0) => `/${_w0}& b`)($Wrapper_content__walks)};${((_w0) => `${_w0}<button>+</button>`)($Wrapper_content__template)}`,
 	a7: `a7 >>a>>a>a>;${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($Wrapper_content__walks)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($Wrapper_content__template)}`
 });
@@ -30,7 +29,7 @@ var template_default = _template("a", (input) => {
 				d: ($wi__input_label || $wi__x) && ($ui__input_label || $ui__x || _unfilled_if($scope2_reason, 0)) && z,
 				_: ($wi__input_label || $wi__x || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)
 			}), _client_guard(($uf__input_label | $uf__x | $uf__z) << 1, 0) && "a1"), _client_guard(($uf__x | $uf__z) << 1, 0) && "a2") || $fg__z && ($ui__input_label || $ui__x) && _patch_write($scope2_id, "xd", z, !_server_guard($scope2_reason, 0));
-		}, $scope1_id, 0) };
+		}, $scope1_id) };
 		_set_scope_reason(_updates_from($scope1_reason, 2) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		Inner.content({ z: y });

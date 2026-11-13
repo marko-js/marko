@@ -49,5 +49,5 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a0"], $scope0_reason, 1);
 	_script($scope0_id, "a1");
-	_scope($scope0_id, { g: _write_if($scope0_reason, 1) && p }) || _client_branch(input.promise);
+	_scope($scope0_id, { g: _write_if($scope0_reason, 1) && p });
 }, 1);
