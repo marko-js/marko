@@ -46,7 +46,6 @@ var template_default = _template("a", (input) => {
 					const $scope4_id = _scope_id();
 					_dynamic_tag($scope4_id, "a", input.tag, { content: Inner }, 8, 0, 0, $wg__input_tag);
 					_html(_text_mark($scope4_id, "b", v, $wg__input_p * 2));
-					!$cg__input_tag && _unfilled_if() && _patch_write($scope2_id, "wc", Inner);
 					_subscribe($wi__input_tag && $input_tag__closures, _scope($scope4_id, { Ci: $wi__input_tag && 1 }), $cg__input_tag && "a3", $wg__input_tag || $wg__input_p);
 				}, void 0, void 0, 1, 0, 1);
 				$cg__input_p && _patch_render($scope2_id, "a5");

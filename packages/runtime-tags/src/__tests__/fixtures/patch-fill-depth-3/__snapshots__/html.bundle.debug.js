@@ -9,7 +9,7 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell __tests__/template.marko_3_count#0:8/subscribe;D ;<p> </p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 3), $wg__input_inner = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 1), $cg__input_inner = _client_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_inner = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 3), $wg__input_inner = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 1), $ui__input_inner = _unfilled_if($scope0_reason, 2), $ui__input_items = _unfilled_if($scope0_reason, 3), $ui__input_show__OR__input_inner = _unfilled_if($scope0_reason, 0), $cg__input_inner = _client_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_inner = _filled_guard($scope0_reason, 2), $wi__input_items = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = new Set();
 	const $count__closures = new Set();
@@ -46,17 +46,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_inner && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_inner#0:5/setup", "input_inner");
 	_scope($scope0_id, {
-		input_inner: _write_if($scope0_reason, 1) && ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.inner,
-		input_items: _write_if($scope0_reason, 0) && input.items,
+		input_inner: _write_if($scope0_reason, 1) && ($ui__input_show || $ui__input_inner) && input.inner,
+		input_items: _write_if($scope0_reason, 0) && ($ui__input_show__OR__input_inner || $ui__input_items) && input.items,
 		input_suffix: input.suffix,
 		count,
 		"ClosureScopes:input_suffix/11": _write_if($scope0_reason, 4) && $input_suffix__closures,
 		"ClosureScopes:count/12": $count__closures,
-		"ClosureScopes:input_items/10": _write_if($scope0_reason, 3) && $input_items__closures
+		"ClosureScopes:input_items/10": $wi__input_items && $wi__input_items && ($ui__input_items || $ui__input_show || $ui__input_inner) && $input_items__closures
 	}, "__tests__/template.marko", 0, {
 		input_inner: ["input.inner"],
 		input_items: ["input.items"],
 		input_suffix: ["input.suffix"],
 		count: "1:6"
-	}) || ($fg__input_inner && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_inner", input.inner, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_items", input.items, !_server_guard($scope0_reason, 3)) && ($cg__input_show || $cg__input_inner) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_items#6/subscribers", "input_items"), _filled_guard($scope0_reason, 4) && _patch_write($scope0_id, "PatchMarkedWrite:input_suffix", input.suffix, !_server_guard($scope0_reason, 4)) && ($cg__input_show || $cg__input_inner || $cg__input_items) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_suffix#7/subscribers", "input_suffix"));
+	}) || ($fg__input_inner && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_inner", input.inner, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && $ui__input_show__OR__input_inner && _patch_write($scope0_id, "PatchMarkedWrite:input_items", input.items, !_server_guard($scope0_reason, 3)) && ($cg__input_show || $cg__input_inner) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_items#6/subscribers", "input_items"), _filled_guard($scope0_reason, 4) && _patch_write($scope0_id, "PatchMarkedWrite:input_suffix", input.suffix, !_server_guard($scope0_reason, 4)) && ($cg__input_show || $cg__input_inner || $cg__input_items) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_suffix#7/subscribers", "input_suffix"));
 }, 1);

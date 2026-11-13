@@ -5,7 +5,7 @@ const $setup$1 = [[], []];
 _shells({
 	"__tests__/tags/card.marko_1*content": "__tests__/tags/card.marko_1*content __tests__/tags/card.marko_1_c#0:5/subscribe;D%;<section><!></section>",
 	"__tests__/tags/card.marko_0_#text#1/await": "__tests__/tags/card.marko_0_#text#1/await __tests__/tags/card.marko_1_c#0:5/subscribe;D%;<section><!></section>",
-	"__tests__/tags/card.marko": "__tests__/tags/card.marko;D%l%;<div><!></div><!><!>"
+	"__tests__/tags/card.marko": "__tests__/tags/card.marko !;D%l%;<div><!></div><!><!>"
 });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_reason = _scope_reason();
@@ -13,7 +13,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $c__closures = new Set();
 	let c = input.content;
 	_html("<div>");
-	_dynamic_tag($scope0_id, "#text/0", c, {}, 2, 0, 0, 1, _client_guard($scope0_reason, 0) << 1, 0, 1);
+	_dynamic_tag($scope0_id, "#text/0", c, {});
 	_html("</div>");
 	_await($scope0_id, "#text/1", resolveAfter("v", 1), (v) => {
 		const $scope1_id = _scope_id();
@@ -22,6 +22,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		_html("</section>");
 		_subscribe($c__closures, _scope($scope1_id, {}, "__tests__/tags/card.marko", "5:2"), "__tests__/tags/card.marko_1_c#0:5/subscribe");
 	}, 1, "__tests__/tags/card.marko_1*content", void 0, 1);
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_c#5/fill", c, 1);
 	_scope($scope0_id, { "ClosureScopes:c/6": $c__closures }, "__tests__/tags/card.marko", 0);
 });
 

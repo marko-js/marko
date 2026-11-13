@@ -49,7 +49,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope4_id = _scope_id();
 					_dynamic_tag($scope4_id, "#text/0", input.tag, { content: Inner }, 8, 0, 0, $wg__input_tag);
 					_html(_text_mark($scope4_id, "#text/1", v, $wg__input_p * 2));
-					!$cg__input_tag && _unfilled_if() && _patch_write($scope2_id, "PatchWrite:Inner", Inner);
 					_subscribe($wi__input_tag && $input_tag__closures, _scope($scope4_id, { "ClosureSignalIndex:input_tag/8": $wi__input_tag && 1 }, "__tests__/template.marko", "5:6"), $cg__input_tag && "__tests__/template.marko_4_input_tag#0:5/subscribe", $wg__input_tag || $wg__input_p);
 				}, void 0, void 0, 1, 0, 1);
 				$cg__input_p && _patch_render($scope2_id, "__tests__/template.marko_2_input_p#0:6/subscribe");

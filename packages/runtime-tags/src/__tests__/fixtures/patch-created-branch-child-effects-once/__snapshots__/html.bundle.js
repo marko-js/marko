@@ -51,7 +51,7 @@ _shells({
 	a9: "a9,"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 4), $scope0_page = _page_render(), $ui__input_show = _unfilled_if($scope0_reason, 3), $wi__input_show = _write_if($scope0_reason, 3), $fg__input_items4 = _filled_guard($scope0_reason, 4), $fg__input_nested = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_tag = _filled_guard($scope0_reason, 6), $wi__input_items = _write_if($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 4), $scope0_page = _page_render(), $ui__input_show = _unfilled_if($scope0_reason, 3), $wi__input_show = _write_if($scope0_reason, 3), $ui__input_show__OR__input_tag = _unfilled_if($scope0_reason, 1), $fg__input_items4 = _filled_guard($scope0_reason, 4), $fg__input_nested = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_tag = _filled_guard($scope0_reason, 6), $wi__input_items = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_items__closures = /* @__PURE__ */ new Set();
 	let count = 0;
@@ -143,10 +143,10 @@ var template_default = _template("a", (input) => {
 	$fg__input_nested && $cg__input_show && _patch_render($scope0_id, "a20", "h");
 	$fg__input_tag && $cg__input_show && _patch_render($scope0_id, "a21", "i");
 	_scope($scope0_id, {
-		g: _write_if($scope0_reason, 1) && input.items,
+		g: _write_if($scope0_reason, 1) && ($ui__input_show__OR__input_tag || _unfilled_if($scope0_reason, 4)) && input.items,
 		h: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 5)) && input.nested,
 		i: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 6)) && input.tag,
 		j: count,
 		k: $wi__input_items && $input_items__closures
-	}) || ($fg__input_items4 && (_client_branch_if("a4", $scope0_id) || _unfilled_if($scope0_reason, 1)) && _patch_write($scope0_id, "xg", input.items, !$sg__input_items) && _patch_subscribers($scope0_id, "a23", "g"), $fg__input_nested && $ui__input_show && _patch_write($scope0_id, "xh", input.nested, !_server_guard($scope0_reason, 5)), $fg__input_tag && $ui__input_show && _patch_write($scope0_id, "xi", input.tag, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_items4 && (_client_branch_if("a4", $scope0_id) || $ui__input_show__OR__input_tag) && _patch_write($scope0_id, "xg", input.items, !$sg__input_items) && _patch_subscribers($scope0_id, "a23", "g"), $fg__input_nested && $ui__input_show && _patch_write($scope0_id, "xh", input.nested, !_server_guard($scope0_reason, 5)), $fg__input_tag && $ui__input_show && _patch_write($scope0_id, "xi", input.tag, !_server_guard($scope0_reason, 6)));
 }, 1);

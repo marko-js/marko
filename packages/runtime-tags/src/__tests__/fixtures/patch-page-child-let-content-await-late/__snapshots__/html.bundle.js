@@ -5,7 +5,7 @@ const $setup$1 = [[], []];
 _shells({
 	b1: "b1 b0;D%;<section><!></section>",
 	b2: "b2 b0;D%;<section><!></section>",
-	b: "b;D%l%;<div><!></div><!><!>"
+	b: "b !;D%l%;<div><!></div><!><!>"
 });
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
@@ -13,7 +13,7 @@ var card_default = _template("b", (input) => {
 	const $c__closures = /* @__PURE__ */ new Set();
 	let c = input.content;
 	_html("<div>");
-	_dynamic_tag($scope0_id, "a", c, {}, 2, 0, 0, 1, _client_guard($scope0_reason, 0) << 1, 0, 1);
+	_dynamic_tag($scope0_id, "a", c, {});
 	_html("</div>");
 	_await($scope0_id, "b", resolveAfter("v", 1), (v) => {
 		const $scope1_id = _scope_id();
@@ -22,6 +22,7 @@ var card_default = _template("b", (input) => {
 		_html("</section>");
 		_subscribe($c__closures, _scope($scope1_id, {}), "b0");
 	}, 1, "b1", void 0, 1);
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb3", c, 1);
 	_scope($scope0_id, { g: $c__closures });
 });
 

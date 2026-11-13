@@ -29,7 +29,6 @@ var template_default = _template("a", (input) => {
 		const $scope1_reason = _scope_reason();
 		const uid = _id("A");
 		_html(`<em${_attr("title", input.label + " " + uid, $scope1_id, "a", $scope0_reason, 0)}>${_text_mark($scope1_id, "b", n, 1, $scope1_reason, 0)}</em>${_el_mark($scope1_id, "a", _updates_from($scope0_reason, 0))}`);
-		$ui__input_label && _patch_write($scope1_id, "wf", uid, 1);
 		_subscribe($ui__input_label && $input_label__closures, _scope($scope1_id, {
 			f: $ui__input_label && uid,
 			_: _scope_with_id($scope0_id)

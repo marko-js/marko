@@ -1,7 +1,7 @@
 // template.marko
 const $List_content__walks = " b b";
 const $List_content__template = "<ul></ul><button class=add>+</button>";
-_shells({ a: `a !a6;${((_w0) => `/${_w0}& b`)($List_content__walks)};${((_w0) => `${_w0}<button class=toggle>toggle</button>`)($List_content__template)}` });
+_shells({ a: `a !a5;${((_w0) => `/${_w0}& b`)($List_content__walks)};${((_w0) => `${_w0}<button class=toggle>toggle</button>`)($List_content__template)}` });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
@@ -24,7 +24,6 @@ var template_default = _template("a", (input) => {
 		_html(`<button class=add>+</button>${_el_mark($scope1_id, "b")}`);
 		_script($scope1_id, "a3");
 		$fg__selected2 && _patch_render($scope1_id, "a4", "e");
-		_patch_fill($scope1_id, "va5", rows, 1);
 		_scope($scope1_id, {
 			e: selected,
 			f: flag,
@@ -39,7 +38,7 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_html(`<button class=toggle>toggle</button>${_el_mark($scope0_id, "b")}`);
-	_script($scope0_id, "a6");
+	_script($scope0_id, "a5");
 	_scope($scope0_id, {
 		f: on,
 		a: _existing_scope($childScope)

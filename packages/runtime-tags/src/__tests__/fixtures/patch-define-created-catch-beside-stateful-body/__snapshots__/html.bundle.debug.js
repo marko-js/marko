@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let open = false;
 	const Panel = { content: _content_resume("__tests__/template.marko_3*content", ({ isOpen, label }) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason(), $wg__isOpen = _write_guard($scope3_reason, 0), $ui__isOpen = _unfilled_if($scope3_reason, 0), $wi__isOpen = _write_if($scope3_reason, 0);
+		const $scope3_reason = _scope_reason(), $wg__isOpen = _write_guard($scope3_reason, 0), $wi__isOpen = _write_if($scope3_reason, 0);
 		_if(() => {
 			if (isOpen) {
 				const $scope4_id = _scope_id();
@@ -26,8 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope3_id, "#text/0", 1, $wg__isOpen, 1, 0, 0, ["__tests__/template.marko_4*shell"], $scope3_reason, 0);
-		$ui__isOpen && _patch_write($scope3_id, "PatchWrite:label", label, 1);
-		$wi__isOpen && _scope($scope3_id, { label: $wi__isOpen && ($ui__isOpen || _unfilled_if($scope3_reason, 1)) && label }, "__tests__/template.marko", "2:2", { label: "2:25" });
+		$wi__isOpen && _scope($scope3_id, { label: $wi__isOpen && (_unfilled_if($scope3_reason, 0) || _unfilled_if($scope3_reason, 1)) && label }, "__tests__/template.marko", "2:2", { label: "2:25" });
 	}, $scope0_id) };
 	_try($scope0_id, "#text/0", () => {
 		const $scope2_reason = _scope_reason();

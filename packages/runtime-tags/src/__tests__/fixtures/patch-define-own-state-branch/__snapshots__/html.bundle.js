@@ -14,7 +14,6 @@ var template_default = _template("a", (input) => {
 		_html(`<button>toggle</button>${_el_mark($scope1_id, "b")}`);
 		_script($scope1_id, "a2");
 		$fg__label && _patch_render($scope1_id, "a0", "e");
-		_patch_fill($scope1_id, "va3", open, 1);
 		_scope($scope1_id, {
 			e: label,
 			f: open

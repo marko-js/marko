@@ -27,7 +27,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<button class=add>+</button>${_el_mark($scope1_id, "#button/1")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		$fg__selected2 && _patch_render($scope1_id, "__tests__/template.marko_2_selected#1:4/setup", "selected");
-		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_rows#6/fill", rows, 1);
 		_scope($scope1_id, {
 			selected,
 			flag,

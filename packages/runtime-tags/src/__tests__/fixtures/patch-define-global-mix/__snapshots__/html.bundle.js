@@ -11,7 +11,6 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_html(`<p>${_text_mark($scope1_id, "a", input.value + $global$1.flag, 1, 6, 0)}</p>`);
 		_fill_global_subscribe("a1", $scope1_id, 1);
-		_patch_write($scope1_id, "wd", input.value, 1);
 		_scope($scope1_id, { d: input.value });
 	}, $scope0_id) };
 	let count = 0;

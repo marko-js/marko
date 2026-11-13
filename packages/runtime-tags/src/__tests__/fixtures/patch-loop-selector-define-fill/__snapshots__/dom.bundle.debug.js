@@ -13,17 +13,17 @@ const $for_content__setup = ($scope) => {
 };
 const $for_content__flag = /*@__PURE__*/ _for_closure_patch("__tests__/template.marko_2_flag#1:5/setup", "#ul/0", $for_content__selected__OR__flag, 8);
 const $List_content__for = /*@__PURE__*/ _for_of("#ul/0", "<li> </li>", " D ", $for_content__setup);
-const $List_content__rows = /*@__PURE__*/ _fill_let("__tests__/template.marko_1_rows#6/fill", "rows/6", ($scope) => $List_content__for($scope, [$scope.rows, "id"]));
+const $List_content__rows = _let("rows/6", ($scope) => $List_content__for($scope, [$scope.rows, "id"]));
 const $List_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$List_content__rows($scope, [...$scope.rows, { id: $scope.rows.length + 1 }]);
 }));
 const $List_content__setup = ($scope) => {
-	$List_content__setup__script($scope);
 	$List_content__rows($scope, [
 		{ id: 1 },
 		{ id: 2 },
 		{ id: 3 }
 	]);
+	$List_content__setup__script($scope);
 };
 const $List_content__tag_input_selected = /*@__PURE__*/ _const("selected", $for_content__selected);
 const $List_content__tag_input_flag = /*@__PURE__*/ _const("flag", $for_content__flag);

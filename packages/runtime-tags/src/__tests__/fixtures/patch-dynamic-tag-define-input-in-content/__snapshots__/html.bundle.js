@@ -19,7 +19,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}&`)("D%l")};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_useA__OR__input_record = _write_guard($scope0_reason, 0), $ui__input_useA__OR__input_record = _unfilled_if($scope0_reason, 0), $cg__input_useA__OR__input_record = _client_guard($scope0_reason, 0), $wi__input_record = _write_if($scope0_reason, 2), $wi__input_useA = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_useA__OR__input_record = _write_guard($scope0_reason, 0), $ui__input_useA__OR__input_record = _unfilled_if($scope0_reason, 0), $wi__input_record = _write_if($scope0_reason, 2), $wi__input_useA = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_useA__closures = /* @__PURE__ */ new Set();
 	const $input_record__closures = /* @__PURE__ */ new Set();
@@ -41,8 +41,6 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "a", input.useA ? Card : Other, { record: input.record }, 1, 0, 0, $wg__input_useA__OR__input_record, $scope0_reason, 0);
-		!$cg__input_useA__OR__input_record && _unfilled_if() && _patch_write($scope0_id, "wf", Card);
-		!$cg__input_useA__OR__input_record && _unfilled_if() && _patch_write($scope0_id, "wg", Other);
 		_patch_render($scope1_id, "a2", ((_filled_guard($scope0_reason, 1) ? " >d" : "") + (_filled_guard($scope0_reason, 2) ? " >e" : "")).slice(1), $scope0_reason, 0);
 		_write_if($scope0_reason, 0) && _subscribe(_unfilled_if($scope0_reason, 2) && $input_record__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_useA__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a3", $wg__input_useA__OR__input_record), _client_guard($scope0_reason, 2) && "a4", $wg__input_useA__OR__input_record);
 	}, $scope0_id) });

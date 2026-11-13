@@ -23,7 +23,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/0", $wg__on, $wg__on);
-		_patch_write($scope1_id, "PatchWrite:k", k, 1);
 		_scope($scope1_id, {
 			k: _write_if($scope1_reason, 0) && k,
 			_: _scope_with_id($scope0_id)

@@ -40,7 +40,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id) });
 		_patch_child_end();
 		_fill_global_subscribe("__tests__/template.marko_1_$global_flag#0:9_v#3", $scope1_id);
-		_unfilled_if() && _patch_write($scope1_id, "PatchWrite:z", z, 1);
 		_scope($scope1_id, {
 			z: _unfilled_if() && z,
 			"ClosureScopes:z/5": $scope1_page && _unfilled_if() && $D_content__z__closures,

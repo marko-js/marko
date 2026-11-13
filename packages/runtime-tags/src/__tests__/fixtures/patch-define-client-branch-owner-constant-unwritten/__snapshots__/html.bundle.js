@@ -20,7 +20,6 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", $wg__on, $wg__on);
-		_patch_write($scope1_id, "we", k, 1);
 		_scope($scope1_id, {
 			e: _write_if($scope1_reason, 0) && k,
 			_: _scope_with_id($scope0_id)

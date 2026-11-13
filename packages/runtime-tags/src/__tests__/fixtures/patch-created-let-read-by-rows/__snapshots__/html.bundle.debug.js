@@ -8,7 +8,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell __tests__/template.marko_2_sel#1:1_size_id#4/setup!__tests__/template.marko_2; D ;<button> </button>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const sizes = [{ id: "s" }, { id: "m" }];
 	_if(() => {
@@ -38,8 +38,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_scope($scope0_id, {
-		sizes: _write_if($scope0_reason, 0) && sizes,
-		sizes_0: _unfilled_if($scope0_reason, 0) && sizes[0]
+		sizes: $ui__input_show && sizes,
+		sizes_0: $ui__input_show && sizes[0]
 	}, "__tests__/template.marko", 0, {
 		sizes: "1:8",
 		sizes_0: ["sizes[0]", "1:8"]

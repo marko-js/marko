@@ -56,7 +56,7 @@ _shells({
 	"__tests__/template.marko_8*shell": "__tests__/template.marko_8*shell,"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 4), $scope0_page = _page_render(), $ui__input_show = _unfilled_if($scope0_reason, 3), $wi__input_show = _write_if($scope0_reason, 3), $fg__input_items4 = _filled_guard($scope0_reason, 4), $fg__input_nested = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_tag = _filled_guard($scope0_reason, 6), $wi__input_items = _write_if($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 4), $scope0_page = _page_render(), $ui__input_show = _unfilled_if($scope0_reason, 3), $wi__input_show = _write_if($scope0_reason, 3), $ui__input_show__OR__input_tag = _unfilled_if($scope0_reason, 1), $fg__input_items4 = _filled_guard($scope0_reason, 4), $fg__input_nested = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_tag = _filled_guard($scope0_reason, 6), $wi__input_items = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_items__closures = new Set();
 	let count = 0;
@@ -148,7 +148,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_nested && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_nested#0:7/setup", "input_nested");
 	$fg__input_tag && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_tag#0:8/setup", "input_tag");
 	_scope($scope0_id, {
-		input_items: _write_if($scope0_reason, 1) && input.items,
+		input_items: _write_if($scope0_reason, 1) && ($ui__input_show__OR__input_tag || _unfilled_if($scope0_reason, 4)) && input.items,
 		input_nested: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 5)) && input.nested,
 		input_tag: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 6)) && input.tag,
 		count,
@@ -158,5 +158,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_nested: ["input.nested"],
 		input_tag: ["input.tag"],
 		count: "1:6"
-	}) || ($fg__input_items4 && (_client_branch_if("__tests__/template.marko_3*content", $scope0_id) || _unfilled_if($scope0_reason, 1)) && _patch_write($scope0_id, "PatchMarkedWrite:input_items", input.items, !$sg__input_items) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_items#6/subscribers", "input_items"), $fg__input_nested && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_nested", input.nested, !_server_guard($scope0_reason, 5)), $fg__input_tag && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_tag", input.tag, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_items4 && (_client_branch_if("__tests__/template.marko_3*content", $scope0_id) || $ui__input_show__OR__input_tag) && _patch_write($scope0_id, "PatchMarkedWrite:input_items", input.items, !$sg__input_items) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_items#6/subscribers", "input_items"), $fg__input_nested && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_nested", input.nested, !_server_guard($scope0_reason, 5)), $fg__input_tag && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_tag", input.tag, !_server_guard($scope0_reason, 6)));
 }, 1);

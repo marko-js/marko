@@ -5,7 +5,7 @@ _shells({
 	a1: "a1 a5!a0; D ;<button> </button>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const sizes = [{ id: "s" }, { id: "m" }];
 	_if(() => {
@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a2"], $scope0_reason, 0);
 	_scope($scope0_id, {
-		e: _write_if($scope0_reason, 0) && sizes,
-		f: _unfilled_if($scope0_reason, 0) && sizes[0]
+		e: $ui__input_show && sizes,
+		f: $ui__input_show && sizes[0]
 	});
 }, 1);
