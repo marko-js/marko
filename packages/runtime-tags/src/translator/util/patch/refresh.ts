@@ -2039,6 +2039,7 @@ function findUnfilledStructure(
     if (
       !read.callSiteExprs &&
       !read.initialValue &&
+      !isFilledHole(read) &&
       some(read.derives, (derived) => {
         if (
           !readInFunction &&
@@ -2079,13 +2080,16 @@ function addSources(all: SortedOpt<Sources>, sources: Sources) {
 }
 
 // A read resumed code renders wherever its scope sits, so no patch fills it: also one
-// no patch pairs, or deriving what no patch fills (one it writes reaches its readers).
+// no patch pairs, or deriving what no patch fills (one it writes, or a branch's params
+// where it renders the branch, reaches its readers).
 export function isResumedRead(read: ReferencedExtra) {
   return (
     readsValuesOnResume(read) ||
     !!getSourcesForExpr(read)?.state ||
     !patchFillsSection(read.section) ||
-    (!!getDerivedNeeds(read) && !every(read.derives, isPatchWritten))
+    (!!getDerivedNeeds(read) &&
+      !isFilledHole(read) &&
+      !every(read.derives, isPatchWritten))
   );
 }
 
