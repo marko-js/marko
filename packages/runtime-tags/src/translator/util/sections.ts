@@ -647,7 +647,7 @@ function getTextBeforeIn(
 // template it is passed to, where its own tag may.
 function mayContentFollowText(section: Section) {
   const { tag } = section.derives!;
-  const { unseen, sites, deepSites } = getContentSites(section.derives!);
+  const { unseen, sites, deepSites } = getContentSites(section);
   const tagFollowsText = () =>
     tag.textBefore ?? getSectionTextBefore(section.parent!) ?? true;
   return (
