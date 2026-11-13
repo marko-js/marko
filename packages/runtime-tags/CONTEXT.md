@@ -528,7 +528,10 @@ _Avoid_: part, global part, `$global` join
 **Stable**:
 A binding or expression with no sources, so fixed for its scope's lifetime: a
 constant, an `<id>`, a `<define>`'s renderer. A fill of a stable value
-only seeds a created scope.
+only seeds a created scope, with the flush's own copy: an object or `<define>`
+there is not the page's, so an identity check against the page's (`===`,
+`includes`, a `Map` key) fails. Patches don't keep that identity; compare such
+values by key.
 
 **Paired structure**:
 A loop or branch whose expression is stable (its group's mask is `0`), outside
