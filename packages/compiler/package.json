@@ -70,7 +70,7 @@
     "build-babel-types": "node -r ~ts scripts/types"
   },
   "dependencies": {
-    "htmljs-parser": "^5.20.0",
+    "htmljs-parser": "^5.22.0",
     "jsesc": "^3.1.0",
     "kleur": "^4.1.5",
     "magic-string": "^1.4.5",
