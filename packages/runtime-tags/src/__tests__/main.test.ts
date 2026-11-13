@@ -594,8 +594,8 @@ function testFixtures(interop?: true) {
             const optimize = logs.get("optimize");
             if (debug !== undefined && optimize !== undefined) {
               assert.strictEqual(
-                optimize,
-                debug,
+                unnamedStyles(optimize),
+                unnamedStyles(debug),
                 `${file} diverges between optimize and debug`,
               );
             }
@@ -604,6 +604,17 @@ function testFixtures(interop?: true) {
       }
     });
   }
+}
+
+// A dynamic `<style>`'s custom properties spell its template id, which only a
+// debug build keeps whole, so each is numbered by first use instead.
+function unnamedStyles(log: string) {
+  const names = new Map<string, number>();
+  return log.replace(/--M_[\w-]+:/g, (name) => {
+    let index = names.get(name);
+    if (index === undefined) names.set(name, (index = names.size));
+    return `--M_${index}:`;
+  });
 }
 
 async function runSteps(

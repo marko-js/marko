@@ -467,33 +467,32 @@ export default {
         const markerGuard = getWriteGuard(tagSection, markerReason, true);
         // For a debug build's check that the tag it renders is not lazy.
         const debugTagVar = !isOptimize() && node.var && t.numericLiteral(1);
-        const dynamicTagExpr = hasTagArgs
-          ? callRuntime(
-              "_dynamic_tag",
-              getScopeIdIdentifier(tagSection),
-              getScopeAccessorLiteral(nodeBinding),
-              tagExpression,
-              t.arrayExpression(args),
-              // Fallback body for a null/string renderer; the DOM side already
-              // passes it, so a hardcoded 0 here was an SSR/CSR mismatch.
-              contentProp ? contentProp.value : t.numericLiteral(0),
-              t.numericLiteral(1),
-              markerGuard || absentArg(1),
-              debugTagVar,
-            )
-          : callRuntime(
-              "_dynamic_tag",
-              getScopeIdIdentifier(tagSection),
-              getScopeAccessorLiteral(nodeBinding),
-              tagExpression,
-              args[0],
-              args[1] || absentArg(0),
-              absentArg(0),
-              markerGuard || absentArg(1),
-              debugTagVar,
-            );
+        // The resumed variable's id, which `_var` wires.
+        const varId =
+          node.var &&
+          isTagVarResumed(tag) &&
+          getResumeRegistryId(tagSection, node.var.extra?.binding, "var");
+        const input = args[0];
+        const scopeIdArg = getScopeIdIdentifier(tagSection);
+        const accessorArg = getScopeAccessorLiteral(nodeBinding);
+        const inputArg = hasTagArgs ? t.arrayExpression(args) : input;
+        // Fallback content for a null or string renderer, as the DOM passes.
+        const contentArg = contentProp ? contentProp.value : absentArg(0);
+        const inputIsArgs = hasTagArgs ? t.numericLiteral(1) : absentArg(0);
+        const markerArg = markerGuard || absentArg(1);
+        const dynamicTagExpr = callRuntime(
+          "_dynamic_tag",
+          scopeIdArg,
+          accessorArg,
+          tagExpression,
+          inputArg,
+          contentArg,
+          inputIsArgs,
+          markerArg,
+          debugTagVar,
+        );
 
-        if (node.var && isTagVarResumed(tag)) {
+        if (varId) {
           const dynamicScopeIdentifier = generateUidIdentifier(
             tag.get("name").toString() + "_scope",
           );
@@ -514,13 +513,7 @@ export default {
                 getScopeIdIdentifier(tagSection),
                 getScopeOffsetAccessorLiteral(nodeBinding),
                 dynamicScopeIdentifier,
-                t.stringLiteral(
-                  getResumeRegistryId(
-                    tagSection,
-                    node.var.extra?.binding,
-                    "var",
-                  ),
-                ),
+                t.stringLiteral(varId),
                 mutatesTagVar
                   ? getScopeAccessorLiteral(nodeBinding)
                   : undefined,

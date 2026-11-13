@@ -31,13 +31,7 @@ import {
   StructureKind,
   type StructureOp,
 } from "./sections";
-import {
-  ensureSectionSlot,
-  ensureSlot,
-  findSlot,
-  type Slot,
-  SlotKind,
-} from "./slots";
+import { ensureSectionSlot, ensureSlot, type Slot, SlotKind } from "./slots";
 import {
   ALWAYS,
   mergeSources,
@@ -45,6 +39,7 @@ import {
   sourcesUtil,
   withSources,
 } from "./sources";
+import { getWriteReason } from "./write-guard";
 
 // Alternatives any one of which leads to a read (a chain's branches, a
 // section's dom nodes); a guard answers for the set.
@@ -308,7 +303,7 @@ function addNodeReason(reasons: Reasons | undefined, op: StructureOp) {
     typeof op === "object" &&
     op.kind === StructureKind.Node &&
     op.binding &&
-    findSlot(op.binding)?.reason;
+    getWriteReason(op.binding);
   return reason ? sourcesUtil.add(reasons, reason) : reasons;
 }
 

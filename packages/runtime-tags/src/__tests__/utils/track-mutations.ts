@@ -281,7 +281,7 @@ function formatMutationRecord(record: MutationRecord) {
   const { target, oldValue } = record;
 
   if (record.type === "characterData") {
-    if (isIgnoredMutationNode(target.parentNode!)) return;
+    if (target.parentNode && isIgnoredMutationNode(target.parentNode)) return;
 
     return `UPDATE: ${nodeInfo.getNodePath(target)} ${JSON.stringify(
       oldValue || "",

@@ -1,4 +1,4 @@
-import { inspect } from "node:util";
+import { inspect, types } from "node:util";
 
 import type { VirtualConsole } from "jsdom";
 
@@ -64,12 +64,11 @@ function formatConsoleArg(arg: unknown) {
     case "boolean":
       return JSON.stringify(arg);
     default:
-      // `String()` for errors: `inspect` would embed a machine-specific stack.
-      // `inspect` for the rest: it survives circular values and keeps
-      // `undefined`/functions/symbols visible where `JSON.stringify` drops them.
+      // `String()` for errors of either realm, Node's or the page's: `inspect`
+      // embeds a machine-specific stack, but prints cycles and `undefined`.
       return arg === null
         ? "null"
-        : arg instanceof Error
+        : types.isNativeError(arg)
           ? String(arg)
           : inspect(arg);
   }

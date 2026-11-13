@@ -549,7 +549,7 @@ function getTextBeforeIn(
       !isStartMarked(branch, section, content) &&
       // A row follows the one before, even one whose text ends in its own resume
       // mark and so needs no `<!>` after it: rows are not traced to their last text.
-      ((branch.kind === "for" && mayEndWithText(section)) ||
+      ((isLoopBody(section) && mayEndWithText(section)) ||
         (tag.textBefore ??
           (content
             ? getTextBeforeIn(tagSection, content)
@@ -756,6 +756,10 @@ export function isOptionalBranch(
   return kind === "if" || kind === "for";
 }
 
+export function isLoopBody(section: Section) {
+  return section.branch?.kind === "for";
+}
+
 export function isInParentSection(binding: Binding, section: Section) {
   return section.parent?.id === binding.section.id;
 }
@@ -797,7 +801,7 @@ export function getForClosureIndex(closure: Binding, closureSection?: Section) {
   find(closure.closureSections, (section) => {
     if (section === closureSection) return true;
     if (
-      section.branch?.kind === "for" &&
+      isLoopBody(section) &&
       section.parent === closure.section &&
       !isForSelectorClosure(section, closure)
     ) {
