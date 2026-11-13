@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.43.3
+
+### Patch Changes
+
+- [#4693](https://github.com/marko-js/marko/pull/4693) [`7077ffc`](https://github.com/marko-js/marko/commit/7077ffca3bc8339f9015fcda8220806b54236d3a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop adding to a Babel config's `parserOpts.plugins` on every compile.
+
+- [#4695](https://github.com/marko-js/marko/pull/4695) [`7798ab8`](https://github.com/marko-js/marko/commit/7798ab8cf62592f26c0e0edea5c432f7632dccee) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Raise htmljs-parser to 5.22, which fixes several misparses: regular expressions after keywords like `return`, escaped quotes and regular expressions in `<script>` bodies, `<!-- a->b -->` comments, spaced non-null `!` assertions, attribute values starting with a comment, and unfinished concise constructs at EOF.
+
 ## 5.43.2
 
 ### Patch Changes
