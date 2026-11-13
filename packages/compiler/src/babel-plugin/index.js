@@ -90,13 +90,18 @@ export default (api, markoOpts) => {
         parserOpts.createImportExpressions =
           true;
 
-      parserOpts.plugins.push("objectRestSpread", "classProperties", [
-        "typescript",
-        {
-          disallowAmbiguousJSXLike: false,
-          dts: false,
-        },
-      ]);
+      parserOpts.plugins = [
+        ...parserOpts.plugins,
+        "objectRestSpread",
+        "classProperties",
+        [
+          "typescript",
+          {
+            disallowAmbiguousJSXLike: false,
+            dts: false,
+          },
+        ],
+      ];
       curOpts = opts;
     },
     parserOverride(code) {
