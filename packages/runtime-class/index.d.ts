@@ -251,22 +251,18 @@ declare global {
        */
 
       /** @marko-overload-start */
-      /** Asynchronously render the template. */
+      /** Asynchronously render the template, to a stream or (with a callback) in buffered mode. */
       abstract render(
         input: Marko.TemplateInput<Input>,
-        stream?: {
-          write: (chunk: string) => void;
-          end: (chunk?: string) => void;
-        },
-      ): Marko.Out<Marko.Component>;
-
-      /** Asynchronously render the template in buffered mode. */
-      abstract render(
-        input: Marko.TemplateInput<Input>,
-        cb?: (
-          err: Error | null,
-          result: Marko.RenderResult<Marko.Component>,
-        ) => void,
+        streamOrCallback?:
+          | {
+              write: (chunk: string) => void;
+              end: (chunk?: string) => void;
+            }
+          | ((
+              err: Error | null,
+              result: Marko.RenderResult<Marko.Component>,
+            ) => void),
       ): Marko.Out<Marko.Component>;
 
       /** Synchronously render the template. */
