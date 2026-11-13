@@ -22,13 +22,13 @@ const $try_content__setup = ($scope) => {
 	$try_content__await_promise($scope, resolveAfter(0, 1));
 };
 const $wrap_content__n__closure = /*@__PURE__*/ _closure($await_content__n);
-const $wrap_content__n = _let("n/1", $wrap_content__n__closure);
+const $wrap_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_2_n#1/fill", "n/1", $wrap_content__n__closure);
 const $wrap_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 const $wrap_content__setup__script = _script("__tests__/template.marko_2", ($scope) => $wrap_content__n($scope, 5));
 const $wrap_content__setup = ($scope) => {
-	$wrap_content__n($scope, 1);
 	$wrap_content__try($scope);
 	$wrap_content__setup__script($scope);
+	$wrap_content__n($scope, 1);
 };
 const $wrap_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $wrap_content__setup);
 const $for_content__setup = ($scope) => $input_content_direct($scope["#childScope/0"], $wrap_content($scope));

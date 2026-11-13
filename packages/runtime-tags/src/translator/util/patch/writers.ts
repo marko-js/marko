@@ -314,22 +314,25 @@ export function writePatchResumeStatements(
   }
   // Beside fills: a created scope's seeds and filled intersection members' slot writes.
   forEach(section.bindings, (binding) => {
-    const seeds =
-      writesSeed(binding) && mapBodyParams(section, getWriteReason(binding));
+    const seeds = writesSeed(binding);
+    // A seed writes a group-gated value only where the group is the client's, as
+    // plain's document would; client state always, since no later patch writes it.
+    const reason =
+      seeds &&
+      !isStateSourced(binding) &&
+      mapBodyParams(section, getWriteReason(binding));
     // In place where an intersection the patch writes runs on the client (another
     // member is the client's).
     const { filledMembers } = getPatchFill(binding);
     const inPlace =
       filledMembers &&
       orCallerGroupGuards(section, undefined, "_client_guard", filledMembers);
-    // A seed writes a group-gated value only where the group is the client's, as
-    // plain's document would; client state always, since no later patch writes it.
     const entry = seeds
       ? andGuard(
           getStateInitialValueGuard(section, binding),
           andGuard(
-            isDynamicWriteGuard(section, seeds) && !isStateSourced(binding)
-              ? getCallerGroupGuard(section, "_unfilled_if", seeds)
+            reason && isDynamicWriteGuard(section, reason)
+              ? getCallerGroupGuard(section, "_unfilled_if", reason)
               : undefined,
             buildPatchWrite(
               section,

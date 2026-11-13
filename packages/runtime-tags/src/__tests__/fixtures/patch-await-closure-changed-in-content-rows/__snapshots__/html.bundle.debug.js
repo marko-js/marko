@@ -49,6 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html("loading");
 			}, void 0, "__tests__/template.marko_5*content", void 0, "__tests__/template.marko_3*content");
 			_script($scope2_id, "__tests__/template.marko_2", 0);
+			_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_2_n#1/fill", n, 1);
 			_scope($scope2_id, { "ClosureScopes:n/2": $wrap_content__n__closures }, "__tests__/template.marko", "3:4");
 			_resume_branch($scope2_id);
 		}, $scope1_id, 0) });

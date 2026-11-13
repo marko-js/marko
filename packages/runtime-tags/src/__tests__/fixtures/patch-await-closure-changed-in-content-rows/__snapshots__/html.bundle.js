@@ -45,6 +45,7 @@ var template_default = _template("a", (input) => {
 				_html("loading");
 			}, void 0, "a6", void 0, "a3");
 			_script($scope2_id, "a7", 0);
+			_patch_fill($scope2_id, "va8", n, 1);
 			_scope($scope2_id, { c: $wrap_content__n__closures });
 			_resume_branch($scope2_id);
 		}, $scope1_id, 0) });

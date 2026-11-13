@@ -96,6 +96,7 @@ import { getWriteReason, isEverWritten } from "../write-guard";
 import {
   getStateInitialValueSources,
   getFillSources,
+  fillsHole,
   isFilledHole,
 } from "./decisions";
 import {
@@ -370,8 +371,8 @@ function canPatchFill(binding: Binding) {
     getCanonicalBinding(binding) === binding &&
     patchFillsScope(binding.section) &&
     (!!findSlot(binding, SlotKind.ChangeHandler) ||
-      // The seed runs a `<let>`'s signal where plain keeps it and client code holds
-      // the value, or takes it past the scope's renders and effects (a child, an intersection).
+      // The seed runs a `<let>`'s signal where plain keeps it and client code holds the value, or
+      // takes it past the scope's renders and effects (a child, an intersection, a hole below).
       (binding.type === BindingType.let &&
         mayBeCreated(binding.section) &&
         // Only from `<let>`s created with it: the page holds any other's value.
@@ -379,7 +380,8 @@ function canPatchFill(binding: Binding) {
         !initialValueRunsFromFills(binding) &&
         (!!getWriteReason(binding) ||
           readsPastRenders(binding) ||
-          initialValueQueuesEffect(binding)))) &&
+          initialValueQueuesEffect(binding) ||
+          hasUnfilledClosureRead(binding)))) &&
     bindingUtil.has(binding.sources.state, binding)
   );
 }
@@ -478,12 +480,13 @@ export const [seedsCreatedScope] = createAnalysisMemo((binding: Binding) => {
   );
 }, false);
 
-// A created scope's seed a flush writes; a registration it carries binds by
-// what its own module imports.
+// A created scope's seed a flush writes, where plain writes it or a hole below reads it;
+// a registration it carries binds by what its own module imports.
 export function writesSeed(binding: Binding) {
   return (
     seedsCreatedScope(binding) &&
-    isEverWritten(binding.section, getWriteReason(binding))
+    (isEverWritten(binding.section, getWriteReason(binding)) ||
+      hasUnfilledClosureRead(binding))
   );
 }
 
@@ -497,6 +500,25 @@ function readsPastRenders(binding: Binding) {
       (!read.derives ||
         some(read.derives, (derived) => derived.section !== binding.section)),
   );
+}
+
+// Read as a closure, itself or by a direct alias, rendering a hole no patch fills: structure
+// a flush creates with the scope reads it then, where a client render reads what setup computed.
+function hasUnfilledClosureRead(binding: Binding) {
+  return someAlias(binding, rendersUnfilledOutside, binding.section, true);
+}
+
+function rendersUnfilledOutside(alias: Binding, section: Section) {
+  for (const read of alias.reads.keys()) {
+    if (
+      read.rendersValue &&
+      read.section !== section &&
+      !fillsHole(read.section, read)
+    ) {
+      return true;
+    }
+  }
+  return false;
 }
 
 // A `<let>` the created scope starts from its render's value, as a resumed
