@@ -372,7 +372,7 @@ function canPatchFill(binding: Binding) {
     patchFillsScope(binding.section) &&
     (!!findSlot(binding, SlotKind.ChangeHandler) ||
       // The seed runs a `<let>`'s signal where plain keeps it and client code holds the value, or
-      // takes it past the scope's renders and effects (a child, an intersection, a hole below).
+      // takes it past the scope's renders and effects (a child, an intersection, an unfilled hole).
       (binding.type === BindingType.let &&
         mayBeCreated(binding.section) &&
         // Only from `<let>`s created with it: the page holds any other's value.
@@ -480,7 +480,7 @@ export const [seedsCreatedScope] = createAnalysisMemo((binding: Binding) => {
   );
 }, false);
 
-// A created scope's seed a flush writes, where plain writes it or a hole below reads it;
+// A created scope's seed a flush writes, where plain writes it or an unfilled hole reads it;
 // a registration it carries binds by what its own module imports.
 export function writesSeed(binding: Binding) {
   return (
