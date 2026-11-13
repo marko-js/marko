@@ -478,6 +478,11 @@ client-sourced, or the read sits in unpatched structure, unless the value is a `
 param a call passes as a module read from structure the client renders, which
 the call's forwards there push first: `derivesConstantParam`). Translate derives reads no patch can
 fill (`PatchWrite.unfillable`), never the gate.
+A read is _unfilled_ where client state makes client code run it in a scope a flush
+may create. Where a patch may create structure, the page holds what the patch leaves
+to client code there, the values an unfilled read reaches (`reachesUnfilledRead`), not
+what a client render would read: a `<let>` by its fill, another value by its seed, a
+function by the `<let>` it closes over, from which main's `_const` builds it.
 _Avoid_: server-side/client-side value, owned read, effect write, capture
 write
 

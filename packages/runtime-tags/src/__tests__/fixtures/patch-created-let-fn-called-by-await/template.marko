@@ -1,0 +1,9 @@
+import { resolveAfter } from "../../utils/resolve";
+<if=input.show>
+  <let/n=1/>
+  <const/add=(v) => v + n/>
+  <button onClick() { n = 5 }>set</button>
+  <await|value|=resolveAfter(1, 1)>
+    <span>${add(value)}</span>
+  </await>
+</if>
