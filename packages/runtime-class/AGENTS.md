@@ -2,20 +2,23 @@
 
 ## Architecture
 
-The package is organized into four layers:
+Main directories:
 
-| Directory              | Purpose                                                                |
-| ---------------------- | ---------------------------------------------------------------------- |
-| `src/runtime/helpers/` | Shared runtime helpers (class/style values, dynamic tags, attr-tags)   |
-| `src/runtime/html/`    | SSR runtime: streaming HTML output, helpers, hot reload                |
-| `src/runtime/vdom/`    | CSR runtime: virtual DOM, morphdom reconciliation, component lifecycle |
-| `src/translator/`      | Babel-based compiler that transforms `.marko` into SSR/CSR JavaScript  |
+| Directory                     | Purpose                                                                         |
+| ----------------------------- | ------------------------------------------------------------------------------- |
+| `src/runtime/components/`     | Component class, state, lifecycle, update queue, registry                       |
+| `src/runtime/html/`           | SSR runtime: `AsyncStream`, HTML helpers, hot reload                            |
+| `src/runtime/vdom/`           | CSR runtime: virtual DOM, `AsyncVDOMBuilder`, vendored morphdom                 |
+| `src/runtime/helpers/`        | Helpers compiled templates import; `tags-compat/` is the Marko 6 interop bridge |
+| `src/core-tags/`              | Built-in tags                                                                   |
+| `src/node_modules/@internal/` | Modules with a server `index.js` and a browser `index-browser.js`; change both  |
+| `src/translator/`             | Class API Babel translator                                                      |
 
-The compiler/translator entry is `src/translator/index.js`, but the package's exported translator (`src/translator.js`) wraps it with `createInteropTranslator` from `@marko/runtime-tags/translator`, so Marko 5 projects can mix in Marko 6 (Tags API) components. Interop behavior changes are usually made in `packages/runtime-tags/src/translator/interop/`, not here.
+The compiler/translator entry is `src/translator/index.js`, but the package's exported translator (`src/translator.js`) wraps it with `createInteropTranslator` from `@marko/runtime-tags/translator`, so Marko 5 projects can mix in Marko 6 (Tags API) components. Interop spans both packages: the translator wrapper in `packages/runtime-tags/src/translator/interop/`, the Class side of each boundary in `src/translator/` (e.g. `tag/util.js` › `getAttrs`), and the runtime bridge in `src/runtime/helpers/tags-compat/`, which loads runtime-tags' `compat.feat`. Interop fixtures live in `packages/runtime-tags/src/__tests__/fixtures-interop/` (suite `translator-interop`), not under `test/`.
 
 Note: the package is private (named `marko`); `scripts/publish-alias.mts` publishes it as `marko` under the `m5` dist-tag.
 
-Compiled templates import runtime helpers by string path (`marko/src/runtime/helpers/...`, see `translator/util/load-import.js`), so a source search for importers misses those uses.
+Compiled templates import runtime helpers by string path (`marko/src/runtime/...`, emitted across `src/translator/`), so a source search for importers misses those uses.
 
 `src` mixes ESM and CommonJS `.js` with no `"type"`, so Node warns `MODULE_TYPELESS_PACKAGE_JSON` under `-t class`. Accepted: Marko 5 is in maintenance and `src` ships in `files`, so a `{"type":"module"}` marker would force converting every CJS file.
 
@@ -31,7 +34,7 @@ component.___queueUpdate();
 exports.___batchUpdate = batchUpdate;
 ```
 
-The build step mangles these names into short single-character identifiers.
+The build step mangles these names into short identifiers.
 
 ### `MARKO_DEBUG` pattern
 
@@ -49,53 +52,26 @@ The build step replaces `"MARKO_DEBUG"` with `false` and dead-code-eliminates th
 
 ## Output Modes
 
-- **HTML (SSR)** — `src/runtime/html/index.js` creates a `Template` produces `AsyncStream`. Output is HTML strings piped to a Node.js stream.
-- **VDOM (browser)** — `src/runtime/vdom/index.js` creates a `Template` produces `AsyncVDOMBuilder`. Output is a virtual DOM tree reconciled via local morphdom .
+- **HTML (SSR)**: `src/runtime/html/index.js`, whose `Template` renders into an `AsyncStream` of HTML strings.
+- **VDOM (browser)**: `src/runtime/vdom/index.js`, whose `Template` renders into an `AsyncVDOMBuilder` tree that the vendored `src/runtime/vdom/morphdom/` reconciles.
 
 Both stacks share `src/runtime/renderable.js`, which mixes `render()`, `renderSync()`, `renderToString()`, and `mount()` into `Template.prototype`.
-
-## Error Handling
-
-- Compile-time errors use Babel's `path.buildCodeFrameError(message)` to include source locations
-- Most validation happens at compile time; runtime errors in production are minimal
 
 ## Testing
 
 ### Test structure
 
-```
-test/
-  translator/              # Snapshot tests for compiler output
-  components-pages/        # Full page hydration (ssr + csr) tests
-  components-browser/      # jsdom-based browser component tests
-  components-server/       # SSR rendering tests
-  morphdom/                # morphdom unit tests
-  vdom-create/             # VNode construction unit tests
-  async-stream/            # AsyncStream unit tests
-```
+Each directory under `test/` is one suite; `test/translator/` holds the snapshot tests for compiler output.
 
 ### Translator tests
 
-Each fixture has a `template.marko` input and a `snapshots/` directory:
-
-```
-fixtures/<name>/
-  template.marko
-  snapshots/
-    vdom-expected.js
-    html-expected.js
-    htmlProduction-expected.js
-    hydrate-expected.js
-    cjs-expected.js
-    generated-expected.marko
-```
+Each fixture has a `template.marko` (or the `templateFile` its `test.js` names) and a `snapshots/<mode>-expected.*` per mode in `test/translator/index.test.js`, or `<mode>-error-expected.txt` when that compile throws.
 
 ### Running tests
 
 From the repo root:
 
 ```sh
-pnpm test # all tests
-pnpm test -- --grep "<fixture> " # specific fixture
-pnpm run test:update # update snapshots
+pnpm test -- --grep "translator/fixtures <fixture> "            # one translator fixture
+pnpm run test:update -- --grep "translator/fixtures <fixture> " # regenerate its snapshots
 ```
