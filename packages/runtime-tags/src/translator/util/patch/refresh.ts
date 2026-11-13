@@ -502,12 +502,12 @@ function readsPastRenders(binding: Binding) {
   );
 }
 
-// Read as a closure (or a direct alias's) rendering a hole no patch fills, in a scope a flush
+// Read as a closure (or an alias's) rendering a hole no patch fills, in a scope a flush
 // creates: structure created with it reads the value then, which a client render's setup computes.
 function hasUnfilledClosureRead(binding: Binding) {
   return (
     patchCreatesOrComposes(binding.section) &&
-    someAlias(binding, rendersUnfilledOutside, binding.section, true)
+    someAlias(binding, rendersUnfilledOutside, binding.section)
   );
 }
 
