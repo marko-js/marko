@@ -471,9 +471,9 @@ export default {
           );
           const controlExtra = mergeReferenceGroup(tagSection, values);
           exprExtras = controlExtra;
-          if (values.some(rendersValue)) {
-            controlExtra.rendersValue = true;
-          }
+          // Its helper writes the values even where constant, which the
+          // template never holds.
+          controlExtra.rendersValue = true;
           // A patched control's entries apply through its type's feature, which
           // loads `patches/control`.
           linkHolePatcher(
@@ -809,10 +809,7 @@ export default {
             const { name, value } = attributes[index] as t.MarkoAttribute;
             const { confident, computed } = evaluate(value);
 
-            if (
-              value.extra!.rendersValue &&
-              fillsHole(tagSection, value.extra)
-            ) {
+            if (fillsHole(tagSection, value.extra)) {
               // The attribute's helper also writes its patch entry (the
               // expression appears once): the element and group args trail.
               const helper = getPatchAttrHelper(tagName, name);
@@ -2399,8 +2396,4 @@ function addToggle(
   alternate: DelimitedAttrPart | undefined,
 ) {
   (meta.toggles ||= []).push({ key, value, alternate });
-}
-
-function rendersValue(value: t.Node | undefined) {
-  return value?.extra?.rendersValue;
 }

@@ -4,11 +4,11 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<main><textarea>${_attr_textarea_value($scope0_id, "a", "hello", 0, 1, 0, 0)}</textarea>`);
+	_html(`<main><textarea>${_attr_textarea_value($scope0_id, "a", "hello", 0, 1, 0, 0)}</textarea>${_el_mark($scope0_id, "a", 0)}`);
 	_attr_select_value($scope0_id, "b", "b", 0, () => {
 		_html(`<select><option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option></select>`);
 	}, 1, 0, 0);
-	_html(`<p>${_text_mark($scope0_id, "c", input.note, 1, $scope0_reason, 0)}</p><button>${_text_mark($scope0_id, "e", count)}</button>${_el_mark($scope0_id, "d")}</main>`);
+	_html(`${_el_mark($scope0_id, "b", 0)}<p>${_text_mark($scope0_id, "c", input.note, 1, $scope0_reason, 0)}</p><button>${_text_mark($scope0_id, "e", count)}</button>${_el_mark($scope0_id, "d")}</main>`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { i: count });
 }, 1);

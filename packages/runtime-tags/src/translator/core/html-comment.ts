@@ -17,7 +17,6 @@ import {
   isTagVarUsed,
   mergeReferences,
   trackDomVarReferences,
-  isReferencedExtra,
 } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime } from "../util/runtime";
@@ -106,16 +105,12 @@ export default {
       if (isOutputHTML()) {
         const { body } = tag.node.body;
         write`<!--`;
-        if (
-          nodeBinding &&
-          isReferencedExtra(tagExtra) &&
-          fillsHole(tagSection, tagExtra)
-        ) {
+        if (fillsHole(tagSection, tagExtra)) {
           // An emptiable body still pads, so the resume marker claims no
           // stray text.
           const patched = buildPatchTextContent(
             tagSection,
-            nodeBinding,
+            nodeBinding!,
             bodyToText(tag.node.body),
             "_escape_comment",
             tagExtra,

@@ -455,7 +455,8 @@ A _hole_ is anywhere client code needs a server value: a site the patch renders
 (text, attribute, `<show>` display, branch choice), a scope slot client code
 reads (a join's member, an effect's or handler's value), or a `<let>`/`$global`
 declaration that reaches every read. A patch _fills_ it: the decision
-(`fillsHole`, `isFilledHole`) and the act. It lands by a write where main would
+(`fillsHole`, `isFilledHole`, which read what analysis records each tag rendering,
+`rendersValue` and `rendersContent`) and the act. It lands by a write where main would
 serialize the value (`PatchKey.Write`, `_patch_write`; the same verb as main's
 write reason) or by a registered fill (**Patch fill**). The write is the value's
 write reason on the instance (`getUnfilledPatchWrite`), a `<define>` body's

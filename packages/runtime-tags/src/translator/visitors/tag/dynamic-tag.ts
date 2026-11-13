@@ -41,9 +41,8 @@ import { concat, type Opt, toArray } from "../../util/optional";
 import { getParamsTreeAt } from "../../util/params-tree";
 import {
   keepsSeededMarker,
-  linkHolePatcher,
-  fillsHole,
   onReasonsSettled,
+  patchFillsExpr,
 } from "../../util/patch/decisions";
 import {
   getExprRootGroupArgs,
@@ -235,8 +234,6 @@ export default {
         BindingType.dom,
         tagSection,
       ));
-      // The dynamic tag entry applies without this template's dom module.
-      linkHolePatcher(tagSection, tagExtra, "patches/dynamic-tag");
       // Fallback: a write a patch fills into its params (a `<let>` its input seeds,
       // say) links page-level.
       if (
@@ -285,10 +282,14 @@ export default {
 
       structure.marker(tag, nodeBinding);
       structure.enterShallow(tag);
-      // A tag client state names is the patch's to create alone: its entry
-      // rides a created scope's setup, with the child entry of what it renders.
       if (isPatch()) {
         onReasonsSettled(() => {
+          // The dynamic tag entry applies without this template's dom module.
+          if (patchFillsExpr(tagSection, tagExtra)) {
+            linkRuntimeFeature("patches/dynamic-tag");
+          }
+          // A tag client state names is the patch's to create alone: its entry
+          // rides a created scope's setup, with the child entry of what it renders.
           if (keepsSeededMarker(tagSection, tagExtra)) {
             linkRuntimeFeature("patches/setup-child");
           }
@@ -536,7 +537,7 @@ export default {
         let groupArgs: t.Expression[] = [];
         let rendererArgs: t.Expression[] = [];
         let createdOnly: t.NumericLiteral | undefined;
-        if (fillsHole(tagSection, tag.node.extra)) {
+        if (patchFillsExpr(tagSection, tagExtra)) {
           groupArgs = getExprRootGroupArgs(tagSection, tagExtra);
           // A renderer the name hands unchanged pairs while its input changes.
           if (groupArgs.length) {
@@ -651,7 +652,7 @@ export default {
           const varBinding = tag.node.var.extra!.binding!;
           tagVarSignal = initValue(varBinding);
           // A patch writes the variable's value by its resume id.
-          tagVarSignal.register = fillsHole(section, tag.node.extra)
+          tagVarSignal.register = patchFillsExpr(section, tag.node.extra!)
             ? "fill"
             : true;
           tagVarSignal.referenced = true;

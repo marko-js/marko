@@ -145,7 +145,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   const valueExtra = value.extra!;
   // A state-sourced hole derives through the signal graph, and inside
   // unpatched structure owner fills refresh it: neither patch-writes.
-  const filledHole = isHTML && !!nodeBinding && fillsHole(section, valueExtra);
+  const filledHole = isHTML && fillsHole(section, valueExtra);
   const canWriteHTML = isHTML || (confident && node.escape);
   const method = canWriteHTML
     ? node.escape

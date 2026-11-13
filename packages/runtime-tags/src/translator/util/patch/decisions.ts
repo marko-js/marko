@@ -28,7 +28,11 @@ import {
   isGuardedReason,
   mapParamReason,
 } from "../reasons";
-import { getConstantBindings, type ReferencedExtra } from "../references";
+import {
+  getCanonicalExpr,
+  getConstantBindings,
+  type ReferencedExtra,
+} from "../references";
 import { type DOMRuntimeFeature, linkRuntimeFeature } from "../runtime";
 import {
   getCallerParamGroupsAt,
@@ -69,12 +73,26 @@ import {
   patchFillsSection,
 } from "./structure";
 
-// A hole a patch writes (a value, a control's, a site it renders): in patch-written
-// structure, not state-sourced unless it only seeds a created scope.
+// A hole a patch writes: a value or content its tag recorded in analyze as rendering
+// into its node, so translate writes no hole analysis did not link.
 export function fillsHole(section: Section, extra: t.NodeExtra | undefined) {
+  return (
+    !!extra &&
+    rendersHole(getCanonicalExpr(extra)) &&
+    patchFillsExpr(section, extra)
+  );
+}
+
+// A write of the expression a patch fills (a hole's, or a dynamic tag's it renders): in
+// patch-written structure, not state-sourced unless it only seeds a created scope.
+export function patchFillsExpr(section: Section, extra: t.NodeExtra) {
   if (!patchFillsSection(section)) return false;
   const sources = getFillSources(extra);
   return !sources?.state || seedsOnly(section, sources);
+}
+
+function rendersHole(extra: t.NodeExtra) {
+  return !!(extra.rendersValue || extra.rendersContent);
 }
 
 // Read only from `<let>`s at the initial value the server renders where the scope
@@ -178,8 +196,8 @@ export function keepsSeededMarker(
 // into its node, or it picks its tag's branch.
 export function isFilledHole(read: ReferencedExtra) {
   return (
-    !!(read.rendersValue || read.rendersContent || picksBranch(read)) &&
-    fillsHole(read.section, read)
+    (rendersHole(read) || picksBranch(read)) &&
+    patchFillsExpr(read.section, read)
   );
 }
 
@@ -456,7 +474,7 @@ function isSlotWritten(slot: Slot, groups: [Section, ParamReasonGroup][]) {
   return some(slot.reasonExprs, (expr) =>
     expr.rendersContent
       ? !(getWriteUpdatesFrom(slot.section, expr, groups) & UpdatesFrom.Client)
-      : (!node || (expr.rendersValue && fillsHole(slot.section, expr))) &&
+      : (!node || fillsHole(slot.section, expr)) &&
         getWriteUpdatesFrom(slot.section, expr, groups) === UpdatesFrom.Server,
   );
 }

@@ -137,8 +137,8 @@ declare module "@marko/compiler/dist/types" {
     /** A `content` it spreads or sets, or a dynamic tag name, is rendered (as a
      * body, or a `<meta>`'s attribute), so its effect never reads it. */
     rendersContent?: true;
-    /** Its value renders into its tag's node (an attribute, a text, a comment's
-     * or a style's), which the node's slot lists among its reason expressions. */
+    /** Its value renders into its tag's node (an attribute, a control's, a text, a
+     * comment's, a style's, a `<show>` display): the hole a patch writes (`fillsHole`). */
     rendersValue?: true;
     merged?: NodeExtra;
   }

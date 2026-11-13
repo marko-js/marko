@@ -30,6 +30,7 @@ import {
   fillsHole,
 } from "../util/patch/decisions";
 import { patchCreatesOrComposes } from "../util/patch/refresh";
+import { patchFillsSection } from "../util/patch/structure";
 import { getExprRootGroupArgs } from "../util/patch/writers";
 import { addReasonExprs } from "../util/reasons";
 import { mergeReferences } from "../util/references";
@@ -218,7 +219,12 @@ export default {
         // A patched display's entry is keyed by the node's accessor and names
         // the start marker's: a created scope finds the range by the two.
         let patchArgs: (t.Expression | undefined)[] = [];
-        if (fillsHole(tagSection, tagExtra)) {
+        // A static display renders no value; a flush creating the scope writes it.
+        if (
+          staticDisplay === false
+            ? patchFillsSection(tagSection)
+            : fillsHole(tagSection, tagExtra)
+        ) {
           const start = tagExtra[kStartBinding];
           const [mask, group] = getExprRootGroupArgs(tagSection, tagExtra);
           patchArgs = [
