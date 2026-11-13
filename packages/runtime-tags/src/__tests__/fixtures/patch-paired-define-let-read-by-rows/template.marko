@@ -1,8 +1,0 @@
-<define/Picker>
-  <let/sel=1/>
-  <for|item| of=[1, 2]>
-    <button onClick() { sel = item }>${item === sel ? "*" : ""}${item}</button>
-  </for>
-</define>
-<Picker/>
-<p>${input.label}</p>

@@ -381,7 +381,7 @@ function canPatchFill(binding: Binding) {
         (!!getWriteReason(binding) ||
           readsPastRenders(binding) ||
           initialValueQueuesEffect(binding) ||
-          hasUnfilledClosureRead(binding)))) &&
+          hasUnfilledRead(binding)))) &&
     bindingUtil.has(binding.sources.state, binding)
   );
 }
@@ -486,7 +486,7 @@ export function writesSeed(binding: Binding) {
   return (
     seedsCreatedScope(binding) &&
     (isEverWritten(binding.section, getWriteReason(binding)) ||
-      hasUnfilledClosureRead(binding))
+      hasUnfilledRead(binding))
   );
 }
 
@@ -502,24 +502,18 @@ function readsPastRenders(binding: Binding) {
   );
 }
 
-// Read as a closure (or an alias's) rendering a hole no patch fills, in a scope a flush
-// creates: structure created with it reads the value then, which a client render's setup computes.
-function hasUnfilledClosureRead(binding: Binding) {
+// Read by a hole no patch fills (itself or by an alias), in a scope a flush creates: structure
+// created with it reads the value then, which a client render's setup computes first.
+function hasUnfilledRead(binding: Binding) {
   return (
     patchCreatesOrComposes(binding.section) &&
-    someAlias(binding, rendersUnfilledOutside, binding.section)
+    someAlias(binding, rendersUnfilled, undefined)
   );
 }
 
-function rendersUnfilledOutside(alias: Binding, section: Section) {
+function rendersUnfilled(alias: Binding) {
   for (const read of alias.reads.keys()) {
-    if (
-      read.rendersValue &&
-      read.section !== section &&
-      !fillsHole(read.section, read)
-    ) {
-      return true;
-    }
+    if (read.rendersValue && !fillsHole(read.section, read)) return true;
   }
   return false;
 }
