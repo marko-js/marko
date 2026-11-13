@@ -6,15 +6,8 @@ import { injectTextCoercion } from "../util/body-to-text";
 import buildStringExpression from "../util/build-string-expression";
 import evaluate from "../util/evaluate";
 import { isOutputHTML } from "../util/marko-config";
-import {
-  keepsSeededMarker,
-  linkHolePatcher,
-  fillsHole,
-} from "../util/patch/decisions";
-import {
-  getExprRootGroupArgs,
-  getPatchHoleGroupArgs,
-} from "../util/patch/writers";
+import { linkHolePatcher, fillsHole } from "../util/patch/decisions";
+import { buildPatchTextMark } from "../util/patch/writers";
 import { addReasonExprs } from "../util/reasons";
 import { replaceWithStatements } from "../util/replace-with-statements";
 import { absentArg, callRuntime } from "../util/runtime";
@@ -168,8 +161,6 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
       if (markerReason) {
         const guard = getMarkerGuard(nodeBinding!);
         const helper = node.escape ? "_text_mark" : "_html_mark";
-        const scopeId = getScopeIdIdentifier(section);
-        const accessor = getScopeAccessorLiteral(nodeBinding!);
         // `2` (or a guard scaled to 0/2) also asks the runtime to write a
         // `<!>` between non-empty text and the mergeable text before it.
         const markerGuard =
@@ -178,29 +169,16 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
               ? t.binaryExpression("*", guard, t.numericLiteral(2))
               : t.numericLiteral(2)
             : guard || absentArg(1);
-        // The patch write is also the output and resume writer, so the value
-        // evaluates once; its group args follow.
         write`${
           filledHole
-            ? keepsSeededMarker(section, valueExtra)
-              ? callRuntime(
-                  helper,
-                  scopeId,
-                  accessor,
-                  value,
-                  markerGuard,
-                  ...getExprRootGroupArgs(section, valueExtra),
-                  t.numericLiteral(1),
-                )
-              : callRuntime(
-                  helper,
-                  scopeId,
-                  accessor,
-                  value,
-                  markerGuard,
-                  ...getPatchHoleGroupArgs(section, valueExtra),
-                )
-            : callRuntime(helper, scopeId, accessor, value, markerGuard)
+            ? buildPatchTextMark(helper, nodeBinding!, value, markerGuard)
+            : callRuntime(
+                helper,
+                getScopeIdIdentifier(section),
+                getScopeAccessorLiteral(nodeBinding!),
+                value,
+                markerGuard,
+              )
         }`;
       } else {
         write`${

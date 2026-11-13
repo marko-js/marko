@@ -537,6 +537,18 @@ export function linkHolePatcher(
   }
 }
 
+// By a control's server helper: the feature applying its entries, which loads
+// `patches/control`.
+export const controlPatchers = {
+  _attr_input_checked: "patches/control-input",
+  _attr_input_checkedValue: "patches/control-checked-value",
+  _attr_details_open: "patches/control-open",
+  _attr_dialog_open: "patches/control-open",
+  _attr_select_value: "patches/control-select",
+  _attr_textarea_value: "patches/control-input",
+  _attr_input_value: "patches/control-input",
+} as const satisfies Record<string, DOMRuntimeFeature>;
+
 // A patch link reads reasons (through fills), so it runs once the solve settles
 // them, still at analysis exit, where the page entry reads linked features.
 const [getSettledFinalizers] = createAnalysisState(() => [] as (() => void)[]);

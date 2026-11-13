@@ -31,7 +31,7 @@ import {
 } from "../util/patch/decisions";
 import { patchCreatesOrComposes } from "../util/patch/refresh";
 import { patchFillsSection } from "../util/patch/structure";
-import { getExprRootGroupArgs } from "../util/patch/writers";
+import { getPatchShowArgs } from "../util/patch/writers";
 import { addReasonExprs } from "../util/reasons";
 import { mergeReferences } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
@@ -216,38 +216,34 @@ export default {
               ),
             );
 
-        // A patched display's entry is keyed by the node's accessor and names
-        // the start marker's: a created scope finds the range by the two.
-        let patchArgs: (t.Expression | undefined)[] = [];
-        // A static display renders no value; a flush creating the scope writes it.
-        if (
-          staticDisplay === false
-            ? patchFillsSection(tagSection)
-            : fillsHole(tagSection, tagExtra)
-        ) {
-          const start = tagExtra[kStartBinding];
-          const [mask, group] = getExprRootGroupArgs(tagSection, tagExtra);
-          patchArgs = [
-            t.numericLiteral(1),
-            mask,
-            group,
-            start && getScopeAccessorLiteral(start, true),
-          ];
-        }
+        const showEndArgs = [
+          getScopeIdIdentifier(tagSection),
+          getScopeAccessorLiteral(nodeBinding),
+          display,
+        ];
         // The runtime calls bracket the body's statements (rather than taking a
         // callback) so declarations in them stay readable by later statements.
         const statements = [
           t.expressionStatement(showStart),
           ...bodyStatements,
           t.expressionStatement(
-            callRuntime(
-              "_show_end",
-              getScopeIdIdentifier(tagSection),
-              getScopeAccessorLiteral(nodeBinding),
-              display,
-              ...(patchArgs.length ? getPatchEndArgs(endArgs) : endArgs),
-              ...patchArgs,
-            ),
+            // A static display renders no value; a flush creating the scope writes it.
+            (
+              staticDisplay === false
+                ? patchFillsSection(tagSection)
+                : fillsHole(tagSection, tagExtra)
+            )
+              ? callRuntime(
+                  "_show_end",
+                  ...showEndArgs,
+                  ...getPatchEndArgs(endArgs),
+                  ...getPatchShowArgs(
+                    tagSection,
+                    tagExtra,
+                    tagExtra[kStartBinding],
+                  ),
+                )
+              : callRuntime("_show_end", ...showEndArgs, ...endArgs),
           ),
         ];
         replaceWithStatements(tag, statements);

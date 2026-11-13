@@ -56,10 +56,15 @@ import {
   toModuleReadExpression,
 } from "../../util/module-read";
 import { type Opt, push } from "../../util/optional";
-import { linkHolePatcher, fillsHole } from "../../util/patch/decisions";
 import {
+  controlPatchers,
+  linkHolePatcher,
+  fillsHole,
+} from "../../util/patch/decisions";
+import {
+  buildPatchAttr,
   buildPatchTextContent,
-  getExprRootGroupArgs,
+  getPatchControlArgs,
   getPatchHoleGroupArgs,
 } from "../../util/patch/writers";
 import { addAlwaysReason, addReasonExprs } from "../../util/reasons";
@@ -124,7 +129,7 @@ const htmlSelectArgs = new WeakMap<
   {
     helper: "_attr_select_value" | "_attrs_select_value";
     args: t.Expression[];
-    patchArgs: t.Expression[];
+    patchArgs?: t.Expression[];
   }
 >();
 
@@ -479,9 +484,7 @@ export default {
           linkHolePatcher(
             tagSection,
             controlExtra,
-            patchControlFeatures[
-              getControllableHelper(tagName, controllable.state)
-            ],
+            controlPatchers[getControllableHelper(tagName, controllable.state)],
           );
         }
 
@@ -689,41 +692,32 @@ export default {
           write`${callRuntime("_attr_nonce")}`;
         }
 
-        // A patched control's helper writes the bind and control entries from
-        // the values it renders.
-        let patchArgs: t.Expression[] = [];
-        const controlHelper =
-          controllable && getControllableHelper(tagName, controllable.state);
+        // A patched control's helper writes its entries from the values it
+        // renders, which read as one group.
+        const controlPatchArgs =
+          controllable &&
+          getPatchControlArgs(
+            tagSection,
+            attrAt(attributes, controllable.attrs.find(isDefined))!.value
+              .extra!,
+            controllable.attrs[1] !== undefined,
+          );
         if (controllable) {
-          // The control's attributes read as one group.
-          const controlExtra = attrAt(
-            attributes,
-            controllable.attrs.find(isDefined),
-          )!.value.extra!;
-          // Client code sets the handler with its value wherever that group reads
-          // client state, so a patch writes the handler only with its control.
-          if (fillsHole(tagSection, controlExtra)) {
-            // Bits: 1 the control's entry, 2 its handler's bind; both take
-            // that group.
-            patchArgs = [
-              t.numericLiteral(
-                attrAt(attributes, controllable.attrs[1]) ? 3 : 1,
-              ),
-              ...getExprRootGroupArgs(tagSection, controlExtra),
-            ];
-          }
-
           if (tagName !== "select" && tagName !== "textarea") {
-            write`${callRuntime(
-              controlHelper!,
+            const helper = getControllableHelper(tagName, controllable.state);
+            const controlArgs = [
               getScopeIdIdentifier(tagSection),
               nodeAccessor,
               ...controllable.attrs.map(
                 (index, i) =>
                   attrAt(attributes, index)?.value || (i === 1 && absentArg(0)),
               ),
-              ...patchArgs,
-            )}`;
+            ];
+            write`${
+              controlPatchArgs
+                ? callRuntime(helper, ...controlArgs, ...controlPatchArgs)
+                : callRuntime(helper, ...controlArgs)
+            }`;
           }
 
           if (controllable.attrs[1] !== undefined) {
@@ -758,7 +752,7 @@ export default {
                 attrAt(attributes, controllable.attrs[1])?.value ||
                   absentArg(0),
               ],
-              patchArgs,
+              patchArgs: controlPatchArgs,
             });
           } else if (spreadExpression) {
             const spreadIdentifier = declareConstBefore(
@@ -769,7 +763,6 @@ export default {
             htmlSelectArgs.set(tag.node, {
               helper: "_attrs_select_value",
               args: [spreadIdentifier],
-              patchArgs: [],
             });
             spreadExpression = spreadIdentifier;
           }
@@ -777,15 +770,22 @@ export default {
           if (controllable) {
             const value = attrAt(attributes, controllable.attrs[0]);
             const valueChange = attrAt(attributes, controllable.attrs[1]);
-            writeAtStartOfBody =
-              valueChange || patchArgs.length
+            writeAtStartOfBody = controlPatchArgs
+              ? callRuntime(
+                  "_attr_textarea_value",
+                  getScopeIdIdentifier(tagSection),
+                  nodeAccessor,
+                  value?.value,
+                  valueChange?.value || absentArg(0),
+                  ...controlPatchArgs,
+                )
+              : valueChange
                 ? callRuntime(
-                    controlHelper!,
+                    "_attr_textarea_value",
                     getScopeIdIdentifier(tagSection),
                     nodeAccessor,
                     value?.value,
-                    valueChange?.value || (isPatch() && absentArg(0)),
-                    ...patchArgs,
+                    valueChange.value,
                   )
                 : callRuntime("_textarea_value", value!.value);
           } else if (spreadExpression) {
@@ -810,24 +810,7 @@ export default {
             const { confident, computed } = evaluate(value);
 
             if (fillsHole(tagSection, value.extra)) {
-              // The attribute's helper also writes its patch entry (the
-              // expression appears once): the element and group args trail.
-              const helper = getPatchAttrHelper(tagName, name);
-              const scopeId = getScopeIdIdentifier(tagSection);
-              const accessor = getScopeAccessorLiteral(nodeBinding!);
-              const groupArgs = getExprRootGroupArgs(tagSection, value.extra!);
-              write`${
-                helper === "_attr"
-                  ? callRuntime(
-                      "_attr",
-                      t.stringLiteral(name),
-                      value,
-                      scopeId,
-                      accessor,
-                      ...groupArgs,
-                    )
-                  : callRuntime(helper, value, scopeId, accessor, ...groupArgs)
-              }`;
+              write`${buildPatchAttr(nodeBinding!, tagName, name, value)}`;
               continue;
             }
 
@@ -860,33 +843,33 @@ export default {
           addHTMLEffectCall(tagSection, tagExtra);
 
           if (!spreadContent) {
-            // A patch write renders the set itself; its group args trail.
-            const patchArgs = fillsHole(tagSection, tagExtra)
+            const helper = skipExpression ? "_attrs_partial" : "_attrs";
+            const scopeId = getScopeIdIdentifier(tagSection);
+            const spreadArgs = skipExpression
               ? [
-                  getPatchSpreadFlag(tagName, !!controllable, injectsNonce),
-                  ...getPatchHoleGroupArgs(tagSection, tagExtra),
+                  spreadExpression,
+                  skipExpression,
+                  nodeAccessor,
+                  scopeId,
+                  t.stringLiteral(tagName),
                 ]
-              : [];
-            if (skipExpression) {
-              write`${callRuntime(
-                "_attrs_partial",
-                spreadExpression,
-                skipExpression,
-                nodeAccessor,
-                getScopeIdIdentifier(tagSection),
-                t.stringLiteral(tagName),
-                ...patchArgs,
-              )}`;
-            } else {
-              write`${callRuntime(
-                "_attrs",
-                spreadExpression,
-                nodeAccessor,
-                getScopeIdIdentifier(tagSection),
-                t.stringLiteral(tagName),
-                ...patchArgs,
-              )}`;
-            }
+              : [
+                  spreadExpression,
+                  nodeAccessor,
+                  scopeId,
+                  t.stringLiteral(tagName),
+                ];
+            // A patch write renders the set itself; its flag and group trail.
+            write`${
+              fillsHole(tagSection, tagExtra)
+                ? callRuntime(
+                    helper,
+                    ...spreadArgs,
+                    getPatchSpreadFlag(tagName, !!controllable, injectsNonce),
+                    ...getPatchHoleGroupArgs(tagSection, tagExtra),
+                  )
+                : callRuntime(helper, ...spreadArgs)
+            }`;
           }
         }
 
@@ -1008,19 +991,18 @@ export default {
           }
 
           writer.flushInto(tag);
+          const { helper, args, patchArgs } = selectArgs;
+          const selectArgList = [
+            getScopeIdIdentifier(tagSection),
+            nodeBinding && getScopeAccessorLiteral(nodeBinding),
+            ...args,
+            t.arrowFunctionExpression([], t.blockStatement(tag.node.body.body)),
+          ];
           statements = [
             t.expressionStatement(
-              callRuntime(
-                selectArgs.helper,
-                getScopeIdIdentifier(tagSection),
-                nodeBinding && getScopeAccessorLiteral(nodeBinding),
-                ...selectArgs.args,
-                t.arrowFunctionExpression(
-                  [],
-                  t.blockStatement(tag.node.body.body),
-                ),
-                ...selectArgs.patchArgs,
-              ),
+              patchArgs
+                ? callRuntime(helper, ...selectArgList, ...patchArgs)
+                : callRuntime(helper, ...selectArgList),
             ),
           ];
         } else if (isTextOnly) {
@@ -1616,17 +1598,6 @@ function getControllableHelper(tagName: string, state: Controllable["state"]) {
   }
 }
 
-// By a control's server helper: the feature applying its entries.
-const patchControlFeatures = {
-  _attr_input_checked: "patches/control-input",
-  _attr_input_checkedValue: "patches/control-checked-value",
-  _attr_details_open: "patches/control-open",
-  _attr_dialog_open: "patches/control-open",
-  _attr_select_value: "patches/control-select",
-  _attr_textarea_value: "patches/control-input",
-  _attr_input_value: "patches/control-input",
-} as const;
-
 function assertValidNativeAttrName(
   tag: t.NodePath<t.MarkoTag>,
   attr: t.MarkoAttribute,
@@ -2201,17 +2172,6 @@ function getClassNames(part: DelimitedAttrPart | undefined) {
     : isLiteralPart(part)
       ? part.split(/\s+/).filter(Boolean)
       : [part.join(".")];
-}
-
-// The patched attribute's helper; class, style and an `<option>`'s value (which
-// marks it selected) each have their own.
-function getPatchAttrHelper(tagName: string, name: string) {
-  if (tagName === "option" && name === "value") {
-    return "_attr_option_value";
-  }
-  return name === "class" || name === "style"
-    ? (`_attr_${name}` as const)
-    : "_attr";
 }
 
 // A class or style value the template holds whole never needs the element.

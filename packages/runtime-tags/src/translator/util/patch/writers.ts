@@ -57,7 +57,11 @@ import {
   type ReferencedExtra,
 } from "../references";
 import { absentArg, callRuntime, type HTMLRuntimeHelpers } from "../runtime";
-import { getPrefixedScopeAccessor, getScopeAccessor } from "../scope-accessor";
+import {
+  getPrefixedScopeAccessor,
+  getScopeAccessor,
+  getScopeAccessorLiteral,
+} from "../scope-accessor";
 import {
   findParamReasonGroupIndex,
   forEachParamGroup,
@@ -112,6 +116,7 @@ import {
   orGuard,
 } from "../write-guard";
 import {
+  fillsHole,
   getEffectWrites,
   getExprWriteGroups,
   getRenderedValueSources,
@@ -121,6 +126,7 @@ import {
   getWriteGroupsValue,
   getFillSources,
   hasClientState,
+  keepsSeededMarker,
   passesNoMask,
   type WriteGroups,
 } from "./decisions";
@@ -898,6 +904,117 @@ export function buildPatchTextContent(
     t.stringLiteral(getPatchKey().TextContent + getScopeAccessor(nodeBinding)),
     ...getPatchHoleGroupArgs(section, extra),
   );
+}
+
+// A filled text or markup hole's marking helper is also its patch write, so the value
+// evaluates once; a seed's node keeps its marker whatever its group (`1`).
+export function buildPatchTextMark(
+  helper: "_text_mark" | "_html_mark",
+  nodeBinding: Binding,
+  value: t.Expression,
+  markerGuard: t.Expression,
+) {
+  const { section } = nodeBinding;
+  const extra = value.extra!;
+  const scopeId = getScopeIdIdentifier(section);
+  const accessor = getScopeAccessorLiteral(nodeBinding);
+  return keepsSeededMarker(section, extra)
+    ? callRuntime(
+        helper,
+        scopeId,
+        accessor,
+        value,
+        markerGuard,
+        ...getExprRootGroupArgs(section, extra),
+        t.numericLiteral(1),
+      )
+    : callRuntime(
+        helper,
+        scopeId,
+        accessor,
+        value,
+        markerGuard,
+        ...getPatchHoleGroupArgs(section, extra),
+      );
+}
+
+// A filled attribute's helper renders it and writes its entry, so the value evaluates
+// once; class, style and an `<option>`'s value (which marks it selected) have their own.
+export function buildPatchAttr(
+  nodeBinding: Binding,
+  tagName: string,
+  name: string,
+  value: t.Expression,
+) {
+  const { section } = nodeBinding;
+  const scopeId = getScopeIdIdentifier(section);
+  const accessor = getScopeAccessorLiteral(nodeBinding);
+  const groupArgs = getExprRootGroupArgs(section, value.extra!);
+  return tagName === "option" && name === "value"
+    ? callRuntime("_attr_option_value", value, scopeId, accessor, ...groupArgs)
+    : name === "class" || name === "style"
+      ? callRuntime(`_attr_${name}`, value, scopeId, accessor, ...groupArgs)
+      : callRuntime(
+          "_attr",
+          t.stringLiteral(name),
+          value,
+          scopeId,
+          accessor,
+          ...groupArgs,
+        );
+}
+
+// A filled control's args after its helper's own: the entries it writes (1 the
+// control's, 2 its handler's bind, which client code sets with the value), then their group.
+export function getPatchControlArgs(
+  section: Section,
+  controlExtra: t.NodeExtra,
+  hasChangeHandler: boolean,
+) {
+  if (fillsHole(section, controlExtra)) {
+    return [
+      t.numericLiteral(hasChangeHandler ? 3 : 1),
+      ...getExprRootGroupArgs(section, controlExtra),
+    ];
+  }
+}
+
+// A `<style>` value where a patch fills its section: its helper writes the declaration
+// and its entry, which only seeds a created scope for a value no patch fills (group `0`).
+export function buildPatchStyleValue(
+  nodeBinding: Binding,
+  name: string,
+  value: t.Expression,
+) {
+  const { section } = nodeBinding;
+  const [mask, group] = fillsHole(section, value.extra)
+    ? getExprRootGroupArgs(section, value.extra!)
+    : [t.numericLiteral(0), t.numericLiteral(0)];
+  return callRuntime(
+    "_escape_style_value",
+    value,
+    getScopeIdIdentifier(section),
+    getScopeAccessorLiteral(nodeBinding),
+    t.stringLiteral(name),
+    mask,
+    group,
+  );
+}
+
+// A filled `<show>` display's args after `_show_end`'s own: its entry and group, and the
+// start marker's accessor, by which with the node's a created scope finds the range.
+export function getPatchShowArgs(
+  section: Section,
+  extra: t.NodeExtra,
+  start: Binding | undefined,
+) {
+  const [mask, group] = getExprRootGroupArgs(section, extra);
+  return [
+    t.numericLiteral(1),
+    mask,
+    group,
+    start && getScopeAccessorLiteral(start, true),
+  ];
 }
 
 // A created scope runs the setup where the client contributes the sources'
