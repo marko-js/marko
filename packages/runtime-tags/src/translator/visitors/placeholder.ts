@@ -40,7 +40,7 @@ import {
 import * as structure from "../util/structure";
 import { isInTextBody } from "../util/tag-facts";
 import type { TemplateVisitor } from "../util/visitors";
-import { getWriteGuard, getWriteReason } from "../util/write-guard";
+import { getMarkerGuard, getWriteReason } from "../util/write-guard";
 import * as writer from "../util/writer";
 
 const kTextAfter = Symbol("text may merge after the placeholder");
@@ -166,7 +166,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
 
     if (isHTML) {
       if (markerReason) {
-        const guard = getWriteGuard(section, markerReason, true);
+        const guard = getMarkerGuard(nodeBinding!);
         const helper = node.escape ? "_text_mark" : "_html_mark";
         const scopeId = getScopeIdIdentifier(section);
         const accessor = getScopeAccessorLiteral(nodeBinding!);

@@ -8,12 +8,11 @@ import buildStringExpression, {
 import { isOutputHTML } from "./marko-config";
 import { isPatchKeyedByValues } from "./patch/decisions";
 import { getValueNodeMarkerGuard } from "./patch/writers";
-import type { Reason } from "./reasons";
 import { insertStatementBefore } from "./replace-with-statements";
 import { callRuntime } from "./runtime";
 import { getScopeAccessorLiteral } from "./scope-accessor";
 import { createOutputSectionState } from "./state";
-import { getWriteGuard } from "./write-guard";
+import { getMarkerGuard, getWriteReason } from "./write-guard";
 
 type Write = string | t.Expression | (() => undefined | string | t.Expression);
 const [getWrites] = createOutputSectionState<Write[]>(() => [""]);
@@ -81,10 +80,10 @@ export function flushInto(
   return target;
 }
 
+// Writes the node's resume marker where its slot says client code reads it.
 export function markNode(
   path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>,
   nodeBinding: Binding,
-  reason: undefined | false | Reason,
   deferred?: boolean,
 ) {
   if (nodeBinding.type !== BindingType.dom) {
@@ -93,20 +92,18 @@ export function markNode(
     );
   }
 
-  if (isOutputHTML()) {
-    if (reason) {
-      const section = getSection(path);
-      // Deferred markers ride the stream trailer alongside a deferred end tag
-      // (html/body), keeping the marker adjacent to the element it resumes.
-      writeTo(path, deferred)`${callRuntime(
-        "_el_mark",
-        getScopeIdIdentifier(section),
-        getScopeAccessorLiteral(nodeBinding),
-        (isPatchKeyedByValues(nodeBinding) &&
-          getValueNodeMarkerGuard(section, nodeBinding)) ||
-          getWriteGuard(section, reason, true),
-      )}`;
-    }
+  if (isOutputHTML() && getWriteReason(nodeBinding)) {
+    const { section } = nodeBinding;
+    // Deferred markers ride the stream trailer alongside a deferred end tag
+    // (html/body), keeping the marker adjacent to the element it resumes.
+    writeTo(path, deferred)`${callRuntime(
+      "_el_mark",
+      getScopeIdIdentifier(section),
+      getScopeAccessorLiteral(nodeBinding),
+      (isPatchKeyedByValues(nodeBinding) &&
+        getValueNodeMarkerGuard(section, nodeBinding)) ||
+        getMarkerGuard(nodeBinding),
+    )}`;
   }
 }
 

@@ -27,7 +27,6 @@ import { ensureSection, getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
 import { ensureSlot } from "../util/slots";
 import * as structure from "../util/structure";
-import { getWriteReason } from "../util/write-guard";
 import * as writer from "../util/writer";
 
 // Applies the `>` escape of the runtime `_escape_comment`.
@@ -166,7 +165,7 @@ export default {
       }
 
       if (nodeBinding) {
-        writer.markNode(tag, nodeBinding, getWriteReason(nodeBinding));
+        writer.markNode(tag, nodeBinding);
       }
 
       replaceWithStatements(tag);

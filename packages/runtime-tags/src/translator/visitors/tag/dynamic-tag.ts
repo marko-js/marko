@@ -126,7 +126,7 @@ import translateVar, {
   isTagVarAssigned,
 } from "../../util/translate-var";
 import type { TemplateVisitor } from "../../util/visitors";
-import { getWriteGuard, getWriteReason } from "../../util/write-guard";
+import { getMarkerGuard, getWriteReason } from "../../util/write-guard";
 import * as writer from "../../util/writer";
 import * as ClassHydration from "./constants/class-hydration";
 
@@ -517,7 +517,7 @@ export default {
 
       if (isOutputHTML()) {
         writeHTMLResumeStatements(tag);
-        const markerGuard = getWriteGuard(tagSection, markerReason, true);
+        const markerGuard = getMarkerGuard(nodeBinding);
         // For a debug build's check that the tag it renders is not lazy.
         const debugTagVar = !isOptimize() && node.var && t.numericLiteral(1);
         // The resumed variable's id: `_var` wires it, a patch entry fills it.

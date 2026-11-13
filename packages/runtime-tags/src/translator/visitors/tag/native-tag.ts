@@ -111,7 +111,7 @@ import {
 } from "../../util/to-property-name";
 import { propsToExpression } from "../../util/translate-attrs";
 import { type TemplateVisitor, translateByTarget } from "../../util/visitors";
-import { getWriteGuard, getWriteReason } from "../../util/write-guard";
+import { getMarkerGuard, getWriteReason } from "../../util/write-guard";
 import * as writer from "../../util/writer";
 
 const kNodeOp = Symbol("native tag structure node");
@@ -903,12 +903,7 @@ export default {
           // client applies through `_attr_content`, as its own signal does.
           const patches = fillsHole(tagSection, content.extra);
           const scopeId = getScopeIdIdentifier(tagSection);
-          const markerGuard =
-            getWriteGuard(
-              tagSection,
-              nodeBinding && getWriteReason(nodeBinding),
-              true,
-            ) || absentArg(1);
+          const markerGuard = getMarkerGuard(nodeBinding!) || absentArg(1);
           (tag.node.body.body as t.Statement[]) = [
             t.expressionStatement(
               isPatch()
@@ -940,12 +935,7 @@ export default {
             ),
           ];
         } else if (spreadContent) {
-          const markerGuard =
-            getWriteGuard(
-              tagSection,
-              nodeBinding && getWriteReason(nodeBinding),
-              true,
-            ) || absentArg(1);
+          const markerGuard = getMarkerGuard(nodeBinding!) || absentArg(1);
           const patches = fillsHole(tagSection, tagExtra);
           const contentArgs = isPatch()
             ? patches
@@ -1078,7 +1068,7 @@ export default {
         }
 
         if (markerReason) {
-          writer.markNode(tag, nodeBinding, markerReason, tagName === "html");
+          writer.markNode(tag, nodeBinding, tagName === "html");
         }
 
         replaceWithStatements(tag, statements);
