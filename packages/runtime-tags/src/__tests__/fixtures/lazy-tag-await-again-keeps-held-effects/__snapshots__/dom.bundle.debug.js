@@ -28,7 +28,7 @@ const $await_content__setup = ($scope) => {
 };
 const $await_content__$params = ($scope, $params3) => $input_id($scope["#childScope/0"], $params3[0]);
 const $catch_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]?.message);
-const $catch_content = _content("__tests__/child.marko_2*content", " ", " ", 0, $catch_content__$params);
+const $catch_content = _content_resume("__tests__/child.marko_2*content", " ", " ", 0, $catch_content__$params);
 const $await_content = /*@__PURE__*/ _await_content("#text/1", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><!>`)(""), /*@__PURE__*/ ((_w0) => `/${_w0}&b%c`)(""), $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content__$params);
 const $try_content__setup = ($scope) => {

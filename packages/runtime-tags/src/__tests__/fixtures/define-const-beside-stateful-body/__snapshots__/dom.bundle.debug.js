@@ -24,7 +24,7 @@ const $Panel_content__$temp = ($scope, $temp) => {
 	$Panel_content__isOpen($scope, $temp.isOpen);
 	$Panel_content__tag_input_label($scope, $temp.label);
 };
-const $Panel_content = _content("__tests__/tags/child.marko_1*content", $Panel_content__template, $Panel_content__walks, 0, $Panel_content__$params);
+const $Panel_content = _content_resume("__tests__/tags/child.marko_1*content", $Panel_content__template, $Panel_content__walks, 0, $Panel_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _or(11, ($scope) => $dynamicTag($scope, $scope.Tag, ($_) => ({
 	isOpen: !$scope.open,

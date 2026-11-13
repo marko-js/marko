@@ -41,7 +41,7 @@ const $reveal_content__setup = ($scope) => {
 	$reveal_content__input_color($scope);
 	_style_shell($scope, "#style/0");
 };
-const $reveal_content = _content("__tests__/template.marko_4*content", "<style></style><div class=content></div>", " ", $reveal_content__setup);
+const $reveal_content = _content_resume("__tests__/template.marko_4*content", "<style></style><div class=content></div>", " ", $reveal_content__setup);
 const $if_content__input_color = /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $Box_content__color($scope["#childScope/0"], $scope._.input_color));
 const $if_content__setup = ($scope) => {
 	$if_content__input_color._($scope);

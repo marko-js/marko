@@ -11,7 +11,7 @@ const $try_content__setup = ($scope) => {
 };
 const $placeholder_content__clicks = /*@__PURE__*/ _closure_get("clicks/4", ($scope) => _text($scope["#text/0"], $scope._._.clicks), ($scope) => $scope._._, "__tests__/template.marko_2_clicks#0:3/subscribe");
 const $placeholder_content__setup = $placeholder_content__clicks;
-const $placeholder_content = _content("__tests__/template.marko_2*content", "<i>loading <!></i>", "Db%", $placeholder_content__setup);
+const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "<i>loading <!></i>", "Db%", $placeholder_content__setup);
 const $await_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 const $await_content__setup = $await_content__try;
 const $clicks__closure = /*@__PURE__*/ _closure($placeholder_content__clicks, $await_content2__clicks);

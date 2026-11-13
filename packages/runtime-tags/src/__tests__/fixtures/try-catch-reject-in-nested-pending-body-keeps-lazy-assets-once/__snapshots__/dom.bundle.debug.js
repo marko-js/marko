@@ -18,7 +18,7 @@ let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(($_) => import("./v
 const $await_content3__$params = ($scope, $params6) => _text($scope["#text/0"], $params6[0]);
 const $await_content2__$params = ($scope, $params5) => _text($scope["#text/0"], $params5[0]);
 const $await_content__$params = ($scope, $params4) => _text($scope["#text/0"], $params4[0]);
-const $catch_content3 = _content("__tests__/template.marko_6*content", "never caught");
+const $catch_content3 = _content_resume("__tests__/template.marko_6*content", "never caught");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", " ", " ");
 const $try_content3__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $try_content3__setup = ($scope) => {
@@ -26,7 +26,7 @@ const $try_content3__setup = ($scope) => {
 	$try_content3__await_promise($scope, resolveAfter("never shown", 3));
 };
 const $catch_content2__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]?.message);
-const $catch_content2 = _content("__tests__/template.marko_4*content", "caught <!>", "b%", 0, $catch_content2__$params);
+const $catch_content2 = _content_resume("__tests__/template.marko_4*content", "caught <!>", "b%", 0, $catch_content2__$params);
 const $try_content2__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content3__setup, 0, $catch_content3);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/3", " ", " ");
 const $try_content2__await_promise = /*@__PURE__*/ _await_promise("#text/3", $await_content2__$params);
@@ -42,7 +42,7 @@ const $catch_content__setup = ($scope) => {
 	$load_Child_tag_input_value($scope["#childScope/1"], "catch");
 };
 const $catch_content__$params = ($scope, $params2) => _text($scope["#text/2"], $params2[0]?.message);
-const $catch_content = _content("__tests__/template.marko_2*content", "<!><!> caught <!>", "b%/&c%", $catch_content__setup, $catch_content__$params);
+const $catch_content = _content_resume("__tests__/template.marko_2*content", "<!><!> caught <!>", "b%/&c%", $catch_content__setup, $catch_content__$params);
 const $try_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!><!><!>", "b%b%/&b%", $try_content2__setup, 0, $catch_content2);
 const $await_content3 = /*@__PURE__*/ _await_content("#text/1", " ", " ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content3__$params);

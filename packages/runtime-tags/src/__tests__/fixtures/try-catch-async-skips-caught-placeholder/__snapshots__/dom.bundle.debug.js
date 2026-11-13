@@ -11,7 +11,7 @@ const $placeholder_content2__setup = ($scope) => {
 	$placeholder_content2__count($scope, 0);
 	$placeholder_content2__setup__script($scope);
 };
-const $placeholder_content2 = _content("__tests__/template.marko_7*content", "<button>placeholder <!></button>", " Db%", $placeholder_content2__setup);
+const $placeholder_content2 = _content_resume("__tests__/template.marko_7*content", "<button>placeholder <!></button>", " Db%", $placeholder_content2__setup);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", " ", " ");
 const $try_content3__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content2__$params);
 const $try_content3__setup = ($scope) => {
@@ -26,14 +26,14 @@ const $await_content__setup = ($scope) => {
 	$await_content__try($scope);
 };
 const $catch_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]?.message);
-const $catch_content = _content("__tests__/template.marko_4*content", "caught <!>", "b%", 0, $catch_content__$params);
+const $catch_content = _content_resume("__tests__/template.marko_4*content", "caught <!>", "b%", 0, $catch_content__$params);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "b%b%", $await_content__setup);
 const $try_content2__await_promise = /*@__PURE__*/ _await_promise("#text/0");
 const $try_content2__setup = ($scope) => {
 	$await_content($scope);
 	$try_content2__await_promise($scope, resolveAfter("outer", 1));
 };
-const $placeholder_content = _content("__tests__/template.marko_2*content", "loading");
+const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "loading");
 const $try_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content2__setup, 0, $catch_content);
 const $try_content__setup = $try_content__try;
 const $count = /*@__PURE__*/ _let("count/4", ($scope) => _text($scope["#text/1"], $scope.count));

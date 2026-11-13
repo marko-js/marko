@@ -15,7 +15,7 @@ const $await_content = /*@__PURE__*/ _await_content("#text/0", "<button><!> <!><
 const $catch_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $catch_content__setup = $await_content;
 const $catch_content__$params = ($scope, $params3) => $catch_content__await_promise($scope, resolveAfter($params3[0]?.message, 2));
-const $catch_content = _content("__tests__/template.marko_3*content", "<!><!><!>", "b%", $catch_content__setup, $catch_content__$params);
+const $catch_content = _content_resume("__tests__/template.marko_3*content", "<!><!><!>", "b%", $catch_content__setup, $catch_content__$params);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", " ", " ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content2__$params);
 const $try_content__setup = ($scope) => {

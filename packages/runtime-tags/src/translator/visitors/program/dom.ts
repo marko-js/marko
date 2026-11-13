@@ -142,8 +142,15 @@ export default {
 
               // Resume calls the registered wrapper with the loop's values.
               const registerWrapper = !!(registerReason && objProps.length);
+              const registerClosures =
+                !!registerReason &&
+                !!getDynamicTagContentClosures(childSection);
               let renderer: t.Expression = callRuntime(
-                "_content",
+                // Content no statement below registers keeps itself registered:
+                // `_content_resume` is `_content` off the pure list.
+                registerReason && !registerWrapper && !registerClosures
+                  ? "_content_resume"
+                  : "_content",
                 t.stringLiteral(registryId),
                 ...trimEmptyArgs([
                   writes,
@@ -158,12 +165,6 @@ export default {
                     : undefined,
                 ]),
               );
-
-              // `_content` registers any renderer the bundle keeps; one that must
-              // be registered whatever else the client keeps is left impure.
-              if (!registerReason || registerWrapper) {
-                renderer = t.addComment(renderer, "leading", "@__PURE__");
-              }
 
               if (objProps.length) {
                 renderer = callRuntime(
@@ -182,16 +183,13 @@ export default {
                 ]),
               );
 
-              if (
-                registerReason &&
-                getDynamicTagContentClosures(childSection)
-              ) {
+              if (registerClosures) {
                 // Registered with the closures its registration carries, after
                 // any loop values it passes on to the wrapper above.
                 program.node.body.push(
                   t.expressionStatement(
                     callRuntime(
-                      "_content_resume",
+                      "_content_closures_resume",
                       t.identifier(childSection.name),
                       registerWrapper && t.numericLiteral(1),
                     ),

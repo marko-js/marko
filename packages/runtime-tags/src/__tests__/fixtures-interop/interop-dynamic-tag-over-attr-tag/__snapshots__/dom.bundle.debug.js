@@ -3,7 +3,7 @@ var import_vdom = require_vdom();
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $inputitem_content = _content("__tests__/components/tags-inner.marko_1*content", "<i>body</i>");
+const $inputitem_content = _content_resume("__tests__/components/tags-inner.marko_1*content", "<i>body</i>");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputitem_content);
 const $input_item = $dynamicTag;
 const $input$1 = ($scope, input) => $input_item($scope, input.item);

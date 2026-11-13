@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<pre id=log></pre><button class=inc> </button><button class=hide></button><!><!><!>";
 const $walks = "b D l b%b%c";
-const $placeholder_content = _content("__tests__/template.marko_5*content", "loading");
+const $placeholder_content = _content_resume("__tests__/template.marko_5*content", "loading");
 const $await_content2__count = /*@__PURE__*/ _closure_get("count/7", ($scope) => _text($scope["#text/0"], $scope._.count), 0, "__tests__/template.marko_4_count#0:5/subscribe");
 const $await_content2__setup = $await_content2__count;
 const $await_content__count = /*@__PURE__*/ _closure_get("count/7", ($scope) => _text($scope["#text/1"], $scope._._._.count), ($scope) => $scope._._._, "__tests__/template.marko_3_count#0:5/subscribe");

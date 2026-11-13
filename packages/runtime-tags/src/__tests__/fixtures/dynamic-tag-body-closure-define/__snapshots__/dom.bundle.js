@@ -1,6 +1,6 @@
 // template.marko
-const $showFoodiv_content = _content("a2", "count <!>", "b%", /* @__PURE__ */ _closure_get(5, ($scope) => _text($scope.a, $scope._.e)));
-_content_resume($showFoodiv_content);
+const $showFoodiv_content = /*@__PURE__*/ _content("a2", "count <!>", "b%", /* @__PURE__ */ _closure_get(5, ($scope) => _text($scope.a, $scope._.e)));
+_content_closures_resume($showFoodiv_content);
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $if_content__input_content = /*@__PURE__*/ _if_closure(1, 0, ($scope) => $if_content__dynamicTag($scope, $scope._.e));
 const $Foo_content__if = /*@__PURE__*/ _if(1, "<!><!><!>", "b%", $if_content__input_content);

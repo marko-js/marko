@@ -19,8 +19,8 @@ const $if_content__setup = ($scope) => {
 	$if_content__await_promise($scope, rejectAfter(new Error("rejected"), 1));
 };
 const $catch_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]?.message);
-const $catch_content = _content("__tests__/template.marko_3*content", "caught: <!>", "b%", 0, $catch_content__$params);
-const $placeholder_content = _content("__tests__/template.marko_2*content", "loading");
+const $catch_content = _content_resume("__tests__/template.marko_3*content", "caught: <!>", "b%", 0, $catch_content__$params);
+const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "loading");
 const $try_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!><!>", "b%/&b%", $if_content__setup);
 const $try_content__show = /*@__PURE__*/ _closure_get("show/3", ($scope) => $try_content__if($scope, $scope._.show ? 0 : 1), 0, "__tests__/template.marko_1_show#0:2/subscribe");
 const $try_content__setup = $try_content__show;

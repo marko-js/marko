@@ -26,7 +26,7 @@ const $load_Child_trigger = /*@__PURE__*/ _load_event_trigger("click", "body");
 let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.setup.mjs")));
 let $load_Child_tag_input_content = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.input_content.mjs")));
 const $el_getter = _hoist_resume("__tests__/template.marko_0_#span#1:0/hoist", "#span/0", "ClosureScopes:1");
-const $Item_content = _content("__tests__/template.marko_1*content", $Item_content__template, $Item_content__walks, 0, 0, "ClosureScopes:1");
+const $Item_content = _content_resume("__tests__/template.marko_1*content", $Item_content__template, $Item_content__walks, 0, 0, "ClosureScopes:1");
 const $Item = ($scope, Item) => $load_Child_tag_input_content($scope["#childScope/1"], Item);
 const $await_content = /*@__PURE__*/ _await_content("#text/2", $Item_content__template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($Item_content__walks));
 const $await_promise = /*@__PURE__*/ _await_promise("#text/2");

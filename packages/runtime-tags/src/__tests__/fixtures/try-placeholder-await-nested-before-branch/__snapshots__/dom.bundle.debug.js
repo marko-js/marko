@@ -21,7 +21,7 @@ const $await_content__setup = ($scope) => {
 	$await_content2($scope);
 	$await_content__await_promise($scope, resolveAfter(1, 1));
 };
-const $placeholder_content = _content("__tests__/template.marko_2*content", "loading");
+const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "loading");
 const $try_content__if = /*@__PURE__*/ _if("#text/1", "<span>shown</span>");
 const $try_content__show = /*@__PURE__*/ _closure_get("show/3", ($scope) => $try_content__if($scope, $scope._.show ? 0 : 1), 0, "__tests__/template.marko_1_show#0:2/subscribe");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "b%", $await_content__setup);

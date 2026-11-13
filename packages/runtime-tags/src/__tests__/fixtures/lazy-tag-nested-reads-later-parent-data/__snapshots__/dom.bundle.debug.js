@@ -26,7 +26,7 @@ const $template = "<button class=parent>parent</button><!><!><!>";
 const $walks = " b%/&b%c";
 let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_item = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_item.mjs"));
-const $placeholder_content = _content("__tests__/parent.marko_4*content", "loading");
+const $placeholder_content = _content_resume("__tests__/parent.marko_4*content", "loading");
 const $await_content2__first = /*@__PURE__*/ _closure_get("first/5", ($scope) => $load_Child_tag_input_item($scope["#childScope/1"], $scope._._._.first), ($scope) => $scope._._._);
 const $await_content2__setup = ($scope) => {
 	$await_content2__first($scope);

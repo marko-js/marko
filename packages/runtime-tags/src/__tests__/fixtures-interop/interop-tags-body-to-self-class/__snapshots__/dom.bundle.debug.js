@@ -37,7 +37,7 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 // template.marko
 const $template = "<div id=tags-api>tags</div><!><!>";
 const $walks = "b%c";
-const $selfbox_content = _content("__tests__/template.marko_1*content", "<em>body</em>");
+const $selfbox_content = _content_resume("__tests__/template.marko_1*content", "<em>body</em>");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $selfbox_content);
 function $setup($scope) {
 	$dynamicTag($scope, _marko_template);

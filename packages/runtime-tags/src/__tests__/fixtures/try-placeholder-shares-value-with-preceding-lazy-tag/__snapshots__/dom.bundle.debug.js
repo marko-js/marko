@@ -33,7 +33,7 @@ const $placeholder_content__setup = ($scope) => {
 	$placeholder_content__count($scope, 0);
 	$placeholder_content__setup__script($scope);
 };
-const $placeholder_content = _content("__tests__/template.marko_2*content", "<button class=placeholder> </button>", " D ", $placeholder_content__setup);
+const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "<button class=placeholder> </button>", " D ", $placeholder_content__setup);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", " ", " ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $try_content__setup = ($scope) => {

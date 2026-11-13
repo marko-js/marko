@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const never = new Promise(() => {});
-const $catch_content2 = _content("__tests__/template.marko_7*content", "inner caught");
+const $catch_content2 = _content_resume("__tests__/template.marko_7*content", "inner caught");
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", "never inner");
 const $try_content3__await_promise = /*@__PURE__*/ _await_promise("#text/0");
 const $try_content3__setup = ($scope) => {
@@ -10,7 +10,7 @@ const $try_content3__setup = ($scope) => {
 	$try_content3__await_promise($scope, never);
 };
 const $catch_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]?.message);
-const $catch_content = _content("__tests__/template.marko_5*content", "caught: <!>", "b%", 0, $catch_content__$params);
+const $catch_content = _content_resume("__tests__/template.marko_5*content", "caught: <!>", "b%", 0, $catch_content__$params);
 const $try_content2__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content3__setup, 0, $catch_content2);
 const $await_content3 = /*@__PURE__*/ _await_content("#text/1", "never outer");
 const $try_content2__await_promise = /*@__PURE__*/ _await_promise("#text/1");
@@ -19,7 +19,7 @@ const $try_content2__setup = ($scope) => {
 	$try_content2__try($scope);
 	$try_content2__await_promise($scope, rejectAfter(new Error("ERROR!"), 2));
 };
-const $placeholder_content = _content("__tests__/template.marko_3*content", "loading outer...");
+const $placeholder_content = _content_resume("__tests__/template.marko_3*content", "loading outer...");
 const $await_content__changes = /*@__PURE__*/ _closure_get("changes/2", ($scope) => _text($scope["#text/2"], $scope._._.changes), ($scope) => $scope._._, "__tests__/template.marko_2_changes#0:1/subscribe");
 const $await_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!><!>", "b%b%", $try_content2__setup, 0, $catch_content);
 const $await_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#div/1"], "change", function() {

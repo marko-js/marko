@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button>inc</button><!><!>";
 const $walks = " b%c";
-const $placeholder_content = _content("__tests__/template.marko_3*content", "loading...");
+const $placeholder_content = _content_resume("__tests__/template.marko_3*content", "loading...");
 const $await_content__value_a__OR__value_b = /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._._.value_a + $scope._._.value_b));
 const $await_content__value_a = /*@__PURE__*/ _closure_get("value_a/5", $await_content__value_a__OR__value_b, ($scope) => $scope._._, "__tests__/template.marko_2_value_a#0:3/subscribe");
 const $await_content__setup = ($scope) => {

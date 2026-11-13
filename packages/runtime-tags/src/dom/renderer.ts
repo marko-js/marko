@@ -125,7 +125,7 @@ export function _content(
         );
 
   // Registered here so any reference that keeps a renderer in the bundle
-  // also resumes it; one that must always register is emitted impure.
+  // also resumes it; one that must always register is emitted as `_content_resume`.
   return (_resumed[id] = (owner?: Scope): Renderer => {
     return {
       [RendererProp.Id]: id,
@@ -141,7 +141,7 @@ export function _content(
 // Registers content that code the analysis cannot see may render later. Its
 // registration carries the loop's values if it has some, then the closures it
 // reads per owner down to its own, set where missing.
-export function _content_resume(
+export function _content_closures_resume(
   renderer: (
     owner?: Scope,
     localValues?: Record<Accessor, unknown>,

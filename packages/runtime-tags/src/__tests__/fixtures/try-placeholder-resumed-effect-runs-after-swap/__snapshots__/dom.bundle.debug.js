@@ -6,7 +6,7 @@ const $await_content2__$params = ($scope, $params3) => _text($scope["#text/0"], 
 const $await_content__setup__script = _script("__tests__/template.marko_3", ($scope) => console.log("connected " + _el_read($scope["#span/0"]).isConnected));
 const $await_content__setup = $await_content__setup__script;
 const $await_content__$params = ($scope, $params2) => _text($scope["#text/1"], $params2[0]);
-const $placeholder_content = _content("__tests__/template.marko_2*content", "loading");
+const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "loading");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<span> </span>", " D ", $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/1", "<div> </div>", "D ");

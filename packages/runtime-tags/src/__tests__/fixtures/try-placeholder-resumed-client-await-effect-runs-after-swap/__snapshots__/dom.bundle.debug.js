@@ -4,7 +4,7 @@ const $walks = " b%c";
 const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
 const $if_content__setup__script = _script("__tests__/template.marko_3", ($scope) => console.log("if script ran"));
 const $if_content__setup = $if_content__setup__script;
-const $placeholder_content = _content("__tests__/template.marko_2*content", "loading");
+const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "loading");
 const $try_content__if = /*@__PURE__*/ _if("#text/0", "<span>shown</span>", 0, $if_content__setup);
 const $await_content = /*@__PURE__*/ _await_content("#text/1", "<div> </div>", "D ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content__$params);

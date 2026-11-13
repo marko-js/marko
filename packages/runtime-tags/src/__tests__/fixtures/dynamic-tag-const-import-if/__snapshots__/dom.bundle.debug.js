@@ -20,7 +20,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // template.marko
 const $template = "<button id=show>show</button><!><!>";
 const $walks = " b%c";
-const $type_content = _content("__tests__/template.marko_2*content", "shown");
+const $type_content = _content_resume("__tests__/template.marko_2*content", "shown");
 const $if_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $type_content($scope));

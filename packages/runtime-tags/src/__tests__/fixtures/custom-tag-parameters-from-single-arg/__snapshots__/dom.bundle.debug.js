@@ -22,7 +22,7 @@ var custom_tag_default = /*@__PURE__*/ _template("__tests__/tags/custom-tag.mark
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1);
 const $customtag_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
-const $customtag_content = _content("__tests__/template.marko_1*content", "<div>Count: <!></div>", "Db%", 0, $customtag_content__$params);
+const $customtag_content = _content_resume("__tests__/template.marko_1*content", "<div>Count: <!></div>", "Db%", 0, $customtag_content__$params);
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $customtag_content($scope));

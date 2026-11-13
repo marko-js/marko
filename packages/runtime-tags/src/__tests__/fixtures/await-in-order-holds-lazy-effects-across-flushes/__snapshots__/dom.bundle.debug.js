@@ -49,7 +49,7 @@ const $await_content3__setup = ($scope) => $load_Child_setup($scope, $scope["#ch
 const $await_content3__$params = ($scope, $params4) => $load_Child_tag_input_id($scope["#childScope/1"], $params4[0]);
 const $await_content2__setup = ($scope) => $load_Reordered_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 const $await_content2__$params = ($scope, $params3) => $load_Reordered_tag_input_id($scope["#childScope/1"], $params3[0]);
-const $placeholder_content = _content("__tests__/template.marko_3*content", "loading");
+const $placeholder_content = _content_resume("__tests__/template.marko_3*content", "loading");
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "b%/&", $await_content2__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content2__$params);
 const $try_content__setup = ($scope) => {

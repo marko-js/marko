@@ -1,8 +1,8 @@
 // template.marko
 const $template = "<!><!><!><!><!>";
 const $walks = "b%b%b%c";
-const $inputoptimizeKey_content = _content("__tests__/template.marko_2*content", "<span>optimize key</span>");
-const $inputdebugKey_content = _content("__tests__/template.marko_1*content", "<span>debug key</span>");
+const $inputoptimizeKey_content = _content_resume("__tests__/template.marko_2*content", "<span>optimize key</span>");
+const $inputdebugKey_content = _content_resume("__tests__/template.marko_1*content", "<span>debug key</span>");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 function $setup($scope) {
 	$dynamicTag($scope, _marko_template);

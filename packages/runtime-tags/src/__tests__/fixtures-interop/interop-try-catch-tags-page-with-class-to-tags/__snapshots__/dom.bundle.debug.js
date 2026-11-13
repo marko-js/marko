@@ -4,7 +4,7 @@ const $walks = "b%b%c";
 const $await_content2__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $await_content2__setup = ($scope) => $await_content2__dynamicTag($scope, _marko_template);
 const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
-const $catch_content = _content("__tests__/template.marko_2*content", "<div id=page-caught>page caught</div>");
+const $catch_content = _content_resume("__tests__/template.marko_2*content", "<div id=page-caught>page caught</div>");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<div id=page> </div>", "D ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $try_content__setup = ($scope) => {

@@ -4,8 +4,8 @@ const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
 const $inputasdiv_content__input_text = /*@__PURE__*/ _closure_get("input_text/5", ($scope) => _text($scope["#text/0"], $scope._.input_text), 0, "__tests__/tags/heading.marko_1_input_text#0:4/subscribe");
 const $inputasdiv_content__setup = $inputasdiv_content__input_text;
-const $inputasdiv_content = _content("__tests__/tags/heading.marko_1*content", " ", " ", $inputasdiv_content__setup);
-_content_resume($inputasdiv_content);
+const $inputasdiv_content = /*@__PURE__*/ _content("__tests__/tags/heading.marko_1*content", " ", " ", $inputasdiv_content__setup);
+_content_closures_resume($inputasdiv_content);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputasdiv_content);
 const $input_as = ($scope, input_as) => $dynamicTag($scope, input_as || "div");
 const $input = ($scope, input) => {

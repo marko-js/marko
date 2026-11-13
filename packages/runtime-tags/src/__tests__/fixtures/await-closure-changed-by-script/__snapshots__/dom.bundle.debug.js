@@ -12,7 +12,7 @@ var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter.marko", ""
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><button></button><!><!>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&b1b b%c`)("");
-const $placeholder_content = _content("__tests__/template.marko_3*content", "loading");
+const $placeholder_content = _content_resume("__tests__/template.marko_3*content", "loading");
 const $await_content__local = /*@__PURE__*/ _let("local/5", ($scope) => _text($scope["#text/1"], $scope.local));
 const $await_content__n__OR__m = /*@__PURE__*/ _or(4, ($scope) => _text($scope["#text/0"], $scope._._.n + $scope._._.m));
 const $await_content__n__script = _script("__tests__/template.marko_2_n#0:9", ($scope) => console.log("e" + $scope._._.n));

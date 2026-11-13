@@ -53,7 +53,7 @@ const $A_content__setup__script = _script("__tests__/b.marko_2", ($scope) => _on
 	console.log("b");
 }));
 const $A_content__setup = $A_content__setup__script;
-const $A_content = _content("__tests__/b.marko_2*content", "<button>b</button>", " ", $A_content__setup);
+const $A_content = _content_resume("__tests__/b.marko_2*content", "<button>b</button>", " ", $A_content__setup);
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $A_content);
 const $if_content__input_depth = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, A, ($_) => ({ depth: $scope._.input_depth - 1 })));
 const $if_content__setup = $if_content__input_depth;

@@ -28,7 +28,7 @@ var v_template_marko_hydrate_5_default = () => {};
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $catch_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]?.message);
-const $catch_content = _content("__tests__/components/tags-child.marko_3*content", " ", " ", 0, $catch_content__$params);
+const $catch_content = _content_resume("__tests__/components/tags-child.marko_3*content", " ", " ", 0, $catch_content__$params);
 const $await_content__input_name__script = _script("__tests__/components/tags-child.marko_2_input_name#0:3", ($scope) => console.log(`${$scope._._.input_name} in try`));
 const $await_content__input_name = /*@__PURE__*/ _closure_get("input_name/4", $await_content__input_name__script, ($scope) => $scope._._, "__tests__/components/tags-child.marko_2_input_name#0:3/subscribe");
 const $await_content__setup = $await_content__input_name;

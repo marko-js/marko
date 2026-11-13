@@ -11,7 +11,7 @@ const $template = "<!><!><!>";
 const $walks = "b1c";
 const $setup = ($_) => {};
 _dynamic_tag_var_resume("#text/0");
-const $inputtype_content = _content("__tests__/tags/heading.marko_1*content", "<span>body</span>");
+const $inputtype_content = _content_resume("__tests__/tags/heading.marko_1*content", "<span>body</span>");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputtype_content, ($_) => $el);
 const $el__script = _script("__tests__/tags/heading.marko_0_el#5", ($scope) => $scope.el().setAttribute("data-mounted", ""));
 const $el = _var_resume("__tests__/tags/heading.marko_0_el#5/var", /*@__PURE__*/ _const("el", $el__script));

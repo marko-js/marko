@@ -14,5 +14,5 @@ const $Label_content__setup = ($scope) => {
 	$Label_content__item($scope);
 };
 const $Label_content__item = /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.a, $scope._.c), 0, "a2");
-const $Label_content = _content("a0", "<em><!> <!></em>", "D%c%", $Label_content__setup);
-_content_resume($Label_content);
+const $Label_content = /*@__PURE__*/ _content("a0", "<em><!> <!></em>", "D%c%", $Label_content__setup);
+_content_closures_resume($Label_content);

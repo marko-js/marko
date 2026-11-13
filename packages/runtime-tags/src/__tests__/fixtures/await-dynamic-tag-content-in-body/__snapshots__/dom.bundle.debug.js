@@ -1,7 +1,7 @@
 // tags/card.marko
 const $template$2 = "<!><!><!>";
 const $walks$2 = "b%c";
-const $inputcontent_content = _content("__tests__/tags/card.marko_2*content", "<i>x</i>");
+const $inputcontent_content = _content_resume("__tests__/tags/card.marko_2*content", "<i>x</i>");
 const $await_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputcontent_content);
 const $await_content__input_content = /*@__PURE__*/ _closure_get("input_content/5", ($scope) => $await_content__dynamicTag($scope, $scope._.input_content), 0, "__tests__/tags/card.marko_1_input_content#0:4/subscribe");
 const $await_content__setup = $await_content__input_content;
@@ -41,8 +41,8 @@ const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}</main>`)($template$2);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)("b%c");
 const $inputonKeeperdiv_content__input_note = /*@__PURE__*/ _closure_get("input_note/7", ($scope) => _text($scope["#text/0"], $scope._._.input_note), ($scope) => $scope._._, "__tests__/template.marko_2_input_note#0:5/subscribe");
 const $inputonKeeperdiv_content__setup = $inputonKeeperdiv_content__input_note;
-const $inputonKeeperdiv_content = _content("__tests__/template.marko_2*content", "<em> </em>", "D ", $inputonKeeperdiv_content__setup);
-_content_resume($inputonKeeperdiv_content);
+const $inputonKeeperdiv_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<em> </em>", "D ", $inputonKeeperdiv_content__setup);
+_content_closures_resume($inputonKeeperdiv_content);
 const $Card_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputonKeeperdiv_content);
 const $Card_content__input_on = /*@__PURE__*/ _closure_get("input_on/6", ($scope) => $Card_content__dynamicTag($scope, $scope._.input_on ? keeper_default : "div"), 0, "__tests__/template.marko_1_input_on#0:4/subscribe");
 const $Card_content__setup = $Card_content__input_on;

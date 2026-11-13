@@ -35,7 +35,7 @@ const $if_content__setup = $if_content__count;
 const $mybutton_content__if = /*@__PURE__*/ _if("#text/0", " <i></i>", " ", $if_content__setup);
 const $mybutton_content__show = /*@__PURE__*/ _closure_get("show/5", ($scope) => $mybutton_content__if($scope, $scope._.show ? 0 : 1), 0, "__tests__/template.marko_1_show#0:2/subscribe");
 const $mybutton_content__setup = $mybutton_content__show;
-const $mybutton_content = _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", $mybutton_content__setup);
+const $mybutton_content = _content_resume("__tests__/template.marko_1*content", "<!><!><!>", "b%", $mybutton_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $mybutton_content);
 const $count__OR__show = /*@__PURE__*/ _or(3, ($scope) => $dynamicTag($scope, _marko_template, ($_) => ({ onClick: $onClick($scope) })));
 const $count__closure = /*@__PURE__*/ _closure($if_content__count);

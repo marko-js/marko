@@ -17,7 +17,7 @@ const $catch_content__setup = ($scope) => {
 	$catch_content__setup__script($scope);
 };
 const $catch_content__$params = ($scope, $params2) => _text($scope["#text/1"], $params2[0]?.message);
-const $catch_content = _content("__tests__/template.marko_2*content", "<button><!> <!></button>", " D%c%", $catch_content__setup, $catch_content__$params);
+const $catch_content = _content_resume("__tests__/template.marko_2*content", "<button><!> <!></button>", " D%c%", $catch_content__setup, $catch_content__$params);
 const $try_content__if = /*@__PURE__*/ _if("#text/0", "<span>before</span><!><!>", "b%", $if_content__setup);
 const $try_content__show = /*@__PURE__*/ _closure_get("show/4", ($scope) => $try_content__if($scope, $scope._.show ? 0 : 1), 0, "__tests__/template.marko_1_show#0:3/subscribe");
 const $try_content__setup = $try_content__show;

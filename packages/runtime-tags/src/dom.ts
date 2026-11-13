@@ -90,8 +90,11 @@ export {
 export { run } from "./dom/queue";
 export {
   _content,
+  // The form a template emits for content only its own registration keeps:
+  // off the translator's pure list, so the bundle keeps it.
+  _content as _content_resume,
   _content_closures,
-  _content_resume,
+  _content_closures_resume,
   _return_setup,
 } from "./dom/renderer";
 export {

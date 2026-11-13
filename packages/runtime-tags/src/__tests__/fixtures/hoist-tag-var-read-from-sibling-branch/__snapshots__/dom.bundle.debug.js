@@ -4,7 +4,7 @@ const $walks = "b%c";
 const $setup = ($_) => {};
 const $inputdyn_content__if = /*@__PURE__*/ _if("#text/0", "y");
 const $inputdyn_content__setup = ($scope) => $inputdyn_content__if($scope, $getLabel_getter($scope._._) ? 0 : 1);
-const $inputdyn_content = _content("__tests__/template.marko_3*content", "<!><!><!>", "b%", $inputdyn_content__setup);
+const $inputdyn_content = _content_resume("__tests__/template.marko_3*content", "<!><!><!>", "b%", $inputdyn_content__setup);
 const $getLabel_getter = _hoist_resume("__tests__/template.marko_0_getLabel#2:0/hoist", "getLabel", [
 	"BranchScopes:#text/0",
 	"ConditionalRenderer:#text/0",

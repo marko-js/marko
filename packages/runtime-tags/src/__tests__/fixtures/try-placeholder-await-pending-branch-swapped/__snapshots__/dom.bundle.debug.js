@@ -9,7 +9,7 @@ const $else_content__setup = ($scope) => {
 	$await_content2($scope);
 	$else_content__await_promise($scope, resolveAfter("tab 2", 2));
 };
-const $placeholder_content = _content("__tests__/template.marko_3*content", "LOADING");
+const $placeholder_content = _content_resume("__tests__/template.marko_3*content", "LOADING");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", " ", " ");
 const $if_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $if_content__tab = /*@__PURE__*/ _closure_get("tab/3", ($scope) => $if_content__await_promise($scope, $scope._._.tab === 1 ? new Promise(() => {}) : "ready"), ($scope) => $scope._._, "__tests__/template.marko_2_tab#0:2/subscribe");

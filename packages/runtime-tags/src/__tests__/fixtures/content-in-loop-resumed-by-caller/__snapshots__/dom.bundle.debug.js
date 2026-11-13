@@ -19,7 +19,7 @@ const $template = /*@__PURE__*/ ((_w0) => `<div>${_w0}</div><button>inc</button>
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&l b`)("b%c");
 const $row_content__n = /*@__PURE__*/ _closure_get("n/4", ($scope) => _text($scope["#text/0"], $scope._.n), 0, "__tests__/template.marko_1_n#0:3/subscribe");
 const $row_content__setup = $row_content__n;
-const $row_content = _content("__tests__/template.marko_1*content", " ", " ", $row_content__setup);
+const $row_content = _content_resume("__tests__/template.marko_1*content", " ", " ", $row_content__setup);
 const $items = /*@__PURE__*/ _let("items/2", ($scope) => $input_items($scope["#childScope/0"], $scope.items));
 const $n__closure = /*@__PURE__*/ _closure($row_content__n);
 const $n = /*@__PURE__*/ _let("n/3", $n__closure);

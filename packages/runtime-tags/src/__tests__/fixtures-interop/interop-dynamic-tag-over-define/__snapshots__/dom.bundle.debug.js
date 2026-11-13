@@ -2,8 +2,8 @@
 var import_vdom = require_vdom();
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $B_content = _content("__tests__/components/tags-define.marko_2*content", "<i id=b>b</i>");
-const $A_content = _content("__tests__/components/tags-define.marko_1*content", "<b id=a>a</b>");
+const $B_content = _content_resume("__tests__/components/tags-define.marko_2*content", "<i id=b>b</i>");
+const $A_content = _content_resume("__tests__/components/tags-define.marko_1*content", "<b id=a>a</b>");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_which__OR__A__OR__B = /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.input_which ? $scope.A : $scope.B), 2);
 const $A = /*@__PURE__*/ _const("A", $input_which__OR__A__OR__B);

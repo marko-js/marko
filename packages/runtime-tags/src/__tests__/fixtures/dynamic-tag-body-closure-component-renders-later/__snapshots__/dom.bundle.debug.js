@@ -32,8 +32,8 @@ const $walks = "b%c";
 const $setup = ($_) => {};
 const $inputtype_content__input_depth = /*@__PURE__*/ _closure_get("input_depth/5", ($scope) => _text($scope["#text/0"], $scope._.input_depth), 0, "__tests__/tags/heading.marko_1_input_depth#0:4/subscribe");
 const $inputtype_content__setup = $inputtype_content__input_depth;
-const $inputtype_content = _content("__tests__/tags/heading.marko_1*content", "depth <!>", "b%", $inputtype_content__setup);
-_content_resume($inputtype_content);
+const $inputtype_content = /*@__PURE__*/ _content("__tests__/tags/heading.marko_1*content", "depth <!>", "b%", $inputtype_content__setup);
+_content_closures_resume($inputtype_content);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputtype_content);
 const $input_type = $dynamicTag;
 const $input = ($scope, input) => {

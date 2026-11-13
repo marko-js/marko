@@ -15,8 +15,8 @@ const $inputonCarddiv_content__setup = ($scope) => {
 	$Note_content__setup($scope.a);
 	$Note_content__tag_input_label($scope.a, "x");
 };
-const $inputonCarddiv_content = _content("a3", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Note_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Note_content__walks), $inputonCarddiv_content__setup);
-_content_resume($inputonCarddiv_content);
+const $inputonCarddiv_content = /*@__PURE__*/ _content("a3", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Note_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Note_content__walks), $inputonCarddiv_content__setup);
+_content_closures_resume($inputonCarddiv_content);
 const $if_content__input_note = /*@__PURE__*/ _closure_get(6, ($scope) => _text($scope.b, $scope._._.e), ($scope) => $scope._._, "a0");
 const $if_content__setup = ($scope) => {
 	$if_content__input_note($scope);

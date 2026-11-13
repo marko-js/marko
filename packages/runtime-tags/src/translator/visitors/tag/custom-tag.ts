@@ -330,6 +330,8 @@ function createLoadIdentifier(
         id,
         callRuntime(
           runtime,
+          // Applying a trigger only wraps the load, so it is pure: a load no
+          // signal reads still drops. Not a runtime helper call.
           trigger
             ? t.addComment(
                 t.callExpression(trigger, [load]),
