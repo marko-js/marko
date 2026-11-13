@@ -12,22 +12,25 @@ import {
   propertiesUtil,
 } from "./bindings";
 import {
+  createAnalysisMemo,
   createPassMemo,
   createPassPathMemo,
+  createPathKeys,
   resetPassMemos,
 } from "./cyclic-memo";
 import { addKnownTagReasons } from "./known-tag";
 import { addFunctionReasons } from "./module-registrations";
 import {
+  at,
   concat,
   every,
   first,
   forEach,
-  type OneMany,
   type Opt,
   push,
   reduce,
   rest,
+  size,
   some,
 } from "./optional";
 import {
@@ -301,33 +304,16 @@ function addRegisteredFnReasons(
 interface Readers {
   reason: undefined | Reason;
   lands: number;
-  /** The content sites rendering it, and its deep sites past a further call. */
-  sites?: Opt<t.MarkoTagExtra>;
-  deepSites?: Opt<t.MarkoTagExtra>;
 }
 
 // Lands in a retained read, where client code may read it as is.
 const LANDS_RETAINED = 1;
 // Reaches a retained read as more than a dynamic tag's name.
 const LANDS_RETAINED_INPUT = 2;
-// Handed on by a read that derives nothing, so it may render anywhere.
-const LANDS_UNSEEN = 4;
 
 const UNREAD: Readers = { reason: undefined, lands: 0 };
 
 const ALWAYS_READ: Readers = { reason: ALWAYS, lands: 0 };
-
-const UNSEEN_READ: Readers = { reason: undefined, lands: LANDS_UNSEEN };
-
-const RETAINED_TAG_NAME_READ: Readers = {
-  reason: undefined,
-  lands: LANDS_RETAINED,
-};
-
-const RETAINED_INPUT_READ: Readers = {
-  reason: undefined,
-  lands: LANDS_RETAINED | LANDS_RETAINED_INPUT,
-};
 
 const exprReaders = createPassMemo(computeExprReaders, UNREAD);
 
@@ -357,18 +343,66 @@ export function bindingLandsRetained(
   return !!(bindingReaders(binding, properties).lands & LANDS_RETAINED_INPUT);
 }
 
-// Where content passed to templates renders: `sites` and `deepSites` (see
-// `Readers`), or `unseen` where a read hands it on.
+// Where content renders: its content sites in the template it is passed to, its
+// deep sites past a further call, or else `unseen`, where a read hands it on.
 export function getContentSites({
   binding,
   properties,
 }: NonNullable<Section["derives"]>) {
-  const { lands, sites, deepSites } = reduce(
+  return reduce(
     binding,
-    (readers, part) => mergeReaders(readers, bindingReaders(part, properties)),
-    UNREAD,
+    (sites, part) => joinSites(sites, getSitesAt(getWalkKey(part, properties))),
+    NO_SITES,
   );
-  return { unseen: !!(lands & LANDS_UNSEEN), sites, deepSites };
+}
+
+interface ContentSites {
+  unseen: boolean;
+  sites?: Opt<t.MarkoTagExtra>;
+  deepSites?: Opt<t.MarkoTagExtra>;
+}
+
+const NO_SITES: ContentSites = { unseen: false };
+
+const UNSEEN_SITES: ContentSites = { unseen: true };
+
+// The content sites of a value passed at a binding and path, shared by every
+// content section passed there.
+const [getSitesAt] = createAnalysisMemo(
+  ([binding, properties]: [Binding, Opt<string> | true]): ContentSites => {
+    let sites: Opt<t.MarkoTagExtra>;
+    let deepSites: Opt<t.MarkoTagExtra>;
+    const unseen = someReachedRead(
+      binding,
+      properties,
+      (read, reader, pastCall) => {
+        if (read.isEffect) return false;
+        // A read deriving nothing may hand it on to render anywhere: a spread, a
+        // native element's `content=` or a class component's body.
+        if (!isNamedBy(read, reader)) return !read.derives;
+        if (pastCall) {
+          deepSites = push(deepSites, read);
+        } else {
+          sites = push(sites, read);
+        }
+        return false;
+      },
+    );
+    return unseen ? UNSEEN_SITES : { unseen, sites, deepSites };
+  },
+  NO_SITES,
+);
+
+function joinSites(a: ContentSites, b: ContentSites): ContentSites {
+  return a === NO_SITES
+    ? b
+    : a.unseen || b.unseen
+      ? UNSEEN_SITES
+      : {
+          unseen: false,
+          sites: concat(a.sites, b.sites),
+          deepSites: concat(a.deepSites, b.deepSites),
+        };
 }
 
 // Whether the value lands somewhere retained (itself included), where client
@@ -381,51 +415,32 @@ export function landsRetained(extra: t.NodeExtra) {
 }
 
 function computeExprReaders(extra: t.NodeExtra): Readers {
-  return readersOfDerives(extra, undefined);
+  const folding: Folding = {
+    readers: isReturned(extra) ? ALWAYS_READ : UNREAD,
+    head: undefined,
+  };
+  forEachDerivedStep(extra, undefined, undefined, READERS_STEP, folding);
+  return folding.readers;
 }
 
-// Who reads an expression: the template's return, or its derives bindings'
-// readers, except `part`'s own destructured parts (they answer for their path).
-function readersOfDerives(
-  extra: t.NodeExtra,
-  part: Binding | undefined,
-  properties?: Opt<string> | true,
-): Readers {
-  if (extra === getProgram().node.extra.section!.returnValueExpr) {
-    return ALWAYS_READ;
-  }
-  let readers = UNREAD;
-  forEach(extra.derives, (binding) => {
-    if (!isPartOf(binding, part)) {
-      readers = mergeReaders(
-        readers,
-        readersOfDerived(extra, binding, part, properties),
-      );
-    }
-  });
-  return readers;
-}
-
-// Who reads a derives binding, in this program's terms.
-function readersOfDerived(
-  extra: t.NodeExtra,
+// Who reads a binding the value reaches, in this program's terms: past a call,
+// the callee's reason maps through what the call passes.
+function readersOf(
   binding: Binding,
-  part: Binding | undefined,
-  properties: Opt<string> | true | undefined,
+  path: Opt<string> | true,
+  via: t.NodeExtra | undefined,
 ): Readers {
-  const linked = bindingReaders(
-    binding,
-    getDerivedPath(extra, binding, part, properties),
-  );
-  const exprs = extra.callSiteExprs;
-  // Past another call, a template's root edge follows that call's place.
-  return exprs && (linked.reason || linked.sites)
+  const linked = bindingReaders(binding, path);
+  const exprs = via?.callSiteExprs;
+  return exprs && linked.reason
     ? {
-        reason:
-          linked.reason &&
-          mapParamReason(binding.section.program, linked.reason, exprs, true),
+        reason: mapParamReason(
+          binding.section.program,
+          linked.reason,
+          exprs,
+          true,
+        ),
         lands: linked.lands,
-        deepSites: mergeSites(linked.deepSites, linked.sites),
       }
     : linked;
 }
@@ -474,74 +489,56 @@ function computeBindingReaders(
   binding: Binding,
   properties: Opt<string> | true | undefined,
 ): Readers {
+  if (isLeftOut(binding, properties)) return UNREAD;
   const head =
     properties === true || properties === undefined
       ? undefined
       : first(properties);
   const reason = findSlot(binding)?.reason;
-  let readers: Readers = reason ? { reason, lands: 0 } : UNREAD;
-  // A property is read with the value it is read from.
-  const aliased = binding.aliasOf;
-  if (properties !== true && aliased) {
-    readers = mergeReaders(
-      readers,
-      bindingReaders(
-        aliased,
-        properties === undefined
-          ? binding.property
-          : concat(binding.property, properties),
-      ),
-    );
-  }
-  for (const expr of binding.reads.keys()) {
-    if (expr.isEffect) {
-      if (
-        !(
-          head === "content" &&
-          expr.rendersContent &&
-          bindingUtil.has(expr.spreadFrom, binding)
-        )
-      ) {
-        readers = mergeReaders(readers, ALWAYS_READ);
-      }
-      continue;
-    }
-    readers = mergeReaders(readers, landingReaders(expr, binding));
-    readers = mergeReaders(readers, renderingReaders(expr, binding));
-    readers = mergeReaders(
-      readers,
-      readersOfDerives(expr, binding, properties),
-    );
-  }
-  for (const alias of binding.aliases) {
-    readers = mergeReaders(readers, bindingReaders(alias, properties));
-  }
-  if (properties === undefined) return readers;
-  if (properties === true) {
-    for (const propBinding of binding.propertyAliases.values()) {
-      readers = mergeReaders(readers, bindingReaders(propBinding, true));
-    }
-    return readers;
-  }
-  const property = first(properties);
-  if (propertiesUtil.has(binding.excludeProperties, property)) return UNREAD;
-  readers = mergePropertyReaders(readers, binding, property, properties);
-  for (const alias of binding.aliases) {
-    readers = mergePropertyReaders(readers, alias, property, properties);
-  }
-  return readers;
+  const folding: Folding = {
+    readers: reason ? { reason, lands: 0 } : UNREAD,
+    head,
+  };
+  forEachStep(binding, properties, READERS_STEP, folding);
+  return folding.readers;
 }
 
-function mergePropertyReaders(
+interface Folding {
+  readers: Readers;
+  head: string | undefined;
+}
+
+const READERS_STEP: Step<Folding> = {
+  land(folding, read, binding) {
+    folding.readers = landIn(folding.readers, read, binding, folding.head);
+  },
+  reach(folding, binding, path, via) {
+    folding.readers = mergeReaders(
+      folding.readers,
+      readersOf(binding, path, via),
+    );
+  },
+};
+
+// What a read the binding's value lands in adds: its bits, and an always reason
+// where the template returns it or an effect reads it (other than as content).
+function landIn(
   readers: Readers,
-  owner: Binding,
-  property: string,
-  properties: OneMany<string>,
-) {
-  const propBinding = owner.propertyAliases.get(property);
-  return propBinding
-    ? mergeReaders(readers, bindingReaders(propBinding, rest(properties)))
-    : readers;
+  read: ReferencedExtra,
+  binding: Binding,
+  head: string | undefined,
+): Readers {
+  if (read.isEffect) {
+    return head === "content" &&
+      read.rendersContent &&
+      bindingUtil.has(read.spreadFrom, binding)
+      ? readers
+      : mergeReaders(readers, ALWAYS_READ);
+  }
+  return withLands(
+    isReturned(read) ? mergeReaders(readers, ALWAYS_READ) : readers,
+    getLandingBits(read, binding),
+  );
 }
 
 function mergeReaders(a: Readers, b: Readers): Readers {
@@ -549,64 +546,175 @@ function mergeReaders(a: Readers, b: Readers): Readers {
   if (b === UNREAD) return a;
   const reason = mergeSources(a.reason, b.reason);
   const lands = a.lands | b.lands;
-  const sites = mergeSites(a.sites, b.sites);
-  const deepSites = mergeSites(a.deepSites, b.deepSites);
-  if (
-    reason === a.reason &&
-    lands === a.lands &&
-    sites === a.sites &&
-    deepSites === a.deepSites
-  ) {
-    return a;
-  }
-  if (
-    reason === b.reason &&
-    lands === b.lands &&
-    sites === b.sites &&
-    deepSites === b.deepSites
-  ) {
-    return b;
-  }
-  return { reason, lands, sites, deepSites };
+  if (reason === a.reason && lands === a.lands) return a;
+  if (reason === b.reason && lands === b.lands) return b;
+  return { reason, lands };
 }
 
-function mergeSites(
-  a: Opt<t.MarkoTagExtra>,
-  b: Opt<t.MarkoTagExtra>,
-): Opt<t.MarkoTagExtra> {
-  return reduce(
-    b,
-    (sites, site) =>
-      some(sites, (held) => held === site) ? sites : push(sites, site),
-    a,
-  );
+function withLands(readers: Readers, lands: number): Readers {
+  return (readers.lands | lands) === readers.lands
+    ? readers
+    : { reason: readers.reason, lands: readers.lands | lands };
 }
 
-// What a read the binding's value lands in adds: only a retained one counts.
-function landingReaders(read: ReferencedExtra, binding: Binding): Readers {
-  return !read.retained
-    ? UNREAD
-    : every(binding.reads.get(read), isTagNameRead)
-      ? RETAINED_TAG_NAME_READ
-      : RETAINED_INPUT_READ;
+// The bits a read the binding's value lands in adds: only a retained one counts.
+function getLandingBits(read: ReferencedExtra, binding: Binding) {
+  return read.retained
+    ? isNamedBy(read, binding)
+      ? LANDS_RETAINED
+      : LANDS_RETAINED | LANDS_RETAINED_INPUT
+    : 0;
+}
+
+// A dynamic tag reads the value only as its name.
+function isNamedBy(read: ReferencedExtra, binding: Binding) {
+  return every(binding.reads.get(read), isTagNameRead);
 }
 
 function isTagNameRead({ extra }: Read) {
   return !!extra.exprRoot?.tagName;
 }
 
-// A dynamic tag naming the value, or what holds it as `content`, renders it; a
-// read deriving nothing may hand it on to render anywhere.
-function renderingReaders(expr: ReferencedExtra, binding: Binding): Readers {
-  const reads = binding.reads.get(expr);
-  if (reads && every(reads, isTagNameRead)) {
-    return {
-      reason: undefined,
-      lands: 0,
-      sites: first(reads).extra.exprRoot.tagName,
-    };
+// The path names a property the binding (a rest) leaves out.
+function isLeftOut(binding: Binding, properties: Opt<string> | true) {
+  return (
+    properties !== undefined &&
+    properties !== true &&
+    propertiesUtil.has(binding.excludeProperties, first(properties))
+  );
+}
+
+// Each step a value at `properties` takes through its aliases and derives links:
+// a read it lands in, or a binding and path it goes on to (`via` the read deriving it).
+function forEachStep<S>(
+  binding: Binding,
+  properties: Opt<string> | true,
+  step: Step<S>,
+  state: S,
+) {
+  // A property is read with the value it is read from.
+  const aliased = binding.aliasOf;
+  if (properties !== true && aliased) {
+    step.reach(state, aliased, concat(binding.property, properties), undefined);
   }
-  // So does a spread, a native element's `content=` or a class component's body,
-  // even where it renders the content first inside an element.
-  return expr.derives ? UNREAD : UNSEEN_READ;
+  for (const read of binding.reads.keys()) {
+    step.land(state, read, binding);
+    if (!read.isEffect) {
+      forEachDerivedStep(read, binding, properties, step, state);
+    }
+  }
+  for (const alias of binding.aliases) {
+    step.reach(state, alias, properties, undefined);
+  }
+  if (properties === true) {
+    for (const part of binding.propertyAliases.values()) {
+      step.reach(state, part, true, undefined);
+    }
+  } else if (properties !== undefined) {
+    const property = first(properties);
+    let part = binding.propertyAliases.get(property);
+    if (part) step.reach(state, part, rest(properties), undefined);
+    for (const alias of binding.aliases) {
+      part = alias.propertyAliases.get(property);
+      if (part) step.reach(state, part, rest(properties), undefined);
+    }
+  }
+}
+
+// The bindings a read derives, at the path into `part` it carries; none past the
+// template's return, nor `part`'s own destructured parts (they answer for their path).
+function forEachDerivedStep<S>(
+  read: t.NodeExtra,
+  part: Binding | undefined,
+  properties: Opt<string> | true | undefined,
+  step: Step<S>,
+  state: S,
+) {
+  const { derives } = read;
+  if (!isReturned(read)) {
+    for (let i = 0; i < size(derives); i++) {
+      const binding = at(derives, i)!;
+      if (!isPartOf(binding, part)) {
+        step.reach(
+          state,
+          binding,
+          getDerivedPath(read, binding, part, properties),
+          read,
+        );
+      }
+    }
+  }
+}
+
+interface Step<S> {
+  land(state: S, read: ReferencedExtra, binding: Binding): void;
+  reach(
+    state: S,
+    binding: Binding,
+    path: Opt<string> | true,
+    via: t.NodeExtra | undefined,
+  ): void;
+}
+
+function isReturned(extra: t.NodeExtra) {
+  return extra === getProgram().node.extra.section!.returnValueExpr;
+}
+
+const getWalkKey = createPathKeys<Binding>();
+
+type ReadTest = (
+  read: ReferencedExtra,
+  reader: Binding,
+  pastCall: boolean,
+) => boolean;
+
+// Whether `test` passes a read the value at `properties` reaches, given the binding
+// reading it and whether past a call.
+function someReachedRead(
+  binding: Binding,
+  properties: Opt<string> | true,
+  test: ReadTest,
+) {
+  const walk: Walk = {
+    test,
+    found: false,
+    pastCall: false,
+    walked: new Set(),
+    walkedPastCall: new Set(),
+  };
+  walkFrom(walk, binding, properties);
+  return walk.found;
+}
+
+interface Walk {
+  test: ReadTest;
+  found: boolean;
+  pastCall: boolean;
+  // Each binding and path is walked once, and once more past a call.
+  walked: Set<object>;
+  walkedPastCall: Set<object>;
+}
+
+const WALK_STEP: Step<Walk> = {
+  land(walk, read, binding) {
+    walk.found ||= walk.test(read, binding, walk.pastCall);
+  },
+  reach(walk, binding, path, via) {
+    const { pastCall } = walk;
+    walk.pastCall ||= !!via?.callSiteExprs;
+    walkFrom(walk, binding, path);
+    walk.pastCall = pastCall;
+  },
+};
+
+function walkFrom(
+  walk: Walk,
+  binding: Binding,
+  properties: Opt<string> | true,
+) {
+  const seen = walk.pastCall ? walk.walkedPastCall : walk.walked;
+  const key = getWalkKey(binding, properties);
+  if (walk.found || seen.has(key) || isLeftOut(binding, properties)) return;
+  seen.add(key);
+  forEachStep(binding, properties, WALK_STEP, walk);
 }
