@@ -71,34 +71,50 @@ export function resetPassMemos() {
 
 // A pass memo keyed by an object and a property path (`true` for all):
 // each path interns one key, so a path's answers share one cycle protocol.
-type MemoPath = Opt<string> | true;
+export type MemoPath = Opt<string> | true;
+type PathKey<K> = [K, MemoPath];
 interface PathKeys<K> {
-  value?: [K, MemoPath];
-  all?: [K, MemoPath];
-  properties?: Map<string, PathKeys<K>>;
+  value: PathKey<K> | undefined;
+  all: PathKey<K> | undefined;
+  properties: Map<string, PathKeys<K>> | undefined;
 }
 export function createPassPathMemo<K extends object, R>(
   compute: (key: K, path: MemoPath) => R,
   cycleAnswer: R,
 ) {
-  const keys = new WeakMap<K, PathKeys<K>>();
+  const getKey = createPathKeys<K>();
   const memo = createPassMemo(
-    ([key, path]: [K, MemoPath]) => compute(key, path),
+    ([key, path]: PathKey<K>) => compute(key, path),
     cycleAnswer,
   );
-  return (key: K, path: MemoPath) => {
+  return (key: K, path: MemoPath) => memo(getKey(key, path));
+}
+
+// One key per object and property path, the same each time it is asked.
+export function createPathKeys<K extends object>() {
+  const keys = new WeakMap<K, PathKeys<K>>();
+  return (key: K, path: MemoPath): PathKey<K> => {
     let pathKeys: PathKeys<K> | undefined = keys.get(key);
-    if (!pathKeys) keys.set(key, (pathKeys = {}));
-    if (path === true) return memo((pathKeys.all ??= [key, path]));
-    return memo(
-      (reduce(path, ensurePropKeys<K>, pathKeys).value ??= [key, path]),
-    );
+    if (!pathKeys) keys.set(key, (pathKeys = createPathKeysRecord()));
+    return path === true
+      ? (pathKeys.all ??= [key, path])
+      : (reduce(path, ensurePropKeys<K>, pathKeys).value ??= [key, path]);
   };
 }
 
 // The keys under `property`, made on first use.
 function ensurePropKeys<K>(pathKeys: PathKeys<K>, property: string) {
   let next = pathKeys.properties?.get(property);
-  if (!next) (pathKeys.properties ??= new Map()).set(property, (next = {}));
+  if (!next) {
+    (pathKeys.properties ??= new Map()).set(
+      property,
+      (next = createPathKeysRecord()),
+    );
+  }
   return next;
+}
+
+// Every record starts with all its fields, so all share one object shape.
+function createPathKeysRecord<K>(): PathKeys<K> {
+  return { value: undefined, all: undefined, properties: undefined };
 }

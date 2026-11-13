@@ -127,13 +127,13 @@ function isCreatedWith(section: Section, owner: Section): boolean {
           isCreatedWith(call.childScopeBinding.section, owner),
         )
       : !!section.derives &&
-        isCreatedWithCallee(section.derives) &&
+        isCreatedWithCallee(section) &&
         isCreatedWith(section.parent!, owner))
   );
 }
 
-function isCreatedWithCallee(derives: NonNullable<Section["derives"]>) {
-  const { unseen, sites, deepSites } = getContentSites(derives);
+function isCreatedWithCallee(content: Section) {
+  const { unseen, sites, deepSites } = getContentSites(content);
   return (
     !unseen &&
     !deepSites &&
@@ -143,7 +143,12 @@ function isCreatedWithCallee(derives: NonNullable<Section["derives"]>) {
       const sources = getSourcesForExpr(site);
       return (
         (!sources ||
-          !mapParamReason(siteSection.program, sources, derives.exprs, true)) &&
+          !mapParamReason(
+            siteSection.program,
+            sources,
+            content.derives!.exprs,
+            true,
+          )) &&
         isCreatedWith(siteSection, siteSection.program)
       );
     })
