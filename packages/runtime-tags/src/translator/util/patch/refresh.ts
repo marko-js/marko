@@ -506,13 +506,10 @@ function readsPastRenders(binding: Binding) {
 // it, which never travels as data (main's `_const` builds it from the `<let>`'s fill).
 export const reachesUnfilledRead = createPassMemo(
   (binding: Binding): boolean =>
-    someAlias(binding, hasUnfilledRead, undefined) || buildsReachedFn(binding),
+    someAlias(binding, someBindingRead, isUnfilledReadOf) ||
+    buildsReachedFn(binding),
   false,
 );
-
-function hasUnfilledRead(alias: Binding) {
-  return someBindingRead(alias, isUnfilledReadOf);
-}
 
 // A read client state makes client code run, other than computing a value of the binding's
 // own section, whose own reads answer for it.
@@ -537,28 +534,22 @@ function isUnfilledRead(read: ReferencedExtra) {
 
 // A function over client state an unfilled read reaches derives from the value, through
 // the `<const>`s between; a `<let>` between holds its own.
-const buildsReachedFn = createPassMemo(computeBuildsReachedFn, false);
-
-function computeBuildsReachedFn(binding: Binding): boolean {
+const buildsReachedFn = createPassMemo((binding: Binding): boolean => {
   if (someDerivedRead(binding, isReachedFnSource)) return true;
   for (const part of binding.propertyAliases.values()) {
     if (buildsReachedFn(part)) return true;
   }
   return false;
-}
+}, false);
 
 function isReachedFnSource(derived: Binding, read: ReferencedExtra) {
   return (
     !read.initialValue &&
     !!derived.sources?.state &&
-    (mayHoldFn(derived)
+    (someFnValueOf(getCanonicalBinding(derived), isTrackedFunction)
       ? reachesUnfilledRead(derived)
       : buildsReachedFn(derived))
   );
-}
-
-function mayHoldFn(binding: Binding) {
-  return someFnValueOf(getCanonicalBinding(binding), isTrackedFunction);
 }
 
 // A `<let>` the created scope starts from its render's value, as a resumed
@@ -2074,9 +2065,8 @@ function addSources(all: SortedOpt<Sources>, sources: Sources) {
   return sourcesUtil.add(all, sources);
 }
 
-// A read resumed code renders wherever its scope sits, so no patch fills it: also one
-// no patch pairs, or deriving what no patch fills (one it writes, or a branch's params
-// where it renders the branch, reaches its readers).
+// A read resumed code renders wherever its scope sits, so no patch fills it: also one no patch
+// pairs, or deriving what no patch fills (one it writes, or a branch it renders, reaches readers).
 export function isResumedRead(read: ReferencedExtra) {
   return (
     readsValuesOnResume(read) ||
