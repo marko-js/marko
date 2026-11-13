@@ -23,7 +23,6 @@ import {
   applyBranchStart,
   type AsyncContent,
   Boundary,
-  captureContext,
   Chunk,
   deferBranchStart,
   getAsyncContent,
@@ -81,7 +80,7 @@ export function _show_end(
 export function _for_of(
   list: Falsy | Iterable<unknown>,
   cb: (item: unknown, index: number) => void,
-  by: Falsy | ((item: unknown, index: number) => unknown),
+  by: Falsy | string | ((item: unknown, index: number) => string | number),
   scopeId: number,
   accessor: Accessor,
   branchGuard?: number,
@@ -107,7 +106,7 @@ export function _for_of(
 export function iterateForOf(
   list: Falsy | Iterable<unknown>,
   cb: (item: unknown, index: number) => void,
-  by: Falsy | ((item: unknown, index: number) => unknown),
+  by: Falsy | string | ((item: unknown, index: number) => string | number),
 ): LoopIterate<unknown, number> {
   return (each) =>
     each
@@ -121,7 +120,7 @@ export function iterateForOf(
 export function _for_in(
   obj: Falsy | {},
   cb: (key: string, value: unknown) => void,
-  by: Falsy | ((key: string, v: unknown) => unknown),
+  by: Falsy | ((key: string, v: unknown) => string | number),
   scopeId: number,
   accessor: Accessor,
   branchGuard?: number,
@@ -147,7 +146,7 @@ export function _for_in(
 export function iterateForIn(
   obj: Falsy | {},
   cb: (key: string, value: unknown) => void,
-  by: Falsy | ((key: string, v: unknown) => unknown),
+  by: Falsy | ((key: string, v: unknown) => string | number),
 ): LoopIterate<string, unknown> {
   return (each) =>
     each
@@ -164,7 +163,7 @@ export function _for_to(
   from: number | Falsy,
   step: number | Falsy,
   cb: (index: number) => void,
-  by: Falsy | ((v: number) => unknown),
+  by: Falsy | ((v: number) => string | number),
   scopeId: number,
   accessor: Accessor,
   branchGuard?: number,
@@ -192,7 +191,7 @@ export function iterateForTo(
   from: number | Falsy,
   step: number | Falsy,
   cb: (index: number) => void,
-  by: Falsy | ((v: number) => unknown),
+  by: Falsy | ((v: number) => string | number),
 ): LoopIterate<number> {
   return (each) => {
     let index = 0;
@@ -210,7 +209,7 @@ export function _for_until(
   from: number | Falsy,
   step: number | Falsy,
   cb: (index: number) => void,
-  by: Falsy | ((v: number) => unknown),
+  by: Falsy | ((v: number) => string | number),
   scopeId: number,
   accessor: Accessor,
   branchGuard?: number,
@@ -238,7 +237,7 @@ export function iterateForUntil(
   from: number | Falsy,
   step: number | Falsy,
   cb: (index: number) => void,
-  by: Falsy | ((v: number) => unknown),
+  by: Falsy | ((v: number) => string | number),
 ): LoopIterate<number> {
   return (each) => {
     let index = 0;
@@ -254,7 +253,9 @@ export function iterateForUntil(
 // A loop's iteration: each row's key and `cb` arguments, where its branches
 // resume (`each`).
 export type LoopIterate<A, B = void> = (
-  each: 0 | ((itemKey: unknown, sameAsIndex: boolean, a: A, b: B) => void),
+  each:
+    | 0
+    | ((itemKey: string | number, sameAsIndex: boolean, a: A, b: B) => void),
 ) => void;
 
 // Asserts, in debug builds, that a keyed loop's keys are unique.
@@ -482,7 +483,7 @@ export function _await<T>(
   const startId = _peek_scope_id();
   const after = (chunk.next = chunk.forkRest(boundary));
   chunk.async = true;
-  captureContext(chunk);
+  boundary.state.captureContext(chunk);
   boundary.startAsync();
   // Won't fix: a thenable that calls back synchronously settles before a `<try>`
   // waits on it; adopting it through `Promise.resolve` would cost another promise.
@@ -617,7 +618,7 @@ function tryPlaceholder(
   }
 
   chunk.next = chunk.forkRest(boundary);
-  captureContext(chunk);
+  boundary.state.captureContext(chunk);
   chunk.placeholder = {
     body,
     render: placeholder,
@@ -675,7 +676,7 @@ export function tryBoundary(
   if (reorderId) {
     chunk.catchRange = { id: reorderId, end: bodyEnd };
     // The catch renders later, forked from this chunk.
-    captureContext(chunk);
+    state.captureContext(chunk);
   }
 
   bodyBoundary.onNext = () => {

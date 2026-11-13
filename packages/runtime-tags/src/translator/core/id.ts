@@ -26,6 +26,7 @@ import { scopeIdentifier } from "../util/scope-read";
 import { ensureSection, getSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
 import { addValue, initValue } from "../util/signals";
+import translateVar from "../util/translate-var";
 
 export default {
   analyze(tag) {
@@ -71,17 +72,15 @@ export default {
         : callRuntime("_id", scopeIdentifier);
 
       if (isOutputHTML()) {
-        replaceWithStatements(tag, [
-          t.variableDeclaration("const", [
-            t.variableDeclarator(
-              node.var!,
-              valueAttr ? t.logicalExpression("||", valueAttr.value, id) : id,
-            ),
-          ]),
-        ]);
+        translateVar(
+          tag,
+          valueAttr ? t.logicalExpression("||", valueAttr.value, id) : id,
+        );
+        replaceWithStatements(tag);
       } else {
         const section = getSection(tag);
-        const signal = initValue(node.var!.extra!.binding!);
+        const binding = node.var!.extra!.binding!;
+        const signal = initValue(binding);
 
         if (valueAttr) {
           const { value } = valueAttr;
@@ -103,7 +102,7 @@ export default {
                     scopeIdentifier,
                     t.stringLiteral(
                       getPrefixedScopeAccessor(
-                        node.var!.extra!.binding!,
+                        binding,
                         getAccessorPrefix().IdFallback,
                       ),
                     ),
