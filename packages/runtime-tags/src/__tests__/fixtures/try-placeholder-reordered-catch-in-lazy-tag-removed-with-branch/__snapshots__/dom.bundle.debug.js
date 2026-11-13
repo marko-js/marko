@@ -10,7 +10,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // child.marko
 const $template = "<pre id=log></pre><button class=inc> </button><button class=hide></button><!><!>";
 const $walks = "b D l b%c";
-const $placeholder_content2 = _content("__tests__/child.marko_8*content", "loading");
+const $placeholder_content2 = _content_resume("__tests__/child.marko_8*content", "loading");
 const $await_content2__v = /*@__PURE__*/ _closure_get("v/7", ($scope) => _text($scope["#text/0"], $scope._._.v), ($scope) => $scope._._);
 const $await_content2__setup = $await_content2__v;
 const $await_content2__$params = ($scope, $params4) => _text($scope["#text/1"], $params4[0]);
@@ -24,7 +24,7 @@ const $await_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $tr
 const $await_content__setup = $await_content__try;
 const $await_content__$params = ($scope, $params3) => $await_content__v($scope, $params3[0]);
 const $await_content__v = /*@__PURE__*/ _const("v");
-const $placeholder_content = _content("__tests__/child.marko_4*content", "outer loading");
+const $placeholder_content = _content_resume("__tests__/child.marko_4*content", "outer loading");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "b%", $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $try_content__setup = ($scope) => {
@@ -37,7 +37,7 @@ const $catch_content__count = /*@__PURE__*/ _closure_get("count/6", ($scope) => 
 	$catch_content__count__script($scope);
 }, ($scope) => $scope._._, "__tests__/child.marko_2_count#0:4/subscribe");
 const $catch_content__setup = $catch_content__count;
-const $catch_content = _content("__tests__/child.marko_2*content", "<span> </span>", "D ", $catch_content__setup);
+const $catch_content = _content_resume("__tests__/child.marko_2*content", "<span> </span>", "D ", $catch_content__setup);
 const $if_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content, $catch_content);
 const $if_content__setup = $if_content__try;
 const $count__closure = /*@__PURE__*/ _closure($catch_content__count);

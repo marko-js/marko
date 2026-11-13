@@ -30,7 +30,7 @@ const $catch_content__setup = ($scope) => {
 	$await_content($scope);
 	$catch_content__await_promise($scope, resolveAfter("caught", 2));
 };
-const $catch_content = _content("__tests__/components/tags-child.marko_2*content", "<!><!><!>", "b%", $catch_content__setup);
+const $catch_content = _content_resume("__tests__/components/tags-child.marko_2*content", "<!><!><!>", "b%", $catch_content__setup);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", "<div id=tags> </div>", "D ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content2__$params);
 const $try_content__setup = ($scope) => {

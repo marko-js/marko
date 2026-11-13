@@ -27,8 +27,8 @@ const $Label_content__setup = ($scope) => {
 	$Label_content__item($scope);
 };
 const $Label_content__item = /*@__PURE__*/ _closure_get("item/8", ($scope) => _text($scope["#text/0"], $scope._.item), 0, "__tests__/template.marko_2_item#1:2/subscribe");
-const $Label_content = _content("__tests__/template.marko_2*content", "<em><!> <!></em>", "D%c%", $Label_content__setup);
-_content_resume($Label_content);
+const $Label_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<em><!> <!></em>", "D%c%", $Label_content__setup);
+_content_closures_resume($Label_content);
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $for_content__input_on__OR__Label = /*@__PURE__*/ _or(4, ($scope) => $for_content__dynamicTag($scope, $scope._.input_on ? card_default : "div", ($_) => ({ content: $scope.Label })));
 const $for_content__input_on = /*@__PURE__*/ _for_closure("#text/0", $for_content__input_on__OR__Label, 7);

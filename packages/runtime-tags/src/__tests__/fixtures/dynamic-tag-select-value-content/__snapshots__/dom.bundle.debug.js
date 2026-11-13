@@ -3,7 +3,7 @@ const $template = "<button id=swap>swap</button><button id=bump>bump</button><!>
 const $walks = " b b%c";
 const $tag_content__n = /*@__PURE__*/ _closure_get("n/8", ($scope) => _text($scope["#text/0"], $scope._.n), 0, "__tests__/template.marko_1_n#0:7/subscribe");
 const $tag_content__setup = $tag_content__n;
-const $tag_content = _content("__tests__/template.marko_1*content", "<option value=a>A<!></option>", "Db%", $tag_content__setup);
+const $tag_content = _content_resume("__tests__/template.marko_1*content", "<option value=a>A<!></option>", "Db%", $tag_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2", $tag_content);
 const $tag = /*@__PURE__*/ _let("tag/6", ($scope) => $dynamicTag($scope, $scope.tag, ($_) => ({ value: "b" })));
 const $input_tag = $tag;

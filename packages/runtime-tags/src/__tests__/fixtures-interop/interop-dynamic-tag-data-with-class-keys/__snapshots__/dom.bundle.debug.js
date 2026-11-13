@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!><!>";
 const $walks = "b%b%c";
-const $rendernotafunction_content = _content("__tests__/template.marko_1*content", "<span>body</span>");
+const $rendernotafunction_content = _content_resume("__tests__/template.marko_1*content", "<span>body</span>");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/1", $rendernotafunction_content);
 function $setup($scope) {

@@ -28,7 +28,7 @@ let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.mark
 let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_label.mjs"));
 let $load_Child_tag_input_shared = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_shared.mjs"));
 const $await_content2__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
-const $placeholder_content = _content("__tests__/template.marko_3*content", "loading");
+const $placeholder_content = _content_resume("__tests__/template.marko_3*content", "loading");
 const $await_content__shared = /*@__PURE__*/ _closure_get("shared/5", ($scope) => $load_Child_tag_input_shared($scope["#childScope/1"], $scope._.shared));
 const $await_content__setup = ($scope) => {
 	$await_content__shared($scope);

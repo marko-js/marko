@@ -3,7 +3,7 @@ const $Wrapper_content__walks = " b%c";
 const $Wrapper_content__template = "<button id=toggle>toggle</button><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($Wrapper_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($Wrapper_content__walks);
-const $Wrapper_content2 = _content("__tests__/template.marko_2*content", "Hello");
+const $Wrapper_content2 = _content_resume("__tests__/template.marko_2*content", "Hello");
 const $Wrapper_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $Wrapper_content__content__OR__open = /*@__PURE__*/ _or(6, ($scope) => $Wrapper_content__dynamicTag($scope, $scope.open ? $scope.content : undefined));
 const $Wrapper_content__open = /*@__PURE__*/ _let("open/5", $Wrapper_content__content__OR__open);

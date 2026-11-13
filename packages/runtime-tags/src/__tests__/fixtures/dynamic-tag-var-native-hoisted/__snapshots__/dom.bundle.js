@@ -1,8 +1,8 @@
 // template.marko
 _dynamic_tag_var_resume(0);
 const $inputitemType_content__setup = ($scope) => _text($scope.a, $scope._.M);
-const $inputitemType_content = _content("a3", "item <!>", "b%", $inputitemType_content__setup);
-_content_resume($inputitemType_content);
+const $inputitemType_content = /*@__PURE__*/ _content("a3", "item <!>", "b%", $inputitemType_content__setup);
+_content_closures_resume($inputitemType_content);
 const $inputtype_content = _content("a1", "body");
 const $item_getter = _hoist_resume("a0", 3, "Ab");
 const $for_content__$item = _var_resume("a4", /*@__PURE__*/ _const(3));

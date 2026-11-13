@@ -1,7 +1,7 @@
 // tags/heading.marko
 const $inputtype_content__input_depth = /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.a, $scope._.e), 0, "c1");
-const $inputtype_content = _content("c0", "depth <!>", "b%", $inputtype_content__input_depth);
-_content_resume($inputtype_content);
+const $inputtype_content = /*@__PURE__*/ _content("c0", "depth <!>", "b%", $inputtype_content__input_depth);
+_content_closures_resume($inputtype_content);
 const $input_depth__closure = /*@__PURE__*/ _closure($inputtype_content__input_depth);
 const $input_depth = /*@__PURE__*/ _const(4, $input_depth__closure);
 

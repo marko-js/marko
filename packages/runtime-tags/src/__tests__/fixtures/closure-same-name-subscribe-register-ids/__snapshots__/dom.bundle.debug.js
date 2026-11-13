@@ -11,7 +11,7 @@ var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $templat
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button class=x> </button>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&`)("D%l");
-const $placeholder_content = _content("__tests__/template.marko_5*content", "loading");
+const $placeholder_content = _content_resume("__tests__/template.marko_5*content", "loading");
 const $wrap_content2__x = /*@__PURE__*/ _closure_get("x/5", ($scope) => _text($scope["#text/0"], $scope._.x), 0, "__tests__/template.marko_4_x#1:3/subscribe");
 const $wrap_content2__setup = $wrap_content2__x;
 const $wrap_content2 = /*@__PURE__*/ _content("__tests__/template.marko_4*content", "<s> </s>", "D ", $wrap_content2__setup);

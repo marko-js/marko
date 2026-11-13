@@ -22,7 +22,7 @@ const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1);
 const $Card_content__input_depth = /*@__PURE__*/ _closure_get("input_depth/4", ($scope) => _text($scope["#text/0"], $scope._.input_depth), 0, "__tests__/template.marko_1_input_depth#0:3/subscribe");
 const $Card_content__setup = $Card_content__input_depth;
-const $Card_content = _content("__tests__/template.marko_1*content", "depth <!>", "b%", $Card_content__setup);
+const $Card_content = _content_resume("__tests__/template.marko_1*content", "depth <!>", "b%", $Card_content__setup);
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $Card_content($scope));

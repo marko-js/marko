@@ -3,14 +3,14 @@ const $template = "<!><!><!><!>";
 const $walks = "b%b%c";
 const $await_content4__$params = ($scope, $params5) => _text($scope["#text/0"], $params5[0]);
 const $await_content3__$params = ($scope, $params4) => _text($scope["#text/0"], $params4[0]);
-const $placeholder_content4 = _content("__tests__/template.marko_10*content", "b inner loading");
+const $placeholder_content4 = _content_resume("__tests__/template.marko_10*content", "b inner loading");
 const $await_content3 = /*@__PURE__*/ _await_content("#text/0", "<span> </span>", "D ");
 const $try_content4__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content3__$params);
 const $try_content4__setup = ($scope) => {
 	$await_content3($scope);
 	$try_content4__await_promise($scope, resolveAfter("b inner", 4));
 };
-const $placeholder_content3 = _content("__tests__/template.marko_8*content", "b loading");
+const $placeholder_content3 = _content_resume("__tests__/template.marko_8*content", "b loading");
 const $try_content3__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content4__setup, $placeholder_content4);
 const $await_content4 = /*@__PURE__*/ _await_content("#text/1", "<div> </div>", "D ");
 const $try_content3__await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content4__$params);
@@ -21,14 +21,14 @@ const $try_content3__setup = ($scope) => {
 };
 const $await_content2__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]);
 const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
-const $placeholder_content2 = _content("__tests__/template.marko_4*content", "a inner loading");
+const $placeholder_content2 = _content_resume("__tests__/template.marko_4*content", "a inner loading");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<span> </span>", "D ");
 const $try_content2__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $try_content2__setup = ($scope) => {
 	$await_content($scope);
 	$try_content2__await_promise($scope, resolveAfter("a inner", 1));
 };
-const $placeholder_content = _content("__tests__/template.marko_2*content", "a loading");
+const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "a loading");
 const $try_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content2__setup, $placeholder_content2);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/1", "<div> </div>", "D ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content2__$params);

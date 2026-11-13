@@ -15,8 +15,8 @@ const $inputonCarddiv_content__setup = ($scope) => {
 	$Tree_content__setup($scope.a);
 	$Tree_content__tag_input_n($scope.a, 1);
 };
-const $inputonCarddiv_content = _content("a2", /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($Tree_content__template), /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($Tree_content__walks), $inputonCarddiv_content__setup);
-_content_resume($inputonCarddiv_content);
+const $inputonCarddiv_content = /*@__PURE__*/ _content("a2", /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($Tree_content__template), /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($Tree_content__walks), $inputonCarddiv_content__setup);
+_content_closures_resume($inputonCarddiv_content);
 const $if_content__n = /*@__PURE__*/ _if_closure(1, 0, ($scope) => $Tree_content__tag_input_n($scope.a, $scope._.e - 1));
 const $if_content__setup = ($scope) => {
 	$if_content__n._($scope);

@@ -9,8 +9,8 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 
 // tags/heading.marko
 const $inputtype_content__input_depth = /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.a, $scope._._.f), ($scope) => $scope._._, "c1");
-const $inputtype_content = _content("c0", "depth <!>", "b%", $inputtype_content__input_depth);
-_content_resume($inputtype_content);
+const $inputtype_content = /*@__PURE__*/ _content("c0", "depth <!>", "b%", $inputtype_content__input_depth);
+_content_closures_resume($inputtype_content);
 const $if_content__setup__script = _script("c2", ($scope) => _on($scope.a, "click", function() {
 	$count($scope._, +$scope._.g + 1);
 }));

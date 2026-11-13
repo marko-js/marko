@@ -21,7 +21,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 const $template = "<button id=add>add</button><!><!>";
 const $walks = " b%c";
 const $type_content__setup = ($scope) => _text($scope["#text/0"], $scope._["#LoopKey"]);
-const $type_content = _content("__tests__/template.marko_2*content", "item <!>", "b%", $type_content__setup);
+const $type_content = _content_resume("__tests__/template.marko_2*content", "item <!>", "b%", $type_content__setup);
 const $for_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $type_content($scope));

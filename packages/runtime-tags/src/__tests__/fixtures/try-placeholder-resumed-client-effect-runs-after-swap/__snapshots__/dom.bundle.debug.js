@@ -6,7 +6,7 @@ const $if_content__setup__script = _script("__tests__/template.marko_3", ($scope
 	console.log("inner clicked");
 }));
 const $if_content__setup = $if_content__setup__script;
-const $placeholder_content = _content("__tests__/template.marko_2*content", "loading");
+const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "loading");
 const $try_content__if = /*@__PURE__*/ _if("#text/0", "<button id=inner>inner</button>", " ", $if_content__setup);
 const $try_content__show = /*@__PURE__*/ _closure_get("show/3", ($scope) => $try_content__if($scope, $scope._.show ? 0 : 1), 0, "__tests__/template.marko_1_show#0:2/subscribe");
 const $await_content = /*@__PURE__*/ _await_content("#text/1", "<div> </div>", "D ");

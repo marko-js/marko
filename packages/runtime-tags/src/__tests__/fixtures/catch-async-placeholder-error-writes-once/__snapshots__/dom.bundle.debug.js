@@ -17,7 +17,7 @@ let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.mark
 const $await_content2__$params = ($scope, $params4) => _text($scope["#text/0"], $params4[0]);
 const $catch_content__setup = ($scope) => $load_Child_setup($scope, $scope["#childScope/2"], $scope["#text/1"]);
 const $catch_content__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]?.message);
-const $catch_content = _content("__tests__/template.marko_4*content", "caught <!><!><!>", "b%b%/&", $catch_content__setup, $catch_content__$params);
+const $catch_content = _content_resume("__tests__/template.marko_4*content", "caught <!><!><!>", "b%b%/&", $catch_content__setup, $catch_content__$params);
 const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", " ", " ");
 const $placeholder_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
@@ -25,7 +25,7 @@ const $placeholder_content__setup = ($scope) => {
 	$await_content($scope);
 	$placeholder_content__await_promise($scope, resolveAfter("placeholder", 2));
 };
-const $placeholder_content = _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $placeholder_content__setup);
+const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "<!><!><!>", "b%", $placeholder_content__setup);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", " ", " ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content2__$params);
 const $try_content__setup = ($scope) => {

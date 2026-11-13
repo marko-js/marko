@@ -1144,7 +1144,7 @@ function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
     f: dynamicScopesAccessor,
   }));
 }
-function _content_resume(renderer, hasLocalValues = 0) {
+function _content_closures_resume(renderer, hasLocalValues = 0) {
   return (_resumed[renderer().a] = (owner, ...values) => {
     for (let i = values.length, scope = owner; i > hasLocalValues;) {
       let closures = values[--i];

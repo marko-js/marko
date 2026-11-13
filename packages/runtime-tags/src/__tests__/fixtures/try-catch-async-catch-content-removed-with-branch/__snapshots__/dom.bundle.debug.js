@@ -20,7 +20,7 @@ const $catch_content__setup = ($scope) => {
 	$await_content($scope);
 	$catch_content__await_promise($scope, resolveAfter("caught", 2));
 };
-const $catch_content = _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $catch_content__setup);
+const $catch_content = _content_resume("__tests__/template.marko_2*content", "<!><!><!>", "b%", $catch_content__setup);
 const $if_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);
 const $if_content__setup = $if_content__try;
 const $count__closure = /*@__PURE__*/ _closure($await_content__count);

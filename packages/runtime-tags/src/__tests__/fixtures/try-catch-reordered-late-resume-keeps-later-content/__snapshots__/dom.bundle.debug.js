@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<pre id=log></pre><button class=inc> </button><button class=hide></button><!><!><!>";
 const $walks = "b D l b%b%c";
-const $placeholder_content = _content("__tests__/template.marko_8*content", "loading");
+const $placeholder_content = _content_resume("__tests__/template.marko_8*content", "loading");
 const $await_content3__v = /*@__PURE__*/ _closure_get("v/8", ($scope) => _text($scope["#text/0"], $scope._._.v), ($scope) => $scope._._);
 const $await_content3__setup = $await_content3__v;
 const $await_content3__$params = ($scope, $params4) => _text($scope["#text/1"], $params4[0]);
@@ -25,7 +25,7 @@ const $await_content__count = /*@__PURE__*/ _closure_get("count/7", ($scope) => 
 const $await_content__setup = $await_content__count;
 const $catch_content__count = /*@__PURE__*/ _closure_get("count/7", ($scope) => _text($scope["#text/0"], $scope._._.count), ($scope) => $scope._._, "__tests__/template.marko_2_count#0:5/subscribe");
 const $catch_content__setup = $catch_content__count;
-const $catch_content = _content("__tests__/template.marko_2*content", "<span class=caught> </span>", "D ", $catch_content__setup);
+const $catch_content = _content_resume("__tests__/template.marko_2*content", "<span class=caught> </span>", "D ", $catch_content__setup);
 const $if_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);
 const $if_content__setup = $if_content__try;
 const $count__closure = /*@__PURE__*/ _closure($catch_content__count, $await_content__count);

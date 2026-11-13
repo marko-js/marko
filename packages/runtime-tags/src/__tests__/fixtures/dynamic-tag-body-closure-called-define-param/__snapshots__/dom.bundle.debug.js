@@ -28,8 +28,8 @@ const $inputonCarddiv_content__setup = ($scope) => {
 	$Note_content__setup($scope["#childScope/0"]);
 	$Note_content__tag_input_label($scope["#childScope/0"], "x");
 };
-const $inputonCarddiv_content = _content("__tests__/template.marko_3*content", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Note_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Note_content__walks), $inputonCarddiv_content__setup);
-_content_resume($inputonCarddiv_content);
+const $inputonCarddiv_content = /*@__PURE__*/ _content("__tests__/template.marko_3*content", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Note_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Note_content__walks), $inputonCarddiv_content__setup);
+_content_closures_resume($inputonCarddiv_content);
 const $if_content__input_note = /*@__PURE__*/ _closure_get("input_note/6", ($scope) => _text($scope["#text/1"], $scope._._.input_note), ($scope) => $scope._._, "__tests__/template.marko_2_input_note#0:4/subscribe");
 const $if_content__setup = ($scope) => {
 	$if_content__input_note($scope);

@@ -4,7 +4,7 @@ const $Item_content__template = "<span>x</span>";
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!><!>`)($Item_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&%c`)($Item_content__walks);
 const $catch_content__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]?.message);
-const $catch_content = _content("__tests__/template.marko_4*content", "caught <!>", "b%", 0, $catch_content__$params);
+const $catch_content = _content_resume("__tests__/template.marko_4*content", "caught <!>", "b%", 0, $catch_content__$params);
 const $try_content__setup = ($scope) => _text($scope["#text/1"], (() => {
 	throw new Error("ERROR!");
 })());

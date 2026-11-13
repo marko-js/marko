@@ -8,7 +8,7 @@ const $try_content__setup = ($scope) => {
 	$await_content($scope);
 	$try_content__await_promise($scope, rejectAfter(new Error("ERROR!"), 1));
 };
-const $try__catch = _content("__tests__/template.marko_0_#text#0/catch");
+const $try__catch = /*@__PURE__*/ _content("__tests__/template.marko_0_#text#0/catch");
 const $try = /*@__PURE__*/ _try("#text/0", "b<!>c", "b%", $try_content__setup, 0, $try__catch);
 const $setup = $try;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);

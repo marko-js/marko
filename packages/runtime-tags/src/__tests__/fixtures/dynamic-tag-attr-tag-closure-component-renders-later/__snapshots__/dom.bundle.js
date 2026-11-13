@@ -9,5 +9,5 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 
 // tags/heading.marko
 const $item_content__input_text = /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.a, $scope._.e), 0, "c0");
-const $item_content = _content("c1", "text <!>", "b%", $item_content__input_text);
-_content_resume($item_content);
+const $item_content = /*@__PURE__*/ _content("c1", "text <!>", "b%", $item_content__input_text);
+_content_closures_resume($item_content);

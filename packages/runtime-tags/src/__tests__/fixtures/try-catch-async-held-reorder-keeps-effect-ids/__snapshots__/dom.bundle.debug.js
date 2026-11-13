@@ -12,7 +12,7 @@ const $template = /*@__PURE__*/ ((_w0) => `<div id=log></div><!>${_w0}<!><!>`)("
 const $walks = /*@__PURE__*/ ((_w0) => `b%/${_w0}&b%c`)("");
 const $await_content2__setup = ($scope) => $input_id($scope["#childScope/0"], "q");
 const $catch_content__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]?.message);
-const $catch_content = _content("__tests__/template.marko_5*content", " ", " ", 0, $catch_content__$params);
+const $catch_content = _content_resume("__tests__/template.marko_5*content", " ", " ", 0, $catch_content__$params);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", "", /*@__PURE__*/ ((_w0) => `/${_w0}&`)(""), $await_content2__setup);
 const $try_content2__await_promise = /*@__PURE__*/ _await_promise("#text/0");
 const $try_content2__setup = ($scope) => {
@@ -21,7 +21,7 @@ const $try_content2__setup = ($scope) => {
 };
 const $await_content__setup__script = _script("__tests__/template.marko_3", ($scope) => document.getElementById("log").textContent += "[r]");
 const $await_content__setup = $await_content__setup__script;
-const $placeholder_content = _content("__tests__/template.marko_2*content", "loading");
+const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "loading");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", 0, 0, $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");
 const $try_content__setup = ($scope) => {

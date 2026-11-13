@@ -7,7 +7,7 @@ const $placeholder_content__setup = ($scope) => {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$load_Child_tag_input_value($scope["#childScope/1"], "loading");
 };
-const $placeholder_content = _content("__tests__/template.marko_4*content", "<!><!><!>", "b%/&", $placeholder_content__setup);
+const $placeholder_content = _content_resume("__tests__/template.marko_4*content", "<!><!><!>", "b%/&", $placeholder_content__setup);
 const $await_content2__t = /*@__PURE__*/ _closure_get("t/3", ($scope) => _text($scope["#text/0"], $scope._._.t), ($scope) => $scope._._);
 const $await_content2__setup = $await_content2__t;
 const $await_content2__$params = ($scope, $params3) => _text($scope["#text/1"], $params3[0]);

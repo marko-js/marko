@@ -14,7 +14,7 @@ const $tagselect_content__setup = ($scope) => $tagselect_content__for($scope, [[
 	{ value: "b" },
 	{ value: "c" }
 ]]);
-const $tagselect_content = _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", $tagselect_content__setup);
+const $tagselect_content = _content_resume("__tests__/template.marko_1*content", "<!><!><!>", "b%", $tagselect_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $tagselect_content);
 const $value__OR__tag = /*@__PURE__*/ _or(4, ($scope) => $dynamicTag($scope, $scope.tag ? "select" : {}, ($_) => ({
 	value: $scope.value,

@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $inputas_content = _content("__tests__/tags/resume-root.marko_1*content", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("b"));
+const $inputas_content = _content_resume("__tests__/tags/resume-root.marko_1*content", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("b"));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputas_content);
 const $input_as = $dynamicTag;
 const $input = ($scope, input) => $input_as($scope, input.as);

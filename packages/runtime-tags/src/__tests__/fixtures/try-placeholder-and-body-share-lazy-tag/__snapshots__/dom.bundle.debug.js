@@ -21,7 +21,7 @@ const $placeholder_content__setup = ($scope) => {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$load_Child_tag_input_value($scope["#childScope/1"], "p");
 };
-const $placeholder_content = _content("__tests__/template.marko_2*content", "<!><!><!>", "b%/&", $placeholder_content__setup);
+const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "<!><!><!>", "b%/&", $placeholder_content__setup);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "b%/&", $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $try_content__setup = ($scope) => {

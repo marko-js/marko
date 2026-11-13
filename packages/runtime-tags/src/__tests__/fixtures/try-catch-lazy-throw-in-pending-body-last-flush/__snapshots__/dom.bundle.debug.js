@@ -11,7 +11,7 @@ const $await_content2__setup = ($scope) => {
 	$await_content2__await_promise($scope, resolveAfter("c", 3));
 };
 const $catch_content__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]?.message);
-const $catch_content = _content("__tests__/template.marko_3*content", "caught <!>", "b%", 0, $catch_content__$params);
+const $catch_content = _content_resume("__tests__/template.marko_3*content", "caught <!>", "b%", 0, $catch_content__$params);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", "<!><!><!><!>", "b%/&b%", $await_content2__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");
 const $try_content__setup = ($scope) => {

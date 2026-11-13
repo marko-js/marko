@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button></button><!><!>";
 const $walks = " b%c";
-const $catch_content = _content("__tests__/template.marko_3*content", "error");
+const $catch_content = _content_resume("__tests__/template.marko_3*content", "error");
 const $if_content__a = /*@__PURE__*/ _closure_get("a/4", ($scope) => _text($scope["#text/0"], $scope._._.a), ($scope) => $scope._._, "__tests__/template.marko_2_a#0:2/subscribe");
 const $if_content__setup = ($scope) => {
 	$if_content__a($scope);

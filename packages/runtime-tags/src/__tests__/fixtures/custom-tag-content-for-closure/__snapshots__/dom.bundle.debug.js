@@ -38,7 +38,7 @@ const PEOPLE = [
 const $for_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
 const $menu_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<div>person: <!></div>", "Db%", 0, $for_content__$params);
 const $menu_content__setup = ($scope) => $menu_content__for($scope, [PEOPLE]);
-const $menu_content = _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", $menu_content__setup);
+const $menu_content = _content_resume("__tests__/template.marko_1*content", "<!><!><!>", "b%", $menu_content__setup);
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $menu_content($scope));

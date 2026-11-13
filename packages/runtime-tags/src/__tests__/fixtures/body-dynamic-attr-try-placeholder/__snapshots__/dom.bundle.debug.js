@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<html lang=en><head><title>x</title></head><body><!></body></html>";
 const $walks = "Db D%m";
-const $placeholder_content = _content("__tests__/template.marko_3*content", "loading");
+const $placeholder_content = _content_resume("__tests__/template.marko_3*content", "loading");
 const $await_content__dark = /*@__PURE__*/ _closure_get("dark/3", ($scope) => _text($scope["#text/2"], $scope._._.dark), ($scope) => $scope._._, "__tests__/template.marko_2_dark#0:2/subscribe");
 const $await_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/0"], "click", function() {
 	$dark($scope._._, !$scope._._.dark);

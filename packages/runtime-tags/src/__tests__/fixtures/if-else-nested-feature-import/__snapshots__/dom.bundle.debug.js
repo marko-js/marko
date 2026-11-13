@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 _dynamic_tag_var_resume("#text/0");
-const $inputtype_content = _content("__tests__/template.marko_3*content", "body");
+const $inputtype_content = _content_resume("__tests__/template.marko_3*content", "body");
 const $el_getter = /*@__PURE__*/ _hoist("$el", [
 	"BranchScopes:#text/0",
 	"ConditionalRenderer:#text/0",

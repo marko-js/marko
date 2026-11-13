@@ -24,8 +24,8 @@ const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Outer_content__templa
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Outer_content__walks);
 const $Label_content__v = /*@__PURE__*/ _closure_get("v/6", ($scope) => _text($scope["#text/0"], $scope._.v), 0, "__tests__/template.marko_2_v#1:3/subscribe");
 const $Label_content__setup = $Label_content__v;
-const $Label_content = _content("__tests__/template.marko_2*content", "<em> </em>", "D ", $Label_content__setup);
-_content_resume($Label_content);
+const $Label_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<em> </em>", "D ", $Label_content__setup);
+_content_closures_resume($Label_content);
 const $Outer_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $Outer_content__input_on__OR__Label = /*@__PURE__*/ _or(5, ($scope) => $Outer_content__dynamicTag($scope, $scope._.input_on ? card_default : "div", ($_) => ({ content: $scope.Label })));
 const $Outer_content__input_on = /*@__PURE__*/ _closure_get("input_on/5", $Outer_content__input_on__OR__Label, 0, "__tests__/template.marko_1_input_on#0:3/subscribe");

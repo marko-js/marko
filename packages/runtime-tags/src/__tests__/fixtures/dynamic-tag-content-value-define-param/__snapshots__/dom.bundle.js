@@ -9,5 +9,5 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 
 // template.marko
 const $Label_content__v = /*@__PURE__*/ _closure_get(6, ($scope) => _text($scope.a, $scope._.d), 0, "a1");
-const $Label_content = _content("a0", "<em> </em>", "D ", $Label_content__v);
-_content_resume($Label_content);
+const $Label_content = /*@__PURE__*/ _content("a0", "<em> </em>", "D ", $Label_content__v);
+_content_closures_resume($Label_content);

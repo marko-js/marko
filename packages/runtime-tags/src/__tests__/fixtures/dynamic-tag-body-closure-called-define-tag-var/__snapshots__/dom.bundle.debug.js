@@ -27,8 +27,8 @@ const $Tag_content__setup = ($scope) => {
 	$scope["#childScope/0"]._ = $scope._;
 	$Note_content__setup($scope["#childScope/0"]);
 };
-const $Tag_content = _content("__tests__/template.marko_2*content", $Note_content__template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($Note_content__walks), $Tag_content__setup);
-_content_resume($Tag_content);
+const $Tag_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", $Note_content__template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($Note_content__walks), $Tag_content__setup);
+_content_closures_resume($Tag_content);
 const $Note_content__input_note = /*@__PURE__*/ _closure_get("input_note/6", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:3/subscribe");
 const $Note_content__setup = $Note_content__input_note;
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $Tag_content);

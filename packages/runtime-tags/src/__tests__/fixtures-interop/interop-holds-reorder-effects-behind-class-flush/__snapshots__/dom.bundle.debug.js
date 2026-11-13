@@ -38,7 +38,7 @@ const $await_content3__$params = ($scope, $params4) => _text($scope["#text/0"], 
 const $await_content2__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $await_content2__setup = ($scope) => $await_content2__dynamicTag($scope, _marko_template);
 const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
-const $placeholder_content = _content("__tests__/template.marko_4*content", "loading");
+const $placeholder_content = _content_resume("__tests__/template.marko_4*content", "loading");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", " ", " ");
 const $try_content2__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $try_content2__setup = ($scope) => {
@@ -47,7 +47,7 @@ const $try_content2__setup = ($scope) => {
 };
 const $catch_content__setup__script = _script("__tests__/template.marko_2", ($scope) => console.log("catch effect"));
 const $catch_content__setup = $catch_content__setup__script;
-const $catch_content = _content("__tests__/template.marko_2*content", 0, 0, $catch_content__setup);
+const $catch_content = _content_resume("__tests__/template.marko_2*content", 0, 0, $catch_content__setup);
 const $try_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content2__setup, $placeholder_content);
 const $try_content__setup = $try_content__try;
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);

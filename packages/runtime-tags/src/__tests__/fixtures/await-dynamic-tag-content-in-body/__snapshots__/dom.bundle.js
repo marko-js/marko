@@ -12,5 +12,5 @@ const $setup__script = _script("c0", ($scope) => _on($scope.a, "click", function
 
 // template.marko
 const $inputonKeeperdiv_content__input_note = /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.a, $scope._._.f), ($scope) => $scope._._, "a1");
-const $inputonKeeperdiv_content = _content("a0", "<em> </em>", "D ", $inputonKeeperdiv_content__input_note);
-_content_resume($inputonKeeperdiv_content);
+const $inputonKeeperdiv_content = /*@__PURE__*/ _content("a0", "<em> </em>", "D ", $inputonKeeperdiv_content__input_note);
+_content_closures_resume($inputonKeeperdiv_content);
