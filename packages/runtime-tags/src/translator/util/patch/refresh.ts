@@ -1,7 +1,6 @@
 // Patch fill decisions: which bindings a patch fills or writes, fill identity,
 // and what a created scope runs.
 import type { types as t } from "@marko/compiler";
-import { getProgram } from "@marko/compiler/babel-utils";
 
 import {
   type Binding,
@@ -16,7 +15,6 @@ import {
   type ReferencedBindings,
   someAlias,
   someBindingRead,
-  someDerivedRead,
   someReadIn,
 } from "../bindings";
 import { createAnalysisMemo, createPassMemo } from "../cyclic-memo";
@@ -48,7 +46,6 @@ import {
   mapBodyParams,
 } from "../reasons";
 import {
-  getCanonicalExpr,
   getGlobalReads,
   getLazyBindings,
   getNameRead,
@@ -59,7 +56,6 @@ import {
   isReferencedExtra,
   type Read,
   type ReferencedExtra,
-  type RegisteredFnExtra,
 } from "../references";
 import { getScopeAccessor } from "../scope-accessor";
 import {
@@ -110,7 +106,6 @@ import {
   isStatefulStructure,
   getParamSelectedStructure,
   calleeKeepsInput,
-  getStatefulConsumers,
   isPassedStateByEveryCall,
   isStatefulRead,
   derivesRenderedContent,
@@ -120,7 +115,6 @@ import {
 // need, how a patch fills them, and what deriving it needs of its inputs.
 interface PatchFill {
   contentKind?: true | FillConditions;
-  keptInLet?: boolean;
   /** A `<let>` a patch fills. */
   fill?: boolean;
   derivedNeeds?: true | FillConditions;
@@ -147,7 +141,7 @@ export const getPatchFill = createPassMemo(computePatchFill, UNREAD);
 export const getPatchWrite = createPassMemo(computePatchWrite, UNREAD);
 
 function computePatchFill(binding: Binding): PatchFill {
-  const { kind, contentKind, keptInLet } = getFillReadKind(binding);
+  const { kind, contentKind } = getFillReadKind(binding);
   // A value only intersections the patch writes call for rides its slot write.
   const members = getFilledMembers(kind);
   const reasons = members ? undefined : kind;
@@ -172,7 +166,6 @@ function computePatchFill(binding: Binding): PatchFill {
   }
   return {
     contentKind,
-    keptInLet,
     fill,
     derivedNeeds,
     effectRead,
@@ -355,13 +348,12 @@ function getClientRenderedContents(section: Section, upTo?: Section) {
   return contents;
 }
 
-// Content no shipped code renders: no registered renderer or kept closure fills, no state
-// passing it, no call the client renders whatever callers pass. A flush reaches it by data.
+// Content no shipped code renders: no registered renderer, no state passing it, no
+// call the client renders whatever callers pass. A flush reaches it by data.
 const reachedByData = createPassMemo(
   (section: Section): boolean =>
     !getRendererReason(section) &&
     !(section.derives && getSourcesForDerived(section.derives)?.state) &&
-    !keepsClosureFills(section) &&
     !some(section.renderedBy, isClientRenderedCall),
   true,
 );
@@ -567,7 +559,6 @@ const getFillReadKind = createPassMemo(computeFillReadKind, {
   kind: undefined,
   contentKind: undefined,
   filledIntersections: undefined,
-  keptInLet: false,
 });
 
 function computeFillReadKind(binding: Binding) {
@@ -575,8 +566,6 @@ function computeFillReadKind(binding: Binding) {
   // What the reads rendering it as content need, its own, its aliases' and
   // its derived values': `{}` where they need nothing.
   let contentKind: true | FillConditions | undefined;
-  // A `<let>` it gives itself to keeps it on the client, as content it renders.
-  let keptInLet = false;
   // Each filled intersection its value is shipped for, by the section reading it.
   let filledIntersections: Map<Intersection, Section> | undefined;
   for (const alias of binding.propertyAliases.values()) {
@@ -617,7 +606,6 @@ function computeFillReadKind(binding: Binding) {
         if (derivedKind) {
           contentKind = mergeKinds(contentKind, derivedKind);
           rendersContent = true;
-          keptInLet ||= derived.type === BindingType.let;
         }
       } else if (someRead(bindingReaders(derived, true), isContentRender)) {
         rendersContent = true;
@@ -645,7 +633,6 @@ function computeFillReadKind(binding: Binding) {
     kind,
     contentKind,
     filledIntersections,
-    keptInLet,
   };
 }
 
@@ -762,26 +749,20 @@ function getReadStructure(
   ]);
   const pending: [Section, SortedOpt<Section>][] = [[read.section, undefined]];
   for (const [readAt, carried] of pending) {
-    // No patch write reaches a skipped region: reads in stateful structure, a body
-    // some consumer renders so, or boundary content the client renders take owner fills.
+    // No patch write reaches a skipped region: reads in stateful structure or
+    // boundary content the client renders take owner fills.
     let readSection: Section | undefined = readAt;
     let unawaited = carried;
     while (readSection && readSection !== binding.section) {
-      // Content whose kept instances take their holes as data is the patch's.
-      const kept = keepsContent(readSection);
-      if (
-        !kept &&
-        (isStatefulStructure(readSection) || getStatefulConsumers(readSection))
-      ) {
+      if (isStatefulStructure(readSection) || readSection.boundaryContent) {
         return true;
       }
-      if (readSection.boundaryContent) return true;
       if (handOff && readSection.branch?.kind === "await") {
         handOff.under = sectionUtil.add(handOff.under, readSection);
       }
       // Each content around the read a consumer may render as a client branch: any of them the
       // client keeps renders what is inside.
-      if (!kept && isClientBranchContent(readSection)) {
+      if (isClientBranchContent(readSection)) {
         unawaited = sectionUtil.add(unawaited, readSection);
       }
       if (readSection.renderedBy) {
@@ -1200,36 +1181,6 @@ export function addFilledReads(reads: Set<Binding>, binding: Binding) {
   return reads;
 }
 
-// Whether a function's value reaches a binding `test` accepts (with the read reaching it)
-// from its holder (`expr` derives it): one choosing it, another template's input, and on.
-export function someReached(
-  holder: Binding,
-  test: (reached: Binding, expr?: t.NodeExtra) => boolean,
-  expr?: t.NodeExtra,
-  carries?: (binding: Binding, expr: ReferencedExtra) => boolean,
-) {
-  const seen = new Set<Binding>();
-  const reaches = (reached: Binding, expr?: t.NodeExtra): boolean => {
-    if (seen.has(reached)) return false;
-    seen.add(reached);
-    return (
-      test(reached, expr) ||
-      someAlias(
-        reached,
-        (alias) =>
-          someDerivedRead(
-            alias,
-            (derived, expr) =>
-              (!carries || carries(alias, expr)) && reaches(derived, expr),
-          ),
-        undefined,
-        true,
-      )
-    );
-  };
-  return reaches(holder, expr);
-}
-
 // Referenced inside a function client code reads (registering it): its reads
 // reach the live scope at any later invocation, so a patch keeps it current.
 function isRegisteredFnReference(binding: Binding) {
@@ -1241,103 +1192,6 @@ function isRegisteredFnReference(binding: Binding) {
 
 function isRegisteredFnRead(read: Read) {
   return !!read.fnRoot?.reason;
-}
-
-// An `<id>` an expression (a hole, a `<const>`, a handler) reads beside a value with
-// sources, here or in a template it is passed to: a hole may differ in each kept instance.
-export function isIdReadBesideSources(id: Binding) {
-  return someReached(id, isReadBesideSources);
-}
-
-function isReadBesideSources(reached: Binding) {
-  for (const expr of reached.reads.keys()) {
-    if (
-      some(
-        getReferencedBindings(expr),
-        (read) => read !== reached && !!read.sources,
-      )
-    ) {
-      return true;
-    }
-  }
-  return false;
-}
-
-// A scope-bound function a hole may send as a bind reference, which names one scope:
-// where it sits (a change handler binds owner-bound), or a read its value reaches.
-export function isSentAsBindReference(fn: RegisteredFnExtra) {
-  const extra = getCanonicalExpr(fn.exprRoot);
-  return (
-    (!fn.exprRoot.changeHandler && isBindReferenceRead(extra, true)) ||
-    someRead(exprReaders(extra), isBindReferenceRead)
-  );
-}
-
-// An element or hoisted getter a hole may send as a bind reference: a read of its binding.
-export function isBindingSentAsBindReference(binding: Binding) {
-  return someRead(bindingReaders(binding, undefined), isBindReferenceRead);
-}
-
-// Content a hole may send as a bind reference: a read of what it derives. Content that
-// derives from nothing is a dynamic tag's body, which ships as its id, not its value.
-export function isContentSentAsBindReference(section: Section) {
-  return (
-    !!section.derives &&
-    someRead(getDerivedReaders(section.derives), isBindReferenceRead)
-  );
-}
-
-// A read a patch writes a value at as is: retained, a known call's argument not shipped
-// whole, or the template's return, which a caller it cannot see takes.
-function isBindReferenceRead(read: t.NodeExtra, asInput: boolean) {
-  return (
-    asInput &&
-    (!!read.retained ||
-      (!!read.callSiteExprs &&
-        !isTrackedFunction(read) &&
-        !(read.read && holdsRegisteredFn(read.read.binding))) ||
-      read === getProgram().node.extra.section!.returnValueExpr)
-  );
-}
-
-// Kept content with nodes of its own: its instances take their holes as data.
-export function keepsHoles(section: Section) {
-  return !!section.bindings && keepsContent(section);
-}
-
-// In kept content, its branch bodies included: no client code of it ships, and
-// each flush refills its holes.
-export function inKeptContent(section: Section) {
-  while (section.branch) section = section.parent!;
-  return keepsContent(section);
-}
-
-// Content a known child renders from its state, where plain renders it nowhere
-// on the client: a patch creates its instances from their shells alone.
-export function keepsContent(section: Section) {
-  return (
-    rendersFromChildState(section) &&
-    !getRendererReason(section) &&
-    !section.params &&
-    patchFillsSection(section)
-  );
-}
-
-// Content a known child renders from its state.
-function rendersFromChildState(section: Section) {
-  return isPatch() && !!getStatefulConsumers(section);
-}
-
-// Such content closing over what a flush fills, where none creates it and no
-// renderer registers: its closures load by their fills' own registration.
-export function keepsClosureFills(section: Section) {
-  return (
-    !!section.referencedClosures &&
-    !getRendererReason(section) &&
-    rendersFromChildState(section) &&
-    !keepsContent(section) &&
-    !patchMayCreateEnclosing(section.parent!, mayBeCreated(section.program))
-  );
 }
 
 // How a scope runs what nothing it receives renders: a closure's value, or a
@@ -1872,31 +1726,8 @@ function patchMayCreateEnclosing(section: Section, root: boolean): boolean {
   }
   return section.parent
     ? patchMayCreateOwn(section) ||
-        (section.renderedBy
-          ? (root ? patchMayCreateAtCallsOrRoot : patchMayCreateAtCalls)(
-              section,
-            )
-          : patchMayCreateEnclosing(section.parent, root))
+        patchMayCreateEnclosing(section.parent, root)
     : root;
-}
-
-// A `<define>` body sits in the structure around each call rendering it, memoized
-// as a recursive call asks of the body again: once per `root`.
-const patchMayCreateAtCalls = createPassMemo(
-  (body: Section) => some(body.renderedBy, isCallCreatable),
-  false,
-);
-const patchMayCreateAtCallsOrRoot = createPassMemo(
-  (body: Section) => some(body.renderedBy, isCallCreatableOrRoot),
-  false,
-);
-
-function isCallCreatable(call: KnownTagExtra) {
-  return patchMayCreateEnclosing(call.childScopeBinding.section, false);
-}
-
-function isCallCreatableOrRoot(call: KnownTagExtra) {
-  return patchMayCreateEnclosing(call.childScopeBinding.section, true);
 }
 
 // A section whose scopes a flush creates from its shell: a branch, `<await>` or

@@ -34,6 +34,7 @@ import {
   type SortedOpt,
 } from "./optional";
 import { ensurePatchReasonGroups } from "./patch/refresh";
+import { mayRenderOnClient } from "./patch/structure";
 import {
   addOwnerReason,
   addReason,
@@ -272,12 +273,22 @@ function addClosureReasons(section: Section) {
   );
   forEach(section.referencedClosures, (closure) => {
     addClosureReason(section, closure);
-    if (closure.sources && isDynamicClosure(section, closure)) {
-      addReason(ensureSlot(closure, SlotKind.ClosureScopes), closure.sources);
+    const { sources } = closure;
+    if (sources && isDynamicClosure(section, closure)) {
+      // A patch changing `$global` re-runs one reading it alone, whose set reaches
+      // the scopes the client renders.
+      const reason =
+        isPatch() &&
+        !sources.state &&
+        !sources.param &&
+        mayRenderOnClient(section)
+          ? ALWAYS
+          : sources;
+      addReason(ensureSlot(closure, SlotKind.ClosureScopes), reason);
       if (getDynamicClosureIndex(closure, section)) {
         addReason(
           ensureSlot(closure, SlotKind.ClosureSignalIndex, section),
-          closure.sources,
+          reason,
         );
       }
     }

@@ -18,7 +18,6 @@ import { BindingType } from "../util/bindings";
 import evaluate from "../util/evaluate";
 import { getAccessorPrefix } from "../util/get-accessor-enums";
 import { isOptimize, isOutputHTML, isPatch } from "../util/marko-config";
-import { isIdReadBesideSources } from "../util/patch/refresh";
 import { setDerivedFrom, trackVarReferences } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime } from "../util/runtime";
@@ -70,17 +69,12 @@ export default {
         return;
       }
 
-      // A patch build's id names its declaration under its render's path, and says where
-      // it is read beside a value with sources outside a branch body (`_id` counts one in it).
+      // A patch build's id names its declaration under its render's path.
       const binding = node.var!.extra!.binding!;
       const id = isOutputHTML()
         ? callRuntime(
             "_id",
             isPatch() && t.stringLiteral(nextIdDeclaration(binding.name)),
-            isPatch() &&
-              !getSection(tag).branch &&
-              isIdReadBesideSources(binding) &&
-              t.numericLiteral(1),
           )
         : callRuntime("_id", scopeIdentifier);
 

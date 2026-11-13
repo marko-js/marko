@@ -37,8 +37,6 @@ import { isOptimize, isOutputHTML, isPatch } from "./marko-config";
 import { every, forEach, type Opt, push, reduce, some } from "./optional";
 import { fillsHole } from "./patch/decisions";
 import {
-  inKeptContent,
-  keepsClosureFills,
   hasGuardedSources,
   getCreatedSetup,
   getFilledReferences,
@@ -564,11 +562,7 @@ export function getSignal(
         // position) registers once by its resume id, keyed by this section as HTML's is.
         if (walked || (isPatch() && getCreatedSetup(section).has(closure))) {
           return callRuntime(
-            // Off the pure list: in resumed content no renderer registers, this subscriber
-            // alone updates the closure, and nothing else references it.
-            walked && keepsClosureFills(section)
-              ? "_closure_resume"
-              : "_closure_get_patch",
+            "_closure_get_patch",
             ...trimEmptyArgs([
               subscribeId,
               getClosureAccessorLiteral(closure),
@@ -617,8 +611,6 @@ export function shipsClosureScopes(closure: Binding) {
 // re-runs: `true` if resumed code renders the read, else the sources the client may own.
 const [getGlobalSignals] = createAnalysisMemo((section: Section) => {
   const signals = new Map<string, true | Sources | undefined>();
-  // Kept content's scopes never subscribe: no client code reads for them.
-  if (inKeptContent(section)) return signals;
   const effects = new Set<string>();
   for (const expr of section.globalReadExprs || []) {
     const referencedBindings = getReferencedBindings(expr);

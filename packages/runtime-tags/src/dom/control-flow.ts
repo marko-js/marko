@@ -808,17 +808,6 @@ export function dynamicTagScript(branch: Scope) {
   );
 }
 
-// A patch's entry for the branch a site creates waits at the site, which takes it as
-// it creates the branch (`patches/client-branch`); bundles without one fold this away.
-let takeBranchEntry:
-  | undefined
-  | ((scope: Scope, accessor: Accessor, branch?: BranchScope) => void);
-export function installBranchEntries(
-  take: NonNullable<typeof takeBranchEntry>,
-) {
-  takeBranchEntry = take;
-}
-
 export function setBranch<T>(
   scope: Scope,
   nodeAccessor: Accessor,
@@ -841,7 +830,6 @@ export function setBranch<T>(
   const newBranch = (scope[AccessorPrefix.BranchScopes + nodeAccessor] =
     newRenderer &&
     createBranch(scope[AccessorProp.Global], newRenderer, scope, parentNode));
-  takeBranchEntry?.(scope, nodeAccessor, newBranch);
   if (referenceNode === parentNode) {
     if (prevBranch) {
       destroyBranch(prevBranch);

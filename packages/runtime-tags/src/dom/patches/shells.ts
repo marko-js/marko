@@ -127,14 +127,9 @@ export const getContentAt = (scope: Scope, id: string) => {
 export const getShell = (id: string) =>
   (_resumed["=" + id] as ContentFactory | undefined)?.[RendererProp.Shell];
 
-// Kept content's instances join their owner's set as they're created (`patches/client-branch`).
-let keepInstance: ((branch: Scope, id: string) => void) | undefined;
-export const installKeptInstances = (keep: NonNullable<typeof keepInstance>) =>
-  (keepInstance = keep);
-
 // `"id setup…!scripts…;walks;template"` (`,` for `;walks;` when walk-less):
 // setup renders inside the created scope's setup, `!` opens the mount scripts.
-export const registerShell = (shell: string) => {
+installPatchShells((shell: string) => {
   // A debug shell of content with a `<return>` leads with `^` (its mark).
   const returns = MARKO_DEBUG && shell[0] === "^";
   // A bare `id setupIds` is content the page's bundle registers.
@@ -145,15 +140,11 @@ export const registerShell = (shell: string) => {
   const id = idToken.slice(0, sep);
   const setupIds = idToken.slice(sep + 1);
   const resolved = setupIds && resolveSetupIds(setupIds);
-  const keep = keepInstance;
   const parts: Shell = [
     shell.slice(second + 1),
     shell.slice(first + 1, second),
-    resolved || keep
-      ? (branch: Scope) => {
-          keep?.(branch, id);
-          if (resolved) withCreating(runSetupIds, resolved, branch);
-        }
+    resolved
+      ? (branch: Scope) => withCreating(runSetupIds, resolved, branch)
       : 0,
   ];
   const registered = _resumed[id] as Renderer & ContentFactory;
@@ -182,6 +173,4 @@ export const registerShell = (shell: string) => {
   // `registered` is read before `_content` registers its factory under the id:
   // the page's own registration stays, else the shell, till a later module's.
   _resumed[id] = registered || fromShell;
-  return id;
-};
-installPatchShells(registerShell);
+});

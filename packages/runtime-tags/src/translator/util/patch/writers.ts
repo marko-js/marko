@@ -4,7 +4,6 @@ import { types as t } from "@marko/compiler";
 
 import { UpdatesFrom } from "../../../common/types";
 import {
-  BindingType,
   type Binding,
   bindingUtil,
   getCanonicalBinding,
@@ -17,6 +16,7 @@ import {
   type ReferencedBindings,
   someAlias,
   someBindingRead,
+  someDerivedRead,
   somePart,
 } from "../bindings";
 import { createAnalysisMemo } from "../cyclic-memo";
@@ -85,7 +85,6 @@ import {
   type Signal,
 } from "../signals";
 import { findSlot } from "../slots";
-import { bindingReaders, someRead } from "../solve-reasons";
 import { type Sources } from "../sources";
 import { createOutputSectionState } from "../state";
 import { TagNameType } from "../tag-name-type";
@@ -140,7 +139,6 @@ import {
   getPatchWrite,
   getRendererCallerSources,
   getRendererRead,
-  someReached,
   getClosureReadSources,
   getUnfilledReadSources,
   getUnfilledSubscribedSources,
@@ -159,14 +157,6 @@ export function getPatchScopeCalls(
   paramWrites: t.Statement[],
 ) {
   const scopeCalls: t.Expression[] = [];
-  // A `<let>` keeps the content it is given: what it derives from reports it.
-  forEach(section.bindings, (binding) => {
-    if (getPatchFill(binding).keptInLet) {
-      const branchCall = getClientBranchCall(section, binding);
-      if (branchCall) scopeCalls.push(branchCall);
-    }
-  });
-
   // Effect-read values need no client registration: the wire writes the accessor and
   // each effect runs again by register id on change.
   if (isKnownChild(section)) {
@@ -697,21 +687,6 @@ function buildDeclarationWrite(binding: Binding) {
     (!isKnownChild(section) || isFilledReference(binding)) &&
     buildLocalWrite(section, binding)
   );
-}
-
-// Content the value holds stays live where a read rendering it may be the
-// client's, whether or not the flush ships the value (`_client_branch_if`).
-function getClientBranchCall(section: Section, binding: Binding) {
-  const kind = getPatchFill(binding).contentKind;
-  if (!kind) return;
-  const call = callRuntime(
-    "_client_branch",
-    getDeclaredBindingExpression(binding),
-  );
-  const contents =
-    kind === true || getClientBranchGuard(section, kind.contents);
-  if (contents === true) return call;
-  return contents && andGuard(contents, call);
 }
 
 // The marked write of a value a patch writes, gated like the root's writes: none where
@@ -1293,17 +1268,14 @@ function getUnfilledPatchWrite(section: Section, binding: Binding) {
   const reason = mapBodyParams(section, getWriteReason(binding));
   if (!contents && !reason) return;
   // Content taking the value as a closure needs it where the client keeps an instance.
-  const guard =
-    contents === true
-      ? undefined
-      : !isDynamicWriteGuard(section, reason)
-        ? !reason && getClientBranchGuard(section, contents)
-        : orCallerGroupGuards(
-            section,
-            contents && getClientBranchGuard(section, contents),
-            "_unfilled_if",
-            reason,
-          );
+  const guard = !isDynamicWriteGuard(section, reason)
+    ? !reason && getClientBranchGuard(section, contents)
+    : orCallerGroupGuards(
+        section,
+        contents && getClientBranchGuard(section, contents),
+        "_unfilled_if",
+        reason,
+      );
   // None where the guard folds to never, decided before the write is built.
   if (!guard || !isNever(guard)) {
     let write: t.Expression = buildPatchWrite(
@@ -1370,14 +1342,13 @@ function addClientBranchGuardWrite(writes: t.Statement[], binding: Binding) {
 }
 
 // A value dynamic tag content takes as a closure is written where a consumer
-// renders that content as a client branch (`_client_branch_if`), which no `<let>` keeping it decides.
+// renders that content as a client branch (`_client_branch_if`).
 function hasClientBranchGuard(binding: Binding) {
-  const contents = getClosureContents(getCanonicalBinding(binding));
-  return !!contents && contents !== true;
+  return !!getClosureContents(getCanonicalBinding(binding));
 }
 
 // The dynamic tag contents between a read and the value that take it as a content
-// closure, or `true` where a `<let>` keeps one; a define renders where it is called.
+// closure; a define renders where it is called.
 export const [getClosureContents] = createAnalysisMemo(
   computeClosureContents,
   undefined,
@@ -1386,40 +1357,20 @@ export const [getClosureContents] = createAnalysisMemo(
 function computeClosureContents(binding: Binding) {
   const seen = new Set<Section>();
   let contents: SortedOpt<Section>;
-  const visit = (section: Section): boolean => {
+  const visit = (section: Section) => {
     for (let cur = section; cur !== binding.section; cur = cur.parent!) {
-      if (seen.has(cur)) return false;
+      if (seen.has(cur)) return;
       seen.add(cur);
-      if (isKeptInLet(cur) || some(cur.renderedBy, visitCall)) return true;
+      forEach(cur.renderedBy, visitCall);
       if (bindingUtil.has(getDynamicTagContentClosures(cur), binding)) {
         contents = sectionUtil.add(contents, cur);
       }
     }
-    return false;
   };
   const visitCall = (call: KnownTagExtra) =>
     visit(call.childScopeBinding.section);
-  return some(binding.closureSections, visit) || contents;
-}
-
-// Content a `<let>` keeps: the client renders that instance from its own state, with
-// the values it reads from its owners.
-function isKeptInLet(content: Section) {
-  const { derives } = content;
-  return (
-    !!derives &&
-    some(derives.binding, (binding) =>
-      someRead(bindingReaders(binding, derives.properties), derivesLet),
-    )
-  );
-}
-
-function derivesLet(read: ReferencedExtra) {
-  return some(read.derives, isLet);
-}
-
-function isLet(binding: Binding) {
-  return binding.type === BindingType.let;
+  forEach(binding.closureSections, visit);
+  return contents;
 }
 
 // A constant group's value seeds a created scope alone: a live one holds it.
@@ -1569,15 +1520,31 @@ function reachesBoundHolder(
   carries?: (binding: Binding, expr: ReferencedExtra) => boolean,
 ) {
   const { program } = fn.section!;
-  const reaches = (holder: Binding) =>
-    someReached(
-      holder,
-      (reached, expr) =>
+  // Each holder walks once what its value reaches: one choosing it, another template's
+  // input, and on.
+  const reaches = (holder: Binding) => {
+    const seen = new Set<Binding>();
+    const visit = (reached: Binding, expr?: t.NodeExtra): boolean => {
+      if (seen.has(reached)) return false;
+      seen.add(reached);
+      return (
         test(reached, reached.section.program === program, expr) ||
-        readsAsDynamicTagInput(reached),
-      fn,
-      carries,
-    );
+        readsAsDynamicTagInput(reached) ||
+        someAlias(
+          reached,
+          (alias) =>
+            someDerivedRead(
+              alias,
+              (derived, expr) =>
+                (!carries || carries(alias, expr)) && visit(derived, expr),
+            ),
+          undefined,
+          true,
+        )
+      );
+    };
+    return visit(holder, fn);
+  };
   // Its holders are what its root expression derives, and their parts, as main
   // registers it (`trackFunction`).
   return (

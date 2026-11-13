@@ -33,7 +33,6 @@ import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { isPatch } from "../util/marko-config";
 import { fromIter } from "../util/optional";
 import { getFillSources, onReasonsSettled } from "../util/patch/decisions";
-import { getPatchFill } from "../util/patch/refresh";
 import {
   patchesBranchesAt,
   recordStructuralParams,
@@ -196,13 +195,6 @@ export default {
           if (hasCallerParamSource(getFillSources(tagExtra))) {
             linkRuntimeFeature("patches/loop-item");
           }
-        } else if (
-          bodySection.params &&
-          getPatchFill(bodySection.params).contentKind
-        ) {
-          // The client's rows take content, which may be kept: its sites pair the
-          // rows (`PatchLoopItem`). Compile time can't tell kept content from bound.
-          linkRuntimeFeature("patches/loop-item");
         }
       });
     }

@@ -1,9 +1,5 @@
 import { ROOT_SCOPE_ID } from "../../common/meta";
-import {
-  encodeIdKey,
-  encodeIdSite,
-  clientBranchIdToken,
-} from "../../common/patch-path";
+import { encodeIdKey, encodeIdSite } from "../../common/patch-path";
 import {
   type Accessor,
   AccessorPrefix,
@@ -29,13 +25,10 @@ import {
   _var as _base_var,
   _html,
   _peek_scope_id as _base_peek_scope_id,
-  _el as _base_el,
-  _hoist as _base_hoist,
   _resume as _base_resume,
   _scope as _base_scope,
   _script as _base_script,
   $chunk,
-  getChunk,
   getContext,
   getScopeId,
   getState,
@@ -54,7 +47,7 @@ export let patchBuild: string | undefined;
 
 // A generated id names its declaration under the hops its render passed
 // through: each row key and call site, the root's address first.
-export function _id(declaration: string, readBesideSources?: 1) {
+export function _id(declaration: string) {
   const ids = getIds();
   for (let hop = ids.built - 1; hop < ids.depth; hop++) {
     ids.addresses[hop + 1] =
@@ -62,26 +55,7 @@ export function _id(declaration: string, readBesideSources?: 1) {
       encodeHop(ids.path[hop * 2] as IdHop, ids.path[hop * 2 + 1]);
   }
   ids.built = ids.depth + 1;
-  // One an expression reads beside a value with sources (`isIdReadBesideSources`), or one
-  // in a branch below a kept instance, makes its render differ.
-  if (readBesideSources || getContext(kBranchId) !== getContext(kKeptBranch)) {
-    keepHolesAtSite();
-  }
   return ids.addresses[ids.depth] + (MARKO_DEBUG ? "." : "") + declaration;
-}
-
-// Whether this renders a kept content's owner's entry, which every instance applies, or a
-// kept instance inside one.
-export function inKeptOwnerEntry() {
-  return getContext(kSeedRoot) === null;
-}
-
-// In a kept instance's render, a value of its own makes its render differ: its site entry
-// carries its holes. A patch page's document render reaches here too, with no such count.
-export function keepHolesAtSite() {
-  if (getContext(kSeedRoot) !== undefined) {
-    (getState() as PatchRenderState).holesAtSite++;
-  }
 }
 
 // The hops a render is under, two entries each (kind, value), and the first
@@ -93,7 +67,7 @@ export interface IdPath {
   built: number;
 }
 
-// The render enters a row, a call site or a client branch render; an address built
+// The render enters a row or a call site; an address built
 // deeper is stale.
 export function pushIdHop(
   kind: IdHop,
@@ -130,11 +104,6 @@ function encodeHop(kind: IdHop, value: IdPath["path"][number]) {
             : JSON.stringify(value).replace(/ /g, "\\u0020")) +
           "]"
       : encodeIdKey(value as string | number);
-  }
-  if (kind === IdHop.ClientBranch) {
-    return MARKO_DEBUG
-      ? "^[" + JSON.stringify(value) + "]"
-      : clientBranchIdToken + encodeIdKey(value as string);
   }
   return MARKO_DEBUG
     ? "." +
@@ -173,55 +142,6 @@ export function withUnpatched<T>(cb: () => T): T;
 export function withUnpatched<T, U>(cb: (value: U) => T, value: U): T;
 export function withUnpatched<T, U>(cb: (value?: U) => T, value?: U): T {
   return withContext(kUnpatched, 1, cb, value);
-}
-
-// Set while a patch renders unpatched structure only for the kept content inside,
-// whose instances render apart from it (`renderKeptInstance`): nothing else there writes.
-const kKeptOnly = Symbol("Kept Only");
-
-// Outside a render (a flush serializing its bound shells), nothing is.
-export function inKeptOnly() {
-  return !!getChunk()?.context?.[kKeptOnly];
-}
-
-export function withKeptOnly<T, U, V>(
-  cb: (value: U, value2: V) => T,
-  value: U,
-  value2: V,
-): T {
-  return withContext(kKeptOnly, 1, cb, value, value2);
-}
-
-// A kept instance's render, whose holes a patch fills wherever it sits: its branch
-// tells its own scopes and `<id>`s from those in branches below it, and its own
-// scopes' seeds hang from `seedRoot`'s (`ensurePatchSetup`).
-const kKeptBranch = Symbol("Kept Branch");
-const kSeedRoot = Symbol("Seed Root");
-
-export function renderKeptInstance(
-  content: ServerRenderer,
-  // None for its owner's entry, which carries no instance's seeds, nor does one inside it.
-  seedRoot: number | null,
-) {
-  return withContext(
-    kKeptBranch,
-    getContext(kBranchId),
-    withSeedRoot,
-    content,
-    inKeptOwnerEntry() ? null : seedRoot,
-  );
-}
-
-function withSeedRoot(content: ServerRenderer, seedRoot: number | null) {
-  return withContext(kSeedRoot, seedRoot, withFilledHoles, content);
-}
-
-function withFilledHoles(content: ServerRenderer) {
-  return withContext(kKeptOnly, 0, renderFilled, content);
-}
-
-function renderFilled(content: ServerRenderer) {
-  return withContext(kUnpatched, 0, content);
 }
 
 // The lazy modules a patch render is inside: a write there makes the flush
@@ -271,23 +191,6 @@ function pairBranch<T, U, V>(cb: (a: U, b: V) => T, a: U, b: V): T {
   return withContext(kPairedBranch, getContext(kBranchId), cb, a, b);
 }
 
-// A consumer keeps content for the resumed page to render: the values inside fill
-// (`_client_branch_if`). Only a renderer is content, not a value carrying its keys.
-export function _client_branch(value: unknown) {
-  const state = getState();
-  if (state instanceof PatchRenderState) {
-    const content =
-      (value as { content?: unknown } | undefined)?.content || value;
-    if (typeof content === "function") {
-      const id = (content as ServerRenderer)[RendererProp.Id];
-      const owner = (content as ServerRenderer)[RendererProp.Owner]!;
-      if (id) addClientBranch(state, id, owner);
-      const kept = clientBranchRenderers.get(content as ServerRenderer);
-      if (kept) renderClientBranch(state, content as ServerRenderer, kept);
-    }
-  }
-}
-
 // The highest owner with a client branch: a gate asks whether its scope or a later one made an
 // instance some consumer renders as a client branch, in whatever order they reported.
 export function addClientBranch(
@@ -298,37 +201,6 @@ export function addClientBranch(
   if (owner > ((state.clientBranches ??= new Map()).get(id) ?? -1)) {
     state.clientBranches.set(id, owner);
   }
-}
-
-// Content whose kept instances take their holes as data (`_content`'s `elide`): a
-// renderer per owner.
-export const clientBranchRenderers = new WeakMap<ServerRenderer, KeptContent>();
-
-export interface KeptContent {
-  section: number;
-  // Its owner's client branch entry's scope, once the response renders it.
-  entry?: number;
-}
-
-// A response renders kept content's holes once for its owner, under the entry
-// every instance there takes.
-function renderClientBranch(
-  state: PatchRenderState,
-  renderer: ServerRenderer,
-  kept: KeptContent,
-) {
-  if (kept.entry !== undefined) return;
-  const scopeId = (kept.entry = _base_peek_scope_id());
-  state.patchLinks[scopeId] = {
-    parent: renderer[RendererProp.Owner]!,
-    hop: "",
-    key: PatchKey.ClientBranch + kept.section,
-  };
-  // It links once its render shows what every instance shares (`keepHoles`).
-  openScopePatch(state, scopeId);
-  pushIdHop(IdHop.ClientBranch, renderer[RendererProp.Id]!);
-  renderer();
-  popIdHop();
 }
 
 // The setup ids a setup envelope names, each written once: several locals may
@@ -382,53 +254,22 @@ export function patchTreeNode<T extends object>(
   return node;
 }
 
-// A scope's setup envelope: in a kept instance's own branch, its seeds, which its
-// site entry carries apart (none in its owner's entry); elsewhere, in its patch.
+// A scope's setup envelope, in its patch.
 export function ensurePatchSetup(
   state: PatchRenderState,
   scopeId: number,
   key: typeof PatchKey.Setup | typeof PatchKey.SetupValues = PatchKey.Setup,
 ) {
-  const seedRoot = getContext(kSeedRoot) as number | null | undefined;
-  let patch: Record<string, unknown>;
-  if (
-    seedRoot === undefined ||
-    getContext(kBranchId) !== getContext(kKeptBranch)
-  ) {
-    patch = ensureScopePatch(state, scopeId);
-  } else if (seedRoot === null) {
-    return {};
-  } else {
-    patch = ensureSeedPatch(state, scopeId, seedRoot);
-  }
-  return (patch[key] ??= patchTreeNode(state, {})) as Record<string, unknown>;
-}
-
-// A kept instance's scope's seeds, hung from its parent's as its patch is.
-function ensureSeedPatch(
-  state: PatchRenderState,
-  scopeId: number,
-  root: number,
-): Record<string, unknown> {
-  const seeds = (state.seedTree ??= {});
-  let patch = seeds[scopeId];
-  if (!patch) {
-    patch = seeds[scopeId] = patchTreeNode(state, {});
-    if (scopeId !== root) {
-      const link = state.patchLinks[scopeId];
-      ensureSeedPatch(state, link.parent, root)[linkKey(link)] = patch;
-    }
-  }
-  return patch;
+  return (ensureScopePatch(state, scopeId)[key] ??= patchTreeNode(
+    state,
+    {},
+  )) as Record<string, unknown>;
 }
 
 export function ensureScopePatch(
   state: PatchRenderState,
   scopeId: number,
-  // A child's link, which unpatched structure carries for the kept content inside.
-  link?: 1,
 ): Record<string, unknown> {
-  if (!link && inKeptOnly()) return {};
   const readyIds = getPatchReadyIds();
   if (readyIds) for (const readyId of readyIds) patchWait(state, readyId);
   const patches = ensurePatchTree(state);
@@ -462,22 +303,15 @@ export function linkScopePatch(
       if (state.setupLinks?.has(scopeId)) {
         ensurePatchSetup(state, parent)[key] = entry || patch;
       } else {
-        ensureScopePatch(state, parent, 1)[key] = entry || patch;
+        ensureScopePatch(state, parent)[key] = entry || patch;
       }
       return entry;
     } else {
       // A keyed item's `[index, key]` ships afresh in each flush linking it.
       const at = hop[1];
-      const parentPatch = ensureScopePatch(state, parent, 1);
-      // Rows its setup values build follow them, and apply once they exist.
-      if (parent === state.rowsAfterValues) {
-        parentPatch[PatchKey.SetupValues] ??= patchTreeNode(state, {});
-      }
       (
-        (parentPatch[PatchKey.LoopItem + hop[0]] ??= patchTreeNode(
-          state,
-          [],
-        )) as unknown[]
+        (ensureScopePatch(state, parent)[PatchKey.LoopItem + hop[0]] ??=
+          patchTreeNode(state, [])) as unknown[]
       ).push(
         typeof at === "number" ? at : patchTreeNode(state, [at[0], at[1]]),
         patch,
@@ -498,7 +332,6 @@ export function linkScopePatch(
 // The flush holding the current root names the lazy modules it first needs in
 // the response (`PatchRenderState.addResumes`); later flushes wait behind it.
 export function patchWait(state: PatchRenderState, readyId: string) {
-  if (inKeptOnly()) return;
   const readyIds = (state.readyIds ||= new Set());
   if (readyIds.has(readyId)) return;
   readyIds.add(readyId);
@@ -646,8 +479,7 @@ export function shipShell(
   shellId: string | 0 | undefined,
   ref?: boolean,
 ) {
-  // Unpatched structure a patch renders for kept content ships nothing itself.
-  if (shellId && shellId in rawShells && !inKeptOnly()) {
+  if (shellId && shellId in rawShells) {
     if (rawShells[shellId] && !(state.heldShells ??= new Set()).has(shellId)) {
       state.heldShells.add(shellId);
       // One shell ships bare; a second opens a list (`[…]`) that `addResumes` closes.
@@ -690,16 +522,6 @@ export class PatchRenderState extends PatchPageState {
   // The branches linked into their parent's setup: only the flush creating the
   // parent applies it, so a later flush links them as children.
   setupLinks?: Set<number>;
-  // How many values the response has rendered that make a kept instance's render differ, so
-  // its site entry carries its holes (`keepHolesAtSite`).
-  holesAtSite = 0;
-  // A scope the flush may create whose client rows render now, from its setup values,
-  // which lead its entry; a row settling in a later flush finds them shipped.
-  rowsAfterValues?: number;
-  // Each kept instance's own scopes' seeds in the flush (`ensurePatchSetup`).
-  seedTree?: Record<number, Record<string, unknown> | undefined>;
-  // Kept content rendered so far, which unpatched structure after it may hold.
-  keptContent?: 1;
 
   // Nothing ever resumes a patch render's output, so resume writes stop at the
   // canonical scope (server reads); patch data goes through `writePatchEntry`.
@@ -743,7 +565,6 @@ export class PatchRenderState extends PatchPageState {
       out += ";" + encodeHeld(this.heldShells) + "\n";
     }
     this.patchTree =
-      this.seedTree =
       this.patchTreeNodes =
       this.setupIds =
       this.setupLinks =
@@ -1131,9 +952,7 @@ export function _resume_locals<T extends WeakKey>(
   id: string,
   locals: PartialScope,
   ownerScopeId?: number,
-  bindReference?: 1,
 ): T {
-  if (bindReference) keepHolesAtSite();
   return getState() instanceof PatchRenderState
     ? _base_resume(val, id, ownerScopeId ?? ROOT_SCOPE_ID, () => [locals])
     : _base_resume_locals(val, id, locals, ownerScopeId);
@@ -1249,38 +1068,14 @@ type EntryReads = string | Falsy;
 // Functions with filled references: their registrations name them (`patches/marked-bind`).
 const FILLED_REFERENCE_FNS = new WeakSet<WeakKey>();
 
-// A function with filled references; one a hole may send as a bind reference has a kept
-// instance's site entry carry its holes.
+// A function with filled references.
 export function _bind_resume<T extends WeakKey>(
   val: T,
   id: string,
   scopeId: number,
-  bindReference?: 1,
 ) {
   FILLED_REFERENCE_FNS.add(val);
-  return _resume(val, id, scopeId, bindReference);
-}
-
-// Main's registrations: one a hole may send as a bind reference has a kept instance's site
-// entry carry its holes.
-export function _resume<T extends WeakKey>(
-  val: T,
-  id: string,
-  scopeId?: number,
-  bindReference?: 1,
-) {
-  if (bindReference) keepHolesAtSite();
   return _base_resume(val, id, scopeId);
-}
-
-export function _el(scopeId: number, id: string, bindReference?: 1) {
-  if (bindReference) keepHolesAtSite();
-  return _base_el(scopeId, id);
-}
-
-export function _hoist(scopeId: number, id: string, bindReference?: 1) {
-  if (bindReference) keepHolesAtSite();
-  return _base_hoist(scopeId, id);
 }
 
 // A page render's resume payload rides this; a patch carries fills alone.

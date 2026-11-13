@@ -29,7 +29,6 @@ import {
   patchComposes,
   patchCreates,
   getPatchWrite,
-  keepsHoles,
   runsEffectOnPatch,
   writesSeed,
   runsSubscribersByWrite,
@@ -118,7 +117,6 @@ export const [getShells] = createOutputState(() => {
 // caller's params decide (read in its compile) and the module's registrations.
 export function linkPatchFills() {
   forEachSection((section) => {
-    if (keepsHoles(section)) linkRuntimeFeature("patches/client-branch");
     forEach(section.bindings, recordPatchEntries);
     forEach(section.bindings, recordClientBranchContents);
     recordIntersectionRenders(section);
@@ -174,7 +172,7 @@ export const [getClientBranchContents] = createAnalysisState(
 function recordClientBranchContents(binding: Binding) {
   if (!getPatchWrite(binding).write) return;
   const contents = getClosureContents(getCanonicalBinding(binding));
-  if (!contents || contents === true) return;
+  if (!contents) return;
   const branches = getClientBranchContents();
   const add = ({ nodeBinding }: t.NodeExtra, content: Section) => {
     if (nodeBinding) {
@@ -527,19 +525,16 @@ function isEffectOutsideShell(
   );
 }
 
-// The shell `id[|section] setupIds;walks;template` (`,` for `;walks;` when the walk
-// is empty): the section's dom template parts, none where the client registers them.
+// The shell `id setupIds;walks;template` (`,` for `;walks;` when the walk is empty):
+// the section's dom template parts, none where the client registers them.
 export function buildShell(
   id: string,
   section: Section,
   setupIds?: t.Expression,
 ) {
-  // `^` marks content with a `<return>` for a debug build's tag variable check;
-  // kept content names its section after `|`, whose scopes its owner holds.
+  // `^` marks content with a `<return>` for a debug build's tag variable check.
   const parts: (string | t.Expression)[] = [
-    (section.returnValueExpr && !isOptimize() ? "^" : "") +
-      id +
-      (keepsHoles(section) ? "|" + section.id : ""),
+    (section.returnValueExpr && !isOptimize() ? "^" : "") + id,
   ];
   if (setupIds) parts.push(setupIds);
   // Content the page's bundle registers ships its setup ids, no markup.

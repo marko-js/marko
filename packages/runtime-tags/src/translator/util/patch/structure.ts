@@ -4,7 +4,7 @@ import { type Binding, bindingUtil } from "../bindings";
 import { createPassMemo } from "../cyclic-memo";
 import { everyCallPasses, type KnownTagExtra } from "../known-tag";
 import { isPatch } from "../marko-config";
-import { every, first, reduce, some } from "../optional";
+import { first, reduce, some } from "../optional";
 import {
   addStructuralParams,
   getSourcesForDerived,
@@ -21,7 +21,7 @@ import {
 } from "../sections";
 import { bindingReaders, getDerivedReaders, someRead } from "../solve-reasons";
 import { hasParamOrGlobalSource, type Sources } from "../sources";
-import { hasClientState, isCreatedAtInitialValue } from "./decisions";
+import { hasClientState } from "./decisions";
 
 // Every render of the section is patch-written: on the branch path, outside
 // stateful structure.
@@ -49,6 +49,16 @@ export const inStatefulStructure = createPassMemo(
   false,
 );
 
+// Some render of the section is the client's: stateful structure holds it, or a
+// consumer renders it (or a body holding it) with client state.
+export const mayRenderOnClient = createPassMemo(
+  (section: Section): boolean =>
+    (!!section.parent && mayRenderOnClient(section.parent)) ||
+    inStatefulStructure(section) ||
+    !!getStatefulConsumers(section),
+  false,
+);
+
 // Content read inside stateful structure renders there; a tag rendering it
 // with client state renders it on the client wherever it sits.
 export function isStatefulRead(read: ReferencedExtra) {
@@ -70,17 +80,9 @@ export function derivesRenderedContent(read: ReferencedExtra) {
 function isRenderedContent(binding: Binding) {
   return someRead(bindingReaders(binding, true), isContentRender);
 }
-// A read rendering the content where a patch may too: outside stateful structure,
-// or naming a `<let>` alone that a patch creates with the scope, filled or not.
+// A read rendering the content where a patch may too: outside stateful structure.
 function isPatchedLeaf(read: ReferencedExtra) {
-  return (
-    isContentRender(read) &&
-    (!isStatefulRead(read) ||
-      (!!read.nameOnly &&
-        every(getSourcesForExpr(read)?.state, (state) =>
-          isCreatedAtInitialValue(state, read.section),
-        )))
-  );
+  return isContentRender(read) && !isStatefulRead(read);
 }
 
 // Which consumers render a tag body with client state (as its prop renders in the child):

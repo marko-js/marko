@@ -175,7 +175,6 @@ export const domPatchRuntimeFeatures = [
   "patches/write",
   "patches/bind",
   "patches/var",
-  "patches/client-branch",
   "patches/setup-child",
 ] as const;
 export type DOMRuntimeFeature =

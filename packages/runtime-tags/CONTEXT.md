@@ -336,8 +336,7 @@ _Avoid_: partial
 **Shell**:
 A body a patch may create, as its id with setup ids (setup reading nothing a
 patch writes, or all of a `@catch`'s, which no patch pairs), walks and markup
-(`id setup…!scripts…;walks;template`; kept content's id is followed by its section,
-`id|section`): registered by the server module at
+(`id setup…!scripts…;walks;template`): registered by the server module at
 load and shipped in the first flush that creates from it, so the client
 creates the body without bundling its template. Its setup ids lead with
 those of each scope its markup composes, a known child's (a template's
@@ -428,12 +427,13 @@ _Avoid_: rebuild, rebuilt structure
 A branch body whose branch expression has a state reason (its `BranchExpr`
 slot) — state sources, no `$global`, param sources a patch fills —
 derived from its branch expression (`isStatefulStructure`), never stored; or a
-content or `<define>` body every consumer renders with client state. Resumed
-code re-renders it, so flushes omit its entry and patch renders skip it, but
-for kept content inside (_Unpatched structure_). A
-body only some consumer renders so (`getStatefulConsumers`) is patched
-structure whose instances each consumer sets at render: a call by its mask, a
-dynamic tag or stateful chain by rendering it unpatched.
+content or `<define>` body every content site or call renders with client state.
+Resumed code re-renders it, so flushes omit its entry and patch renders skip it. A
+body only some renders so (`getStatefulConsumers`) is patched structure whose
+instances each site or call sets at render: a call by its mask, a dynamic tag or
+stateful chain by rendering it unpatched. Either registers its renderer
+(`getRendererReason`), a `<let>` holding it included: the client renders it with its
+registered renderer, its closures subscribing as registered content's do.
 _Avoid_: state-selected, client-owned
 
 **Updates from**:
@@ -460,9 +460,8 @@ serialize the value (`PatchKey.Write`, `_patch_write`; the same verb as main's
 write reason) or by a registered fill (**Patch fill**). The write is the value's
 write reason on the instance (`getUnfilledPatchWrite`), a `<define>` body's
 params mapped to what its calls pass (`mapBodyParams`), a guarded one where its
-caller group leaves the reads unfilled (`_unfilled_if`); always where a `<let>` keeps
-content reading it, and where a consumer renders the content reading it as a
-client branch (`_client_branch_if`). What the client runs on a filled slot is
+caller group leaves the reads unfilled (`_unfilled_if`); and where a content site
+renders the content reading it as a client branch (`_client_branch_if`). What the client runs on a filled slot is
 named by the scope's entries: its effects' (one list of ids, `PatchKey.Effect`), which
 also mounts each in a scope its flush created whose shell names no effect reading what
 a patch fills (those the created scope's own render queues list as `QueuedEffect`,
@@ -490,9 +489,6 @@ a dynamic tag site a patch never pairs, a `@catch` (one reading its error is
 written once, by the patch creating it). The html writer tracks it at render
 as context (`withUnpatched`, `inUnpatched`) because a child template cannot
 see how its parent reached it; the static cases are where `patchFillsSection` fails.
-Once kept content exists in a patch render, its unpatched loops, `<if>`s and
-`<try>`s render, writing nothing but the kept content inside (`withKeptOnly`):
-created with a scope the flush may create, else paired.
 _Avoid_: client-owned structure, client-selected
 
 **Caught try**:
@@ -523,7 +519,10 @@ reading under the same keys shares one signal; a script keeps its own, so it
 runs again only when what it reads changes. A loop's rows reading one share a
 single subscription on the loop's owner (`_fill_global_for`, or
 `_fill_global_path_for` for a member path), which walks the rows on a change,
-so a row the client creates subscribes to none.
+so a row the client creates subscribes to none. Client code, content a `<let>`
+holds included, reads `$global` as main's does: only the `serializedGlobals` keys,
+which every patch sends. A value passed in (an input, a closure such as a
+`<const>` of it) is a server value a patch fills.
 _Avoid_: part, global part, `$global` join
 
 **Stable**:
@@ -557,38 +556,12 @@ is state a server value keeps reaching: a `<let>`'s declaration (`_fill_let`,
 _Avoid_: deliver/delivery, forwarder
 
 **Client branch**:
-Content a consumer renders instead of the patch: one that updates from the client (a tag
-client state names, unpatched structure) skips it, and the flush reports the
-content (`_client_branch`); a dynamic tag whose renderer is a template renders as
+Content a content site renders instead of the patch: one that updates from the client
+(a tag client state names, unpatched structure) skips it, and the flush reports the
+content (`addClientBranch`); a dynamic tag whose renderer is a template renders as
 a client branch the content the compiler names for it. A write the branch reads
 is guarded by `_client_branch_if`.
 _Avoid_: withheld content
-
-**Kept content**:
-Content a known child renders from its state, where plain renders it nowhere on
-the client (`keepsContent`): it creates from its shell, never by registration, and a flush
-renders its holes once per owner under the _client branch entry_
-(`PatchClientBranch:<section>`), which the client applies to each live instance in the
-set its owner holds them in: the section's scopes main keeps for hoisted reads
-(`ClosureScopes:<section>`), which a document fills with `_subscribe` and an
-instance created from its shell joins (its shell names the section, `id|section`).
-The entry carries what every live instance shares; an instance whose render
-differs, or that a flush may create, also takes a _site entry_.
-
-**Site entry**:
-A kept instance's own entry at the site rendering it (`PatchClientBranch:<accessor>`,
-`[patch, key, seeds?]`). Like its owner's holes it waits where it lands, at the site
-(`ClientBranchHoles:<accessor>`): the branch there takes it now, and one the client
-creates there later takes the last one, if it renders what the server did: `key` is
-the content's id, or the client `<if>`'s branch index. `seeds` are its own scopes' setup envelopes, where
-a flush may create it; `patch` is all it renders, where its render differs (_Kept
-content_), which the owner's entry then leaves to it: it renders an `<id>` some expression
-reads beside a value with sources, or one in a branch below it; a registration bound to
-one of its scopes that a hole may send as a bind reference (`isSentAsBindReference`),
-whose path from the page root runs through the site; or an `<await>`, which settles at
-the site, as a document renders each instance's there, while the owner's entry (decided
-before it settles) renders none of it, nor does a kept instance it renders.
-_Avoid_: instance entry
 
 **Filled intersection**:
 An intersection of two or more params, one a caller passes, whose every read the patch
@@ -627,8 +600,9 @@ _Avoid_: written references, written captures, live function, live bind, held fu
 **Patch pairing**:
 How a patch treats a dynamic tag (`PatchPairing`, `renderDynamicTag`): `Render`
 pairs the live branch and renders the tag; `Skip` leaves it to the resumed page,
-whose renderer is the client's; `Keep` pairs it keeping the live branch, so no
-entry ships; `Setup` renders it into the setup only a created scope applies.
+whose renderer is the client's, as is a created scope's where its renderer ships no
+shell; `Keep` pairs it keeping the live branch, so no entry ships; `Setup` renders it
+into the setup only a created scope applies.
 
 **Param group sources**:
 Per reason group at a templated call site (`getParamGroupSources`): the

@@ -1,4 +1,4 @@
-import { hasKeys, normalizeDynamicRenderer } from "../../common/helpers";
+import { normalizeDynamicRenderer } from "../../common/helpers";
 import { ROOT_SCOPE_ID } from "../../common/meta";
 import { toArray } from "../../common/opt";
 import {
@@ -13,15 +13,13 @@ import {
 } from "../../common/types";
 import {
   _content as _base_content,
-  _content_resume as _base_content_resume,
   _dynamic_tag as _base_dynamic_tag,
 } from "../dynamic-tag";
-import { type Locals, REGISTRY, register } from "../serializer";
+import { REGISTRY, register } from "../serializer";
 import type { ServerRenderer } from "../template";
 import {
   _attr_content as _base_attr_content,
   type GroupMask,
-  type ScopeInternals,
   type State,
   _peek_scope_id,
   _scope,
@@ -35,28 +33,20 @@ import {
   popIdHop,
   pushIdHop,
   ALL_SERVER,
-  _client_branch,
   _patch_fill,
   ensurePatchSetup,
   findOwnerDepth,
   getUpdatesFrom,
-  inCreatable,
-  linkScopePatch,
-  openScopePatch,
   isFilledEntry,
   addClientBranch,
   linkBranch,
   patchWait,
   shipShell,
   walkMarkers,
-  clientBranchRenderers,
-  type KeptContent,
-  renderKeptInstance,
   withOwnerHops,
   withPairedBranchId,
   withUnpatched,
   writePatchEntry,
-  keepHolesAtSite,
 } from "./writer";
 
 // A patch pairs a tag whose renderer it renders (a native tag's body too); one
@@ -166,12 +156,10 @@ function renderDynamicTag(
   const reason =
     givenReason ?? (markerGuard !== 0 || isPatchRender ? ALL_SERVER : 0);
   pushIdHop(IdHop.Site, MARKO_DEBUG ? [accessor, site] : site);
-  // A tag no patch pairs again (one only a created scope takes, the client's own with
-  // kept content) renders unpatched; the client's own keeps a branch no flush creates.
-  const clientTag =
-    pairing === PatchPairing.Setup || pairing === PatchPairing.Skip;
+  // A tag only a created scope takes renders unpatched, into its setup.
+  const setup = pairing === PatchPairing.Setup;
   const value =
-    !pairs || clientTag
+    !pairs || setup
       ? withUnpatched(() =>
           _base_dynamic_tag(
             scopeId,
@@ -182,11 +170,7 @@ function renderDynamicTag(
             inputIsArgs,
             markerGuard,
             tagVar ? 1 : undefined,
-            clientTag
-              ? inCreatable()
-                ? PatchPairing.Render
-                : PatchPairing.Keep
-              : pairing,
+            setup ? PatchPairing.Render : pairing,
             reason,
             renderPatchedContent,
           ),
@@ -259,12 +243,7 @@ export function pairsContent(
   content: unknown,
   pairing: PatchPairing | undefined,
 ) {
-  // Kept content renders at its site wherever it sits, the client's tag included.
-  const kept =
-    state instanceof PatchRenderState &&
-    clientBranchRenderers.get(renderer as ServerRenderer);
   const pairs =
-    kept ||
     pairing === PatchPairing.Render ||
     pairing === PatchPairing.Keep ||
     pairing === PatchPairing.Setup;
@@ -272,21 +251,6 @@ export function pairsContent(
     if (!pairs) {
       const readyId = (renderer as ServerRenderer)?.[RendererProp.ReadyId];
       if (readyId) patchWait(state, readyId);
-    } else if (kept) {
-      const instanceId = _peek_scope_id();
-      linkBranch(
-        state,
-        scopeId,
-        accessor,
-        instanceId,
-        undefined,
-        [(renderer as ServerRenderer)[RendererProp.Id]],
-        (renderer as ServerRenderer)[RendererProp.Owner],
-        false,
-        PatchKey.ClientBranch + accessor,
-      );
-      // It links once its render shows what it carries (`keepHoles`).
-      openScopePatch(state, instanceId);
     } else if (renderer || content) {
       // A null renderer still renders the body: its writes pair too.
       linkBranch(
@@ -312,74 +276,14 @@ export function _content(
   id: string,
   fn: ServerRenderer,
   scopeId?: number,
-  elide?: number,
+  elide?: 0,
 ) {
   if (elide === undefined) return _base_content(id, fn, scopeId);
   const state = getState();
-  if (elide && state instanceof PatchRenderState) state.keptContent = 1;
-  const content = _base_content(
-    id,
-    elide ? keepHoles(fn, scopeId!, elide) : fn,
-    scopeId,
-  );
+  const content = _base_content(id, fn, scopeId);
   return state instanceof PatchRenderState
     ? register("=" + id, content, scopeWithId(state, scopeId!))
     : register("", content, undefined, undefined, "0");
-}
-
-// Registered content a hole may send as a bind reference: in a kept instance's render,
-// its site entry carries its holes (`keepHolesAtSite`).
-export function _content_resume(
-  id: string,
-  fn: ServerRenderer,
-  scopeId?: number,
-  locals?: Locals,
-  bindReference?: 1,
-) {
-  if (bindReference) keepHolesAtSite();
-  return _base_content_resume(id, fn, scopeId, locals);
-}
-
-// Kept content (`elide` its section) takes its instances' holes as data: each one
-// a page renders joins the section's scopes its owner holds, and the client adds those it creates.
-function keepHoles(fn: ServerRenderer, scopeId: number, section: number) {
-  const kept: KeptContent = { section };
-  // It has no params (`keepsContent`): it reads none of what a renderer is passed.
-  const renderer = () => {
-    const state = getState();
-    const instanceId = _peek_scope_id();
-    if (state instanceof PatchRenderState) {
-      const owner = instanceId === kept.entry;
-      const holesAtSite = state.holesAtSite;
-      const result = renderKeptInstance(fn, owner ? null : instanceId);
-      const patch = state.patchTree![instanceId];
-      const seeds = state.seedTree?.[instanceId];
-      // The owner's entry carries its holes, none where an instance's render differs; a site,
-      // its seeds (none at the owner's), beside its holes where it does.
-      const holes =
-        owner !== (state.holesAtSite !== holesAtSite) &&
-        hasKeys(patch) &&
-        patch;
-      const part = holes || seeds;
-      if (part) {
-        const entry = linkScopePatch(state, instanceId, part);
-        if (holes && seeds) entry!.push(seeds);
-      }
-      return result;
-    }
-    const result = fn();
-    const instances = AccessorPrefix.ClosureScopes + section;
-    _subscribe(
-      (scopeWithId(state, scopeId)[instances] ||
-        _scope(scopeId, { [instances]: new Set() })[
-          instances
-        ]) as Set<ScopeInternals>,
-      scopeWithId(state, instanceId),
-    );
-    return result;
-  };
-  clientBranchRenderers.set(renderer, kept);
-  return renderer;
 }
 
 // The entry (`key`) of a dynamic tag or a native tag's content: a shell ships its
@@ -441,16 +345,30 @@ export function writeDynamicTagEntry(
         (!shell && renderer && args) || 0,
         varId,
       ];
-      // The resumed page renders a native tag's `content` input.
+      // The resumed page renders a native tag's `content` input: what it reads stays
+      // filled (`_client_branch_if`). Only a renderer is content, not a value carrying its keys.
       if (typeof renderer === "string") {
-        _client_branch((Array.isArray(args) ? args[0] : args)?.content);
+        const value = (Array.isArray(args) ? args[0] : args)?.content;
+        const content =
+          (value as { content?: unknown } | undefined)?.content || value;
+        const id =
+          typeof content === "function" &&
+          (content as ServerRenderer)[RendererProp.Id];
+        if (id) {
+          addClientBranch(
+            state,
+            id,
+            (content as ServerRenderer)[RendererProp.Owner]!,
+          );
+        }
       }
       while (entry.length > 1 && !entry[entry.length - 1]) entry.pop();
       const value = entry.length > 1 ? entry : entry[0];
-      // Client state names the tag: only a scope the flush creates takes it.
+      // Client state names the tag: only a scope the flush creates takes it, rendering it
+      // itself (`Skip`) where its renderer ships no shell.
       if (createdOnly) {
         ensurePatchSetup(state, scopeId)[key] = value;
-        return PatchPairing.Setup;
+        return shell ? PatchPairing.Setup : PatchPairing.Skip;
       }
       writePatchEntry(state, scopeId, key, value);
     } else if (!(updatesFrom & UpdatesFrom.Client)) {

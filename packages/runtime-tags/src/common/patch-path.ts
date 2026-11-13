@@ -16,11 +16,8 @@ const STR = 15;
 const LONG_STR = 52;
 const ESCAPED = 53;
 const OTHER_NUMBER = 54;
-const CLIENT_BRANCH = 55;
-const SITE = 56;
+const SITE = 55;
 const LONG_SITE = 63;
-
-export const clientBranchIdToken = DIGITS[CLIENT_BRANCH];
 
 // The `n`th declaration of a template rendering an `<id>`.
 export function encodeIdDeclaration(n: number) {

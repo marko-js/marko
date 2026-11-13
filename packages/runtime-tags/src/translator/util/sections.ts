@@ -805,9 +805,9 @@ export const getRendererReason = createPassMemo((section: Section) => {
     return false;
   }
 
-  // Content every consumer renders with client state renders on the client,
-  // which a patch creating its scope leaves to it: its renderer registers.
-  if (isPatch() && getStatefulConsumers(section) === "every") return ALWAYS;
+  // Content a content site or call renders with client state (a `<let>` holding it too)
+  // renders on the client, so its renderer registers.
+  if (isPatch() && getStatefulConsumers(section)) return ALWAYS;
 
   const { derives } = section;
 

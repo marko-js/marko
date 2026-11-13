@@ -1,9 +1,6 @@
 // A bound registration's function for its owner, and the run last binding it.
 export const BoundFn = "U";
 export const BranchScopes = "A";
-// The holes kept content's owner last took from its client branch entry, by the
-// content's section; at a site, the entry it last took, by its accessor.
-export const ClientBranchHoles = "S";
 export const ClosureScopes = "B";
 export const ClosureSignalIndex = "C";
 export const ConditionalRenderer = "D";

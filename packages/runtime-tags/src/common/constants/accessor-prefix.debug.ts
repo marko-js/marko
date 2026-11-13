@@ -1,6 +1,5 @@
 export const BoundFn = "BoundFn:";
 export const BranchScopes = "BranchScopes:";
-export const ClientBranchHoles = "ClientBranchHoles:";
 export const ClosureScopes = "ClosureScopes:";
 export const ClosureSignalIndex = "ClosureSignalIndex:";
 export const ConditionalRenderer = "ConditionalRenderer:";
