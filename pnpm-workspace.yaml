@@ -13,7 +13,7 @@ minimumReleaseAgeExclude:
 packageExtensions:
   "@babel/generator@7.29.12":
     dependencies:
-      htmljs-parser: ^5.17.1
+      htmljs-parser: ^5.22.0
 # mocha-autotest loads `it-fails`, whose patches reach mocha internals that
 # mocha 12 removed; no fixture uses `fails`, so its patch drops the require.
 overrides:

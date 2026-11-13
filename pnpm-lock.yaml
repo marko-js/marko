@@ -7,7 +7,7 @@ settings:
 overrides:
   it-fails: '-'
 
-packageExtensionsChecksum: sha256-p9jw9EOZM1/UmAgvdpWQnVY5BiMbIJcb6Gk5OwKaEeg=
+packageExtensionsChecksum: sha256-Nk4he0oHt+htp9npVQz2OrJc32s/lOMOtUS8YAwaz6U=
 
 patchedDependencies:
   '@babel/generator@7.29.12': 0117f680d0484ae478b8ce2109bde3a24a04ff2ce45ac064d34d839c5c4bca20
@@ -146,8 +146,8 @@ importers:
   packages/compiler:
     dependencies:
       htmljs-parser:
-        specifier: ^5.20.0
-        version: 5.20.0
+        specifier: ^5.22.0
+        version: 5.22.0
       jsesc:
         specifier: ^3.1.0
         version: 3.1.0
@@ -1749,8 +1749,8 @@ packages:
     resolution: {integrity: sha512-UikN5yr7xsCDAq87Or5or0PAlD3HJJOKVzM05az588WnpDJ4Ux7a2A53Qi6gofGg2/EtvF/H4hCi/TXfCW4Y6w==}
     engines: {node: ^22.13.0 || >=24.0.0}
 
-  htmljs-parser@5.20.0:
-    resolution: {integrity: sha512-hgqpYBbHzoNE0CYVhy1kWj9oPT98v+2VlKLHuap5Baqq2daGSELcKBQg4oLdGo1XjPBm+snPj86mdcZu+dhWJg==}
+  htmljs-parser@5.22.0:
+    resolution: {integrity: sha512-TeLhShu8fiAt83m0tgdGHtyU6ORt43KmAYxaDeQHnprH/5qdVo1z4gq6qeftNNeyBMUzd9T1F6cw5LC9ORANGw==}
 
   human-id@4.2.0:
     resolution: {integrity: sha512-K3GbkIWqyvvlpfhBPlbEvD97TtqBpAYA4kt+cn2lD2x2HuohzZCibcA2nOlnJT6exqvJLggoB5nv2dNf192nEA==}
@@ -2313,7 +2313,7 @@ snapshots:
       '@babel/types': 7.29.11(patch_hash=97b7eb84e5c56d52a50974fd3cfecd67579627900359aedacb5922d7163e9cb5)
       '@jridgewell/gen-mapping': 0.3.13
       '@jridgewell/trace-mapping': 0.3.31
-      htmljs-parser: 5.20.0
+      htmljs-parser: 5.22.0
       jsesc: 3.1.0
 
   '@babel/helper-annotate-as-pure@7.29.7':
@@ -3724,7 +3724,7 @@ snapshots:
     transitivePeerDependencies:
       - '@noble/hashes'
 
-  htmljs-parser@5.20.0: {}
+  htmljs-parser@5.22.0: {}
 
   human-id@4.2.0: {}
 
