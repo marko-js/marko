@@ -15,6 +15,7 @@ import {
   type ReferencedBindings,
   someAlias,
   someBindingRead,
+  someDerivedRead,
   someReadIn,
 } from "../bindings";
 import { createAnalysisMemo, createPassMemo } from "../cyclic-memo";
@@ -96,7 +97,6 @@ import { getWriteReason, isEverWritten } from "../write-guard";
 import {
   getStateInitialValueSources,
   getFillSources,
-  fillsHole,
   isFilledHole,
 } from "./decisions";
 import {
@@ -372,16 +372,16 @@ function canPatchFill(binding: Binding) {
     patchFillsScope(binding.section) &&
     (!!findSlot(binding, SlotKind.ChangeHandler) ||
       // The seed runs a `<let>`'s signal where plain keeps it and client code holds the value, or
-      // takes it past the scope's renders and effects (a child, an intersection, an unfilled hole).
+      // takes it past the scope's renders and effects (a child, an intersection, an unfilled read).
       (binding.type === BindingType.let &&
-        mayBeCreated(binding.section) &&
+        patchCreatesOrComposes(binding.section) &&
         // Only from `<let>`s created with it: the page holds any other's value.
         binding.readsInitialValues &&
         !initialValueRunsFromFills(binding) &&
         (!!getWriteReason(binding) ||
           readsPastRenders(binding) ||
           initialValueQueuesEffect(binding) ||
-          hasUnfilledRead(binding)))) &&
+          reachesUnfilledRead(binding)))) &&
     bindingUtil.has(binding.sources.state, binding)
   );
 }
@@ -452,7 +452,7 @@ export function seedsOwnerConstant(section: Section, closure: Binding) {
   return (
     !closure.sources &&
     closure.type !== BindingType.dom &&
-    mayBeCreated(section) &&
+    patchCreatesOrComposes(section) &&
     isEverWritten(closure.section, getWriteReason(closure))
   );
 }
@@ -464,7 +464,7 @@ export const [seedsCreatedScope] = createAnalysisMemo((binding: Binding) => {
   return (
     binding.type !== BindingType.dom &&
     binding.type !== BindingType.constant &&
-    mayBeCreated(section) &&
+    patchCreatesOrComposes(section) &&
     (binding.localOf ? shipsContentShell(section) : patchFillsScope(section)) &&
     every(binding.sources?.state, (state) => isFirstState(state, section)) &&
     // A branch's own params arrive with its structure.
@@ -480,13 +480,13 @@ export const [seedsCreatedScope] = createAnalysisMemo((binding: Binding) => {
   );
 }, false);
 
-// A created scope's seed a flush writes, where plain writes it or an unfilled hole reads it;
-// a registration it carries binds by what its own module imports.
+// A created scope's seed a flush writes, where plain writes it or an unfilled read reaches it
+// as data; a registration it carries binds by what its own module imports.
 export function writesSeed(binding: Binding) {
   return (
     seedsCreatedScope(binding) &&
     (isEverWritten(binding.section, getWriteReason(binding)) ||
-      hasUnfilledRead(binding))
+      (reachesUnfilledRead(binding) && !mayHoldFn(binding)))
   );
 }
 
@@ -502,20 +502,68 @@ function readsPastRenders(binding: Binding) {
   );
 }
 
-// Read by a hole no patch fills (itself or by an alias), in a scope a flush creates: structure
-// created with it reads the value then, which a client render's setup computes first.
-function hasUnfilledRead(binding: Binding) {
+// An unfilled read reaches the value: one reads it, or an alias, or calls a function built
+// from it, which never travels as data (main's `_const` builds it from what the page holds).
+export const reachesUnfilledRead = createPassMemo(
+  (binding: Binding): boolean =>
+    someAlias(binding, hasUnfilledRead, undefined) || buildsReachedFn(binding),
+  false,
+);
+
+function hasUnfilledRead(alias: Binding) {
+  return someBindingRead(alias, isUnfilledReadOf);
+}
+
+// A read client state makes client code run where a flush may create its scope, other than
+// computing a value of the binding's own section, whose own reads answer for it.
+function isUnfilledReadOf(read: ReferencedExtra, binding: Binding) {
   return (
-    patchCreatesOrComposes(binding.section) &&
-    someAlias(binding, rendersUnfilled, undefined)
+    patchCreatesOrComposes(read.section) &&
+    !!getSourcesForExpr(read)?.state &&
+    isUnfilledRead(read) &&
+    !(
+      read.derives &&
+      every(read.derives, (derived) => derived.section === binding.section)
+    )
   );
 }
 
-function rendersUnfilled(alias: Binding) {
-  for (const read of alias.reads.keys()) {
-    if (read.rendersValue && !fillsHole(read.section, read)) return true;
+// A read no patch fills: no hole it writes, nor a `<let>`'s initial value its fill sets.
+function isUnfilledRead(read: ReferencedExtra) {
+  return (
+    !isFilledHole(read) &&
+    !(read.initialValue && every(read.derives, canPatchFill))
+  );
+}
+
+// A function over client state an unfilled read reaches derives from the value, through
+// the `<const>`s between; a `<let>` between holds its own.
+const buildsReachedFn = createPassMemo(computeBuildsReachedFn, false);
+
+function computeBuildsReachedFn(binding: Binding): boolean {
+  if (someDerivedRead(binding, isReachedFnSource)) return true;
+  for (const alias of binding.aliases) {
+    if (buildsReachedFn(alias)) return true;
+  }
+  for (const part of binding.propertyAliases.values()) {
+    if (buildsReachedFn(part)) return true;
   }
   return false;
+}
+
+function isReachedFnSource(derived: Binding, read: ReferencedExtra) {
+  return (
+    !read.initialValue &&
+    !!derived.sources?.state &&
+    derived.section.program === read.section.program &&
+    (mayHoldFn(derived)
+      ? reachesUnfilledRead(derived)
+      : buildsReachedFn(derived))
+  );
+}
+
+function mayHoldFn(binding: Binding) {
+  return someFnValueOf(getCanonicalBinding(binding), isTrackedFunction);
 }
 
 // A `<let>` the created scope starts from its render's value, as a resumed
@@ -1346,7 +1394,7 @@ function getIntersectionSetup(
   if (sources?.state) {
     if (
       every(intersection, (member) => arrivesBySignal(member, section)) ||
-      !mayBeCreated(section)
+      !patchCreatesOrComposes(section)
     ) {
       return;
     }
@@ -1388,8 +1436,7 @@ function seedsReads(section: Section, ref: Binding | Intersection) {
         section,
         (read) =>
           (!intersection || getReferencedBindings(read) === ref) &&
-          !isFilledHole(read) &&
-          !(read.initialValue && every(read.derives, canPatchFill)),
+          isUnfilledRead(read),
       ),
     undefined,
   );
