@@ -480,13 +480,13 @@ export const [seedsCreatedScope] = createAnalysisMemo((binding: Binding) => {
   );
 }, false);
 
-// A created scope's seed a flush writes, where plain writes it or an unfilled read reaches it
-// as data; a registration it carries binds by what its own module imports.
+// A created scope's seed a flush writes, where plain writes it or an unfilled read reaches it;
+// a registration it carries binds by what its own module imports.
 export function writesSeed(binding: Binding) {
   return (
     seedsCreatedScope(binding) &&
     (isEverWritten(binding.section, getWriteReason(binding)) ||
-      (reachesUnfilledRead(binding) && !mayHoldFn(binding)))
+      reachesUnfilledRead(binding))
   );
 }
 
@@ -502,8 +502,8 @@ function readsPastRenders(binding: Binding) {
   );
 }
 
-// An unfilled read reaches the value: one reads it, or an alias, or calls a function built
-// from it, which never travels as data (main's `_const` builds it from what the page holds).
+// An unfilled read reaches the value: one reads it or an alias, or calls a function built from
+// it, which never travels as data (main's `_const` builds it from the `<let>`'s fill).
 export const reachesUnfilledRead = createPassMemo(
   (binding: Binding): boolean =>
     someAlias(binding, hasUnfilledRead, undefined) || buildsReachedFn(binding),
@@ -514,11 +514,10 @@ function hasUnfilledRead(alias: Binding) {
   return someBindingRead(alias, isUnfilledReadOf);
 }
 
-// A read client state makes client code run where a flush may create its scope, other than
-// computing a value of the binding's own section, whose own reads answer for it.
+// A read client state makes client code run, other than computing a value of the binding's
+// own section, whose own reads answer for it.
 function isUnfilledReadOf(read: ReferencedExtra, binding: Binding) {
   return (
-    patchCreatesOrComposes(read.section) &&
     !!getSourcesForExpr(read)?.state &&
     isUnfilledRead(read) &&
     !(
@@ -542,9 +541,6 @@ const buildsReachedFn = createPassMemo(computeBuildsReachedFn, false);
 
 function computeBuildsReachedFn(binding: Binding): boolean {
   if (someDerivedRead(binding, isReachedFnSource)) return true;
-  for (const alias of binding.aliases) {
-    if (buildsReachedFn(alias)) return true;
-  }
   for (const part of binding.propertyAliases.values()) {
     if (buildsReachedFn(part)) return true;
   }
@@ -555,7 +551,6 @@ function isReachedFnSource(derived: Binding, read: ReferencedExtra) {
   return (
     !read.initialValue &&
     !!derived.sources?.state &&
-    derived.section.program === read.section.program &&
     (mayHoldFn(derived)
       ? reachesUnfilledRead(derived)
       : buildsReachedFn(derived))
