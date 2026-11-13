@@ -1,6 +1,6 @@
 {
   "name": "marko",
-  "version": "5.40.2",
+  "version": "5.40.3",
   "private": true,
   "description": "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
   "keywords": [

@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.40.3
+
+### Patch Changes
+
+- [#4690](https://github.com/marko-js/marko/pull/4690) [`66956ad`](https://github.com/marko-js/marko/commit/66956ad5f07696b365df41cc6c797f8719d4cfa3) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Type a template's `render` as one signature that takes a stream or a callback, where it was two overloads.
+
 ## 5.40.2
 
 ### Patch Changes
