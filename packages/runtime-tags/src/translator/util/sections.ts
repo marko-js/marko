@@ -965,17 +965,6 @@ export function ensureCallerParamGroups(sources: Sources | undefined) {
   }
 }
 
-// The caller groups a patch guard asks of a set at `section`, those
-// `ensureCallerParamGroups` records: client state or `always` answers it statically.
-export function getGuardedCallerGroupsAt(sources: Sources, section: Section) {
-  if (!isGuardedReason(sources)) {
-    throw new Error(
-      "Invalid compiler state, a patch guard cannot ask the caller groups of an unguarded set (client state or `always`).",
-    );
-  }
-  return getCallerParamGroupsAt(sources.param, section);
-}
-
 function ensureParamReasonGroup(section: Section, group: ParamReasonGroup) {
   const { paramReasonGroups } = section;
   const groups: ParamReasonGroups = paramReasonGroups

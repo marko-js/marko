@@ -521,10 +521,6 @@ export function isSectionParam(binding: Binding) {
   return root === root.section.params;
 }
 
-export function isStateSourced(binding: Binding) {
-  return !!binding.sources?.state;
-}
-
 export function getDebugName(binding: Binding) {
   const { root, access } = getDebugAccess(
     binding,

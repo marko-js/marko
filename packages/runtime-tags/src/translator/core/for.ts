@@ -32,7 +32,11 @@ import { getAccessorProp } from "../util/get-accessor-enums";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { isPatch } from "../util/marko-config";
 import { fromIter } from "../util/optional";
-import { getFillSources, onReasonsSettled } from "../util/patch/decisions";
+import {
+  getFillSources,
+  hasCallerParamSource,
+  onReasonsSettled,
+} from "../util/patch/decisions";
 import {
   patchesBranchesAt,
   recordStructuralParams,
@@ -70,7 +74,6 @@ import {
   writeHTMLResumeStatements,
 } from "../util/signals";
 import { ensureSlot, SlotKind } from "../util/slots";
-import { hasCallerParamSource } from "../util/sources";
 import * as structure from "../util/structure";
 import { getMemberExpressionPropString } from "../util/to-property-name";
 import { translateByTarget } from "../util/visitors";

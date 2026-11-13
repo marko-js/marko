@@ -12,7 +12,6 @@ import {
   type Intersection,
   isInvokeOnlyBinding,
   isSectionParam,
-  isStateSourced,
   type ReferencedBindings,
   someAlias,
   someBindingRead,
@@ -64,7 +63,6 @@ import {
   forEachParamGroup,
   getCallerParamGroupsAt,
   getDynamicTagContentClosures,
-  getGuardedCallerGroupsAt,
   getParamReasonGroupIndex,
   getRendererReason,
   getScopeIdIdentifier,
@@ -122,6 +120,7 @@ import {
   getWriteGroups,
   getWriteGroupsValue,
   getFillSources,
+  hasClientState,
   passesNoMask,
   type WriteGroups,
 } from "./decisions";
@@ -321,7 +320,7 @@ export function writePatchResumeStatements(
     // plain's document would; any other always, since no later patch writes it.
     const reason =
       seeds &&
-      !isStateSourced(binding) &&
+      !hasClientState(binding.sources) &&
       mapBodyParams(section, getWriteReason(binding));
     // In place where an intersection the patch writes runs on the client (another
     // member is the client's).
@@ -1171,10 +1170,8 @@ function getCallerGroups(
   groups: CallerGroup[],
 ) {
   forEach(list, (sources) => {
-    for (const [paramSection, group] of getGuardedCallerGroupsAt(
-      sources,
-      section,
-    )) {
+    for (const [paramSection, group] of getWriteGroups(section, sources)
+      .groups) {
       const index = getParamReasonGroupIndex(paramSection, group);
       const key = paramSection.paramReasonGroups![index];
       if (!seen.has(key)) {

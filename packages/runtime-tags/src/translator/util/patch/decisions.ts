@@ -8,6 +8,7 @@ import {
   BindingType,
   bindingUtil,
   getCanonicalBinding,
+  type ParamBinding,
 } from "../bindings";
 import { createPassMemo } from "../cyclic-memo";
 import { mergeInitialValueSources } from "../finalize-references";
@@ -32,6 +33,8 @@ import { type DOMRuntimeFeature, linkRuntimeFeature } from "../runtime";
 import {
   getCallerParamGroupsAt,
   getLoopBody,
+  isCallerParamAt,
+  isKnownChild,
   isLoopBody,
   isOptionalBranch,
   type ParamReasonGroup,
@@ -43,7 +46,6 @@ import { getSignals, type Signal } from "../signals";
 import { findSlot, SlotKind, type Slot } from "../slots";
 import { getContentSites } from "../solve-reasons";
 import {
-  hasUngatedSource,
   mergeSources,
   type Sources,
   sourcesUtil,
@@ -133,6 +135,34 @@ function isCreatedWithCallee(derives: NonNullable<Section["derives"]>) {
 // The sources take client state: every `<let>` is, assigned or not.
 export function hasClientState(sources: Sources | undefined) {
   return !!sources?.state;
+}
+
+// Whether the sources read a param a caller passes (`isKnownChild`).
+export function hasCallerParamSource(sources: Sources | undefined) {
+  return some(sources?.param, isCallerParam);
+}
+
+// Whether a write in `section` gates on a group of the sources' params.
+export function hasCallerParamSourceAt(
+  sources: Sources | undefined,
+  section: Section,
+) {
+  return some(sources?.param, (param) => isCallerParamAt(param, section));
+}
+
+// A source only the server changes that no caller group gates: `$global`, or a param of a
+// section no known caller renders (a patch renders that section only with server input).
+function hasUngatedSource(sources: Sources) {
+  return !!sources.global || !every(sources.param, isCallerParam);
+}
+
+function isCallerParam(binding: ParamBinding) {
+  return isKnownChild(binding.section);
+}
+
+// Whether the sources read what the server supplies: params or `$global`.
+export function hasParamOrGlobalSource(sources: Sources | undefined) {
+  return !!(sources?.param || sources?.global);
 }
 
 // A seed-only hole: its `<let>`s' signals rewrite the node, so the page keeps its

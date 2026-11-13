@@ -53,6 +53,7 @@ import {
   getWriteGroups,
   getWriteGroupsValue,
   hasClientState,
+  hasParamOrGlobalSource,
   isPatchKeyedSlot,
   onReasonsSettled,
 } from "./patch/decisions";
@@ -139,12 +140,7 @@ import {
   writeSlot,
 } from "./signals";
 import { findSlot, ensureSlot, SlotKind } from "./slots";
-import {
-  hasParamOrGlobalSource,
-  mergeSources,
-  type Sources,
-  withSources,
-} from "./sources";
+import { mergeSources, type Sources, withSources } from "./sources";
 import {
   createAnalysisState,
   createOutputSectionState,

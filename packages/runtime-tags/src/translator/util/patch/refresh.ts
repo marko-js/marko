@@ -8,7 +8,6 @@ import {
   BindingType,
   getCanonicalBinding,
   type Intersection,
-  isStateSourced,
   isDirectAlias,
   isSectionParam,
   type ParamBinding,
@@ -84,9 +83,6 @@ import {
 } from "../solve-reasons";
 import {
   createSources,
-  hasCallerParamSource,
-  hasCallerParamSourceAt,
-  hasParamOrGlobalSource,
   isCoveredParam,
   mergeSources,
   type Sources,
@@ -97,6 +93,10 @@ import { getWriteReason, isEverWritten } from "../write-guard";
 import {
   getStateInitialValueSources,
   getFillSources,
+  hasCallerParamSource,
+  hasCallerParamSourceAt,
+  hasClientState,
+  hasParamOrGlobalSource,
   isFilledHole,
 } from "./decisions";
 import {
@@ -1127,7 +1127,7 @@ const [getFilledReferenceBindings] = createAnalysisMemo(
 
 function addFilledReference(references: Binding[], ref: Binding) {
   const reference = getCanonicalBinding(ref);
-  if (isStateSourced(reference)) return;
+  if (hasClientState(reference.sources)) return;
   if (hasParamOrGlobalSource(reference.sources)) references.push(reference);
   return references;
 }
@@ -1433,7 +1433,7 @@ function seedsReads(section: Section, ref: Binding | Intersection) {
 function arrivesBySignal(member: Binding, section: Section) {
   const root = getCanonicalBinding(member);
   return (
-    (isStateSourced(root) && !writesSeed(root)) ||
+    (hasClientState(root.sources) && !writesSeed(root)) ||
     (root.section === section && !!getPatchFill(root).fill)
   );
 }

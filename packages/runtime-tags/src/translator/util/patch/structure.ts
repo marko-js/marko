@@ -20,8 +20,8 @@ import {
   type Section,
 } from "../sections";
 import { bindingReaders, getDerivedReaders, someRead } from "../solve-reasons";
-import { hasParamOrGlobalSource, type Sources } from "../sources";
-import { hasClientState } from "./decisions";
+import { type Sources } from "../sources";
+import { hasClientState, hasParamOrGlobalSource } from "./decisions";
 
 // Every render of the section is patch-written: on the branch path, outside
 // stateful structure.
