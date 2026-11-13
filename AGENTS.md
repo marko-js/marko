@@ -75,7 +75,7 @@ Nothing reaches review until its author has made it optimal, clean, unified and 
 - Does the fix remove the cause or tolerate it? What existing fact, pointer, pass or helper already answers each addition?
 - What does the change make redundant elsewhere, and how would the code read if written today with it in mind?
 - State a claimed invariant (an ordering, "every Z is covered"), then check it from both ends: every producer and every consumer, each backed by a fixture or a cited reason it cannot occur.
-- How does it scale? Name what each rendered instance pays, what client code the change newly keeps reachable, and what it costs on every other axis; a fixture's delta, or how many fixtures change, shows none of it.
+- How does it scale? Name what each rendered instance pays, what client code the change newly keeps reachable, and what it costs on every other axis, compiling included (call sites times callee size, recursion); a fixture's delta, or how many fixtures change, shows none of it.
 
 Keep a change small and complete on its own: no dependency on another open PR, no known bug left for a later one. A change that stands alone (a rename, helper types, a fix, an analysis fact other code reads) lands first as its own PR. A refactor may change output when the abstraction improves it; state each change with its reason, fixture and measurement. A brief to another agent gives the problem, its numbers and constraints, and leaves the implementation to be derived from existing mechanisms.
 
