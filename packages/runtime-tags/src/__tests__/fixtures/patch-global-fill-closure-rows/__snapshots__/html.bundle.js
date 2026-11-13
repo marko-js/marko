@@ -59,7 +59,7 @@ var shop_default = _template("a", (input) => {
 					_patch_child_end();
 					_patch_write($scope3_id, "wf", part, 1);
 					_patch_render($scope3_id, "a0", ">>>e");
-					_patch_render($scope3_id, "a1", ">>>h h >>>e");
+					_patch_render($scope3_id, "a1", ">>>h >>>e");
 					_subscribe($drops__closures, _subscribe($now__closures, _scope($scope3_id, {
 						f: part,
 						h: have,

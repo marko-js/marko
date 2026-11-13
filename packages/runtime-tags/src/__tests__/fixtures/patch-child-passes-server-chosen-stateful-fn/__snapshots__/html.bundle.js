@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>inc</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a2");
 	_patch_render($scope0_id, "a3", $fg__input_title && "e");
-	_patch_render($scope0_id, "a4", "i" + ($fg__input_upper ? " f" : "") + ($fg__input_title ? " e" : "") + ($fg__input_title ? " j" : ""));
+	_patch_render($scope0_id, "a4", (($fg__input_upper ? " f" : "") + ($fg__input_title ? " e" : "") + ($fg__input_title ? " j" : "")).slice(1));
 	_scope($scope0_id, {
 		e: input.title,
 		f: input.upper,

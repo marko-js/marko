@@ -1955,8 +1955,7 @@ export function writeHTMLResumeStatements(
           }
           const subscribed = unfilled
             ? andGuard(
-                getCallerGroupGuard(section, "_unfilled_if", readSources) ||
-                  callRuntime("_unfilled_if"),
+                getCallerGroupGuard(section, "_unfilled_if", readSources),
                 subscribeArg,
               )
             : subscribeArg;

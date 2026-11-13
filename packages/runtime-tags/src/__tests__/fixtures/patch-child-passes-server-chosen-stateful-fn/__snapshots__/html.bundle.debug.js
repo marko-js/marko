@@ -45,7 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>inc</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_title#4_n#6/setup", $fg__input_title && "input_title");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_upper#5_up#8_low#9/setup", "up" + ($fg__input_upper ? " input_upper" : "") + ($fg__input_title ? " input_title" : "") + ($fg__input_title ? " low" : ""));
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_upper#5_up#8_low#9/setup", (($fg__input_upper ? " input_upper" : "") + ($fg__input_title ? " input_title" : "") + ($fg__input_title ? " low" : "")).slice(1));
 	_scope($scope0_id, {
 		input_title: input.title,
 		input_upper: input.upper,

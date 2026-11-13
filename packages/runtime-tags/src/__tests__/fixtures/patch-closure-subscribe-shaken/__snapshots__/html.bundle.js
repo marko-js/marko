@@ -45,7 +45,7 @@ var shop_default = _template("a", (input) => {
 					_html(`<span${live < 2 ? " class=short" : ""}>${_text_mark($scope3_id, "b", part, 1, 0, 0)} ${_text_mark($scope3_id, "c", have, 2)}</span>${_el_mark($scope3_id, "a")}`);
 					_patch_write($scope3_id, "we", part, 1);
 					_patch_render($scope3_id, "a0", ">>>e");
-					_patch_render($scope3_id, "a1", ">>>h g >>>e");
+					_patch_render($scope3_id, "a1", ">>>h >>>e");
 					_subscribe($drops__closures, _subscribe($now__closures, _scope($scope3_id, {
 						e: part,
 						g: have,

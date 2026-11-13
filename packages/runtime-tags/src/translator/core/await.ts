@@ -30,6 +30,7 @@ import {
 import {
   alwaysPairs,
   getCallerGroupGuard,
+  hasCallerGroupsAt,
   setBodyEntries,
 } from "../util/patch/writers";
 import { setDerivedFrom, trackParamsReferences } from "../util/references";
@@ -162,7 +163,8 @@ export default {
           isPatch() &&
           (hasStatefulBranchExpr(bodySection)
             ? t.numericLiteral(1)
-            : ifEver(
+            : hasCallerGroupsAt(bodySection.parent!, sources) &&
+              ifEver(
                 getCallerGroupGuard(
                   bodySection.parent!,
                   "_unfilled_if",

@@ -256,28 +256,58 @@ export function getUnwrittenBodies(
 export interface WriteGroups {
   groups: [Section, ParamReasonGroup][];
   params?: Sources["param"];
+  /** Client state or `always`: written unconditionally, no caller group gates it. */
+  unconditional?: boolean;
   ungated?: boolean;
   seed?: boolean;
 }
 
-// The groups of a write in `section` gating on `sources` (none: no caller group
-// gates it, read as the server's); `stable`: never changes, a mask of `0`.
+// The groups of a write in `section` gating on `sources`, none for no sources;
+// `stable`: never changes, a mask of `0`.
+export function getWriteGroups(section: Section, sources: Sources): WriteGroups;
+export function getWriteGroups(
+  section: Section,
+  sources: Sources | undefined,
+  stable?: boolean,
+): WriteGroups | undefined;
 export function getWriteGroups(
   section: Section,
   sources: Sources | undefined,
   stable?: boolean,
 ): WriteGroups | undefined {
   if (stable) return { groups: [] };
+  if (!sources) return;
   // A state-mixed write has no caller group (`ensureCallerParamGroups`).
-  if (!isGuardedReason(sources)) return;
-  const groups = getCallerParamGroupsAt(sources.param, section);
-  if (groups.length) {
-    return {
-      groups,
-      params: sources.param,
-      ungated: hasUngatedSource(sources),
-    };
+  if (!isGuardedReason(sources)) {
+    return { groups: [], params: sources.param, unconditional: true };
   }
+  return {
+    groups: getCallerParamGroupsAt(sources.param, section),
+    params: sources.param,
+    ungated: hasUngatedSource(sources),
+  };
+}
+
+// The value a mask of `write` holds, its caller groups' bits `combine`d: client state's
+// (the server's too beside a param), an ungated source's server bit, else `0`.
+export function getWriteGroupsValue<R>(
+  write: WriteGroups | undefined,
+  combine: (groups: [Section, ParamReasonGroup][], bits: number) => R,
+) {
+  if (!write) return 0;
+  if (write.unconditional) {
+    return write.params
+      ? UpdatesFrom.Client | UpdatesFrom.Server
+      : UpdatesFrom.Client;
+  }
+  const bits = write.ungated ? UpdatesFrom.Server : 0;
+  return write.groups.length ? combine(write.groups, bits) : bits;
+}
+
+// A write no caller group gates passes no mask, read as the server's, unless it is
+// constant (a mask of `0`).
+export function passesNoMask(write: WriteGroups) {
+  return !!(write.unconditional || write.ungated);
 }
 
 // An expression's; a value fixed for the scope's lifetime (constant, `<id>`,
@@ -312,7 +342,7 @@ function getMaskUpdatesFrom(
   groups: [Section, ParamReasonGroup][],
 ) {
   if (!write) return UpdatesFrom.Server;
-  if (!write.groups.length) return 0;
+  if (!write.groups.length) return passesNoMask(write) ? UpdatesFrom.Server : 0;
   return holdsGroups(write.groups, groups)
     ? write.seed
       ? UpdatesFrom.Client
@@ -338,7 +368,7 @@ export function getEffectWrites(section: Section, signal: Signal) {
       if (own || (read !== root && getPatchWrite(read).write)) {
         reads.push(read);
         const sources = getSourcesForReferencedBindings(read);
-        if (getWriteGroups(section, sources)) {
+        if (getWriteGroups(section, sources)?.groups.length) {
           written = sourcesUtil.add(written, sources!);
         } else {
           always = true;

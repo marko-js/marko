@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>${_text_mark($scope0_id, "b", x)}</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "a1");
 	_patch_render($scope0_id, "a2", $fg__input_label && "e");
-	_script($scope0_id, "a0", 1, 0, "i" + ($fg__input_other ? " f" : "") + ($fg__input_label ? " e" : ""), "a3");
+	_script($scope0_id, "a0", 1, 0, (($fg__input_other ? " f" : "") + ($fg__input_label ? " e" : "")).slice(1), "a3");
 	_scope($scope0_id, {
 		e: input.label,
 		f: input.other,

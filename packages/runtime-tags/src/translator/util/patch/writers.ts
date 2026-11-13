@@ -120,7 +120,9 @@ import {
   getSeedWriteGroups,
   getStateInitialValueSources,
   getWriteGroups,
+  getWriteGroupsValue,
   getFillSources,
+  passesNoMask,
   type WriteGroups,
 } from "./decisions";
 import {
@@ -214,7 +216,7 @@ export function getEffectEntryArgs(
   const guard = reduce(
     written,
     (guard: t.Expression | undefined, sources) =>
-      orGuard(guard, getCallerGroupGuard(section, check, sources, checksIn)!),
+      orGuard(guard, getCallerGroupGuard(section, check, sources, checksIn)),
     undefined,
   );
   // No call's patch writes what the effect reads.
@@ -315,8 +317,8 @@ export function writePatchResumeStatements(
   // Beside fills: a created scope's seeds and filled intersection members' slot writes.
   forEach(section.bindings, (binding) => {
     const seeds = writesSeed(binding);
-    // A seed writes a group-gated value only where the group is the client's, as
-    // plain's document would; client state always, since no later patch writes it.
+    // A seed writes a caller group's value only where the group is the client's, as
+    // plain's document would; any other always, since no later patch writes it.
     const reason =
       seeds &&
       !isStateSourced(binding) &&
@@ -329,11 +331,10 @@ export function writePatchResumeStatements(
       orCallerGroupGuards(section, undefined, "_client_guard", filledMembers);
     const entry = seeds
       ? andGuard(
-          getStateInitialValueGuard(section, binding),
+          getStateInitialValueGuard(section, binding.sources?.state),
           andGuard(
-            reason && isDynamicWriteGuard(section, reason)
-              ? getCallerGroupGuard(section, "_unfilled_if", reason)
-              : undefined,
+            hasCallerGroupsAt(section, reason) &&
+              getCallerGroupGuard(section, "_unfilled_if", reason),
             buildPatchWrite(
               section,
               binding,
@@ -363,11 +364,11 @@ export function writePatchResumeStatements(
         "_client_guard",
         reason,
       );
-      if (!client || !isAlways(client)) {
+      if (!isAlways(client)) {
         body.push(
           t.expressionStatement(
             andGuard(
-              client && notGuard(client),
+              notGuard(client),
               andGuard(
                 callRuntime("_unfilled_if"),
                 buildPatchWrite(closure.section, closure, getPatchKey().Write),
@@ -623,11 +624,7 @@ function buildLetChangeWrites(
 // A created scope's `<let>` seeds its value, which its signals render from.
 function buildLetSeeds(section: Section, binding: Binding) {
   const setup = t.numericLiteral(1);
-  const guard = getCallerGroupGuard(
-    section,
-    "_filled_guard",
-    getStateInitialValueSources(binding),
-  );
+  const guard = getStateInitialValueGuard(section, binding);
   // None where no call's patch fills the initial value.
   return guard && isNever(guard)
     ? []
@@ -651,14 +648,11 @@ function buildReadMember([name, member]: [string, Binding]) {
   return toObjectProperty(name, buildReadValue(member));
 }
 
-// A created scope's own state starts from its initial values: the server's
-// only where their caller groups update from the server.
-function getStateInitialValueGuard(section: Section, binding: Binding) {
-  return getCallerGroupGuard(
-    section,
-    "_filled_guard",
-    getStateInitialValueSources(binding.sources?.state),
-  );
+// A created scope's own state starts from its initial values: the server's where
+// they read no param or `$global`, else where their caller groups are the server's.
+function getStateInitialValueGuard(section: Section, states: Sources["state"]) {
+  const sources = getStateInitialValueSources(states);
+  return sources && getCallerGroupGuard(section, "_filled_guard", sources);
 }
 
 // The writes a declared value makes once it exists, and those of the members
@@ -1002,7 +996,7 @@ export function hasCallerGroupsAt(
   section: Section,
   sources: Sources | false | undefined,
 ): sources is Sources & { param: NonNullable<Sources["param"]> } {
-  return !!sources && !!getWriteGroups(section, sources);
+  return !!sources && !!getWriteGroups(section, sources).groups.length;
 }
 
 // A patch writer's trailing `[mask, groupIdx]` group args, or `[]` when
@@ -1022,8 +1016,11 @@ function buildWriteGroupArgs(
 ): [t.Expression, t.Expression] | [] {
   if (!write) return [];
   const { groups } = write;
-  // Never changes: the write only seeds a created scope.
-  if (!groups.length) return [t.numericLiteral(0), t.numericLiteral(0)];
+  if (!groups.length) {
+    if (passesNoMask(write)) return [];
+    // Never changes: the write only seeds a created scope.
+    return [t.numericLiteral(0), t.numericLiteral(0)];
+  }
   if (groups.length === 1 && !write.ungated && !write.seed) {
     const [section, group] = groups[0];
     return getGroupArgs(section, group);
@@ -1041,7 +1038,8 @@ function buildWriteGroupArgs(
 
 // A composed mask's value: its groups' bits or'd, with an ungated source's server bit, or a
 // seed's client bit alone (one group's is its client guard, shared as a guard is).
-function buildWriteGroupValue({ groups, ungated, seed }: WriteGroups) {
+function buildWriteGroupValue(write: WriteGroups) {
+  const { groups, seed } = write;
   if (seed && groups.length === 1) {
     const [section, group] = groups[0];
     const client = getOrShareSectionGuard(section, group, "_client_guard");
@@ -1054,11 +1052,11 @@ function buildWriteGroupValue({ groups, ungated, seed }: WriteGroups) {
         buildComposedGroupValue(groups),
         t.numericLiteral(UpdatesFrom.Client),
       )
-    : buildGroupsValue(groups, ungated ? UpdatesFrom.Server : 0);
+    : getWriteGroupsValue(write, buildGroupsValue);
 }
 
 // The same test as a guard expression (`_filled_guard` for fills and effect
-// writes), or undefined when no caller group gates a write in `section`.
+// writes) of a write in `section`: a constant where its mask's value decides it.
 export function getCallerGroupGuard(
   section: Section,
   check: GroupCheck,
@@ -1066,13 +1064,11 @@ export function getCallerGroupGuard(
   checksIn = section,
 ) {
   const write = getWriteGroups(section, sources);
-  if (!write) return;
-  // A constant mask decides the check, as a constant group does.
-  const value = getWriteGroupsConstant(write);
-  const bit = getConstantBit(check, value);
+  const value = getWriteGroupsValue(write, getGroupsConstant);
+  const bit = value === undefined ? undefined : getPatchCheckBit(check, value);
   if (bit !== undefined) return t.numericLiteral(bit);
   // One caller group's check is shared, as a write guard is.
-  if (write.groups.length === 1 && !write.ungated) {
+  if (write?.groups.length === 1 && !write.ungated) {
     const [groupSection, group] = write.groups[0];
     return getOrShareGroupCheck(checksIn, groupSection, group, check);
   }
@@ -1080,25 +1076,20 @@ export function getCallerGroupGuard(
   if (value === UpdatesFrom.Server && check === "_unfilled_if") {
     return callRuntime("_unfilled_if");
   }
-  return callRuntime(check, ...buildWriteGroupArgs(write));
+  return callRuntime(check, ...buildWriteGroupArgs(write || { groups: [] }));
 }
 
-// What `getCallerGroupGuard` folds to, without building it: `1` where no caller group
-// gates the write, so a guard deciding a never is asked before what it guards is built.
+// What `getCallerGroupGuard` folds to, without building it, so a guard deciding a
+// never is asked before what it guards is built.
 export function getCallerGroupBit(
   section: Section,
   check: GroupCheck,
   sources: Sources | undefined,
 ) {
-  const write = getWriteGroups(section, sources);
-  return write ? getConstantBit(check, getWriteGroupsConstant(write)) : 1;
-}
-
-function getWriteGroupsConstant({ groups, ungated }: WriteGroups) {
-  return getGroupsConstant(groups, ungated ? UpdatesFrom.Server : 0);
-}
-
-function getConstantBit(check: GroupCheck, value: number | undefined) {
+  const value = getWriteGroupsValue(
+    getWriteGroups(section, sources),
+    getGroupsConstant,
+  );
   return value === undefined ? undefined : getPatchCheckBit(check, value);
 }
 
@@ -1378,8 +1369,9 @@ function computeClosureContents(binding: Binding) {
 
 // A constant group's value seeds a created scope alone: a live one holds it.
 function getConstantSetup(section: Section, binding: Binding) {
-  const guard = getCallerGroupGuard(section, "_server_guard", binding.sources);
-  return guard && ifEver(notGuard(guard));
+  return ifEver(
+    notGuard(getCallerGroupGuard(section, "_server_guard", binding.sources)),
+  );
 }
 
 // What an entry depends on, as shells' hops (`>` per owner up), each where this instance's

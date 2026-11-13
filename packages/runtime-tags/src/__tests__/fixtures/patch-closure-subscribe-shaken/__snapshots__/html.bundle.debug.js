@@ -45,7 +45,7 @@ var shop_default = _template("__tests__/shop.marko", (input) => {
 					_html(`<span${live < 2 ? " class=short" : ""}>${_text_mark($scope3_id, "#text/1", part, 1, 0, 0)} ${_text_mark($scope3_id, "#text/2", have, 2)}</span>${_el_mark($scope3_id, "#span/0")}`);
 					_patch_write($scope3_id, "PatchWrite:part", part, 1);
 					_patch_render($scope3_id, "__tests__/shop.marko_3_p#0:4_drops#0:9_part#4/setup", ">>>p");
-					_patch_render($scope3_id, "__tests__/shop.marko_3_proj#0:7_now#0:8_have#6/setup", ">>>proj have >>>p");
+					_patch_render($scope3_id, "__tests__/shop.marko_3_proj#0:7_now#0:8_have#6/setup", ">>>proj >>>p");
 					_subscribe($drops__closures, _subscribe($now__closures, _scope($scope3_id, {
 						part,
 						have,

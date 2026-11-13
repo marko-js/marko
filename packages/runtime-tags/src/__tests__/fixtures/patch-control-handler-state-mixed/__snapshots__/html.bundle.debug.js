@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			cv = v;
 		}, "__tests__/template.marko_1/valueChange", $scope1_id))}>${_el_mark($scope1_id, "#input/0")}<span>${_text_mark($scope1_id, "#text/1", cv, 1, 0, 0, 1)}</span>`);
 		_script($scope1_id, "__tests__/template.marko_1");
-		_patch_render($scope1_id, "__tests__/template.marko_1_cm#0:9_it_v#4/setup", ">cm" + (_filled_guard($scope0_reason, 0) ? " >input_a" : "") + ($fg__input_items ? " it_v" : ""));
+		_patch_render($scope1_id, "__tests__/template.marko_1_cm#0:9_it_v#4/setup", ((_filled_guard($scope0_reason, 0) ? " >input_a" : "") + ($fg__input_items ? " it_v" : "")).slice(1));
 		_scope($scope1_id, {
 			it_v: it?.v,
 			_: _scope_with_id($scope0_id)

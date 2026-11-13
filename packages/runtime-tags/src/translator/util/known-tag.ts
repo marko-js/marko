@@ -50,6 +50,8 @@ import {
   hasAllKnownProperties,
 } from "./params-tree";
 import {
+  getWriteGroups,
+  getWriteGroupsValue,
   hasClientState,
   isPatchKeyedSlot,
   onReasonsSettled,
@@ -118,7 +120,6 @@ import {
   ensureBodySection,
   forEachSection,
   getCallerParamGroups,
-  getCallerParamGroupsAt,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
@@ -139,9 +140,7 @@ import {
 } from "./signals";
 import { findSlot, ensureSlot, SlotKind } from "./slots";
 import {
-  hasCallerParamSource,
   hasParamOrGlobalSource,
-  hasUngatedSource,
   mergeSources,
   type Sources,
   withSources,
@@ -1052,27 +1051,13 @@ function buildGroupMaskExpr(
   );
 }
 
-// A group's value from its call site's sources: state's, the server's, or none for a
-// constant; its callers' groups `combine` with them.
+// A group's value from its call site's sources, as a write gating on them composes it.
 function getGroupSourcesValue<R>(
   section: Section,
   sources: Sources | undefined,
   combine: (groups: [Section, ParamReasonGroup][], bits: number) => R,
 ) {
-  if (sources?.state) {
-    return sources.param
-      ? UpdatesFrom.Client | UpdatesFrom.Server
-      : UpdatesFrom.Client;
-  }
-  // Params this section's callers pass compose their groups' bits; an ungated source adds a server bit.
-  const callerGroups = getCallerParamGroupsAt(sources?.param, section);
-  if (callerGroups.length) {
-    return combine(
-      callerGroups,
-      hasUngatedSource(sources) ? UpdatesFrom.Server : 0,
-    );
-  }
-  return isUngatedGroup(sources) ? UpdatesFrom.Server : 0;
+  return getWriteGroupsValue(getWriteGroups(section, sources), combine);
 }
 
 // Where a patch call's child group updates from, where every render passes a constant.
@@ -1131,12 +1116,6 @@ function passesOneValue(
 // The server alone contributes the group, as the all-server default says.
 function isServerOnly(value: number | t.Expression) {
   return value === UpdatesFrom.Server;
-}
-
-// A group with param or `$global` sources but none a caller passes: no
-// caller gates it, so its mask is fixed and a patch writes it.
-function isUngatedGroup(sources: Sources | undefined) {
-  return hasParamOrGlobalSource(sources) && !hasCallerParamSource(sources);
 }
 
 function analyzeParams(
