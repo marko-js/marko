@@ -10,7 +10,7 @@ import { getExprRoot, getFnRoot, getMarkoRoot } from "../util/get-root";
 import { canIgnoreRegister, trackFunction } from "../util/module-registrations";
 import type { RegisteredFnExtra } from "../util/references";
 import { getSection } from "../util/sections";
-import { traverseFindAwait } from "../util/traverse";
+import { traverseFindAwait, traverseFindSuper } from "../util/traverse";
 import type { TemplateVisitor } from "../util/visitors";
 
 export default {
@@ -47,6 +47,16 @@ export default {
 
     // bail on closures
     if (fn !== getFnRoot(fn)) return;
+    // A method reading `super` stays as written too: `super` only exists
+    // inside a method, so the hoisted function registration emits can't parse.
+    if (
+      (t.isObjectMethod(node) ||
+        t.isClassMethod(node) ||
+        t.isClassPrivateMethod(node)) &&
+      traverseFindSuper(node.body)
+    ) {
+      return;
+    }
 
     const exprRoot = getExprRoot(fn);
     const markoRoot = getMarkoRoot(exprRoot);
