@@ -1,0 +1,10 @@
+<if=input.show>
+  <let/sel=1/>
+  <p>${sel}</p>
+  <for|n| from=1 to=2>
+    <button onClick() { sel = n }>${n === sel ? "*" : ""}${n}</button>
+  </for>
+  <for|item| of=[{ id: 1 }, { id: 2 }] by="id">
+    <span>${item.id === sel ? "*" : ""}${item.id}</span>
+  </for>
+</if>

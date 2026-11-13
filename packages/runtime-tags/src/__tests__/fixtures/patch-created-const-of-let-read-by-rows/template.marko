@@ -1,0 +1,10 @@
+static function initial(user: { name: string }) {
+  return user.name[0];
+}
+<if=input.show>
+  <let/user=input.user/>
+  <const/letter=initial(user)/>
+  <for|l| of=["A", "B"]>
+    <button onClick() { user = { name: l } }>${l === letter ? "*" : ""}${l}</button>
+  </for>
+</if>
