@@ -119,14 +119,11 @@ import {
   patchFillsSection,
 } from "./structure";
 
-// A value's fill, derived once per analysis (afresh each solve pass): what its reads
-// need, how a patch fills them, and what deriving it needs of its inputs.
+// A value's fill, derived once per analysis (afresh each solve pass): how a patch
+// fills or writes it.
 interface PatchFill {
-  contentKind?: true | FillConditions;
   /** A `<let>` a patch fills. */
   fill?: boolean;
-  derivedNeeds?: true | FillConditions;
-  effectRead?: boolean;
   writeReads?: boolean;
   ownRegistration?: boolean;
   filledMembers?: SortedOpt<Sources>;
@@ -140,51 +137,27 @@ interface PatchWrite {
 
 const UNREAD: PatchFill & PatchWrite = {};
 
-// A value re-asked within its own answer (a recursive `<define>`) is unread.
 export const getPatchFill = createPassMemo(computePatchFill, UNREAD);
 
 export const getPatchWrite = createPassMemo(computePatchWrite, UNREAD);
 
 function computePatchFill(binding: Binding): PatchFill {
-  const { kind, contentKind } = getFillReadKind(binding);
-  // A value only intersections the patch writes call for rides its slot write.
-  const members = getFilledMembers(kind);
-  const reasons = members ? undefined : kind;
   const fill = canPatchFill(binding);
-  const effectRead = someAlias(binding, hasEffectRead, undefined, true);
-  const fnReference = someAlias(
-    binding,
-    isRegisteredFnReference,
-    undefined,
-    true,
-  );
-  let derivedNeeds: PatchFill["derivedNeeds"];
-  // The client derives a value no patch can fill from its sources, wherever its reads,
-  // effects and functions (or a part's) need it; one it writes, for functions and client callers.
-  if (!fill) {
-    derivedNeeds = isServerSourced(binding)
-      ? fnReference || undefined
-      : effectRead || fnReference || reasons;
-    for (const part of binding.propertyAliases.values()) {
-      derivedNeeds = mergeKinds(derivedNeeds, getPatchFill(part).derivedNeeds);
-    }
-  }
   return {
-    contentKind,
     fill,
-    derivedNeeds,
-    effectRead,
     // A filled value effects, function references or an intersection a write's
     // render reads: written where a flush writes its scope.
     writeReads:
       isPatchFilled(binding) &&
-      (effectRead ||
-        fnReference ||
+      (hasEffectReads(binding) ||
+        hasFnReference(binding) ||
         hasServerFillReads(binding) ||
         writesForIntersectionRender(binding)),
     // Only the patch's key reaches the declaration: a `<let>` no shipped code assigns.
     ownRegistration: fill && !hasResumableAssignment(binding),
-    filledMembers: fill ? members : undefined,
+    filledMembers: fill
+      ? getFilledMembers(getFillReadKind(binding).kind)
+      : undefined,
   };
 }
 
@@ -193,7 +166,7 @@ function computePatchWrite(binding: Binding): PatchWrite {
   const write = isPatchWritten(binding) && leavesReadUnfilled(binding);
   return {
     write,
-    effect: getPatchFill(binding).effectRead && write,
+    effect: write && hasEffectReads(binding),
   };
 }
 
@@ -626,12 +599,13 @@ interface FillConditions {
   members?: SortedOpt<Sources>;
 }
 
-// What a binding's reads (and its direct aliases') need of its fill, and the
-// intersections the patch writes that it reaches in structure that may update from the client.
+// What a binding's reads (and direct aliases') need of its fill, the filled intersections they
+// reach and what deriving it needs of its inputs; re-asked through a recursive call, unread.
 const getFillReadKind = createPassMemo(computeFillReadKind, {
   kind: undefined,
   contentKind: undefined,
   filledIntersections: undefined,
+  derivedNeeds: undefined,
 });
 
 function computeFillReadKind(binding: Binding) {
@@ -641,8 +615,11 @@ function computeFillReadKind(binding: Binding) {
   let contentKind: true | FillConditions | undefined;
   // Each filled intersection its value is shipped for, by the section reading it.
   let filledIntersections: Map<Intersection, Section> | undefined;
+  let partNeeds: true | FillConditions | undefined;
   for (const alias of binding.propertyAliases.values()) {
-    contentKind = mergeKinds(contentKind, getFillReadKind(alias).contentKind);
+    const partFill = getFillReadKind(alias);
+    contentKind = mergeKinds(contentKind, partFill.contentKind);
+    partNeeds = mergeKinds(partNeeds, partFill.derivedNeeds);
   }
   for (const alias of binding.aliases) {
     const aliasFill = getFillReadKind(alias);
@@ -673,13 +650,15 @@ function computeFillReadKind(binding: Binding) {
     // A derived value renders it by its own kind; passed to another template,
     // this read renders it, and the callee reports its own state.
     let rendersContent = isContentRender(read);
+    let derivedNeeds: true | FillConditions | undefined;
     forEach(read.derives, (derived) => {
       if (derived.section.program === binding.section.program) {
-        const derivedKind = getFillReadKind(derived).contentKind;
-        if (derivedKind) {
-          contentKind = mergeKinds(contentKind, derivedKind);
+        const derivedFill = getFillReadKind(derived);
+        if (derivedFill.contentKind) {
+          contentKind = mergeKinds(contentKind, derivedFill.contentKind);
           rendersContent = true;
         }
+        derivedNeeds = mergeKinds(derivedNeeds, derivedFill.derivedNeeds);
       } else if (isRenderedContent(derived)) {
         rendersContent = true;
       }
@@ -690,7 +669,7 @@ function computeFillReadKind(binding: Binding) {
     // A `<let>`'s initial value is read again only where the client creates its scope.
     const readKind = read.initialValue
       ? getReadStructure(binding, read, effect)
-      : getReadKind(binding, read, effect, written, handOff);
+      : getReadKind(binding, read, effect, written, derivedNeeds, handOff);
     kind = mergeKinds(kind, readKind);
     if (rendersContent) {
       contentKind = mergeKinds(
@@ -706,7 +685,28 @@ function computeFillReadKind(binding: Binding) {
     kind,
     contentKind,
     filledIntersections,
+    derivedNeeds: getOwnDerivedNeeds(binding, kind, partNeeds),
   };
+}
+
+// The client derives a value no patch can fill from its sources, wherever its reads,
+// effects and functions (or a part's) need it; one it writes, for functions and client callers.
+function getOwnDerivedNeeds(
+  binding: Binding,
+  kind: true | FillConditions | undefined,
+  partNeeds: true | FillConditions | undefined,
+): true | FillConditions | undefined {
+  if (canPatchFill(binding)) return;
+  const fnReference = hasFnReference(binding);
+  return mergeKinds(
+    isServerSourced(binding)
+      ? fnReference || undefined
+      : hasEffectReads(binding) ||
+          fnReference ||
+          // A value only intersections the patch writes call for rides its slot write.
+          (getFilledMembers(kind) ? undefined : kind),
+    partNeeds,
+  );
 }
 
 // A dynamic tag's body or attribute tag a consumer may render as a client branch.
@@ -720,7 +720,7 @@ export function awaitMayRenderClientBranch(body: Section) {
   for (let above = body.parent; above; above = above.parent) {
     if (
       some(above.bindings, (binding) => {
-        const kind = getPatchFill(binding).contentKind;
+        const kind = getFillReadKind(binding).contentKind;
         return kind !== true && sectionUtil.has(kind?.passedUnder, body);
       })
     ) {
@@ -741,6 +741,7 @@ function getReadKind(
   read: ReferencedExtra,
   effect: boolean,
   written: boolean,
+  derived: true | FillConditions | undefined,
   handOff?: { under?: SortedOpt<Section> },
 ): true | FillConditions | undefined {
   const knownChild = isKnownChild(binding.section);
@@ -757,7 +758,6 @@ function getReadKind(
       return;
     }
     if (sources?.state) return true;
-    const derived = getDerivedNeeds(read);
     if (derived === true) return true;
     if (derived) conditions = mergeConditions(conditions, derived);
     if (written) {
@@ -910,10 +910,12 @@ export function getClosureReadSources(closure: Binding, section: Section) {
 // as its scope renders, and a callee keeps its own copy of what a call passes.
 function getDerivedNeeds(read: ReferencedExtra) {
   if (read.initialValue) return;
-  return reduce(read.derives, (kind: PatchFill["derivedNeeds"], derived) =>
-    derived.section.program === read.section.program
-      ? mergeKinds(kind, getPatchFill(derived).derivedNeeds)
-      : kind,
+  return reduce(
+    read.derives,
+    (kind: true | FillConditions | undefined, derived) =>
+      derived.section.program === read.section.program
+        ? mergeKinds(kind, getFillReadKind(derived).derivedNeeds)
+        : kind,
   );
 }
 
@@ -1013,7 +1015,11 @@ function mergeConditions(
 }
 
 // An effect read of a written value re-runs by register id when a patch
-// changes what it saw; ask through `someAlias` (direct aliases only).
+// changes what it saw.
+function hasEffectReads(binding: Binding) {
+  return someAlias(binding, hasEffectRead, undefined, true);
+}
+
 function hasEffectRead(binding: Binding) {
   return someBindingRead(binding, readsValuesOnResume);
 }
@@ -1256,6 +1262,10 @@ export function addFilledReads(reads: Set<Binding>, binding: Binding) {
 
 // Referenced inside a function client code reads (registering it): its reads
 // reach the live scope at any later invocation, so a patch keeps it current.
+function hasFnReference(binding: Binding) {
+  return someAlias(binding, isRegisteredFnReference, undefined, true);
+}
+
 function isRegisteredFnReference(binding: Binding) {
   for (const reads of binding.reads.values()) {
     if (some(reads, isRegisteredFnRead)) return true;
