@@ -14,7 +14,7 @@ import { generateUidIdentifier } from "./generate-uid";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isPatch } from "./marko-config";
 import { toArray } from "./optional";
-import { pushDeclarationWrites } from "./patch/writers";
+import { insertDeclarationWrites } from "./patch/writers";
 import { insertStatementBefore } from "./replace-with-statements";
 import { importRuntime } from "./runtime";
 import { getSection, type Section } from "./sections";
@@ -91,33 +91,15 @@ export default function translateVar(
     }
   });
 
-  const declaration = declare(kind, tagVar, initialValue, varBinding);
+  const declaration = t.variableDeclaration(kind, [
+    t.variableDeclarator(tagVar, initialValue),
+  ]);
   if (statements) {
-    statements.push(...declaration);
+    statements.push(declaration);
   } else {
-    for (const statement of declaration) insertStatementBefore(tag, statement);
+    insertStatementBefore(tag, declaration);
   }
-}
-
-// A declaration, and the patch writes its values make once they exist.
-function declare(
-  kind: "let" | "const",
-  id: t.LVal,
-  init: t.Expression,
-  binding?: Binding,
-) {
-  const statements: t.Statement[] = [
-    t.variableDeclaration(kind, [t.variableDeclarator(id, init)]),
-  ];
-  if (isPatch()) {
-    if (binding) pushDeclarationWrites(statements, binding);
-    forEachIdentifier(id, (name) => {
-      if (name.extra?.binding && name.extra.binding !== binding) {
-        pushDeclarationWrites(statements, name.extra.binding);
-      }
-    });
-  }
-  return statements;
+  if (isPatch()) insertDeclarationWrites(tag, tagVar, varBinding, statements);
 }
 
 export function isTagVarAssigned(tag: t.NodePath<t.MarkoTag>) {
@@ -190,14 +172,19 @@ function translateAliasInSection(
 ) {
   const aliased = alias.aliasOf!;
   const value = getDeclaredBindingExpression(aliased);
-  for (const statement of declare(
-    kind,
-    id,
-    alias.property === undefined
-      ? value
-      : toMemberExpression(value, alias.property, aliased.nullable),
-  )) {
-    insertStatementBefore(getSectionTarget(tag, alias.section), statement);
+  insertStatementBefore(
+    getSectionTarget(tag, alias.section),
+    t.variableDeclaration(kind, [
+      t.variableDeclarator(
+        id,
+        alias.property === undefined
+          ? value
+          : toMemberExpression(value, alias.property, aliased.nullable),
+      ),
+    ]),
+  );
+  if (isPatch()) {
+    insertDeclarationWrites(getSectionTarget(tag, alias.section), id);
   }
 }
 
@@ -223,13 +210,16 @@ function translateRest(
     inPlace = false;
   }
   const value = getDeclaredBindingExpression(from, inPlace);
-  for (const statement of declare(
-    kind,
-    getRestPattern(rest, id, from, false),
-    inPlace ? value : withRestFallback(rest, from, value),
-  )) {
-    insertStatementBefore(target, statement);
-  }
+  insertStatementBefore(
+    target,
+    t.variableDeclaration(kind, [
+      t.variableDeclarator(
+        getRestPattern(rest, id, from, false),
+        inPlace ? value : withRestFallback(rest, from, value),
+      ),
+    ]),
+  );
+  if (isPatch()) insertDeclarationWrites(target, id);
 }
 
 // The pattern taking `rest` out of `from`'s value. One alone in a function

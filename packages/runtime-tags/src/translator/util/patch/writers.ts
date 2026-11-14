@@ -19,6 +19,7 @@ import {
   somePart,
 } from "../bindings";
 import { createAnalysisMemo } from "../cyclic-memo";
+import { forEachIdentifier } from "../for-each-identifier";
 import { generateUidIdentifier } from "../generate-uid";
 import {
   getAccessorPrefix,
@@ -56,6 +57,7 @@ import {
   type Read,
   type ReferencedExtra,
 } from "../references";
+import { insertStatementBefore } from "../replace-with-statements";
 import { absentArg, callRuntime, type HTMLRuntimeHelpers } from "../runtime";
 import {
   getPrefixedScopeAccessor,
@@ -660,12 +662,29 @@ function getStateInitialValueGuard(section: Section, states: Sources["state"]) {
   return sources && getCallerGroupGuard(section, "_filled_guard", sources);
 }
 
+// The patch writes a declaration's values make once they exist, after it:
+// pushed onto `statements` where the declaration was, else inserted.
+export function insertDeclarationWrites(
+  target: t.NodePath,
+  id: t.LVal,
+  binding?: Binding,
+  statements?: t.Statement[],
+) {
+  const writes = statements || [];
+  if (binding) pushDeclarationWrites(writes, binding);
+  forEachIdentifier(id, (name) => {
+    if (name.extra?.binding && name.extra.binding !== binding) {
+      pushDeclarationWrites(writes, name.extra.binding);
+    }
+  });
+  if (!statements) {
+    for (const write of writes) insertStatementBefore(target, write);
+  }
+}
+
 // The writes a declared value makes once it exists, and those of the members
 // read through it that no name declares.
-export function pushDeclarationWrites(
-  statements: t.Statement[],
-  binding: Binding,
-) {
+function pushDeclarationWrites(statements: t.Statement[], binding: Binding) {
   const write =
     !hasClientBranchGuard(binding) && buildDeclarationWrite(binding);
   if (write) statements.push(t.expressionStatement(write));
