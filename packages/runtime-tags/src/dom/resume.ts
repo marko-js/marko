@@ -105,10 +105,8 @@ export function installReady(
   patchReadyFailed = onFail;
 }
 
-// A lazy module that will never arrive can never deliver its channel's
-// pending resume data: the debug build records the failure per channel
-// (repeat reports fold) and says so instead of staying silent. Production
-// builds without patches compile no reporting call site, so it strips away.
+// A lazy module that failed to load leaves its channel's resume data pending: debug
+// builds report it once, and patch pages reject the flushes waiting on it.
 export function readyFailed(readyId: string) {
   patchReadyFailed?.(readyId);
   if (MARKO_DEBUG) {

@@ -459,9 +459,8 @@ export function _attr_textarea_value(
     : _base_attr_textarea_value(scopeId, nodeAccessor, value, valueChange);
 }
 
-// Bits: 1 the control's value entry, 2 its change handler's bind entry; the
-// control's attributes read as one group, which both take.
-// A handler's bind (`2`) ships only with its control's entry (`1`).
+// Bits: 1 the control's value entry, 2 its change handler's bind entry, which ships only
+// beside the first (`3`); both read the control's attributes as one group.
 type ControlPatched = 0 | 1 | 3;
 
 // The handler's bind entry applies first, then the value's control entry (its
