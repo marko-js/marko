@@ -153,6 +153,7 @@ import {
   getUnfilledSubscribedSources,
   getWriteHop,
   hasTagCallerParamAt,
+  patchCreates,
   runsEffectOnPatch,
   runsSubscribersByWrite,
   seedsOwnerConstant,
@@ -810,6 +811,22 @@ function getOwnParamGroup(binding: Binding): OwnParamGroup | undefined {
     ? findParamReasonGroupIndex(section, binding.sources!.param!)
     : -1;
   if (index !== -1) return { section, index };
+}
+
+// A patch creates a `<try>` from its body's shell; an always-pairing body drops
+// it outside structure a flush may create.
+export function getTryPatchArgs(
+  bodySection: Section,
+  catchSection: Section | undefined,
+) {
+  return [
+    t.stringLiteral(getResumeRegistryId(bodySection, "content")),
+    alwaysPairs(bodySection) ? t.numericLiteral(1) : absentArg(0),
+    // A flush creates a catch whose effects its entries mount.
+    catchSection && patchCreates(catchSection)
+      ? t.numericLiteral(1)
+      : absentArg(0),
+  ];
 }
 
 // An `<await>` or `<try>` body every patch page renders, so it pairs without creating;

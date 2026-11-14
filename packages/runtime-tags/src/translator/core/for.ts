@@ -30,19 +30,11 @@ import evaluate from "../util/evaluate";
 import { detectForSelector, isForSelectorClosure } from "../util/for-selector";
 import { getAccessorProp } from "../util/get-accessor-enums";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
-import { isPatch } from "../util/marko-config";
 import { fromIter } from "../util/optional";
-import {
-  getFillSources,
-  hasCallerParamSource,
-  onReasonsSettled,
-} from "../util/patch/decisions";
-import {
-  patchesBranchesAt,
-  recordStructuralParams,
-} from "../util/patch/structure";
+import { linkBranchPatcher } from "../util/patch/decisions";
+import { patchesBranchesAt } from "../util/patch/structure";
 import { getExprRootGroupArgs } from "../util/patch/writers";
-import { addReasonExprs, getSourcesForExpr } from "../util/reasons";
+import { addReasonExprs } from "../util/reasons";
 import {
   dropNodes,
   getAllTagReferenceNodes,
@@ -52,7 +44,7 @@ import {
   mergeTagReferences,
 } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
-import { callRuntime, linkRuntimeFeature } from "../util/runtime";
+import { callRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { getScopeExpression, scopeIdentifier } from "../util/scope-read";
 import {
@@ -181,26 +173,12 @@ export default {
     }
     tagExtra.textBefore = mayMergeWithText(tag, true);
     initBranchSection(bodySection, tagExtra, { kind: "for", tag: tagExtra });
-
-    if (isPatch()) {
-      onFinalizeReferences(() => {
-        recordStructuralParams(getSourcesForExpr(tagExtra));
-      });
-      onReasonsSettled(() => {
-        if (patchesBranchesAt(nodeBinding)) {
-          linkRuntimeFeature(
-            isUnkeyed(forType, forAttrs)
-              ? "patches/loop"
-              : "patches/loop-keyed",
-          );
-          // A collection reading a param a caller passes may be client-sourced
-          // at runtime, and the rows it keeps patch in place.
-          if (hasCallerParamSource(getFillSources(tagExtra))) {
-            linkRuntimeFeature("patches/loop-item");
-          }
-        }
-      });
-    }
+    linkBranchPatcher(
+      nodeBinding,
+      tagExtra,
+      isUnkeyed(forType, forAttrs) ? "patches/loop" : "patches/loop-keyed",
+      "patches/loop-item",
+    );
   },
   translate: translateByTarget({
     html: {

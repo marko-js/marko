@@ -24,21 +24,13 @@ import {
 import { getTagName } from "../util/get-tag-name";
 import { isConditionTag, isCoreTagName } from "../util/is-core-tag";
 import { enterBranchIdSites, exitBranchIdSites } from "../util/known-tag";
-import { isPatch } from "../util/marko-config";
-import { onReasonsSettled } from "../util/patch/decisions";
-import {
-  patchesBranchesAt,
-  recordStructuralParams,
-} from "../util/patch/structure";
+import { linkBranchPatcher } from "../util/patch/decisions";
+import { patchesBranchesAt } from "../util/patch/structure";
 import { getExprRootGroupArgs } from "../util/patch/writers";
-import {
-  addReasonExprs,
-  getSourcesForExpr,
-  type Reasons,
-} from "../util/reasons";
-import { mergeReferences, onFinalizeReferences } from "../util/references";
+import { addReasonExprs, type Reasons } from "../util/reasons";
+import { mergeReferences } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
-import { callRuntime, linkRuntimeFeature } from "../util/runtime";
+import { callRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
   getBranchRendererArgs,
@@ -114,16 +106,7 @@ export const IfTag = {
 
       mergeReferences(ifTagSection, ifTag.node, mergeReferenceNodes);
       addReasonExprs(ensureSlot(nodeBinding, SlotKind.BranchExpr), ifTagExtra);
-      if (isPatch()) {
-        onFinalizeReferences(() => {
-          recordStructuralParams(getSourcesForExpr(ifTagExtra));
-        });
-        onReasonsSettled(() => {
-          if (patchesBranchesAt(nodeBinding)) {
-            linkRuntimeFeature("patches/branch");
-          }
-        });
-      }
+      linkBranchPatcher(nodeBinding, ifTagExtra, "patches/branch");
     }
   },
   translate: translateByTarget({
