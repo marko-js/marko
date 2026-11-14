@@ -1,5 +1,12 @@
 # Change Log
 
+## 5.40.4
+
+### Patch Changes
+
+- Updated dependencies [[`0ef16f4`](https://github.com/marko-js/marko/commit/0ef16f4bdc61cc7e1a15db09d69e2eedee45856f)]:
+  - @marko/runtime-tags@6.4.16
+
 ## 5.40.3
 
 ### Patch Changes
