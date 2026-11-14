@@ -313,9 +313,9 @@ _Avoid_: async HTML stream
 ## Patch protocol
 
 **Patch render**:
-A server rerender of a patch page (`template.patch`), streamed as flushes the
-live page applies by refreshing values and navigating structure, without a
-full page render.
+A patch page's server render for a navigation (`template.patch`), streamed as
+flushes the live page applies by refreshing values and navigating structure,
+in place of a new document.
 _Avoid_: rerender, hydration update
 
 **Flush**:
@@ -381,16 +381,18 @@ An `<await>` body the client settles reads no value of the server's for its own 
 own render of the promise, whose body only writes data) writes no value, the `<await>`
 writes them and awaits no copy; a section inside the body still takes its entries from
 the copy.
-_Avoid_: init, init entry, patch render (the server's rerender)
+_Avoid_: init, init entry, patch render (the server's render)
 
 **Setup envelope**:
 A patch's `PatchKey.Setup` and `PatchKey.SetupValues` entries: what a created
 scope gets in place of its renderer's setup (seeds, bindings, setup ids). It
-applies only to a scope its flush created; a paired scope ignores it. Its
-writes, bindings and setup ids apply at once, ahead of the scope's child
-scopes, which may read them; its values follow the scope's child entries on the
-wire, as their renders may read what those write, except where the client's rows
-of a scope a flush may create build from them: there they lead. A write never sets a slot a
+applies only to a scope its flush created; a paired scope ignores it. The
+client applies a patch's entries in wire order, and an envelope sits where the
+scope's render first wrote into it: what the body renders into the scope (text,
+attributes, a pending `<await>`) is written in place, ahead of the child entries
+after it, and writes, bindings, values and setup ids once the body rendered. So
+an envelope these open follows the child entries the body wrote, whose created
+scopes set up before it. A write never sets a slot a
 value's signal sets, which would then skip its renders: a `<let>` whose renders
 read members seeds the written ones in that one value too. Where its group
 mixes, a filled intersection the scope renders rides the scope's own
@@ -434,9 +436,7 @@ _Avoid_: state-selected, client-owned
 Which side a param group at a call site takes its values from, as the runtime
 reads it from the group's two bits (`getUpdatesFrom`: `UpdatesFrom.Client`
 renders, `UpdatesFrom.Server` contributes). The client bit is set by
-client state, or for a server value the client derives: a call input its
-callee reads alone (`isClientDerivedParam`) where the fills of what the input reads
-ship, which then reach it and no hole is filled. Only the group of a
+client state. Only the group of a
 known child's param (a template's root and a `<define>` body alike) is decided
 per call, at render, and only code in that body reads it (`isCallerParamAt`):
 it gates writes in the body and the sections inside it, a flush writes the

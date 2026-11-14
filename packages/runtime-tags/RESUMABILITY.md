@@ -50,7 +50,7 @@ and Brotli size. Inspect optimized `dom.bundle.js`, chunk placement, and
 ## Patch protocol
 
 With the `patches` compiler option a template also answers a navigation with
-a patch render: a server rerender whose patches apply to the live document
+a patch render: a server render whose patches apply to the live document
 instead of a new page. `CONTEXT.md` defines the terms (patch render, flush,
 patch, fill, structural param, shell).
 
@@ -65,9 +65,10 @@ patch, fill, structural param, shell).
   `decisions.ts`).
 - **Flushes.** `html/patches/writer.ts` (`PatchRenderState`) collects a flush's entries into
   one nested tree of patches rooted at the page root; scope ids never ride
-  the wire, a patch nests under its parent's structural entry. Each flush
-  is one line and one expression, which `joinFlush` asserts in debug;
-  `dom/patches/apply.ts` evaluates it as an arrow's body.
+  the wire, a patch nests under its parent's structural entry. A flush is
+  one or more lines of one expression each, its shells ahead of the tree that
+  names them and its first line led by the lazy modules it waits for;
+  `dom/patches/apply.ts` evaluates each line as an arrow's body.
 - **Applying.** `dom/patches/apply.ts` walks each patch beside its live scope and
   dispatches each entry by its key prefix (`PatchKey`, debug spelled
   `Patch<Kind>:`) into `patchers`, one `dom/patches/*.feat.ts` module per kind,
@@ -116,12 +117,12 @@ patch, fill, structural param, shell).
   anything, an uncached 412 with no body under `patchResponseHeaders(kind)`,
   and its own (`PatchRequestKind.Patch`) with `template.patch(input, headers)`
   under `patchResponseHeaders(kind)`, uncached, whose
-  `x-marko-patch` names the build again for the page to check, one flush per
-  line; every response ends with a `;` line, followed by the token when the
-  shells it sent changed what the page holds.
-  `apply(response, onCommit, onApplied, onEnd, onFail)` reads the body's lines
-  as flushes: `onCommit` right before the first changes the page, `onApplied`
-  once each flush has applied, with anything it waits on (a lazy module, a body
+  `x-marko-patch` names the build again for the page to check. A response
+  whose shells changed what the page holds ends with a `;` line carrying the
+  new token.
+  `apply(response, onCommit, onApplied, onEnd, onFail)` applies the body's
+  lines as they arrive: `onCommit` right before the first changes the page, `onApplied`
+  once each line has applied, with anything it waits on (a lazy module, a body
   the document still streams), `onEnd` once the body ended and all applied, and
   `onFail` for a response that is no patch, a failed flush or a cut stream. A
   later `patch()` ends the response. `@marko/vite` names the build
