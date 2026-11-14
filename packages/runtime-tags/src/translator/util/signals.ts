@@ -56,14 +56,12 @@ import {
   getCallerGroupBit,
   getCallerGroupGuard,
   getClosureScopesIfWritten,
-  getEffectEntryArgs,
   getEffectReads,
   getExprIfUnfilled,
   getClientBranchGuardWrites,
-  getPatchScopeCalls,
   hasCallerGroupsAt,
-  getBodyEntries,
   writePatchResumeStatements,
+  writePatchScript,
 } from "./patch/writers";
 import { getReadReplacement } from "./read-replacement";
 import {
@@ -150,7 +148,6 @@ import {
   isSameReason,
   getSlotWriteReason,
   getSectionWriteReason,
-  getEmittedReasonStatement,
   getScopeIdStatement,
 } from "./write-guard";
 import { flushInto } from "./writer";
@@ -1928,46 +1925,15 @@ export function writeHTMLResumeStatements(
   // Effects carry no order (CONTEXT.md Effect), so neither this loop's direction
   // nor its place after the section's body holds one.
   const patches = isPatch();
-  const renderScripts = new Map<Intersection, (t.Expression | undefined)[][]>();
-  const entries = getBodyEntries(section);
   for (let i = allSignals.length; i--;) {
-    const signal = allSignals[i];
-    if (signal.hasHTMLEffect) {
-      // A patch's intersection render may run the effect instead of its entry:
-      // the intersection's own effect and each of its `$global` signals'.
-      const ref = signal.referencedBindings;
-      const rendered =
-        patches &&
-        Array.isArray(ref) &&
-        getCreatedSetup(section).get(ref)?.setup === "mixed"
-          ? ref
-          : undefined;
-      const entry =
-        patches &&
-        getEffectEntryArgs(
-          section,
-          signal,
-          !!rendered,
-          entries && section.parent,
-        );
-      const registryId = t.stringLiteral(getSignalRegistryId(signal));
-      const args = entry
-        ? [
-            scopeIdIdentifier,
-            registryId,
-            markerGuard || t.numericLiteral(1),
-            ...entry,
-          ]
-        : [scopeIdIdentifier, registryId, markerGuard];
-      if (rendered && entry) {
-        let scripts = renderScripts.get(rendered);
-        if (!scripts) renderScripts.set(rendered, (scripts = []));
-        scripts.push(args);
-      } else {
-        const script = t.expressionStatement(callRuntime("_script", ...args));
-        body.push(script);
-        // An effect's entry is one its `<await>` writes where no copy renders.
-        if (entry && entries) entries.push(script);
+    if (allSignals[i].hasHTMLEffect) {
+      const args = [
+        scopeIdIdentifier,
+        t.stringLiteral(getSignalRegistryId(allSignals[i])),
+        markerGuard,
+      ];
+      if (!patches || !writePatchScript(section, allSignals[i], args, body)) {
+        body.push(t.expressionStatement(callRuntime("_script", ...args)));
       }
     }
   }
@@ -2022,11 +1988,7 @@ export function writeHTMLResumeStatements(
     }
   });
 
-  const paramWrites: t.Statement[] = [];
-  const scopeCalls = patches ? getPatchScopeCalls(section, paramWrites) : [];
-  if (patches) {
-    writePatchResumeStatements(section, body, paramWrites, renderScripts);
-  }
+  const scopeCalls = patches ? writePatchResumeStatements(section, body) : [];
 
   if (section.parent) {
     const ownerAccessor = getAccessorProp().Owner;
@@ -2139,11 +2101,6 @@ export function writeHTMLResumeStatements(
     }
   }
 
-  if (paramWrites.length) {
-    // The params' writes lead the body, after its reason where it has one.
-    const reason = getEmittedReasonStatement(section);
-    body.splice(reason ? body.indexOf(reason) + 1 : 0, 0, ...paramWrites);
-  }
   const additionalStatements = getHTMLSectionStatements(section);
   // A patch page names each scope by the id its caller peeks (a marker, a patch
   // link, a child scope ref) whatever it writes, so every section claims its id.

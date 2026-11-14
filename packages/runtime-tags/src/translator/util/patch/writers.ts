@@ -96,6 +96,7 @@ import {
   buildComposedGroupValue,
   buildGroupsValue,
   buildGroupMask,
+  getEmittedReasonStatement,
   getExprIfWritten,
   getGroupArgs,
   getGroupsConstant,
@@ -162,10 +163,7 @@ import {
 
 // What a section's patch calls in `_scope`'s place: its client branch reports and a known
 // child's writes; a filled reference writes where declared instead, a param's into `paramWrites`.
-export function getPatchScopeCalls(
-  section: Section,
-  paramWrites: t.Statement[],
-) {
+function getPatchScopeCalls(section: Section, paramWrites: t.Statement[]) {
   const scopeCalls: t.Expression[] = [];
   // Effect-read values need no client registration: the wire writes the accessor and
   // each effect runs again by register id on change.
@@ -194,7 +192,7 @@ function pushKnownChildCalls(
 
 // The patch side of an effect's `_script`: its entry (`1`, or `2` queued) where
 // a patch writes in place a value the effect read, then those values.
-export function getEffectEntryArgs(
+function getEffectEntryArgs(
   section: Section,
   signal: Signal,
   rendered: boolean,
@@ -300,14 +298,59 @@ export const [getLetChanges] = createOutputSectionState<
 export const [getBodyEntries, setBodyEntries] =
   createOutputSectionState<t.Statement[]>();
 
+// The `_script`s a mixed intersection's render may run in place of their entries.
+const [getRenderScripts] = createOutputSectionState(
+  () => new Map<Intersection, (t.Expression | undefined)[][]>(),
+);
+
+// Writes an effect's `_script` with its entry, extending the caller's `args`, or
+// leaves it to its intersection's render; false where it has no entry.
+export function writePatchScript(
+  section: Section,
+  signal: Signal,
+  args: (t.Expression | undefined)[],
+  body: t.Statement[],
+) {
+  // A patch's intersection render may run the effect instead of its entry:
+  // the intersection's own effect and each of its `$global` signals'.
+  const ref = signal.referencedBindings;
+  const rendered =
+    Array.isArray(ref) && getCreatedSetup(section).get(ref)?.setup === "mixed"
+      ? ref
+      : undefined;
+  const entries = getBodyEntries(section);
+  const entry = getEffectEntryArgs(
+    section,
+    signal,
+    !!rendered,
+    entries && section.parent,
+  );
+  if (!entry) return false;
+  args[2] ||= t.numericLiteral(1);
+  args.push(...entry);
+  if (rendered) {
+    const renderScripts = getRenderScripts(section);
+    let scripts = renderScripts.get(rendered);
+    if (!scripts) renderScripts.set(rendered, (scripts = []));
+    scripts.push(args);
+  } else {
+    const script = t.expressionStatement(callRuntime("_script", ...args));
+    body.push(script);
+    // An effect's entry is one its `<await>` writes where no copy renders.
+    entries?.push(script);
+  }
+  return true;
+}
+
 // A section's patch entries beside its resume data: the setup a created scope
-// gets, and the intersection renders, an effect's in its `_script`.
+// gets, and the intersection renders, an effect's in its `_script`. Returns
+// what the section's patch calls in `_scope`'s place.
 export function writePatchResumeStatements(
   section: Section,
   body: t.Statement[],
-  paramWrites: t.Statement[],
-  renderScripts: Map<Intersection, (t.Expression | undefined)[][]>,
 ) {
+  const paramWrites: t.Statement[] = [];
+  const scopeCalls = getPatchScopeCalls(section, paramWrites);
   const pendingProperties = getScopeProperties(section);
   // A branch param writes as its body starts, a local once it exists.
   if (!isKnownChild(section)) {
@@ -459,7 +502,7 @@ export function writePatchResumeStatements(
         );
         // The intersection's effects ship their entries only where the render doesn't run
         // them: the first takes the render, the rest run where it shipped none.
-        const [script, ...scripts] = renderScripts.get(ref) || [];
+        const [script, ...scripts] = getRenderScripts(section).get(ref) || [];
         const rendered =
           script &&
           callRuntime("_script", ...script, reads, renderId, ...groupArgs);
@@ -558,6 +601,13 @@ export function writePatchResumeStatements(
       body.push(t.expressionStatement(write));
     }
   });
+
+  if (paramWrites.length) {
+    // The params' writes lead the body, after its reason where it has one.
+    const reason = getEmittedReasonStatement(section);
+    body.splice(reason ? body.indexOf(reason) + 1 : 0, 0, ...paramWrites);
+  }
+  return scopeCalls;
 }
 
 function buildScriptCall(args: (t.Expression | undefined)[]) {
