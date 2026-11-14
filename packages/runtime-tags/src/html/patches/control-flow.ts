@@ -636,46 +636,37 @@ export function _try(
     if (create) shipShell(state, bodyId);
     let entry: unknown[] | undefined;
     let settled = false;
-    tryBoundary(
-      branchContent,
-      catchContent,
-      branchId,
-      NOOP,
-      (err) => {
-        getIds().depth = depth;
-        settled = true;
-        if (!entry) {
-          if (create) linkScopePatch(state, branchId, body)![0] = 0;
-        } else if (peekScopePatch(state, branchId) === body) {
-          // Still in the flush to go out (a flush sent it pending otherwise).
-          if (create) {
-            entry[0] = 0;
-          } else {
-            writePatchEntry(
-              state,
-              scopeId,
-              PatchKey.Child + AccessorPrefix.BranchScopes + accessor,
-              0,
-            );
-          }
+    tryBoundary(branchContent, catchContent, branchId, NOOP, (err) => {
+      getIds().depth = depth;
+      settled = true;
+      if (!entry) {
+        if (create) linkScopePatch(state, branchId, body)![0] = 0;
+      } else if (peekScopePatch(state, branchId) === body) {
+        // Still in the flush to go out (a flush sent it pending otherwise).
+        if (create) {
+          entry[0] = 0;
+        } else {
+          writePatchEntry(
+            state,
+            scopeId,
+            PatchKey.Child + AccessorPrefix.BranchScopes + accessor,
+            0,
+          );
         }
-        // The client renders a catch no flush creates; one reading its error
-        // sits where no patch renders its try (stateful or off the branch path).
-        writePatchEntry(
-          state,
-          scopeId,
-          PatchKey.Catch + accessor,
-          createsCatch
-            ? writeCatch(state, scopeId, accessor, catchContent, err, catchId!)
-            : [],
-        );
-      },
-      () => {
-        settled = true;
-        if (!entry) linkScopePatch(state, branchId, body);
-      },
-    );
-    // A caught try rejects a body still pending here, even one that later throws.
+      }
+      // The client renders a catch no flush creates; one reading its error
+      // sits where no patch renders its try (stateful or off the branch path).
+      writePatchEntry(
+        state,
+        scopeId,
+        PatchKey.Catch + accessor,
+        createsCatch
+          ? writeCatch(state, scopeId, accessor, catchContent, err, catchId!)
+          : [],
+      );
+    });
+    // Unless the body threw, its patch links; a caught try rejects one still
+    // pending here, even one that later throws.
     if (!settled) entry = linkScopePatch(state, branchId, body);
   } else {
     // A try this flush may create needs its entry even when its body writes
