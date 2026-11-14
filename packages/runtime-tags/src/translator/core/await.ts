@@ -17,6 +17,7 @@ import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
 import { isPatch } from "../util/marko-config";
 import {
+  getCallerParamGroupsAt,
   getUnwrittenBodies,
   getFillSources,
   onReasonsSettled,
@@ -46,7 +47,6 @@ import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { scopeIdentifier } from "../util/scope-read";
 import {
   getBranchRendererArgs,
-  getCallerParamGroupsAt,
   ensureSection,
   ensureBodySection,
   getScopeIdIdentifier,

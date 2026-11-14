@@ -50,6 +50,7 @@ import {
   hasAllKnownProperties,
 } from "./params-tree";
 import {
+  getCallerParamGroups,
   getWriteGroups,
   getWriteGroupsValue,
   hasClientState,
@@ -120,7 +121,6 @@ import {
   ensureSection,
   ensureBodySection,
   forEachSection,
-  getCallerParamGroups,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,

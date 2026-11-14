@@ -635,7 +635,7 @@ A dom node the writer emits a patch entry keyed on, so its marker or scope ref
 is written whatever its reason says: a node rendering a value a flush
 writes (`rendersValue`, `fillsHole`), a known tag's child scope ref
 (`isKnownChildNode`, `patchFillsSection`), or the marker of loop rows a flush
-pairs (`getLoopBody`, `patchesBranchesAt`). Analyze records what the template
+pairs (`isLoopBody`, `patchesBranchesAt`). Analyze records what the template
 renders there; the patch module concludes once per analysis which slots are keyed
 (`isPatchKeyedSlot`), which forces their writes (`getSlotWriteReason`). Being
 keyed is no reason, so it never makes a template a root, wires a tag variable,

@@ -18,18 +18,17 @@ import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
 import { getTagName } from "../util/get-tag-name";
 import { isPatch } from "../util/marko-config";
-import { getFillSources } from "../util/patch/decisions";
+import {
+  ensureCallerParamGroups,
+  getFillSources,
+} from "../util/patch/decisions";
 import { buildReturnChangeBind } from "../util/patch/writers";
 import { addReason } from "../util/reasons";
 import { onFinalizeReferences } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime } from "../util/runtime";
 import { scopeIdentifier } from "../util/scope-read";
-import {
-  ensureCallerParamGroups,
-  ensureSection,
-  getSection,
-} from "../util/sections";
+import { ensureSection, getSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
 import {
   addStatement,

@@ -439,12 +439,6 @@ export const [getBranchRendererArgs, setBranchRendererArgs] =
     ]
   >();
 
-// The `<for>` body rendered at a node, once per item: an optional branch
-// outside an `<if>` chain, which numbers its branches.
-export function getLoopBody(binding: Binding) {
-  return find(binding.branchBodies, isLoopBody);
-}
-
 export function forEachSection(fn: (section: Section) => void) {
   const { sections } = getProgram().node.extra;
   sections!.forEach(fn);
@@ -956,16 +950,10 @@ export function ensureReasonGroups(
   }
 }
 
-// A patch write asks the sources of each group its callers pass.
-export function ensureCallerParamGroups(sources: Sources | undefined) {
-  if (isGuardedReason(sources)) {
-    for (const [section, group] of getCallerParamGroups(sources.param)) {
-      ensureParamReasonGroup(section, group);
-    }
-  }
-}
-
-function ensureParamReasonGroup(section: Section, group: ParamReasonGroup) {
+export function ensureParamReasonGroup(
+  section: Section,
+  group: ParamReasonGroup,
+) {
   const { paramReasonGroups } = section;
   const groups: ParamReasonGroups = paramReasonGroups
     ? addSorted(compareReferences, paramReasonGroups, group)
@@ -1002,44 +990,6 @@ export function forEachParamGroup(
   fn: (section: Section, group: ParamReasonGroup) => void,
 ) {
   bindingUtil.forEachRun(params, bindingToSection, sectionUtil.compare, fn);
-}
-
-// Each group of params a caller passes (`isKnownChild`), with its section:
-// the call's mask reports where it updates from at render.
-export function getCallerParamGroups(params: Sources["param"]) {
-  return reduceParamGroups(
-    params,
-    addCallerParamGroup,
-    [] as [Section, ParamReasonGroup][],
-  );
-}
-
-function addCallerParamGroup(
-  groups: [Section, ParamReasonGroup][],
-  section: Section,
-  group: ParamReasonGroup,
-) {
-  if (isKnownChild(section)) groups.push([section, group]);
-  return groups;
-}
-
-// The caller groups a write in `section` gates on (`isCallerParamAt`).
-export function getCallerParamGroupsAt(
-  params: Sources["param"],
-  section: Section,
-) {
-  return getCallerParamGroups(params).filter(([body]) =>
-    isSameOrAncestorSection(body, section),
-  );
-}
-
-// Whether a write in `section` gates on the param's group: a caller passes it
-// to `section` or a body around it, whose scope reason `section` reads.
-export function isCallerParamAt(param: Binding, section: Section) {
-  return (
-    isKnownChild(param.section) &&
-    isSameOrAncestorSection(param.section, section)
-  );
 }
 
 export function reduceParamGroups<R>(
