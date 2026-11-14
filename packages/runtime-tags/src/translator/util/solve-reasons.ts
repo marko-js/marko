@@ -460,13 +460,10 @@ export function someContentRead(content: Section, test: ReadTest) {
 // Whether `test` passes a read the expression's value reaches, each past the call
 // where it is a call site's (`someReachedRead`).
 export function someExprRead(extra: t.NodeExtra, test: ReadTest) {
-  return (
-    !isReturned(extra) &&
-    someReachedRead(
-      extra.derives,
-      true,
-      extra.callSiteExprs ? (read, asInput) => test(read, asInput, true) : test,
-    )
+  return someReachedRead(
+    extra.derives,
+    true,
+    extra.callSiteExprs ? (read, asInput) => test(read, asInput, true) : test,
   );
 }
 
@@ -705,11 +702,12 @@ function isReturned(extra: t.NodeExtra) {
 
 const getWalkKey = createPathKeys<Binding>();
 
+// Stops the walk by passing; a visit returning nothing walks every read.
 type ReadTest = (
   read: ReferencedExtra,
   asInput: boolean,
   pastCall: boolean,
-) => boolean;
+) => boolean | void;
 
 // Whether `test` passes a read the value at `properties` reaches, given whether as more
 // than a dynamic tag's name and whether past a call.
@@ -735,7 +733,7 @@ export function someReachedRead(
       binding,
       properties,
       (read) => {
-        found ||= test(read, !isNamedBy(read, binding), pastCall);
+        if (test(read, !isNamedBy(read, binding), pastCall)) found = true;
       },
       (to, path, via) => walk(to, path, pastCall || !!via?.callSiteExprs),
     );

@@ -188,9 +188,8 @@ function recordClientBranchContents(binding: Binding) {
       add(branchExpr, content);
     }
     if (derives) {
-      someContentRead(content, (read, asInput) => {
-        if (asInput && read.retained) add(read, content);
-        return false;
+      someContentRead(content, (read) => {
+        if (read.retained) add(read, content);
       });
     }
   });
