@@ -13,7 +13,6 @@ import {
 import { type ReferencedExtra } from "../references";
 import {
   forEachParamGroup,
-  getCallerParamGroups,
   isContentRender,
   isOptionalBranch,
   type ParamReasonGroup,
@@ -25,7 +24,11 @@ import {
   someReachedRead,
 } from "../solve-reasons";
 import { type Sources } from "../sources";
-import { hasClientState, hasParamOrGlobalSource } from "./decisions";
+import {
+  getCallerParamGroups,
+  hasClientState,
+  hasParamOrGlobalSource,
+} from "./decisions";
 
 // Every render of the section is patch-written: on the branch path, outside
 // stateful structure.

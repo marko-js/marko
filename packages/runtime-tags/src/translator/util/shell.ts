@@ -19,8 +19,13 @@ import { hasClientWork } from "./entry-builder";
 import { isOptimize, isPatch } from "./marko-config";
 import { forEach, some, type SortedOpt } from "./optional";
 import {
+  getCallerParamGroups,
+  getCallerParamGroupsAt,
+} from "./patch/decisions";
+import {
   patchMayCreate,
   getCreatedSetup,
+  getCreatedSetupId,
   getPatchFill,
   hasFilledReferences,
   runsByEntry,
@@ -51,8 +56,6 @@ import { isSectionRendererElided } from "./section-renderer";
 import {
   forEachSection,
   forEachSectionReverse,
-  getCallerParamGroups,
-  getCallerParamGroupsAt,
   getRendererReason,
   isOptionalBranch,
   type ParamReasonGroup,
@@ -62,7 +65,6 @@ import {
   type StructureOp,
 } from "./sections";
 import {
-  getCreatedSetupId,
   getResumeRegistryId,
   getSignalRegistryId,
   getSignals,

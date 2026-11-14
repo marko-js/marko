@@ -67,12 +67,10 @@ import {
 import {
   findParamReasonGroupIndex,
   forEachParamGroup,
-  getCallerParamGroupsAt,
   getDynamicTagContentClosures,
   getParamReasonGroupIndex,
   getRendererReason,
   getScopeIdIdentifier,
-  isCallerParamAt,
   isDynamicClosure,
   isKnownChild,
   isOptionalBranch,
@@ -82,8 +80,6 @@ import {
 } from "../sections";
 import { isQueuedOnCreate } from "../shell";
 import {
-  getClosureSubscribersId,
-  getCreatedSetupId,
   getResumeRegistryId,
   getScopeProperties,
   type Signal,
@@ -119,15 +115,17 @@ import {
 } from "../write-guard";
 import {
   fillsHole,
+  getCallerParamGroupsAt,
   getEffectWrites,
   getExprWriteGroups,
+  getFillSources,
   getRenderedValueSources,
   getSeedWriteGroups,
   getStateInitialValueSources,
   getWriteGroups,
   getWriteGroupsValue,
-  getFillSources,
   hasClientState,
+  isCallerParamAt,
   keepsSeededMarker,
   passesNoMask,
   type WriteGroups,
@@ -140,6 +138,8 @@ import {
   someFnValue,
   type CreatedSetup,
   getCreatedSetup,
+  getCreatedSetupId,
+  getClosureSubscribersId,
   getSetupSources,
   getFilledReferences,
   getPatchFill,

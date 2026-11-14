@@ -35,13 +35,13 @@ import {
 } from "../references";
 import { type DOMRuntimeFeature, linkRuntimeFeature } from "../runtime";
 import {
-  getCallerParamGroupsAt,
-  getLoopBody,
-  isCallerParamAt,
+  ensureParamReasonGroup,
   isKnownChild,
   isLoopBody,
   isOptionalBranch,
+  isSameOrAncestorSection,
   type ParamReasonGroup,
+  reduceParamGroups,
   type Section,
 } from "../sections";
 import { hasSetupWorkReadingNothing } from "../setup-work";
@@ -153,6 +153,53 @@ function isCreatedWithCallee(derives: NonNullable<Section["derives"]>) {
 // The sources take client state: every `<let>` is, assigned or not.
 export function hasClientState(sources: Sources | undefined) {
   return !!sources?.state;
+}
+
+// A patch write asks the sources of each group its callers pass.
+export function ensureCallerParamGroups(sources: Sources | undefined) {
+  if (isGuardedReason(sources)) {
+    for (const [section, group] of getCallerParamGroups(sources.param)) {
+      ensureParamReasonGroup(section, group);
+    }
+  }
+}
+
+// Each group of params a caller passes (`isKnownChild`), with its section:
+// the call's mask reports where it updates from at render.
+export function getCallerParamGroups(params: Sources["param"]) {
+  return reduceParamGroups(
+    params,
+    addCallerParamGroup,
+    [] as [Section, ParamReasonGroup][],
+  );
+}
+
+function addCallerParamGroup(
+  groups: [Section, ParamReasonGroup][],
+  section: Section,
+  group: ParamReasonGroup,
+) {
+  if (isKnownChild(section)) groups.push([section, group]);
+  return groups;
+}
+
+// The caller groups a write in `section` gates on (`isCallerParamAt`).
+export function getCallerParamGroupsAt(
+  params: Sources["param"],
+  section: Section,
+) {
+  return getCallerParamGroups(params).filter(([body]) =>
+    isSameOrAncestorSection(body, section),
+  );
+}
+
+// Whether a write in `section` gates on the param's group: a caller passes it
+// to `section` or a body around it, whose scope reason `section` reads.
+export function isCallerParamAt(param: Binding, section: Section) {
+  return (
+    isKnownChild(param.section) &&
+    isSameOrAncestorSection(param.section, section)
+  );
 }
 
 // Whether the sources read a param a caller passes (`isKnownChild`).
@@ -589,7 +636,7 @@ function computePatchKeying(slot: Slot) {
     if (isKnownChildNode(node)) {
       // A known child's scope, which a patch pairs through.
       return "pairs";
-    } else if (getLoopBody(node) && patchesBranchesAt(node)) {
+    } else if (some(node.branchBodies, isLoopBody) && patchesBranchesAt(node)) {
       // The marker of loop rows a patch pairs.
       return "pairs";
     } else if (some(slot.reasonExprs, rendersServerValue)) {

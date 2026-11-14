@@ -23,8 +23,6 @@ import {
   isRest,
   type ReferencedBindings,
   someAlias,
-  someBindingRead,
-  someReadIn,
 } from "./bindings";
 import { createAnalysisMemo } from "./cyclic-memo";
 import { getLastOwnSourceReturn } from "./finalize-references";
@@ -48,9 +46,11 @@ import {
   isResumedRead,
   runsSubscribersByWrite,
   runsByEntry,
-  leavesReadToPatch,
+  getClosureSubscribersId,
+  leavesForwardToPatch,
+  setsInitialValue,
 } from "./patch/refresh";
-import { patchesBranchesAt, patchFillsSection } from "./patch/structure";
+import { patchFillsSection } from "./patch/structure";
 import {
   comparesBoundFn,
   getCallerGroupBit,
@@ -85,7 +85,6 @@ import {
   isAssignedBindingExtra,
   isPureExpr,
   isRegisteredFnExtra,
-  type ReferencedExtra,
 } from "./references";
 import {
   insertStatementBefore,
@@ -125,7 +124,6 @@ import {
   isDynamicClosure,
   isInParentSection,
   isLoopBody,
-  isOptionalBranch,
   type Section,
   sectionUtil,
 } from "./sections";
@@ -826,65 +824,10 @@ function isPureMemberForwarder(binding: Binding): boolean {
   return hasNonConstantPropertyAlias(binding);
 }
 
-// Only an uncontrolled `<let>`'s `value=` is marked its initial value (`core/let.ts`).
-function setsInitialValue({ referencedBindings }: Signal) {
-  return !!(
-    (referencedBindings as Binding).derivedFrom as t.NodeExtra | undefined
-  )?.initialValue;
-}
-
 function getForwardStatements(signal: Signal, target: Signal) {
   return isPatch() && leavesForwardToPatch(target)
     ? signal.patch
     : signal.render;
-}
-
-// A fill's run leaves a forward to the patch when the patch fills the value, or does
-// every read the target runs: all of a value's, or its bindings' in its section.
-function leavesForwardToPatch({
-  referencedBindings,
-  section,
-  globalReads,
-}: Signal): boolean {
-  if (!referencedBindings) return false;
-  if (
-    Array.isArray(referencedBindings) ||
-    globalReads ||
-    referencedBindings.section !== section
-  ) {
-    return every(
-      referencedBindings,
-      (binding) => !someReadIn(binding, section, fillRunsRead),
-    );
-  }
-  // A node's own work: a loop or branch chain the patch renders wherever it writes the scope.
-  if (referencedBindings.type === BindingType.dom) {
-    return (
-      some(referencedBindings.branchBodies, isOptionalBranch) &&
-      patchesBranchesAt(referencedBindings)
-    );
-  }
-  return (
-    getPatchFill(referencedBindings).fill ||
-    leavesValueToPatch(referencedBindings)
-  );
-}
-
-// Every read of the value, and of each alias a forward reaches, leaves its work to the patch.
-function leavesValueToPatch(binding: Binding) {
-  if (someBindingRead(binding, fillRunsRead)) return false;
-  for (const alias of binding.aliases) {
-    if (!leavesForwardToPatch(getSignal(alias.section, alias))) return false;
-  }
-  for (const alias of binding.propertyAliases.values()) {
-    if (!leavesForwardToPatch(getSignal(alias.section, alias))) return false;
-  }
-  return true;
-}
-
-// The fill's run does the read's work itself.
-function fillRunsRead(read: ReferencedExtra) {
-  return !leavesReadToPatch(read);
 }
 
 function pushMemberForwards(
@@ -1642,26 +1585,6 @@ export function writeSignals(section: Section) {
   }
 
   return written;
-}
-
-// The id a created scope runs `ref`'s setup by: a subscriber's resume id (its setup
-// being its `._`, `_closure_get_patch`), else its own.
-export function getCreatedSetupId(
-  section: Section,
-  ref: Binding | Intersection,
-) {
-  return getResumeRegistryId(
-    section,
-    ref,
-    !Array.isArray(ref) && isDynamicClosure(section, ref)
-      ? "subscribe"
-      : "setup",
-  );
-}
-
-// The id an owner's entry runs a closure's subscribers by.
-export function getClosureSubscribersId(closure: Binding) {
-  return getResumeRegistryId(closure.section, closure, "subscribers");
 }
 
 function writeGetters(section: Section) {
