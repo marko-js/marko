@@ -18,10 +18,10 @@ import {
 import { scopeIdentifier } from "../../util/scope-read";
 import { isSectionRendererElided } from "../../util/section-renderer";
 import {
-  getRendererReason,
   forEachSectionReverse,
   getDynamicTagContentClosures,
   getSectionForBody,
+  getRendererReason,
   isDynamicClosure,
   type Section,
   setBranchRendererArgs,
@@ -127,6 +127,10 @@ export default {
               ]);
             } else {
               const registerReason = getRendererReason(childSection);
+              // A flush binds registered content by id (a loop's values ride along).
+              if (registerReason && isPatch()) {
+                importRuntimeFeature("patches/bind");
+              }
               const registryId = getResumeRegistryId(childSection, "content");
               const objProps: t.ObjectExpression["properties"] = [];
               forEach(childSection.localClosures, (closure) => {
@@ -174,11 +178,6 @@ export default {
                     : undefined,
                 ]),
               );
-
-              // A flush binds registered content by id (a loop's values ride along).
-              if (registerReason && isPatch()) {
-                importRuntimeFeature("patches/bind");
-              }
 
               if (objProps.length) {
                 renderer = callRuntime(
