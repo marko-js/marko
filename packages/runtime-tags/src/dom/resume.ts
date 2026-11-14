@@ -15,7 +15,6 @@ import {
   type BranchScope,
   type EncodedAccessor,
   NodeType,
-  RenderDataProp,
   ResumeSymbol,
   type Scope,
 } from "../common/types";
@@ -61,14 +60,6 @@ export interface RenderData {
   j?: never;
   // Await counter lookup
   p?: Record<string | number, AwaitCounter>;
-  // The server build a patch page's document named (`setPatchBuild`).
-  [RenderDataProp.PatchBuild]?: string;
-  // The server's account of what this render holds: the opaque token its
-  // last patch response ended with, sent with the next request.
-  [RenderDataProp.HeldShells]?: string;
-  // Its live patch response's stop, which the next one calls: what it left
-  // waiting never applies once it stopped.
-  [RenderDataProp.PatchStop]?: () => void;
 }
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 

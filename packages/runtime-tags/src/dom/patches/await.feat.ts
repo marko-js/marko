@@ -28,6 +28,13 @@ import {
 } from "./apply";
 import { getContent } from "./shells";
 
+declare module "../../common/types" {
+  interface AwaitCounter {
+    // Runs the patch work waiting for the try's streamed body, in arrival order.
+    l?: () => void;
+  }
+}
+
 declare module "./apply" {
   interface PatchValues {
     [PatchKey.Pending]: string | 0;
