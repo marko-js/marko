@@ -34,7 +34,7 @@ import {
 // stateful structure.
 export function patchFillsSection(section: Section) {
   return (
-    isPatch() && section.enclosing.branchPath && !inStatefulStructure(section)
+    isPatch() && section.enclosing!.branchPath && !inStatefulStructure(section)
   );
 }
 
