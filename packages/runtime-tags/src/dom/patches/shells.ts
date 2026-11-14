@@ -6,7 +6,7 @@ import {
   type Scope,
 } from "../../common/types";
 import { queueEffect, runId } from "../queue";
-import { _content as content } from "../renderer";
+import { _content as content, _return_setup, type SetupFn } from "../renderer";
 import { _resumed } from "../resume";
 import {
   creating,
@@ -45,7 +45,6 @@ patchers[PatchKey.Setup] = patchers[PatchKey.SetupValues] = (
 setupPatchers[PatchKey.Render] = (scope, _key, ids) =>
   runSetupIds(resolveSetupIds(ids), scope);
 
-type SetupFn = (branch: Scope) => void;
 type SetupIds = [setup: SetupFn[], scripts?: SetupFn[]];
 // Each id resolves as it runs, on the scope its hops reach (`accessor>…id`, a `>` per
 // owner up; an id-less hop only sets the owner); a setup id runs a registration's `._`.
@@ -158,16 +157,12 @@ installPatchShells((shell: string) => {
       [RendererProp.Clone]:
         registered[RendererProp.Clone] || registered()[RendererProp.Clone],
     };
+  // Marked on its setup, as compiled content's is.
+  if (returns) _return_setup((parts[2] ||= (_: Scope) => {}));
   const factory = _content(id, ...parts);
   const fromShell = (_resumed["=" + id] = Object.assign(
     (owner?: Scope) =>
-      Object.assign(
-        factory(owner),
-        clone,
-        returns
-          ? { [RendererProp.Shell]: parts, [RendererProp.Returns]: 1 }
-          : { [RendererProp.Shell]: parts },
-      ),
+      Object.assign(factory(owner), clone, { [RendererProp.Shell]: parts }),
     { [RendererProp.Shell]: parts },
   ));
   // `registered` is read before `_content` registers its factory under the id:
