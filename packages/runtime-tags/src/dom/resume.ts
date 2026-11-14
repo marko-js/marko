@@ -107,16 +107,19 @@ export function installReady(
   patchReadyFailed = onFail;
 }
 
-// A channel module that never arrives can never drain its data: the
-// patch feature settles pending flushes and rejects later ones.
+// A lazy module that will never arrive can never deliver its channel's
+// pending resume data: the debug build records the failure per channel
+// (repeat reports fold) and says so instead of staying silent. Production
+// builds without patches compile no reporting call site, so it strips away.
 export function readyFailed(readyId: string) {
-  if (MARKO_DEBUG && !failedIds?.has(readyId) && !readyIds?.has(readyId)) {
+  patchReadyFailed?.(readyId);
+  if (MARKO_DEBUG) {
+    if (failedIds?.has(readyId) || readyIds?.has(readyId)) return;
     (failedIds ||= new Set()).add(readyId);
     console.error(
       `The lazy module for "${readyId}" failed to load; its server-rendered content cannot become interactive.`,
     );
   }
-  patchReadyFailed?.(readyId);
 }
 
 export function isReady(readyId: string) {
