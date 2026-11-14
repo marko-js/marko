@@ -1,9 +1,5 @@
 import { types as t } from "@marko/compiler";
-import {
-  getFile,
-  getProgram,
-  getTemplateId,
-} from "@marko/compiler/babel-utils";
+import { getFile, getTemplateId } from "@marko/compiler/babel-utils";
 
 export function isOutputHTML() {
   return getMarkoOpts().output === "html";
@@ -11,12 +7,6 @@ export function isOutputHTML() {
 
 export function isPatch() {
   return !!getMarkoOpts().patches;
-}
-
-// The document's own template (the render's root), never composed into a
-// caller's shell.
-export function isPage() {
-  return !!getProgram().node.extra.page;
 }
 
 export function isOutputDOM() {
