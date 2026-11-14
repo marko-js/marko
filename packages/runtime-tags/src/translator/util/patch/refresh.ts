@@ -350,7 +350,7 @@ function isPatchFilled(binding: Binding) {
 // Inside content a flush reaches only by data.
 function inContentReachedByData(section: Section) {
   return (
-    section.enclosing.inContentSection && !getClientRenderedContents(section)
+    section.enclosing!.inContentSection && !getClientRenderedContents(section)
   );
 }
 
@@ -360,7 +360,7 @@ function getClientRenderedContents(section: Section, upTo?: Section) {
   let contents: SortedOpt<Section>;
   for (
     let cur = section;
-    cur !== upTo && cur.enclosing.inContentSection;
+    cur !== upTo && cur.enclosing!.inContentSection;
     cur = cur.parent!
   ) {
     if (isContentSection(cur) && !reachedByData(cur)) {
@@ -1704,8 +1704,8 @@ const rendersFilledIntersection = createPassMemo(
           filledIntersections!.size === 1 &&
           !member.section.parent &&
           // Its key's hops reach every scope of the intersection, unlike a subscriber set.
-          section.enclosing.nonOptionalAncestor ===
-            member.section.enclosing.nonOptionalAncestor
+          section.enclosing!.nonOptionalAncestor ===
+            member.section.enclosing!.nonOptionalAncestor
         )
       );
     }),
@@ -1877,8 +1877,8 @@ export function fillSubscribes(closure: Binding, section: Section) {
     // Param-selected structure's own render code keeps the subscriber.
     getPatchFill(closure).fill &&
     (closureCarriesFill(closure, section) ||
-      (section.enclosing.awaitOrTryBody !==
-        closure.section.enclosing.awaitOrTryBody &&
+      (section.enclosing!.awaitOrTryBody !==
+        closure.section.enclosing!.awaitOrTryBody &&
         hasClosureSignalRead(closure, section)))
   );
 }
@@ -1908,8 +1908,8 @@ function hasLoneRead(binding: Binding, section: Section) {
 function hasClosureSignalRead(binding: Binding, section: Section) {
   return (
     hasLoneRead(binding, section) ||
-    (section.enclosing.nonOptionalAncestor !==
-      binding.section.enclosing.nonOptionalAncestor &&
+    (section.enclosing!.nonOptionalAncestor !==
+      binding.section.enclosing!.nonOptionalAncestor &&
       someAlias(
         binding,
         (alias) => someReadIn(alias, section, runsFromClosure),

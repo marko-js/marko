@@ -208,19 +208,21 @@ export interface Section {
   /** A `<try>`'s `@catch` or `@placeholder` body, which renders in the
    * try's place on an error or while its body is pending. */
   boundaryContent: false | "catch" | "placeholder";
-  /** Where it sits among the sections around it, once bindings resolve. */
-  enclosing: {
-    /** On the branch path: no dropped content or boundary content reading no
-     * params around it. */
-    branchPath: boolean;
-    /** Content a consumer or a `<try>` renders encloses it (inclusive). */
-    inContentSection: boolean;
-    /** The nearest section around it (inclusive) that is no optional branch:
-     * only a chain of optional branches composes per-hop closure builders. */
-    nonOptionalAncestor: Section;
-    /** The nearest `<await>` or `<try>` body around it (inclusive). */
-    awaitOrTryBody: Section | undefined;
-  };
+  /** Where it sits among the sections around it, set once bindings resolve. */
+  enclosing:
+    | undefined
+    | {
+        /** On the branch path: no dropped content or boundary content reading no
+         * params around it. */
+        branchPath: boolean;
+        /** Content a consumer or a `<try>` renders encloses it (inclusive). */
+        inContentSection: boolean;
+        /** The nearest section around it (inclusive) that is no optional branch:
+         * only a chain of optional branches composes per-hop closure builders. */
+        nonOptionalAncestor: Section;
+        /** The nearest `<await>` or `<try>` body around it (inclusive). */
+        awaitOrTryBody: Section | undefined;
+      };
   /** What renders at its edges, `null` for nothing; set once its body is
    * analyzed (`settleContent`). */
   content:
@@ -330,7 +332,7 @@ export function ensureBodySection(
       hasSetupWork: false,
       branch: undefined,
       boundaryContent: false,
-      enclosing: undefined as unknown as Section["enclosing"],
+      enclosing: undefined,
       structure: parentSection && !parentSection.structure ? null : [],
     };
     if (parentSection) {
