@@ -1,0 +1,13 @@
+<input value=a><!--M_$1 #input/0--><input checked
+  type=checkbox><!--M_$1 #input/1--><textarea>a</textarea><!--M_$1 #textarea/2--><select>
+  <option value=a selected>A</option>
+  <option value=b>B</option>
+  <option value=c>C</option>
+</select><!--M_$1 #select/3-->
+<details>
+  <summary>more</summary>body
+</details><!--M_$1 #details/4-->
+<script>
+  WALKER_RUNTIME("M")("_").patchBuild = "b";
+  M._.w()
+</script>
