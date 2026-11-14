@@ -5,7 +5,7 @@ const click = (document: Document) => {
 };
 
 // A function with written captures passed straight to a known child, its capture filled for a
-// sibling: the fill marks the change, so the bind makes it anew (R166).
+// sibling: the fill marks the change, so the bind makes it anew.
 export const config: TestConfig = {
   patches: true,
   steps: [

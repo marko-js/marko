@@ -1,8 +1,7 @@
 import type { TestConfig } from "../../main.test";
 
-// R137's sub-group crash through `buildSubscribe`: a tag reads a child's tag
-// variable (with a valueChange), a loop item and an input member under an
-// `<if>` in the loop (marko-idle activity-banner, at ab311ea2d41).
+// `buildSubscribe` for a tag reading a child's tag variable (with a valueChange), a loop
+// item and an input member under an `<if>` in the loop.
 export const config: TestConfig = {
   patches: true,
   steps: [
