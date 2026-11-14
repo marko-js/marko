@@ -23,6 +23,19 @@ import {
 } from "../resume";
 import type { Signal } from "../signals";
 
+declare module "../resume" {
+  interface RenderData {
+    // The server build a patch page's document named (`setPatchBuild`).
+    [RenderDataProp.PatchBuild]?: string;
+    // The server's account of what this render holds: the opaque token its
+    // last patch response ended with, sent with the next request.
+    [RenderDataProp.HeldShells]?: string;
+    // Its live patch response's stop, which the next one calls: what it left
+    // waiting never applies once it stopped.
+    [RenderDataProp.PatchStop]?: () => void;
+  }
+}
+
 // What a patch of each kind carries, declared beside the patcher that
 // reads it.
 export interface PatchValues {}

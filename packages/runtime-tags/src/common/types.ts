@@ -58,8 +58,6 @@ export interface AwaitCounter {
   m?: (effects: unknown[]) => unknown[];
   i: number;
   c: () => void | 1;
-  // Runs the patch work waiting for the try's streamed body, in arrival order.
-  l?: () => void;
 }
 
 export {
