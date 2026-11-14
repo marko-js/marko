@@ -13,7 +13,7 @@ import runtimeInfo from "./runtime-info";
 import { createOutputState } from "./state";
 import { toMemberExpression } from "./to-property-name";
 
-export type DOMRuntimeHelpers = keyof typeof import("../../dom");
+export type DOMRuntimeHelpers = keyof typeof import("../../dom/patch");
 export type HTMLRuntimeHelpers = keyof typeof import("../../html/patch");
 
 // Pure despite registering into `_resumed` (`_template`, `_closure_get`): that
@@ -223,15 +223,16 @@ export function getRuntimeFeatureImport(feature: DOMRuntimeFeature) {
 }
 
 export function getRuntimeFeaturePath(feature: DOMRuntimeFeature) {
-  return `${getRuntimePath("dom")}/${feature}.feat`;
+  const { optimize } = getMarkoOpts();
+  return `${runtimeInfo.name}/${optimize ? "" : "debug/"}dom/${feature}.feat`;
 }
 
-// A patch build's templates take the patch entry's html helpers.
+// A patch build's templates take the patch entry's helpers.
 export function getRuntimePath(output: string) {
   const { optimize } = getMarkoOpts();
-  return `${runtimeInfo.name}/${optimize ? "" : "debug/"}${
-    output === "html" ? (isPatch() ? "html/patch" : "html") : "dom"
-  }`;
+  return `${runtimeInfo.name}/${
+    optimize ? "" : "debug/"
+  }${output === "html" ? "html" : "dom"}${isPatch() ? "/patch" : ""}`;
 }
 
 function assertTranslate(helper: string, name: string) {
