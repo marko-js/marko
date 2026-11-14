@@ -719,11 +719,10 @@ export function initValue(binding: Binding, isLet = false) {
     const fills = isPatch() && getPatchFill(binding).fill;
     signal.storesValue ||= !!fills;
     const fn = buildSignalFn(signal);
-    const letHelper = signal.extraArgs ? "_let_change" : "_let";
-    const helper = isLet ? letHelper : "_const";
     // A filled `<let>`'s own declaration doubles as its fill registration
     // (even a pure forwarder); renders the flush writes itself stay out.
     if (fills) {
+      const letHelper = signal.extraArgs ? "_let_change" : "_let";
       const { ownRegistration } = getPatchFill(binding);
       const key = t.stringLiteral(getPatchFillKey(binding));
       const accessor = getScopeAccessorLiteral(binding, true, true);
@@ -748,7 +747,7 @@ export function initValue(binding: Binding, isLet = false) {
     }
 
     return callRuntime(
-      helper,
+      isLet ? (signal.extraArgs ? "_let_change" : "_let") : "_const",
       getScopeAccessorLiteral(binding, true, isLet),
       fn,
     );
@@ -1952,14 +1951,14 @@ export function writeHTMLResumeStatements(
     const reason = getWriteReason(binding);
     if (!reason) return;
     const accessor = getScopeAccessor(binding);
-    const value = getDeclaredBindingExpression(binding);
+    const expr = getDeclaredBindingExpression(binding);
     pendingProperties.delete(accessor);
     // Where a patch build's unfilled guard applies it decides, also where it folds to never.
-    const written = ifEver(
-      (isPatch() && getExprIfUnfilled(section, binding, reason, value)) ||
-        ifWritten(reason, value),
+    const value = ifEver(
+      (isPatch() && getExprIfUnfilled(section, binding, reason, expr)) ||
+        ifWritten(reason, expr),
     );
-    if (written) scopeProperties.push(toObjectProperty(accessor, written));
+    if (value) scopeProperties.push(toObjectProperty(accessor, value));
 
     if (debug) {
       const { root, access } = getDebugAccess(binding, false, toAccess);
