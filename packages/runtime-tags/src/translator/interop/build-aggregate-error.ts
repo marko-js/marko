@@ -7,20 +7,20 @@ import * as markoModules from "@marko/compiler/modules";
 export function buildAggregateError(
   file: t.BabelFile,
   rootMsg: string,
-  ...paths: [string, t.NodePath][]
+  ...features: [string, t.Node][]
 ) {
   const err = new SyntaxError();
   const fileName = path.relative(
     markoModules.cwd,
     file.opts.filename as string,
   );
-  const finalMsg = `${rootMsg}:\n\n${paths
+  const finalMsg = `${rootMsg}:\n\n${features
     .map(
-      ([msg, path]: [string, t.NodePath]) =>
+      ([msg, node]) =>
         `\x1b[90m${msg} at ${getFileNameWithLoc(
           fileName,
-          path,
-        )}:\x1b[0m\n${getFrame(file, path)}`,
+          node,
+        )}:\x1b[0m\n${getFrame(file, node)}`,
     )
     .join("\n\n")}`;
 
@@ -39,7 +39,7 @@ export function buildAggregateError(
   return err;
 }
 
-function getFrame(file: t.BabelFile, { node: { loc } }: t.NodePath) {
+function getFrame(file: t.BabelFile, { loc }: t.Node) {
   return loc
     ? codeFrameColumns(
         file.code,
@@ -61,7 +61,7 @@ function getFrame(file: t.BabelFile, { node: { loc } }: t.NodePath) {
     : "";
 }
 
-function getFileNameWithLoc(fileName: string, { node: { loc } }: t.NodePath) {
+function getFileNameWithLoc(fileName: string, { loc }: t.Node) {
   if (loc) {
     return `${fileName}(${loc.start.line},${loc.start.column + 1})`;
   }
