@@ -31,6 +31,7 @@ import {
 import {
   getCanonicalExpr,
   getConstantBindings,
+  onFinalizeReferences,
   type ReferencedExtra,
 } from "../references";
 import { type DOMRuntimeFeature, linkRuntimeFeature } from "../runtime";
@@ -62,6 +63,7 @@ import {
   getPatchWrite,
   fillsInitialValue,
   getPatchFill,
+  patchCreates,
   patchCreatesOrComposes,
   runsByEntry,
   runsEffectOnPatch,
@@ -71,6 +73,8 @@ import {
   hasStatefulBranchExpr,
   patchesBranchesAt,
   patchFillsSection,
+  patchMayFillSection,
+  recordStructuralParams,
 } from "./structure";
 
 // A hole a patch writes: a value or content its tag recorded in analyze as rendering
@@ -582,6 +586,51 @@ export function linkHolePatcher(
       }
     });
   }
+}
+
+// Records what the branch expression's params decide (structural params), and
+// links the feature patching the branches at the node and, where a caller may
+// pass client state, the one patching their rows in place.
+export function linkBranchPatcher(
+  nodeBinding: Binding,
+  branchExpr: t.NodeExtra,
+  feature: DOMRuntimeFeature,
+  rowFeature?: DOMRuntimeFeature,
+) {
+  if (isPatch()) {
+    onFinalizeReferences(() => {
+      recordStructuralParams(getSourcesForExpr(branchExpr));
+    });
+    onReasonsSettled(() => {
+      if (patchesBranchesAt(nodeBinding)) {
+        linkRuntimeFeature(feature);
+        if (rowFeature && hasCallerParamSource(getFillSources(branchExpr))) {
+          linkRuntimeFeature(rowFeature);
+        }
+      }
+    });
+  }
+}
+
+// A `<try>` a patch may reach applies its body through `patches/try`, and
+// a `@catch` a patch creates from its shell, `patches/catch-created`.
+export function linkTryPatcher(
+  section: Section,
+  getCatchSection: false | (() => Section | undefined),
+) {
+  onReasonsSettled(() => {
+    if (patchMayFillSection(section)) {
+      linkRuntimeFeature("patches/try");
+      if (getCatchSection) {
+        const catchSection = getCatchSection();
+        linkRuntimeFeature(
+          catchSection && patchCreates(catchSection)
+            ? "patches/catch-created"
+            : "patches/catch",
+        );
+      }
+    }
+  });
 }
 
 // By a control's server helper: the feature applying its entries, which loads
