@@ -1153,16 +1153,17 @@ function testFixtures(interop?: true) {
             const debug = logs.get("debug");
             const optimize = logs.get("optimize");
             if (debug !== undefined && optimize !== undefined) {
-              // Ids are numbered per step: a debug id may name what changed
-              // in a slot (a dynamic element's tag) where the optimized one
-              // stays, so only each document's own id structure must match.
+              // A patch's debug ids may name what changed in a slot where the
+              // optimized ones stay, so only each step's id structure must match.
               const normalize = (log: string) =>
-                log
-                  .split(/^(?=# )/m)
-                  .map((step) =>
-                    normalizeStructuralIds(step, config.runtime_id),
-                  )
-                  .join("");
+                usesPatches
+                  ? log
+                      .split(/^(?=# )/m)
+                      .map((step) =>
+                        normalizeStructuralIds(step, config.runtime_id),
+                      )
+                      .join("")
+                  : log;
               assert.strictEqual(
                 normalize(unnamedStyles(optimize)),
                 normalize(unnamedStyles(debug)),
