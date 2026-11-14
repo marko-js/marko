@@ -9,6 +9,6 @@ const o = (x: string, y: number) => ({
 export const config: TestConfig = {
   patches: true,
   same_input_divergence:
-    "R124: each patch re-ships `$global.o` as a new object, so its readers re-run.",
+    "Each patch re-ships `$global.o` as a new object, so its readers re-run.",
   steps: [o("a", 1), o("a", 2)],
 };

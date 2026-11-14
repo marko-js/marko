@@ -9,7 +9,7 @@ const g = (title: string) => ({
 export const config: TestConfig = {
   patches: true,
   same_input_divergence:
-    "R124: each patch re-ships `$global`, so its whole reader re-runs.",
+    "Each patch re-ships `$global`, so its whole reader re-runs.",
   skip_fresh_render: true,
   steps: [g("one"), g("two"), g("two")],
 };

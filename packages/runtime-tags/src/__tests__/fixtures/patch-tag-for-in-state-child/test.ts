@@ -5,7 +5,7 @@ const click = (document: Document) => {
 };
 
 // A <for … in> body's conditional passes a child client state beside a loop value
-// and an input: its groups crashed at f961a29fd21.
+// and an input.
 export const config: TestConfig = {
   patches: true,
   steps: [

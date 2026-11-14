@@ -1,7 +1,7 @@
 import type { TestConfig } from "../../main.test";
 
 // A function with written captures' fill gates on a <define> body's <if>, whose param two calls map
-// to two inputs, so the fill asks the merged set (R137's class, third path).
+// to two inputs, so the fill asks the merged set.
 export const config: TestConfig = {
   patches: true,
   steps: [
