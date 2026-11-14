@@ -521,11 +521,9 @@ export function getSignal(
 
         if (closureSignalBuilder && isDirectClosure(section, closure)) {
           // A created scope sets the closure up by its id, registered with the
-          // signal it runs (a `$global` signal's wrapper registers its own).
+          // signal it runs.
           const setup =
-            isPatch() &&
-            !signal.globalReads &&
-            getCreatedSetup(section).get(closure)?.setup;
+            isPatch() && getCreatedSetup(section).get(closure)?.setup;
           // A patch may render a mixed one on any scope, whoever renders this body.
           if (setup === "mixed") importRuntimeFeature("patches/render");
           return closureSignalBuilder(
@@ -910,12 +908,9 @@ function isInlinedValue(signal: Signal) {
   if (Array.isArray(read) || read!.fnRoot) return false;
 
   // A local closure's signal is built after its reads resolve, too late to
-  // take in what it computes; a fill runs from its own signal's scope slot.
+  // take in what it computes.
   const from = getBindingsDerivedFrom(binding);
-  return (
-    (Array.isArray(from) || !from?.localOf) &&
-    !(isPatch() && getPatchFill(binding).fill)
-  );
+  return Array.isArray(from) || !from?.localOf;
 }
 
 // A source intersection runs in its source's pass, so it needs no `_or`.
@@ -1511,19 +1506,8 @@ export function writeSignals(section: Section) {
         trimEmptyArgs(value.arguments as t.Expression[]);
       }
 
-      if (isPatch()) {
-        const unwrapped = value;
-        if (signal.globalReads && !onlyEffect) {
-          value = wrapGlobalSignals(signal, value);
-        }
-        // A wrapper takes the signal as a callback whose result goes unused.
-        if (
-          value !== unwrapped &&
-          t.isArrowFunctionExpression(unwrapped) &&
-          t.isBlockStatement(unwrapped.body)
-        ) {
-          unwrapped.body = toOnlyExpressionOrBlock(unwrapped.body.body);
-        }
+      if (isPatch() && signal.globalReads && !onlyEffect) {
+        value = wrapGlobalSignals(signal, value);
       }
 
       if (signal.register) {
