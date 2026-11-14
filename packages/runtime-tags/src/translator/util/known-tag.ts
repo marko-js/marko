@@ -511,21 +511,15 @@ export function knownTagTranslateHTML(
   }
 
   if (childSection.paramReasonGroups) {
-    let childGroupMask: t.Expression | undefined;
-    if (isPatch()) {
-      // The scope reason carries the group mask, which an instance in stateful
-      // structure (patch renders skip it) needs for what its page resumes.
-      const groups = getParamGroupSources(tagExtra);
-      if (groups) {
-        childGroupMask = buildGroupMaskExpr(section, tag.node, groups);
-      }
-    } else {
-      childGroupMask = buildChildGroupMask(
-        section,
-        childScopeBinding,
-        childSection.paramReasonGroups,
-      );
-    }
+    const childGroupMask = isPatch()
+      ? // The scope reason carries the group mask, which an instance in stateful
+        // structure (patch renders skip it) needs for what its page resumes.
+        buildGroupMaskExpr(section, tag.node, getParamGroupSources(tagExtra)!)
+      : buildChildGroupMask(
+          section,
+          childScopeBinding,
+          childSection.paramReasonGroups,
+        );
 
     if (childGroupMask) {
       statements.unshift(
@@ -534,20 +528,21 @@ export function knownTagTranslateHTML(
     }
   }
 
-  const renderArgs = getRenderArgs(tag, properties);
   if (tagVar) {
     // The render call reads attr-tag bindings, so its declaration must follow
     // the attr statements rather than precede the tag.
     translateVar(
       tag,
-      t.callExpression(tagIdentifier, renderArgs),
+      t.callExpression(tagIdentifier, getRenderArgs(tag, properties)),
       "let",
       statements,
     );
     if (varStatement) statements.push(varStatement);
   } else {
     statements.push(
-      t.expressionStatement(t.callExpression(tagIdentifier, renderArgs)),
+      t.expressionStatement(
+        t.callExpression(tagIdentifier, getRenderArgs(tag, properties)),
+      ),
     );
   }
   if (isPatch()) {
