@@ -28,8 +28,6 @@ declare module "@marko/compiler/dist/types" {
 interface EntryState {
   init: boolean;
   hasClientStatement: boolean;
-  /** Whether a reached template has client work: the entry links its roots. */
-  links: boolean;
   /** Whether a reached template lazily imports another. */
   lazy: boolean;
   /** Depth of enclosing templates whose modules the bundle already loads:
@@ -77,7 +75,6 @@ const builder = {
 
     // A patch page's patches apply against the runtime, so its entry
     // initializes it even with no client code, where it links no root.
-    const { links } = state;
     const init = state.init || !!entryFile.markoOpts.patches;
     if (init || state.hasClientStatement) {
       if (init) {
@@ -142,7 +139,7 @@ const builder = {
 
       // The topmost templates with client side work or resumes; everything
       // below one of them (and its client assets) arrives through its imports.
-      if (links) {
+      if (state.init || state.hasClientStatement) {
         for (const root of state.roots) {
           body.push(t.importDeclaration([], t.stringLiteral(root)));
         }
@@ -220,7 +217,6 @@ const builder = {
     const state: EntryState = (entryFile[kState] ||= {
       init: false,
       hasClientStatement: false,
-      links: false,
       lazy: false,
       bundledDepth: 0,
       lazyDepth: 0,
@@ -244,7 +240,6 @@ const builder = {
 
     state.init ||= init;
     state.hasClientStatement ||= hasClientStatement;
-    state.links ||= hasClientWork(programExtra);
     state.lazy ||= !!loadImports;
     if (isRoot) {
       state.roots.push(
@@ -298,8 +293,7 @@ const builder = {
 
 export default builder;
 
-// A template whose page links its roots' modules: one with client side work or
-// a client statement.
+// A template with client side work: interactive, or a client statement.
 export function hasClientWork(programExtra: t.ProgramExtra) {
   return !!(programExtra.isInteractive || programExtra.hasClientStatement);
 }
