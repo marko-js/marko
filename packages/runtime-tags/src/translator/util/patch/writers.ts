@@ -86,7 +86,7 @@ import {
 } from "../signals";
 import { findSlot } from "../slots";
 import { type Sources } from "../sources";
-import { createOutputSectionState } from "../state";
+import { createOutputSectionState, createOutputState } from "../state";
 import { TagNameType } from "../tag-name-type";
 import { toSequenceExpression } from "../to-only-or-block";
 import { toObjectProperty } from "../to-property-name";
@@ -731,6 +731,30 @@ export function getPatchContentLocals(
 
 function isPatchWritten(binding: Binding) {
   return !!getPatchWrite(binding).write;
+}
+
+// An `<id>`'s address numbers each call site rendering another scope's content
+// across its template: a branch adds nothing, so accessors could repeat.
+const [getIdSites, setIdSites] = createOutputState(() => 0);
+export function nextIdSite() {
+  const site = getIdSites();
+  setIdSites(site + 1);
+  return site;
+}
+
+// An `<if>`'s branches never render together, so each numbers its sites from
+// the first branch's, and what follows numbers past all of them.
+const [getBranchIdSites] = createOutputState(
+  () => new Map<object, [first: number, next: number]>(),
+);
+export function enterBranchIdSites(branches: object) {
+  const range = getBranchIdSites().get(branches);
+  if (range) setIdSites(range[0]);
+  else getBranchIdSites().set(branches, [getIdSites(), 0]);
+}
+export function exitBranchIdSites(branches: object) {
+  const range = getBranchIdSites().get(branches)!;
+  setIdSites((range[1] = Math.max(range[1], getIdSites())));
 }
 
 // The patch writes a declaration's values make once they exist, after it:
