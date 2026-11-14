@@ -76,6 +76,7 @@ import { getResumeRegistryId, shipsClosureScopes } from "../signals";
 import { findSlot, type Slot, SlotKind } from "../slots";
 import {
   getBranchExprReasonUntil,
+  isNamedBy,
   isRenderedContent,
   someContentRead,
   someExprRead,
@@ -1580,7 +1581,7 @@ export function leavesReadToPatch(read: ReferencedExtra): boolean {
 
 function rendersDirectlyAtSite(
   read: ReferencedExtra,
-  _asInput: boolean,
+  _reader: Binding,
   pastCall: boolean,
 ) {
   return !pastCall && rendersAtSite(read);
@@ -1665,8 +1666,8 @@ const patchMayCreateOwn = createPassMemo((section: Section): boolean => {
   // A known consumer decides by where it renders the content; an unknown
   // one may do anything.
   if (!derives) return true;
-  return someContentRead(section, (read, asInput) =>
-    patchMayCreateAtRead(read, asInput, section),
+  return someContentRead(section, (read, reader) =>
+    patchMayCreateAtRead(read, !isNamedBy(read, reader), section),
   );
 }, false);
 
