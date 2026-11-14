@@ -250,7 +250,7 @@ function recordClosureRenders(binding: Binding) {
 
 // What a patch fills into a section's scopes by its params, here or in a child
 // they are passed to (`linkKnownTagPatchEntries`).
-export interface ParamEntries {
+interface ParamEntries {
   fills: ParamFill[];
   written: SortedOpt<Binding>;
   marked: SortedOpt<Binding>;

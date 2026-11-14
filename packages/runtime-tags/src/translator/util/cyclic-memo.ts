@@ -71,7 +71,7 @@ export function resetPassMemos() {
 
 // A pass memo keyed by an object and a property path (`true` for all):
 // each path interns one key, so a path's answers share one cycle protocol.
-export type MemoPath = Opt<string> | true;
+type MemoPath = Opt<string> | true;
 type PathKey<K> = [K, MemoPath];
 interface PathKeys<K> {
   value?: PathKey<K>;

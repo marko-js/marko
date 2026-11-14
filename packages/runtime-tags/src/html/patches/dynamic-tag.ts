@@ -234,7 +234,7 @@ export function renderPatchedContent(
 
 // Whether a patch renders a tag's content by its `pairing`: paired with the
 // live branch, or skipped to wait for its lazy module as a render would.
-export function pairsContent(
+function pairsContent(
   state: State,
   scopeId: number,
   accessor: Accessor,
@@ -441,7 +441,7 @@ function branchesUpTo(
 
 // Templates and content whose own state drives their `<return>`: a dynamic
 // tag's patch leaves the variable to the client for them.
-export const statefulReturns = new Set<unknown>();
+const statefulReturns = new Set<unknown>();
 
 export function _stateful_return(id: string) {
   statefulReturns.add(id);

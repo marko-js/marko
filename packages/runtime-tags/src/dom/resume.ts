@@ -67,9 +67,7 @@ export const _resumed: Record<string, unknown> = {};
 
 // Written only by the bind features that compare a function's identity: resume
 // records what it revives per owner, for a plain-id bind to resolve through.
-export let boundFnRevive:
-  | undefined
-  | ((registryId: string, owner: Scope) => unknown);
+let boundFnRevive: undefined | ((registryId: string, owner: Scope) => unknown);
 export function installBoundFnRevive(
   revive: NonNullable<typeof boundFnRevive>,
 ) {

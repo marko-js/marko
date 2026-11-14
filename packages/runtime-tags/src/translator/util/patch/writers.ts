@@ -1679,7 +1679,7 @@ function getSoleCallerGroup(section: Section, list: Opt<Sources>) {
 }
 
 // A filled reference of a function a patch may bind: its change makes the function anew.
-export function isFilledReference(binding: Binding) {
+function isFilledReference(binding: Binding) {
   return someAlias(
     getCanonicalBinding(binding),
     hasFilledReferenceRead,
@@ -1803,7 +1803,7 @@ function isScopeBoundTrackedFn(expr: t.NodeExtra) {
 }
 
 // A registered function its template binds to one of its scopes.
-export function isScopeBoundFn(expr: t.NodeExtra) {
+function isScopeBoundFn(expr: t.NodeExtra) {
   const fn = expr as t.FunctionExtra;
   return !!(fn.referencesScope || fn.referencedLocalBindingsInFunction);
 }
@@ -1876,7 +1876,7 @@ export function buildGroupsValue(
 }
 
 // The groups' bits or'd at render.
-export function buildComposedGroupValue(groups: [Section, ParamReasonGroup][]) {
+function buildComposedGroupValue(groups: [Section, ParamReasonGroup][]) {
   let value: t.Expression | undefined;
   for (const [section, group] of groups) {
     value = orMaskGroup(value, section, group);

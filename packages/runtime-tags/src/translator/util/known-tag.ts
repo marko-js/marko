@@ -894,7 +894,7 @@ function buildChildGroupMask(
   );
 }
 
-export interface ParamGroupSources {
+interface ParamGroupSources {
   /** The child params this group covers. */
   params: ParamReasonGroup;
   /** The call site's sources for this group, function-body reads included. */
