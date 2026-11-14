@@ -12,32 +12,19 @@ import {
   parseVar,
 } from "@marko/compiler/babel-utils";
 import { NodePath, types as t } from "@marko/compiler/internal/babel";
-import { createParser, TagType } from "htmljs-parser";
+import {
+  createParser,
+  getLines,
+  getLocation,
+  getPosition,
+  TagType,
+} from "htmljs-parser";
 
 import { buildCodeFrameError } from "../util/build-code-frame";
 import throwAggregateError from "../util/merge-errors";
 
 const noop = () => {};
 const jsxStyleAttrValueReg = /^\{[\s\S]*\}$/;
-// A brace wrapped attribute value that only parses once unwrapped is almost
-// certainly a JSX/Svelte style value (eg `onClick={handler}`); say so instead
-// of surfacing the bare expression parse error.
-const withWrappedAttrValueHint = (file, part, rawValue, node) => {
-  const trimmed = rawValue.trim();
-  if (
-    node.type === "MarkoParseError" &&
-    jsxStyleAttrValueReg.test(trimmed) &&
-    parseExpression(
-      file,
-      trimmed.slice(1, -1),
-      part.value.start,
-      part.value.end,
-    ).type !== "MarkoParseError"
-  ) {
-    node.label += `${node.label.endsWith(".") ? "" : "."} Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping \`{ }\`.`;
-  }
-  return node;
-};
 const emptyRange = (part) => part.start === part.end;
 const isAttrTag = (tag) => tag.name.value?.[0] === "@";
 const isStatementTag = (tag) => tag.tagDef?.parseOptions?.statement;
@@ -48,26 +35,67 @@ const toBabelPosition = ({ line, character }) => ({
 });
 
 export function parseMarko(file) {
+  const builder = createMarkoBuilder(file);
+  const parser = createParser({
+    onError: builder.error,
+    onText: builder.text,
+    onCDATA: builder.cdata,
+    onDoctype: builder.doctype,
+    onDeclaration: builder.declaration,
+    onComment: builder.comment,
+    onOpenTagComment: builder.openTagComment,
+    onTagTypeArgs: builder.tagTypeArgs,
+    onTagTypeParams: builder.tagTypeParams,
+    onPlaceholder: builder.placeholder,
+    onScriptlet: builder.scriptlet,
+    onOpenTagName: builder.openTagName,
+    onTagShorthandId: builder.tagShorthandId,
+    onTagShorthandClass: builder.tagShorthandClass,
+    onTagVar: builder.tagVar,
+    onTagParams: builder.tagParams,
+    onTagArgs: builder.tagArgs,
+    onAttrName: builder.attrName,
+    onAttrArgs: builder.attrArgs,
+    onAttrValue: builder.attrValue,
+    onAttrMethod: builder.attrMethod,
+    onAttrSpread: builder.attrSpread,
+    onOpenTagEnd: builder.openTagEnd,
+    onCloseTagEnd: builder.closeTagEnd,
+  });
+  parser.parse(file.code);
+  builder.finish();
+}
+
+/**
+ * Builds `file`'s Marko AST from htmljs-parser's parts, in source order, with
+ * NodePaths only for the tags a taglib parse hook visits, once it is built.
+ */
+function createMarkoBuilder(file) {
   const { code } = file;
   const { htmlParseOptions = {} } = file.markoOpts;
   const { watchFiles } = file.metadata.marko;
+  const program = file.ast.program;
+  const root = { node: undefined, body: program, parent: undefined };
   const parseVisits = [];
-  let currentTag = file.path;
-  let currentBody = currentTag;
-  let currentAttr = undefined;
-  let currentShorthandId = undefined;
-  let currentShorthandClassNames = undefined;
-  let currentOpenTagComments = undefined;
-  let { preserveWhitespace } = htmlParseOptions;
-  let preservingWhitespaceUntil = preserveWhitespace;
+  let lines;
+  let currentTag = root;
+  let currentAttr;
+  let currentShorthandId;
+  let currentShorthandClassNames;
+  let currentOpenTagComments;
+  let preservingWhitespaceUntil = htmlParseOptions.preserveWhitespace;
   let onNext = noop;
-  const positionAt = (index) => toBabelPosition(parser.positionAt(index));
+
+  const read = (range) => code.slice(range.start, range.end);
+  const positionAt = (index) =>
+    toBabelPosition(getPosition((lines ||= getLines(code)), index));
   const locationAt = (range) => {
-    const { start, end } = parser.locationAt(range);
-    return {
-      start: toBabelPosition(start),
-      end: toBabelPosition(end),
-    };
+    const { start, end } = getLocation(
+      (lines ||= getLines(code)),
+      range.start,
+      range.end,
+    );
+    return { start: toBabelPosition(start), end: toBabelPosition(end) };
   };
   const withLoc = (node, range) => {
     node.start = range.start;
@@ -75,37 +103,38 @@ export function parseMarko(file) {
     node.loc = locationAt(range);
     return node;
   };
+
   const enterTag = (node) => {
+    const parent = currentTag;
+    let container;
+    let listKey;
     if (isAttrTag(node)) {
-      if (currentTag === file.path) {
+      if (parent === root) {
         throw file.buildCodeFrameError(
           node.name,
           "@tags must be nested within another element.",
         );
       }
-
-      // `currentBody` is the body's own path, so the siblings are the paths
-      // it holds rather than anything indexable off it directly.
-      const siblings = currentBody.get("body");
-      let previousSiblingIndex = siblings.length;
-      while (previousSiblingIndex) {
-        const previousSibling = siblings[--previousSiblingIndex];
-        if (!t.isMarkoComment(previousSibling.node)) {
-          break;
-        }
-        appendPath(currentTag, "attributeTags", previousSibling.node);
-        previousSibling.remove();
+      // The comments right before an attribute tag go with it.
+      const siblings = parent.body.body;
+      while (
+        siblings.length &&
+        t.isMarkoComment(siblings[siblings.length - 1])
+      ) {
+        parent.node.attributeTags.push(siblings.pop());
       }
-
-      currentTag = appendPath(currentTag, "attributeTags", node);
+      container = parent.node.attributeTags;
+      listKey = "attributeTags";
     } else {
-      currentTag = appendPath(currentBody, "body", node);
+      container = parent.body.body;
+      listKey = "body";
     }
-    currentBody = currentTag.get("body");
+    container.push(node);
+    currentTag = { node, body: node.body, parent, container, listKey };
     onNext(node);
   };
   const pushContent = (node) => {
-    currentBody.node.body.push(node);
+    currentTag.body.body.push(node);
     onNext(node);
   };
   const endAttr = () => {
@@ -134,18 +163,37 @@ export function parseMarko(file) {
     currentTag.node.attributes.push(attr);
     return attr;
   };
+  // A brace wrapped attribute value that only parses once unwrapped is almost
+  // certainly a JSX/Svelte style value (eg `onClick={handler}`); say so instead
+  // of surfacing the bare expression parse error.
+  const withWrappedAttrValueHint = (value, rawValue, node) => {
+    const trimmed = rawValue.trim();
+    if (
+      node.type === "MarkoParseError" &&
+      jsxStyleAttrValueReg.test(trimmed) &&
+      parseExpression(file, trimmed.slice(1, -1), value.start, value.end)
+        .type !== "MarkoParseError"
+    ) {
+      node.label += `${node.label.endsWith(".") ? "" : "."} Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping \`{ }\`.`;
+    }
+    return node;
+  };
+  const toBlock = (start, end) =>
+    parseBlock(file, code.slice(start, end), start, end);
+  // A tag name or shorthand: a lone placeholder is its expression, other
+  // placeholders make a template literal.
   const parseTemplateString = ({ quasis, expressions }) => {
     switch (expressions.length) {
       case 0: {
         const [first] = quasis;
-        return withLoc(t.stringLiteral(parser.read(first)), first);
+        return withLoc(t.stringLiteral(read(first)), first);
       }
       case 1: {
         if (emptyRange(quasis[0]) && emptyRange(quasis[1])) {
           const [{ value }] = expressions;
           const result = parseExpression(
             file,
-            parser.read(value),
+            read(value),
             value.start,
             value.end,
           );
@@ -155,20 +203,18 @@ export function parseMarko(file) {
               t.templateLiteral([templateElement(result.value, true)], []),
               value,
             );
-          } else {
-            return result;
           }
+          return result;
         }
       }
     }
-
     const [{ start }] = quasis;
     const end = quasis[quasis.length - 1].end;
-    return parseTemplateLiteral(file, parser.read({ start, end }), start, end);
+    return parseTemplateLiteral(file, read({ start, end }), start, end);
   };
 
-  const parser = createParser({
-    onError(part) {
+  const builder = {
+    error(part) {
       const err = buildCodeFrameError(
         file.opts.filename,
         file.code,
@@ -197,8 +243,8 @@ export function parseMarko(file) {
       errors.push(err);
       throwAggregateError(errors);
     },
-    onText(part) {
-      const rawValue = parser.read(part);
+    text(part) {
+      const rawValue = read(part);
 
       if (preservingWhitespaceUntil) {
         pushContent(withLoc(t.markoText(rawValue), part));
@@ -209,7 +255,7 @@ export function parseMarko(file) {
       if (/^(?:[\n\r][ \t\n\r\f]*)?(?:[\n\r][ \t\n\r\f]*)?$/.test(rawValue))
         return;
 
-      const { body } = currentBody.node;
+      const { body } = currentTag.body;
       let prev;
       let prevIndex = body.length;
       // Find previous non-scriptlet or comment.
@@ -284,24 +330,24 @@ export function parseMarko(file) {
         onNext = noop;
       };
     },
-    onCDATA(part) {
-      pushContent(withLoc(t.markoCDATA(parser.read(part.value)), part));
+    cdata(part) {
+      pushContent(withLoc(t.markoCDATA(read(part.value)), part));
     },
-    onDoctype(part) {
-      pushContent(withLoc(t.markoDocumentType(parser.read(part.value)), part));
+    doctype(part) {
+      pushContent(withLoc(t.markoDocumentType(read(part.value)), part));
     },
-    onDeclaration(part) {
-      pushContent(withLoc(t.markoDeclaration(parser.read(part.value)), part));
+    declaration(part) {
+      pushContent(withLoc(t.markoDeclaration(read(part.value)), part));
     },
-    onComment(part) {
+    comment(part) {
       pushContent(
         withLoc(
-          t.markoComment(parser.read(part.value), getCommentKind(code, part)),
+          t.markoComment(read(part.value), getCommentKind(code, part)),
           part,
         ),
       );
     },
-    onOpenTagComment(part) {
+    openTagComment(part) {
       (currentOpenTagComments ||= []).push(
         withLoc(
           {
@@ -309,56 +355,48 @@ export function parseMarko(file) {
               code.charCodeAt(part.start + 1) === 42 /* * */
                 ? "CommentBlock"
                 : "CommentLine",
-            value: parser.read(part.value),
+            value: read(part.value),
           },
           part,
         ),
       );
     },
-    onTagTypeArgs(part) {
+    tagTypeArgs({ value }) {
       currentTag.node.typeArguments = parseTypeArgs(
         file,
-        parser.read(part.value),
-        part.value.start,
-        part.value.end,
+        read(value),
+        value.start,
+        value.end,
       );
     },
-    onTagTypeParams(part) {
-      currentBody.node.typeParameters = parseTypeParams(
+    tagTypeParams({ value }) {
+      currentTag.body.typeParameters = parseTypeParams(
         file,
-        parser.read(part.value),
-        part.value.start,
-        part.value.end,
+        read(value),
+        value.start,
+        value.end,
       );
     },
-    onPlaceholder(part) {
+    placeholder(part) {
+      const { value } = part;
       pushContent(
         withLoc(
           t.markoPlaceholder(
-            parseExpression(
-              file,
-              parser.read(part.value),
-              part.value.start,
-              part.value.end,
-            ),
+            parseExpression(file, read(value), value.start, value.end),
             part.escape,
           ),
           part,
         ),
       );
     },
-    onScriptlet(part) {
-      const block = parseBlock(
-        file,
-        parser.read(part.value),
-        part.value.start,
-        part.value.end,
-      );
+    scriptlet(part) {
+      const block = toBlock(part.value.start, part.value.end);
       const scriptlet = t.markoScriptlet(block.body);
       scriptlet.innerComments = block.innerComments;
       pushContent(withLoc(scriptlet, part));
     },
-    onOpenTagName(part) {
+    /** Opens a tag; returns how the taglibs parse its body. */
+    openTagName(part) {
       const tagName = parseTemplateString(part);
       const node = t.markoTag(tagName, [], t.markoTagBody());
       let parseType = TagType.html;
@@ -422,48 +460,40 @@ export function parseMarko(file) {
       enterTag(node);
       return parseType;
     },
-    onTagShorthandId(part) {
+    tagShorthandId(part) {
       currentShorthandId = parseTemplateString(part);
     },
-    onTagShorthandClass(part) {
+    tagShorthandClass(part) {
+      const className = parseTemplateString(part);
       if (currentShorthandClassNames) {
-        currentShorthandClassNames.push(parseTemplateString(part));
+        currentShorthandClassNames.push(className);
       } else {
-        currentShorthandClassNames = [parseTemplateString(part)];
+        currentShorthandClassNames = [className];
       }
     },
-
     // A bare `|` union in a tag-var type is intentionally unsupported (write
     // `(A | B)`): htmljs-parser reserves `|` as the body-params delimiter.
-    onTagVar({ value }) {
-      currentTag.node.var = parseVar(
+    tagVar({ value }) {
+      currentTag.node.var = parseVar(file, read(value), value.start, value.end);
+    },
+    tagParams({ value }) {
+      currentTag.body.params = parseParams(
         file,
-        parser.read(value),
+        read(value),
         value.start,
         value.end,
       );
     },
-
-    onTagParams({ value }) {
-      currentTag.node.body.params = parseParams(
-        file,
-        parser.read(value),
-        value.start,
-        value.end,
-      );
-    },
-
-    onTagArgs({ value }) {
+    tagArgs({ value }) {
       currentTag.node.arguments = parseArgs(
         file,
-        parser.read(value),
+        read(value),
         value.start,
         value.end,
       );
     },
-
-    onAttrName(part) {
-      let name = parser.read(part);
+    attrName(part) {
+      let name = read(part);
       let modifier = null;
       const modifierIndex = name.lastIndexOf(":");
       if (~modifierIndex) {
@@ -475,9 +505,9 @@ export function parseMarko(file) {
       currentAttr = pushAttr(
         t.markoAttribute(
           name || "value",
-          t.booleanLiteral(true),
+          { type: "BooleanLiteral", value: true },
           modifier,
-          undefined,
+          null,
           !name,
         ),
       );
@@ -485,57 +515,44 @@ export function parseMarko(file) {
       currentAttr.start = part.start;
       currentAttr.end = part.end;
     },
-
-    onAttrArgs({ value, end }) {
+    attrArgs({ value, end }) {
       currentAttr.arguments = parseArgs(
         file,
-        parser.read(value),
+        read(value),
         value.start,
         value.end,
       );
-
       currentAttr.end = end;
     },
-
-    onAttrValue(part) {
+    attrValue(part) {
       currentAttr.end = part.end;
       currentAttr.bound = part.bound;
-      const rawAttrValue = parser.read(part.value);
+      const rawAttrValue = read(part.value);
       currentAttr.value = withWrappedAttrValueHint(
-        file,
-        part,
+        part.value,
         rawAttrValue,
         parseExpression(file, rawAttrValue, part.value.start, part.value.end),
       );
     },
-
-    onAttrMethod(part) {
-      const params = parseParams(
-        file,
-        parser.read(part.params.value),
-        part.params.value.start,
-        part.params.value.end,
-      );
+    attrMethod(part) {
       const method = t.functionExpression(
-        undefined,
+        null,
         [],
-        parseBlock(
-          file,
-          parser.read(part.body.value),
-          part.body.value.start,
-          part.body.value.end,
-        ),
+        toBlock(part.body.value.start, part.body.value.end),
         false,
         part.async,
       );
-      // Assigned past the builder: a params parse error is a placeholder node
-      // its validation would throw on before the error could be reported.
-      method.params = params;
+      method.params = parseParams(
+        file,
+        read(part.params.value),
+        part.params.value.start,
+        part.params.value.end,
+      );
 
       if (part.typeParams) {
         method.typeParameters = parseTypeParams(
           file,
-          parser.read(part.typeParams.value),
+          read(part.typeParams.value),
           part.typeParams.value.start,
           part.typeParams.value.end,
         );
@@ -544,25 +561,19 @@ export function parseMarko(file) {
       currentAttr.end = part.end;
       currentAttr.value = withLoc(method, part);
     },
-
-    onAttrSpread(part) {
+    attrSpread(part) {
+      const { value } = part;
       endAttr();
       pushAttr(
         withLoc(
           t.markoSpreadAttribute(
-            parseExpression(
-              file,
-              parser.read(part.value),
-              part.value.start,
-              part.value.end,
-            ),
+            parseExpression(file, read(value), value.start, value.end),
           ),
           part,
         ),
       );
     },
-
-    onOpenTagEnd(part) {
+    openTagEnd(part) {
       const { node } = currentTag;
       const { attributes } = node;
       const parseOptions = node.tagDef?.parseOptions;
@@ -647,10 +658,7 @@ export function parseMarko(file) {
 
       if (parseOptions) {
         if (parseOptions.rawOpenTag) {
-          node.rawValue = parser.read({
-            start: node.name.start,
-            end: part.start,
-          });
+          node.rawValue = read({ start: node.name.start, end: part.start });
         }
 
         if (
@@ -658,14 +666,15 @@ export function parseMarko(file) {
           parseOptions.statement ||
           parseOptions.openTagOnly
         ) {
-          this.onCloseTagEnd(part);
+          builder.closeTagEnd(part);
         }
       } else if (part.selfClosed) {
-        this.onCloseTagEnd(part);
+        builder.closeTagEnd(part);
       }
     },
-    onCloseTagEnd(part) {
-      const { node } = currentTag;
+    closeTagEnd(part) {
+      const frame = currentTag;
+      const { node } = frame;
       const tagDef = node.tagDef;
       const parserPlugin = tagDef?.parser;
       if (preservingWhitespaceUntil === node) {
@@ -678,12 +687,10 @@ export function parseMarko(file) {
       if (parserPlugin) {
         const { hook } = parserPlugin;
         if (parserPlugin.path) watchFiles.push(parserPlugin.path);
-        parseVisits.push(hook.default || hook, currentTag);
+        parseVisits.push(hook.default || hook, frame);
       }
 
-      const parentTag = isAttrTag(node)
-        ? currentTag.parentPath
-        : currentTag.parentPath.parentPath;
+      const parentTag = frame.parent === root ? undefined : frame.parent;
       const { attributeTags } = node;
 
       if (attributeTags.length) {
@@ -748,37 +755,54 @@ export function parseMarko(file) {
             );
           }
 
-          currentTag.remove();
-          appendPath(parentTag, "attributeTags", node);
+          // An attribute tag of the tag the control flow sits in.
+          frame.container.splice(frame.container.indexOf(node), 1);
+          frame.container = parentTag.node.attributeTags;
+          frame.listKey = "attributeTags";
+          frame.container.push(node);
         }
       }
 
-      if (parentTag) {
-        currentTag = parentTag;
-        currentBody = currentTag.get("body");
-      } else {
-        currentTag = currentBody = file.path;
-      }
-
+      currentTag = parentTag || root;
       onNext();
     },
-  });
+    finish() {
+      onNext();
 
-  parser.parse(code);
-  onNext();
+      // The path of a tag a parse hook visits, from the finished tree.
+      const pathOf = (frame) => {
+        if (!frame.path) {
+          const owner = frame.parent;
+          const parentPath =
+            owner === root
+              ? file.path
+              : frame.listKey === "body"
+                ? pathOf(owner).get("body")
+                : pathOf(owner);
+          frame.path = NodePath.get({
+            parentPath,
+            parent: parentPath.node,
+            container: frame.container,
+            listKey: frame.listKey,
+            key: frame.container.indexOf(frame.node),
+          }).setContext(parentPath.context);
+        }
+        return frame.path;
+      };
+      for (let i = 0; i < parseVisits.length; i += 2) {
+        parseVisits[i](pathOf(parseVisits[i + 1]));
+      }
 
-  for (let i = 0; i < parseVisits.length;) {
-    parseVisits[i++](parseVisits[i++]);
-  }
-
-  const { ast } = file;
-  const { program } = ast;
-  ast.start = program.start = 0;
-  ast.end = program.end = code.length - 1;
-  ast.loc = program.loc = {
-    start: { line: 1, column: 0 },
-    end: positionAt(ast.end),
+      const { ast } = file;
+      ast.start = program.start = 0;
+      ast.end = program.end = code.length - 1;
+      ast.loc = program.loc = {
+        start: { line: 1, column: 0 },
+        end: positionAt(ast.end),
+      };
+    },
   };
+  return builder;
 }
 
 function getCommentKind(code, part) {
@@ -794,20 +818,6 @@ function getCommentKind(code, part) {
 
 function sortByStart(a, b) {
   return a.start - b.start;
-}
-
-// `pushContainer` re-keys every cached sibling (O(n²) over a body of n tags);
-// no traversal runs while parsing, so appending needs none of its bookkeeping.
-function appendPath(parentPath, listKey, node) {
-  const container = parentPath.node[listKey];
-  container.push(node);
-  return NodePath.get({
-    parentPath,
-    parent: parentPath.node,
-    container,
-    listKey,
-    key: container.length - 1,
-  }).setContext(parentPath.context);
 }
 
 function templateElement(value, tail) {
