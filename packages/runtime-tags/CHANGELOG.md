@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.4.16
+
+### Patch Changes
+
+- [#4696](https://github.com/marko-js/marko/pull/4696) [`0ef16f4`](https://github.com/marko-js/marko/commit/0ef16f4bdc61cc7e1a15db09d69e2eedee45856f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Shrink server code for values whose resume marker is never written, such as a `<define>` param every call passes a constant: the server writes the value directly instead of calling a marker helper that writes nothing.
+
 ## 6.4.15
 
 ### Patch Changes
