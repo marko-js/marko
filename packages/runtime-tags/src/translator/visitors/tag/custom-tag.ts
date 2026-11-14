@@ -332,30 +332,39 @@ function createLoadIdentifier(
     [getUnusedParamIdentifier()],
     dynamicImport(request),
   );
+  if (readyId) {
+    // A patch loads the input itself, ahead of the trigger.
+    getProgram().node.body.push(
+      t.variableDeclaration("let", [
+        t.variableDeclarator(
+          id,
+          callRuntime(
+            "_load_signal_patch",
+            load,
+            t.stringLiteral(readyId),
+            trigger,
+          ),
+        ),
+      ]),
+    );
+    return id;
+  }
   getProgram().node.body.push(
     t.variableDeclaration("let", [
       t.variableDeclarator(
         id,
-        readyId
-          ? // A patch loads the input itself, ahead of the trigger.
-            callRuntime(
-              "_load_signal_patch",
-              load,
-              t.stringLiteral(readyId),
-              trigger,
-            )
-          : callRuntime(
-              runtime,
-              // Applying a trigger only wraps the load, so it is pure: a load no
-              // signal reads still drops. Not a runtime helper call.
-              trigger
-                ? t.addComment(
-                    t.callExpression(trigger, [load]),
-                    "leading",
-                    "@__PURE__",
-                  )
-                : load,
-            ),
+        callRuntime(
+          runtime,
+          // Applying a trigger only wraps the load, so it is pure: a load no
+          // signal reads still drops. Not a runtime helper call.
+          trigger
+            ? t.addComment(
+                t.callExpression(trigger, [load]),
+                "leading",
+                "@__PURE__",
+              )
+            : load,
+        ),
       ),
     ]),
   );
