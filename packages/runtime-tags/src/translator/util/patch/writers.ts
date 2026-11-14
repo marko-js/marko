@@ -103,6 +103,7 @@ import {
   getOrShareGroupCheck,
   getOrShareSectionGuard,
   getPatchCheckBit,
+  getReasonSection,
   getStaticGroupBit,
   getWriteReason,
   type GroupCheck,
@@ -113,6 +114,7 @@ import {
   notGuard,
   getSectionWriteReason,
   orGuard,
+  scopePageIdentifier,
 } from "../write-guard";
 import {
   fillsHole,
@@ -711,6 +713,26 @@ function buildReadMember([name, member]: [string, Binding]) {
 function getStateInitialValueGuard(section: Section, states: Sources["state"]) {
   const sources = getStateInitialValueSources(states);
   return sources && getCallerGroupGuard(section, "_filled_guard", sources);
+}
+
+// A patch render writes each content closure the client reads, so where it writes
+// one, registered content's args send only its locals.
+export function getPatchContentLocals(
+  bodySection: Section,
+  values: t.ArrayExpression,
+  locals: t.Expression[],
+) {
+  return some(getDynamicTagContentClosures(bodySection), isPatchWritten)
+    ? t.conditionalExpression(
+        scopePageIdentifier(getReasonSection(bodySection.parent!)),
+        values,
+        t.arrayExpression(locals),
+      )
+    : values;
+}
+
+function isPatchWritten(binding: Binding) {
+  return !!getPatchWrite(binding).write;
 }
 
 // The patch writes a declaration's values make once they exist, after it:

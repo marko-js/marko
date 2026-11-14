@@ -7,7 +7,7 @@ import { getDeclaredBindingExpression } from "./get-declared-binding-expression"
 import { getKnownAttrValues } from "./get-known-attr-values";
 import { getAttributeTagParent } from "./get-parent-tag";
 import { getTagName } from "./get-tag-name";
-import { isOutputHTML } from "./marko-config";
+import { isOutputHTML, isPatch } from "./marko-config";
 import {
   type AttrTagMeta,
   type AttrTagLookup,
@@ -16,6 +16,7 @@ import {
 } from "./nested-attribute-tags";
 import { toArray } from "./optional";
 import { type ParamsTree, getParamsTreeAt } from "./params-tree";
+import { getPatchContentLocals } from "./patch/writers";
 import { callRuntime } from "./runtime";
 import { getScopeAccessor } from "./scope-accessor";
 import { scopeIdentifier } from "./scope-read";
@@ -30,11 +31,7 @@ import {
 import { shipsContentShell } from "./shell";
 import { getContentClosureValues, getResumeRegistryId } from "./signals";
 import { toObjectProperty } from "./to-property-name";
-import {
-  getReasonSection,
-  getScopeReasonStatement,
-  scopePageIdentifier,
-} from "./write-guard";
+import { getScopeReasonStatement } from "./write-guard";
 
 const contentProps = new WeakSet<t.Node>();
 type ContentKey = "renderBody" | "content";
@@ -461,15 +458,10 @@ function getRegisteredLocals(bodySection: Section) {
       ...locals,
       ...(contentClosureValues?.levels || []),
     ]);
-    // A patch render writes each closure the client reads, so it sends none.
     return t.arrowFunctionExpression(
       contentClosureValues ? [contentClosureValues.scope] : [],
-      contentClosureValues?.written
-        ? t.conditionalExpression(
-            scopePageIdentifier(getReasonSection(bodySection.parent!)),
-            values,
-            t.arrayExpression(locals),
-          )
+      contentClosureValues && isPatch()
+        ? getPatchContentLocals(bodySection, values, locals)
         : values,
     );
   }
