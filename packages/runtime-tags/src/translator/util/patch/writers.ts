@@ -1066,16 +1066,17 @@ export function getCallerGroupGuard(
   const value = getWriteGroupsValue(write, getGroupsConstant);
   const bit = value === undefined ? undefined : getPatchCheckBit(check, value);
   if (bit !== undefined) return t.numericLiteral(bit);
+  const { groups, ungated } = write!;
   // One caller group's check is shared, as a write guard is.
-  if (write?.groups.length === 1 && !write.ungated) {
-    const [groupSection, group] = write.groups[0];
+  if (groups.length === 1 && !ungated) {
+    const [groupSection, group] = groups[0];
     return getOrShareGroupCheck(checksIn, groupSection, group, check);
   }
   // The server's constant alone leaves `_unfilled_if` the render context.
   if (value === UpdatesFrom.Server && check === "_unfilled_if") {
     return callRuntime("_unfilled_if");
   }
-  return callRuntime(check, ...buildWriteGroupArgs(write || { groups: [] }));
+  return callRuntime(check, ...buildWriteGroupArgs(write!));
 }
 
 // What `getCallerGroupGuard` folds to, without building it, so a guard deciding a
