@@ -22,10 +22,10 @@ import { getScopeAccessor } from "./scope-accessor";
 import { scopeIdentifier } from "./scope-read";
 import { getSectionRendererIdentifier } from "./section-renderer";
 import {
-  getRendererReason,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  getRendererReason,
   type Section,
 } from "./sections";
 import { shipsContentShell } from "./shell";

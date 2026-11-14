@@ -314,7 +314,7 @@ function resolveReason(exprExtras: Set<t.NodeExtra>) {
 }
 
 // When the server writes a template: an effect reading it runs on the client
-// instead; a patch may write one in an unknown tag's input or a `<let>`'s initial value.
+// instead of reading it from the resume data.
 function resolveTemplateReason(exprExtras: Set<t.NodeExtra>) {
   let reason: undefined | Reason;
   for (const exprExtra of exprExtras) {
@@ -323,6 +323,7 @@ function resolveTemplateReason(exprExtras: Set<t.NodeExtra>) {
       // A dynamic tag reads its attributes as one; one its known templates read
       // derives where the template goes past the call.
       const passed = exprExtra.derives ? exprExtra : extra;
+      // A patch may write it in an unknown tag's input or a `<let>`'s initial value.
       reason = mergeSources(
         reason,
         isPatch() && (landsRetainedAsInput(passed) || landsInitialValue(passed))
