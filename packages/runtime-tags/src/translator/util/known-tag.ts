@@ -21,7 +21,7 @@ import { setTagContentDerives } from "./content-derives";
 import { createPassMemo } from "./cyclic-memo";
 import { generateUidIdentifier } from "./generate-uid";
 import { getTagName, getTagNameHint } from "./get-tag-name";
-import { isOptimize, isPage, isPatch } from "./marko-config";
+import { isOptimize, isPatch } from "./marko-config";
 import { getModuleRead } from "./module-read";
 import {
   analyzeAttributeTags,
@@ -722,8 +722,9 @@ export function linkKnownTagPatchEntries() {
   } while (grew);
   // A patched entry is a page (a build contract: debug builds refuse an embedded
   // render's patch), and no call links its own input.
-  const root = getParamEntries(getProgram().node.extra.section!);
-  if (isPage()) {
+  const { section, page } = getProgram().node.extra;
+  const root = getParamEntries(section!);
+  if (page) {
     for (const fill of root.fills) {
       if (fill.client === true) linkParamFillFeatures(fill);
     }
