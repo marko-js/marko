@@ -19,7 +19,7 @@ import {
   type ParamReasonGroup,
   type Section,
 } from "../sections";
-import { bindingReaders, getDerivedReaders, someRead } from "../solve-reasons";
+import { isRenderedContent, someContentRead } from "../solve-reasons";
 import { type Sources } from "../sources";
 import { hasClientState, hasParamOrGlobalSource } from "./decisions";
 
@@ -77,9 +77,10 @@ export function derivesRenderedContent(read: ReferencedExtra) {
   return some(read.derives, isRenderedContent);
 }
 
-function isRenderedContent(binding: Binding) {
-  return someRead(bindingReaders(binding, true), isContentRender);
+function isAnyRead() {
+  return true;
 }
+
 // A read rendering the content where a patch may too: outside stateful structure.
 function isPatchedLeaf(read: ReferencedExtra) {
   return isContentRender(read) && !isStatefulRead(read);
@@ -89,11 +90,9 @@ function isPatchedLeaf(read: ReferencedExtra) {
 // some, or every one where no patched read or call outside stateful structure is left.
 export const getStatefulConsumers = createPassMemo(
   (section: Section): "some" | "every" | undefined => {
-    const { derives } = section;
-    const readers = derives && getDerivedReaders(derives);
-    if (!readers || !someRead(readers, isStatefulRead)) return;
+    if (!section.derives || !someContentRead(section, isStatefulRead)) return;
     return some(section.renderedBy, isPatchedCall) ||
-      someRead(readers, isPatchedLeaf)
+      someContentRead(section, isPatchedLeaf)
       ? "some"
       : "every";
   },
@@ -137,10 +136,9 @@ export function isPassedStateByEveryCall(
 ) {
   let passes = !anyGroup && !!sources?.param;
   forEachParamGroup(sources?.param, (body, params) => {
-    const { derives } = body;
     const groupPasses =
-      !!derives &&
-      !getDerivedReaders(derives).reads &&
+      !!body.derives &&
+      !someContentRead(body, isAnyRead) &&
       everyCallPasses(body, params, hasClientState);
     passes = anyGroup ? passes || groupPasses : passes && groupPasses;
   });

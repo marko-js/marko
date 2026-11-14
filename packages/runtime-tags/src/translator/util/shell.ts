@@ -67,7 +67,7 @@ import {
   getSignalRegistryId,
   getSignals,
 } from "./signals";
-import { bindingReaders } from "./solve-reasons";
+import { someContentRead } from "./solve-reasons";
 import { type Sources } from "./sources";
 import {
   createAnalysisState,
@@ -187,11 +187,12 @@ function recordClientBranchContents(binding: Binding) {
     if (branchExpr?.tagNameType === TagNameType.DynamicTag) {
       add(branchExpr, content);
     }
-    forEach(derives?.binding, (held) => {
-      forEach(bindingReaders(held, derives!.properties).asInput, (read) => {
-        if (read.retained) add(read, content);
+    if (derives) {
+      someContentRead(content, (read, asInput) => {
+        if (asInput && read.retained) add(read, content);
+        return false;
       });
-    });
+    }
   });
 }
 

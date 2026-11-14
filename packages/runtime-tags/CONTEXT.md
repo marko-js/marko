@@ -57,12 +57,13 @@ _Avoid_: upstream, downstream, feed, feeder
 
 **Readers**:
 What reads a value through its aliases and derives links: its _reason_, and
-each read the value reaches, marked if reached directly rather than through a tag the value is passed to,
-and if as a dynamic tag's input rather than its name. An alias
-(`<const/b=a/>`) is no read, so `a`'s readers include `b`'s; a computing init
-(`<const/b=a + 1/>`) is a read of `a`, and the walk goes on into `b`'s readers.
-A call site maps the callee's param reasons through the expressions it passes,
-to their sources (a passed `<let>` gives a state reason).
+bits for the reads it lands in (retained, as more than a dynamic tag's name),
+set as each read lands. An alias (`<const/b=a/>`) is no read, so `a`'s readers
+include `b`'s; a computed value (`<const/b=a + 1/>`) is a read of `a`, and the
+walk goes on into `b`'s readers. A call site maps the callee's param reasons
+through the expressions it passes, to their sources (a passed `<let>` gives a
+state reason). The reads themselves are walked when asked (`someReachedRead`),
+as for content sites.
 _Avoid_: landing read
 
 **Branch expression**:

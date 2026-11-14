@@ -75,11 +75,11 @@ import { shipsContentShell } from "../shell";
 import { getResumeRegistryId, shipsClosureScopes } from "../signals";
 import { findSlot, type Slot, SlotKind } from "../slots";
 import {
-  bindingReaders,
-  exprReaders,
   getBranchExprReasonUntil,
-  getDerivedReaders,
-  someRead,
+  isRenderedContent,
+  someContentRead,
+  someExprRead,
+  someReachedRead,
 } from "../solve-reasons";
 import {
   createSources,
@@ -388,9 +388,7 @@ function canPatchFill(binding: Binding) {
 function initialValueQueuesEffect(binding: Binding) {
   return (
     hasTagCallerParamAt(binding.initialValueSources, binding.section) &&
-    someRead(bindingReaders(binding, true), (read) =>
-      queuesEffectOn(read, binding),
-    )
+    someReachedRead(binding, true, (read) => queuesEffectOn(read, binding))
   );
 }
 
@@ -490,8 +488,9 @@ export function writesSeed(binding: Binding) {
 // Read in `section` past renders, effects, setup, name-only dynamic tags and (never
 // assigned) control flow and call arguments: by a child, intersection or return.
 function readsPastRenders(binding: Binding) {
-  return someRead(
-    bindingReaders(binding, true),
+  return someReachedRead(
+    binding,
+    true,
     (read) =>
       !(read.rendersValue || read.isEffect || read.nameOnly) &&
       (!read.derives ||
@@ -657,7 +656,7 @@ function computeFillReadKind(binding: Binding) {
           contentKind = mergeKinds(contentKind, derivedKind);
           rendersContent = true;
         }
-      } else if (someRead(bindingReaders(derived, true), isContentRender)) {
+      } else if (isRenderedContent(derived)) {
         rendersContent = true;
       }
     });
@@ -956,7 +955,7 @@ function rendersWithOwner(content: Section) {
     !!derives &&
     isKnownTagExtra(derives.tag) &&
     !isStatefulStructure(content) &&
-    !someRead(getDerivedReaders(derives), rendersApart)
+    !someContentRead(content, rendersApart)
   );
 }
 
@@ -1576,9 +1575,15 @@ export const isFilledIntersection = createPassMemo(
 // A read the patch leaves to the holes it writes, the effects its entries
 // re-run and the calls whose callees keep their inputs, through derived values.
 export function leavesReadToPatch(read: ReferencedExtra): boolean {
-  return (
-    !rendersAtSite(read) && !some(exprReaders(read).directReads, rendersAtSite)
-  );
+  return !rendersAtSite(read) && !someExprRead(read, rendersDirectlyAtSite);
+}
+
+function rendersDirectlyAtSite(
+  read: ReferencedExtra,
+  _asInput: boolean,
+  pastCall: boolean,
+) {
+  return !pastCall && rendersAtSite(read);
 }
 
 // The client renders the read where it sits: it is no hole the patch fills nor a value
@@ -1660,7 +1665,7 @@ const patchMayCreateOwn = createPassMemo((section: Section): boolean => {
   // A known consumer decides by where it renders the content; an unknown
   // one may do anything.
   if (!derives) return true;
-  return someRead(getDerivedReaders(derives), (read, asInput) =>
+  return someContentRead(section, (read, asInput) =>
     patchMayCreateAtRead(read, asInput, section),
   );
 }, false);
