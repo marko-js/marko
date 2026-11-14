@@ -52,22 +52,11 @@ const pureDOMFunctions = new Set<string>([
   "_load_race_trigger",
 ] satisfies DOMRuntimeHelpers[]);
 
-const [getRuntimeImports] = createOutputState(
-  () => new Map<DOMRuntimeHelpers | HTMLRuntimeHelpers, string>(),
-);
-
 export function importRuntime(name: DOMRuntimeHelpers | HTMLRuntimeHelpers) {
   // The `dom`/`html` import path is only known at translate; emitting it into
   // the cached, output-shared earlier AST leaks one runtime into the other.
   assertTranslate("importRuntime", name);
-  const { output } = getMarkoOpts();
-  const imports = getRuntimeImports();
-  let localName = imports.get(name);
-  if (!localName) {
-    localName = importNamed(getFile(), getRuntimePath(output), name).name;
-    imports.set(name, localName);
-  }
-  return t.identifier(localName);
+  return importNamed(getFile(), getRuntimePath(getMarkoOpts().output), name);
 }
 
 // A bare registration is an assignment into the registry: no call.
@@ -146,11 +135,20 @@ export function getRuntimeFeatureImport(feature: DOMRuntimeFeature) {
   );
 }
 
+// Built once, so the import lookup on every helper call hashes no new string.
+const runtimePaths = {
+  dom: `${runtimeInfo.name}/dom`,
+  html: `${runtimeInfo.name}/html`,
+};
+const debugRuntimePaths = {
+  dom: `${runtimeInfo.name}/debug/dom`,
+  html: `${runtimeInfo.name}/debug/html`,
+};
+
 export function getRuntimePath(output: string) {
-  const { optimize } = getMarkoOpts();
-  return `${runtimeInfo.name}/${
-    optimize ? "" : "debug/"
-  }${output === "html" ? "html" : "dom"}`;
+  return (getMarkoOpts().optimize ? runtimePaths : debugRuntimePaths)[
+    output === "html" ? "html" : "dom"
+  ];
 }
 
 function assertTranslate(helper: string, name: string) {
