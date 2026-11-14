@@ -7,6 +7,7 @@ declare module "@babel/core" {
 
 export { codeFrameColumns } from "@babel/code-frame";
 export {
+  createConfigItem,
   File,
   loadPartialConfig,
   loadPartialConfigAsync,

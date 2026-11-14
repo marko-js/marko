@@ -2,6 +2,7 @@ import path from "path";
 
 import { DiagnosticType } from "@marko/compiler/babel-utils";
 import {
+  createConfigItem,
   loadPartialConfig,
   loadPartialConfigAsync,
   pluginTransformModulesCommonjs,
@@ -30,26 +31,26 @@ const hasBabel = !!(
 );
 
 export async function compile(src, filename, config) {
-  const markoConfig = loadMarkoConfig(config);
+  const recent = loadMarkoConfig(config);
   try {
-    const babelConfig = await loadBabelConfig(filename, markoConfig);
+    const babelConfig = await loadBabelConfig(filename, recent);
     const babelResult = await transformAsync(src, babelConfig);
-    return buildResult(src, filename, markoConfig, babelResult);
+    return buildResult(src, filename, recent.config, babelResult);
   } catch (err) {
-    throw appendAgentFixGuide(err, markoConfig.translator);
+    throw appendAgentFixGuide(err, recent.config.translator);
   }
 }
 
 export function compileSync(src, filename, config) {
-  const markoConfig = loadMarkoConfig(config);
+  const recent = loadMarkoConfig(config);
   try {
-    const babelConfig = loadBabelConfigSync(filename, markoConfig);
+    const babelConfig = loadBabelConfigSync(filename, recent);
     const babelResult = transformSync(src, babelConfig);
-    return buildResult(src, filename, markoConfig, babelResult);
+    return buildResult(src, filename, recent.config, babelResult);
   } catch (err) {
     // Errors pass through as thrown, so nesting deep enough to overflow Babel's
     // traversal surfaces as a bare `RangeError`; such templates are pathological.
-    throw appendAgentFixGuide(err, markoConfig.translator);
+    throw appendAgentFixGuide(err, recent.config.translator);
   }
 }
 
@@ -88,7 +89,44 @@ export function getRuntimeVersion(requestedTranslator) {
 
 const outputValues = new Set(["html", "dom", "source", "migrate", "hydrate"]);
 
+// Compiles with equal option values share a record, and with it one core
+// plugin item, so Babel sets the plugin up once. The 8 most recent are kept.
+const recentConfigs = new WeakMap();
+let commonjsPluginItem;
+
 function loadMarkoConfig(config) {
+  const given = loadMarkoConfigValues(config);
+  let recents = recentConfigs.get(given.cache);
+  if (!recents) recentConfigs.set(given.cache, (recents = new Set()));
+  let recent;
+  for (const candidate of recents) {
+    if (sameValues(candidate.given, given)) {
+      recent = candidate;
+      break;
+    }
+  }
+  if (recent) {
+    recents.delete(recent);
+  } else {
+    recent = { given, config: { ...given }, corePluginItem: undefined };
+  }
+  // A Set iterates in insertion order: the least recently used comes first.
+  recents.add(recent);
+  if (recents.size > 8) recents.delete(recents.values().next().value);
+  return recent;
+}
+
+function sameValues(a, b) {
+  let count = 0;
+  for (const key in a) {
+    if (a[key] !== b[key]) return false;
+    count++;
+  }
+  for (const _ in b) count--;
+  return count === 0;
+}
+
+function loadMarkoConfigValues(config) {
   const markoConfig = { ...globalConfig, ...config };
 
   if (!outputValues.has(markoConfig.output)) {
@@ -104,16 +142,16 @@ function loadMarkoConfig(config) {
   return markoConfig;
 }
 
-async function loadBabelConfig(filename, config) {
-  const baseBabelConfig = getBaseBabelConfig(filename, config);
-  return shouldResolveBabelConfig(config)
+async function loadBabelConfig(filename, recent) {
+  const baseBabelConfig = getBaseBabelConfig(filename, recent);
+  return shouldResolveBabelConfig(recent.config)
     ? (await loadPartialConfigAsync(baseBabelConfig)).options
     : baseBabelConfig;
 }
 
-function loadBabelConfigSync(filename, config) {
-  const baseBabelConfig = getBaseBabelConfig(filename, config);
-  return shouldResolveBabelConfig(config)
+function loadBabelConfigSync(filename, recent) {
+  const baseBabelConfig = getBaseBabelConfig(filename, recent);
+  return shouldResolveBabelConfig(recent.config)
     ? loadPartialConfig(baseBabelConfig).options
     : baseBabelConfig;
 }
@@ -126,10 +164,14 @@ function shouldResolveBabelConfig(config) {
   );
 }
 
-function getBaseBabelConfig(filename, { babelConfig, ...markoConfig }) {
+function getBaseBabelConfig(filename, recent) {
+  const { babelConfig, ...markoConfig } = recent.config;
   const isTranslated = isTranslatedOutput(markoConfig.output);
   const loadConfig = isTranslated && hasBabel;
-  const requiredPlugins = [[corePlugin, markoConfig]];
+  recent.corePluginItem ||= createConfigItem([corePlugin, markoConfig], {
+    type: "plugin",
+  });
+  const requiredPlugins = [recent.corePluginItem];
   const baseBabelConfig = {
     filenameRelative: filename
       ? path.relative(markoModules.cwd, filename)
@@ -158,10 +200,12 @@ function getBaseBabelConfig(filename, { babelConfig, ...markoConfig }) {
 
   if (isTranslated) {
     if (markoConfig.modules === "cjs") {
-      baseBabelConfig.plugins.push([
-        pluginTransformModulesCommonjs,
-        { loose: true },
-      ]);
+      baseBabelConfig.plugins.push(
+        (commonjsPluginItem ||= createConfigItem(
+          [pluginTransformModulesCommonjs, { loose: true }],
+          { type: "plugin" },
+        )),
+      );
     }
   }
 
