@@ -537,9 +537,6 @@ export function getSignal(
           );
         }
 
-        const subscribeId = t.stringLiteral(
-          getResumeRegistryId(section, closure, "subscribe"),
-        );
         const ownerScope = isInParentSection(closure, section)
           ? undefined
           : t.arrowFunctionExpression(
@@ -553,25 +550,28 @@ export function getSignal(
         if (walked || (isPatch() && getCreatedSetup(section).has(closure))) {
           return callRuntime(
             "_closure_get_patch",
-            ...trimEmptyArgs([
-              subscribeId,
-              getClosureAccessorLiteral(closure),
-              render,
-              ownerScope,
-              walked && t.stringLiteral(getClosureSubscribersId(closure)),
-              walked &&
-                t.numericLiteral(getDynamicClosureIndex(closure, section)),
-            ]),
+            t.stringLiteral(getResumeRegistryId(section, closure, "subscribe")),
+            getClosureAccessorLiteral(closure),
+            render,
+            ownerScope,
+            walked && t.stringLiteral(getClosureSubscribersId(closure)),
+            walked &&
+              t.numericLiteral(getDynamicClosureIndex(closure, section)),
           );
         }
         return callRuntime(
           "_closure_get",
-          ...trimEmptyArgs([
-            getClosureAccessorLiteral(closure),
-            render,
-            ownerScope,
-            isChangeableDynamicClosure(section, closure) && subscribeId,
-          ]),
+          getClosureAccessorLiteral(closure),
+          render,
+          ownerScope,
+          // Match the HTML registration, which is gated on this subscriber
+          // section (writeHTMLResumeStatements); keying on any sibling closure
+          // section would ship a subscribe id that nothing looks up.
+          isChangeableDynamicClosure(section, closure)
+            ? t.stringLiteral(
+                getResumeRegistryId(section, closure, "subscribe"),
+              )
+            : undefined,
         );
       };
     }
