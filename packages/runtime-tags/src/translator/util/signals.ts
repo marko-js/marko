@@ -40,7 +40,6 @@ import {
   getFilledReferences,
   getPatchFillKey,
   getPatchFill,
-  getPatchWrite,
   fillSubscribes,
   getClosureReadSources,
   isResumedRead,
@@ -274,7 +273,6 @@ export function getContentClosureValues(bodySection: Section) {
     : [contentClosures];
   const ownerAccessor = getAccessorProp().Owner;
   const levels: t.Expression[] = [];
-  let written = false;
   for (let i = closures.length, section = bodySection.parent!; i;) {
     const props: t.ObjectProperty[] = [];
     while (i && closures[i - 1].section === section) {
@@ -285,7 +283,6 @@ export function getContentClosureValues(bodySection: Section) {
           getDeclaredBindingExpression(closure),
         ),
       );
-      written ||= isPatch() && !!getPatchWrite(closure).write;
     }
     // Resume walks up through each owner while the payload evaluates, before
     // any scope flush could link it, so every level below another links its owner.
@@ -300,7 +297,7 @@ export function getContentClosureValues(bodySection: Section) {
     levels.push(t.objectExpression(props));
     section = section.parent!;
   }
-  return { scope, levels: levels.reverse(), written };
+  return { scope, levels: levels.reverse() };
 }
 
 export const [getScopeProperties] = createOutputSectionState<
