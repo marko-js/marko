@@ -1820,9 +1820,8 @@ export function getClosureRenderGroups(closure: Binding, section: Section) {
   };
 }
 
-// A closure over a slot a patch writes, in structure the client may render (a `mixed`
-// setup): the write re-renders it there, where no entry of the flush reaches. One
-// further down is its parent's to feed, as a value signal feeds only its children.
+// A closure over a slot a patch writes, read by a child section the client may render (a
+// `mixed` setup): the write re-renders it where no entry reaches; that child notifies deeper ones.
 export function runsClosureByWrite(closure: Binding, section: Section) {
   const root = getCanonicalBinding(closure);
   return (
