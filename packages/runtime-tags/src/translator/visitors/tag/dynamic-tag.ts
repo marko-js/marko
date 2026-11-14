@@ -33,7 +33,6 @@ import {
   knownTagAnalyze,
   knownTagTranslateDOM,
   knownTagTranslateHTML,
-  nextIdSite,
 } from "../../util/known-tag";
 import { isOptimize, isOutputHTML, isPatch } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
@@ -47,6 +46,7 @@ import {
 import {
   getExprRootGroupArgs,
   getRendererGroupArgs,
+  nextIdSite,
 } from "../../util/patch/writers";
 import {
   addAlwaysReason,

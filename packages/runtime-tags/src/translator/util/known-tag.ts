@@ -78,6 +78,7 @@ import {
   getCallerGroupGuard,
   getGroupsConstant,
   mayHoldScopeBoundFn,
+  nextIdSite,
 } from "./patch/writers";
 import {
   addAlwaysReason,
@@ -143,11 +144,7 @@ import {
 } from "./signals";
 import { findSlot, ensureSlot, SlotKind } from "./slots";
 import { mergeSources, type Sources, withSources } from "./sources";
-import {
-  createAnalysisState,
-  createOutputSectionState,
-  createOutputState,
-} from "./state";
+import { createAnalysisState, createOutputSectionState } from "./state";
 import { hasScopeOffset } from "./structure";
 import { toMemberExpression, toObjectProperty } from "./to-property-name";
 import {
@@ -867,30 +864,6 @@ export function callsOtherTemplateSetup(section: Section) {
     }
   }
   return false;
-}
-
-// An `<id>`'s address numbers each call site rendering another scope's content
-// across its template: a branch adds nothing, so accessors could repeat.
-const [getIdSites, setIdSites] = createOutputState(() => 0);
-export function nextIdSite() {
-  const site = getIdSites();
-  setIdSites(site + 1);
-  return site;
-}
-
-// An `<if>`'s branches never render together, so each numbers its sites from
-// the first branch's, and what follows numbers past all of them.
-const [getBranchIdSites] = createOutputState(
-  () => new Map<object, [first: number, next: number]>(),
-);
-export function enterBranchIdSites(branches: object) {
-  const range = getBranchIdSites().get(branches);
-  if (range) setIdSites(range[0]);
-  else getBranchIdSites().set(branches, [getIdSites(), 0]);
-}
-export function exitBranchIdSites(branches: object) {
-  const range = getBranchIdSites().get(branches)!;
-  setIdSites((range[1] = Math.max(range[1], getIdSites())));
 }
 
 // Each group's serialize guard is its bit; groups sharing a guard still shift it

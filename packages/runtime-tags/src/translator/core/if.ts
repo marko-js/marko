@@ -23,10 +23,13 @@ import {
 } from "../util/branch-tag";
 import { getTagName } from "../util/get-tag-name";
 import { isConditionTag, isCoreTagName } from "../util/is-core-tag";
-import { enterBranchIdSites, exitBranchIdSites } from "../util/known-tag";
 import { linkBranchPatcher } from "../util/patch/decisions";
 import { patchesBranchesAt } from "../util/patch/structure";
-import { getExprRootGroupArgs } from "../util/patch/writers";
+import {
+  enterBranchIdSites,
+  exitBranchIdSites,
+  getExprRootGroupArgs,
+} from "../util/patch/writers";
 import { addReasonExprs, type Reasons } from "../util/reasons";
 import { mergeReferences } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";

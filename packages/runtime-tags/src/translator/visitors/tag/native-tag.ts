@@ -44,7 +44,6 @@ import {
 } from "../../util/get-accessor-enums";
 import { getTagName } from "../../util/get-tag-name";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
-import { nextIdSite } from "../../util/known-tag";
 import {
   getMarkoOpts,
   isOptimize,
@@ -66,6 +65,7 @@ import {
   buildPatchTextContent,
   getPatchControlArgs,
   getPatchHoleGroupArgs,
+  nextIdSite,
 } from "../../util/patch/writers";
 import { addAlwaysReason, addReasonExprs } from "../../util/reasons";
 import {
