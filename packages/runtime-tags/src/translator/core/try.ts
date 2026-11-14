@@ -16,7 +16,7 @@ import { getTagName } from "../util/get-tag-name";
 import { isPatch } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import { linkTryPatcher } from "../util/patch/decisions";
-import { getTryPatchArgs } from "../util/patch/writers";
+import { getPatchTryArgs } from "../util/patch/writers";
 import { mergeTagReferences } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
 import { absentArg, callRuntime, importRuntimeFeature } from "../util/runtime";
@@ -174,7 +174,7 @@ export default {
         ];
         if (isPatch()) {
           tryArgs.push(
-            ...getTryPatchArgs(getSectionForBody(tagBody)!, catchSection),
+            ...getPatchTryArgs(getSectionForBody(tagBody)!, catchSection),
           );
         }
 

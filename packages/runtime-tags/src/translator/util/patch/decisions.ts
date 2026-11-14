@@ -588,9 +588,8 @@ export function linkHolePatcher(
   }
 }
 
-// Records what the branch expression's params decide (structural params), and
-// links the feature patching the branches at the node and, where a caller may
-// pass client state, the one patching their rows in place.
+// Records the branch expression's structural params, and links the branches'
+// patcher and, where a caller may pass client state, their rows'.
 export function linkBranchPatcher(
   nodeBinding: Binding,
   branchExpr: t.NodeExtra,

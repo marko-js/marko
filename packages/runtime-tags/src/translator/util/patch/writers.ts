@@ -342,9 +342,8 @@ export function writePatchScript(
   return true;
 }
 
-// A section's patch entries beside its resume data: the setup a created scope
-// gets, and the intersection renders, an effect's in its `_script`. Returns
-// what the section's patch calls in `_scope`'s place.
+// A section's patch entries beside its resume data (a created scope's setup, the
+// intersection renders); returns what its patch calls in `_scope`'s place.
 export function writePatchResumeStatements(
   section: Section,
   body: t.Statement[],
@@ -909,7 +908,7 @@ function getOwnParamGroup(binding: Binding): OwnParamGroup | undefined {
 
 // A patch creates a `<try>` from its body's shell; an always-pairing body drops
 // it outside structure a flush may create.
-export function getTryPatchArgs(
+export function getPatchTryArgs(
   bodySection: Section,
   catchSection: Section | undefined,
 ) {
