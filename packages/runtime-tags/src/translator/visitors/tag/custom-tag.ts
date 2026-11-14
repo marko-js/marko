@@ -129,7 +129,7 @@ export default {
           path: getTagRelativePath(tag),
           hint: tagName,
         },
-        load,
+        load && true,
       );
     },
   },

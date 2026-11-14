@@ -24,7 +24,6 @@ import {
   type StructureRef,
 } from "./sections";
 import { createOutputState, createOutputSectionState } from "./state";
-import { type LoadImportConfig } from "./tag-import";
 import { withLeadingComment } from "./with-comment";
 
 const walkCodeToName = {
@@ -60,14 +59,14 @@ export function child(
   tag: t.NodePath<t.MarkoTag>,
   name: string,
   renderer?: StructureRef,
-  load?: LoadImportConfig,
+  lazy?: true,
 ) {
   getSection(tag).structure?.push({
     kind: StructureKind.Child,
     name,
     binding: tag.node.extra!.childScopeBinding!,
     renderer,
-    load,
+    lazy,
   });
 }
 
@@ -244,8 +243,8 @@ function resolveStructure(section: Section) {
           const withVar = hasScopeOffset(op.binding);
           // A shell composes a lazy child, as the flush creating it waits for
           // its module; the dom template leaves one to its own load.
-          const composed = isOutputHTML() && !!op.load;
-          const renderer = op.load && !composed ? undefined : op.renderer;
+          const composed = isOutputHTML() && !!op.lazy;
+          const renderer = op.lazy && !composed ? undefined : op.renderer;
           // The walk steps over a lazy child's marker: into the composed
           // child, or past the one its load renders.
           if (composed) resolved.steps.push(Step.Enter, Step.Exit);
@@ -275,7 +274,7 @@ function resolveStructure(section: Section) {
             resolved.walks.push(walks, "");
           }
           appendLiteral(resolved.walks, String.fromCharCode(WalkCode.EndChild));
-          if (op.load && !composed) resolved.steps.push(Step.Enter, Step.Exit);
+          if (op.lazy && !composed) resolved.steps.push(Step.Enter, Step.Exit);
           break;
         }
       }
