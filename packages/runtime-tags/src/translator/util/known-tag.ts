@@ -73,8 +73,10 @@ import {
   recordStructuralParams,
 } from "./patch/structure";
 import {
+  buildGroupsValue,
   getCallerGroupBit,
   getCallerGroupGuard,
+  getGroupsConstant,
   mayHoldScopeBoundFn,
 } from "./patch/writers";
 import {
@@ -162,11 +164,9 @@ import translateVar, {
 } from "./translate-var";
 import {
   andGuard,
-  buildGroupsValue,
   buildGroupMask,
   getExprIfWritten,
   getWriteGuard,
-  getGroupsConstant,
   getWriteReason,
   isEverWritten,
   scopePageIdentifier,

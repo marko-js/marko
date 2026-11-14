@@ -93,18 +93,16 @@ import { toObjectProperty } from "../to-property-name";
 import { withLeadingComment } from "../with-comment";
 import {
   andGuard,
-  buildComposedGroupValue,
-  buildGroupsValue,
   buildGroupMask,
   getEmittedReasonStatement,
   getExprIfWritten,
   getGroupArgs,
-  getGroupsConstant,
   getOrShareGroupCheck,
   getOrShareSectionGuard,
   getPatchCheckBit,
   getReasonSection,
   getStaticGroupBit,
+  getStaticGroupValue,
   getWriteReason,
   type GroupCheck,
   isDynamicWriteGuard,
@@ -1820,4 +1818,54 @@ function readsAsDynamicTagInput(holder: Binding) {
 
 function isDynamicTagInput(expr: t.NodeExtra) {
   return expr.tagNameType === TagNameType.DynamicTag;
+}
+
+// The 2-bit value caller groups pass together, or'd into `bits`, where every call
+// passes each as a constant; undefined where one composes at render.
+export function getGroupsConstant(
+  groups: [Section, ParamReasonGroup][],
+  bits: number,
+) {
+  for (const [section, group] of groups) {
+    const value = getStaticGroupValue(section, group);
+    if (value === undefined) return;
+    bits |= value;
+  }
+  return bits;
+}
+
+// The same as a mask value: what a child's mask composes for them, a constant group
+// folded into `bits`, the rest read at render.
+export function buildGroupsValue(
+  groups: [Section, ParamReasonGroup][],
+  bits: number,
+) {
+  let composed: t.Expression | undefined;
+  for (const [section, group] of groups) {
+    const value = getStaticGroupValue(section, group);
+    if (value === undefined) composed = orMaskGroup(composed, section, group);
+    else bits |= value;
+  }
+  if (!composed) return bits;
+  return bits
+    ? t.binaryExpression("|", t.numericLiteral(bits), composed)
+    : composed;
+}
+
+// The groups' bits or'd at render.
+export function buildComposedGroupValue(groups: [Section, ParamReasonGroup][]) {
+  let value: t.Expression | undefined;
+  for (const [section, group] of groups) {
+    value = orMaskGroup(value, section, group);
+  }
+  return value!;
+}
+
+function orMaskGroup(
+  value: t.Expression | undefined,
+  section: Section,
+  group: ParamReasonGroup,
+) {
+  const bits = getOrShareSectionGuard(section, group, "_updates_from");
+  return value ? t.binaryExpression("|", value, bits) : bits;
 }
