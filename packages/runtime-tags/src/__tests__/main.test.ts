@@ -111,8 +111,8 @@ export type TestConfig = {
    * when the page left for the back/forward cache), so later steps still run.
    */
   stay_on_rejection?: true;
-  /** Compares a patched page's control defaults, not live values, with a
-   * fresh render (a patch refreshes defaults and leaves typed input). */
+  /** Compares control defaults, which a patch refreshes, not the live values it keeps, with a
+   * fresh render; an existing `<details>` keeps its `open`, which no fresh render shows. */
   compare_defaults?: boolean;
   skip_dom?: boolean;
   skip_html?: boolean;

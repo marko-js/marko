@@ -266,7 +266,7 @@ function normalizeTree(source: Node, target: Node, ignoredNodes: ChildNode[]) {
       if (source.defaultSelected && !source.selected) {
         target.setAttribute("default-selected", "");
       }
-      if (source.selected) {
+      if (printDefaults ? source.defaultSelected : source.selected) {
         target.setAttribute("selected", "");
       } else {
         target.removeAttribute("selected");
