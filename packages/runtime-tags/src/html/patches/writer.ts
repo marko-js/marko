@@ -60,7 +60,7 @@ export function _id(declaration: string) {
 
 // The hops a render is under, two entries each (kind, value), and the first
 // `built` addresses of them.
-export interface IdPath {
+interface IdPath {
   path: (string | number | [Accessor, number])[];
   depth: number;
   addresses: string[];
@@ -134,7 +134,7 @@ export function walkMarkers(state: State) {
 // derives from a group updating from the client): no patch fills its reads.
 const kUnpatched = Symbol("Unpatched");
 
-export function inUnpatched() {
+function inUnpatched() {
   return !!getContext(kUnpatched);
 }
 
@@ -205,11 +205,7 @@ export function addClientBranch(
 
 // The setup ids a setup envelope names, each written once: several locals may
 // derive from one closure.
-export function addSetupId(
-  state: PatchRenderState,
-  scopeId: number,
-  id: string,
-) {
+function addSetupId(state: PatchRenderState, scopeId: number, id: string) {
   const setup = ensurePatchSetup(state, scopeId);
   const setupIds = (state.setupIds ??= new Map());
   let ids = setupIds.get(setup);
@@ -364,7 +360,7 @@ export function _client_guard(mask: GroupMask, group?: number) {
 }
 
 // How a scope's patch reaches its parent's entry.
-export interface PatchLink {
+interface PatchLink {
   parent: number;
   // A child accessor, or a loop item: its index, with its key when not that.
   hop:

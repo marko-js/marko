@@ -84,7 +84,7 @@ function renderPatch(
 }
 
 /** A request's headers: a `Headers` or a plain record. */
-export type PatchHeaders =
+type PatchHeaders =
   | Record<string, string | undefined>
   | { get(name: string): string | null };
 

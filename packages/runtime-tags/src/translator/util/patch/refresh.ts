@@ -451,7 +451,7 @@ export const fillsInitialValue = createPassMemo(
 
 // A scope a flush writes into: a known child, attribute tag `<for>` content, or one
 // it creates.
-export function patchFillsScope(section: Section) {
+function patchFillsScope(section: Section) {
   return (
     (patchFillsSection(section) &&
       (isKnownChild(section) || !!section.localClosures)) ||
@@ -524,7 +524,7 @@ function readsPastRenders(binding: Binding) {
 
 // An unfilled read reaches the value: one reads it or an alias, or calls a function built from
 // it, which never travels as data (main's `_const` builds it from the `<let>`'s fill).
-export const reachesUnfilledRead = createPassMemo(
+const reachesUnfilledRead = createPassMemo(
   (binding: Binding): boolean =>
     someAlias(binding, someBindingRead, isUnfilledReadOf) ||
     buildsReachedFn(binding),
@@ -1109,7 +1109,7 @@ function clientMayRender(section: Section) {
 
 // Content a flush can't reach by data (below `upTo`), or unpatched structure: no
 // caller's params decide.
-export function clientMayRenderInAnyCall(section: Section, upTo?: Section) {
+function clientMayRenderInAnyCall(section: Section, upTo?: Section) {
   return (
     !!getClientRenderedContents(section, upTo) || !patchFillsSection(section)
   );
@@ -1569,36 +1569,33 @@ function passesClientState(passed: Sources | undefined) {
 
 // An intersection of params, one a caller passes, whose reads the patch leaves to holes
 // and effect entries: where its group mixes, a member's fill or the render re-runs it.
-export const isFilledIntersection = createPassMemo(
-  (intersection: Intersection) => {
-    const sources = getSourcesForReferencedBindings(intersection);
-    if (!Array.isArray(sources?.param)) return false;
-    let section: Section | undefined;
-    for (const read of intersection[0].reads.keys()) {
-      if (getReferencedBindings(read) === intersection) {
-        if (!leavesReadToPatch(read)) return false;
-        section = read.section;
-      }
+const isFilledIntersection = createPassMemo((intersection: Intersection) => {
+  const sources = getSourcesForReferencedBindings(intersection);
+  if (!Array.isArray(sources?.param)) return false;
+  let section: Section | undefined;
+  for (const read of intersection[0].reads.keys()) {
+    if (getReferencedBindings(read) === intersection) {
+      if (!leavesReadToPatch(read)) return false;
+      section = read.section;
     }
-    // Every caller asks for an intersection a read references, which sets `section`.
-    return (
-      hasTagCallerParamAt(sources, section!) &&
-      !(
-        isPassedStateByEveryCall(sources, true) &&
-        // A member another intersection reads keeps it written: its key would ship for both.
-        every(
-          intersection,
-          (member) => !readsOtherIntersection(member, intersection),
-        )
+  }
+  // Every caller asks for an intersection a read references, which sets `section`.
+  return (
+    hasTagCallerParamAt(sources, section!) &&
+    !(
+      isPassedStateByEveryCall(sources, true) &&
+      // A member another intersection reads keeps it written: its key would ship for both.
+      every(
+        intersection,
+        (member) => !readsOtherIntersection(member, intersection),
       )
-    );
-  },
-  false,
-);
+    )
+  );
+}, false);
 
 // A read the patch leaves to the holes it writes, the effects its entries
 // re-run and the calls whose callees keep their inputs, through derived values.
-export function leavesReadToPatch(read: ReferencedExtra): boolean {
+function leavesReadToPatch(read: ReferencedExtra): boolean {
   return !rendersAtSite(read) && !someExprRead(read, rendersDirectlyAtSite);
 }
 
