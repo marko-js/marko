@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		const { bar: $bar } = void 0 !== $foo ? $foo : { bar: 2 };
 		const bar = void 0 !== $bar ? $bar : 1;
-		_html(`<div class=a>${_text_mark($scope1_id, "#text/0", bar, 0)} ${_text_mark($scope1_id, "#text/1", typeof foo, 0 * 2)}</div>`);
+		_html(`<div class=a>${_escape(bar)} ${_escape(typeof foo)}</div>`);
 	}, $scope0_id) };
 	ChildA.content({ foo: { bar: 0 } });
 	ChildA.content({ foo: {} });
@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const { bar: $bar2 } = void 0 !== input.foo ? input.foo : { bar: 2 };
 		const bar = void 0 !== $bar2 ? $bar2 : 1;
-		_html(`<div class=b>${_text_mark($scope2_id, "#text/0", bar, 0)} ${_text_mark($scope2_id, "#text/1", typeof input.foo, 0 * 2)}</div>`);
+		_html(`<div class=b>${_escape(bar)} ${_escape(typeof input.foo)}</div>`);
 	}, $scope0_id) };
 	ChildB.content({ foo: { bar: 0 } });
 	ChildB.content({ foo: {} });

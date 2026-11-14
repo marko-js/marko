@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 				const $scope2_id = _scope_id();
 				{
 					const $scope3_id = _scope_id();
-					_html(`<div>${_text_mark($scope3_id, "a", input.name || "Fallback", 0)}</div>`);
+					_html(`<div>${_escape(input.name || "Fallback")}</div>`);
 					_scope($scope3_id, { _: _scope_with_id($scope2_id) });
 				}
 				_scope($scope2_id, { _: _scope_with_id($scope1_id) });

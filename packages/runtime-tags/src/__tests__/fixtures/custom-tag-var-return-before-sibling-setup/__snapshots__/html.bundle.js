@@ -18,16 +18,16 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	_content("a1", ({ color }) => {
-		const $scope1_id = _scope_id();
+		_scope_id();
 		_scope_reason();
-		_html(`${_style_html(`--M_a0:${_escape_style_value(color)};`)}${_el_mark($scope1_id, "a", 0)}<div class=box></div>`);
+		_html(`${_style_html(`--M_a0:${_escape_style_value(color)};`)}<div class=box></div>`);
 	}, $scope0_id);
 	_content("a2", ({ value }) => {
 		const $scope3_id = _scope_id();
 		_scope_reason();
 		_await($scope3_id, "a", value, (v) => {
-			const $scope4_id = _scope_id();
-			_html(`<span>${_text_mark($scope4_id, "a", v, 0)}</span>`);
+			_scope_id();
+			_html(`<span>${_escape(v)}</span>`);
 		}, 0);
 	}, $scope0_id);
 	let top = child_default({});

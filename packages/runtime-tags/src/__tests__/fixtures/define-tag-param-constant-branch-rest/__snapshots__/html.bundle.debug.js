@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (on) {
 				const $scope2_id = _scope_id();
 				const { foo: $foo, ...rest } = item;
-				_html(`<span${_attrs(rest, "#span/0", $scope2_id, "span")}>${_text_mark($scope2_id, "#text/1", item.foo, 0)}</span>${_el_mark($scope2_id, "#span/0")}`);
+				_html(`<span${_attrs(rest, "#span/0", $scope2_id, "span")}>${_escape(item.foo)}</span>${_el_mark($scope2_id, "#span/0")}`);
 				_script($scope2_id, "__tests__/template.marko_2_rest#1:6");
 				_scope($scope2_id, {}, "__tests__/template.marko", "2:4", { "EventAttributes:#span/0": ["...rest", "4:14"] });
 				return 0;

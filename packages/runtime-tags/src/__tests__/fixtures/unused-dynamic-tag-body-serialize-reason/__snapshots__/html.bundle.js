@@ -15,9 +15,9 @@ var template_default = _template("a", (input) => {
 		});
 	}, $scope0_id) };
 	const Message = { content: _content("a2", (input) => {
-		const $scope2_id = _scope_id();
+		_scope_id();
 		_scope_reason();
-		_html(_text_mark($scope2_id, "a", input.before + input.after, 0));
+		_html(_escape(input.before + input.after));
 	}, $scope0_id) };
 	let x = 1;
 	_set_scope_reason(162);

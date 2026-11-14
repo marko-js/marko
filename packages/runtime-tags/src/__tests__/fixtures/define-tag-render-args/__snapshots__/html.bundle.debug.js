@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		const c = void 0 !== $c ? $c : a + 1;
-		_html(`<div>${_text_mark($scope1_id, "#text/0", a, _write_guard($scope1_reason, 2))}|${_text_mark($scope1_id, "#text/1", b, 0 * 2)}|${_text_mark($scope1_id, "#text/2", c, 2)}</div>`);
+		_html(`<div>${_text_mark($scope1_id, "#text/0", a, _write_guard($scope1_reason, 2))}|${_escape(b)}|${_text_mark($scope1_id, "#text/2", c, 2)}</div>`);
 		_scope($scope1_id, {
 			a: _write_if($scope1_reason, 4) && a,
 			$c: _write_if($scope1_reason, 2) && $c

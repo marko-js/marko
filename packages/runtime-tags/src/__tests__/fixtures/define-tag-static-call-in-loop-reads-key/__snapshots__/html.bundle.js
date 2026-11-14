@@ -5,9 +5,9 @@ var template_default = _template("a", (input) => {
 	forTo(2, 1, 1, (i) => {
 		const $scope1_id = _scope_id();
 		({ content: _content("a0", ({ q }) => {
-			const $scope2_id = _scope_id();
+			_scope_id();
 			_scope_reason();
-			_html(`<span>${_text_mark($scope2_id, "a", i > q, 0)}</span>`);
+			_html(`<span>${_escape(i > q)}</span>`);
 		}, $scope1_id) }).content({ q: 1 });
 	});
 }, 1);

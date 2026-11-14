@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 	const MyTag = { content: _content("a0", ({ name, count }) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<div>Hello ${_text_mark($scope1_id, "a", name, 0)} ${_text_mark($scope1_id, "b", count, 2)}</div>`);
+		_html(`<div>Hello ${_escape(name)} ${_text_mark($scope1_id, "b", count, 2)}</div>`);
 		_scope($scope1_id, {});
 	}, $scope0_id) };
 	_set_scope_reason(34);

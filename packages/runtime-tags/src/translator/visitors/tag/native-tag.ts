@@ -102,7 +102,7 @@ import {
 } from "../../util/to-property-name";
 import { propsToExpression } from "../../util/translate-attrs";
 import { type TemplateVisitor, translateByTarget } from "../../util/visitors";
-import { getWriteGuard, getWriteReason } from "../../util/write-guard";
+import { getMarkerGuard, getWriteReason } from "../../util/write-guard";
 import * as writer from "../../util/writer";
 
 const kNodeOp = Symbol("native tag structure node");
@@ -788,20 +788,12 @@ export default {
                 nodeAccessor,
                 getScopeIdIdentifier(tagSection),
                 contentAttr.value,
-                getWriteGuard(
-                  tagSection,
-                  nodeBinding && getWriteReason(nodeBinding),
-                  true,
-                ),
+                getMarkerGuard(nodeBinding!),
               ),
             ),
           ];
         } else if (spreadContent) {
-          const markerGuard = getWriteGuard(
-            tagSection,
-            nodeBinding && getWriteReason(nodeBinding),
-            true,
-          );
+          const markerGuard = getMarkerGuard(nodeBinding!);
           htmlContentAttrTags.add(tag.node);
           (tag.node.body.body as t.Statement[]) = [
             skipExpression
@@ -911,7 +903,7 @@ export default {
         }
 
         if (markerReason) {
-          writer.markNode(tag, nodeBinding, markerReason, tagName === "html");
+          writer.markNode(tag, nodeBinding, tagName === "html");
         }
 
         replaceWithStatements(tag, statements);
