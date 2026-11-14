@@ -179,6 +179,8 @@ function writePatchTreeNode(
   accessor: string,
   patchTreeNodes: Set<object>,
 ) {
+  // A flush nests a literal per level of structure: past about 500 levels a browser can't
+  // parse it, and deeper still this recursion overflows; either way the page loads the document.
   const ref = new Reference(parent, accessor, state.flushId, state.buf.length);
   ref.channel = state.channel;
   if (Array.isArray(node)) {

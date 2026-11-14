@@ -225,6 +225,8 @@ function hasUngatedSource(sources: Sources) {
   return !!sources.global || !every(sources.param, isCallerParam);
 }
 
+// A content body's tag params (`<popover|Context|>`) have no caller group, so a patch
+// writes what reads them every time, even when the child renders the body with the same values.
 function isCallerParam(binding: ParamBinding) {
   return isKnownChild(binding.section);
 }
