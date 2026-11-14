@@ -1,10 +1,10 @@
 // Analyze-side structure facts for patches, in template terms; group guards
 // and wire channels belong to ./decisions, ./refresh, ./writers.
 import { type Binding, bindingUtil } from "../bindings";
-import { createPassMemo } from "../cyclic-memo";
+import { createPassMemo, createPassPathMemo } from "../cyclic-memo";
 import { everyCallPasses, type KnownTagExtra } from "../known-tag";
 import { isPatch } from "../marko-config";
-import { first, reduce, some } from "../optional";
+import { first, type Opt, reduce, some } from "../optional";
 import {
   addStructuralParams,
   getSourcesForDerived,
@@ -19,7 +19,11 @@ import {
   type ParamReasonGroup,
   type Section,
 } from "../sections";
-import { isRenderedContent, someContentRead } from "../solve-reasons";
+import {
+  isRenderedContent,
+  someContentRead,
+  someReachedRead,
+} from "../solve-reasons";
 import { type Sources } from "../sources";
 import { hasClientState, hasParamOrGlobalSource } from "./decisions";
 
@@ -90,14 +94,36 @@ function isPatchedLeaf(read: ReferencedExtra) {
 // some, or every one where no patched read or call outside stateful structure is left.
 export const getStatefulConsumers = createPassMemo(
   (section: Section): "some" | "every" | undefined => {
-    if (!section.derives || !someContentRead(section, isStatefulRead)) return;
+    const { derives } = section;
+    if (!derives || !someReaches(derives, reachesStatefulRead)) return;
     return some(section.renderedBy, isPatchedCall) ||
-      someContentRead(section, isPatchedLeaf)
+      someReaches(derives, reachesPatchedLeaf)
       ? "some"
       : "every";
   },
   undefined,
 );
+
+// Whether content passed at a binding and path reaches a stateful read, or a
+// patched leaf: one answer for every content section passed there.
+const reachesStatefulRead = createPassPathMemo(
+  (binding: Binding, path: Opt<string> | true) =>
+    someReachedRead(binding, path, isStatefulRead),
+  false,
+);
+
+const reachesPatchedLeaf = createPassPathMemo(
+  (binding: Binding, path: Opt<string> | true) =>
+    someReachedRead(binding, path, isPatchedLeaf),
+  false,
+);
+
+function someReaches(
+  { binding, properties }: NonNullable<Section["derives"]>,
+  reaches: (binding: Binding, path: Opt<string> | true) => boolean,
+) {
+  return some(binding, (part) => reaches(part, properties));
+}
 
 function isPatchedCall(call: KnownTagExtra) {
   return !inStatefulStructure(call.childScopeBinding.section);
