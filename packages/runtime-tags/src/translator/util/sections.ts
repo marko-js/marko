@@ -50,7 +50,6 @@ import { ALWAYS, mergeSources, type Sources } from "./sources";
 import { createOutputSectionState } from "./state";
 import { getPlaceholderContentType } from "./static-text";
 import { getTagContentType, getTagFacts } from "./tag-facts";
-import { type LoadImportConfig } from "./tag-import";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 import {
   getBranchWriteReason,
@@ -124,9 +123,8 @@ export interface StructureChild {
   name: string;
   binding: Binding;
   renderer?: StructureRef;
-  // A lazy child: its import's load config. It renders at the marker before
-  // it, which the walk steps over.
-  load?: LoadImportConfig;
+  // A lazy child: it renders at the marker before it, which the walk steps over.
+  lazy?: true;
 }
 
 // A module read written into the markup, read when the module loads.

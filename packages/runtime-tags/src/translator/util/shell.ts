@@ -402,7 +402,7 @@ function composesLazyMarkup(op: StructureOp) {
   return (
     typeof op === "object" &&
     op.kind === StructureKind.Child &&
-    (!!op.load ||
+    (!!op.lazy ||
       (!!op.renderer &&
         includesLazyMarkup(
           op.renderer.kind === StructureKind.SectionRef
