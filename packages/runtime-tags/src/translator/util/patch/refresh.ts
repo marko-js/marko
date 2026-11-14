@@ -127,8 +127,6 @@ interface PatchFill {
   fill?: boolean;
   derivedNeeds?: true | FillConditions;
   effectRead?: boolean;
-  /** A function client code reads, or a flush seeds, references it. */
-  fnReference?: boolean;
   writeReads?: boolean;
   ownRegistration?: boolean;
   filledMembers?: SortedOpt<Sources>;
@@ -176,7 +174,6 @@ function computePatchFill(binding: Binding): PatchFill {
     fill,
     derivedNeeds,
     effectRead,
-    fnReference,
     // A filled value effects, function references or an intersection a write's
     // render reads: written where a flush writes its scope.
     writeReads:

@@ -464,10 +464,7 @@ export function getSignal(
             referencedBindings.closureSections ||
             referencedBindings.hoists ||
             referencedBindings.localOf ||
-            getWriteReason(referencedBindings) ||
-            // A registered function reads what it references from the scope,
-            // though a seeded one gives it no reason.
-            (isPatch() && getPatchFill(referencedBindings).fnReference))
+            getWriteReason(referencedBindings))
         ),
         forceStore: false,
         inline: undefined,
