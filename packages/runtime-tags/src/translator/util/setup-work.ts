@@ -50,14 +50,17 @@ function setCallSectionSetup(call: KnownTagExtra) {
 }
 
 function hasOwnSetupWork(section: Section) {
+  const info = getSetupInfo(section);
   // Setup subscribes the section to the closures it reads, and sets up another
   // template it renders.
-  return (
-    getSetupInfo(section).always ||
-    !!section.referencedClosures ||
-    callsOtherTemplateSetup(section) ||
-    hasSetupWorkReadingNothing(section)
-  );
+  if (
+    info.always ||
+    section.referencedClosures ||
+    callsOtherTemplateSetup(section)
+  ) {
+    return true;
+  }
+  return hasSetupWorkReadingNothing(section);
 }
 
 // Whether the section's setup runs work reading nothing, but for the expressions
