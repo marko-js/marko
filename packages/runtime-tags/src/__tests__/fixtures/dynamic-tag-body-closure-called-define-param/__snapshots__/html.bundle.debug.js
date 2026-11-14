@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (input.on) {
 				const $scope2_id = _scope_id();
-				_html(`<em>${_text_mark($scope2_id, "#text/0", label, 0)} ${_text_mark($scope2_id, "#text/1", input.note, $wg__input_note * 2)}</em>`);
+				_html(`<em>${_escape(label)} ${_text_mark($scope2_id, "#text/1", input.note, $wg__input_note * 2)}</em>`);
 				$wi__input_on__OR__input_note && _subscribe($wi__input_note && $input_note__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4"), "__tests__/template.marko_2_input_note#0:4/subscribe", $wg__input_note);
 				return 0;
 			}

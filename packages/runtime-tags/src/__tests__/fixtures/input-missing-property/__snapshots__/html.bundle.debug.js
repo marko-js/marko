@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_id = _scope_id();
 				if (true) {
 					const $scope3_id = _scope_id();
-					_html(`<div>${_text_mark($scope3_id, "#text/0", input.name || "Fallback", 0)}</div>`);
+					_html(`<div>${_escape(input.name || "Fallback")}</div>`);
 					_scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "8:6");
 				}
 				_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4");

@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		const c = void 0 !== $c ? $c : a + 1;
-		_html(`<div>${_text_mark($scope1_id, "a", a, _write_guard($scope1_reason, 2))}|${_text_mark($scope1_id, "b", b, 0)}|${_text_mark($scope1_id, "c", c, 2)}</div>`);
+		_html(`<div>${_text_mark($scope1_id, "a", a, _write_guard($scope1_reason, 2))}|${_escape(b)}|${_text_mark($scope1_id, "c", c, 2)}</div>`);
 		_scope($scope1_id, {
 			e: _write_if($scope1_reason, 4) && a,
 			g: _write_if($scope1_reason, 2) && $c

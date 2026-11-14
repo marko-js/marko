@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const MyTag = { content: _content("__tests__/template.marko_2*content", (a, b, c) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		_html(`<div>${_text_mark($scope2_id, "#text/0", b, 0)}|${_text_mark($scope2_id, "#text/1", c, 2)}</div>`);
+		_html(`<div>${_escape(b)}|${_text_mark($scope2_id, "#text/1", c, 2)}</div>`);
 		_scope($scope2_id, {}, "__tests__/template.marko", "2:2");
 	}, $scope0_id) };
 	const Wrap = { content: _content("__tests__/template.marko_3*content", (a, opts) => {
@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Titled = { content: _content("__tests__/template.marko_4*content", (a, opts) => {
 		const $scope4_id = _scope_id();
 		const $scope4_reason = _scope_reason();
-		_html(`<h1>${_text_mark($scope4_id, "#text/0", opts.title, 0)}</h1>`);
+		_html(`<h1>${_escape(opts.title)}</h1>`);
 	}, $scope0_id) };
 	_set_scope_reason(34);
 	const $childScope = _peek_scope_id();

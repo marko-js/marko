@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			} else {
 				const $scope4_id = _scope_id();
-				_html(_text_mark($scope4_id, "#text/0", JSON.stringify(input.message), 0 * 2));
+				_html(_escape(JSON.stringify(input.message)));
 				return 1;
 			}
 		}, $scope1_id, "#text/0", 0, 0);

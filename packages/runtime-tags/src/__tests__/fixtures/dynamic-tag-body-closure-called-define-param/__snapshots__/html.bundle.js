@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 		_if(() => {
 			if (input.on) {
 				const $scope2_id = _scope_id();
-				_html(`<em>${_text_mark($scope2_id, "a", label, 0)} ${_text_mark($scope2_id, "b", input.note, $wg__input_note * 2)}</em>`);
+				_html(`<em>${_escape(label)} ${_text_mark($scope2_id, "b", input.note, $wg__input_note * 2)}</em>`);
 				$wi__input_on__OR__input_note && _subscribe($wi__input_note && $input_note__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a0", $wg__input_note);
 				return 0;
 			}

@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		const { title, ...rest } = input;
-		_html(`<h1>${_text_mark($scope1_id, "a", title)}</h1><p>${_text_mark($scope1_id, "b", input.body, 0)}</p>`);
+		_html(`<h1>${_text_mark($scope1_id, "a", title)}</h1><p>${_escape(input.body)}</p>`);
 		_scope($scope1_id, {});
 	}, $scope0_id) };
 	let t = "a";

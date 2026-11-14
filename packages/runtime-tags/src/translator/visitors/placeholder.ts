@@ -31,7 +31,7 @@ import {
 import * as structure from "../util/structure";
 import { isInTextBody } from "../util/tag-facts";
 import type { TemplateVisitor } from "../util/visitors";
-import { getWriteGuard, getWriteReason } from "../util/write-guard";
+import { getMarkerGuard, isMarkerWritten } from "../util/write-guard";
 import * as writer from "../util/writer";
 
 const kTextAfter = Symbol("text may merge after the placeholder");
@@ -141,17 +141,15 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     }
   } else {
     const section = getSection(placeholder);
-    const markerReason = nodeBinding && getWriteReason(nodeBinding);
-
     if (isHTML) {
-      if (markerReason) {
+      if (nodeBinding && isMarkerWritten(nodeBinding)) {
         // `2` (or a guard scaled to 0/2) also asks the runtime to write a
         // `<!>` between non-empty text and the mergeable text before it.
-        const guard = getWriteGuard(section, markerReason, true);
+        const guard = getMarkerGuard(nodeBinding);
         write`${callRuntime(
           node.escape ? "_text_mark" : "_html_mark",
           getScopeIdIdentifier(section),
-          getScopeAccessorLiteral(nodeBinding!),
+          getScopeAccessorLiteral(nodeBinding),
           value,
           (extra.textBefore ?? getSectionTextBefore(section) ?? true)
             ? guard

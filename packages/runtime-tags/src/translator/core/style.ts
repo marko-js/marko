@@ -44,7 +44,6 @@ import {
   htmlStyleTagAlternateMsg,
 } from "../util/style-interpolation";
 import { translateByTarget } from "../util/visitors";
-import { getWriteReason } from "../util/write-guard";
 import * as writer from "../util/writer";
 
 const kStyleImportPath = Symbol("style import path");
@@ -217,7 +216,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
 
   if (binding) {
     writer.writeTo(tag)`${callRuntime("_style_html", buildStyleDecls(node))}`;
-    writer.markNode(tag, binding, getWriteReason(binding));
+    writer.markNode(tag, binding);
   }
 
   emitStyleImport(tag);

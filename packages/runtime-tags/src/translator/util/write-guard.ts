@@ -122,6 +122,17 @@ export function getWriteReason(binding: Binding) {
   return findSlot(binding)?.reason;
 }
 
+// The guard a node's resume marker writes under, from its slot's write reason:
+// none where it always writes.
+export function getMarkerGuard(nodeBinding: Binding) {
+  return getWriteGuard(nodeBinding.section, getWriteReason(nodeBinding), true);
+}
+
+// Whether a node's resume marker is ever written: its guard isn't the constant never.
+export function isMarkerWritten(nodeBinding: Binding) {
+  return getWriteBit(nodeBinding.section, getWriteReason(nodeBinding)) !== 0;
+}
+
 // A branch's write reason: whether the server writes the scope it resumes.
 export function getBranchWriteReason(section: Section) {
   return findSectionSlot(section, SlotKind.Branch)?.reason;

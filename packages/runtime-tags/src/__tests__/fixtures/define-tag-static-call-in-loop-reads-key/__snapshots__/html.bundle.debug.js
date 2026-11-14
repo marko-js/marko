@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const D = { content: _content("__tests__/template.marko_2*content", ({ q }) => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason();
-			_html(`<span>${_text_mark($scope2_id, "#text/0", i > q, 0)}</span>`);
+			_html(`<span>${_escape(i > q)}</span>`);
 		}, $scope1_id) };
 		D.content({ q: 1 });
 	});

@@ -12,8 +12,8 @@ var template_default = _template("a", (input) => {
 				Foo.content({ message: input.bar });
 				return 0;
 			} else {
-				const $scope4_id = _scope_id();
-				_html(_text_mark($scope4_id, "a", JSON.stringify(input.message), 0));
+				_scope_id();
+				_html(_escape(JSON.stringify(input.message)));
 				return 1;
 			}
 		}, $scope1_id, "a", 0, 0);

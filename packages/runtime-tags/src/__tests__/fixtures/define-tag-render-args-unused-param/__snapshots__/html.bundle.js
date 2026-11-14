@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 	const MyTag = { content: _content("a0", (a, b, c) => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
-		_html(`<div>${_text_mark($scope2_id, "a", b, 0)}|${_text_mark($scope2_id, "b", c, 2)}</div>`);
+		_html(`<div>${_escape(b)}|${_text_mark($scope2_id, "b", c, 2)}</div>`);
 		_scope($scope2_id, {});
 	}, $scope0_id) };
 	const Wrap = { content: _content("a1", (a, opts) => {
@@ -18,9 +18,9 @@ var template_default = _template("a", (input) => {
 		_html("</p>");
 	}, $scope0_id) };
 	const Titled = { content: _content("a2", (a, opts) => {
-		const $scope4_id = _scope_id();
+		_scope_id();
 		_scope_reason();
-		_html(`<h1>${_text_mark($scope4_id, "a", opts.title, 0)}</h1>`);
+		_html(`<h1>${_escape(opts.title)}</h1>`);
 	}, $scope0_id) };
 	_set_scope_reason(34);
 	const $childScope = _peek_scope_id();
