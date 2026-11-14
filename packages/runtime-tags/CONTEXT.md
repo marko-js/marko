@@ -477,8 +477,7 @@ say which side acts on a param group:
 scope needs the seed), `_unfilled_if` (no patch fills it: the group is
 client-sourced, or the read sits in unpatched structure, unless the value is a `<define>`
 param a call passes as a module read from structure the client renders, which
-the call's forwards there push first: `derivesConstantParam`). Translate derives reads no patch can
-fill (`PatchWrite.unfillable`), never the gate.
+the call's forwards there push first: `derivesConstantParam`).
 A read is _unfilled_ where client state makes client code run it and no patch fills
 it. Where a patch may create structure, the page holds what the patch leaves to client
 code there, the values an unfilled read reaches (`reachesUnfilledRead`), not what a

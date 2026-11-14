@@ -131,7 +131,6 @@ interface PatchFill {
 interface PatchWrite {
   write?: boolean;
   effect?: boolean;
-  unfillable?: boolean;
 }
 
 const UNREAD: PatchFill & PatchWrite = {};
@@ -185,14 +184,12 @@ function computePatchFill(binding: Binding): PatchFill {
   };
 }
 
-// Each write (content's once its shell ships) and unfillable read.
+// Each write (content's once its shell ships).
 function computePatchWrite(binding: Binding): PatchWrite {
   const write = isPatchWritten(binding) && leavesReadUnfilled(binding);
-  const { sources } = binding;
   return {
     write,
     effect: getPatchFill(binding).effectRead && write,
-    unfillable: !!sources?.param && !sources.global && !patchRefreshes(binding),
   };
 }
 
@@ -1639,41 +1636,6 @@ function getFilledMembers(kind: true | FillConditions | undefined) {
     !(kind.structure || kind.intersections || kind.contents)
     ? kind.members
     : undefined;
-}
-
-// The caller params a `$global` signal reads unfilled: a changed key re-runs it
-// only where they update from the client.
-export function getUnfillableSources(refs: ReferencedBindings) {
-  return getSourcesForReferencedBindings(
-    bindingUtil.filter(refs, isUnfillablePatchRead),
-  );
-}
-
-// Server-sourced reads a patch cannot keep current: param-sourced bindings
-// a patch neither fills nor writes read stale after any patch render.
-function isUnfillablePatchRead(binding: Binding) {
-  return !!getPatchWrite(binding).unfillable;
-}
-
-// A patch fills a known child's value (a fill or a write), and a local
-// derivation when it fills every server source (the client derives it).
-function patchRefreshes(binding: Binding): boolean {
-  const root = getCanonicalBinding(binding);
-  if (getPatchFill(root).fill || isPatchWritten(root)) return true;
-  if (isKnownChild(root.section)) return false;
-  // A param arrives with its section, unless a branch derives it from its
-  // expression (a loop item, an `<await>` value): then its sources decide.
-  if (isSectionParam(root) && !derivesFromBranch(root)) return true;
-  // Sources are params, which the checks above decide without recursing.
-  return every(root.sources?.param, patchRefreshes);
-}
-
-// A branch's param its expression gives; one passed to its body (an attribute
-// tag loop's item) is its own source.
-function derivesFromBranch(param: Binding) {
-  return (
-    !!param.section.branchExpr && !bindingUtil.has(param.sources?.param, param)
-  );
 }
 
 // Whether a patch may create this content: its tag can diverge, a consumer
