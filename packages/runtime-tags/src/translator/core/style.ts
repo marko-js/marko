@@ -332,8 +332,7 @@ function buildStyleDecls(node: t.MarkoTag, binding: Binding) {
     if (patched) {
       parts.push(buildPatchStyleValue(binding, names[i], value));
     } else {
-      parts.push(`${names[i]}:`);
-      parts.push(callRuntime("_escape_style_value", value));
+      parts.push(`${names[i]}:`, callRuntime("_escape_style_value", value));
     }
     parts.push(";");
   });
