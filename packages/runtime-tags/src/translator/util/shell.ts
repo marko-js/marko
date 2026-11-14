@@ -501,8 +501,8 @@ export function isQueuedOnCreate(
   );
 }
 
-// The section's mount effects' register ids, in resume order, for its shell
-// to ship.
+// The section's mount effects' register ids for its shell to ship; effects carry
+// no order (CONTEXT.md Effect), so neither does this loop's direction.
 function getSectionEffectRegistryIds(section: Section) {
   const ids: string[] = [];
   const allSignals = Array.from(getSignals(section).values());
@@ -577,9 +577,7 @@ export const [getShellSetup] = createOutputSectionState<
         // Only a body reading its owner climbs to it; else the call site owns
         // it, as its patch link names.
         if (body.readsOwner) {
-          for (let cur = section; cur !== body.parent; cur = cur.parent!) {
-            hop = ">" + hop;
-          }
+          hop = ">".repeat(section.depth - body.parent!.depth) + hop;
         }
         const setup = patchComposes(body) && getShellSetup(body);
         // A body reading its owner gets it from its hop: an id-less one
