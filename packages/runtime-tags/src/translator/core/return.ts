@@ -77,8 +77,7 @@ export default {
     }
 
     if (valueChangeAttr) {
-      const changeExtra = (valueChangeAttr.value.extra ??= {});
-      changeExtra.isEffect = true;
+      (valueChangeAttr.value.extra ??= {}).isEffect = true;
       addSetupExpr(section, valueChangeAttr.value);
       // TODO: this should be based on the parent actually mutating the tag variable.
       addReason(
@@ -88,7 +87,7 @@ export default {
       // A patch binds the handler under its callers' param groups.
       if (isPatch()) {
         onFinalizeReferences(() =>
-          ensureCallerParamGroups(getFillSources(changeExtra)),
+          ensureCallerParamGroups(getFillSources(valueChangeAttr.value.extra)),
         );
       }
     }
