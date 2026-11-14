@@ -13,16 +13,17 @@ import {
 } from "../../common/types";
 import {
   _attr as _base_attr,
+  _attr_class as _base_attr_class,
   _attr_details_or_dialog_open as _base_attr_details_or_dialog_open,
   _attr_input_checked as _base_attr_input_checked,
   _attr_input_checkedValue as _base_attr_input_checkedValue,
   _attr_input_value as _base_attr_input_value,
   _attr_option_value as _base_attr_option_value,
   _attr_select_value as _base_attr_select_value,
+  _attr_style as _base_attr_style,
   _attr_textarea_value as _base_attr_textarea_value,
   _attrs as _base_attrs,
   _attrs_partial as _base_attrs_partial,
-  stringAttr,
 } from "../attrs";
 import type { ServerRenderer } from "../template";
 import { type GroupMask, _html, getState } from "../writer";
@@ -68,14 +69,17 @@ export function _attr_class(
   mask?: GroupMask,
   group?: number,
 ) {
-  return patchStringAttr(
-    "class",
-    toDelimitedString(value, " ", stringifyClassEntry),
-    scopeId,
-    accessor,
-    mask,
-    group,
-  );
+  const fills =
+    scopeId === undefined ? undefined : ensureFills(scopeId, mask, group);
+  return fills === undefined
+    ? _base_attr_class(value)
+    : writeNamedFill(
+        fills,
+        PatchKey.Attr,
+        accessor!,
+        "class",
+        toDelimitedString(value, " ", stringifyClassEntry) || undefined,
+      );
 }
 
 export function _attr_style(
@@ -85,14 +89,17 @@ export function _attr_style(
   mask?: GroupMask,
   group?: number,
 ) {
-  return patchStringAttr(
-    "style",
-    toDelimitedString(value, ";", stringifyStyleEntry),
-    scopeId,
-    accessor,
-    mask,
-    group,
-  );
+  const fills =
+    scopeId === undefined ? undefined : ensureFills(scopeId, mask, group);
+  return fills === undefined
+    ? _base_attr_style(value)
+    : writeNamedFill(
+        fills,
+        PatchKey.Attr,
+        accessor!,
+        "style",
+        toDelimitedString(value, ";", stringifyStyleEntry) || undefined,
+      );
 }
 
 // An option's `value` renders through the select-aware writer (it may add
@@ -115,21 +122,6 @@ export function _attr_option_value(
         "value",
         normalizeAttrValue(value),
       );
-}
-
-function patchStringAttr(
-  name: string,
-  value: string,
-  scopeId: number | undefined,
-  accessor: Accessor | undefined,
-  mask: GroupMask | undefined,
-  group: number | undefined,
-) {
-  const fills =
-    scopeId === undefined ? undefined : ensureFills(scopeId, mask, group);
-  return fills === undefined
-    ? stringAttr(name, value)
-    : writeNamedFill(fills, PatchKey.Attr, accessor!, name, value || undefined);
 }
 
 // An attribute's value as the client's `_attr` sets it: `""` for `true`, none

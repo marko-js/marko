@@ -26,7 +26,6 @@ import {
   _subscribe,
   getScopeId,
   getState,
-  scopeWithId,
 } from "../writer";
 import {
   PatchRenderState,
@@ -282,7 +281,7 @@ export function _content(
   const state = getState();
   const content = _base_content(id, fn, scopeId);
   return state instanceof PatchRenderState
-    ? register("=" + id, content, scopeWithId(state, scopeId!))
+    ? register("=" + id, content, state.scope(scopeId!))
     : register("", content, undefined, undefined, "0");
 }
 

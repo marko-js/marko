@@ -482,7 +482,7 @@ export function _scope_with_id(scopeId: number) {
   return scopeWithId($chunk.boundary.state, scopeId);
 }
 
-export function scopeWithId(state: State, scopeId: number) {
+function scopeWithId(state: State, scopeId: number) {
   const { scopes } = state;
   let scope = scopes.get(scopeId);
   if (!scope) {
