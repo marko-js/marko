@@ -1,8 +1,10 @@
 import type { types as t } from "@marko/compiler";
 import {
   getFile,
-  getTagDef,
+  getTagDefForTagName,
   getTaglibLookup,
+  hasMacro,
+  isTransparentTag,
 } from "@marko/compiler/babel-utils";
 
 import runtimeInfo from "../util/runtime-info";
@@ -13,10 +15,11 @@ type FeatureType = FeatureType.Value;
 
 type Feature = {
   name: string;
-  path: t.NodePath;
+  node: t.Node;
   type: FeatureType;
 };
 type FeatureState = {
+  file: t.BabelFile;
   feature?: Feature;
 };
 
@@ -28,17 +31,17 @@ export function isTagsAPI(file = getFile()) {
   if (!featureType) {
     const lookup = getTaglibLookup(file);
     const tagsDir = getTagsDir(lookup, file.opts.filename);
-    const state: FeatureState = {};
+    const state: FeatureState = { file };
     if (tagsDir && !lookup.manualTagsDirs?.has(tagsDir)) {
       addFeature(
         state,
         FeatureType.Tags,
         "Template file within a tags directory",
-        program,
+        program.node,
       );
     }
 
-    scanBody(state, program.get("body"));
+    scanBody(state, program.node.body, undefined);
     featureType =
       file.metadata.marko.api =
       programExtra.featureType =
@@ -71,85 +74,85 @@ function getTagsDir(
   return !!nearest && /[/\\]tags$/.test(nearest) && nearest;
 }
 
+/** Scans `body`, in the tag whose fully resolved name is `parentName`. */
 function scanBody(
   state: FeatureState,
-  body: t.NodePath<
+  body: (
     | t.Program["body"][number]
     | t.MarkoTagBody["body"][number]
     | t.MarkoTag["attributeTags"][number]
-  >[],
+  )[],
+  parentName: string | undefined,
 ) {
   for (const child of body) {
     switch (child.type) {
       case "MarkoTag":
-        scanTag(state, child as t.NodePath<t.MarkoTag>);
+        scanTag(state, child, parentName);
         break;
       case "MarkoComment":
-        if (/^\s*use tags\s*$/.test((child.node as t.MarkoComment).value)) {
+        if (/^\s*use tags\s*$/.test(child.value)) {
           addFeature(state, FeatureType.Tags, "<!-- use tags -->", child);
-        } else if (
-          /^\s*use class\s*$/.test((child.node as t.MarkoComment).value)
-        ) {
+        } else if (/^\s*use class\s*$/.test(child.value)) {
           addFeature(state, FeatureType.Class, "<!-- use class -->", child);
         }
         break;
       case "MarkoScriptlet":
-        if (!(child.node as t.MarkoScriptlet).static) {
+        if (!child.static) {
           addFeature(state, FeatureType.Class, "Scriptlet", child);
         }
         break;
       case "MarkoClass":
-        addFeature(
-          state,
-          FeatureType.Class,
-          "Class block",
-          (child as t.NodePath<t.MarkoClass>).get("body"),
-        );
+        addFeature(state, FeatureType.Class, "Class block", child.body);
         break;
     }
   }
 }
 
-function scanTag(state: FeatureState, tag: t.NodePath<t.MarkoTag>) {
-  if (tag.node.var) {
-    addFeature(
-      state,
-      FeatureType.Tags,
-      "Tag variable",
-      tag.get("var") as t.NodePath<t.LVal>,
-    );
+function scanTag(
+  state: FeatureState,
+  tag: t.MarkoTag,
+  parentName: string | undefined,
+) {
+  if (tag.var) {
+    addFeature(state, FeatureType.Tags, "Tag variable", tag.var);
   }
 
-  const tagDef = getTagDef(tag);
+  const { name } = tag;
+  // As `getFullyResolvedTagName` gives it (`*` for a dynamic tag).
+  const fullName =
+    name.type !== "StringLiteral"
+      ? "*"
+      : name.value[0] === "@"
+        ? (parentName ? parentName + ":" : "") + name.value.slice(1)
+        : name.value;
+  const tagDef = getNodeTagDef(state.file, tag, fullName);
   if (tagDef) {
     if (tagDef.name === "style") {
       if (
-        /^style(?:(?:\.[^.\s\\/:*?"<>|({]+)+)?\s*\{/.test(
-          tag.node.rawValue || "",
-        )
+        /^style(?:(?:\.[^.\s\\/:*?"<>|({]+)+)?\s*\{/.test(tag.rawValue || "")
       ) {
-        addFeature(state, FeatureType.Class, `style block`, tag.get("name"));
+        addFeature(state, FeatureType.Class, `style block`, tag.name);
       }
     } else if (tagDef.taglibId === runtimeInfo.taglibId) {
       const feature = getFeatureTypeFromCoreTagName(tagDef.name);
       if (feature) {
-        addFeature(state, feature, `<${tagDef.name}> tag`, tag.get("name"));
+        addFeature(state, feature, `<${tagDef.name}> tag`, tag.name);
       }
     }
   }
 
   if (!tagDef?.parseOptions?.rawOpenTag) {
-    for (const attr of tag.get("attributes")) {
-      if (attr.isMarkoAttribute()) {
-        if (attr.node.arguments?.length) {
+    for (const attr of tag.attributes) {
+      if (attr.type === "MarkoAttribute") {
+        if (attr.arguments?.length) {
           addFeature(
             state,
             FeatureType.Class,
             "Attribute arguments",
-            (attr.get("arguments") as t.NodePath<t.Expression>[])[0],
+            attr.arguments[0],
           );
           break;
-        } else if (attr.node.bound) {
+        } else if (attr.bound) {
           addFeature(state, FeatureType.Tags, "Bound attribute", attr);
           break;
         }
@@ -157,8 +160,27 @@ function scanTag(state: FeatureState, tag: t.NodePath<t.MarkoTag>) {
     }
   }
 
-  scanBody(state, tag.get("body").get("body"));
-  scanBody(state, tag.get("attributeTags"));
+  // `isTransparentTag` reads only the node.
+  const childParentName = isTransparentTag({
+    node: tag,
+  } as t.NodePath<t.MarkoTag>)
+    ? parentName
+    : fullName;
+  scanBody(state, tag.body.body, childParentName);
+  scanBody(state, tag.attributeTags, childParentName);
+}
+
+// What `getTagDef` gives (and caches on the node), from the node and its
+// fully resolved name, since the scan builds no NodePath.
+function getNodeTagDef(file: t.BabelFile, tag: t.MarkoTag, fullName: string) {
+  if (tag.tagDef === undefined) {
+    const { name } = tag;
+    tag.tagDef =
+      name.type !== "StringLiteral" || hasMacro(file.path, name.value)
+        ? null
+        : getTagDefForTagName(file, fullName) || null;
+  }
+  return tag.tagDef;
 }
 
 function getFeatureTypeFromCoreTagName(
@@ -198,21 +220,21 @@ function addFeature(
   state: FeatureState,
   type: Feature["type"],
   name: Feature["name"],
-  path: Feature["path"],
+  node: t.Node,
 ) {
   if (state.feature) {
     if (state.feature.type !== type) {
       throw buildAggregateError(
-        getFile(),
+        state.file,
         "Cannot mix Tags API and Class API features in the same file",
-        [state.feature.name, state.feature.path],
-        [name, path],
+        [state.feature.name, state.feature.node],
+        [name, node],
       );
     }
   } else {
     state.feature = {
       name,
-      path,
+      node,
       type,
     };
   }
