@@ -402,13 +402,6 @@ A flush waiting for the lazy modules it writes into to register
 (`patches/ready`, `waitFlush`); later flushes of the response queue behind it, and a
 rejected one is discarded.
 
-**Known child**:
-A section its callers pass params to (`isKnownChild`): a template's root, or a
-`<define>` body its direct calls render. Patches handle both alike: the
-params' groups gate writes in the body and the sections inside it, a flush
-writes its scope, and a created one seeds from its setup envelope.
-_Avoid_: called body, define root, root-like body
-
 **Structural param**:
 A known child's param a branch expression derives from (`structuralParams`),
 where it is declared or in a child it is passed to: state in the call site's
@@ -444,10 +437,12 @@ renders, `UpdatesFrom.Server` contributes). The client bit is set by
 client state, or for a server value the client derives: a call input its
 callee reads alone (`isClientDerivedParam`) where the fills of what the input reads
 ship, which then reach it and no hole is filled. Only the group of a
-known child's param is decided per call, at render, and only code in that body
-reads it (`isCallerParamAt`); analysis knows only sources (state, params,
-`$global`), so translate code names those and never decides where a group
-updates from.
+known child's param (a template's root and a `<define>` body alike) is decided
+per call, at render, and only code in that body reads it (`isCallerParamAt`):
+it gates writes in the body and the sections inside it, a flush writes the
+body's scope, and a created one seeds from its setup envelope. Analysis knows
+only sources (state, params, `$global`), so translate code names those and never
+decides where a group updates from.
 _Avoid_: ownership, owned (owner is the owner scope); server-/client- as a
 compile-time fact
 
