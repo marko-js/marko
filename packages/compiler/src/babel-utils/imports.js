@@ -54,116 +54,92 @@ function isWithin(dir, filename) {
 }
 
 export function importDefault(file, request, nameHint) {
-  const imports = getImports(file);
-  request = resolveRelativePath(file, request);
-  let importDeclaration = imports.get(request);
-
-  if (!importDeclaration) {
-    imports.set(
-      request,
-      (importDeclaration = file.path.pushContainer(
-        "body",
-        t.importDeclaration([], t.stringLiteral(request)),
-      )[0]),
-    );
-  }
+  const { declaration } = getImport(file, request);
 
   if (!nameHint) {
     return;
   }
 
-  const specifiers = importDeclaration.get("specifiers");
-  const specifier = specifiers.find((specifier) =>
-    specifier.isImportDefaultSpecifier(),
+  const specifier = declaration.node.specifiers.find(
+    t.isImportDefaultSpecifier,
   );
 
   if (!specifier) {
     const identifier = file.scope.generateUidIdentifier(nameHint);
-    importDeclaration.pushContainer(
+    declaration.pushContainer(
       "specifiers",
       t.importDefaultSpecifier(identifier),
     );
     return identifier;
   }
 
-  return t.identifier(specifier.node.local.name);
+  return t.identifier(specifier.local.name);
 }
 
 export function importNamed(file, request, name, nameHint = name) {
-  request = resolveRelativePath(file, request);
-  const imports = getImports(file);
-  let importDeclaration = imports.get(request);
+  const { declaration, named } = getImport(file, request);
+  const localName = named.get(name);
 
-  if (!importDeclaration) {
-    imports.set(
-      request,
-      (importDeclaration = file.path.pushContainer(
-        "body",
-        t.importDeclaration([], t.stringLiteral(request)),
-      )[0]),
-    );
-  }
-
-  const specifiers = importDeclaration.get("specifiers");
-  const specifier = specifiers.find(
-    (specifier) =>
-      specifier.isImportSpecifier() && specifier.node.imported.name === name,
-  );
-
-  if (!specifier) {
+  if (!localName) {
     const identifier = file.scope.generateUidIdentifier(nameHint);
-    importDeclaration.pushContainer(
+    named.set(name, identifier.name);
+    declaration.pushContainer(
       "specifiers",
       t.importSpecifier(identifier, t.identifier(name)),
     );
     return identifier;
   }
 
-  return t.identifier(specifier.node.local.name);
+  return t.identifier(localName);
 }
 
 export function importStar(file, request, nameHint) {
-  const imports = getImports(file);
-  request = resolveRelativePath(file, request);
-  let importDeclaration = imports.get(request);
-
-  if (!importDeclaration) {
-    imports.set(
-      request,
-      (importDeclaration = file.path.pushContainer(
-        "body",
-        t.importDeclaration([], t.stringLiteral(request)),
-      )[0]),
-    );
-  }
+  const { declaration } = getImport(file, request);
 
   if (!nameHint) {
     return;
   }
 
-  const specifiers = importDeclaration.get("specifiers");
-  const specifier = specifiers.find((specifier) =>
-    specifier.isImportNamespaceSpecifier(),
+  const specifier = declaration.node.specifiers.find(
+    t.isImportNamespaceSpecifier,
   );
 
   if (!specifier) {
     const identifier = file.scope.generateUidIdentifier(nameHint);
-    importDeclaration.pushContainer(
+    declaration.pushContainer(
       "specifiers",
       t.importNamespaceSpecifier(identifier),
     );
     return identifier;
   }
 
-  return t.identifier(specifier.node.local.name);
+  return t.identifier(specifier.local.name);
 }
 
-function getImports(file) {
+// Only these helpers edit the declarations they create, so `named` stays in
+// sync with the declaration's named specifiers.
+function getImport(file, request) {
+  request = resolveRelativePath(file, request);
   let imports = file.metadata.marko[IMPORTS_KEY];
 
   if (!imports) {
     imports = file.metadata.marko[IMPORTS_KEY] = new Map();
   }
 
-  return imports;
+  let imported = imports.get(request);
+
+  if (!imported) {
+    imports.set(
+      request,
+      (imported = {
+        declaration: file.path.pushContainer(
+          "body",
+          t.importDeclaration([], t.stringLiteral(request)),
+        )[0],
+        named: new Map(),
+      }),
+    );
+  }
+
+  return imported;
 }
