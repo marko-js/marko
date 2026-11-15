@@ -486,6 +486,7 @@ export function getLastOwnSourceReturn(
   bindings: ReferencedBindings,
   section: Section,
 ) {
+  if (!section.hasReturnedVar) return;
   let last: Binding | undefined;
   const seen = new Set<Binding>();
   // Another section's tag has no scope offset on this scope.

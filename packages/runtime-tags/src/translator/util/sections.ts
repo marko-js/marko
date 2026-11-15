@@ -184,6 +184,9 @@ export interface Section {
   /** Whether analysis found work keyed by setup in the section, or in a
    * `<define>` body or template it calls in place. */
   hasSetupWork: boolean;
+  /** A tag variable in it holds a child's `<return>`, whose scope offset its
+   * renders may wait for. */
+  hasReturnedVar: boolean;
   /** Its tag, which renders it in place into branch scopes at the tag's node
    * binding; an `<if>` chain's at `index`, the renderer index it renders as. */
   branch:
@@ -294,6 +297,7 @@ export function ensureBodySection(
       abortSignalExprs: 0,
       readsOwner: false,
       hasSetupWork: false,
+      hasReturnedVar: false,
       branch: undefined,
       structure: parentSection && !parentSection.structure ? null : [],
     };
