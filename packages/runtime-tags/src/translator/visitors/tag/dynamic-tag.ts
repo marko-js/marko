@@ -205,6 +205,7 @@ export default {
       ));
 
       if (hasVar) {
+        tagSection.hasReturnedVar = true;
         trackVarReferences(tag, BindingType.derived)!.returnedBy = {
           scope: nodeBinding,
         };

@@ -194,6 +194,7 @@ export function knownTagAnalyze(
     // Tag variables emit a `_var` statement in the parent's setup.
     addSetupWork(section);
     const { childScopeBinding } = tagExtra;
+    section.hasReturnedVar = true;
     varBinding.returnedBy = {
       scope: childScopeBinding,
       section: childSection,
