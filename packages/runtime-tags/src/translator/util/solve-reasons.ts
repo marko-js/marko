@@ -88,9 +88,14 @@ export function solveReasons(
     forEachSection(addClosureReasons);
     forEachSection(addCallOwnerReasons);
     addRegisteredFnReasons(getFunctionReadsByExpression());
-    forEachSectionReverse(solveSectionReasons);
   } while (reasonsVersion !== getReasonsVersion());
   getFunctionReadsByExpression().clear();
+  // No rule reads groups, so they form from settled reasons; a call visited before its
+  // body gains a group (from a later section, or recursive) maps it on the next pass.
+  do {
+    reasonsVersion = getReasonsVersion();
+    forEachSectionReverse(solveSectionReasons);
+  } while (reasonsVersion !== getReasonsVersion());
 }
 
 function solveSectionReasons(section: Section) {
