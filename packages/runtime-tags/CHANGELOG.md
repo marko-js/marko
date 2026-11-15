@@ -1,5 +1,23 @@
 # @marko/runtime-tags
 
+## 6.4.16
+
+### Patch Changes
+
+- [#4700](https://github.com/marko-js/marko/pull/4700) [`571d80c`](https://github.com/marko-js/marko/commit/571d80ca0af2170e721a558946974b6b4cd9ef73) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a function passed to a custom tag and returned by its `<return>` failing to serialize, so calling it in the browser after a change threw.
+
+- [#4700](https://github.com/marko-js/marko/pull/4700) [`1b9e2ff`](https://github.com/marko-js/marko/commit/1b9e2ff2640e6cfbb582525d4d889348065f803b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - The compiler no longer crashes on content passed into a recursive call of its own template.
+
+- [#4701](https://github.com/marko-js/marko/pull/4701) [`745ec5a`](https://github.com/marko-js/marko/commit/745ec5aba557cf06380cfaf7a24f953b471e9e36) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Detect a template's API in the interop translator without building a NodePath for every node.
+
+- [#4696](https://github.com/marko-js/marko/pull/4696) [`0ef16f4`](https://github.com/marko-js/marko/commit/0ef16f4bdc61cc7e1a15db09d69e2eedee45856f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Shrink server code for values whose resume marker is never written, such as a `<define>` param every call passes a constant: the server writes the value directly instead of calling a marker helper that writes nothing.
+
+- [#4698](https://github.com/marko-js/marko/pull/4698) [`11234cf`](https://github.com/marko-js/marko/commit/11234cfc7f65dfe82ae93d25a408ed5f9fed5520) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Speed up DOM compiles of templates that call tags with many params.
+
+- [#4699](https://github.com/marko-js/marko/pull/4699) [`058d41a`](https://github.com/marko-js/marko/commit/058d41ae5496a6e045ee2c82d82953a230ce0d94) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix resumed text merging where a template renders its content and spreads its input into a call to itself.
+- Updated dependencies [[`3de9831`](https://github.com/marko-js/marko/commit/3de98312d4ab8b55bfb236f8956755bf170433a6), [`5974785`](https://github.com/marko-js/marko/commit/5974785847c3e3acadc7737a7c0c205900ed0b66), [`042f0bd`](https://github.com/marko-js/marko/commit/042f0bd15c4365f20a0f31c8aeebaf277bcf6c0e), [`11234cf`](https://github.com/marko-js/marko/commit/11234cfc7f65dfe82ae93d25a408ed5f9fed5520)]:
+  - @marko/compiler@5.43.4
+
 ## 6.4.15
 
 ### Patch Changes
