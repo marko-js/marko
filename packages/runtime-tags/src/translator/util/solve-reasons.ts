@@ -39,6 +39,7 @@ import {
   getReasonsVersion,
   getSourcesForDerived,
   getSourcesForExpr,
+  type KnownExprs,
   mapParamReason,
   mergeSlotReasons,
   type Reason,
@@ -428,10 +429,9 @@ function computeExprReaders(extra: t.NodeExtra): Readers {
 function readersOf(
   binding: Binding,
   path: Opt<string> | true,
-  via: t.NodeExtra | undefined,
+  exprs: KnownExprs | undefined,
 ): Readers {
   const linked = bindingReaders(binding, path);
-  const exprs = via?.callSiteExprs;
   return exprs && linked.reason
     ? {
         reason: mapParamReason(
@@ -512,10 +512,10 @@ const READERS_STEP: Step<Folding> = {
   land(folding, read, binding) {
     folding.readers = landIn(folding.readers, read, binding, folding.head);
   },
-  reach(folding, binding, path, via) {
+  reach(folding, binding, path, exprs) {
     folding.readers = mergeReaders(
       folding.readers,
-      readersOf(binding, path, via),
+      readersOf(binding, path, exprs),
     );
   },
 };
@@ -585,7 +585,7 @@ function isLeftOut(binding: Binding, properties: Opt<string> | true) {
 }
 
 // Each step a value at `properties` takes through its aliases and derives links:
-// a read it lands in, or a binding and path it goes on to (`via` the read deriving it).
+// a read it lands in, or a binding and path it goes on to (past a call, its `exprs`).
 function forEachStep<S>(
   binding: Binding,
   properties: Opt<string> | true,
@@ -639,7 +639,8 @@ function forEachDerivedStep<S>(
           state,
           binding,
           getDerivedPath(read, binding, part, properties),
-          read,
+          // Only a param the call sets is past it; its tag variable is not.
+          binding.exposed ? read.callSiteExprs : undefined,
         );
       }
     }
@@ -652,7 +653,7 @@ interface Step<S> {
     state: S,
     binding: Binding,
     path: Opt<string> | true,
-    via: t.NodeExtra | undefined,
+    exprs: KnownExprs | undefined,
   ): void;
 }
 
@@ -699,9 +700,9 @@ const WALK_STEP: Step<Walk> = {
   land(walk, read, binding) {
     walk.found ||= walk.test(read, binding, walk.pastCall);
   },
-  reach(walk, binding, path, via) {
+  reach(walk, binding, path, exprs) {
     const { pastCall } = walk;
-    walk.pastCall ||= !!via?.callSiteExprs;
+    walk.pastCall ||= !!exprs;
     walkFrom(walk, binding, path);
     walk.pastCall = pastCall;
   },
