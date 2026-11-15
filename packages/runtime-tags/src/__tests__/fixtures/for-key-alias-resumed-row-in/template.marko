@@ -1,0 +1,6 @@
+<let/show=true/>
+<for|name| in={ x: 1, y: 2 }>
+  <const/key=name/>
+  <if=show>${key}</if>
+</for>
+<button onClick() { show = !show }>toggle</button>

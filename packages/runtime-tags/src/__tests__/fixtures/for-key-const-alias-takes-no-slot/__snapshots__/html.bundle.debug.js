@@ -17,9 +17,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id, "#text/2");
 		_script($scope1_id, "__tests__/template.marko_1");
 		_scope($scope1_id, {
+			"#LoopKey": key,
 			count,
 			_: _scope_with_id($scope0_id)
-		}, "__tests__/template.marko", "2:2", { count: "4:8" });
+		}, "__tests__/template.marko", "2:2", {
+			"#LoopKey": "2:12",
+			count: "4:8"
+		});
 	}, 0, $scope0_id, "#text/0", 1, 0);
 	_html(`<button class=toggle></button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");

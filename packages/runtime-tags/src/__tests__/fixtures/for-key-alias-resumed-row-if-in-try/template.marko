@@ -1,0 +1,9 @@
+<let/show=true/>
+<for|item, index| of=["a", "b"]>
+  <const/key=index/>
+  <try>
+    <if=show>${key}</if>
+    <@catch>caught</@catch>
+  </try>
+</for>
+<button onClick() { show = !show }>toggle</button>

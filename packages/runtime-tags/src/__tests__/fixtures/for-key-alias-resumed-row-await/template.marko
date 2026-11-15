@@ -1,0 +1,10 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/show=false/>
+<for|item, index| of=["a", "b"]>
+  <const/key=index/>
+  <if=show>
+    <await|value|=resolveAfter(item, 1)>${value}:${key}</await>
+  </if>
+</for>
+<button onClick() { show = true }>show</button>

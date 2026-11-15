@@ -1,0 +1,8 @@
+<let/show=true/>
+<let/items=["a", "b"]/>
+<for|item, index| of=items>
+  <const/key=index/>
+  <if=show>${key}</if>
+</for>
+<button.toggle onClick() { show = !show }>toggle</button>
+<button.add onClick() { items = [...items, "c"] }>add</button>
