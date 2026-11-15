@@ -531,9 +531,17 @@ export function isKnownChild(section: Section) {
 // Whether resumed text leading the section may follow text the server wrote with
 // no mark; `undefined` at a template's root edge, which its caller decides.
 export const [getSectionTextBefore] = createAnalysisMemo(
-  (section: Section) => getTextBeforeIn(section, undefined),
-  true,
+  computeSectionTextBefore,
+  // A cycle reaches the section again at its own start, adding no text before it.
+  false,
 );
+
+function computeSectionTextBefore(section: Section): boolean | undefined {
+  const { branch, derives } = section;
+  if (branch) return getBranchTextBefore(branch, section, undefined);
+  if (!section.parent) return undefined;
+  return !derives || !!section.renderedBy || mayContentFollowText(section);
+}
 
 // `getSectionTextBefore`, where `content` is given seen through the call passing it
 // to the section's template, whose params then follow what that call passes.
@@ -541,23 +549,25 @@ function getTextBeforeIn(
   section: Section,
   content: Section | undefined,
 ): boolean | undefined {
-  const { branch, derives } = section;
-  if (branch) {
-    const { tag } = branch;
-    const tagSection = tag.nodeBinding.section;
-    return (
-      !isStartMarked(branch, section, content) &&
-      // A row follows the one before, even one whose text ends in its own resume
-      // mark and so needs no `<!>` after it: rows are not traced to their last text.
-      ((isLoopBody(section) && mayEndWithText(section)) ||
-        (tag.textBefore ??
-          (content
-            ? getTextBeforeIn(tagSection, content)
-            : getSectionTextBefore(tagSection))))
-    );
-  }
-  if (!section.parent) return undefined;
-  return !derives || !!section.renderedBy || mayContentFollowText(section);
+  const { branch } = section;
+  return content && branch
+    ? getBranchTextBefore(branch, section, content)
+    : getSectionTextBefore(section);
+}
+
+function getBranchTextBefore(
+  branch: NonNullable<Section["branch"]>,
+  section: Section,
+  content: Section | undefined,
+): boolean | undefined {
+  const { tag } = branch;
+  return (
+    !isStartMarked(branch, section, content) &&
+    // A row follows the one before, even one whose text ends in its own resume
+    // mark and so needs no `<!>` after it: rows are not traced to their last text.
+    ((isLoopBody(section) && mayEndWithText(section)) ||
+      (tag.textBefore ?? getTextBeforeIn(tag.nodeBinding.section, content)))
+  );
 }
 
 // Content follows text where the tags rendering it may, and at the root edge of a
