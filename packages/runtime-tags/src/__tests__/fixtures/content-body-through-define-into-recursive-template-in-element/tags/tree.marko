@@ -1,0 +1,9 @@
+<define/Wrap|{ depth, content }|>
+  <tree depth=depth content=content/>
+</define>
+<if=input.depth>
+  <div><Wrap depth=input.depth - 1><${input.content}/></Wrap></div>
+</if>
+<else>
+  <div><${input.content}/></div>
+</else>
