@@ -4,11 +4,11 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const Rec = { content: _content("a1", (input) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__input_label = _write_guard($scope1_reason, 2), $wi__input_depth__OR__input_label = _write_if($scope1_reason, 0), $wg__input_depth = _write_guard($scope1_reason, 1), $wg__input_depth__OR__input_label = _write_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $wg__input_label = _write_guard($scope1_reason, 2), $wi__input_depth__OR__input_label = _write_if($scope1_reason, 0), $wg__input_depth__OR__input_label = _write_guard($scope1_reason, 0);
 		_if(() => {
 			if (input.depth) {
 				const $scope2_id = _scope_id();
-				_set_scope_reason($wg__input_depth__OR__input_label << 1 | $wg__input_depth << 3 | $wg__input_label << 5);
+				_set_scope_reason($wg__input_depth__OR__input_label << 1 | $wg__input_label << 5);
 				const $childScope = _peek_scope_id();
 				let child = Rec.content({
 					depth: input.depth - 1,
@@ -22,10 +22,8 @@ var template_default = _template("a", (input) => {
 				});
 				return 0;
 			}
-		}, $scope1_id, "a", $wg__input_depth__OR__input_label, $wg__input_depth);
-		const $return = input.label;
-		_write_if($scope1_reason, 1) && _scope($scope1_id, { e: input.label });
-		return $return;
+		}, $scope1_id, "a", $wg__input_depth__OR__input_label, 0);
+		return input.label;
 	}, $scope0_id) };
 	let label = "a";
 	Rec.content({

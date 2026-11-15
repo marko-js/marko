@@ -18,12 +18,12 @@ var template_default = _template("a", (input) => {
 	}, "a0", $scope0_id);
 	const D = { content: _content("a2", ({ on, depth }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__on = _write_guard($scope1_reason, 1), $wi__on__OR__depth = _write_if($scope1_reason, 0), $wg__depth = _write_guard($scope1_reason, 2), $wg__on__OR__depth = _write_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $wg__on = _write_guard($scope1_reason, 1), $wi__on__OR__depth = _write_if($scope1_reason, 0), $wg__on__OR__depth = _write_guard($scope1_reason, 0);
 		_if(() => {
 			if (depth) {
 				const $scope2_id = _scope_id();
 				_html(`<span>${_text_mark($scope2_id, "a", on && f(), $wg__input_a || $wg__on)}</span>`);
-				_set_scope_reason($wg__on__OR__depth << 1 | $wg__on << 3 | $wg__depth << 5);
+				_set_scope_reason($wg__on__OR__depth << 1 | $wg__on << 3);
 				const $childScope = _peek_scope_id();
 				D.content({
 					on,
@@ -36,9 +36,9 @@ var template_default = _template("a", (input) => {
 				$wg__input_a || $wg__on || ($wi__input_a || $wi__on__OR__depth) && $wg__input_a && _resume_branch($scope2_id);
 				return 0;
 			}
-		}, $scope1_id, "a", $wg__on__OR__depth, $wg__depth);
+		}, $scope1_id, "a", $wg__on__OR__depth, 0);
 		($wi__input_a || $wi__on__OR__depth) && _scope($scope1_id, {
-			d: ($wi__input_a || _write_if($scope1_reason, 2)) && on,
+			d: $wi__input_a && on,
 			_: _scope_with_id($scope0_id)
 		});
 	}, $scope0_id) };

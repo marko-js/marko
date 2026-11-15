@@ -1,0 +1,7 @@
+<define/Countdown|{ depth }|>
+  <span>${depth}</span>
+  <if=depth>
+    <Countdown depth=(depth - 1)/>
+  </if>
+</define>
+<Countdown depth=1/>

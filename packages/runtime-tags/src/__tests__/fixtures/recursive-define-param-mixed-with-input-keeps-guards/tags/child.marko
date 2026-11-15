@@ -1,0 +1,7 @@
+<define/Rec|{ a, depth }|>
+  <span>${a}</span>
+  <if=depth>
+    <Rec a=(a || input.x) depth=(depth - 1)/>
+  </if>
+</define>
+<Rec a=0 depth=1/>

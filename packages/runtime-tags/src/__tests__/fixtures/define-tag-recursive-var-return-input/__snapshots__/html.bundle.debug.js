@@ -4,11 +4,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const Rec = { content: _content("__tests__/template.marko_1*content", (input) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__input_label = _write_guard($scope1_reason, 2), $wi__input_depth__OR__input_label = _write_if($scope1_reason, 0), $wg__input_depth = _write_guard($scope1_reason, 1), $wg__input_depth__OR__input_label = _write_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $wg__input_label = _write_guard($scope1_reason, 2), $wi__input_depth__OR__input_label = _write_if($scope1_reason, 0), $wg__input_depth__OR__input_label = _write_guard($scope1_reason, 0);
 		_if(() => {
 			if (input.depth) {
 				const $scope2_id = _scope_id();
-				_set_scope_reason($wg__input_depth__OR__input_label << 1 | $wg__input_depth << 3 | $wg__input_label << 5);
+				_set_scope_reason($wg__input_depth__OR__input_label << 1 | $wg__input_label << 5);
 				const $childScope = _peek_scope_id();
 				let child = Rec.content({
 					depth: input.depth - 1,
@@ -22,9 +22,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}, "__tests__/template.marko", "2:4");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", $wg__input_depth__OR__input_label, $wg__input_depth);
+		}, $scope1_id, "#text/0", $wg__input_depth__OR__input_label, 0);
 		const $return = input.label;
-		_write_if($scope1_reason, 1) && _scope($scope1_id, { input_label: input.label }, "__tests__/template.marko", "1:2", { input_label: ["input.label", "1:13"] });
 		return $return;
 	}, $scope0_id) };
 	let label = "a";
