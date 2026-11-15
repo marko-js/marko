@@ -47,8 +47,18 @@ export function createAnalysisMemo<K extends object, R>(
   cycleAnswer: R,
 ) {
   const create = () => createCyclicMemo(compute, cycleAnswer);
-  const [getMemo, setMemo] = createAnalysisState(create);
-  return [(key: K) => getMemo()(key), () => setMemo(create())] as const;
+  // A reset drops the memo; the next ask makes one, so a pass that never asks makes none.
+  const [getMemo, setMemo] = createAnalysisState<((key: K) => R) | null>(
+    create,
+  );
+  return [
+    (key: K) => {
+      let memo = getMemo();
+      if (!memo) setMemo((memo = create()));
+      return memo(key);
+    },
+    () => setMemo(null),
+  ] as const;
 }
 
 // Every pass memo's reset, which each solve pass runs.
