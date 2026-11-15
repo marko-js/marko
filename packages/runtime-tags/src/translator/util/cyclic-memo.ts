@@ -1,10 +1,21 @@
 import { type Opt, reduce } from "./optional";
 import { createAnalysisState } from "./state";
 
-// Every cyclic memo's computations, numbered together as they start: a cycle
-// may close through another memo, whose computations are then as provisional.
+// Every cyclic memo's running computations, outermost first, numbered as they start:
+// a cycle may close through another memo, whose computations are then as provisional.
 let computations = 0;
+const running: number[] = [];
+// The outermost and innermost depth in `running` of a computation whose cycle answer
+// the current one took.
 let provisionalAt = Infinity;
+let provisionalTo = -1;
+
+interface ProvisionalAnswer<R> {
+  result: R;
+  at: number;
+  to: number;
+  computation: number;
+}
 
 // A memo whose computation may re-ask itself through a cycle: a re-ask
 // answers `cycleAnswer`, and a computation that consumed one does not cache.
@@ -14,30 +25,58 @@ export function createCyclicMemo<K extends object, R>(
 ): (key: K) => R {
   const cache = new WeakMap<K, R>();
   const computing = new Map<K, number>();
+  // Asked again while the computations it took cycle answers from run, a key's walk
+  // meets the same ones, unless it took one from a computation of its own.
+  const provisional = new WeakMap<K, ProvisionalAnswer<R>>();
   return (key) => {
     if (cache.has(key)) return cache.get(key)!;
     const at = computing.get(key);
     if (at !== undefined) {
-      if (at < provisionalAt) provisionalAt = at;
+      takeCycleAnswers(at, at);
       return cycleAnswer;
     }
-    const index = computations++;
-    computing.set(key, index);
+    const answer = provisional.get(key);
+    if (answer && running[answer.to] === answer.computation) {
+      takeCycleAnswers(answer.at, answer.to);
+      return answer.result;
+    }
+    const depth = running.push(computations++) - 1;
+    computing.set(key, depth);
     const outerProvisionalAt = provisionalAt;
+    const outerProvisionalTo = provisionalTo;
     provisionalAt = Infinity;
+    provisionalTo = -1;
     // The walk state outlives a compile (a diagnostic may throw
     // mid-walk), so every exit restores it.
     try {
       const result = compute(key);
-      if (provisionalAt >= index) cache.set(key, result);
+      if (provisionalAt >= depth) {
+        cache.set(key, result);
+      } else if (provisionalTo < depth) {
+        provisional.set(key, {
+          result,
+          at: provisionalAt,
+          to: provisionalTo,
+          computation: running[provisionalTo],
+        });
+      }
       return result;
     } finally {
       computing.delete(key);
-      if (provisionalAt >= index || outerProvisionalAt < provisionalAt) {
+      running.pop();
+      if (provisionalAt >= depth) {
         provisionalAt = outerProvisionalAt;
+        provisionalTo = outerProvisionalTo;
+      } else {
+        takeCycleAnswers(outerProvisionalAt, outerProvisionalTo);
       }
     }
   };
+}
+
+function takeCycleAnswers(at: number, to: number) {
+  if (at < provisionalAt) provisionalAt = at;
+  if (to > provisionalTo) provisionalTo = to;
 }
 
 // The memo per analysis, whose answers every output reads; `reset` starts
