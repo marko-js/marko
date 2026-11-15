@@ -1,5 +1,17 @@
 # Change Log
 
+## 5.43.4
+
+### Patch Changes
+
+- [#4701](https://github.com/marko-js/marko/pull/4701) [`3de9831`](https://github.com/marko-js/marko/commit/3de98312d4ab8b55bfb236f8956755bf170433a6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Set up the compiler's Babel plugin once per set of options instead of on every compile (the parse stage of 2,882 templates takes about 1,035 ms, from 1,210 ms).
+
+- [#4701](https://github.com/marko-js/marko/pull/4701) [`5974785`](https://github.com/marko-js/marko/commit/5974785847c3e3acadc7737a7c0c205900ed0b66) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Require htmljs-parser 5.22.2, which no longer throws on a line comment in a text tag's open tag (`<script// a</script>`).
+
+- [#4701](https://github.com/marko-js/marko/pull/4701) [`042f0bd`](https://github.com/marko-js/marko/commit/042f0bd15c4365f20a0f31c8aeebaf277bcf6c0e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Parse templates about a quarter faster: the parser builds the Marko AST without a NodePath per tag (only the tags a taglib parse hook visits get one, once the tree is built).
+
+- [#4698](https://github.com/marko-js/marko/pull/4698) [`11234cf`](https://github.com/marko-js/marko/commit/11234cfc7f65dfe82ae93d25a408ed5f9fed5520) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Speed up DOM compiles of templates that call tags with many params.
+
 ## 5.43.3
 
 ### Patch Changes
