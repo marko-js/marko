@@ -1,0 +1,8 @@
+<if=input.depth>
+  <tree depth=input.depth - 1>
+    <${input.content}/>
+  </tree>
+</if>
+<else>
+  <${input.content}/>
+</else>
