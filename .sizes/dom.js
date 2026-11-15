@@ -1,4 +1,4 @@
-// size: 25794 (min) 9610 (brotli)
+// size: 25790 (min) 9608 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -1872,14 +1872,14 @@ function createAwaitCounter(tryBranch, done) {
     i: 0,
     c() {
       if (--awaitCounter.i) return 1;
-      (done(), queueEffect(tryBranch, runPendingEffects));
+      (done(), queuePendingEffects(tryBranch));
     },
   });
   return awaitCounter;
 }
-function runPendingEffects(tryBranch) {
+function queuePendingEffects(tryBranch) {
   tryBranch.JS?.forEach(
-    (scope) => scope.J.forEach((fn) => runEffects([fn, scope]), (scope.J = null)),
+    (scope) => scope.J.forEach((fn) => queueEffect(scope, fn), (scope.J = null)),
     (tryBranch.JS = null),
   );
 }

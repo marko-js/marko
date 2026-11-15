@@ -5,13 +5,8 @@ import {
   PendingRenderProp,
   type Scope,
 } from "../common/types";
-import { renderCatch, runPendingEffects } from "./control-flow";
-import {
-  installCatch,
-  type PendingRender,
-  queueAsyncRender,
-  queueEffect,
-} from "./queue";
+import { queuePendingEffects, renderCatch } from "./control-flow";
+import { installCatch, type PendingRender, queueAsyncRender } from "./queue";
 import type { SignalFn } from "./signals";
 
 const deferToPendingTry = (
@@ -30,8 +25,7 @@ const deferToPendingTry = (
           (branch[AccessorProp.AwaitCounter].m &&
             ((complete: AwaitCounter["c"]) =>
               (branch[AccessorProp.AwaitCounter]!.c = (_?: never) =>
-                complete() ||
-                queueAsyncRender(branch!, queueEffect, runPendingEffects)))(
+                complete() || queueAsyncRender(branch!, queuePendingEffects)))(
               branch[AccessorProp.AwaitCounter].c,
             ),
           [])).push(scope),
