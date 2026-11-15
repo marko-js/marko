@@ -4,25 +4,25 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const Tree = { content: _content("__tests__/template.marko_1*content", (input) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__input_depth = _write_guard($scope1_reason, 1), $wg__input_depth__OR__input_label = _write_guard($scope1_reason, 0), $wg__input_label = _write_guard($scope1_reason, 2), $wi__input_depth__OR__input_label = _write_if($scope1_reason, 0);
+		const $scope1_reason = _scope_reason();
 		_if(() => {
 			if (input.depth) {
 				const $scope2_id = _scope_id();
-				_set_scope_reason($wg__input_depth__OR__input_label << 1 | $wg__input_depth << 3 | $wg__input_label << 5);
+				_set_scope_reason(10);
 				const $childScope = _peek_scope_id();
 				Tree.content({
 					depth: input.depth - 1,
 					label: input.label
 				});
-				$wi__input_depth__OR__input_label && _scope($scope2_id, {
+				_scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					"#childScope/0": _existing_scope($childScope)
 				}, "__tests__/template.marko", "2:4");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", $wg__input_depth__OR__input_label, $wg__input_depth);
-		_html(`<span>${_text_mark($scope1_id, "#text/1", input.label, $wg__input_label)}</span>`);
-		$wi__input_depth__OR__input_label && _scope($scope1_id, { input_label: _write_if($scope1_reason, 1) && input.label }, "__tests__/template.marko", "1:2", { input_label: ["input.label", "1:14"] });
+		}, $scope1_id, "#text/0");
+		_html(`<span>${_escape(input.label)}</span>`);
+		_scope($scope1_id, { input_label: input.label }, "__tests__/template.marko", "1:2", { input_label: ["input.label", "1:14"] });
 	}, $scope0_id) };
 	let depth = 1;
 	_set_scope_reason(10);

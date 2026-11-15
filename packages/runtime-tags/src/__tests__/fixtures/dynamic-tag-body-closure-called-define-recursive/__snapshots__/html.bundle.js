@@ -26,22 +26,18 @@ var template_default = _template("a", (input) => {
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const Tree = { content: _content("a0", ({ n }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wi__n = _write_if($scope1_reason, 0), $wg__n = _write_guard($scope1_reason, 0);
+		_scope_reason();
 		_html(`<em>${_text_mark($scope1_id, "a", input.note, $wg__input_note)}</em>`);
 		_if(() => {
 			if (n) {
 				const $scope2_id = _scope_id();
-				_set_scope_reason($wg__n << 1);
-				const $childScope = _peek_scope_id();
+				_set_scope_reason(0);
 				Tree.content({ n: n - 1 });
-				($wi__input_on || $wi__n) && _scope($scope2_id, {
-					_: _scope_with_id($scope1_id),
-					a: $wi__n && _existing_scope($childScope)
-				});
+				$wi__input_on && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
 				return 0;
 			}
-		}, $scope1_id, "b", $wg__n, $wg__n);
-		($wi__input_note__OR__input_on || $wi__n) && _subscribe($wi__input_note && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1", $wg__input_note || $wg__n);
+		}, $scope1_id, "b", 0, 0);
+		$wi__input_note__OR__input_on && _subscribe($wi__input_note && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1", $wg__input_note);
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", input.on ? card_default : "div", {}, _content_resume("a2", () => {
 		const $scope3_id = _scope_id();

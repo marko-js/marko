@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 
 import {
   type Binding,
+  compareReferences,
   getDebugNames,
   getDebugNamesAsIdentifier,
 } from "./bindings";
@@ -371,8 +372,8 @@ function isCrossSection(section: Section, reason: Sources) {
   );
 }
 
-// The constant every render of a `<define>` body's group passes, where each call passes
-// the same; none for a recursive call, or params no guard groups (a function's readers').
+// The constant every render of a `<define>` body's group passes, where each call passes the
+// same; none where a recursive call passes more than the group, or params no guard groups.
 function getStaticGroupBit(body: Section, group: ParamReasonGroup) {
   const index = findParamReasonGroupIndex(body, group);
   return index === -1
@@ -390,11 +391,17 @@ function getCallsBit(body: Section, group: ParamReasonGroup) {
   let bit: number | undefined;
   for (const call of Array.isArray(renderedBy) ? renderedBy : [renderedBy]) {
     const callSection = call.childScopeBinding.section;
-    const callBit = getWriteBit(
+    const reason = findSlot(
+      call.childScopeBinding,
+      SlotKind.ParamGroup,
       callSection,
-      findSlot(call.childScopeBinding, SlotKind.ParamGroup, callSection, group)
-        ?.reason,
-    );
+      group,
+    )?.reason;
+    // A recursive call passing the group back passes the group's own bit.
+    if (isGuardedReason(reason) && !compareReferences(reason.param, group)) {
+      continue;
+    }
+    const callBit = getWriteBit(callSection, reason);
     if (callBit === undefined || (bit !== undefined && bit !== callBit)) {
       return;
     }
