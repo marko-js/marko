@@ -1,0 +1,68 @@
+<!--M_[--><!--M_!^3-->outer<!--M_!3--><!--M_]1 #text/0 3-->
+<t hidden M_=3>
+  <!--M_#b--><!--M_[--><!--M_!^5-->inner<!--M_!5--><!--M_]3 #text/1 5--></t>
+<t hidden M_=5>
+  <!--M_#c--><button>0<!--M_$5 #text/2--></button><!--M_$5 #button/1--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
+  M._.r = [_ => [1, {
+    value: 0,
+    "ClosureScopes:value/3": new Set([_(5)])
+  }, 1, {
+    _: _(1),
+    "#PlaceholderContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-nested-completes-first-keeps-effects/template.marko_6*content"
+      ]
+  }, 1, {
+    _: _(3),
+    "ClosureSignalIndex:value/3": 1,
+    "#PlaceholderContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-nested-completes-first-keeps-effects/template.marko_7*content"
+      ]
+  }]];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_*--><!--M_[--><button>0<!--M_$8 #text/1--></button><!--M_$8 #button/0--><!--M_]1 #text/1 8-->
+<script>
+  M._.r.push(_ => [8, {
+      "ClosureSignalIndex:value/3": 3
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-nested-completes-first-keeps-effects/template.marko_3 5 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-nested-completes-first-keeps-effects/template.marko_5 8 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-nested-completes-first-keeps-effects/template.marko_5_value#0:2/subscribe 8"
+    );
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c>
+  <!--M_[--><button>0<!--M_$9 #text/1--></button><!--M_$9 #button/0--><!--M_]5 #text/0 9-->
+</t>
+<script>
+  M._.r.push(_ => [9, {
+    "ClosureSignalIndex:value/3": 2
+  }]);
+  M._.j.c = _ => {
+    _.push(
+      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-nested-completes-first-keeps-effects/template.marko_4 9 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-nested-completes-first-keeps-effects/template.marko_4_value#0:2/subscribe 9"
+      )
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b>
+  <!--M_[--><button>0<!--M_$10 #text/1--></button><!--M_$10 #button/0--><!--M_]3 #text/0 10-->
+</t>
+<script>
+  M._.j.b = _ => {
+    _.push(
+      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-nested-completes-first-keeps-effects/template.marko_2 10 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-nested-completes-first-keeps-effects/template.marko_2_value#0:2/subscribe 10"
+      )
+  };
+  M._.w()
+</script>

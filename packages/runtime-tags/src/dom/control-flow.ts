@@ -352,19 +352,20 @@ function createAwaitCounter(tryBranch: BranchScope, done: () => void) {
       }
       if (--awaitCounter.i) return 1;
       done();
-      queueEffect(tryBranch, runPendingEffects);
+      queuePendingEffects(tryBranch);
     },
   });
   return awaitCounter;
 }
 
-export function runPendingEffects(tryBranch: BranchScope) {
-  // `forEach`'s second argument clears each list and set before its effects run,
-  // so an effect deferred again starts a new one.
+// Not itself an effect, so only the effects it queues defer to a `<try>` still pending.
+export function queuePendingEffects(tryBranch: BranchScope) {
+  // `forEach`'s second argument clears each list and set as it is read, so an
+  // effect deferred again starts a new one.
   tryBranch[AccessorProp.PendingEffectScopes]?.forEach(
     (scope) =>
       scope[AccessorProp.PendingEffects]!.forEach(
-        (fn) => runEffects([fn, scope]),
+        (fn) => queueEffect(scope, fn),
         (scope[AccessorProp.PendingEffects] = null),
       ),
     (tryBranch[AccessorProp.PendingEffectScopes] = null),
