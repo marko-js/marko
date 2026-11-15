@@ -720,15 +720,20 @@ function pruneBinding(binding: Binding): boolean {
   for (const alias of binding.aliases) {
     if (pruneBinding(alias)) {
       binding.aliases.delete(alias);
-    } else if (alias.type !== BindingType.constant) {
+    } else {
       shouldPrune = false;
     }
   }
 
+  // A loop key is stored at its own accessor, so what it is a property of may go
+  // unread; an alias of a key reads through the key.
   for (const [key, alias] of binding.propertyAliases) {
     if (pruneBinding(alias)) {
       binding.propertyAliases.delete(key);
-    } else if (alias.type !== BindingType.constant) {
+    } else if (
+      alias.type !== BindingType.constant ||
+      binding.type === BindingType.constant
+    ) {
       shouldPrune = false;
     }
   }

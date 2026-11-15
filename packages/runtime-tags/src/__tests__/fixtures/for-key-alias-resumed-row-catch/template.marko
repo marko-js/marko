@@ -1,0 +1,13 @@
+static function fail() {
+  throw new Error("fail");
+}
+
+<let/failing=false/>
+<for|item, index| of=["a", "b"]>
+  <const/key=index/>
+  <try>
+    ${failing ? fail() : item}
+    <@catch>${key}</@catch>
+  </try>
+</for>
+<button onClick() { failing = true }>fail</button>

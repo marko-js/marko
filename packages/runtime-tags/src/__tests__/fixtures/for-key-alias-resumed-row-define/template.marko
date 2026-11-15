@@ -1,0 +1,9 @@
+<let/show=true/>
+<for|item, index| of=["a", "b"]>
+  <const/key=index/>
+  <define/Key>${key}</define>
+  <if=show>
+    <Key/>
+  </if>
+</for>
+<button onClick() { show = !show }>toggle</button>

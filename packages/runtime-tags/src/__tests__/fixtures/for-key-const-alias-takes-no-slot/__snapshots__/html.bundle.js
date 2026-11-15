@@ -17,7 +17,8 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id, "c");
 		_script($scope1_id, "a0");
 		_scope($scope1_id, {
-			d: count,
+			M: key,
+			e: count,
 			_: _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "a", 1, 0);
