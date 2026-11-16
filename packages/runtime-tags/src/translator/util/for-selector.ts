@@ -1,11 +1,6 @@
 import type { types as t } from "@marko/compiler";
 
-import {
-  type Binding,
-  bindingUtil,
-  getCanonicalBinding,
-  getPropertyAlias,
-} from "./bindings";
+import { type Binding, bindingUtil, getPropertyAlias } from "./bindings";
 import { forEach } from "./optional";
 import { getReferencedBindings } from "./references";
 import type { Section } from "./sections";
@@ -14,19 +9,20 @@ export function isForSelectorClosure(
   bodySection: Section,
   closure: Binding,
 ): boolean {
-  return !!bodySection.selector?.has(getCanonicalBinding(closure));
+  return !!bodySection.selector?.has(closure.canonical);
 }
 
 export function detectForSelector(
   bodySection: Section,
   keyBinding: Binding,
 ): void {
+  if (!keyBinding.reads) return;
   const parentSection = bodySection.parent!;
   let closures: Set<Binding> | undefined;
   for (const expr of keyBinding.reads.keys()) {
     if (expr.section !== bodySection) continue;
     forEach(getReferencedBindings(expr), (closure) => {
-      const canonical = getCanonicalBinding(closure);
+      const canonical = closure.canonical;
       if (
         !closures?.has(canonical) &&
         bindingUtil.has(bodySection.referencedClosures, canonical) &&
@@ -60,6 +56,7 @@ function onlyComparesKey(
 ): boolean {
   let found = false;
   for (let chain: Binding | undefined = closure; chain; chain = chain.aliasOf) {
+    if (!chain.reads) continue;
     for (const [expr, reads] of chain.reads) {
       if (expr.section !== bodySection) continue;
       let other = false;
@@ -89,7 +86,7 @@ function resolvesTo(
   canonical: Binding,
 ) {
   const binding = getPropertyAlias(read.binding, read.properties);
-  return !!binding && getCanonicalBinding(binding) === canonical;
+  return !!binding && binding.canonical === canonical;
 }
 
 // Whether the read reads a property through `canonical`.
@@ -101,15 +98,13 @@ function resolvesThrough(
   let through = false;
   forEach(read.properties, (prop) => {
     if (binding) {
-      through ||= getCanonicalBinding(binding) === canonical;
-      binding = binding.propertyAliases.get(prop);
+      through ||= binding.canonical === canonical;
+      binding = binding.propertyAliases?.get(prop);
     }
   });
   return through;
 }
 
 function readsKey(read: t.NodeExtra["read"], keyBinding: Binding): boolean {
-  return (
-    !!read && !read.getter && resolvesTo(read, getCanonicalBinding(keyBinding))
-  );
+  return !!read && !read.getter && resolvesTo(read, keyBinding);
 }

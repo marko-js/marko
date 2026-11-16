@@ -1,11 +1,6 @@
 import { types as t } from "@marko/compiler";
 
-import {
-  type Binding,
-  getCanonicalBinding,
-  getDeclaredAlias,
-  isRest,
-} from "./bindings";
+import { type Binding, getDeclaredAlias, isRest } from "./bindings";
 import {
   forEachIdentifier,
   forEachIdentifierPath,
@@ -72,7 +67,7 @@ export default function translateVar(
 
     if (binding.assignments && binding.property !== undefined) {
       const changeName = binding.property + "Change";
-      const changeBinding = binding.aliasOf.propertyAliases.get(changeName);
+      const changeBinding = binding.aliasOf.propertyAliases?.get(changeName);
       if (changeBinding && changeName !== changeBinding.name) {
         // add a new property to the destructure list when a change handler is implicitly added
         // eg by assigning to a destructured property.
@@ -189,7 +184,7 @@ function translateRest(
   rest: Binding,
   kind: "let" | "const",
 ) {
-  const source = getCanonicalBinding(rest.aliasOf!);
+  const source = rest.aliasOf!;
   // A destructured value is only in scope through the names its pattern
   // declares, so a rest of it narrows the rest or copy declared there.
   const from = getDeclaredAlias(source) || source;

@@ -292,11 +292,11 @@ function getLoopKeyBinding(
   forType: ForType,
 ): Binding | undefined {
   if (byAttr) {
-    const item = paramsBinding.propertyAliases.get("0");
+    const item = paramsBinding.propertyAliases?.get("0");
     return item && getKeyAlias(byAttr, item);
   }
 
-  return paramsBinding.propertyAliases.get(forType === "of" ? "1" : "0");
+  return paramsBinding.propertyAliases?.get(forType === "of" ? "1" : "0");
 }
 
 // The alias of the loop item that `by=` reads: a property name, or a function

@@ -1,10 +1,6 @@
 import { types as t } from "@marko/compiler";
 
-import {
-  type Binding,
-  compareReferences,
-  getCanonicalBinding,
-} from "./bindings";
+import { type Binding, compareReferences } from "./bindings";
 import * as SlotKind from "./constants/slot-kind";
 import { type Opt } from "./optional";
 import { type Reason } from "./reasons";
@@ -68,7 +64,7 @@ export function ensureSlot(
   section?: Section,
   group?: ParamReasonGroup,
 ): Slot {
-  const owner = getCanonicalBinding(binding);
+  const owner = binding.canonical;
   return ensureIn(section || owner.section, owner, kind, group);
 }
 
@@ -87,7 +83,7 @@ export function findSlot(
   section?: Section,
   group?: ParamReasonGroup,
 ) {
-  const owner = getCanonicalBinding(binding);
+  const owner = binding.canonical;
   return findIn((section || owner.section).slots, owner.uid, kind, group);
 }
 

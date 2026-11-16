@@ -418,11 +418,7 @@ function isOnlyCalled(body: Section) {
 }
 
 function isUsed(binding: Binding) {
-  return (
-    !!binding.reads.size ||
-    !!binding.aliases.size ||
-    !!binding.propertyAliases.size
-  );
+  return !!(binding.reads || binding.aliases || binding.propertyAliases);
 }
 
 function createGuardShares(): GuardShares {

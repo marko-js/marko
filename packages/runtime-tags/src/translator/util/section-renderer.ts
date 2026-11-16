@@ -33,20 +33,22 @@ function isPropertyPathRead(binding: Binding, properties: Opt<string>) {
   } else if (binding.pruned === undefined) {
     throw new Error("Binding must be pruned before checking properties");
   }
-  if (binding.reads.size || !properties) {
+  if (binding.reads || !properties) {
     return true;
   }
 
   const property = first(properties);
 
-  const propBinding = binding.propertyAliases.get(property);
+  const propBinding = binding.propertyAliases?.get(property);
   if (propBinding && isPropertyPathRead(propBinding, rest(properties))) {
     return true;
   }
 
-  for (const alias of binding.aliases) {
-    if (isPropertyPathRead(alias, properties)) {
-      return true;
+  if (binding.aliases) {
+    for (const alias of binding.aliases) {
+      if (isPropertyPathRead(alias, properties)) {
+        return true;
+      }
     }
   }
 

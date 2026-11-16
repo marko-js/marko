@@ -9,7 +9,6 @@ import {
   type ReferencedBindings,
   bindingUtil,
   createBinding,
-  getCanonicalBinding,
   ensurePropertyAlias,
   isRest,
   isIndexProperty,
@@ -260,7 +259,7 @@ export function trackVarReferences(
   const tagVar = tag.node.var;
   if (tagVar) {
     const section = ensureSection(tag);
-    let target = aliased && getCanonicalBinding(aliased);
+    let target = aliased?.canonical;
     if (target) {
       const { excludeProperties, restOffset } = target;
       if (isRest(target)) {
@@ -530,7 +529,7 @@ function trackAssignment(
 
   // A name for a value another declares (`b` of `{ a: b }` beside `{ a }`) is
   // read as that one, so assigning it assigns that one.
-  const assigned = getCanonicalBinding(binding);
+  const assigned = binding.canonical;
   const fnRoot = getFnRoot(fnParent);
   const fnExtra =
     fnRoot && ((fnRoot.node.extra ??= {}) as ReferencedFunctionExtra);
@@ -561,7 +560,7 @@ function trackAssignment(
 
         const changePropName = assigned.property + "Change";
         const changeBinding =
-          assigned.aliasOf.propertyAliases.get(changePropName) ||
+          assigned.aliasOf.propertyAliases?.get(changePropName) ||
           createBinding(
             generateUid(changePropName),
             assigned.type,
@@ -792,7 +791,7 @@ function ensurePatternBinding(
   excludeProperties: SortedOpt<string>,
 ) {
   const patternBinding =
-    (property ? aliased!.propertyAliases.get(property) : aliased) ||
+    (property ? aliased!.propertyAliases?.get(property) : aliased) ||
     ((lVal.extra ??= {}).binding = createBinding(
       generateUid(property || "pattern"),
       type,
@@ -849,7 +848,7 @@ function trackReference(
 
     let prop = getMemberExpressionPropString(parent);
     if (isAssignedMember(root.parentPath!)) {
-      const object = getCanonicalBinding(reference);
+      const object = reference.canonical;
       if (isRest(object)) {
         throw root.parentPath!.buildCodeFrameError(
           `\`${referencePath.node.name}\` is a rest element, a copy rebuilt from the value it is destructured from whenever that changes, so assigning its members would be lost. Assign the property on that value instead, or keep your own copy in a \`<let>\`.`,
@@ -965,7 +964,7 @@ function mergeInto(
       isEffect ||= extra.isEffect;
       if (additionalReads) {
         forEach(additionalReads, (read) => {
-          const bindingReads = read.binding.reads;
+          const bindingReads = read.binding.reads!;
           bindingReads.delete(extra);
           bindingReads.set(
             targetExtra,
@@ -1078,7 +1077,8 @@ export function addRead(
   // Content no output renders keeps no binding alive: reads recorded before it
   // was dropped are untracked by `dropContent`, and later ones stop here.
   if (section.dropped) return read;
-  binding.reads.set(exprExtra, push(binding.reads.get(exprExtra), read));
+  const bindingReads = (binding.reads ??= new Map());
+  bindingReads.set(exprExtra, push(bindingReads.get(exprExtra), read));
   exprExtra.section = section;
   readsByExpression.set(
     exprExtra,
@@ -1133,7 +1133,13 @@ function untrackExpr(exprExtra: ReferencedExtra) {
   const reads = readsByExpr.get(exprExtra);
   if (reads) {
     readsByExpr.delete(exprExtra);
-    forEach(reads, (read) => read.holder.reads.delete(exprExtra));
+    forEach(reads, (read) => {
+      const { holder } = read;
+      // An earlier read of the same holder may have emptied it.
+      if (holder.reads?.delete(exprExtra) && !holder.reads.size) {
+        holder.reads = undefined;
+      }
+    });
   }
 }
 

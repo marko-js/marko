@@ -6,7 +6,6 @@ import {
   type Intersection,
   type ParamBinding,
   bindingUtil,
-  getCanonicalBinding,
   isDirectAlias,
   isIndexProperty,
   propertiesUtil,
@@ -485,7 +484,7 @@ function isReferenceTo(extra: t.NodeExtra, binding: Binding) {
   return (
     !!read &&
     read.properties === undefined &&
-    getCanonicalBinding(read.binding) === getCanonicalBinding(binding)
+    read.binding.canonical === binding.canonical
   );
 }
 
@@ -577,7 +576,7 @@ function getLandingBits(read: ReferencedExtra, binding: Binding) {
 
 // A dynamic tag reads the value only as its name.
 function isNamedBy(read: ReferencedExtra, binding: Binding) {
-  return every(binding.reads.get(read), isTagNameRead);
+  return every(binding.reads?.get(read), isTagNameRead);
 }
 
 function isTagNameRead({ extra }: Read) {
@@ -606,26 +605,34 @@ function forEachStep<S>(
   if (properties !== true && aliased) {
     step.reach(state, aliased, concat(binding.property, properties), undefined);
   }
-  for (const read of binding.reads.keys()) {
-    step.land(state, read, binding);
-    if (!read.isEffect) {
-      forEachDerivedStep(read, binding, properties, step, state);
+  if (binding.reads) {
+    for (const read of binding.reads.keys()) {
+      step.land(state, read, binding);
+      if (!read.isEffect) {
+        forEachDerivedStep(read, binding, properties, step, state);
+      }
     }
   }
-  for (const alias of binding.aliases) {
-    step.reach(state, alias, properties, undefined);
+  if (binding.aliases) {
+    for (const alias of binding.aliases) {
+      step.reach(state, alias, properties, undefined);
+    }
   }
   if (properties === true) {
-    for (const part of binding.propertyAliases.values()) {
-      step.reach(state, part, true, undefined);
+    if (binding.propertyAliases) {
+      for (const part of binding.propertyAliases.values()) {
+        step.reach(state, part, true, undefined);
+      }
     }
   } else if (properties !== undefined) {
     const property = first(properties);
-    let part = binding.propertyAliases.get(property);
+    let part = binding.propertyAliases?.get(property);
     if (part) step.reach(state, part, rest(properties), undefined);
-    for (const alias of binding.aliases) {
-      part = alias.propertyAliases.get(property);
-      if (part) step.reach(state, part, rest(properties), undefined);
+    if (binding.aliases) {
+      for (const alias of binding.aliases) {
+        part = alias.propertyAliases?.get(property);
+        if (part) step.reach(state, part, rest(properties), undefined);
+      }
     }
   }
 }

@@ -22,12 +22,7 @@ import {
   scopeIdentifier,
 } from "./scope-read";
 import type { Section } from "./sections";
-import {
-  getBindingGetterIdentifier,
-  getSignals,
-  getSignalValueIdentifier,
-  type Signal,
-} from "./signals";
+import { getBindingGetterIdentifier, getSignals, type Signal } from "./signals";
 import {
   getMemberExpressionPropString,
   toMemberExpression,
@@ -120,7 +115,7 @@ function getDOMReadBase(
   if (inlined) return t.cloneNode(inlined, true);
 
   if (signal?.referencedBindings === binding && !signal.storesValue) {
-    return getSignalValueIdentifier(signal);
+    return t.identifier(binding.canonical.name);
   }
 
   if (getter?.hoisted) {
@@ -171,7 +166,7 @@ function getHTMLReadBase(
   }
 
   if (binding.type === BindingType.dom) {
-    return binding.getters.has(binding.section)
+    return binding.getters?.has(binding.section)
       ? getBindingGetterIdentifier(binding, binding.section)
       : undefined;
   }
