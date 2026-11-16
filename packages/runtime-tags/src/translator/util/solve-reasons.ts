@@ -14,12 +14,11 @@ import {
 import {
   createAnalysisMemo,
   createPassMemo,
-  createPassPathMemo,
   createPathKeys,
   resetPassMemos,
 } from "./cyclic-memo";
 import { addKnownTagReasons } from "./known-tag";
-import { addFunctionReasons } from "./module-registrations";
+import { addFunctionReasons, getReferencesByFn } from "./module-registrations";
 import {
   at,
   concat,
@@ -41,19 +40,17 @@ import {
   getSourcesForExpr,
   type KnownExprs,
   mapParamReason,
-  mergeSlotReasons,
   type Reason,
 } from "./reasons";
 import {
   type Read,
   type ReferencedExtra,
-  getFunctionReadsByExpression,
   getConstantBindingsInFunction,
   getReferencedBindingsInFunction,
   getBindingsDerivedFrom,
 } from "./references";
 import {
-  ensureSectionReasonGroups,
+  ensureReasonGroups,
   forEachSection,
   forEachSectionReverse,
   getDynamicClosureIndex,
@@ -87,9 +84,8 @@ export function solveReasons(
     );
     forEachSection(addClosureReasons);
     forEachSection(addCallOwnerReasons);
-    addRegisteredFnReasons(getFunctionReadsByExpression());
+    addRegisteredFnReasons();
   } while (reasonsVersion !== getReasonsVersion());
-  getFunctionReadsByExpression().clear();
   // No rule reads groups, so they form from settled reasons; a call visited before its
   // body gains a group (from a later section, or recursive) maps it on the next pass.
   do {
@@ -98,10 +94,16 @@ export function solveReasons(
   } while (reasonsVersion !== getReasonsVersion());
 }
 
+// A scope is written when any slot in it is; its guards test the groups of
+// each slot's reason and of the scope's.
 function solveSectionReasons(section: Section) {
   addKnownTagReasons(section);
-  mergeSlotReasons(section);
-  ensureSectionReasonGroups(section);
+  let { reason } = section;
+  for (const slot of section.slots) {
+    reason = mergeSources(reason, slot.reason);
+    ensureReasonGroups(section, slot.reason);
+  }
+  ensureReasonGroups(section, (section.reason = reason));
 }
 
 // An intersection member is read when its partners' sources change, unless
@@ -284,23 +286,19 @@ function addCallOwnerReasons(body: Section) {
 
 // Client code reading a function reads what the function references, owners
 // included.
-function addRegisteredFnReasons(
-  fnReadsByExpression: ReturnType<typeof getFunctionReadsByExpression>,
-) {
+function addRegisteredFnReasons() {
   addFunctionReasons();
-  for (const exprFnReads of fnReadsByExpression.values()) {
-    for (const fn of exprFnReads.keys()) {
-      const reason = fn.reason;
-      if (reason) {
-        const addReadReason = (binding: Binding) => {
-          addReason(ensureSlot(binding), reason);
-          if (binding.section !== fn.section) {
-            addOwnerReason(fn.section, binding.section, reason);
-          }
-        };
-        forEach(getReferencedBindingsInFunction(fn), addReadReason);
-        forEach(getConstantBindingsInFunction(fn), addReadReason);
-      }
+  for (const fn of getReferencesByFn().keys()) {
+    const reason = fn.reason;
+    if (reason) {
+      const addReadReason = (binding: Binding) => {
+        addReason(ensureSlot(binding), reason);
+        if (binding.section !== fn.section) {
+          addOwnerReason(fn.section, binding.section, reason);
+        }
+      };
+      forEach(getReferencedBindingsInFunction(fn), addReadReason);
+      forEach(getConstantBindingsInFunction(fn), addReadReason);
     }
   }
 }
@@ -325,13 +323,17 @@ const exprReaders = createPassMemo(computeExprReaders, UNREAD);
 
 // A binding's answer is per asked path: the value itself, one of its
 // properties (a destructured part), or the whole with every property.
-const bindingReaders = createPassPathMemo(computeBindingReaders, UNREAD);
+const bindingReaders = createPassMemo(computeBindingReaders, UNREAD);
+
+// One key per binding and path, shared by every memo and walk asking for it.
+const getWalkKey = createPathKeys<Binding>();
 
 export function getReasonForBinding(
   binding: Binding,
-  properties?: Opt<string> | true,
+  properties: Opt<string>,
+  exprs: KnownExprs | undefined,
 ): undefined | Reason {
-  return bindingReaders(binding, properties).reason;
+  return readersOf(binding, properties, exprs).reason;
 }
 
 // An expression's `getReasonForBinding`: what rereads its value after resume,
@@ -346,7 +348,9 @@ export function bindingLandsRetained(
   binding: Binding,
   properties: Opt<string>,
 ) {
-  return !!(bindingReaders(binding, properties).lands & LANDS_RETAINED_INPUT);
+  return !!(
+    bindingReaders(getWalkKey(binding, properties)).lands & LANDS_RETAINED_INPUT
+  );
 }
 
 // Where content renders: its content sites in the template it is passed to, its
@@ -436,7 +440,7 @@ function readersOf(
   path: Opt<string> | true,
   exprs: KnownExprs | undefined,
 ): Readers {
-  const linked = bindingReaders(binding, path);
+  const linked = bindingReaders(getWalkKey(binding, path));
   return exprs && linked.reason
     ? {
         reason: mapParamReason(
@@ -490,10 +494,10 @@ function isPartOf(binding: Binding, value: Binding | undefined) {
   return !!value && binding.aliasOf === value && !isDirectAlias(binding);
 }
 
-function computeBindingReaders(
-  binding: Binding,
-  properties: Opt<string> | true | undefined,
-): Readers {
+function computeBindingReaders([binding, properties]: [
+  Binding,
+  Opt<string> | true,
+]): Readers {
   if (isLeftOut(binding, properties)) return UNREAD;
   const head =
     properties === true || properties === undefined
@@ -665,8 +669,6 @@ interface Step<S> {
 function isReturned(extra: t.NodeExtra) {
   return extra === getProgram().node.extra.section!.returnValueExpr;
 }
-
-const getWalkKey = createPathKeys<Binding>();
 
 type ReadTest = (
   read: ReferencedExtra,

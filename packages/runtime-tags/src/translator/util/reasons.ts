@@ -129,13 +129,8 @@ export function getSourcesForExpr(expr: t.NodeExtra) {
     : undefined;
 }
 
-export function getSourcesForExprs(exprs: Opt<t.NodeExtra> | boolean) {
-  if (exprs) {
-    if (exprs === true) {
-      return ALWAYS;
-    }
-    return reduce(exprs, mergeExprSources);
-  }
+export function getSourcesForExprs(exprs: Opt<t.NodeExtra>) {
+  return reduce(exprs, mergeExprSources);
 }
 
 export function getSourcesForReferencedBindings(bindings: ReferencedBindings) {
@@ -278,15 +273,6 @@ export function applyReasonExprs(section: Section) {
   for (const slot of section.slots) {
     addReason(slot, getSourcesForExprs(slot.reasonExprs));
   }
-}
-
-export function mergeSlotReasons(section: Section) {
-  section.reason = section.slots.reduce(mergeSlotReason, section.reason);
-}
-
-// A scope is written when any slot in it is.
-function mergeSlotReason(sectionReason: Reason | undefined, slot: Slot) {
-  return mergeSources(sectionReason, slot.reason);
 }
 
 // Each reason a node of the section resumes for, kept apart so each one's guard

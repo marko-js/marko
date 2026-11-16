@@ -364,22 +364,14 @@ export function getCanonicalBinding(binding: Binding) {
   return binding;
 }
 
-// Whether the binding, or any alias of it (transitively), passes `test`;
-// `directOnly` follows only aliases of the whole value.
-export function someAlias<A>(
+// Whether the binding, or any alias of it (transitively), passes `test`.
+export function someAlias(
   binding: Binding,
-  test: (binding: Binding, arg: A) => boolean,
-  arg: A,
-  directOnly?: boolean,
+  test: (binding: Binding) => boolean,
 ): boolean {
-  if (test(binding, arg)) return true;
+  if (test(binding)) return true;
   for (const alias of binding.aliases) {
-    if (
-      (!directOnly || isDirectAlias(alias)) &&
-      someAlias(alias, test, arg, directOnly)
-    ) {
-      return true;
-    }
+    if (someAlias(alias, test)) return true;
   }
   return false;
 }
@@ -405,7 +397,11 @@ export function getNearestDeclared(binding: Binding) {
 
 // The name a pattern declares for a value no declared name reaches.
 export function getDeclaredAlias(binding: Binding) {
-  return !getNearestDeclared(binding) && binding.declaredAlias;
+  return (
+    binding.declaredAlias &&
+    !getNearestDeclared(binding) &&
+    binding.declaredAlias
+  );
 }
 
 // Aliases the whole of another value: no property, no rest exclusions.
@@ -493,7 +489,7 @@ function toIdentifierAccess(property: string) {
 // A binding the receiving template can never observe: every read is in an
 // `invokeOnly` expression and nothing else (assignment, hoist, getter, access) sees it.
 export function isInvokeOnlyBinding(binding: Binding): boolean {
-  return !someAlias(binding, isReadBeyondInvoking, undefined);
+  return !someAlias(binding, isReadBeyondInvoking);
 }
 
 function isReadBeyondInvoking(binding: Binding) {

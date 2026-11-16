@@ -106,7 +106,7 @@ when their combined work becomes relevant. Reasons that follow others
 known-tag param groups) are solved together, repeating until none moves; every
 write merges, so they only grow and cycles settle.
 
-Across known tags, `ensureSectionReasonGroups()` builds each child's param
+Across known tags, `ensureReasonGroups()` builds each child's param
 reason groups: the param sets its call sites report as two bits. The parent
 calls `_set_scope_reason(...)`; the child consumes and clears it with
 `_scope_reason()`. HTML runtime encoding is two bits per

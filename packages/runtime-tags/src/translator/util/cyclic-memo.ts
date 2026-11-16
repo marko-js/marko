@@ -118,25 +118,14 @@ export function resetPassMemos() {
   for (const reset of passResets) reset();
 }
 
-// A pass memo keyed by an object and a property path (`true` for all):
-// each path interns one key, so a path's answers share one cycle protocol.
+// An object and a property path (`true` for all), interned so a memo keyed by
+// it shares one cycle protocol per path.
 type MemoPath = Opt<string> | true;
 type PathKey<K> = [K, MemoPath];
 interface PathKeys<K> {
   value: PathKey<K> | undefined;
   all: PathKey<K> | undefined;
   properties: Map<string, PathKeys<K>> | undefined;
-}
-export function createPassPathMemo<K extends object, R>(
-  compute: (key: K, path: MemoPath) => R,
-  cycleAnswer: R,
-) {
-  const getKey = createPathKeys<K>();
-  const memo = createPassMemo(
-    ([key, path]: PathKey<K>) => compute(key, path),
-    cycleAnswer,
-  );
-  return (key: K, path: MemoPath) => memo(getKey(key, path));
 }
 
 // One key per object and property path, the same each time it is asked.

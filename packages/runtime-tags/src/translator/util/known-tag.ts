@@ -506,14 +506,10 @@ export function addKnownTagReasons(section: Section) {
         // Sources settle before solving, so a group maps once: a later pass
         // only meets the groups it added.
         if (!findSlot(childScopeBinding, SlotKind.ParamGroup, section, group)) {
-          const slot = ensureSlot(
-            childScopeBinding,
-            SlotKind.ParamGroup,
-            section,
-            group,
+          addReason(
+            ensureSlot(childScopeBinding, SlotKind.ParamGroup, section, group),
+            getSourcesForExprs(mapParamReasonToExpr(knownExprs, group)),
           );
-          slot.reasonExprs = mapParamReasonToExpr(knownExprs, group);
-          addReason(slot, getSourcesForExprs(slot.reasonExprs));
         }
       }
     }

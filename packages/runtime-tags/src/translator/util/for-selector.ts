@@ -6,7 +6,7 @@ import {
   getCanonicalBinding,
   getPropertyAlias,
 } from "./bindings";
-import { forEach, some } from "./optional";
+import { forEach } from "./optional";
 import { getReferencedBindings } from "./references";
 import type { Section } from "./sections";
 
@@ -15,13 +15,6 @@ export function isForSelectorClosure(
   closure: Binding,
 ): boolean {
   return !!bodySection.selector?.has(getCanonicalBinding(closure));
-}
-
-export function isForSelectorValue(binding: Binding): boolean {
-  return some(
-    binding.closureSections,
-    (section) => !!section.selector?.has(binding),
-  );
 }
 
 export function detectForSelector(
