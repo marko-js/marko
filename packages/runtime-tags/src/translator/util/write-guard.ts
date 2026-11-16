@@ -362,14 +362,13 @@ function isDynamicWriteGuard(
   section: Section,
   reason: undefined | Reason,
 ): reason is Sources & { state: undefined } {
-  return isGuardedReason(reason) && !isCrossSection(section, reason);
+  return (
+    isGuardedReason(reason) && !some(reason.param, isOutsideSection, section)
+  );
 }
 
-function isCrossSection(section: Section, reason: Sources) {
-  return some(
-    reason.param,
-    (param) => !isSameOrAncestorSection(param.section, section),
-  );
+function isOutsideSection(param: Binding, section: Section) {
+  return !isSameOrAncestorSection(param.section, section);
 }
 
 // The constant every render of a `<define>` body's group passes, where each call passes the

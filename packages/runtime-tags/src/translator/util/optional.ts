@@ -61,16 +61,26 @@ export class Sorted<T> {
   filter<U extends NonNullable<T>>(
     data: SortedOpt<U>,
     cb: (item: U) => boolean,
+  ): SortedOpt<U>;
+  filter<U extends NonNullable<T>, C>(
+    data: SortedOpt<U>,
+    cb: (item: U, context: C) => boolean,
+    context: C,
+  ): SortedOpt<U>;
+  filter<U extends NonNullable<T>, C>(
+    data: SortedOpt<U>,
+    cb: (item: U, context: C | undefined) => boolean,
+    context?: C,
   ): SortedOpt<U> {
     if (!Array.isArray(data)) {
-      return data !== undefined && cb(data) ? data : undefined;
+      return data !== undefined && cb(data, context) ? data : undefined;
     }
     for (let i = 0; i < data.length; i++) {
-      if (!cb(data[i])) {
+      if (!cb(data[i], context)) {
         const kept: U[] = [];
         for (let j = 0; j < i; j++) kept.push(data[j]);
         while (++i < data.length) {
-          if (cb(data[i])) kept.push(data[i]);
+          if (cb(data[i], context)) kept.push(data[i]);
         }
         return (kept.length > 1 ? kept : kept[0]) as SortedOpt<U>;
       }
@@ -388,26 +398,44 @@ export function find<T>(
   }
 }
 
-export function some<T>(
+export function some<T>(data: Opt<T>, cb: (item: T) => unknown): boolean;
+export function some<T, C>(
   data: Opt<T>,
-  cb: (item: T, index: number) => unknown,
+  cb: (item: T, context: C) => unknown,
+  context: C,
+): boolean;
+export function some<T, C>(
+  data: Opt<T>,
+  cb: (item: T, context: C | undefined) => unknown,
+  context?: C,
 ): boolean {
-  return data !== undefined
-    ? Array.isArray(data)
-      ? data.some(cb)
-      : !!cb(data, 0)
-    : false;
+  if (Array.isArray(data)) {
+    for (const item of data) {
+      if (cb(item, context)) return true;
+    }
+    return false;
+  }
+  return data !== undefined && !!cb(data, context);
 }
 
-export function every<T>(
+export function every<T>(data: Opt<T>, cb: (item: T) => boolean): boolean;
+export function every<T, C>(
   data: Opt<T>,
-  cb: (item: T, index: number) => boolean,
+  cb: (item: T, context: C) => boolean,
+  context: C,
+): boolean;
+export function every<T, C>(
+  data: Opt<T>,
+  cb: (item: T, context: C | undefined) => boolean,
+  context?: C,
 ): boolean {
-  return data !== undefined
-    ? Array.isArray(data)
-      ? data.every(cb)
-      : !!cb(data, 0)
-    : true;
+  if (Array.isArray(data)) {
+    for (const item of data) {
+      if (!cb(item, context)) return false;
+    }
+    return true;
+  }
+  return data === undefined || cb(data, context);
 }
 
 export function reduce<T, R>(

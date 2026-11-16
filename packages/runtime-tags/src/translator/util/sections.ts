@@ -378,10 +378,7 @@ export function getDynamicTagContentClosures(section: Section) {
   const { derives } = section;
   if (
     section.branchExpr?.tagNameType === TagNameType.DynamicTag ||
-    (derives &&
-      some(derives.binding, (binding) =>
-        bindingLandsRetained(binding, derives.properties),
-      ))
+    (derives && some(derives.binding, bindingLandsRetained, derives.properties))
   ) {
     return bindingUtil.filter(
       getClosuresFromAbove(section, section, new Set()),
