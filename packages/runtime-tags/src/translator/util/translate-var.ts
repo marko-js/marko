@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
 
-import { type Binding, getDeclaredAlias, isRest } from "./bindings";
+import { type Alias, type Binding, getDeclaredAlias, isRest } from "./bindings";
 import {
   forEachIdentifier,
   forEachIdentifierPath,
@@ -181,10 +181,10 @@ function translateAliasInSection(
 function translateRest(
   tag: t.NodePath<t.MarkoTag>,
   id: t.Identifier,
-  rest: Binding,
+  rest: Alias,
   kind: "let" | "const",
 ) {
-  const source = rest.aliasOf!;
+  const source = rest.aliasOf;
   // A destructured value is only in scope through the names its pattern
   // declares, so a rest of it narrows the rest or copy declared there.
   const from = getDeclaredAlias(source) || source;

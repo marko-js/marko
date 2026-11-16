@@ -263,7 +263,7 @@ export function trackVarReferences(
     if (target) {
       const { excludeProperties, restOffset } = target;
       if (isRest(target)) {
-        target = target.aliasOf!;
+        target = target.aliasOf;
       }
       // An alias is read as what it aliases, so declares only a pattern holding
       // a rest.
@@ -859,7 +859,7 @@ function trackReference(
     }
     if (prop === undefined) break;
 
-    if (reference.aliasOf && isRest(reference)) {
+    if (isRest(reference)) {
       if (reference.restOffset !== undefined) {
         // A shifted array rest only mirrors the source at offset indices;
         // anything else (length, methods) belongs to the rest array itself.

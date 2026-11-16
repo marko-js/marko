@@ -205,8 +205,7 @@ export function createBinding(
     if (declared) aliased.declaredAlias ??= binding;
   }
   // An alias only ever names a canonical binding, so one hop reaches it.
-  binding.canonical =
-    binding.aliasOf && isDirectAlias(binding) ? binding.aliasOf : binding;
+  binding.canonical = isDirectAlias(binding) ? binding.aliasOf : binding;
 
   setNextBindingId(id + 1);
   getBindings().add(binding);
@@ -404,8 +403,11 @@ export function getDeclaredAlias(binding: Binding) {
   );
 }
 
+// A binding naming part or all of another.
+export type Alias = Binding & { aliasOf: Binding };
+
 // Aliases the whole of another value: no property, no rest exclusions.
-export function isDirectAlias(binding: Binding) {
+export function isDirectAlias(binding: Binding): binding is Alias {
   return (
     binding.aliasOf !== undefined &&
     binding.property === undefined &&
@@ -415,9 +417,11 @@ export function isDirectAlias(binding: Binding) {
 
 // A rest element: a new object or array of what its pattern leaves. An array's
 // always has a `restOffset`, 0 when it takes the whole value.
-export function isRest(binding: Binding) {
+export function isRest(binding: Binding): binding is Alias {
   return (
-    binding.excludeProperties !== undefined || binding.restOffset !== undefined
+    binding.aliasOf !== undefined &&
+    (binding.excludeProperties !== undefined ||
+      binding.restOffset !== undefined)
   );
 }
 
