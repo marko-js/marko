@@ -571,6 +571,28 @@ describe("compiler/compile", () => {
     });
   });
 
+  describe("optimize", () => {
+    // Left unset, it follows the environment of each compile, also for compiles
+    // that share their options and cache.
+    it("defaults from the environment of each compile", () => {
+      const { MARKO_DEBUG } = process.env;
+      const opts = { translator, cache: new Map(), output: "html" };
+      const runtimeOf = (debug) => {
+        process.env.MARKO_DEBUG = debug;
+        return /"@marko\/runtime-tags\/(?:debug\/)?html"/.exec(
+          compileSync("<div/>", "test.marko", opts).code,
+        )[0];
+      };
+      try {
+        assert.equal(runtimeOf("false"), '"@marko/runtime-tags/html"');
+        assert.equal(runtimeOf("true"), '"@marko/runtime-tags/debug/html"');
+      } finally {
+        if (MARKO_DEBUG === undefined) delete process.env.MARKO_DEBUG;
+        else process.env.MARKO_DEBUG = MARKO_DEBUG;
+      }
+    });
+  });
+
   describe("getRuntimeVersion", () => {
     it("reports the translator's version", () =>
       assert.match(getRuntimeVersion(), /^\d+\.\d+\.\d+/));

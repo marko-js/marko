@@ -9,14 +9,11 @@ import {
 import { diagnosticError, DiagnosticType } from "../babel-utils/diagnostics";
 import { getFileInternal, setFileInternal } from "../babel-utils/get-file";
 import { getTemplateId } from "../babel-utils/tags";
-import { translatorConflict } from "../config";
 import { buildLookup } from "../taglib";
 import { buildCodeFrameError } from "../util/build-code-frame";
 import { stat } from "../util/fs";
 import throwAggregateError from "../util/merge-errors";
 import { Hash } from "../util/quick-hash";
-import shouldOptimize from "../util/should-optimize";
-import tryLoadTranslator from "../util/try-load-translator";
 import { MarkoFile } from "./file";
 import { parseMarko } from "./parser";
 import { visitor as migrate } from "./plugins/migrate";
@@ -25,53 +22,19 @@ import { visitor as transform } from "./plugins/transform";
 const SOURCE_FILES = new WeakMap();
 let stripTypesVisitor;
 
-export default (api, markoOpts) => {
+export default (api) => {
   api.assertVersion(7);
-  const translator = (markoOpts.translator = tryLoadTranslator(
-    markoOpts.translator,
-  ));
-  markoOpts.output = markoOpts.output || "html";
-
-  if (markoOpts.optimize === undefined) {
-    api.cache.using(shouldOptimize);
-    markoOpts.optimize = shouldOptimize();
-  }
-
-  if (!translator && translatorConflict) {
-    const [first, second] = translatorConflict;
-    throw new Error(
-      `@marko/compiler: no translator was detected since package.json depends on both "${first}" and "${second}"; set the "translator" option (eg "${first}/translator").`,
-    );
-  }
-
-  if (!translator || !translator.translate) {
-    throw new Error(
-      "@marko/compiler: translator must provide a translate visitor object",
-    );
-  }
-
-  if (
-    markoOpts.output === "hydrate" &&
-    typeof markoOpts.resolveVirtualDependency !== "function"
-  ) {
-    throw new Error(
-      `@marko/compiler: the "resolveVirtualDependency" option must be supplied when output is "hydrate".`,
-    );
-  }
-
-  if (markoOpts.stripTypes) {
-    stripTypesVisitor ||= [
-      pluginTransformTypeScript(api, {
-        isTSX: false,
-        allowNamespaces: true,
-        allowDeclareFields: true,
-        optimizeConstEnums: true,
-        onlyRemoveTypeImports: true,
-        disallowAmbiguousJSXLike: false,
-      }).visitor,
-      stripTagTypesVisitor,
-    ];
-  }
+  stripTypesVisitor ||= [
+    pluginTransformTypeScript(api, {
+      isTSX: false,
+      allowNamespaces: true,
+      allowDeclareFields: true,
+      optimizeConstEnums: true,
+      onlyRemoveTypeImports: true,
+      disallowAmbiguousJSXLike: false,
+    }).visitor,
+    stripTagTypesVisitor,
+  ];
 
   let curOpts;
 
@@ -104,13 +67,14 @@ export default (api, markoOpts) => {
       ];
       curOpts = opts;
     },
-    parserOverride(code) {
+    parserOverride(code, { markoOpts }) {
       const file = getMarkoFile(code, curOpts, markoOpts);
       const finalAst = t.cloneNode(file.ast, true);
       SOURCE_FILES.set(finalAst, file);
       return finalAst;
     },
     pre(file) {
+      const { markoOpts } = file.opts.parserOpts;
       this.hasLaterPlugins =
         file.opts.plugins.length > 1 || file.opts.presets.length > 0;
       const { buildError: prevBuildError } = file.hub;
@@ -158,7 +122,7 @@ export default (api, markoOpts) => {
           }
         }
 
-        rootTranslators.push(translator.translate);
+        rootTranslators.push(markoOpts.translator.translate);
         file.___compileStage = "translate";
         traverseAll(file, rootTranslators);
 
