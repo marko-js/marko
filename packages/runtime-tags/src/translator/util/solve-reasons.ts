@@ -167,9 +167,7 @@ function hasReadIntermediate(
     seen.add(from);
     if (
       bindingUtil.has(partner.sources!.state, from) ||
-      some(partner.sources!.param, (param) =>
-        isCoveredParam(param, from as ParamBinding),
-      )
+      some(partner.sources!.param, isCoveredParam, from as ParamBinding)
     ) {
       return false;
     }
@@ -185,11 +183,12 @@ function withoutOwnSources(closure: Binding, sources: Sources | undefined) {
     return sources;
   }
   const state = bindingUtil.difference(sources.state, own.state);
-  const param = bindingUtil.filter(
-    sources.param,
-    (binding) => !isCoveredParam(binding, own.param),
-  );
+  const param = bindingUtil.filter(sources.param, isUncoveredParam, own.param);
   return withSources(sources, state, param);
+}
+
+function isUncoveredParam(binding: Binding, params: Sources["param"]) {
+  return !isCoveredParam(binding, params);
 }
 
 // What creates a section anew on the client: a branch's expression, or for

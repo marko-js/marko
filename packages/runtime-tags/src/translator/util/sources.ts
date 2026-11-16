@@ -39,10 +39,8 @@ export function sharesSources(a: Binding, b: Binding) {
     !!a.sources &&
     !!b.sources &&
     (bindingUtil.intersects(a.sources.state, b.sources.state) ||
-      some(a.sources.param, (param) =>
-        isCoveredParam(param, b.sources!.param),
-      ) ||
-      some(b.sources.param, (param) => isCoveredParam(param, a.sources!.param)))
+      some(a.sources.param, isCoveredParam, b.sources.param) ||
+      some(b.sources.param, isCoveredParam, a.sources.param))
   );
 }
 
@@ -139,15 +137,15 @@ function unionParamSources(a: Sources["param"], b: Sources["param"]) {
   // Every param list is already filtered, so an input returned as is needs none.
   if (merged === a || merged === b) return merged;
   // A side that covers the other loses nothing, so the union returns it.
-  return bindingUtil.union(dropCovered(a, b), dropCovered(b, a));
+  return bindingUtil.union(
+    bindingUtil.filter(a, isUncoveredAlias, b),
+    bindingUtil.filter(b, isUncoveredAlias, a),
+  );
 }
 
-// The params with no alias root in `other`.
-function dropCovered(params: Sources["param"], other: Sources["param"]) {
-  return bindingUtil.filter(
-    params,
-    (binding) => !isCoveredParam(binding.aliasOf, other),
-  );
+// Its alias root is not one of `params`.
+function isUncoveredAlias(binding: Binding, params: Sources["param"]) {
+  return !isCoveredParam(binding.aliasOf, params);
 }
 
 function isInParams(binding: Binding, params: Sources["param"]) {
@@ -159,7 +157,7 @@ export function isSupersetSources(a: Binding, b: Binding) {
   if (!a.sources) return false;
   return (
     bindingUtil.isSuperset(a.sources.state, b.sources.state) &&
-    every(b.sources.param, (param) => isCoveredParam(param, a.sources!.param))
+    every(b.sources.param, isCoveredParam, a.sources.param)
   );
 }
 

@@ -21,8 +21,10 @@ export function isSectionRendererElided(section: Section) {
         section.derives.tag.tagNameNullable &&
         section.derives.properties === "content"
       ) &&
-      !some(section.derives.binding, (binding) =>
-        isPropertyPathRead(binding, section.derives!.properties),
+      !some(
+        section.derives.binding,
+        isPropertyPathRead,
+        section.derives.properties,
       ))
   );
 }
