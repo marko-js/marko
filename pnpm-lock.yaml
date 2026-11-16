@@ -11,7 +11,7 @@ packageExtensionsChecksum: sha256-Y0nIMaY93oEe9LfWPHtFYIy3Zi2D7z/NLXoacDVgcAI=
 
 patchedDependencies:
   '@babel/generator@7.29.12': 0117f680d0484ae478b8ce2109bde3a24a04ff2ce45ac064d34d839c5c4bca20
-  '@babel/helper-compilation-targets@7.29.7': e98b468bdfe20d08a48f6ee078ac991affe4c54d99c96a56ab50fb71b8601b03
+  '@babel/helper-compilation-targets@7.29.7': 325a2524d247ae4a35165ea6cc40745ff8193d801a8d72ff6f3fff7b5706a2e2
   '@babel/traverse@7.29.12': 831f9092cade155e5b2c5b6b6109643387b1b7a674245caa9073652b8eac637c
   '@babel/types@7.29.11': 97b7eb84e5c56d52a50974fd3cfecd67579627900359aedacb5922d7163e9cb5
   mocha-autotest@1.1.3: 6bfa3ef08c24b7e2a50130bf5f3fa66d0721e865d0d4a10ae17606e6fa0f8810
@@ -2291,7 +2291,7 @@ snapshots:
     dependencies:
       '@babel/code-frame': 7.29.7
       '@babel/generator': 7.29.12(patch_hash=0117f680d0484ae478b8ce2109bde3a24a04ff2ce45ac064d34d839c5c4bca20)
-      '@babel/helper-compilation-targets': 7.29.7(patch_hash=e98b468bdfe20d08a48f6ee078ac991affe4c54d99c96a56ab50fb71b8601b03)
+      '@babel/helper-compilation-targets': 7.29.7(patch_hash=325a2524d247ae4a35165ea6cc40745ff8193d801a8d72ff6f3fff7b5706a2e2)
       '@babel/helper-module-transforms': 7.29.7(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)
       '@babel/helpers': 7.29.7
       '@babel/parser': 7.29.12
@@ -2320,7 +2320,7 @@ snapshots:
     dependencies:
       '@babel/types': 7.29.11(patch_hash=97b7eb84e5c56d52a50974fd3cfecd67579627900359aedacb5922d7163e9cb5)
 
-  '@babel/helper-compilation-targets@7.29.7(patch_hash=e98b468bdfe20d08a48f6ee078ac991affe4c54d99c96a56ab50fb71b8601b03)':
+  '@babel/helper-compilation-targets@7.29.7(patch_hash=325a2524d247ae4a35165ea6cc40745ff8193d801a8d72ff6f3fff7b5706a2e2)':
     dependencies:
       '@babel/compat-data': 7.29.7
       '@babel/helper-validator-option': 7.29.7
@@ -2351,7 +2351,7 @@ snapshots:
   '@babel/helper-define-polyfill-provider@0.6.8(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)':
     dependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
-      '@babel/helper-compilation-targets': 7.29.7(patch_hash=e98b468bdfe20d08a48f6ee078ac991affe4c54d99c96a56ab50fb71b8601b03)
+      '@babel/helper-compilation-targets': 7.29.7(patch_hash=325a2524d247ae4a35165ea6cc40745ff8193d801a8d72ff6f3fff7b5706a2e2)
       '@babel/helper-plugin-utils': 7.29.7
       debug: 4.4.3(supports-color@8.1.1)
       lodash.debounce: 4.0.8
@@ -2559,7 +2559,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
       '@babel/helper-annotate-as-pure': 7.29.7
-      '@babel/helper-compilation-targets': 7.29.7(patch_hash=e98b468bdfe20d08a48f6ee078ac991affe4c54d99c96a56ab50fb71b8601b03)
+      '@babel/helper-compilation-targets': 7.29.7(patch_hash=325a2524d247ae4a35165ea6cc40745ff8193d801a8d72ff6f3fff7b5706a2e2)
       '@babel/helper-globals': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
       '@babel/helper-replace-supers': 7.29.7(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)
@@ -2632,7 +2632,7 @@ snapshots:
   '@babel/plugin-transform-function-name@7.29.7(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)':
     dependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
-      '@babel/helper-compilation-targets': 7.29.7(patch_hash=e98b468bdfe20d08a48f6ee078ac991affe4c54d99c96a56ab50fb71b8601b03)
+      '@babel/helper-compilation-targets': 7.29.7(patch_hash=325a2524d247ae4a35165ea6cc40745ff8193d801a8d72ff6f3fff7b5706a2e2)
       '@babel/helper-plugin-utils': 7.29.7
       '@babel/traverse': 7.29.12(patch_hash=831f9092cade155e5b2c5b6b6109643387b1b7a674245caa9073652b8eac637c)(supports-color@8.1.1)
     transitivePeerDependencies:
@@ -2716,7 +2716,7 @@ snapshots:
   '@babel/plugin-transform-object-rest-spread@7.29.7(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)':
     dependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
-      '@babel/helper-compilation-targets': 7.29.7(patch_hash=e98b468bdfe20d08a48f6ee078ac991affe4c54d99c96a56ab50fb71b8601b03)
+      '@babel/helper-compilation-targets': 7.29.7(patch_hash=325a2524d247ae4a35165ea6cc40745ff8193d801a8d72ff6f3fff7b5706a2e2)
       '@babel/helper-plugin-utils': 7.29.7
       '@babel/plugin-transform-destructuring': 7.29.7(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)
       '@babel/plugin-transform-parameters': 7.29.7(@babel/core@7.29.7(supports-color@8.1.1))
@@ -2854,7 +2854,7 @@ snapshots:
     dependencies:
       '@babel/compat-data': 7.29.7
       '@babel/core': 7.29.7(supports-color@8.1.1)
-      '@babel/helper-compilation-targets': 7.29.7(patch_hash=e98b468bdfe20d08a48f6ee078ac991affe4c54d99c96a56ab50fb71b8601b03)
+      '@babel/helper-compilation-targets': 7.29.7(patch_hash=325a2524d247ae4a35165ea6cc40745ff8193d801a8d72ff6f3fff7b5706a2e2)
       '@babel/helper-plugin-utils': 7.29.7
       '@babel/helper-validator-option': 7.29.7
       '@babel/plugin-bugfix-firefox-class-in-computed-class-key': 7.29.7(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)

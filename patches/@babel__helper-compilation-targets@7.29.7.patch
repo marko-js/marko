@@ -1,13 +1,39 @@
 diff --git a/lib/index.js b/lib/index.js
-index 567565a..9d8d7d9 100644
+index 567565a914ceda3f4eca8b95e3b5ddd177faa368..fa5e790576dbce64cd1a745318c0f89f018a00fd 100644
 --- a/lib/index.js
 +++ b/lib/index.js
-@@ -41,7 +41,7 @@ Object.defineProperty(exports, "unreleasedLabels", {
+@@ -41,7 +41,11 @@ Object.defineProperty(exports, "unreleasedLabels", {
      return _targets.unreleasedLabels;
    }
  });
 -var _browserslist = require("browserslist");
 +var _browserslist = (() => { try { return require("browserslist") } catch {} })();
++function getBrowserslist() {
++  if (!_browserslist) throw new Error('Resolving browserslist targets requires the "browserslist" package, which could not be loaded.');
++  return _browserslist;
++}
  var _helperValidatorOption = require("@babel/helper-validator-option");
  var _lruCache = require("lru-cache");
  var _utils = require("./utils.js");
+@@ -134,7 +138,7 @@ function generateTargets(inputTargets) {
+   return input;
+ }
+ function resolveTargets(queries, env) {
+-  const resolved = _browserslist(queries, {
++  const resolved = getBrowserslist()(queries, {
+     mobileToDesktop: true,
+     env
+   });
+@@ -171,10 +175,10 @@ function getTargets(inputTargets = {}, options = {}) {
+   if (!browsers && shouldSearchForConfig) {
+     browsers = process.env.BROWSERSLIST;
+     if (!browsers) {
+-      const configFile = options.configFile || process.env.BROWSERSLIST_CONFIG || _browserslist.findConfigFile(configPath);
++      const configFile = options.configFile || process.env.BROWSERSLIST_CONFIG || _browserslist && _browserslist.findConfigFile(configPath);
+       if (configFile != null) {
+         onBrowserslistConfigFound == null || onBrowserslistConfigFound(configFile);
+-        browsers = _browserslist.loadConfig({
++        browsers = getBrowserslist().loadConfig({
+           config: configFile,
+           env: options.browserslistEnv
+         });
