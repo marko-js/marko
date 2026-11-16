@@ -108,13 +108,11 @@ import * as writer from "../../util/writer";
 const kNodeOp = Symbol("native tag structure node");
 const kNativeAttrs = Symbol("native tag attrs");
 
-// Tags whose body html translate replaced with a content attribute write.
-const htmlContentAttrTags = new WeakSet<t.MarkoTag>();
 const htmlSelectArgs = new WeakMap<
   t.MarkoTag,
   {
     helper: "_attr_select_value" | "_attrs_select_value";
-    args: t.Expression[];
+    args: (t.Expression | false)[];
   }
 >();
 
@@ -140,6 +138,8 @@ interface NativeAttrs {
   spread: number[] | undefined;
   /** Writes the page's nonce on a `<script>` or `<style>` that sets none itself. */
   injectsNonce: boolean;
+  /** With nothing else filling the element, the spread's `content` renders it. */
+  spreadContent: boolean;
 }
 
 type HandlerAttr = t.MarkoAttribute & { name: `on${string}` };
@@ -204,7 +204,6 @@ export default {
           valueExtra.isEffect = true;
           valueExtra.retained = true;
           hasEventHandlers = true;
-          hasDynamicAttributes = true;
           if (!spread) {
             spread = [];
             controllable = getRelatedControllable(
@@ -314,8 +313,12 @@ export default {
         );
       }
 
-      // A controllable's change handler is attached like an event handler.
-      if (controllable?.attrs[1] !== undefined) hasEventHandlers = true;
+      // A controllable's change handler is attached like an event handler, and
+      // registers its effect in setup.
+      if (controllable?.attrs[1] !== undefined) {
+        hasEventHandlers = true;
+        addSetupWork(tagSection);
+      }
 
       assertExclusiveAttrs(
         indexByName,
@@ -465,11 +468,6 @@ export default {
           addSetupWork(tagSection);
         }
 
-        if (controllable?.attrs[1] !== undefined) {
-          // Controllable change handlers register an effect in setup.
-          addSetupWork(tagSection);
-        }
-
         if (hasEventHandlers || usesVar) {
           addAlwaysReason(nodeBinding);
         }
@@ -525,6 +523,12 @@ export default {
         controllable,
         spread,
         injectsNonce,
+        spreadContent:
+          !!spread &&
+          content === undefined &&
+          !node.body.body.length &&
+          !isTextOnly &&
+          !getTagDef(tag)?.parseOptions?.openTagOnly,
       };
     },
     exit(tag) {
@@ -634,25 +638,40 @@ export default {
           write`${callRuntime("_attr_nonce")}`;
         }
 
+        let writeAtStartOfBody: t.Expression | undefined;
+
         if (controllable) {
-          if (tagName !== "select" && tagName !== "textarea") {
+          const args = controllable.attrs.map(
+            (index, i) =>
+              attrAt(attributes, index)?.value || (i === 1 && absentArg(0)),
+          );
+          if (tagName === "select") {
+            htmlSelectArgs.set(tag.node, {
+              helper: "_attr_select_value",
+              args,
+            });
+          } else if (tagName !== "textarea") {
             write`${callRuntime(
               getControllableHelper(tagName, controllable.state),
               getScopeIdIdentifier(tagSection),
               nodeAccessor,
-              ...controllable.attrs.map(
-                (index, i) =>
-                  attrAt(attributes, index)?.value || (i === 1 && absentArg(0)),
-              ),
+              ...args,
             )}`;
+          } else if (controllable.attrs[1] === undefined) {
+            writeAtStartOfBody = callRuntime("_textarea_value", ...args);
+          } else {
+            writeAtStartOfBody = callRuntime(
+              "_attr_textarea_value",
+              getScopeIdIdentifier(tagSection),
+              nodeAccessor,
+              ...args,
+            );
           }
 
           if (controllable.attrs[1] !== undefined) {
             addHTMLEffectCall(tagSection, undefined);
           }
         }
-
-        let writeAtStartOfBody: t.Expression | undefined;
 
         if (
           tagName === "html" &&
@@ -669,18 +688,8 @@ export default {
           writeAtStartOfBody = callRuntime("_flush_head");
         }
 
-        if (tagName === "select") {
-          if (controllable) {
-            htmlSelectArgs.set(tag.node, {
-              helper: "_attr_select_value",
-              args: [
-                attrAt(attributes, controllable.attrs[0])?.value ||
-                  t.buildUndefinedNode(),
-                attrAt(attributes, controllable.attrs[1])?.value ||
-                  absentArg(0),
-              ],
-            });
-          } else if (spreadExpression) {
+        if (spreadExpression && !controllable) {
+          if (tagName === "select") {
             const spreadIdentifier = declareConstBefore(
               tag,
               "select_input",
@@ -691,21 +700,7 @@ export default {
               args: [spreadIdentifier],
             });
             spreadExpression = spreadIdentifier;
-          }
-        } else if (tagName === "textarea") {
-          if (controllable) {
-            const value = attrAt(attributes, controllable.attrs[0]);
-            const valueChange = attrAt(attributes, controllable.attrs[1]);
-            writeAtStartOfBody = valueChange
-              ? callRuntime(
-                  "_attr_textarea_value",
-                  getScopeIdIdentifier(tagSection),
-                  nodeAccessor,
-                  value?.value,
-                  valueChange.value,
-                )
-              : callRuntime("_textarea_value", value!.value);
-          } else if (spreadExpression) {
+          } else if (tagName === "textarea") {
             const spreadIdentifier = declareConstBefore(
               tag,
               "textarea_input",
@@ -747,40 +742,39 @@ export default {
 
         const isOpenOnly = !!(tagDef && tagDef.parseOptions?.openTagOnly);
         const isTextOnly = getTagFacts(tag).textBody;
-        const spreadContent =
-          !!spreadExpression &&
-          spreadRendersContent(tag, contentAttr, isTextOnly);
+        const { spreadContent } = nativeAttrs;
+        let spreadCall: t.Expression | undefined;
 
         if (spreadExpression) {
           addHTMLEffectCall(tagSection, tagExtra);
-
-          if (!spreadContent) {
-            if (skipExpression) {
-              write`${callRuntime(
-                "_attrs_partial",
+          const scopeIdArg = getScopeIdIdentifier(tagSection);
+          const tagNameArg = t.stringLiteral(tagName);
+          const markerGuard = spreadContent && getMarkerGuard(nodeBinding!);
+          spreadCall = skipExpression
+            ? callRuntime(
+                spreadContent ? "_attrs_partial_content" : "_attrs_partial",
                 spreadExpression,
                 skipExpression,
                 nodeAccessor,
-                getScopeIdIdentifier(tagSection),
-                t.stringLiteral(tagName),
-              )}`;
-            } else {
-              write`${callRuntime(
-                "_attrs",
+                scopeIdArg,
+                tagNameArg,
+                markerGuard,
+              )
+            : callRuntime(
+                spreadContent ? "_attrs_content" : "_attrs",
                 spreadExpression,
                 nodeAccessor,
-                getScopeIdIdentifier(tagSection),
-                t.stringLiteral(tagName),
-              )}`;
-            }
-          }
+                scopeIdArg,
+                tagNameArg,
+                markerGuard,
+              );
+          if (!spreadContent) write`${spreadCall}`;
         }
 
         if (isOpenOnly || isTextOnly) {
           write`>`;
         } else if (contentAttr) {
           write`>`;
-          htmlContentAttrTags.add(tag.node);
           (tag.node.body.body as t.Statement[]) = [
             t.expressionStatement(
               callRuntime(
@@ -793,31 +787,8 @@ export default {
             ),
           ];
         } else if (spreadContent) {
-          const markerGuard = getMarkerGuard(nodeBinding!);
-          htmlContentAttrTags.add(tag.node);
           (tag.node.body.body as t.Statement[]) = [
-            skipExpression
-              ? t.expressionStatement(
-                  callRuntime(
-                    "_attrs_partial_content",
-                    spreadExpression,
-                    skipExpression,
-                    nodeAccessor,
-                    getScopeIdIdentifier(tagSection),
-                    t.stringLiteral(tagName),
-                    markerGuard,
-                  ),
-                )
-              : t.expressionStatement(
-                  callRuntime(
-                    "_attrs_content",
-                    spreadExpression,
-                    nodeAccessor,
-                    getScopeIdIdentifier(tagSection),
-                    t.stringLiteral(tagName),
-                    markerGuard,
-                  ),
-                ),
+            t.expressionStatement(spreadCall!),
           ];
         } else {
           write`>`;
@@ -845,7 +816,9 @@ export default {
           tagName === "html" || (!markerReason && tagName === "body"),
         );
 
-        if (htmlContentAttrTags.has(tag.node)) {
+        const { content, spreadContent } = tagExtra[kNativeAttrs]!;
+        // Its body was replaced with a content attribute write.
+        if (content !== undefined || spreadContent) {
           writer.flushBefore(tag);
         }
 
@@ -988,93 +961,80 @@ export default {
         if (own) {
           for (const index of own) {
             const { name, value } = attributes[index] as t.MarkoAttribute;
-            const { confident } = evaluate(value);
-
-            switch (name) {
-              case "class":
-              case "style": {
-                if (!confident) {
-                  const meta = getDelimitedAttrMeta(tag, name, value);
-                  const items = getDelimitedAttrItems(name, meta);
-                  const calls: t.Expression[] = [];
-                  const assert = buildClassTogglesAssert(meta);
-                  if (assert) calls.push(assert);
-                  if (!items) {
-                    calls.push(
-                      callRuntime(
-                        `_attr_${name}`,
-                        createScopeReadExpression(nodeBinding),
-                        value,
-                      ),
-                    );
-                  } else {
-                    const single: { key: string; value: t.Expression }[] = [];
-                    for (const { key, value } of items) {
-                      if (isLiteralPart(key) && !/\s/.test(key)) {
-                        single.push({ key, value });
-                      } else {
-                        // A style import read or a multi-word key may hold several names.
-                        calls.push(
-                          callRuntime(
-                            "_attr_class_names",
-                            createScopeReadExpression(nodeBinding),
-                            toClassPartExpression(key),
-                            value,
-                          ),
-                        );
-                      }
-                    }
-
-                    if (single.length === 1) {
-                      calls.push(
-                        callRuntime(
-                          `_attr_${name}_item`,
-                          createScopeReadExpression(nodeBinding),
-                          t.stringLiteral(single[0].key),
-                          single[0].value,
-                        ),
-                      );
-                    } else if (single.length) {
-                      calls.push(
-                        callRuntime(
-                          `_attr_${name}_items`,
-                          createScopeReadExpression(nodeBinding),
-                          t.objectExpression(
-                            single.map(({ key, value }) =>
-                              t.objectProperty(toPropertyName(key), value),
-                            ),
-                          ),
-                        ),
-                      );
-                    }
-                  }
-
-                  for (const call of calls) {
-                    addStatement("render", tagSection, value.extra, call, true);
-                  }
-                }
-                break;
-              }
-              default:
-                // Confident values are recorded into the template at analyze.
-                if (confident) {
-                  break;
+            // Confident values are recorded into the template at analyze.
+            if (evaluate(value).confident) continue;
+            if (name !== "class" && name !== "style") {
+              addStatement(
+                "render",
+                tagSection,
+                value.extra,
+                callRuntime(
+                  "_attr",
+                  createScopeReadExpression(nodeBinding),
+                  t.stringLiteral(name),
+                  value,
+                ),
+                true,
+              );
+              continue;
+            }
+            const calls: t.Expression[] = [];
+            const meta = getDelimitedAttrMeta(tag, name, value);
+            const items = getDelimitedAttrItems(name, meta);
+            const assert = buildClassTogglesAssert(meta);
+            if (assert) calls.push(assert);
+            if (!items) {
+              calls.push(
+                callRuntime(
+                  `_attr_${name}`,
+                  createScopeReadExpression(nodeBinding),
+                  value,
+                ),
+              );
+            } else {
+              const single: { key: string; value: t.Expression }[] = [];
+              for (const { key, value } of items) {
+                if (isLiteralPart(key) && !/\s/.test(key)) {
+                  single.push({ key, value });
                 } else {
-                  addStatement(
-                    "render",
-                    tagSection,
-                    value.extra,
+                  // A style import read or a multi-word key may hold several names.
+                  calls.push(
                     callRuntime(
-                      "_attr",
+                      "_attr_class_names",
                       createScopeReadExpression(nodeBinding),
-                      t.stringLiteral(name),
+                      toClassPartExpression(key),
                       value,
                     ),
-                    true,
                   );
                 }
+              }
 
-                break;
+              if (single.length === 1) {
+                calls.push(
+                  callRuntime(
+                    `_attr_${name}_item`,
+                    createScopeReadExpression(nodeBinding),
+                    t.stringLiteral(single[0].key),
+                    single[0].value,
+                  ),
+                );
+              } else if (single.length) {
+                calls.push(
+                  callRuntime(
+                    `_attr_${name}_items`,
+                    createScopeReadExpression(nodeBinding),
+                    t.objectExpression(
+                      single.map(({ key, value }) =>
+                        t.objectProperty(toPropertyName(key), value),
+                      ),
+                    ),
+                  ),
+                );
+              }
+            }
+
+            for (const call of calls) {
+              addStatement("render", tagSection, value.extra, call, true);
             }
           }
         }
@@ -1097,43 +1057,33 @@ export default {
         }
 
         if (spreadExpression) {
-          const spreadContent = spreadRendersContent(
-            tag,
-            contentAttr,
-            getTagFacts(tag).textBody,
-          );
           // A spread claims its controlled attrs during render, unless a
           // static attr owns the controllable and so the slots it wrote.
           const element = controllableElements.get(tagName);
           const spreadHelper = !controllable && element?.spreadHelper;
-          if (skipExpression) {
-            addStatement(
-              "render",
-              tagSection,
-              tagExtra,
-              callRuntime(
-                spreadContent ? "_attrs_partial_content" : "_attrs_partial",
-                scopeIdentifier,
-                nodeAccessor,
-                spreadExpression,
-                skipExpression,
-                spreadHelper && importRuntime(spreadHelper),
-              ),
-            );
-          } else {
-            addStatement(
-              "render",
-              tagSection,
-              tagExtra,
-              callRuntime(
-                spreadContent ? "_attrs_content" : "_attrs",
-                scopeIdentifier,
-                nodeAccessor,
-                spreadExpression,
-                spreadHelper && importRuntime(spreadHelper),
-              ),
-            );
-          }
+          const helperArg = spreadHelper && importRuntime(spreadHelper);
+          const { spreadContent } = nativeAttrs;
+          addStatement(
+            "render",
+            tagSection,
+            tagExtra,
+            skipExpression
+              ? callRuntime(
+                  spreadContent ? "_attrs_partial_content" : "_attrs_partial",
+                  scopeIdentifier,
+                  nodeAccessor,
+                  spreadExpression,
+                  skipExpression,
+                  helperArg,
+                )
+              : callRuntime(
+                  spreadContent ? "_attrs_content" : "_attrs",
+                  scopeIdentifier,
+                  nodeAccessor,
+                  spreadExpression,
+                  helperArg,
+                ),
+          );
 
           if (element) {
             importRuntimeFeature(element.feature);
@@ -1322,20 +1272,6 @@ function getDOMControllableDefaultHelper(
   return helper === "_attr_input_value" && valueMode
     ? (`_attr_input_value_${valueMode}_default` as const)
     : (`${helper}_default` as const);
-}
-
-// With nothing else filling the element, the spread's `content` renders it.
-function spreadRendersContent(
-  tag: t.NodePath<t.MarkoTag>,
-  staticContentAttr: t.MarkoAttribute | undefined,
-  isTextOnly: boolean | undefined,
-) {
-  return !(
-    staticContentAttr ||
-    tag.node.body.body.length ||
-    isTextOnly ||
-    getTagDef(tag)?.parseOptions?.openTagOnly
-  );
 }
 
 // The spread object both outputs write: the spreads and the attributes among
@@ -1533,21 +1469,18 @@ function assertNativeHandlerAttr(
   tag: t.NodePath<t.MarkoTag>,
   attr: t.MarkoAttribute,
 ) {
+  const kind = isEventHandler(attr.name) ? "event handler" : "change handler";
   if (t.isObjectExpression(attr.value)) {
     throw tag.hub.buildError(
       attr.value,
-      `The \`${attr.name}\` ${
-        isEventHandler(attr.name) ? "event handler" : "change handler"
-      } on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function. Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping \`{ }\` (e.g. \`${attr.name}=myHandler\` or \`${attr.name}() { ... }\`).`,
+      `The \`${attr.name}\` ${kind} on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function. Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping \`{ }\` (e.g. \`${attr.name}=myHandler\` or \`${attr.name}() { ... }\`).`,
       Error,
     );
   }
   if (computeNode(attr.value)?.value) {
     throw tag.hub.buildError(
       attr.value,
-      `The \`${attr.name}\` ${
-        isEventHandler(attr.name) ? "event handler" : "change handler"
-      } on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (\`null\`, \`undefined\`, \`false\`, \`0\`, …).`,
+      `The \`${attr.name}\` ${kind} on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (\`null\`, \`undefined\`, \`false\`, \`0\`, …).`,
       Error,
     );
   }

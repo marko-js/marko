@@ -309,24 +309,12 @@ function mergeObjects<A, B, K extends keyof (B & {}) | keyof (A & {}), R>(
     if (value !== undefined) merged[key as string] = value;
   };
 
-  if (a) {
-    if (b) {
-      for (const key in a) {
-        assign(key, a[key], (b as any)[key]);
-      }
+  for (const key in a) {
+    assign(key, a[key], (b as any)?.[key]);
+  }
 
-      for (const key in b) {
-        if (!(key in (a as any))) {
-          assign(key, undefined, b[key]);
-        }
-      }
-    } else {
-      for (const key in a) {
-        assign(key, a[key], undefined);
-      }
-    }
-  } else if (b) {
-    for (const key in b) {
+  for (const key in b) {
+    if (!a || !(key in (a as any))) {
       assign(key, undefined, b[key]);
     }
   }

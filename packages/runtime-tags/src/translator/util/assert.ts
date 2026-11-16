@@ -278,11 +278,14 @@ export function assertForParams(tag: t.NodePath<t.MarkoTag>, type: ForType) {
   if (extraParam && extraParam.type !== "RestElement") {
     throw tag.hub.buildError(
       extraParam,
-      `The ${coreTagLink(tag)} only provides \`|${
-        type === "of" ? "item, index" : type === "in" ? "key, value" : "num"
-      }|\` with \`${type}=\`, so this parameter is never supplied.`,
+      `The ${coreTagLink(tag)} only provides \`|${getForParamNames(type)}|\` with \`${type}=\`, so this parameter is never supplied.`,
     );
   }
+}
+
+/** The params a loop of `type` supplies, as its docs name them. */
+export function getForParamNames(type: ForType) {
+  return type === "of" ? "item, index" : type === "in" ? "key, value" : "num";
 }
 
 export function coreTagLink(tag: t.NodePath<t.MarkoTag>) {

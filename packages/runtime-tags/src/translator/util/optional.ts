@@ -149,15 +149,6 @@ export class Sorted<T> {
     return acc;
   }
 
-  find<U extends NonNullable<T>>(data: SortedOpt<U>, item: U): U | undefined {
-    if (data !== undefined) {
-      if (Array.isArray(data)) {
-        return findSorted(this.compare, data, item);
-      } else if (this.compare(data, item) === 0) {
-        return data;
-      }
-    }
-  }
   has<U extends NonNullable<T>>(data: SortedOpt<U>, item: U): boolean {
     return this.findIndex(data, item) !== -1;
   }
@@ -481,15 +472,6 @@ export function mapToString<T>(
     return cb(data, 0);
   }
   return "";
-}
-
-export function findSorted<T>(
-  compare: Compare<T>,
-  data: T[],
-  item: T,
-): T | undefined {
-  const index = searchSorted(compare, data, item);
-  if (index >= 0) return data[index];
 }
 
 export function findIndexSorted<T>(

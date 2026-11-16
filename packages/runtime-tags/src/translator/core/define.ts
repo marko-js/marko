@@ -38,6 +38,13 @@ import { propsToExpression, translateAttrs } from "../util/translate-attrs";
 import translateVar from "../util/translate-var";
 import * as writer from "../util/writer";
 
+const kOnlyDirectReferences = Symbol("<define> only direct references");
+declare module "@marko/compiler/dist/types" {
+  export interface MarkoTagExtra {
+    [kOnlyDirectReferences]?: true;
+  }
+}
+
 export default {
   analyze(tag: t.NodePath<t.MarkoTag>) {
     assertNoArgs(tag);
@@ -94,6 +101,7 @@ export default {
           if (inputAlias) {
             inputAlias.nullable = false;
           }
+          tag.node.extra![kOnlyDirectReferences] = true;
           dropNodes(getAllTagReferenceNodes(tag.node));
           return;
         }
@@ -130,54 +138,36 @@ export default {
         );
         replaceWithStatements(tag, translatedAttrs.statements);
       } else {
-        if (t.isIdentifier(node.var)) {
-          const babelBinding = tag.scope.getBinding(node.var.name)!;
-          let hasDirectReferences = false;
-          let allDirectReferences = true;
-
-          for (const ref of babelBinding.referencePaths) {
-            if (
-              ref.parent.type === "MarkoTag" &&
-              ref.parent.name === ref.node
-            ) {
-              hasDirectReferences = true;
-            } else {
-              allDirectReferences = false;
+        // The tags that render the body by name call its setup.
+        const bodySection = getSectionForBody(tag.get("body"));
+        if (bodySection?.renderedBy) {
+          const signal = getSignal(bodySection, undefined);
+          signal.build = () => {
+            const hasWork = signalHasWork(signal);
+            // Call sites skip this setup when analysis proved it a noop, so
+            // work here means that proof was wrong.
+            if (hasWork && !bodySection.hasSetupWork) {
+              throw new Error(
+                "Marko internal error: analysis marked a `<define>` body's setup as empty but translation produced statements for it. Please open an issue with a reproduction.",
+              );
             }
-          }
 
-          const bodySection = getSectionForBody(tag.get("body"));
-          if (bodySection && hasDirectReferences) {
-            const signal = getSignal(bodySection, undefined);
-            signal.build = () => {
-              const hasWork = signalHasWork(signal);
-              // Call sites skip this setup when analysis proved it a noop, so
-              // work here means that proof was wrong.
-              if (hasWork && !bodySection.hasSetupWork) {
-                throw new Error(
-                  "Marko internal error: analysis marked a `<define>` body's setup as empty but translation produced statements for it. Please open an issue with a reproduction.",
-                );
-              }
+            if (bodySection.hasSetupWork) {
+              // Call sites still call it once dom output drops work analysis
+              // counted (a class API tag); an empty block body would become `0`.
+              return hasWork
+                ? buildSignalFn(signal)
+                : t.arrowFunctionExpression(
+                    [getUnusedParamIdentifier()],
+                    t.numericLiteral(0),
+                  );
+            }
+          };
+        }
 
-              if (bodySection.hasSetupWork) {
-                // Call sites still call it once dom output drops work analysis
-                // counted (a class API tag); an empty block body would become `0`.
-                return hasWork
-                  ? buildSignalFn(signal)
-                  : t.arrowFunctionExpression(
-                      [getUnusedParamIdentifier()],
-                      t.numericLiteral(0),
-                    );
-              }
-            };
-          }
-
-          // Matches the analysis, which drops the tag whenever every reference
-          // is direct.
-          if (bodySection && allDirectReferences) {
-            replaceWithStatements(tag);
-            return;
-          }
+        if (node.extra![kOnlyDirectReferences]) {
+          replaceWithStatements(tag);
+          return;
         }
 
         const section = getSection(tag);

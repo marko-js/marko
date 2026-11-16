@@ -12,7 +12,7 @@ import {
   assertOnlyValueAttr,
   coreTagLink,
 } from "../util/assert";
-import { BindingType, createBinding } from "../util/bindings";
+import { BindingType } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
 import { setDerivedFrom, trackParamsReferences } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
@@ -76,11 +76,7 @@ export default {
 
     const section = ensureSection(tag);
     const tagExtra = (tag.node.extra ??= {}) as ControlFlowTagExtra;
-    const nodeBinding = (tagExtra.nodeBinding = createBinding(
-      "#text",
-      BindingType.dom,
-      section,
-    ));
+    tagExtra.nodeBinding = structure.markerNode(tag, section);
 
     const bodySection = ensureBodySection(tagBody)!;
     const valueExtra = (valueAttr.value.extra ??= {});
@@ -101,9 +97,6 @@ export default {
 
     // The content renderer is initialized unconditionally in setup.
     addSetupWork(section);
-
-    structure.marker(tag, nodeBinding);
-    structure.enterShallow(tag);
   },
   translate: translateByTarget({
     html: {

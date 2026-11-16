@@ -9,7 +9,6 @@ import {
 
 import type { Falsy } from "../../common/types";
 import { assertHasBody, coreTagLink } from "../util/assert";
-import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
 import { getTagName } from "../util/get-tag-name";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
@@ -111,19 +110,12 @@ export default {
       section,
       tag.node,
     ) as ControlFlowTagExtra;
-    const nodeBinding = (tagExtra.nodeBinding = createBinding(
-      "#text",
-      BindingType.dom,
-      section,
-    ));
-
+    tagExtra.nodeBinding = structure.markerNode(tag, section);
     tagExtra.textBefore = mayMergeWithText(tag, true);
     initBranchSection(ensureBodySection(tag.get("body"))!, tagExtra, {
       kind: "try",
       tag: tagExtra,
     });
-    structure.marker(tag, nodeBinding);
-    structure.enterShallow(tag);
   },
   translate: translateByTarget({
     html: {

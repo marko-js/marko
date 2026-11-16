@@ -12,6 +12,7 @@ import {
   assertNoSpreadAttrs,
   coreTagLink,
   getForAttrs,
+  getForParamNames,
 } from "../util/assert";
 import { type Binding, BindingType, getPropertyAlias } from "../util/bindings";
 import {
@@ -93,13 +94,7 @@ export default {
     if (keyAttr) {
       throw tag.hub.buildError(
         keyAttr,
-        `The ${coreTagLink(tag)} keys items with the \`by=\` attribute, not \`key=\`. ${
-          forType === "of"
-            ? 'Use `by="propName"` or `by=(item, index) => key`'
-            : forType === "in"
-              ? "Use `by=(key, value) => key`"
-              : "Use `by=(num) => key`"
-        }.`,
+        `The ${coreTagLink(tag)} keys items with the \`by=\` attribute, not \`key=\`. Use ${forType === "of" ? '`by="propName"` or ' : ""}\`by=(${getForParamNames(forType)}) => key\`.`,
       );
     }
 
@@ -127,9 +122,7 @@ export default {
     if (forType !== "of" && byAttr?.type === "StringLiteral") {
       throw tag.hub.buildError(
         byAttr,
-        `The ${coreTagLink(tag)} only supports a string \`by\` key with \`of\`; use a \`by=(${
-          forType === "in" ? "key, value" : "num"
-        }) => ...\` function for \`<for ${forType}>\`.`,
+        `The ${coreTagLink(tag)} only supports a string \`by\` key with \`of\`; use a \`by=(${getForParamNames(forType)}) => ...\` function for \`<for ${forType}>\`.`,
       );
     }
 
