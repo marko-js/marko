@@ -17,7 +17,6 @@ import {
 } from "../util/assert";
 import { BindingType, getDebugAccess, reserveId } from "../util/bindings";
 import evaluate from "../util/evaluate";
-import { hasEmittedAssignment } from "../util/finalize-references";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { isOptimize, isOutputDOM } from "../util/marko-config";
 import { addReason } from "../util/reasons";
@@ -114,7 +113,7 @@ export default {
       const binding = tagVar.extra!.binding!;
 
       // Nothing reads or assigns it, so it holds no slot.
-      const unused = binding.pruned && !hasEmittedAssignment(binding);
+      const unused = binding.pruned && !binding.assignments;
 
       if (isOutputDOM()) {
         const tagExtra = tag.node.extra;

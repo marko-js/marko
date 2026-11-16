@@ -55,7 +55,7 @@ export interface RegisteredExport {
   filename: string;
 }
 
-const [getReferencesByFn] = createAnalysisState(
+export const [getReferencesByFn] = createAnalysisState(
   () => new Map<RegisteredFnExtra, Set<t.NodeExtra>>(),
 );
 const [getReferencesByImport] = createAnalysisState(

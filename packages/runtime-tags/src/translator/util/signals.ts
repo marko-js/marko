@@ -20,11 +20,9 @@ import {
   isDirectAlias,
   isRest,
   type ReferencedBindings,
-  someAlias,
 } from "./bindings";
 import { getLastOwnSourceReturn } from "./finalize-references";
 import { forEachIdentifier } from "./for-each-identifier";
-import { isForSelectorValue } from "./for-selector";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
@@ -47,6 +45,7 @@ import {
   isAssignedBindingExtra,
   isPureExpr,
   isRegisteredFnExtra,
+  type RegisteredFnExtra,
 } from "./references";
 import {
   insertStatementBefore,
@@ -443,14 +442,9 @@ export function getSignal(
                 [scopeIdentifier],
                 getScopeExpression(section, closure.section),
               ),
-          // Match the HTML registration, which is gated on this subscriber
-          // section (writeHTMLResumeStatements); keying on any sibling closure
-          // section would ship a subscribe id that nothing looks up.
-          isChangeableDynamicClosure(section, closure)
-            ? t.stringLiteral(
-                getResumeRegistryId(section, closure, "subscribe"),
-              )
-            : undefined,
+          // Keyed on this subscriber section, as the HTML registration is: a
+          // sibling closure section's id is one nothing looks up.
+          getClosureSubscribeId(section, closure),
         );
       };
     }
@@ -458,15 +452,17 @@ export function getSignal(
   return signal;
 }
 
-// A dynamic closure the client can change before a subscriber that resumes
-// after its owner; state no resumed instance can write never changes.
-function isChangeableDynamicClosure(section: Section, closure: Binding) {
+// The id a subscriber that resumes after its owner subscribes by, for a dynamic
+// closure the client can change (state no resumed instance writes never does).
+function getClosureSubscribeId(section: Section, closure: Binding) {
   const { sources } = closure;
-  return (
-    !!sources &&
+  if (
+    sources &&
     isDynamicClosure(section, closure) &&
     (!sources.state || some(sources.state, hasResumableWriter))
-  );
+  ) {
+    return t.stringLiteral(getResumeRegistryId(section, closure, "subscribe"));
+  }
 }
 
 export function initValue(binding: Binding, isLet = false) {
@@ -483,8 +479,7 @@ export function initValue(binding: Binding, isLet = false) {
     if (
       !signal.forceStore &&
       (isDirectAlias(binding) ||
-        (!signal.storesValue &&
-          !someAlias(binding, aliasStoresValue, binding, true)) ||
+        (!signal.storesValue && !aliasStoresValue(binding)) ||
         !signalHasWork(signal))
     ) {
       return fn;
@@ -506,9 +501,14 @@ function initAliasValue(alias: Binding) {
   if (alias.type !== BindingType.constant) initValue(alias);
 }
 
-// A direct alias's work reads the slot of the binding it aliases.
-function aliasStoresValue(alias: Binding, binding: Binding) {
-  return alias !== binding && getSignal(alias.section, alias).storesValue;
+// A direct alias's work reads the slot of the binding it aliases, one hop up.
+function aliasStoresValue(binding: Binding) {
+  for (const alias of binding.aliases) {
+    if (isDirectAlias(alias) && getSignal(alias.section, alias).storesValue) {
+      return true;
+    }
+  }
+  return false;
 }
 
 export function signalHasWork(signal: Signal): boolean {
@@ -517,7 +517,6 @@ export function signalHasWork(signal: Signal): boolean {
     signal.forceStore ||
     signal.render.length ||
     signal.effect.length ||
-    signal.hasHTMLEffect ||
     signal.values.length ||
     signal.intersections
   ) {
@@ -549,8 +548,7 @@ function isPureMemberForwarder(binding: Binding): boolean {
     binding.exposed ||
     binding.aliases.size ||
     binding.assignments ||
-    isForSelectorValue(binding) ||
-    getWriteReason(binding) ||
+    // Which a closure (a `<for>` selector's too) or a server write also sets.
     getSignal(binding.section, binding).storesValue
   ) {
     return false;
@@ -559,23 +557,26 @@ function isPureMemberForwarder(binding: Binding): boolean {
   return hasNonConstantPropertyAlias(binding);
 }
 
+// Forwards each member of `value`, the value of `binding`, to its property alias,
+// or past one that only forwards its own members.
 function pushMemberForwards(
   signal: Signal,
   value: t.Expression,
-  alias: Binding,
+  binding: Binding,
 ) {
-  if (isPureMemberForwarder(alias)) {
-    for (const [key, child] of alias.propertyAliases) {
-      if (child.type !== BindingType.constant) {
-        pushMemberForwards(
-          signal,
-          toMemberExpression(t.cloneNode(value, true), key, alias.nullable),
-          child,
-        );
+  for (const [key, alias] of binding.propertyAliases) {
+    if (alias.type !== BindingType.constant) {
+      const member = toMemberExpression(
+        t.cloneNode(value, true),
+        key,
+        binding.nullable,
+      );
+      if (isPureMemberForwarder(alias)) {
+        pushMemberForwards(signal, member, alias);
+      } else {
+        pushForward(signal, getSignal(alias.section, alias), member);
       }
     }
-  } else {
-    pushForward(signal, getSignal(alias.section, alias), value);
   }
 }
 
@@ -695,18 +696,8 @@ export function buildSignalFn(signal: Signal): t.Expression {
       }
     }
 
-    for (const [key, alias] of binding.propertyAliases) {
-      if (alias.type !== BindingType.constant) {
-        pushMemberForwards(
-          signal,
-          toMemberExpression(
-            createScopeReadExpression(binding),
-            key,
-            binding.nullable,
-          ),
-          alias,
-        );
-      }
+    if (binding.propertyAliases.size) {
+      pushMemberForwards(signal, createScopeReadExpression(binding), binding);
     }
 
     if (assertsHoists) {
@@ -1096,8 +1087,7 @@ export function writeSignals(section: Section) {
 
       if (
         !value ||
-        (!signal.register &&
-          !signal.referenced &&
+        (!signal.referenced &&
           t.isFunction(value) &&
           t.isBlockStatement(value.body) &&
           !value.body.body.length)
@@ -1226,16 +1216,17 @@ function pushInstancesAccessor(section: Section, accessors: t.Expression[]) {
 export function writeRegisteredFns() {
   const registeredFns = getRegisteredFns();
   const statements: t.Statement[] = [];
-  for (const registeredFn of registeredFns) {
+  for (const { node, extra } of registeredFns) {
+    const { name, referencesScope } = extra;
     let fn: t.Statement;
-    if (registeredFn.referencesScope || registeredFn.referencedLocals) {
+    if (referencesScope || extra.referencedLocalBindingsInFunction) {
       let params: (t.Identifier | t.Pattern)[];
       let prologue: t.Statement[] | undefined;
-      if (registeredFn.referencedLocals) {
+      if (extra.referencedLocalBindingsInFunction) {
         // The scope hop stays inside the returned function: resume may call
         // the factory before its scopes resume (stubs fill in place).
         params = [localsIdentifier];
-        if (registeredFn.referencesScope) {
+        if (referencesScope) {
           prologue = [
             t.variableDeclaration("const", [
               t.variableDeclarator(
@@ -1253,10 +1244,10 @@ export function writeRegisteredFns() {
       }
       // A const arrow (unlike a function declaration) lets the minifier fold
       // the factory into its lone `_resume` call site.
-      const body = toReturnedFunction(registeredFn.node, prologue);
+      const body = toReturnedFunction(node, prologue);
       fn = t.variableDeclaration("const", [
         t.variableDeclarator(
-          t.identifier(registeredFn.id),
+          t.identifier(name),
           t.arrowFunctionExpression(
             params,
             body.length === 1 && body[0].type === "ReturnStatement"
@@ -1265,33 +1256,27 @@ export function writeRegisteredFns() {
           ),
         ),
       ]);
-    } else if (
-      registeredFn.node.type === "FunctionDeclaration" &&
-      registeredFn.node.id?.name === registeredFn.id
-    ) {
-      fn = registeredFn.node;
+    } else if (node.type === "FunctionDeclaration" && node.id?.name === name) {
+      fn = node;
     } else {
       fn = t.functionDeclaration(
-        t.identifier(registeredFn.id),
-        registeredFn.node.params as t.FunctionDeclaration["params"],
-        registeredFn.node.body.type === "BlockStatement"
-          ? registeredFn.node.body
-          : t.blockStatement([t.returnStatement(registeredFn.node.body)]),
-        registeredFn.node.generator,
-        registeredFn.node.async,
+        t.identifier(name),
+        node.params as t.FunctionDeclaration["params"],
+        node.body.type === "BlockStatement"
+          ? node.body
+          : t.blockStatement([t.returnStatement(node.body)]),
+        node.generator,
+        node.async,
       );
     }
 
     statements.push(fn);
   }
 
-  for (const registeredFn of registeredFns) {
+  for (const { extra } of registeredFns) {
     statements.push(
       t.expressionStatement(
-        registerRuntimeValue(
-          registeredFn.registryId,
-          t.identifier(registeredFn.id),
-        ),
+        registerRuntimeValue(extra.registryId, t.identifier(extra.name)),
       ),
     );
   }
@@ -1314,7 +1299,7 @@ function toReturnedFunction(rawFn: t.Function, prologue?: t.Statement[]) {
 
 export function addHTMLEffectCall(section: Section, expr?: t.NodeExtra) {
   const signal = getSignal(section, getReferencedBindings(expr));
-  signal.hasHTMLEffect = signal.storesValue = true;
+  signal.hasHTMLEffect = true;
 }
 
 export function writeHTMLResumeStatements(
@@ -1340,6 +1325,7 @@ export function writeHTMLResumeStatements(
   forEach(section.referencedClosures, (closure) => {
     if (closure.sources) {
       if (isDynamicClosure(section, closure)) {
+        const closureScopes = findSlot(closure, SlotKind.ClosureScopes);
         const closureSignal = getSignal(closure.section, closure);
         let identifier =
           htmlDynamicClosureInstancesIdentifier.get(closureSignal);
@@ -1359,7 +1345,7 @@ export function writeHTMLResumeStatements(
               ),
             ]),
           );
-          writeSlot(findSlot(closure, SlotKind.ClosureScopes), identifier);
+          writeSlot(closureScopes, identifier);
         }
 
         const closureIndex = getDynamicClosureIndex(closure, section);
@@ -1370,10 +1356,7 @@ export function writeHTMLResumeStatements(
           );
         }
 
-        const closureScopesReason = findSlot(
-          closure,
-          SlotKind.ClosureScopes,
-        )?.reason;
+        const closureScopesReason = closureScopes?.reason;
         const subscribeArg =
           isGuardedReason(closureScopesReason) &&
           !isSameReason(closureScopesReason, sectionReason)
@@ -1381,18 +1364,13 @@ export function writeHTMLResumeStatements(
             : identifier;
         // No call writes the subscriber set: the scope joins none.
         if (subscribeArg) {
-          const changeable = isChangeableDynamicClosure(section, closure);
           if (subscribeArg === identifier) {
             linkedWithScope = true;
           } else {
             linkReasons = sourcesUtil.add(linkReasons, closureScopesReason!);
           }
           addWriteScopeBuilder(section, (expr) => {
-            const resumeId =
-              changeable &&
-              t.stringLiteral(
-                getResumeRegistryId(section, closure, "subscribe"),
-              );
+            const resumeId = getClosureSubscribeId(section, closure);
             return callRuntime(
               "_subscribe",
               subscribeArg,
@@ -1812,14 +1790,7 @@ function getBuildAssignment(extra: AssignedBindingExtra) {
 }
 
 const [getRegisteredFns] = createOutputState<
-  {
-    id: string;
-    registryId: string;
-    node: t.Function;
-    section: Section;
-    referencesScope: undefined | boolean;
-    referencedLocals: Opt<Binding>;
-  }[]
+  { node: t.Function; extra: RegisteredFnExtra }[]
 >(() => []);
 export function replaceRegisteredFunctionNode(node: t.Node) {
   switch (node.type) {
@@ -1850,14 +1821,7 @@ function registerFnExpression(node: t.Function) {
     const id = extra.name;
     const referencesScope = extra.referencesScope;
     const referencedLocals = extra.referencedLocalBindingsInFunction;
-    getRegisteredFns().push({
-      id,
-      node,
-      registryId: extra.registryId,
-      section: extra.section,
-      referencesScope,
-      referencedLocals,
-    });
+    getRegisteredFns().push({ node, extra });
 
     if (referencedLocals) {
       // The argument mirrors the locals scope `_resume_locals` serializes.

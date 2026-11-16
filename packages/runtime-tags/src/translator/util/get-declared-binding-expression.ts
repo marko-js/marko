@@ -4,7 +4,6 @@ import {
   type Binding,
   getCanonicalBinding,
   getDeclaredAlias,
-  getNearestDeclared,
   isRest,
   propertiesUtil,
 } from "./bindings";
@@ -21,7 +20,7 @@ export function getDeclaredBindingExpression(
   if (canonicalBinding.localOf) {
     return getDeclaredBindingExpression(canonicalBinding.localOf, inPlace);
   }
-  const { aliasOf: aliased, property, declaredAlias } = canonicalBinding;
+  const { aliasOf: aliased, property } = canonicalBinding;
   if (binding.declared) {
     return t.identifier(binding.name);
   }
@@ -32,11 +31,8 @@ export function getDeclaredBindingExpression(
 
   // A destructured value no declared name reaches is only in scope through
   // the names its pattern declares; a named one may be read before those.
-  if (
-    declaredAlias &&
-    !isRest(declaredAlias) &&
-    !getNearestDeclared(canonicalBinding)
-  ) {
+  const declaredAlias = getDeclaredAlias(canonicalBinding);
+  if (declaredAlias && !isRest(declaredAlias)) {
     return t.identifier(declaredAlias.name);
   }
 

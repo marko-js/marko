@@ -734,24 +734,18 @@ export function getRendererReason(section: Section) {
   const { derives } = section;
 
   if (derives) {
+    const { properties, exprs } = derives;
     const derivedReasons = reduce(
       derives.binding,
       (reasons: Reason | undefined, binding) => {
-        const reason = getReasonForBinding(binding, derives.properties);
-        // A known call site resolves the callee's own params (a same-file
-        // `<define>` included); without one only cross-file params are read
-        // always.
+        const reason = getReasonForBinding(binding, properties, exprs);
+        // A known call site (a same-file `<define>` included) maps the callee's
+        // own params; without one only cross-file params are read always.
         return mergeSources(
           reasons,
-          reason &&
-            (derives.exprs
-              ? mapParamReason(
-                  binding.section.program,
-                  reason,
-                  derives.exprs,
-                  true,
-                )
-              : mapParamReason(section.program, reason, undefined, false)),
+          reason && !exprs
+            ? mapParamReason(section.program, reason, undefined, false)
+            : reason,
         );
       },
     );
@@ -852,16 +846,11 @@ export function getCommonSection(section: Section, other: Section) {
   return a;
 }
 
-export function ensureSectionReasonGroups(section: Section) {
-  ensureReasonGroups(section, section.reason);
-
-  for (const slot of section.slots) {
-    ensureReasonGroups(slot.section, slot.reason);
-  }
-}
-
 // The groups the section's guards test, in its own terms.
-function ensureReasonGroups(section: Section, reason: Section["reason"]) {
+export function ensureReasonGroups(
+  section: Section,
+  reason: Section["reason"],
+) {
   const ownReason = mapBodyParams(section, reason);
   if (isGuardedReason(ownReason)) {
     forEachParamGroup(ownReason.param, ensureParamReasonGroup);

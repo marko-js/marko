@@ -71,31 +71,21 @@ export function translateAttrs(
     for (let i = 0; i < attrTags.length; i++) {
       const child = attrTags[i];
       if (child.isMarkoTag()) {
-        if (isAttributeTag(child)) {
-          const attrTagMeta = attrTagLookup[getTagName(child)];
-          if (attrTagMeta.dynamic) {
-            i = addDynamicAttrTagStatements(
-              attrTags,
-              i,
-              attrTagLookup,
-              statements,
-              paramsTree,
-              contentKey,
-            );
-          } else {
-            const translatedAttrTag = translateAttrs(
-              child,
-              getParamsTreeAt(paramsTree, attrTagMeta.name),
-              statements,
-              contentKey,
-            );
+        const attrTagMeta =
+          isAttributeTag(child) && attrTagLookup[getTagName(child)];
+        if (attrTagMeta && !attrTagMeta.dynamic) {
+          const translatedAttrTag = translateAttrs(
+            child,
+            getParamsTreeAt(paramsTree, attrTagMeta.name),
+            statements,
+            contentKey,
+          );
 
-            addAttrTag(
-              contentProperties,
-              attrTagMeta,
-              t.objectExpression(translatedAttrTag.properties),
-            );
-          }
+          addAttrTag(
+            contentProperties,
+            attrTagMeta,
+            t.objectExpression(translatedAttrTag.properties),
+          );
         } else {
           i = addDynamicAttrTagStatements(
             attrTags,

@@ -43,8 +43,7 @@ interface BaseSlot {
   /** The sources whose changes lead client code to read it after resume,
    * unset while nothing does. */
   reason: Reason | undefined;
-  /** The expressions it holds or renders (a param group's: what its call site
-   * passes the group), whose sources its reason takes. */
+  /** The expressions it holds or renders, whose sources its reason takes. */
   reasonExprs: Opt<t.NodeExtra>;
 }
 

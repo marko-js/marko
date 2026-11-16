@@ -26,7 +26,6 @@ import isStatic from "./is-static";
 import {
   concat,
   forEach,
-  type OneMany,
   type Opt,
   type SortedOpt,
   push,
@@ -45,10 +44,14 @@ import { ALWAYS } from "./sources";
 import { createAnalysisState } from "./state";
 import { getMemberExpressionPropString } from "./to-property-name";
 
-interface ReferencedFunctionExtra extends t.FunctionExtra, ReferencedExtra {}
+export interface ReferencedFunctionExtra
+  extends t.FunctionExtra, ReferencedExtra {}
 
 export interface Read {
   binding: Binding;
+  /** The binding holding it in `reads`: `binding`, or the nearest ancestor its
+   * expression also reads once pruning hands the read up. */
+  holder: Binding;
   extra: ReadExtra;
   inOwnBody: boolean;
   getter: Getter | undefined;
@@ -948,9 +951,7 @@ function mergeInto(
 ) {
   const targetExtra = extra as ReferencedExtra;
   const readsByExpression = getReadsByExpression();
-  const fnReadsByExpression = getFunctionReadsByExpression();
   let reads = readsByExpression.get(targetExtra);
-  let exprFnReads = fnReadsByExpression.get(targetExtra);
   let { isEffect, retained } = targetExtra;
 
   for (const node of nodes) {
@@ -961,7 +962,6 @@ function mergeInto(
     retained ||= extra.retained;
     if (isReferencedExtra(extra)) {
       const additionalReads = readsByExpression.get(extra);
-      const additionalExprFnReads = fnReadsByExpression.get(extra);
       isEffect ||= extra.isEffect;
       if (additionalReads) {
         forEach(additionalReads, (read) => {
@@ -975,19 +975,6 @@ function mergeInto(
 
         reads = concat(reads, additionalReads);
         readsByExpression.delete(extra);
-      }
-
-      if (additionalExprFnReads) {
-        if (exprFnReads) {
-          for (const [key, value] of additionalExprFnReads) {
-            exprFnReads.set(key, value);
-          }
-        } else {
-          fnReadsByExpression.set(
-            targetExtra,
-            (exprFnReads = new Map(additionalExprFnReads)),
-          );
-        }
       }
     } else if (extra.dropped) {
       /* v8 ignore next -- a dropped reference is never merged into another */
@@ -1057,10 +1044,6 @@ export const [getReadsByExpression] = createAnalysisState(
   () => new Map<ReferencedExtra, Opt<Read>>(),
 );
 
-export const [getFunctionReadsByExpression] = createAnalysisState(
-  () => new Map<ReferencedExtra, Map<ReferencedFunctionExtra, OneMany<Read>>>(),
-);
-
 export const [getReferenceFinalizers] = createAnalysisState<(() => void)[]>(
   () => [],
 );
@@ -1084,6 +1067,7 @@ export function addRead(
   const readsByExpression = getReadsByExpression();
   const read: Read = {
     binding,
+    holder: binding,
     extra: extra as ReadExtra,
     getter,
     inOwnBody: false,
@@ -1149,17 +1133,7 @@ function untrackExpr(exprExtra: ReferencedExtra) {
   const reads = readsByExpr.get(exprExtra);
   if (reads) {
     readsByExpr.delete(exprExtra);
-    getFunctionReadsByExpression().delete(exprExtra);
-    // Pruning may have handed a read to any binding up its alias chain.
-    forEach(reads, (read) => {
-      for (
-        let cur: Binding | undefined = read.binding;
-        cur;
-        cur = cur.aliasOf
-      ) {
-        cur.reads.delete(exprExtra);
-      }
-    });
+    forEach(reads, (read) => read.holder.reads.delete(exprExtra));
   }
 }
 
@@ -1246,16 +1220,10 @@ function addReadToExpression(
     // is invoked.
     read.deferred =
       fnRoot.node.type !== "ObjectMethod" || fnRoot.node.kind === "method";
-    const fnReadsByExpr = getFunctionReadsByExpression();
-    let exprFnReads = fnReadsByExpr.get(exprExtra);
-    if (!exprFnReads) {
-      fnReadsByExpr.set(exprExtra, (exprFnReads = new Map()));
-    }
     const fnExtra = (fnRoot.node.extra ??= {}) as ReferencedFunctionExtra;
     fnExtra.section = section;
     fnExtra.exprRoot = rootExtra;
     read.fnRoot = fnExtra;
-    exprFnReads.set(fnExtra, push(exprFnReads.get(fnExtra), read));
   }
 }
 
@@ -1316,16 +1284,9 @@ export function createResolvedRead(
   binding: Binding,
   properties: Opt<string>,
   inOwnBody: boolean = false,
+  getter?: Getter,
 ): ResolvedRead {
-  return { binding, properties, inOwnBody, getter: undefined };
-}
-
-export function createResolvedGetterRead(
-  binding: Binding,
-  properties: Opt<string>,
-  getter: Getter,
-): ResolvedRead {
-  return { binding, properties, inOwnBody: false, getter };
+  return { binding, properties, inOwnBody, getter };
 }
 
 export interface ReferencedExtra extends t.NodeExtra {
