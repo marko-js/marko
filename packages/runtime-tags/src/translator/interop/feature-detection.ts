@@ -196,11 +196,10 @@ function getFeatureTypeFromCoreTagName(
     case "module-code":
     case "while":
       return FeatureType.Class;
-    case "attrs":
+    // Not the deprecated `<attrs>` and `<effect>`, which identify no API.
     case "const":
     case "debug":
     case "define":
-    case "effect":
     case "id":
     case "let":
     case "lifecycle":
