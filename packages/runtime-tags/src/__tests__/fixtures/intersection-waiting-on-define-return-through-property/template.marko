@@ -1,0 +1,9 @@
+<let/count=0/>
+<let/other=1/>
+<define/Child|input|>
+  <return={ a: input.x + input.y }/>
+</define>
+<Child/r x=count y=other/>
+<const/o={ ...r }/>
+<p>${o.a + other}</p>
+<button onClick() { count++; other++ }>inc</button>

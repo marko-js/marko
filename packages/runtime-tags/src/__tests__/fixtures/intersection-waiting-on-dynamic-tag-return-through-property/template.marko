@@ -1,0 +1,7 @@
+import child from "./tags/child.marko";
+<let/count=0/>
+<let/other=1/>
+<${child}/r x=count y=other/>
+<const/o={ ...r }/>
+<p>${o.a + other}</p>
+<button onClick() { count++; other++ }>inc</button>

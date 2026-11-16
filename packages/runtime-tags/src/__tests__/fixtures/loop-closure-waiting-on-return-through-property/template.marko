@@ -1,0 +1,8 @@
+<let/count=0/>
+<let/other=1/>
+<child/r x=count y=other/>
+<const/o={ ...r }/>
+<for|item| of=o.list>
+  <p>${item + other}</p>
+</for>
+<button onClick() { count++; other++ }>inc</button>

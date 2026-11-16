@@ -1,0 +1,7 @@
+<let/count=0/>
+<let/other=1/>
+<child/r x=count y=other/>
+<const/o={ ...r }/>
+<const/q={ inner: o }/>
+<p>${q.inner.a + other}</p>
+<button onClick() { count++; other++ }>inc</button>
