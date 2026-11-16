@@ -9,7 +9,6 @@ import { toAccess } from "../../html/serializer";
 import {
   type Binding,
   BindingType,
-  getCanonicalBinding,
   getDebugName,
   getDebugNames,
   getDebugNamesAsIdentifier,
@@ -334,7 +333,7 @@ export function getSignal(
     }
 
     if (referencedBindings.section !== section) {
-      const canonicalReference = getCanonicalBinding(referencedBindings);
+      const canonicalReference = referencedBindings.canonical;
       if (canonicalReference !== referencedBindings) {
         return getSignal(section, canonicalReference);
       }
@@ -406,8 +405,8 @@ export function getSignal(
           // A member only its intersection reads is computed there from the source,
           // unless client code reads it after resume: then it reads what the server wrote.
           const inline =
-            !member.propertyAliases.size &&
-            member.reads.size === 1 &&
+            !member.propertyAliases &&
+            member.reads?.size === 1 &&
             !getWriteReason(member) &&
             sourceSignal.values.find((v) => v.signal === memberSignal);
           if (inline) {
@@ -492,8 +491,8 @@ export function initValue(binding: Binding, isLet = false) {
     );
   };
 
-  binding.aliases.forEach(initAliasValue);
-  binding.propertyAliases.forEach(initAliasValue);
+  binding.aliases?.forEach(initAliasValue);
+  binding.propertyAliases?.forEach(initAliasValue);
   return signal;
 }
 
@@ -503,9 +502,11 @@ function initAliasValue(alias: Binding) {
 
 // A direct alias's work reads the slot of the binding it aliases, one hop up.
 function aliasStoresValue(binding: Binding) {
-  for (const alias of binding.aliases) {
-    if (isDirectAlias(alias) && getSignal(alias.section, alias).storesValue) {
-      return true;
+  if (binding.aliases) {
+    for (const alias of binding.aliases) {
+      if (isDirectAlias(alias) && getSignal(alias.section, alias).storesValue) {
+        return true;
+      }
     }
   }
   return false;
@@ -530,7 +531,7 @@ export function signalHasWork(signal: Signal): boolean {
         binding.type === BindingType.dom ||
         (binding.section === signal.section &&
           (binding.hoists ||
-            binding.aliases.size ||
+            binding.aliases ||
             hasNonConstantPropertyAlias(binding))))
     ) {
       return true;
@@ -544,9 +545,9 @@ export function signalHasWork(signal: Signal): boolean {
 function isPureMemberForwarder(binding: Binding): boolean {
   if (
     binding.property === undefined ||
-    binding.reads.size ||
+    binding.reads ||
     binding.exposed ||
-    binding.aliases.size ||
+    binding.aliases ||
     binding.assignments ||
     // Which a closure (a `<for>` selector's too) or a server write also sets.
     getSignal(binding.section, binding).storesValue
@@ -564,7 +565,7 @@ function pushMemberForwards(
   value: t.Expression,
   binding: Binding,
 ) {
-  for (const [key, alias] of binding.propertyAliases) {
+  for (const [key, alias] of binding.propertyAliases!) {
     if (alias.type !== BindingType.constant) {
       const member = toMemberExpression(
         t.cloneNode(value, true),
@@ -624,13 +625,13 @@ function isInlinedValue(signal: Signal) {
   if (
     !binding ||
     Array.isArray(binding) ||
-    binding.reads.size !== 1 ||
+    binding.reads?.size !== 1 ||
     signal.storesValue ||
     signal.referenced ||
     binding.exposed ||
     binding.assignments ||
-    binding.aliases.size ||
-    binding.propertyAliases.size ||
+    binding.aliases ||
+    binding.propertyAliases ||
     (binding.property === undefined &&
       (binding.type !== BindingType.derived ||
         binding.aliasOf ||
@@ -678,25 +679,27 @@ export function buildSignalFn(signal: Signal): t.Expression {
   const assertsHoists = isValue && binding.hoists && !isOptimize();
 
   if (isValue) {
-    for (const alias of binding.aliases) {
-      const aliasSignal = getSignal(alias.section, alias);
-      if (signalHasWork(aliasSignal)) {
-        let value: t.Expression = createScopeReadExpression(binding);
-        if (isRest(alias)) {
-          const aliasId = t.identifier(alias.name);
-          value = t.callExpression(
-            t.arrowFunctionExpression(
-              [getRestPattern(alias, aliasId, binding, true)],
-              aliasId,
-            ),
-            [withRestFallback(alias, binding, value)],
-          );
+    if (binding.aliases) {
+      for (const alias of binding.aliases) {
+        const aliasSignal = getSignal(alias.section, alias);
+        if (signalHasWork(aliasSignal)) {
+          let value: t.Expression = createScopeReadExpression(binding);
+          if (isRest(alias)) {
+            const aliasId = t.identifier(alias.name);
+            value = t.callExpression(
+              t.arrowFunctionExpression(
+                [getRestPattern(alias, aliasId, binding, true)],
+                aliasId,
+              ),
+              [withRestFallback(alias, binding, value)],
+            );
+          }
+          pushForward(signal, aliasSignal, value);
         }
-        pushForward(signal, aliasSignal, value);
       }
     }
 
-    if (binding.propertyAliases.size) {
+    if (binding.propertyAliases) {
       pushMemberForwards(signal, createScopeReadExpression(binding), binding);
     }
 
@@ -787,7 +790,7 @@ export function buildSignalFn(signal: Signal): t.Expression {
     }
 
     return t.arrowFunctionExpression(
-      [scopeIdentifier, getSignalValueIdentifier(signal)],
+      [scopeIdentifier, t.identifier(binding.canonical.name)],
       toOnlyExpressionOrBlock(signal.render),
     );
   }
@@ -859,13 +862,6 @@ function getTranslatedExtraArgs(signal: { extraArgs?: t.Expression[] }) {
   return emptyExtraArgs;
 }
 
-export function getSignalValueIdentifier(signal: Signal) {
-  const canonicalBinding = getCanonicalBinding(
-    signal.referencedBindings as Binding,
-  );
-  return t.identifier(canonicalBinding.name);
-}
-
 function isOwnValueRead(node: t.Node, binding: Binding) {
   const extra = (node as { extra?: t.NodeExtra }).extra;
   const read = extra?.read;
@@ -882,7 +878,7 @@ function subscribe(references: ReferencedBindings, intersection: Signal) {
   if (references) {
     forEach(references, (binding) => {
       if (binding.type !== BindingType.constant) {
-        const source = getCanonicalBinding(binding);
+        const source = binding.canonical;
         const providerSignal = getSignal(intersection.section, source);
         providerSignal.storesValue = true;
         providerSignal.intersections = push(
@@ -1149,6 +1145,7 @@ export function writeSignals(section: Section) {
 
 function writeGetters(section: Section) {
   forEach(section.bindings, (binding) => {
+    if (!binding.getters) return;
     for (const [hoistSection, hasReference] of binding.getters) {
       const getterIdentifier = getBindingGetterIdentifier(
         binding,

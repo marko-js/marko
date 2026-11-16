@@ -32,19 +32,23 @@ export function exposeParamsTree(
     rest: undefined,
   };
 
-  if (!binding.reads.size) {
+  if (!binding.reads) {
     let restAlias: Binding | undefined;
     let aliasCount = 0;
-    for (const alias of binding.aliases) {
-      if (!bodyAnalyzed || isPossiblyRead(alias)) {
-        restAlias = alias;
-        if (++aliasCount > 1) break;
+    if (binding.aliases) {
+      for (const alias of binding.aliases) {
+        if (!bodyAnalyzed || isPossiblyRead(alias)) {
+          restAlias = alias;
+          if (++aliasCount > 1) break;
+        }
       }
     }
     if (!restAlias) {
       tree.properties = Object.create(null) as { [prop: string]: ParamsTree };
-      for (const [property, alias] of binding.propertyAliases) {
-        tree.properties[property] = exposeParamsTree(alias, bodyAnalyzed);
+      if (binding.propertyAliases) {
+        for (const [property, alias] of binding.propertyAliases) {
+          tree.properties[property] = exposeParamsTree(alias, bodyAnalyzed);
+        }
       }
     } else if (aliasCount === 1) {
       if (hasSupersetExcludeProperties(binding, restAlias.excludeProperties)) {
@@ -54,7 +58,7 @@ export function exposeParamsTree(
         };
 
         forEach(restAlias.excludeProperties, (property) => {
-          const propAlias = binding.propertyAliases.get(property);
+          const propAlias = binding.propertyAliases?.get(property);
           if (propAlias) {
             tree.properties![property] = exposeParamsTree(
               propAlias,
@@ -87,7 +91,7 @@ export function exposeParamsTree(
 // A binding read only as the whole name of a name-only `<${binding}/>` is always a `_content(...)` renderer
 // (only known-parent `input`/`<define>` params reach here) — use the leaner `_dynamic_tag_content` signal.
 function isDirectContentBinding(binding: Binding) {
-  if (binding.reads.size !== 1) {
+  if (binding.reads?.size !== 1) {
     return false;
   }
 
@@ -103,12 +107,16 @@ function isDirectContentBinding(binding: Binding) {
 // Pruning keeps an alias of an analyzed body only if something reads it or an
 // alias of it; a reference to an alias reads what it aliases.
 function isPossiblyRead(alias: Binding): boolean {
-  if (alias.reads.size) return true;
-  for (const nested of alias.aliases) {
-    if (isPossiblyRead(nested)) return true;
+  if (alias.reads) return true;
+  if (alias.aliases) {
+    for (const nested of alias.aliases) {
+      if (isPossiblyRead(nested)) return true;
+    }
   }
-  for (const prop of alias.propertyAliases.values()) {
-    if (isPossiblyRead(prop)) return true;
+  if (alias.propertyAliases) {
+    for (const prop of alias.propertyAliases.values()) {
+      if (isPossiblyRead(prop)) return true;
+    }
   }
   return false;
 }
@@ -121,9 +129,11 @@ function hasSupersetExcludeProperties(
     return false;
   }
 
-  for (const prop of binding.propertyAliases.keys()) {
-    if (!propertiesUtil.has(excludeProperties, prop)) {
-      return false;
+  if (binding.propertyAliases) {
+    for (const prop of binding.propertyAliases.keys()) {
+      if (!propertiesUtil.has(excludeProperties, prop)) {
+        return false;
+      }
     }
   }
 

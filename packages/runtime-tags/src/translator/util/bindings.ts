@@ -51,19 +51,24 @@ export interface Binding {
   derivedFrom: Opt<t.NodeExtra> | false;
   /** Its reads by expression, complete once `finalizeReferences` runs: pruning
    * hands an expression's reads to the nearest ancestor it also reads. */
-  reads: Map<ReferencedExtra, Opt<Read>>;
-  aliases: Set<Binding>;
+  reads: Map<ReferencedExtra, Opt<Read>> | undefined;
+  /** Unset while empty, as are `reads`, `getters` and `propertyAliases`. */
+  aliases: Set<Binding> | undefined;
   /** The sections reading it through a hoist: its own or its ancestors, so
    * the first is the outermost. */
   hoists: SortedOpt<Section>;
-  getters: Map<Getter["hoisted"], boolean>;
+  getters: Map<Getter["hoisted"], boolean> | undefined;
   property: string | undefined;
-  propertyAliases: Map<string, Binding>;
+  propertyAliases: Map<string, Binding> | undefined;
   excludeProperties: SortedOpt<string>;
   /** Its properties code assigns in place (`obj.x = 1`), all of them for a
    * computed one. */
   assignedProperties: SortedOpt<string> | true;
+  /** The binding it names part or all of, always a canonical one. */
   aliasOf: Binding | undefined;
+  /** The binding whose slot holds its value: the one a direct alias aliases,
+   * else itself; fixed once made. */
+  canonical: Binding;
   /** The value these `<for>` params iterate, by `of` or `in`. */
   iterates: { expr: t.NodeExtra; type: "of" | "in" } | undefined;
   /** For an array rest, the source index it starts at: `rest[0]` of
@@ -160,12 +165,13 @@ export function createBinding(
     sources: undefined,
     intersection: undefined,
     derivedFrom: undefined,
-    reads: new Map(),
-    aliases: new Set(),
+    reads: undefined,
+    aliases: undefined,
     hoists: undefined,
-    getters: new Map(),
-    propertyAliases: new Map(),
+    getters: undefined,
+    propertyAliases: undefined,
     aliasOf: aliased,
+    canonical: undefined!,
     iterates: undefined,
     declaredAlias: undefined,
     localOf: undefined,
@@ -185,19 +191,22 @@ export function createBinding(
 
   if (property) {
     // TODO: should prefer declared properties as alias roots.
-    const propBinding = aliased!.propertyAliases.get(property);
+    const propBinding = aliased!.propertyAliases?.get(property);
     if (propBinding) {
       binding.property = undefined;
       binding.aliasOf = propBinding;
-      propBinding.aliases.add(binding);
+      (propBinding.aliases ??= new Set()).add(binding);
     } else {
       // TODO: check if default is used, if so an intermediate binding is needed
-      aliased!.propertyAliases.set(property, binding);
+      (aliased!.propertyAliases ??= new Map()).set(property, binding);
     }
   } else if (aliased) {
-    aliased.aliases.add(binding);
+    (aliased.aliases ??= new Set()).add(binding);
     if (declared) aliased.declaredAlias ??= binding;
   }
+  // An alias only ever names a canonical binding, so one hop reaches it.
+  binding.canonical =
+    binding.aliasOf && isDirectAlias(binding) ? binding.aliasOf : binding;
 
   setNextBindingId(id + 1);
   getBindings().add(binding);
@@ -212,9 +221,9 @@ export function reserveId(binding: Binding, offset: ReservedId) {
 // A property of a direct alias is the root's property: one binding, one
 // read, however many local names the value passes through.
 export function ensurePropertyAlias(binding: Binding, property: string) {
-  const canonical = getCanonicalBinding(binding);
+  const { canonical } = binding;
   return (
-    canonical.propertyAliases.get(property) ||
+    canonical.propertyAliases?.get(property) ||
     createBinding(
       canonical.name + toIdentifierAccess(property),
       canonical.type,
@@ -247,10 +256,9 @@ export function getAssignedObject(binding: Binding) {
     alias = alias.aliasOf
   ) {
     if (alias.property !== undefined) {
-      const parent = getCanonicalBinding(alias.aliasOf);
       if (
-        parent.assignedProperties === true ||
-        propertiesUtil.has(parent.assignedProperties, alias.property)
+        alias.aliasOf.assignedProperties === true ||
+        propertiesUtil.has(alias.aliasOf.assignedProperties, alias.property)
       ) {
         object = alias.aliasOf;
       }
@@ -265,7 +273,7 @@ export function getPropertyAlias(binding: Binding, properties: Opt<string>) {
 }
 
 function getExistingPropertyAlias(binding: Binding, property: string) {
-  return getCanonicalBinding(binding).propertyAliases.get(property);
+  return binding.canonical.propertyAliases?.get(property);
 }
 
 // The alias a property path leads to, or the deepest one along it that exists.
@@ -276,12 +284,12 @@ export function getDeepestPropertyAlias(
   let alias = binding;
   if (Array.isArray(properties)) {
     for (const property of properties) {
-      const next = alias.propertyAliases.get(property);
+      const next = alias.propertyAliases?.get(property);
       if (!next) break;
       alias = next;
     }
   } else if (properties !== undefined) {
-    alias = alias.propertyAliases.get(properties) ?? alias;
+    alias = alias.propertyAliases?.get(properties) ?? alias;
   }
   return alias;
 }
@@ -354,24 +362,16 @@ export const propertiesUtil = new Sorted(function compareProperties(
   return a < b ? -1 : a > b ? 1 : 0;
 });
 
-// A direct alias only ever aliases a canonical binding, so one hop reaches it.
-export function getCanonicalBinding(binding: Binding) {
-  const alias = binding.aliasOf;
-  if (alias && isDirectAlias(binding)) {
-    return alias;
-  }
-
-  return binding;
-}
-
 // Whether the binding, or any alias of it (transitively), passes `test`.
 export function someAlias(
   binding: Binding,
   test: (binding: Binding) => boolean,
 ): boolean {
   if (test(binding)) return true;
-  for (const alias of binding.aliases) {
-    if (someAlias(alias, test)) return true;
+  if (binding.aliases) {
+    for (const alias of binding.aliases) {
+      if (someAlias(alias, test)) return true;
+    }
   }
   return false;
 }
@@ -496,14 +496,16 @@ function isReadBeyondInvoking(binding: Binding) {
   if (
     binding.assignments ||
     binding.hoists ||
-    binding.getters.size ||
-    binding.propertyAliases.size ||
+    binding.getters ||
+    binding.propertyAliases ||
     isRest(binding)
   ) {
     return true;
   }
-  for (const reads of binding.reads.values()) {
-    if (some(reads, isReadOutsideInvokeOnly)) return true;
+  if (binding.reads) {
+    for (const reads of binding.reads.values()) {
+      if (some(reads, isReadOutsideInvokeOnly)) return true;
+    }
   }
   return false;
 }
@@ -518,9 +520,11 @@ export function isOwnBinding(binding: Binding) {
 }
 
 export function hasNonConstantPropertyAlias(binding: Binding) {
-  for (const alias of binding.propertyAliases.values()) {
-    if (alias.type !== BindingType.constant) {
-      return true;
+  if (binding.propertyAliases) {
+    for (const alias of binding.propertyAliases.values()) {
+      if (alias.type !== BindingType.constant) {
+        return true;
+      }
     }
   }
   return false;

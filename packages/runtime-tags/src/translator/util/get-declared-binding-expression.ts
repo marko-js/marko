@@ -2,7 +2,6 @@ import { types as t } from "@marko/compiler";
 
 import {
   type Binding,
-  getCanonicalBinding,
   getDeclaredAlias,
   isRest,
   propertiesUtil,
@@ -15,7 +14,7 @@ export function getDeclaredBindingExpression(
   binding: Binding,
   inPlace = false,
 ): t.Identifier | t.MemberExpression | t.OptionalMemberExpression {
-  const canonicalBinding = getCanonicalBinding(binding);
+  const canonicalBinding = binding.canonical;
   // Content the loop creates is written within it, where the local is in scope.
   if (canonicalBinding.localOf) {
     return getDeclaredBindingExpression(canonicalBinding.localOf, inPlace);

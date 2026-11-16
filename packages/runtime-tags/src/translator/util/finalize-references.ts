@@ -12,7 +12,6 @@ import {
   compareIntersections,
   getAliasRoot,
   getBindings,
-  getCanonicalBinding,
   getAssignedObject,
   getPropertyPath,
   isDirectAlias,
@@ -149,12 +148,14 @@ function excludeAssignedChangeHandlers() {
       !excluded.has(binding)
     ) {
       excluded.add(binding);
-      for (const alias of binding.aliasOf.aliases) {
-        if (propertiesUtil.has(alias.excludeProperties, binding.property)) {
-          alias.excludeProperties = propertiesUtil.add(
-            alias.excludeProperties,
-            binding.property + "Change",
-          );
+      if (binding.aliasOf.aliases) {
+        for (const alias of binding.aliasOf.aliases) {
+          if (propertiesUtil.has(alias.excludeProperties, binding.property)) {
+            alias.excludeProperties = propertiesUtil.add(
+              alias.excludeProperties,
+              binding.property + "Change",
+            );
+          }
         }
       }
     }
@@ -328,7 +329,7 @@ function resolveBindings() {
       }
     }
 
-    const canonicalBinding = getCanonicalBinding(binding);
+    const canonicalBinding = binding.canonical;
     // A direct alias shares its root's slot, which the root adds on its own
     // turn; a pruned root needs none.
     if (canonicalBinding === binding) {
@@ -585,7 +586,7 @@ function resolveBindingSources(binding: Binding) {
     case BindingType.param:
       binding.sources = createSources(
         undefined,
-        getCanonicalBinding(binding) as ParamBinding,
+        binding.canonical as ParamBinding,
       );
       return;
     case BindingType.global:
@@ -703,53 +704,65 @@ function pruneBinding(binding: Binding): boolean {
   // A read from an unread binding's droppable value is no read: judge those
   // bindings first (one met again mid way counts as read).
   binding.pruned = false;
-  for (const read of binding.reads.keys()) pruneDerived(read);
+  if (binding.reads) {
+    for (const read of binding.reads.keys()) pruneDerived(read);
+  }
   // Likewise an assignment from such a value.
   forEach(binding.assignments, pruneAssignmentDerived);
 
   // An expression that also reads an ancestor reads this through it, and one
   // reading a property assigned in place reads it from the object, kept current.
-  const assignedObject = getAssignedObject(binding);
-  for (const [expr, reads] of binding.reads) {
-    const ancestor = assignedObject
-      ? getNearestReadBy(assignedObject, expr) || assignedObject
-      : binding.aliasOf &&
-        !isRest(binding) &&
-        getNearestReadBy(binding.aliasOf, expr);
-    if (ancestor) {
-      forEach(reads, (read) => (read.holder = ancestor));
-      ancestor.reads.set(expr, concat(ancestor.reads.get(expr), reads));
-      binding.reads.delete(expr);
+  if (binding.reads) {
+    const assignedObject = getAssignedObject(binding);
+    for (const [expr, reads] of binding.reads) {
+      const ancestor = assignedObject
+        ? getNearestReadBy(assignedObject, expr) || assignedObject
+        : binding.aliasOf &&
+          !isRest(binding) &&
+          getNearestReadBy(binding.aliasOf, expr);
+      if (ancestor) {
+        forEach(reads, (read) => (read.holder = ancestor));
+        const ancestorReads = (ancestor.reads ??= new Map());
+        ancestorReads.set(expr, concat(ancestorReads.get(expr), reads));
+        binding.reads.delete(expr);
+      }
     }
+    // A collection is unset whenever it is empty.
+    if (!binding.reads.size) binding.reads = undefined;
   }
 
   let shouldPrune = true;
-  for (const alias of binding.aliases) {
-    if (pruneBinding(alias)) {
-      binding.aliases.delete(alias);
-    } else {
-      shouldPrune = false;
+  if (binding.aliases) {
+    for (const alias of binding.aliases) {
+      if (pruneBinding(alias)) {
+        binding.aliases.delete(alias);
+      } else {
+        shouldPrune = false;
+      }
     }
+    if (!binding.aliases.size) binding.aliases = undefined;
   }
 
   // A loop key is stored at its own accessor, so what it is a property of may go
   // unread; an alias of a key reads through the key.
-  for (const [key, alias] of binding.propertyAliases) {
-    if (pruneBinding(alias)) {
-      binding.propertyAliases.delete(key);
-    } else if (
-      alias.type !== BindingType.constant ||
-      binding.type === BindingType.constant
-    ) {
-      shouldPrune = false;
+  if (binding.propertyAliases) {
+    for (const [key, alias] of binding.propertyAliases) {
+      if (pruneBinding(alias)) {
+        binding.propertyAliases.delete(key);
+      } else if (
+        alias.type !== BindingType.constant ||
+        binding.type === BindingType.constant
+      ) {
+        shouldPrune = false;
+      }
     }
+    if (!binding.propertyAliases.size) binding.propertyAliases = undefined;
   }
 
   // Judged after its aliases, which can hand it their reads; an emitted
   // assignment calls the change handler in the id it reserves.
   shouldPrune &&=
-    !binding.reads.size &&
-    !(binding.reserveSize && hasEmittedAssignment(binding));
+    !binding.reads && !(binding.reserveSize && hasEmittedAssignment(binding));
 
   binding.pruned = shouldPrune;
   if (shouldPrune && !hasEmittedAssignment(binding)) {
@@ -811,7 +824,7 @@ function resolveReferencedBindingsInFunction(
 // The nearest of a binding and its ancestors holding a read of the expression.
 function getNearestReadBy(binding: Binding, expr: ReferencedExtra) {
   let cur = binding;
-  while (!cur.reads.has(expr)) {
+  while (!cur.reads?.has(expr)) {
     // A rest is a copy, so nothing above it is what it reads.
     if (!cur.aliasOf || isRest(cur)) return;
     cur = cur.aliasOf;
@@ -821,16 +834,17 @@ function getNearestReadBy(binding: Binding, expr: ReferencedExtra) {
 
 // A direct alias has no slot of its own, so its slot owner stores the value.
 function markLazyRead(binding: Binding) {
-  getCanonicalBinding(binding).hasLazyReads = true;
+  binding.canonical.hasLazyReads = true;
 }
 
 function addBindingGetter(binding: Binding, { invoked, hoisted }: Getter) {
-  if (!invoked || !binding.getters.has(hoisted)) {
+  const getters = (binding.getters ??= new Map());
+  if (!invoked || !getters.has(hoisted)) {
     if (hoisted === binding.section) {
-      binding.getters.delete(false);
+      getters.delete(false);
     }
-    if (hoisted || !binding.getters.has(binding.section)) {
-      binding.getters.set(hoisted, !invoked);
+    if (hoisted || !getters.has(binding.section)) {
+      getters.set(hoisted, !invoked);
     }
   }
 }
@@ -895,10 +909,9 @@ function resolveReferencedBindings(
         // no signal, no register-id participation.
         globalBindings = bindingUtil.add(globalBindings, binding);
       } else if (binding.type !== BindingType.dom) {
-        // A read outside a getter is from this section or an enclosing one.
-        const closure =
-          binding.section !== expr.section &&
-          (getConstantRoot(binding) ?? getCanonicalBinding(binding));
+        // A read outside a getter is from this section or an enclosing one; a
+        // constant one already resolved to its outermost constant.
+        const closure = binding.section !== expr.section && binding.canonical;
         if (isLazyRead(read, binding, isChangeHandlerRead)) {
           // A lazy read subscribes to nothing.
           lazyBindings = bindingUtil.add(lazyBindings, binding);

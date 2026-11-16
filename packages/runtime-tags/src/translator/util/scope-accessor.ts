@@ -6,7 +6,7 @@ import {
 } from "../../common/accessor.debug";
 import { decodeAccessor } from "../../common/helpers";
 import { ReservedId } from "../../common/types";
-import { type Binding, BindingType, getCanonicalBinding } from "./bindings";
+import { type Binding, BindingType } from "./bindings";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { isOptimize } from "./marko-config";
 import { isOptionalBranch, type Section } from "./sections";
@@ -58,7 +58,7 @@ function getScopeOffsetAccessor(nodeBinding: Binding) {
 
 // The scope id a binding holds at `offset` past its own (see `reserveId`).
 function getReservedId(binding: Binding, offset: ReservedId) {
-  return getCanonicalBinding(binding).id + offset;
+  return binding.canonical.id + offset;
 }
 
 export function getScopeAccessorLiteral(
@@ -66,7 +66,7 @@ export function getScopeAccessorLiteral(
   encoded?: boolean,
   includeId?: boolean,
 ) {
-  const canonicalBinding = getCanonicalBinding(binding);
+  const canonicalBinding = binding.canonical;
   return encoded &&
     isOptimize() &&
     canonicalBinding.type !== BindingType.constant
@@ -79,7 +79,7 @@ export function getScopeAccessor(
   encoded?: boolean,
   includeId?: boolean,
 ) {
-  const canonicalBinding = getCanonicalBinding(binding);
+  const canonicalBinding = binding.canonical;
   if (canonicalBinding.type === BindingType.constant) {
     return canonicalBinding.scopeAccessor ?? canonicalBinding.name;
   } else if (isOptimize()) {
@@ -112,7 +112,7 @@ export function getPrefixedScopeAccessor(
   binding: Binding,
   prefix: AccessorPrefix,
 ) {
-  const canonicalBinding = getCanonicalBinding(binding);
+  const canonicalBinding = binding.canonical;
   if (isOptimize()) {
     switch (prefix) {
       case getAccessorPrefix().TagVariableChange:
@@ -149,7 +149,7 @@ function getDebugClosureAccessor(binding: Binding) {
 }
 
 function getClosureAccessorId(binding: Binding) {
-  const id = getCanonicalBinding(binding).closureId;
+  const id = binding.canonical.closureId;
   /* v8 ignore next 5 -- analyze reserves an id for every closure binding */
   if (id === undefined) {
     throw new Error(

@@ -97,7 +97,7 @@ export default {
         }
         if (allDirectReferences) {
           const inputAlias =
-            allHaveInput && paramsBinding?.propertyAliases.get("0");
+            allHaveInput && paramsBinding?.propertyAliases?.get("0");
           if (inputAlias) {
             inputAlias.nullable = false;
           }

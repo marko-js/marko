@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { isAttributeTag } from "@marko/compiler/babel-utils";
 
-import { type Binding, getCanonicalBinding } from "./bindings";
+import { type Binding } from "./bindings";
 import { buildForRuntimeCall, getForType } from "./branch-tag";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { getKnownAttrValues } from "./get-known-attr-values";
@@ -121,7 +121,7 @@ export function translateAttrs(
     if (t.isMarkoSpreadAttribute(attr) && attr.extra?.knownSpread) {
       // Analysis reads it prop by prop, so it spreads what those props read.
       const { knownSpread } = attr.extra;
-      if (!getCanonicalBinding(knownSpread).pruned) {
+      if (!knownSpread.canonical.pruned) {
         attrProperties.push(
           t.spreadElement(getDeclaredBindingExpression(knownSpread, true)),
         );

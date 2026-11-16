@@ -44,6 +44,7 @@ export default {
       const sectionDynamicSubscribers = new Set<Section>();
       forEachSection((section) => {
         forEach(section.bindings, (binding) => {
+          if (!binding.getters) return;
           for (const [hoistSection, hasReference] of binding.getters) {
             if (hasReference) {
               getHTMLSectionStatements(hoistSection || section).push(
