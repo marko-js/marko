@@ -614,12 +614,13 @@ describe("compiler/compile", () => {
     });
     afterEach(() => fs.rmSync(dir, { recursive: true, force: true }));
 
-    const writeTag = (name, src) => {
+    const writeTag = (name, src, offset = 1000) => {
       const file = path.join(dir, "tags", `${name}.marko`);
       fs.writeFileSync(file, src);
-      // Pin the mtime ahead so invalidation does not race the clock's resolution.
-      const ahead = new Date(Date.now() + 1000);
-      fs.utimesSync(file, ahead, ahead);
+      // Pin the mtime away from now so neither invalidation nor a cache hit
+      // races the clock's resolution: ahead by default, behind when negative.
+      const at = new Date(Date.now() + offset);
+      fs.utimesSync(file, at, at);
     };
 
     const compileParent = (cache) =>
@@ -628,6 +629,16 @@ describe("compiler/compile", () => {
         output: "dom",
         writeVersionComment: false,
       }).code;
+
+    const compilePage = (cache, fileSystem = fs) =>
+      compileFileSync(path.join(dir, "template.marko"), {
+        cache,
+        fileSystem,
+        output: "dom",
+        entry: "page",
+        linkAssets: { runtime: "asset-runtime", onAsset() {} },
+        writeVersionComment: false,
+      }).meta;
 
     // A taglib file newer than every entry makes each of them stale, so these
     // only compile if a compile checks each template once.
@@ -670,6 +681,34 @@ describe("compiler/compile", () => {
 
       writeTag("my-grandchild", STATEFUL);
       assert.match(compileParent(cache), /_var_resume/);
+    });
+
+    it("lists each template a page entry reached as analyzed, so a change below it reaches the entry", () => {
+      writeTag("my-child", `<my-grandchild/y/>\n<return=y/>\n`);
+      writeTag("my-grandchild", `<return=1/>\n`);
+      assert.deepEqual(compilePage(new Map()).analyzedTags.toSorted(), [
+        path.join(dir, "tags", "my-child.marko"),
+        path.join(dir, "tags", "my-grandchild.marko"),
+      ]);
+    });
+
+    it("reads no template below a page entry again while their analyses are cached", () => {
+      writeTag("my-child", `<my-grandchild/y/>\n<return=y/>\n`, -60_000);
+      writeTag("my-grandchild", STATEFUL, -60_000);
+      const reads = [];
+      const fileSystem = {
+        statSync: fs.statSync,
+        readdirSync: fs.readdirSync,
+        readFileSync(file, encoding) {
+          reads.push(file);
+          return fs.readFileSync(file, encoding);
+        },
+      };
+      const cache = new Map();
+      compilePage(cache, fileSystem);
+      reads.length = 0;
+      compilePage(cache, fileSystem);
+      assert.deepEqual(reads, [path.join(dir, "template.marko")]);
     });
 
     it("compiles an edited template as a fresh cache would", () => {

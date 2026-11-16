@@ -146,9 +146,10 @@ export default (api, markoOpts) => {
         file.markoOpts = markoOpts;
         file.___taglibLookup = taglibLookup;
         file.___getMarkoFile = getMarkoFile;
-        // Copied, so a template that only translate loads is not kept with the
-        // cached file.
-        file.___analyzedFiles = new Map(sourceFile.___analyzedFiles);
+        file.___analyzedFiles = sourceFile.___analyzedFiles;
+        // Translate loads into a copy, so a template only it loads is not kept
+        // with the cached file nor taken for one its analysis loaded.
+        file.___loadedFiles = new Map(sourceFile.___analyzedFiles);
 
         // hydrate output emits only the entry bootstrap, so taglib translators are skipped.
         if (markoOpts.output !== "hydrate") {
@@ -173,6 +174,7 @@ export default (api, markoOpts) => {
           file.___taglibLookup =
           file.___getMarkoFile =
           file.___analyzedFiles =
+          file.___loadedFiles =
             undefined;
       }
     },
@@ -245,7 +247,7 @@ function getMarkoFile(code, fileOpts, markoOpts) {
     file.markoOpts = markoOpts;
     file.___compileStage = "parse";
     file.___getMarkoFile = getMarkoFile;
-    file.___analyzedFiles = new Map();
+    file.___analyzedFiles = file.___loadedFiles = new Map();
     const taglibLookup = (file.___taglibLookup = buildLookup(
       path.dirname(filename),
       translator,

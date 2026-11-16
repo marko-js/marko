@@ -1,11 +1,7 @@
 import path from "path";
 
 import { type Config, types as t } from "@marko/compiler";
-import {
-  getFile,
-  loadFileForImport,
-  resolveRelativePath,
-} from "@marko/compiler/babel-utils";
+import { getFile, resolveRelativePath } from "@marko/compiler/babel-utils";
 import { generator } from "@marko/compiler/internal/babel";
 
 import * as translate6 from "..";
@@ -14,7 +10,6 @@ import {
   createVisited,
   markReached,
   type Reach,
-  resolveRelativeToEntry,
   type VisitChild,
 } from "../util/entry-builder";
 import { getCompatRuntimeFile } from "../util/runtime";
@@ -184,15 +179,10 @@ export function createInteropTranslator(translate5: any) {
         entryBuilder.visit(
           entryFile,
           entryFile,
-          function visitChild(resolved: string, reach: Reach = 0) {
-            if (!markReached(visitedFiles, resolved, reach)) return;
-            const file = loadFileForImport(entryFile, resolved);
-            if (file) {
-              entryBuilder.visit(file, entryFile, (id, childReach = 0) =>
-                visitChild(
-                  resolveRelativeToEntry(entryFile, file, id),
-                  childReach > reach ? childReach : reach,
-                ),
+          function visitChild(file: t.BabelFile, reach: Reach = 0) {
+            if (markReached(entryFile, visitedFiles, file, reach)) {
+              entryBuilder.visit(file, entryFile, (childFile, childReach = 0) =>
+                visitChild(childFile, childReach > reach ? childReach : reach),
               );
             }
           },
