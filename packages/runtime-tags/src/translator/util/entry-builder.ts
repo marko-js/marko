@@ -3,7 +3,6 @@ import path from "path";
 import { types as t } from "@marko/compiler";
 import {
   getTemplateId,
-  loadFileForImport,
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
 
@@ -50,7 +49,7 @@ export type Reach = 0 | 1 | 2;
 type EntryFile = t.BabelFile & {
   [kState]?: EntryState;
 };
-export type VisitChild = (id: string, reach?: Reach) => void;
+export type VisitChild = (file: t.BabelFile, reach?: Reach) => void;
 const kState: unique symbol = Symbol();
 
 const builder = {
@@ -144,11 +143,11 @@ const builder = {
   visit(
     file: t.BabelFile,
     entryFile: EntryFile,
-    visitChild: VisitChild = (id, reach = 0) => {
-      const resolved = resolveRelativeToEntry(entryFile, file, id);
-      if (markReached(entryFile[kState]!.visited, resolved, reach)) {
-        const childFile = loadFileForImport(entryFile, resolved);
-        if (childFile) builder.visit(childFile, entryFile);
+    visitChild: VisitChild = (childFile, reach = 0) => {
+      if (
+        markReached(entryFile, entryFile[kState]!.visited, childFile, reach)
+      ) {
+        builder.visit(childFile, entryFile);
       }
     },
   ) {
@@ -164,7 +163,7 @@ const builder = {
       visited: createVisited(entryFile),
     });
     const programExtra = file.path.node.extra;
-    const { analyzedTags, assetImports } = file.metadata.marko;
+    const { assetImports } = file.metadata.marko;
     const { loadImports } = programExtra;
 
     const init = !!programExtra.isInteractive;
@@ -194,15 +193,17 @@ const builder = {
     }
 
     if (isRoot) state.bundledDepth++;
-    // Copied because loading a child appends this file's own `analyzedTags`.
-    for (const tag of analyzedTags ? [...analyzedTags] : []) {
+    // The templates its analysis loaded, which the compiler keeps on the file.
+    const analyzedFiles: ReadonlyMap<string, t.BabelFile> = (file as any)
+      .___analyzedFiles;
+    for (const [filename, childFile] of analyzedFiles) {
       // A lazily imported subtree is loaded by its own load entry, never here.
-      const lazy = loadImports?.has(tag);
+      const lazy = loadImports?.has(filename);
       if (lazy) {
         state.bundledDepth++;
         state.lazyDepth++;
       }
-      visitChild(tag, state.lazyDepth ? 2 : state.bundledDepth ? 1 : 0);
+      visitChild(childFile, state.lazyDepth ? 2 : state.bundledDepth ? 1 : 0);
       if (lazy) {
         state.bundledDepth--;
         state.lazyDepth--;
@@ -225,14 +226,12 @@ export function assertVisited<S>(
   }
 }
 
-// How eagerly each file has been reached, starting with the entry itself.
+// How eagerly each file has been reached, by filename, starting with the entry itself.
 export function createVisited(entryFile: t.BabelFile) {
-  return new Map<string, Reach>([
-    [resolveRelativePath(entryFile, entryFile.opts.filename as string), 0],
-  ]);
+  return new Map<string, Reach>([[entryFile.opts.filename as string, 0]]);
 }
 
-export function resolveRelativeToEntry(
+function resolveRelativeToEntry(
   entryFile: t.BabelFile,
   file: t.BabelFile,
   req: string,
@@ -249,12 +248,16 @@ export function resolveRelativeToEntry(
 
 // Records a file reached more eagerly than before, which it then visits again.
 export function markReached(
+  entryFile: t.BabelFile,
   visited: Map<string, Reach>,
-  resolved: string,
+  file: t.BabelFile,
   reach: Reach,
 ) {
-  const seen = visited.get(resolved);
+  const filename = file.opts.filename as string;
+  const seen = visited.get(filename);
   if (seen !== undefined && seen <= reach) return false;
-  visited.set(resolved, reach);
+  visited.set(filename, reach);
+  // The entry reads its analysis, so lists it as the compiler lists one it loads.
+  ((entryFile.metadata.marko as any).analyzedTags ||= new Set()).add(filename);
   return true;
 }

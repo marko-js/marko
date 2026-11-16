@@ -24,18 +24,12 @@ export default (entryFile, isHydrate) => {
     return;
   }
 
-  const visitedFiles = new Set([
-    resolveRelativePath(entryFile, entryFile.opts.filename),
-  ]);
-  entryBuilder.visit(entryFile, entryFile, function visitChild(resolved) {
-    if (!visitedFiles.has(resolved)) {
-      visitedFiles.add(resolved);
-      const file = loadFileForImport(entryFile, resolved);
-      if (file) {
-        entryBuilder.visit(file, entryFile, (id) =>
-          visitChild(resolveRelativeToEntry(entryFile, file, id)),
-        );
-      }
+  const visitedFiles = new Set([entryFile.opts.filename]);
+  entryBuilder.visit(entryFile, entryFile, function visitChild(file) {
+    const { filename } = file.opts;
+    if (!visitedFiles.has(filename)) {
+      visitedFiles.add(filename);
+      entryBuilder.visit(file, entryFile, visitChild);
     }
   });
 
@@ -170,14 +164,14 @@ export const entryBuilder = {
       for (const tag of fileMeta.tags) {
         if (loadImports?.has(tag)) continue;
         if (tag.endsWith(".marko")) {
-          visitChild(tag);
+          visitTemplate(entryFile, file, tag, visitChild);
         } else if (/^@lasso\/marko-taglib\//.test(tag)) {
           state.hasComponents = true;
         } else {
           const importedTemplates = tryGetTemplateImports(file, tag);
           if (importedTemplates) {
             for (const templateFile of importedTemplates) {
-              visitChild(templateFile);
+              visitTemplate(entryFile, file, templateFile, visitChild);
             }
           }
         }
@@ -207,6 +201,15 @@ export const entryBuilder = {
     }
   },
 };
+
+// A template `file` names, loaded through the entry as its analysis may not have.
+function visitTemplate(entryFile, file, request, visitChild) {
+  const childFile = loadFileForImport(
+    entryFile,
+    resolveRelativeToEntry(entryFile, file, request),
+  );
+  if (childFile) visitChild(childFile);
+}
 
 function addBrowserImports(seenImports, lassoDeps, body, file, entryFile) {
   const { filename, sourceMaps } = file.opts;

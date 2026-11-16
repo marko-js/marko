@@ -288,8 +288,8 @@ function resolveMarkoFile(file, filename) {
 
   // Analysis keeps references into each template it read, so later loads,
   // translate's included, get that same template rather than a newer cache entry.
-  const analyzedFile = file.___analyzedFiles.get(filename);
-  if (analyzedFile) return analyzedFile;
+  const loadedFile = file.___loadedFiles.get(filename);
+  if (loadedFile) return loadedFile;
 
   try {
     const childFile = file.___getMarkoFile(
@@ -298,7 +298,7 @@ function resolveMarkoFile(file, filename) {
       file.markoOpts,
     );
 
-    file.___analyzedFiles.set(filename, childFile);
+    file.___loadedFiles.set(filename, childFile);
     (file.metadata.marko.analyzedTags ||= new Set()).add(filename);
     return childFile;
   } catch (err) {

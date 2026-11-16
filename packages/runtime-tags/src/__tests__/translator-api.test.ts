@@ -1,5 +1,7 @@
 import * as assert from "assert/strict";
+import fs from "fs";
 import { createRequire } from "module";
+import os from "os";
 import path from "path";
 
 import { decode } from "@jridgewell/sourcemap-codec";
@@ -392,7 +394,94 @@ describe("runtime-tags/translator-api", () => {
     });
   });
 
-  describe("page entry asset imports", () => {
+  describe("page entry", () => {
+    let dir: string;
+    beforeEach(() => {
+      dir = fs.mkdtempSync(path.join(os.tmpdir(), "marko-page-entry-"));
+    });
+    afterEach(() => fs.rmSync(dir, { recursive: true, force: true }));
+
+    const write = (files: Record<string, string>) => {
+      for (const rel in files) {
+        const file = path.join(dir, rel);
+        fs.mkdirSync(path.dirname(file), { recursive: true });
+        fs.writeFileSync(file, files[rel]);
+      }
+    };
+    // The Class API translator, which wraps this one with the interop.
+    const compileInteropPage = (
+      src: string,
+      resolveVirtualDependency: compiler.Config["resolveVirtualDependency"],
+    ) =>
+      compiler.compileSync(src, path.join(dir, "page.marko"), {
+        ...baseConfig,
+        translator: require("marko/translator"),
+        cache: new Map(),
+        output: "dom",
+        entry: "page",
+        linkAssets: { runtime: "asset-runtime", onAsset() {} },
+        resolveVirtualDependency,
+      }).code;
+
+    it("visits the children of a Class lazy-load entry, which the Class builder walks itself", () => {
+      write({
+        "components/child.marko": "<grandchild/>\n",
+        "components/grandchild.marko": "class {\n  onMount() {}\n}\n<div/>\n",
+      });
+      const code = compiler.compileSync(
+        "$ const x = 1;\n<child/>\n",
+        path.join(dir, "page.marko"),
+        {
+          ...baseConfig,
+          translator: require("marko/translator"),
+          cache: new Map(),
+          output: "dom",
+          entry: "load",
+          linkAssets: { runtime: "asset-runtime", onAsset() {} },
+        },
+      ).code;
+      assert.match(code, /"\.\/components\/grandchild\.marko"/, code);
+    });
+
+    it("imports a root once under the interop, however many templates reach it", () => {
+      write({
+        "tags/tag-a.marko":
+          "<let/x=1/>\n<button onClick() { x++ }>${x}</button>\n",
+        "tags/tag-b.marko": "<const/b=1/>\n<tag-a/>\n",
+      });
+      const code = compileInteropPage(
+        "<const/a=1/>\n<tag-a/>\n<tag-b/>\n",
+        null,
+      );
+      assert.equal(code.match(/"\.\/tags\/tag-a\.marko"/g)?.length, 1, code);
+    });
+
+    it("registers a split component once though the Class side loads its template through the entry", () => {
+      // A renderer's templates, which no analysis loads, below a Tags root: one
+      // is missing.
+      write({
+        "tags/tag-a.marko":
+          "<let/x=1/>\n<button onClick() { x++ }>${x}</button>\n<class-host/>\n",
+        "components/class-host/index.marko": "<div><legacy-x/></div>\n",
+        "components/class-host/component-browser.js": "export default {};\n",
+        "marko.json": '{ "<legacy-x>": { "renderer": "./legacy-x.js" } }',
+        "legacy-x.js":
+          'import X from "./lib/x/index.marko";\nimport "./lib/gone.marko";\nexport default (input, out) => X.render(input, out);\n',
+        "lib/x/index.marko": "<span/>\n",
+        "lib/x/component-browser.js": "export default {};\n",
+      });
+      let classEntry = "";
+      compileInteropPage("<const/a=1/>\n<tag-a/>\n", (_from, dep) => {
+        if (dep.virtualPath.endsWith("-5.js")) classEntry = dep.code;
+        return dep.virtualPath;
+      });
+      assert.equal(
+        classEntry.match(/"\.\/lib\/x\/component-browser\.js"/g)?.length,
+        1,
+        classEntry,
+      );
+    });
+
     it("links style imports in every style language by default", () => {
       const linked = [
         "./a.pcss",
