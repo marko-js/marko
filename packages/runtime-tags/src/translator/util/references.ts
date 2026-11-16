@@ -1133,13 +1133,14 @@ function untrackExpr(exprExtra: ReferencedExtra) {
   const reads = readsByExpr.get(exprExtra);
   if (reads) {
     readsByExpr.delete(exprExtra);
-    forEach(reads, (read) => {
-      const { holder } = read;
-      // An earlier read of the same holder may have emptied it.
-      if (holder.reads?.delete(exprExtra) && !holder.reads.size) {
-        holder.reads = undefined;
-      }
-    });
+    forEach(reads, untrackRead, exprExtra);
+  }
+}
+
+function untrackRead({ holder }: Read, exprExtra: ReferencedExtra) {
+  // An earlier read of the same holder may have emptied it.
+  if (holder.reads?.delete(exprExtra) && !holder.reads.size) {
+    holder.reads = undefined;
   }
 }
 

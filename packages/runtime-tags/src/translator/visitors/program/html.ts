@@ -7,7 +7,6 @@ import {
   ensureSharedUid,
   hasSharedUid,
 } from "../../util/generate-uid";
-import { getDeclaredBindingExpression } from "../../util/get-declared-binding-expression";
 import isStatic from "../../util/is-static";
 import { getMarkoOpts } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
@@ -15,7 +14,6 @@ import { first, forEach } from "../../util/optional";
 import { getReadReplacement } from "../../util/read-replacement";
 import { isRegisteredFnExtra } from "../../util/references";
 import { callRuntime, importRuntime } from "../../util/runtime";
-import { getLocalsScopeAccessor } from "../../util/scope-accessor";
 import {
   forEachSection,
   getScopeIdIdentifier,
@@ -28,12 +26,12 @@ import {
   getBindingGetterIdentifier,
   getHTMLSectionStatements,
   getResumeRegistryId,
+  pushLocalProperty,
   writeHTMLResumeStatements,
   writeSlot,
 } from "../../util/signals";
 import { replaceMethodNode, simplifyFunction } from "../../util/simplify-fn";
 import { findSectionSlot, SlotKind } from "../../util/slots";
-import { toObjectProperty } from "../../util/to-property-name";
 import { traverseReplace } from "../../util/traverse";
 import type { TemplateVisitor } from "../../util/visitors";
 import { getScopeReasonStatement } from "../../util/write-guard";
@@ -263,14 +261,7 @@ function buildResumeCall(node: Exclude<t.Function, t.FunctionDeclaration>) {
       // Locals only exist while this render runs, so they're written into a
       // dedicated scope the client reads them back out of on resume.
       const localProperties: t.ObjectExpression["properties"] = [];
-      forEach(referencedLocals, (binding) => {
-        localProperties.push(
-          toObjectProperty(
-            getLocalsScopeAccessor(binding),
-            getDeclaredBindingExpression(binding),
-          ),
-        );
-      });
+      forEach(referencedLocals, pushLocalProperty, localProperties);
       return callRuntime(
         "_resume_locals",
         simplifyFunction(node) as

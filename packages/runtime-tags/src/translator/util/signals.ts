@@ -730,9 +730,7 @@ export function buildSignalFn(signal: Signal): t.Expression {
     }
   }
 
-  forEach(signal.intersections, (intersection) => {
-    pushScopeCall(signal.render, intersection.identifier);
-  });
+  forEach(signal.intersections, pushIntersectionCall, signal);
 
   if (isBinding && binding.sources) {
     let dynamicClosureArgs: t.Expression[] | undefined;
@@ -796,6 +794,10 @@ export function buildSignalFn(signal: Signal): t.Expression {
   }
 
   return toScopeFn(signal.render);
+}
+
+function pushIntersectionCall(intersection: Signal, signal: Signal) {
+  pushScopeCall(signal.render, intersection.identifier);
 }
 
 // `(scope) => fn(scope)` is `fn`.
@@ -876,17 +878,19 @@ function isOwnValueRead(node: t.Node, binding: Binding) {
 
 function subscribe(references: ReferencedBindings, intersection: Signal) {
   if (references) {
-    forEach(references, (binding) => {
-      if (binding.type !== BindingType.constant) {
-        const source = binding.canonical;
-        const providerSignal = getSignal(intersection.section, source);
-        providerSignal.storesValue = true;
-        providerSignal.intersections = push(
-          providerSignal.intersections,
-          intersection,
-        );
-      }
-    });
+    forEach(references, subscribeToBinding, intersection);
+  }
+}
+
+function subscribeToBinding(binding: Binding, intersection: Signal) {
+  if (binding.type !== BindingType.constant) {
+    const source = binding.canonical;
+    const providerSignal = getSignal(intersection.section, source);
+    providerSignal.storesValue = true;
+    providerSignal.intersections = push(
+      providerSignal.intersections,
+      intersection,
+    );
   }
 }
 
@@ -1032,7 +1036,7 @@ export function getResumeRegistryId(
 export function writeSignals(section: Section) {
   const seen = new Set<Signal>();
   const written = new Set<Signal>();
-  writeGetters(section);
+  forEach(section.bindings, writeBindingGetters, section);
 
   for (const signal of getSignals(section).values()) {
     writeSignal(signal);
@@ -1143,51 +1147,44 @@ export function writeSignals(section: Section) {
   return written;
 }
 
-function writeGetters(section: Section) {
-  forEach(section.bindings, (binding) => {
-    if (!binding.getters) return;
-    for (const [hoistSection, hasReference] of binding.getters) {
-      const getterIdentifier = getBindingGetterIdentifier(
-        binding,
+function writeBindingGetters(binding: Binding, section: Section) {
+  if (!binding.getters) return;
+  for (const [hoistSection, hasReference] of binding.getters) {
+    const getterIdentifier = getBindingGetterIdentifier(binding, hoistSection);
+    const accessors: t.Expression[] = [getScopeAccessorLiteral(binding, true)];
+
+    if (hoistSection) {
+      forEachAncestorSection(
+        binding.section,
         hoistSection,
-      );
-      const accessors: t.Expression[] = [
-        getScopeAccessorLiteral(binding, true),
-      ];
-
-      if (hoistSection) {
-        forEachAncestorSection(
-          binding.section,
-          hoistSection,
-          pushInstancesAccessor,
-          accessors,
-        );
-      }
-
-      getProgram().node.body.push(
-        t.variableDeclaration("const", [
-          t.variableDeclarator(
-            getterIdentifier,
-            hoistSection
-              ? hasReference
-                ? callRuntime(
-                    "_hoist_resume",
-                    t.stringLiteral(
-                      getResumeRegistryId(hoistSection, binding, "hoist"),
-                    ),
-                    ...accessors,
-                  )
-                : callRuntime("_hoist", ...accessors)
-              : callRuntime(
-                  "_el",
-                  t.stringLiteral(getResumeRegistryId(section, binding)),
-                  ...accessors,
-                ),
-          ),
-        ]),
+        pushInstancesAccessor,
+        accessors,
       );
     }
-  });
+
+    getProgram().node.body.push(
+      t.variableDeclaration("const", [
+        t.variableDeclarator(
+          getterIdentifier,
+          hoistSection
+            ? hasReference
+              ? callRuntime(
+                  "_hoist_resume",
+                  t.stringLiteral(
+                    getResumeRegistryId(hoistSection, binding, "hoist"),
+                  ),
+                  ...accessors,
+                )
+              : callRuntime("_hoist", ...accessors)
+            : callRuntime(
+                "_el",
+                t.stringLiteral(getResumeRegistryId(section, binding)),
+                ...accessors,
+              ),
+        ),
+      ]),
+    );
+  }
 }
 
 function pushInstancesAccessor(section: Section, accessors: t.Expression[]) {
@@ -1547,20 +1544,22 @@ export function writeHTMLResumeStatements(
   }
 
   if (debug) {
-    forEach(section.bindings, (binding) => {
-      if (binding.hoists && binding.type !== BindingType.dom) {
-        body.push(
-          t.expressionStatement(
-            callRuntime("_assert_hoist", t.identifier(binding.name)),
-          ),
-        );
-      }
-    });
+    forEach(section.bindings, pushAssertHoist, body);
   }
 
   const returnIdentifier = getSectionReturnValueIdentifier(section);
   if (returnIdentifier !== undefined) {
     body.push(t.returnStatement(returnIdentifier));
+  }
+}
+
+function pushAssertHoist(binding: Binding, body: t.Statement[]) {
+  if (binding.hoists && binding.type !== BindingType.dom) {
+    body.push(
+      t.expressionStatement(
+        callRuntime("_assert_hoist", t.identifier(binding.name)),
+      ),
+    );
   }
 }
 
@@ -1831,14 +1830,7 @@ function registerFnExpression(node: t.Function) {
           ),
         );
       }
-      forEach(referencedLocals, (binding) => {
-        properties.push(
-          toObjectProperty(
-            getLocalsScopeAccessor(binding),
-            getDeclaredBindingExpression(binding),
-          ),
-        );
-      });
+      forEach(referencedLocals, pushLocalProperty, properties);
       return t.callExpression(t.identifier(id), [
         t.objectExpression(properties),
       ]);
@@ -1848,6 +1840,18 @@ function registerFnExpression(node: t.Function) {
       return t.identifier(id);
     }
   }
+}
+
+export function pushLocalProperty(
+  binding: Binding,
+  properties: t.ObjectExpression["properties"],
+) {
+  properties.push(
+    toObjectProperty(
+      getLocalsScopeAccessor(binding),
+      getDeclaredBindingExpression(binding),
+    ),
+  );
 }
 
 function appendBindingKey(name: string, binding: Binding, section: Section) {
