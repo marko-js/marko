@@ -2,16 +2,16 @@ import * as Char from "./constants/char";
 import type { Boundary, PartialScope } from "./writer";
 
 export const K_SCOPE_ID = Symbol("Scope ID");
-const kTouchedIterator = /* @__PURE__ */ Symbol.for("marko.touchedIterator");
 const { hasOwnProperty } = {};
 const objectProto = Object.prototype;
 const arrayProto = Array.prototype;
 const Generator = /* @__PURE__ */ (function* () {})().constructor;
 const AsyncGenerator = /* @__PURE__ */ (async function* () {})().constructor;
+// Patches generators only where the check reading it ships, so the translator,
+// which bundles this module for its helpers, leaves its host's generators alone.
+const kTouchedIterator = /* @__PURE__ */ patchIteratorsNext();
 // `Intl.DurationFormat` is newer than the TypeScript lib types.
 type IntlWithDurationFormat = { DurationFormat?: new () => object } | undefined;
-patchIteratorNext(Generator.prototype);
-patchIteratorNext(AsyncGenerator.prototype);
 
 export interface Registered {
   id: string;
@@ -2550,12 +2550,19 @@ function hasOnlyZeros(typedArray: TypedArray) {
   return true;
 }
 
-function patchIteratorNext(proto: Iterator<any>) {
-  if ((proto.next as any)[kTouchedIterator]) return;
+function patchIteratorsNext() {
+  const key = Symbol.for("marko.touchedIterator");
+  patchIteratorNext(Generator.prototype, key);
+  patchIteratorNext(AsyncGenerator.prototype, key);
+  return key;
+}
+
+function patchIteratorNext(proto: Iterator<any>, key: symbol) {
+  if ((proto.next as any)[key]) return;
   const { next } = proto;
   proto.next = function (value) {
-    (this as any)[kTouchedIterator] = 1;
+    (this as any)[key] = 1;
     return next.call(this, value);
   };
-  (proto.next as any)[kTouchedIterator] = true;
+  (proto.next as any)[key] = true;
 }
