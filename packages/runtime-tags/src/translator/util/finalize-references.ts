@@ -53,6 +53,7 @@ import {
   createResolvedRead,
   dropExpr,
   getAssignments,
+  getBindingsDerivedFrom,
   getCanonicalExpr,
   getFunctionReadsByExpression,
   getReadsByExpression,
@@ -491,13 +492,11 @@ export function getLastOwnSourceReturn(
   const track = (binding: Binding) => {
     if (binding.section === section && !seen.has(binding)) {
       seen.add(binding);
-      const { returnedBy } = getAliasRoot(binding);
+      const { returnedBy } = binding;
       if (returnedBy && (!last || last.id < returnedBy.scope.id)) {
         last = returnedBy.scope;
       }
-      if (binding.derivedFrom) {
-        forEach(getValueReferences(binding.derivedFrom), track);
-      }
+      forEach(getBindingsDerivedFrom(binding), track);
       forEach(binding.sources?.state, track);
       forEach(binding.sources?.param, track);
     }
