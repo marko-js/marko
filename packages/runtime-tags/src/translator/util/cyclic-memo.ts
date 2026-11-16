@@ -100,8 +100,14 @@ export function createAnalysisMemo<K extends object, R>(
   ] as const;
 }
 
-// Every pass memo's reset, which each solve pass runs.
-const passResets: (() => void)[] = [];
+// Each analysis's pass memos, one slot per `createPassMemo`: a solve pass clears
+// them in one list, so a memo no pass asks costs nothing.
+let passMemoCount = 0;
+const [getPassMemos] = createAnalysisState(() =>
+  new Array<((key: never) => unknown) | undefined>(passMemoCount).fill(
+    undefined,
+  ),
+);
 
 // An analysis memo over the reasons of the moment: each solve pass asks it
 // afresh.
@@ -109,13 +115,18 @@ export function createPassMemo<K extends object, R>(
   compute: (key: K) => R,
   cycleAnswer: R,
 ) {
-  const [memo, reset] = createAnalysisMemo(compute, cycleAnswer);
-  passResets.push(reset);
-  return memo;
+  const index = passMemoCount++;
+  return (key: K): R => {
+    const memos = getPassMemos();
+    let memo = memos[index] as ((key: K) => R) | undefined;
+    if (!memo) memos[index] = memo = createCyclicMemo(compute, cycleAnswer);
+    return memo(key);
+  };
 }
 
 export function resetPassMemos() {
-  for (const reset of passResets) reset();
+  const memos = getPassMemos();
+  for (let i = 0; i < memos.length; i++) memos[i] = undefined;
 }
 
 // An object and a property path (`true` for all), interned so a memo keyed by
