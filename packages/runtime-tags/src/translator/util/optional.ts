@@ -333,18 +333,25 @@ export function filter<T>(data: Opt<T>, cb: (item: T) => boolean): Opt<T> {
   }
 }
 
-export function forEach<T>(
+// The callback takes `context` after the item, so it needs no closure.
+export function forEach<T>(data: Opt<T>, cb: (item: T) => void): void;
+export function forEach<T, C>(
   data: Opt<T>,
-  cb: (item: T, index: number) => void,
+  cb: (item: T, context: C) => void,
+  context: C,
+): void;
+export function forEach<T, C>(
+  data: Opt<T>,
+  cb: (item: T, context: C | undefined) => void,
+  context?: C,
 ): void {
   if (data !== undefined) {
     if (Array.isArray(data)) {
-      let i = 0;
       for (const item of data) {
-        cb(item, i++);
+        cb(item, context);
       }
     } else {
-      cb(data, 0);
+      cb(data, context);
     }
   }
 }

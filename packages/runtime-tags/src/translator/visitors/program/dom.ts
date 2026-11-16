@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { getFile, importDefault } from "@marko/compiler/babel-utils";
 
+import type { Binding } from "../../util/bindings";
 import { getUnusedParamIdentifier } from "../../util/generate-uid";
 import { addTagVarBindings } from "../../util/known-tag";
 import { isOptimize } from "../../util/marko-config";
@@ -90,10 +91,7 @@ export default {
         if (childSection !== section) {
           const tagParamsSignal =
             childSection.params && initValue(childSection.params);
-          forEach(childSection.localClosures, (closure) => {
-            // Inlined into `_content_closures` below, not written on its own.
-            initValue(closure).build = undefined;
-          });
+          forEach(childSection.localClosures, skipClosureBuild);
           const tagParamsIdentifier =
             tagParamsSignal && signalHasWork(tagParamsSignal)
               ? tagParamsSignal.identifier
@@ -276,4 +274,9 @@ function emptySetup() {
     [getUnusedParamIdentifier()],
     t.blockStatement([]),
   );
+}
+
+// Inlined into `_content_closures`, not written on its own.
+function skipClosureBuild(closure: Binding) {
+  initValue(closure).build = undefined;
 }

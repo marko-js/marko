@@ -16,7 +16,7 @@ import {
   createPathKeys,
   resetPassMemos,
 } from "./cyclic-memo";
-import { addKnownTagReasons } from "./known-tag";
+import { addKnownTagReasons, type KnownTagExtra } from "./known-tag";
 import { addFunctionReasons, getReferencesByFn } from "./module-registrations";
 import {
   at,
@@ -235,26 +235,26 @@ function getBranchExprReasonUntil(section: Section, ancestor: Section) {
 // A loop key a section reads in place takes a closure's reasons, and a closure's
 // signal also reaches the section through subscriber sets where no branch links them.
 function addClosureReasons(section: Section) {
-  forEach(section.referencedConstants, (constant) =>
-    addClosureReason(section, constant),
-  );
-  forEach(section.referencedClosures, (closure) => {
-    addClosureReason(section, closure);
-    if (closure.sources && isDynamicClosure(section, closure)) {
-      addReason(ensureSlot(closure, SlotKind.ClosureScopes), closure.sources);
-      if (getDynamicClosureIndex(closure, section)) {
-        addReason(
-          ensureSlot(closure, SlotKind.ClosureSignalIndex, section),
-          closure.sources,
-        );
-      }
+  forEach(section.referencedConstants, addClosureReason, section);
+  forEach(section.referencedClosures, addReferencedClosureReasons, section);
+}
+
+function addReferencedClosureReasons(closure: Binding, section: Section) {
+  addClosureReason(closure, section);
+  if (closure.sources && isDynamicClosure(section, closure)) {
+    addReason(ensureSlot(closure, SlotKind.ClosureScopes), closure.sources);
+    if (getDynamicClosureIndex(closure, section)) {
+      addReason(
+        ensureSlot(closure, SlotKind.ClosureSignalIndex, section),
+        closure.sources,
+      );
     }
-  });
+  }
 }
 
 // A closure a section reads is read whenever a branch or content between the
 // read and the closure's own section is created, unless that recomputes it.
-function addClosureReason(section: Section, binding: Binding) {
+function addClosureReason(binding: Binding, section: Section) {
   const sourceSection = binding.section;
   const branchesReason = getBranchExprReasonUntil(section, sourceSection);
   addReason(
@@ -272,15 +272,17 @@ function addClosureReason(section: Section, binding: Binding) {
 // created, reading the owner chain between them.
 function addCallOwnerReasons(body: Section) {
   if (body.readsOwner) {
-    forEach(body.renderedBy, (call) => {
-      const callSection = call.childScopeBinding.section;
-      addOwnerReason(
-        callSection,
-        body.parent!,
-        getBranchExprReasonUntil(callSection, body.parent!),
-      );
-    });
+    forEach(body.renderedBy, addCallOwnerReason, body.parent!);
   }
+}
+
+function addCallOwnerReason(call: KnownTagExtra, owner: Section) {
+  const callSection = call.childScopeBinding.section;
+  addOwnerReason(
+    callSection,
+    owner,
+    getBranchExprReasonUntil(callSection, owner),
+  );
 }
 
 // Client code reading a function reads what the function references, owners

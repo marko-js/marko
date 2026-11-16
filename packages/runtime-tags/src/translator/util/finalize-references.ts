@@ -20,6 +20,7 @@ import {
 } from "./bindings";
 import { finalizeContentDerives } from "./content-derives";
 import { generateUid } from "./generate-uid";
+import type { KnownTagExtra } from "./known-tag";
 import {
   every,
   concat,
@@ -210,13 +211,7 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
         }
         forEach(exprBindings.lazyBindings, addAlwaysReason);
       } else {
-        // A value retained as written keeps what it reads outside a function,
-        // so client code reads those with it.
-        forEach(reads, (read) => {
-          if (!read.fnRoot && read.extra.exprRoot?.retained) {
-            addReasonExprs(ensureSlot(read.binding), expr);
-          }
-        });
+        forEach(reads, addRetainedReadReason, expr);
       }
 
       if (exprBindings.allBindings) {
@@ -271,6 +266,41 @@ function addReadByFunction(
   return byFn;
 }
 
+// A value retained as written keeps what it reads outside a function, so client
+// code reads those with it.
+function addRetainedReadReason(read: Read, expr: ReferencedExtra) {
+  if (!read.fnRoot && read.extra.exprRoot?.retained) {
+    addReasonExprs(ensureSlot(read.binding), expr);
+  }
+}
+
+// Deliberately `ALWAYS`, not `binding.sources`: narrowing is a 0-byte no-op until
+// a state-dropping pass exists.
+function addAssignmentOwnerReason(
+  { section: assignedSection }: AssignedBindingExtra,
+  section: Section,
+) {
+  setReadsOwner(assignedSection, section);
+  addOwnerReason(assignedSection, section, ALWAYS);
+}
+
+function addBindingName({ name }: Binding, names: Set<string>) {
+  names.add(name);
+}
+
+function setCallReadsOwner(call: KnownTagExtra, owner: Section) {
+  setReadsOwner(call.childScopeBinding.section, owner);
+}
+
+function addClosureSection(closure: Binding, section: Section) {
+  closure.closureSections = sectionUtil.add(closure.closureSections, section);
+  addOwnerReason(section, closure.section, closure.sources);
+}
+
+function setReadHolder(read: Read, holder: Binding) {
+  read.holder = holder;
+}
+
 // Sources, names, hoists, section membership, and closures, per binding.
 function resolveBindings() {
   const bindingNamesBySection = new Map<Section, Set<string>>();
@@ -286,16 +316,12 @@ function resolveBindings() {
     if (binding.type !== BindingType.dom) {
       resolveBindingSources(binding);
 
-      forEach(binding.assignments, ({ section: assignedSection }) => {
-        setReadsOwner(assignedSection, section);
-        // Deliberately `ALWAYS`, not `binding.sources`: narrowing is a 0-byte no-op until a state-dropping pass exists.
-        addOwnerReason(assignedSection, section, ALWAYS);
-      });
+      forEach(binding.assignments, addAssignmentOwnerReason, section);
 
       let bindingNames = bindingNamesBySection.get(section);
       if (!bindingNames) {
         bindingNamesBySection.set(section, (bindingNames = new Set()));
-        forEach(section.bindings, ({ name }) => bindingNames!.add(name));
+        forEach(section.bindings, addBindingName, bindingNames);
       }
       if (bindingNames.has(binding.name)) {
         binding.name = generateUid(name);
@@ -346,9 +372,7 @@ function addSectionReasons(section: Section) {
   // A call links the body's scope to its owner through the calling scopes;
   // sections run in order, so a body's own calls come after it.
   if (section.readsOwner) {
-    forEach(section.renderedBy, (call) => {
-      setReadsOwner(call.childScopeBinding.section, section.parent!);
-    });
+    forEach(section.renderedBy, setCallReadsOwner, section.parent!);
   }
 
   if (section.isHoistThrough) {
@@ -356,10 +380,7 @@ function addSectionReasons(section: Section) {
   }
 
   // A closure's changes reach the section through its owner chain.
-  forEach(section.referencedClosures, (closure) => {
-    closure.closureSections = sectionUtil.add(closure.closureSections, section);
-    addOwnerReason(section, closure.section, closure.sources);
-  });
+  forEach(section.referencedClosures, addClosureSection, section);
 
   if (isOptionalBranch(section)) {
     const closureSources = getSourcesForReferencedBindings(
@@ -721,7 +742,7 @@ function pruneBinding(binding: Binding): boolean {
           !isRest(binding) &&
           getNearestReadBy(binding.aliasOf, expr);
       if (ancestor) {
-        forEach(reads, (read) => (read.holder = ancestor));
+        forEach(reads, setReadHolder, ancestor);
         const ancestorReads = (ancestor.reads ??= new Map());
         ancestorReads.set(expr, concat(ancestorReads.get(expr), reads));
         binding.reads.delete(expr);

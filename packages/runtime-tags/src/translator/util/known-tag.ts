@@ -244,10 +244,12 @@ function assertTerminates(tag: t.NodePath<t.MarkoTag>, childSection: Section) {
           `A ${childSection === getProgram().node.extra.section ? "template" : "`<define>`"} that renders itself outside a branch never terminates. Render \`<${getTagNameHint(tag.node)}>\` inside a branch that eventually stops, such as \`<if>\`.`,
         );
     }
-    forEach(caller.renderedBy, (call) => {
-      callers.add(call.childScopeBinding.section);
-    });
+    forEach(caller.renderedBy, addCaller, callers);
   }
+}
+
+function addCaller(call: KnownTagExtra, callers: Set<Section>) {
+  callers.add(call.childScopeBinding.section);
 }
 
 // A body in this template is analyzed when its tree is taken: `<define>`
