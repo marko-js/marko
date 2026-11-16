@@ -67,17 +67,14 @@ export default {
         return;
       }
 
-      const id = isOutputHTML()
-        ? callRuntime("_id")
-        : callRuntime("_id", scopeIdentifier);
-
       if (isOutputHTML()) {
+        const id = callRuntime("_id");
         translateVar(
           tag,
           valueAttr ? t.logicalExpression("||", valueAttr.value, id) : id,
         );
-        replaceWithStatements(tag);
       } else {
+        const id = callRuntime("_id", scopeIdentifier);
         const section = getSection(tag);
         const binding = node.var!.extra!.binding!;
         const signal = initValue(binding);
@@ -112,9 +109,9 @@ export default {
         } else {
           addValue(section, undefined, signal, id);
         }
-
-        replaceWithStatements(tag);
       }
+
+      replaceWithStatements(tag);
     },
   },
   parseOptions: {

@@ -146,6 +146,8 @@ export default {
       {
         const markoOpts = getMarkoOpts();
         const { output, entry, runtimeId } = markoOpts;
+        const entryFile = getFile();
+        const { filename } = entryFile.opts;
         const isLoadEntry = entry === "load";
         const isDOMPageEntry =
           (output === "dom" && entry === "page") || output === "hydrate";
@@ -166,8 +168,6 @@ export default {
         }
 
         if (isLoadEntry) {
-          const entryFile = getFile();
-          const { filename } = entryFile.opts;
           const readyId = getReadyId(entryFile)!;
           // A rejected chunk blocks this ready id forever: debug reports it;
           // production saves the bytes (devtools shows the network error).
@@ -213,7 +213,6 @@ export default {
         }
 
         if (isDOMPageEntry) {
-          const entryFile = getFile();
           entryBuilder.visit(entryFile, entryFile);
           program.node.body = entryBuilder.build(entryFile);
           program.skip();
@@ -221,8 +220,6 @@ export default {
         }
 
         if (isServerEntry) {
-          const entryFile = getFile();
-          const { filename } = entryFile.opts;
           const relativeImport = resolveRelativePath(entryFile, filename);
           const templateId = getTemplateId(markoOpts, filename);
           const pageAssetArgs = [

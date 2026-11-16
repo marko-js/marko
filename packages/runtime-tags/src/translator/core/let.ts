@@ -76,15 +76,14 @@ export default {
     ]);
 
     setDerivedFrom(binding, tagExtra);
+    tagExtra.pure = !valueAttr || evaluate(valueAttr.value).pure;
 
     if (valueChangeAttr) {
       const changeSlot = ensureSlot(binding, SlotKind.ChangeHandler);
       // The runtime reads the change handler at the value's reserved id.
       reserveId(binding, ReservedId.ChangeHandler);
       tagExtra.retained = true;
-      tagExtra.pure =
-        (!valueAttr || evaluate(valueAttr.value).pure) &&
-        evaluate(valueChangeAttr.value).pure;
+      tagExtra.pure &&= evaluate(valueChangeAttr.value).pure;
       // Only an assignment to the tag variable calls the change handler, so
       // nothing reads it when nothing assigns.
       onFinalizeReferences(() => {
@@ -96,7 +95,6 @@ export default {
       // An uncontrolled `<let>` keeps its state, yet its initializer re-runs and
       // keeps its reads (serialized) as any value does; an unread let drops it.
       tagExtra.initialValue = true;
-      tagExtra.pure = !valueAttr || evaluate(valueAttr.value).pure;
     }
   },
   translate: {

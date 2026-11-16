@@ -12,12 +12,7 @@ import {
 import { isEventHandler } from "../../../common/helpers";
 import { ReservedId } from "../../../common/types";
 import { assertNoNativeAttrTags } from "../../util/assert";
-import {
-  type Binding,
-  BindingType,
-  createBinding,
-  reserveId,
-} from "../../util/bindings";
+import { type Binding, BindingType, reserveId } from "../../util/bindings";
 import { setTagContentDerives } from "../../util/content-derives";
 import {
   generateUidIdentifier,
@@ -198,9 +193,8 @@ export default {
         }
       }
       if (isInteractive) getProgram().node.extra.isInteractive = true;
-      const nodeBinding = (tagExtra.nodeBinding = createBinding(
-        "#text",
-        BindingType.dom,
+      const nodeBinding = (tagExtra.nodeBinding = structure.markerNode(
+        tag,
         tagSection,
       ));
 
@@ -240,8 +234,6 @@ export default {
         tagExtra.nameOnly = true;
       }
 
-      structure.marker(tag, nodeBinding);
-      structure.enterShallow(tag);
       // A class API tag without a tags template renders only through the
       // interop: dom output renders nothing at its marker, nor its body.
       if (
@@ -445,10 +437,8 @@ export default {
       );
       const args: (t.Expression | t.SpreadElement)[] = [];
       const contentProp = getTranslatedBodyContentProperty(properties);
-      let hasTagArgs = false;
 
       if (node.arguments) {
-        hasTagArgs = true;
         args.push(...node.arguments);
 
         if (properties.length) {
@@ -463,6 +453,9 @@ export default {
         }
       }
 
+      const argsOrInput = node.arguments
+        ? t.arrayExpression(args)
+        : (args[0] as t.Expression);
       if (isOutputHTML()) {
         writeHTMLResumeStatements(tag);
         const markerGuard = getMarkerGuard(nodeBinding);
@@ -473,20 +466,18 @@ export default {
           node.var &&
           isTagVarResumed(tag) &&
           getResumeRegistryId(tagSection, node.var.extra?.binding, "var");
-        const input = args[0];
         const scopeIdArg = getScopeIdIdentifier(tagSection);
         const accessorArg = getScopeAccessorLiteral(nodeBinding);
-        const inputArg = hasTagArgs ? t.arrayExpression(args) : input;
         // Fallback content for a null or string renderer, as the DOM passes.
         const contentArg = contentProp ? contentProp.value : absentArg(0);
-        const inputIsArgs = hasTagArgs ? t.numericLiteral(1) : absentArg(0);
+        const inputIsArgs = node.arguments ? t.numericLiteral(1) : absentArg(0);
         const markerArg = markerGuard || absentArg(1);
         const dynamicTagExpr = callRuntime(
           "_dynamic_tag",
           scopeIdArg,
           accessorArg,
           tagExpression,
-          inputArg,
+          argsOrInput,
           contentArg,
           inputIsArgs,
           markerArg,
@@ -529,9 +520,8 @@ export default {
 
         replaceWithStatements(tag, statements);
       } else {
-        const section = getSection(tag);
         const bodySection = getSectionForBody(tag.get("body"));
-        const signal = getSignal(section, nodeBinding, "dynamicTag");
+        const signal = getSignal(tagSection, nodeBinding, "dynamicTag");
         let tagVarSignal: Signal | undefined;
         // Only a read or assigned variable resumes the scope offset its
         // branch's renders run before.
@@ -568,7 +558,7 @@ export default {
                   tagVarSignal.identifier,
                 )
               : undefined,
-            hasTagArgs && t.numericLiteral(1),
+            node.arguments && t.numericLiteral(1),
           );
         };
 
@@ -595,25 +585,20 @@ export default {
           );
         }
 
-        if (args.length) {
-          const argsOrInput = hasTagArgs
-            ? t.arrayExpression(args)
-            : (args[0] as t.Expression);
-          if (
-            !t.isObjectExpression(argsOrInput) ||
-            argsOrInput.properties.length
-          ) {
-            signal.extraArgs = [
-              t.arrowFunctionExpression(
-                [getUnusedParamIdentifier()],
-                statements.length
-                  ? t.blockStatement(
-                      statements.concat(t.returnStatement(argsOrInput)),
-                    )
-                  : argsOrInput,
-              ),
-            ];
-          }
+        if (
+          args.length &&
+          (!t.isObjectExpression(argsOrInput) || argsOrInput.properties.length)
+        ) {
+          signal.extraArgs = [
+            t.arrowFunctionExpression(
+              [getUnusedParamIdentifier()],
+              statements.length
+                ? t.blockStatement(
+                    statements.concat(t.returnStatement(argsOrInput)),
+                  )
+                : argsOrInput,
+            ),
+          ];
         }
 
         enableDynamicTagVar(tag);
@@ -626,7 +611,7 @@ export default {
             importRuntimeFeature("controllable");
           }
         }
-        addValue(section, tagExtra, signal, tagExpression);
+        addValue(tagSection, tagExtra, signal, tagExpression);
         replaceWithStatements(tag);
       }
     },

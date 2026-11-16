@@ -11,6 +11,13 @@ import CustomTag from "./custom-tag";
 import DynamicTag from "./dynamic-tag";
 import NativeTag from "./native-tag";
 
+const tagVisitors = {
+  [TagNameType.NativeTag]: NativeTag,
+  [TagNameType.CustomTag]: CustomTag,
+  [TagNameType.DynamicTag]: DynamicTag,
+  [TagNameType.AttributeTag]: AttributeTag,
+} satisfies Record<TagNameType, unknown>;
+
 const kAnalyzeFailed = Symbol("analyze failed");
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
@@ -30,24 +37,8 @@ export default {
 
         if (hook) {
           enterHook(hook, tag);
-          return;
-        }
-
-        if (type === TagNameType.NativeTag) {
-          NativeTag.analyze.enter(tag);
-          return;
-        }
-
-        switch (type) {
-          case TagNameType.CustomTag:
-            CustomTag.analyze.enter(tag);
-            break;
-          case TagNameType.AttributeTag:
-            AttributeTag.analyze.enter(tag);
-            break;
-          case TagNameType.DynamicTag:
-            DynamicTag.analyze.enter(tag);
-            break;
+        } else {
+          tagVisitors[type].analyze.enter(tag);
         }
       } catch (err) {
         (tag.node.extra ??= {})[kAnalyzeFailed] = true;
@@ -98,20 +89,7 @@ export default {
         }
       }
 
-      switch (analyzeTagNameType(tag)) {
-        case TagNameType.NativeTag:
-          NativeTag.translate.enter(tag);
-          break;
-        case TagNameType.CustomTag:
-          CustomTag.translate.enter(tag);
-          break;
-        case TagNameType.DynamicTag:
-          DynamicTag.translate.enter(tag);
-          break;
-        case TagNameType.AttributeTag:
-          AttributeTag.translate.enter(tag);
-          break;
-      }
+      tagVisitors[analyzeTagNameType(tag)].translate.enter(tag);
     },
 
     exit(tag) {
@@ -124,20 +102,7 @@ export default {
         return;
       }
 
-      switch (analyzeTagNameType(tag)) {
-        case TagNameType.NativeTag:
-          NativeTag.translate.exit(tag);
-          break;
-        case TagNameType.CustomTag:
-          CustomTag.translate.exit(tag);
-          break;
-        case TagNameType.DynamicTag:
-          DynamicTag.translate.exit(tag);
-          break;
-        case TagNameType.AttributeTag:
-          AttributeTag.translate.exit(tag);
-          break;
-      }
+      tagVisitors[analyzeTagNameType(tag)].translate.exit(tag);
     },
   },
 } satisfies TemplateVisitor<t.MarkoTag>;

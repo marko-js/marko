@@ -130,6 +130,14 @@ export function marker(path: t.NodePath<t.MarkoTag>, binding: Binding) {
   addNode(path, binding, true);
 }
 
+// The node binding of a `<!>` marker of the tag's own, as its only node.
+export function markerNode(tag: t.NodePath<t.MarkoTag>, section: Section) {
+  const binding = createBinding("#text", BindingType.dom, section);
+  marker(tag, binding);
+  enterShallow(tag);
+  return binding;
+}
+
 // A control flow tag that is its element's only child is addressed by that
 // element, else by a marker of its own.
 export function controlFlowNode(tag: t.NodePath<t.MarkoTag>, section: Section) {
@@ -145,14 +153,7 @@ export function controlFlowNode(tag: t.NodePath<t.MarkoTag>, section: Section) {
       ));
   }
 
-  const binding = (extra.nodeBinding = createBinding(
-    "#text",
-    BindingType.dom,
-    section,
-  ));
-  marker(tag, binding);
-  enterShallow(tag);
-  return binding;
+  return (extra.nodeBinding = markerNode(tag, section));
 }
 
 function addNode(

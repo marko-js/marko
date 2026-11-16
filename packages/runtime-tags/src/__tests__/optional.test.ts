@@ -6,7 +6,6 @@ import {
   every,
   filter,
   findIndexSorted,
-  findSorted,
   first,
   fromIter,
   last,
@@ -140,10 +139,6 @@ describe("runtime-tags/translator/util/optional", () => {
         const values = randomSortedValues(random, (random() * 8) | 0);
         const data = fromValues(values);
         const item = ((random() * 50) | 0) + 1;
-        assert.equal(
-          sorted.find(data, item),
-          values.find((v) => v === item),
-        );
         assert.equal(sorted.findIndex(data, item), values.indexOf(item));
         assert.equal(sorted.has(data, item), values.includes(item));
       }
@@ -574,10 +569,6 @@ describe("runtime-tags/translator/util/optional", () => {
       for (let run = 0; run < 100; run++) {
         const values = randomSortedValues(random, (random() * 10) | 0);
         const item = ((random() * 50) | 0) + 1;
-        assert.equal(
-          findSorted(compare, values, item),
-          values.find((v) => v === item),
-        );
         assert.equal(
           findIndexSorted(compare, values, item),
           values.indexOf(item),

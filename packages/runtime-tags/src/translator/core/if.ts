@@ -112,12 +112,11 @@ export const IfTag = {
       exit(tag) {
         if (tag.node.body.attributeTags) return;
 
-        const tagBody = tag.get("body");
-        const bodySection = getSectionForBody(tagBody);
+        const branches = getBranches(tag);
+        const [ifTag] = branches[0];
+        const bodySection = getSectionForBody(tag.get("body"));
 
         if (bodySection) {
-          const branches = getBranches(tag);
-          const [ifTag] = branches[0];
           resumeOwnerByMarkerWhenUnconditional(
             bodySection,
             ifTag.node.extra!.nodeBinding!,
@@ -126,8 +125,6 @@ export const IfTag = {
         }
 
         if (isLastBranch(tag)) {
-          const branches = getBranches(tag);
-          const [ifTag] = branches[0];
           let branchReasons: Reasons | undefined;
           let statement: t.Statement | undefined;
 

@@ -12,7 +12,7 @@ import {
   assertOnlyValueAttr,
   coreTagLink,
 } from "../util/assert";
-import { type Binding, BindingType, createBinding } from "../util/bindings";
+import type { Binding } from "../util/bindings";
 import { buildBranchEndArgs, isSingleNodeContent } from "../util/branch-tag";
 import evaluate from "../util/evaluate";
 import { declareConstBefore } from "../util/generate-uid";
@@ -89,13 +89,7 @@ export default {
       if (getOnlyChildParentTagName(tag)) {
         structure.controlFlowNode(tag, tagSection);
       } else if (!isSingleNodeContent(content)) {
-        tagExtra[kStartBinding] = createBinding(
-          "#text",
-          BindingType.dom,
-          tagSection,
-        );
-        structure.marker(tag, tagExtra[kStartBinding]);
-        structure.enterShallow(tag);
+        tagExtra[kStartBinding] = structure.markerNode(tag, tagSection);
       }
 
       if (tagExtra[kStaticDisplay] === undefined) {

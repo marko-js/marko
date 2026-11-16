@@ -181,10 +181,9 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const childExports = childFile.ast.program.extra.exportNames!;
   const { childSection } = tagExtra;
   const loadConfig = tagExtra.tagNameLoad;
-  const isLoad = !!loadConfig;
   const tagName = getTagNameHint(node);
 
-  if (isLoad) {
+  if (loadConfig) {
     const childFileName = childFile.opts.filename;
     const { triggers, signals, setups } = getLoadIdentifiers();
     let triggerIdent = triggers.get(loadConfig);
