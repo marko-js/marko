@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures-interop/error-deprecated-tag-in-class-api/template.marko:1:2
+    > 1 | <effect() { document.getElementById("out")!.textContent = "ran" }/>
+        |  ^^^^^^ Unable to find entry point for custom tag <effect>.
+      2 | <div#out/>
+      3 |
