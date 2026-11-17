@@ -1,0 +1,20 @@
+// template.marko
+var template_default = _template("a", (input) => {
+	_scope_reason();
+	const $scope0_id = _scope_id();
+	_html(`<script${_attr_nonce()} type=magic>
+  A
+<\/script><script type=magic nonce=override>
+  B
+<\/script><script${_attrs({
+		nonce: $global().cspNonce,
+		type: "magic",
+		nonce: "override-spread"
+	}, "b", $scope0_id, "script")}>
+  C
+<\/script>${_el_mark($scope0_id, "b")}`);
+	_if(() => {}, $scope0_id, "c", 1, 1, 0, 0, 1);
+	_script($scope0_id, "a0");
+	_script($scope0_id, "a1");
+	_scope($scope0_id, {});
+}, 1);

@@ -1725,9 +1725,12 @@ function getFilteredGlobals($global: Record<string, unknown>) {
     | Record<string, boolean>
     | undefined;
 
-  if (!serializedGlobals) return 0;
+  // The nonce always ships: a script or style the client renders takes it.
+  let filtered: 0 | Record<string, unknown> = $global.cspNonce
+    ? { cspNonce: $global.cspNonce }
+    : 0;
 
-  let filtered: 0 | Record<string, unknown> = 0;
+  if (!serializedGlobals) return filtered;
 
   if (Array.isArray(serializedGlobals)) {
     for (const key of serializedGlobals) {
