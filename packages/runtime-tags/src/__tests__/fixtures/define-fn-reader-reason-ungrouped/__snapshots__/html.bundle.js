@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $D_content__v__closures = /* @__PURE__ */ new Set();
 		const $D_content__w__closures = /* @__PURE__ */ new Set();
-		const $scope1_reason = _scope_reason(), $wg__w = _write_guard($scope1_reason, 6), $wi__w = _write_if($scope1_reason, 6), $wi__show__OR__inner__OR__v__OR__w = _write_if($scope1_reason, 2), $wg__inner = _write_guard($scope1_reason, 4), $wg__show = _write_guard($scope1_reason, 3), $wi__show__OR__inner = _write_if($scope1_reason, 0), $wi__v = _write_if($scope1_reason, 5);
+		const $scope1_reason = _scope_reason(), $wi__w = _write_if($scope1_reason, 6), $wg__w = _write_guard($scope1_reason, 6), $wi__show__OR__inner__OR__v__OR__w = _write_if($scope1_reason, 2), $wg__inner = _write_guard($scope1_reason, 4), $wi__show__OR__inner = _write_if($scope1_reason, 0), $wi__v = _write_if($scope1_reason, 5);
 		_if(() => {
 			if (show) {
 				const $scope2_id = _scope_id();
@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 				});
 				return 0;
 			}
-		}, $scope1_id, "a", _write_guard($scope1_reason, 0), $wg__show);
+		}, $scope1_id, "a", _write_guard($scope1_reason, 0), _write_guard($scope1_reason, 3));
 		$wi__show__OR__inner__OR__v__OR__w && _scope($scope1_id, {
 			e: _write_if($scope1_reason, 3) && inner,
 			f: $wi__show__OR__inner && v,

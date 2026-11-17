@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_w = _write_guard($scope0_reason, 6), $wi__input_w = _write_if($scope0_reason, 6), $wi__input_show__OR__input_inner__OR__input_v__OR__input_w = _write_if($scope0_reason, 2), $wg__input_inner = _write_guard($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 3), $wi__input_show__OR__input_inner = _write_if($scope0_reason, 0), $wi__input_v = _write_if($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $wi__input_w = _write_if($scope0_reason, 6), $wg__input_w = _write_guard($scope0_reason, 6), $wi__input_show__OR__input_inner__OR__input_v__OR__input_w = _write_if($scope0_reason, 2), $wg__input_inner = _write_guard($scope0_reason, 4), $wi__input_show__OR__input_inner = _write_if($scope0_reason, 0), $wi__input_v = _write_if($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const $input_v__closures = new Set();
 	const $input_w__closures = new Set();
@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "1:2", { f: "2:10" });
 			return 0;
 		}
-	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), $wg__input_show);
+	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), _write_guard($scope0_reason, 3));
 	$wi__input_show__OR__input_inner__OR__input_v__OR__input_w && _scope($scope0_id, {
 		input_inner: _write_if($scope0_reason, 3) && input.inner,
 		input_v: $wi__input_show__OR__input_inner && input.v,

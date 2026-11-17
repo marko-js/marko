@@ -15,9 +15,9 @@ var tags_child_default = _template("__tests__/components/tags-child.marko", (inp
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/components/tags-child.marko", "5:2");
 	}, void 0, (err) => {
-		const $scope3_reason = _scope_reason(), $wg__err_message = _write_guard($scope3_reason, 0);
+		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
-		_html(_text_mark($scope3_id, "#text/0", err.message, $wg__err_message * 2));
+		_html(_text_mark($scope3_id, "#text/0", err.message, _write_guard($scope3_reason, 0) * 2));
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/components/tags-child.marko", "10:4");
 	}, 0, "__tests__/components/tags-child.marko_3*content");
 	_script($scope0_id, "__tests__/components/tags-child.marko_0_input_name#3", 0);

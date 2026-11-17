@@ -22,7 +22,7 @@ var kept_default = _template("b", (input) => {
 
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_note = _write_guard($scope0_reason, 1), $wg__input_on = _write_guard($scope0_reason, 2), $wi__input_on = _write_if($scope0_reason, 2), $wi__input_note = _write_if($scope0_reason, 1), $wi__input_note__OR__input_on = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_note = _write_guard($scope0_reason, 1), $wi__input_on = _write_if($scope0_reason, 2), $wi__input_note = _write_if($scope0_reason, 1), $wi__input_note__OR__input_on = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const Label = { content: _content_resume("a0", () => {
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 		_html(`<em>${_text_mark($scope1_id, "a", input.note, $wg__input_note)}</em>`);
 		$wi__input_note__OR__input_on && _subscribe($wi__input_note && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1", $wg__input_note);
 	}, $scope0_id, ($scope) => [{ d: input.note }]) };
-	_dynamic_tag($scope0_id, "a", input.on ? kept_default : "div", { content: Label }, 0, 0, $wg__input_on);
+	_dynamic_tag($scope0_id, "a", input.on ? kept_default : "div", { content: Label }, 0, 0, _write_guard($scope0_reason, 2));
 	$wi__input_note__OR__input_on && _scope($scope0_id, {
 		d: $wi__input_on && input.note,
 		f: $wi__input_on && Label,

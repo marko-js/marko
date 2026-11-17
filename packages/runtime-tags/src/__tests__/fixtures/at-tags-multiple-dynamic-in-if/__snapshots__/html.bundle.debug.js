@@ -1,8 +1,8 @@
 // tags/custom-tag/index.marko
 var custom_tag_default = _template("__tests__/tags/custom-tag/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_x_value = _write_guard($scope0_reason, 1), $wg__input_y_value = _write_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div>x: ${_text_mark($scope0_id, "#text/0", input.x?.value, $wg__input_x_value * 2)} y: ${_text_mark($scope0_id, "#text/1", input.y?.value, $wg__input_y_value * 2)}</div>`);
+	_html(`<div>x: ${_text_mark($scope0_id, "#text/0", input.x?.value, _write_guard($scope0_reason, 1) * 2)} y: ${_text_mark($scope0_id, "#text/1", input.y?.value, _write_guard($scope0_reason, 2) * 2)}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/custom-tag/index.marko", 0);
 });
 

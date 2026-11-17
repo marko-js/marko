@@ -1,9 +1,9 @@
 // tags/display-intersection.marko
 var display_intersection_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let dummy = {};
-	_html(`<div>${_text_mark($scope0_id, "a", input.value, $wg__input_value)}</div>`);
+	_html(`<div>${_text_mark($scope0_id, "a", input.value, _write_guard($scope0_reason, 0))}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, { e: dummy });
 });
 

@@ -1,17 +1,17 @@
 // tags/a.marko
 var a_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_x = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div>A ${_text_mark($scope0_id, "a", input.x, $wg__input_x * 2)}</div>`);
+	_html(`<div>A ${_text_mark($scope0_id, "a", input.x, _write_guard($scope0_reason, 0) * 2)}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/b.marko
 var b_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<span>B ");
-	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, $wg__input_content);
+	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, _write_guard($scope0_reason, 0));
 	_html("</span>");
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });

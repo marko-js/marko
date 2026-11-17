@@ -9,12 +9,12 @@ var tags_return_default = _template("c", (input) => {
 
 // components/tags-child.marko
 var tags_child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_x = _write_guard($scope0_reason, 0), $wi__input_x = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_x = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $childScope = _peek_scope_id();
 	let v = tags_return_default({ x: input.x });
 	$wi__input_x && _var($scope0_id, "b", $childScope, "b0");
-	_html(`<p>${_text_mark($scope0_id, "c", v, $wg__input_x)}</p>`);
+	_html(`<p>${_text_mark($scope0_id, "c", v, _write_guard($scope0_reason, 0))}</p>`);
 	$wi__input_x && _scope($scope0_id, { a: _existing_scope($childScope) });
 });
 

@@ -9,7 +9,7 @@ var child_default = _template("__tests__/components/child.marko", (input) => {
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_step = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wi__input_step = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const log = _resume(() => {
 		console.log(input.step);
@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "3:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), $wg__input_show, 0, 0, 1);
+	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), _write_guard($scope0_reason, 2), 0, 0, 1);
 	_scope($scope0_id, {
 		input_step: input.step,
 		log: _write_if($scope0_reason, 2) && log

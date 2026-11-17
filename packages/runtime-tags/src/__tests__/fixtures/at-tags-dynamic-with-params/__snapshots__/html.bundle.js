@@ -1,8 +1,8 @@
 // tags/hello/index.marko
 var hello_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "a", input.item, [1], 0, 1, $wg__input_item);
+	_dynamic_tag($scope0_id, "a", input.item, [1], 0, 1, _write_guard($scope0_reason, 0));
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
@@ -14,9 +14,9 @@ var template_default = _template("a", (input) => {
 	_set_scope_reason(2);
 	let $item;
 	$item = attrTag({ content: _content("a0", (y) => {
-		const $scope1_reason = _scope_reason(), $wg__y = _write_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`y: ${_text_mark($scope1_id, "a", y, $wg__y * 2)}`);
+		_html(`y: ${_text_mark($scope1_id, "a", y, _write_guard($scope1_reason, 0) * 2)}`);
 		_write_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) });
 	const $childScope = _peek_scope_id();

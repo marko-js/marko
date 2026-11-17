@@ -1,8 +1,8 @@
 // child.marko
 var child_default = _template("__tests__/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span class=child>${_text_mark($scope0_id, "#text/0", input.value, $wg__input_value)}</span>`);
+	_html(`<span class=child>${_text_mark($scope0_id, "#text/0", input.value, _write_guard($scope0_reason, 0))}</span>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/child.marko", 0);
 });
 

@@ -1,7 +1,7 @@
 // components/tags-if.marko
 var import_html = require_html();
 var tags_if_default = _template("__tests__/components/tags-if.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -12,7 +12,7 @@ var tags_if_default = _template("__tests__/components/tags-if.marko", (input) =>
 			_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/components/tags-if.marko", "2:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), $wg__input_show, 0, 0, 1);
+	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), _write_guard($scope0_reason, 1), 0, 0, 1);
 	_write_if($scope0_reason, 1) && _scope($scope0_id, { input_content: input.content }, "__tests__/components/tags-if.marko", 0, { input_content: ["input.content"] });
 });
 

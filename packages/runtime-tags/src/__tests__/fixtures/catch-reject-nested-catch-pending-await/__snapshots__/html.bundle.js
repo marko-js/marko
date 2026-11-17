@@ -30,9 +30,9 @@ var template_default = _template("a", (input) => {
 					_html("never outer");
 				}, 0);
 			}, void 0, (err) => {
-				const $scope5_reason = _scope_reason(), $wg__err_message = _write_guard($scope5_reason, 0);
+				const $scope5_reason = _scope_reason();
 				const $scope5_id = _scope_id();
-				_html(`caught: ${_text_mark($scope5_id, "a", err.message, $wg__err_message * 2)}`);
+				_html(`caught: ${_text_mark($scope5_id, "a", err.message, _write_guard($scope5_reason, 0) * 2)}`);
 				_write_if($scope5_reason, 0) && _scope($scope5_id, {});
 			}, 0, "a1");
 			_html(`<div>changes: ${_text_mark($scope2_id, "c", changes, 2)}</div>${_el_mark($scope2_id, "b")}`);

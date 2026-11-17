@@ -1,8 +1,8 @@
 // tags/a.marko
 var a_default = _template("__tests__/tags/a.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_x = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div>A ${_text_mark($scope0_id, "#text/0", input.x, $wg__input_x * 2)}</div>`);
+	_html(`<div>A ${_text_mark($scope0_id, "#text/0", input.x, _write_guard($scope0_reason, 0) * 2)}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/a.marko", 0);
 });
 

@@ -1,11 +1,11 @@
 // tags/row.marko
 var row_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_header = _write_guard($scope0_reason, 1), $wg__input_header__OR__input_tag = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_header = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	_attr_content("a", $scope0_id, input.header, $wg__input_header);
 	_html(`</section>${_el_mark($scope0_id, "a", $wg__input_header)}`);
-	_dynamic_tag($scope0_id, "b", input.tag, { content: input.header }, 0, 0, $wg__input_header__OR__input_tag);
+	_dynamic_tag($scope0_id, "b", input.tag, { content: input.header }, 0, 0, _write_guard($scope0_reason, 0));
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {
 		e: _write_if($scope0_reason, 2) && input.header,
 		f: _write_if($scope0_reason, 1) && input.tag

@@ -19,9 +19,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_scope_reason(2);
 	let $item;
 	forUntil(size, 0, 1, (i) => $item = attrTags($item, { content: _content("__tests__/template.marko_3*content", () => {
-		const $scope3_reason = _scope_reason(), $wg__i = _write_guard($scope3_reason, 0);
+		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
-		_html(_text_mark($scope3_id, "#text/0", i, $wg__i));
+		_html(_text_mark($scope3_id, "#text/0", i, _write_guard($scope3_reason, 0)));
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "11:6");
 	}, $scope0_id) }));
 	const $childScope = _peek_scope_id();

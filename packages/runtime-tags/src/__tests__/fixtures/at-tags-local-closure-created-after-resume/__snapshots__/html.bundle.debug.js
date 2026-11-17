@@ -91,9 +91,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let items = [{ text: "a" }, { text: "b" }];
 	let $item;
 	forOf(items, (item) => $item = attrTags($item, { content: _content_resume("__tests__/template.marko_1*content", () => {
-		const $scope1_reason = _scope_reason(), $wg__item_text = _write_guard($scope1_reason, 0), $wg__item = _write_guard($scope1_reason, 1);
+		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<span>${_text_mark($scope1_id, "#text/0", item.text, $wg__item_text)}:${_text_mark($scope1_id, "#text/1", item === items[0], $wg__item * 2)}</span>`);
+		_html(`<span>${_text_mark($scope1_id, "#text/0", item.text, _write_guard($scope1_reason, 0))}:${_text_mark($scope1_id, "#text/1", item === items[0], _write_guard($scope1_reason, 1) * 2)}</span>`);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:6");
 	}, $scope0_id, () => [{
 		item_text: item?.text,
@@ -104,9 +104,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	forOf(["a", "b"], (row) => {
 		let $cell;
 		forOf([1], (n) => $cell = attrTags($cell, { content: _content_resume("__tests__/template.marko_2*content", () => {
-			const $scope2_reason = _scope_reason(), $wg__n = _write_guard($scope2_reason, 0);
+			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`<em>${_text_mark($scope2_id, "#text/0", n, $wg__n)}</em>`);
+			_html(`<em>${_text_mark($scope2_id, "#text/0", n, _write_guard($scope2_reason, 0))}</em>`);
 			_write_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/template.marko", "13:10");
 		}, $scope0_id, () => [{ n }]) }));
 		$row = attrTags($row, { cell: $cell });

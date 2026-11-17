@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_rows = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1), $wi__input_show__OR__input_rows = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_rows = _write_guard($scope0_reason, 2), $wi__input_show__OR__input_rows = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let selected = 1;
 	_if(() => {

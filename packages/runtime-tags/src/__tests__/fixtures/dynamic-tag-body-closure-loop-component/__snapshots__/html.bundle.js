@@ -1,7 +1,6 @@
 // tags/card.marko
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
-	_write_guard($scope0_reason, 0);
+	_scope_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
 	_html(`<button id=toggle>toggle</button>${_el_mark($scope0_id, "a")}`);
@@ -27,7 +26,7 @@ var list_default = _template("d", (input) => {
 
 // tags/heading.marko
 var heading_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_type = _write_guard($scope0_reason, 0), $wi__input_type = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_type = _write_if($scope0_reason, 0), $wg__input_type = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_type__closures = /* @__PURE__ */ new Set();
 	let $item;

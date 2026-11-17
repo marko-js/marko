@@ -1,9 +1,9 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_value__OR__input_valueChange = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let local = input.value;
-	_html(`<div>${_text_mark($scope0_id, "a", local == null ? "none" : local, $wg__input_value__OR__input_valueChange)}</div>`);
+	_html(`<div>${_text_mark($scope0_id, "a", local == null ? "none" : local, _write_guard($scope0_reason, 0))}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {
 		d: _write_if($scope0_reason, 2) && input.value,
 		e: _write_if($scope0_reason, 1) && input.valueChange

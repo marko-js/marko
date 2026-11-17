@@ -28,10 +28,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_html("loading");
 	}, (err) => {
-		const $scope3_reason = _scope_reason(), $wg__err_message = _write_guard($scope3_reason, 0);
+		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
 		$Child_withLoadAssets({ value: "catch" });
-		_html(` caught ${_text_mark($scope3_id, "#text/2", err.message, $wg__err_message * 2)}`);
+		_html(` caught ${_text_mark($scope3_id, "#text/2", err.message, _write_guard($scope3_reason, 0) * 2)}`);
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "10:4");
 	}, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content");
 }, 1);

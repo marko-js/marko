@@ -5,9 +5,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let on = true;
 	_dynamic_tag($scope0_id, "#text/0", on && input.tag, {}, _content_resume("__tests__/template.marko_1*content", ($label) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__$label = _write_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason();
 		const label = void 0 !== $label ? $label : "falsy";
-		_html(_text_mark($scope1_id, "#text/0", label, $wg__$label * 2));
+		_html(_text_mark($scope1_id, "#text/0", label, _write_guard($scope1_reason, 0) * 2));
 		_write_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "2:4");
 	}, $scope0_id));
 	_html(`<button></button>${_el_mark($scope0_id, "#button/1")}`);

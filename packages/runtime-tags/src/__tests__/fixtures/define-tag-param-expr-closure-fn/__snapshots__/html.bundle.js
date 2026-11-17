@@ -10,7 +10,7 @@ var counter_default = _template("b", (input) => {
 
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $wi__input_a = _write_if($scope0_reason, 1), $wi__input_x = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wi__input_a = _write_if($scope0_reason, 1), $wg__input_a = _write_guard($scope0_reason, 1), $wi__input_x = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $f2__closures = /* @__PURE__ */ new Set();
 	const f = _resume(function() {

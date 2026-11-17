@@ -93,6 +93,7 @@ import { withLeadingComment } from "./with-comment";
 import {
   andGuard,
   getExprIfWritten,
+  getWriteBit,
   getWriteGuardForAny,
   getWriteReason,
   isBranchAlwaysMarked,
@@ -1306,10 +1307,16 @@ export function writeHTMLResumeStatements(
   const body = bodyPath.node.body as t.Statement[];
   const allSignals = Array.from(getSignals(section).values());
   const scopeIdIdentifier = getScopeIdIdentifier(section);
+  const nodeReasons = getNodeReasons(section);
+  const markerAlwaysWritten = some(nodeReasons, isAlwaysWritten, section);
+  // Built at its first read, since a group check's second use shares it.
+  let markerGuard: t.Expression | undefined;
   // Whether any node of the section writes a marker, as the same argument
   // shape `_if` and `_await` take: absent when always, `0` when never.
-  const nodeReasons = getNodeReasons(section);
-  const markerGuard = getWriteGuardForAny(section, nodeReasons, true);
+  const getSectionMarkerGuard = () =>
+    markerAlwaysWritten
+      ? undefined
+      : (markerGuard ||= getWriteGuardForAny(section, nodeReasons, true));
   const sectionReason = section.reason;
   // The client reads the scope's closest branch wherever the server writes
   // state its handlers assign or a subscription for it: with the scope, or with
@@ -1370,7 +1377,7 @@ export function writeHTMLResumeStatements(
               subscribeArg,
               expr,
               resumeId,
-              resumeId && markerGuard,
+              resumeId && getSectionMarkerGuard(),
             );
           });
         }
@@ -1389,7 +1396,7 @@ export function writeHTMLResumeStatements(
             "_script",
             scopeIdIdentifier,
             t.stringLiteral(getResumeRegistryId(section, signalRefs)),
-            markerGuard,
+            getSectionMarkerGuard(),
           ),
         ),
       );
@@ -1502,7 +1509,7 @@ export function writeHTMLResumeStatements(
 
   // The walker places a scope whose marker it visits, so a section that always
   // writes one needs no link; a dynamic marker guards it, none writes it plain.
-  if (markerGuard && !isBranchAlwaysMarked(section)) {
+  if (!markerAlwaysWritten && !isBranchAlwaysMarked(section)) {
     let link: t.Expression | undefined;
     if (section.hasAbortSignal) {
       // An abort signal's effect always ships.
@@ -1523,11 +1530,12 @@ export function writeHTMLResumeStatements(
       }
     }
     if (link) {
+      const guard = getSectionMarkerGuard()!;
       body.push(
         t.expressionStatement(
-          markerGuard.type === "NumericLiteral"
+          guard.type === "NumericLiteral"
             ? link
-            : t.logicalExpression("||", markerGuard, link),
+            : t.logicalExpression("||", guard, link),
         ),
       );
     }
@@ -1551,6 +1559,10 @@ export function writeHTMLResumeStatements(
   if (returnIdentifier !== undefined) {
     body.push(t.returnStatement(returnIdentifier));
   }
+}
+
+function isAlwaysWritten(reason: Reason, section: Section) {
+  return getWriteBit(section, reason) === 1;
 }
 
 function pushAssertHoist(binding: Binding, body: t.Statement[]) {

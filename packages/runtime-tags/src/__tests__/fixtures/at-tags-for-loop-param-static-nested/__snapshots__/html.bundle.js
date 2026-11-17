@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 	const $input_show__closures = /* @__PURE__ */ new Set();
 	let $item;
 	forOf(["a", "b"], (item) => $item = attrTags($item, { content: _content("a1", () => {
-		const $scope1_reason = _scope_reason(), $wg__item = _write_guard($scope1_reason, 0), $wi__item = _write_if($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $wi__item = _write_if($scope1_reason, 0), $wg__item = _write_guard($scope1_reason, 0);
 		const $scope1_id = _scope_id();
 		_if(() => {
 			if (input.show) {

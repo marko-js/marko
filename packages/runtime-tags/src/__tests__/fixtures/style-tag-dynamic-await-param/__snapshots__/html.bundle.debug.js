@@ -6,7 +6,7 @@ var v_template_marko_1_default = "\n      .now { color: var(--M_packages-1brunti
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_color = _write_guard($scope0_reason, 2), $wi__input_color = _write_if($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_color = _write_guard($scope0_reason, 2), $wi__input_color = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -24,6 +24,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_write_if($scope0_reason, 0) && _scope($scope1_id, { _: $wi__input_color && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), $wg__input_show);
+	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), _write_guard($scope0_reason, 1));
 	_write_if($scope0_reason, 1) && _scope($scope0_id, { input_color: input.color }, "__tests__/template.marko", 0, { input_color: ["input.color"] });
 }, 1);

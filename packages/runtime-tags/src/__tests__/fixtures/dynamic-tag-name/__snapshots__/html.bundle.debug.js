@@ -1,36 +1,36 @@
 // tags/tag-a/index.marko
 var tag_a_default = _template("__tests__/tags/tag-a/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_class__OR__input_other = _write_guard($scope0_reason, 0), $wg__input_content = _write_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<div${_attr_class(input.class)}${_attr("data-other", input.other)}>A `);
-	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, $wg__input_content);
-	_html(`</div>${_el_mark($scope0_id, "#div/0", $wg__input_class__OR__input_other)}`);
+	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, _write_guard($scope0_reason, 2));
+	_html(`</div>${_el_mark($scope0_id, "#div/0", _write_guard($scope0_reason, 0))}`);
 	_write_if($scope0_reason, 1) && _scope($scope0_id, {}, "__tests__/tags/tag-a/index.marko", 0);
 });
 
 // tags/tag-b/index.marko
 var tag_b_default = _template("__tests__/tags/tag-b/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_class__OR__input_other = _write_guard($scope0_reason, 0), $wg__input_content = _write_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<div${_attr_class(input.class)}${_attr("data-other", input.other)}>B `);
-	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, $wg__input_content);
-	_html(`</div>${_el_mark($scope0_id, "#div/0", $wg__input_class__OR__input_other)}`);
+	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, _write_guard($scope0_reason, 2));
+	_html(`</div>${_el_mark($scope0_id, "#div/0", _write_guard($scope0_reason, 0))}`);
 	_write_if($scope0_reason, 1) && _scope($scope0_id, {}, "__tests__/tags/tag-b/index.marko", 0);
 });
 
 // template.marko
 const foo = "";
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show__OR__input_other = _write_guard($scope0_reason, 2), $wg__input_showTagA__OR__input_other = _write_guard($scope0_reason, 3), $wg__input_tag__OR__input_other = _write_guard($scope0_reason, 5), $wg__input_isLarge__OR__input_other = _write_guard($scope0_reason, 4), $wg__input_level__OR__input_other = _write_guard($scope0_reason, 6), $wg__input_other = _write_guard($scope0_reason, 9), $wg__input_content__OR__input_other = _write_guard($scope0_reason, 0), $wg__input_x__OR__input_other = _write_guard($scope0_reason, 1), $wi__input_other = _write_if($scope0_reason, 9);
+	const $scope0_reason = _scope_reason(), $wg__input_show__OR__input_other = _write_guard($scope0_reason, 2), $wg__input_showTagA__OR__input_other = _write_guard($scope0_reason, 3), $wg__input_tag__OR__input_other = _write_guard($scope0_reason, 5), $wg__input_isLarge__OR__input_other = _write_guard($scope0_reason, 4), $wg__input_level__OR__input_other = _write_guard($scope0_reason, 6), $wg__input_other = _write_guard($scope0_reason, 9), $wi__input_other = _write_if($scope0_reason, 9);
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "#text/0", input.content, {
 		class: ["a", "b"],
 		other: input.other
-	}, 0, 0, $wg__input_content__OR__input_other);
+	}, 0, 0, _write_guard($scope0_reason, 0));
 	_dynamic_tag($scope0_id, "#text/1", input.x, {
 		class: ["a", "b"],
 		other: input.other
-	}, 0, 0, $wg__input_x__OR__input_other);
+	}, 0, 0, _write_guard($scope0_reason, 1));
 	_dynamic_tag($scope0_id, "#text/2", input.show ? "div" : null, {
 		class: ["a", "b"],
 		other: input.other

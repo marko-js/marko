@@ -14,17 +14,17 @@ var tags_a_default = _template("b", (input) => {
 // components/tags-b.marko
 var tags_b_exports = /* @__PURE__ */ __exportAll({ default: () => tags_b_default });
 var tags_b_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<b id=b>b ${_text_mark($scope0_id, "a", input.label, $wg__input_label * 2)}</b>`);
+	_html(`<b id=b>b ${_text_mark($scope0_id, "a", input.label, _write_guard($scope0_reason, 0) * 2)}</b>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // components/tags-namespace.marko
 var tags_namespace_default = _template("d", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_which__OR__input_count = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "a", input.which ? tags_a_exports : tags_b_exports, { label: input.count }, 0, 0, $wg__input_which__OR__input_count);
+	_dynamic_tag($scope0_id, "a", input.which ? tags_a_exports : tags_b_exports, { label: input.count }, 0, 0, _write_guard($scope0_reason, 0));
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {
 		d: _write_if($scope0_reason, 2) && input.which,
 		e: _write_if($scope0_reason, 1) && input.count

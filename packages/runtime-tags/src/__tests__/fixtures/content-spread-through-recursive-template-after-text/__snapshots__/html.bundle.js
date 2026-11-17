@@ -1,8 +1,8 @@
 // tags/tree.marko
 const $content = (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input = _write_guard($scope0_reason, 1), $wg__input_content = _write_guard($scope0_reason, 2), $wg__input_depth = _write_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, $wg__input_content);
+	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, _write_guard($scope0_reason, 2));
 	_if(() => {
 		if (input.depth) {
 			const $scope1_id = _scope_id();
@@ -18,7 +18,7 @@ const $content = (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "b", $wg__input, $wg__input_depth);
+	}, $scope0_id, "b", $wg__input, _write_guard($scope0_reason, 3));
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 };
 var tree_default = _template("b", $content);

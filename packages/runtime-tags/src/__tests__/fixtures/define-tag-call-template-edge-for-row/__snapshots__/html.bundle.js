@@ -4,8 +4,8 @@ var row_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const Item = { content: _content("b0", ({ label }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__label = _write_guard($scope1_reason, 0);
-		_html(`<li>${_text_mark($scope1_id, "a", label, $wg__label)}</li>`);
+		const $scope1_reason = _scope_reason();
+		_html(`<li>${_text_mark($scope1_id, "a", label, _write_guard($scope1_reason, 0))}</li>`);
 		_write_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) };
 	_set_scope_reason(_write_guard($scope0_reason, 0) << 1);

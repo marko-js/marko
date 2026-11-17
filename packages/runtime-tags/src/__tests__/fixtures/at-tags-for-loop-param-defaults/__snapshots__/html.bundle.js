@@ -20,9 +20,9 @@ var template_default = _template("a", (input) => {
 	_set_scope_reason(2);
 	let $item;
 	forOf(items, ({ a: aa = "default" }, index) => $item = attrTags($item, { content: _content("a0", () => {
-		const $scope1_reason = _scope_reason(), $wg__aa = _write_guard($scope1_reason, 0), $wg__index = _write_guard($scope1_reason, 1);
+		const $scope1_reason = _scope_reason(), $wg__aa = _write_guard($scope1_reason, 0);
 		const $scope1_id = _scope_id();
-		_html(`<p>${_text_mark($scope1_id, "a", index, $wg__index)}:${_text_mark($scope1_id, "b", aa, $wg__aa * 2)}</p>`);
+		_html(`<p>${_text_mark($scope1_id, "a", index, _write_guard($scope1_reason, 1))}:${_text_mark($scope1_id, "b", aa, $wg__aa * 2)}</p>`);
 		_if(() => {
 			{
 				const $scope2_id = _scope_id();
@@ -37,9 +37,9 @@ var template_default = _template("a", (input) => {
 	list_default({ item: $item });
 	let $item2;
 	forOf([["a"], ["b", "c"]], ([x, y = "dy"]) => $item2 = attrTags($item2, { content: _content("a1", () => {
-		const $scope3_reason = _scope_reason(), $wg__x = _write_guard($scope3_reason, 1), $wg__y = _write_guard($scope3_reason, 2);
+		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
-		_html(`<i>${_text_mark($scope3_id, "a", x, $wg__x)}${_text_mark($scope3_id, "b", y, $wg__y * 2)}</i>`);
+		_html(`<i>${_text_mark($scope3_id, "a", x, _write_guard($scope3_reason, 1))}${_text_mark($scope3_id, "b", y, _write_guard($scope3_reason, 2) * 2)}</i>`);
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {});
 	}, $scope0_id) }));
 	list_default({ item: $item2 });

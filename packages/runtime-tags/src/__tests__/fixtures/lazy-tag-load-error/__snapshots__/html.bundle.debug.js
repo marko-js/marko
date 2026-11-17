@@ -1,8 +1,8 @@
 // child.marko
 var child_default = _template("__tests__/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span id=child>${_text_mark($scope0_id, "#text/0", input.value, $wg__input_value)}</span>`);
+	_html(`<span id=child>${_text_mark($scope0_id, "#text/0", input.value, _write_guard($scope0_reason, 0))}</span>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/child.marko", 0);
 });
 
@@ -31,9 +31,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_html("<div id=loading>loading</div>");
 	}, (err) => {
-		const $scope3_reason = _scope_reason(), $wg__err_message = _write_guard($scope3_reason, 0);
+		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
-		_html(`<div id=error>${_text_mark($scope3_id, "#text/0", err.message, $wg__err_message)}</div>`);
+		_html(`<div id=error>${_text_mark($scope3_id, "#text/0", err.message, _write_guard($scope3_reason, 0))}</div>`);
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "12:4");
 	}, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content");
 	_script($scope0_id, "__tests__/template.marko_0");

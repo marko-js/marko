@@ -47,9 +47,9 @@ var grand_child_default = _template("b", (input) => {
 			count += step;
 		}, "b1", { h: step }, $scope0_id),
 		content: _content("b4", () => {
-			const $scope2_reason = _scope_reason(), $wg__step = _write_guard($scope2_reason, 0);
+			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`add ${_text_mark($scope2_id, "a", step, $wg__step * 2)}`);
+			_html(`add ${_text_mark($scope2_id, "a", step, _write_guard($scope2_reason, 0) * 2)}`);
 			_write_if($scope2_reason, 0) && _scope($scope2_id, {});
 		}, $scope0_id)
 	}));

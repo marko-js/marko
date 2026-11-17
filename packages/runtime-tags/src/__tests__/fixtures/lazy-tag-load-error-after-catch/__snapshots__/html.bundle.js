@@ -25,9 +25,9 @@ var template_default = _template("b", (input) => {
 		_scope_id();
 		_html("loading");
 	}, (err) => {
-		const $scope3_reason = _scope_reason(), $wg__err_message = _write_guard($scope3_reason, 0);
+		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
-		_html(`caught: ${_text_mark($scope3_id, "a", err.message, $wg__err_message * 2)}`);
+		_html(`caught: ${_text_mark($scope3_id, "a", err.message, _write_guard($scope3_reason, 0) * 2)}`);
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {});
 	}, "b1", "b2");
 	_script($scope0_id, "b3");

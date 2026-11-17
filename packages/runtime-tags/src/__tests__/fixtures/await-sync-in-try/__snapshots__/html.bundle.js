@@ -18,9 +18,9 @@ var template_default = _template("a", (input) => {
 		_scope_id();
 		_html("Loading...");
 	}, (err) => {
-		const $scope2_reason = _scope_reason(), $wg__err_message = _write_guard($scope2_reason, 0);
+		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`Error: ${_text_mark($scope2_id, "a", err.message, $wg__err_message * 2)}`);
+		_html(`Error: ${_text_mark($scope2_id, "a", err.message, _write_guard($scope2_reason, 0) * 2)}`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
 	}, "a1", "a2");
 	$wi__input_value && _scope($scope0_id, { e: $input_value__closures });

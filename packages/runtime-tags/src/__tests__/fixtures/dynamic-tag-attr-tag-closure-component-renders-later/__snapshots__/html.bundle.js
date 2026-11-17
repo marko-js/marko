@@ -1,7 +1,6 @@
 // tags/card.marko
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
-	_write_guard($scope0_reason, 0);
+	_scope_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
 	_html(`<button id=toggle>toggle</button>${_el_mark($scope0_id, "a")}`);
@@ -15,7 +14,7 @@ var card_default = _template("b", (input) => {
 
 // tags/heading.marko
 var heading_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_text = _write_guard($scope0_reason, 2), $wg__input_type = _write_guard($scope0_reason, 1), $wi__input_text = _write_if($scope0_reason, 2), $wi__input_type__OR__input_text = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_text = _write_guard($scope0_reason, 2), $wi__input_text = _write_if($scope0_reason, 2), $wi__input_type__OR__input_text = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_text__closures = /* @__PURE__ */ new Set();
 	_dynamic_tag($scope0_id, "a", input.type, { item: attrTag({ content: _content_resume("c1", () => {
@@ -23,7 +22,7 @@ var heading_default = _template("c", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`text ${_text_mark($scope1_id, "a", input.text, $wg__input_text * 2)}`);
 		$wi__input_type__OR__input_text && _subscribe($wi__input_text && $input_text__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "c0", $wg__input_text);
-	}, $scope0_id, ($scope) => [{ e: input.text }]) }) }, 0, 0, $wg__input_type);
+	}, $scope0_id, ($scope) => [{ e: input.text }]) }) }, 0, 0, _write_guard($scope0_reason, 1));
 	$wi__input_type__OR__input_text && _scope($scope0_id, {
 		e: _write_if($scope0_reason, 1) && input.text,
 		f: $wi__input_text && $input_text__closures

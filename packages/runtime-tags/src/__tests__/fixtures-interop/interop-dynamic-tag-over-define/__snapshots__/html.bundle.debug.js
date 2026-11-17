@@ -1,7 +1,7 @@
 // components/tags-define.marko
 var import_html = require_html();
 var tags_define_default = _template("__tests__/components/tags-define.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_which = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const A = { content: _content_resume("__tests__/components/tags-define.marko_1*content", () => {
 		const $scope1_id = _scope_id();
@@ -13,7 +13,7 @@ var tags_define_default = _template("__tests__/components/tags-define.marko", (i
 		_scope_reason();
 		_html("<i id=b>b</i>");
 	}, $scope0_id) };
-	_dynamic_tag($scope0_id, "#text/0", input.which ? A : B, {}, 0, 0, $wg__input_which);
+	_dynamic_tag($scope0_id, "#text/0", input.which ? A : B, {}, 0, 0, _write_guard($scope0_reason, 0));
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {
 		A,
 		B

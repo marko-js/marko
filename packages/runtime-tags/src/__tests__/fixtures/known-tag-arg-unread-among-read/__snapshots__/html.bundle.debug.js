@@ -4,8 +4,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const Foo = { content: _content("__tests__/template.marko_1*content", (a, b) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__a = _write_guard($scope1_reason, 0);
-		_html(`<span>${_text_mark($scope1_id, "#text/0", a, $wg__a)}</span>`);
+		const $scope1_reason = _scope_reason();
+		_html(`<span>${_text_mark($scope1_id, "#text/0", a, _write_guard($scope1_reason, 0))}</span>`);
 		_write_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "1:2");
 	}, $scope0_id) };
 	_set_scope_reason(_write_guard($scope0_reason, 0) << 1);

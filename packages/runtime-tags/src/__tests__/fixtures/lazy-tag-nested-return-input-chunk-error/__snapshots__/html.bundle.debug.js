@@ -46,9 +46,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope3_id = _scope_id();
 				_html("loading");
 			}, (err) => {
-				const $scope4_reason = _scope_reason(), $wg__err_message = _write_guard($scope4_reason, 0);
+				const $scope4_reason = _scope_reason();
 				const $scope4_id = _scope_id();
-				_html(`<span class=err>${_text_mark($scope4_id, "#text/0", err.message, $wg__err_message)}</span>`);
+				_html(`<span class=err>${_text_mark($scope4_id, "#text/0", err.message, _write_guard($scope4_reason, 0))}</span>`);
 				_write_if($scope4_reason, 0) && _scope($scope4_id, {}, "__tests__/template.marko", "9:6");
 			}, "__tests__/template.marko_3*content", "__tests__/template.marko_4*content");
 			_scope($scope1_id, {}, "__tests__/template.marko", "5:2");

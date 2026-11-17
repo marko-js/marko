@@ -1,6 +1,6 @@
 // tags/c2.marko
 var c2_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $wi__input_content = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_content = _write_if($scope0_reason, 0), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
 	const D = { content: _content("b0", ({ depth }) => {
@@ -29,9 +29,9 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	c2_default({ content: _content("a0", (p) => {
-		const $scope1_reason = _scope_reason(), $wg__p = _write_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		_html(_text_mark($scope1_id, "a", p, $wg__p * 2));
+		_html(_text_mark($scope1_id, "a", p, _write_guard($scope1_reason, 0) * 2));
 		_write_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) });
 }, 1);

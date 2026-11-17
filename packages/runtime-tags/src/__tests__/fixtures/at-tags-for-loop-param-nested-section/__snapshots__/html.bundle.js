@@ -55,12 +55,12 @@ var template_default = _template("a", (input) => {
 	_set_scope_reason(2);
 	let $item2;
 	forOf(items, (item) => $item2 = attrTags($item2, { content: _content("a5", () => {
-		const $scope2_reason = _scope_reason(), $wg__item_text = _write_guard($scope2_reason, 0);
+		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_if(() => {
 			{
 				const $scope6_id = _scope_id();
-				_html(`<strong>${_text_mark($scope6_id, "a", item.text, $wg__item_text)}</strong>`);
+				_html(`<strong>${_text_mark($scope6_id, "a", item.text, _write_guard($scope2_reason, 0))}</strong>`);
 				_scope($scope6_id, {});
 				return 0;
 			}

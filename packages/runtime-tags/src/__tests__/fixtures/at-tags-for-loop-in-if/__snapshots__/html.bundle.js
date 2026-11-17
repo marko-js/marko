@@ -13,9 +13,9 @@ var list_default = _template("c", (input) => {
 
 // tags/labeled-list.marko
 var labeled_list_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 2), $wg__input_label_text = _write_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_mark($scope0_id, "a", input.label?.text, $wg__input_label_text)}`);
+	_html(`<div>${_text_mark($scope0_id, "a", input.label?.text, _write_guard($scope0_reason, 1))}`);
 	_for_of(input.item, (item) => {
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "a", item.content, {}, 0, 0, $wg__input_item);
@@ -34,18 +34,18 @@ var template_default = _template("a", (input) => {
 	_html(`<button id=add>add</button>${_el_mark($scope0_id, "a")}<button id=mode>mode</button>${_el_mark($scope0_id, "b")}`);
 	let $item;
 	forUntil(3, 0, 1, (i) => $item = attrTags($item, { content: _content("a0", () => {
-		const $scope1_reason = _scope_reason(), $wg__i = _write_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`static ${_text_mark($scope1_id, "a", i, $wg__i * 2)}`);
+		_html(`static ${_text_mark($scope1_id, "a", i, _write_guard($scope1_reason, 0) * 2)}`);
 		_write_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) }));
 	list_default({ item: $item });
 	_set_scope_reason(2);
 	let $item2;
 	forUntil(count, 0, 1, (i) => $item2 = attrTags($item2, { content: _content("a1", () => {
-		const $scope2_reason = _scope_reason(), $wg__i2 = _write_guard($scope2_reason, 0);
+		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`if ${_text_mark($scope2_id, "a", i, $wg__i2 * 2)}`);
+		_html(`if ${_text_mark($scope2_id, "a", i, _write_guard($scope2_reason, 0) * 2)}`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
 	}, $scope0_id) }));
 	const $childScope = _peek_scope_id();
@@ -62,9 +62,9 @@ var template_default = _template("a", (input) => {
 	let $item5;
 	forUntil(count, 0, 1, (j) => {
 		if (j % 2 === 0) $item5 = attrTags($item5, { content: _content("a4", () => {
-			const $scope5_reason = _scope_reason(), $wg__j = _write_guard($scope5_reason, 0);
+			const $scope5_reason = _scope_reason();
 			const $scope5_id = _scope_id();
-			_html(`for-if ${_text_mark($scope5_id, "a", j, $wg__j * 2)}`);
+			_html(`for-if ${_text_mark($scope5_id, "a", j, _write_guard($scope5_reason, 0) * 2)}`);
 			_write_if($scope5_reason, 0) && _scope($scope5_id, {});
 		}, $scope0_id) });
 	});

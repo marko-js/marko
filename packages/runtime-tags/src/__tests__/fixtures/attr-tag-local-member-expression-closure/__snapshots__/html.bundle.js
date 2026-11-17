@@ -14,9 +14,9 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		let $item;
 		forOf(texts, (item) => $item = attrTags($item, { content: _content("a1", () => {
-			const $scope4_reason = _scope_reason(), $wg__item_text = _write_guard($scope4_reason, 0);
+			const $scope4_reason = _scope_reason();
 			const $scope4_id = _scope_id();
-			_html(_text_mark($scope4_id, "a", item.text, $wg__item_text * 2));
+			_html(_text_mark($scope4_id, "a", item.text, _write_guard($scope4_reason, 0) * 2));
 			_write_if($scope4_reason, 0) && _scope($scope4_id, {});
 		}, $scope2_id) }));
 		Child.content({ item: $item });

@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $getLabel_getter = _hoist($scope0_id, "__tests__/template.marko_0_getLabel#2:0/hoist");
 	_if(() => {
@@ -30,6 +30,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "4:2", { count: "5:8" });
 			return 1;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_a);
+	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 1));
 	_scope($scope0_id, { input_dyn: input.dyn }, "__tests__/template.marko", 0, { input_dyn: ["input.dyn"] });
 }, 1);

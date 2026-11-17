@@ -15,11 +15,11 @@ var make_default = _template("b", (input) => {
 
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_v = _write_guard($scope0_reason, 0), $wi__input_v = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_v = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $childScope = _peek_scope_id();
 	let fn = make_default({ v: input.v });
 	$wi__input_v && _var($scope0_id, "b", $childScope, "a0");
-	_html(`<div>${_text_mark($scope0_id, "c", fn(), $wg__input_v)}</div>`);
+	_html(`<div>${_text_mark($scope0_id, "c", fn(), _write_guard($scope0_reason, 0))}</div>`);
 	$wi__input_v && _scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

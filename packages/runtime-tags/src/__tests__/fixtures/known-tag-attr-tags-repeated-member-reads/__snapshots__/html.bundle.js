@@ -1,17 +1,17 @@
 // tags/child/index.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_item_foo = _write_guard($scope0_reason, 1), $wg__input_item_n = _write_guard($scope0_reason, 2), $wg__input_item_sub_x = _write_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_mark($scope0_id, "a", input.item.foo, $wg__input_item_foo)} ${_text_mark($scope0_id, "b", input.item.n, $wg__input_item_n * 2)} ${_text_mark($scope0_id, "c", input.item.sub?.x, $wg__input_item_sub_x * 2)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "a", input.item.foo, _write_guard($scope0_reason, 1))} ${_text_mark($scope0_id, "b", input.item.n, _write_guard($scope0_reason, 2) * 2)} ${_text_mark($scope0_id, "c", input.item.sub?.x, _write_guard($scope0_reason, 3) * 2)}</span>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/child-rest/index.marko
 var child_rest_default = _template("d", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_item_foo = _write_guard($scope0_reason, 1), $wg__rest = _write_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const { item: { foo, ...rest } } = input;
-	_html(`<span>${_text_mark($scope0_id, "a", foo, $wg__input_item_foo)} ${_text_mark($scope0_id, "b", JSON.stringify(rest), $wg__rest * 2)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "a", foo, _write_guard($scope0_reason, 1))} ${_text_mark($scope0_id, "b", JSON.stringify(rest), _write_guard($scope0_reason, 2) * 2)}</span>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 

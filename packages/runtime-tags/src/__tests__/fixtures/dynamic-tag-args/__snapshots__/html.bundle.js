@@ -1,8 +1,8 @@
 // tags/custom-tag.marko
 var custom_tag_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_mark($scope0_id, "a", JSON.stringify(input), $wg__input)}</div>`);
+	_html(`<div>${_text_mark($scope0_id, "a", JSON.stringify(input), _write_guard($scope0_reason, 0))}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 

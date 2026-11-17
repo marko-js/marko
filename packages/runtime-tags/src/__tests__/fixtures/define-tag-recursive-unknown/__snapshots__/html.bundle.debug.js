@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const Foo = { content: _content_resume("__tests__/template.marko_1*content", (input) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__input_bar = _write_guard($scope1_reason, 1), $wg__input_message = _write_guard($scope1_reason, 2), $wi__input_bar = _write_if($scope1_reason, 1);
+		const $scope1_reason = _scope_reason(), $wg__input_bar = _write_guard($scope1_reason, 1), $wi__input_bar = _write_if($scope1_reason, 1);
 		_if(() => {
 			if (input.bar) {
 				const $scope2_id = _scope_id();
@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			} else {
 				const $scope3_id = _scope_id();
-				_html(_text_mark($scope3_id, "#text/0", JSON.stringify(input.message), $wg__input_message * 2));
+				_html(_text_mark($scope3_id, "#text/0", JSON.stringify(input.message), _write_guard($scope1_reason, 2) * 2));
 				_write_if($scope1_reason, 0) && _scope($scope3_id, { _: _write_if($scope1_reason, 2) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:3");
 				return 1;
 			}

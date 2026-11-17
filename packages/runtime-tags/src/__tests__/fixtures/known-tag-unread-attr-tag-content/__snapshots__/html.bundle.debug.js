@@ -1,9 +1,9 @@
 // tags/child.marko
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $wg__input_item_content = _write_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_mark($scope0_id, "#text/0", input.a, $wg__input_a)}</span>`);
-	_dynamic_tag($scope0_id, "#text/1", input.item?.content, {}, 0, 0, $wg__input_item_content);
+	_html(`<span>${_text_mark($scope0_id, "#text/0", input.a, _write_guard($scope0_reason, 1))}</span>`);
+	_dynamic_tag($scope0_id, "#text/1", input.item?.content, {}, 0, 0, _write_guard($scope0_reason, 2));
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 

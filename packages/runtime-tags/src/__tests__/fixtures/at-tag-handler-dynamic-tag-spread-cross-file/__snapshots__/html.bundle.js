@@ -1,8 +1,8 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_tag__OR__input_button = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "a", input.tag, input.button, 0, 0, $wg__input_tag__OR__input_button);
+	_dynamic_tag($scope0_id, "a", input.tag, input.button, 0, 0, _write_guard($scope0_reason, 0));
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {
 		d: _write_if($scope0_reason, 2) && input.tag,
 		e: _write_if($scope0_reason, 1) && input.button

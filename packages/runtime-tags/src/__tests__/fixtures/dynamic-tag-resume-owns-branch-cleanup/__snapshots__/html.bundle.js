@@ -1,13 +1,13 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "a", input.show ? "div" : null, {}, _content("b0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_script($scope1_id, "b1", 0);
 		_resume_branch($scope1_id);
-	}, $scope0_id), 0, $wg__input_show);
+	}, $scope0_id), 0, _write_guard($scope0_reason, 0));
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 

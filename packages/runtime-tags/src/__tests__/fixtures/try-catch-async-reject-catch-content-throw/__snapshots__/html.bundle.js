@@ -36,9 +36,9 @@ var template_default = _template("a", (input) => {
 		}, 0, "a2");
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, void 0, (outer) => {
-		const $scope3_reason = _scope_reason(), $wg__outer_message = _write_guard($scope3_reason, 0);
+		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
-		_html(`<p>outer caught ${_text_mark($scope3_id, "a", outer.message, $wg__outer_message * 2)}</p>`);
+		_html(`<p>outer caught ${_text_mark($scope3_id, "a", outer.message, _write_guard($scope3_reason, 0) * 2)}</p>`);
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {});
 	}, 0, "a3");
 	_html(`<button class=toggle>${_text_mark($scope0_id, "c", show)}</button>${_el_mark($scope0_id, "b")}`);

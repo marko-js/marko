@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $input_b__closures = new Set();
 	const Box = { content: _content("__tests__/template.marko_2*content", ({ open, content }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__open = _write_guard($scope2_reason, 1);
+		const $scope2_reason = _scope_reason();
 		_if(() => {
 			if (open) {
 				const $scope3_id = _scope_id();
@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_write_if($scope2_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "2:4");
 				return 0;
 			}
-		}, $scope2_id, "#text/0", _write_guard($scope2_reason, 0), $wg__open);
+		}, $scope2_id, "#text/0", _write_guard($scope2_reason, 0), _write_guard($scope2_reason, 1));
 		_write_if($scope2_reason, 1) && _scope($scope2_id, { content }, "__tests__/template.marko", "1:2", { content: "1:21" });
 	}, $scope0_id) };
 	_set_scope_reason($wg__input_open << 1 | $wg__input_open << 3);

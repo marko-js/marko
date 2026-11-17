@@ -12,16 +12,16 @@ var v_template_marko_3_default = "\n    .content { color: var(--M_packages-1brun
 
 // tags/reveal.marko
 var reveal_default = _template("__tests__/tags/reveal.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_dynamic_tag($scope1_id, "#text/0", input.content, {}, 0, 0, $wg__input_content);
+			_dynamic_tag($scope1_id, "#text/0", input.content, {}, 0, 0, _write_guard($scope0_reason, 2));
 			_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/tags/reveal.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), $wg__input_show);
+	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), _write_guard($scope0_reason, 1));
 	_write_if($scope0_reason, 1) && _scope($scope0_id, { input_content: input.content }, "__tests__/tags/reveal.marko", 0, { input_content: ["input.content"] });
 });
 
@@ -42,28 +42,28 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_color = _write_guard($scope0_reason, 6), $wg__input_selected = _write_guard($scope0_reason, 8), $wi__input_color = _write_if($scope0_reason, 6), $wi__input_color__OR__input_show = _write_if($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 9), $wg__input_rows = _write_guard($scope0_reason, 5), $wg__input_items = _write_guard($scope0_reason, 7);
+	const $scope0_reason = _scope_reason(), $wg__input_color = _write_guard($scope0_reason, 6), $wi__input_color = _write_if($scope0_reason, 6), $wi__input_color__OR__input_show = _write_if($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 9);
 	const $scope0_id = _scope_id();
 	const $input_color__closures = new Set();
 	const Box = { content: _content("__tests__/template.marko_5*content", ({ color }) => {
 		const $scope5_id = _scope_id();
-		const $scope5_reason = _scope_reason(), $wg__color = _write_guard($scope5_reason, 0);
-		_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19closures-1btemplate-1amarko_0:${_escape_style_value(color)};`)}${_el_mark($scope5_id, "#style/0", $wg__color)}<div class=box></div>`);
+		const $scope5_reason = _scope_reason();
+		_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19closures-1btemplate-1amarko_0:${_escape_style_value(color)};`)}${_el_mark($scope5_id, "#style/0", _write_guard($scope5_reason, 0))}<div class=box></div>`);
 		_write_if($scope5_reason, 0) && _scope($scope5_id, {}, "__tests__/template.marko", "1:2");
 	}, $scope0_id) };
 	_for_of(input.rows, () => {
 		const $scope1_id = _scope_id();
 		_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19closures-1btemplate-1amarko_1:${_escape_style_value(input.color)};`)}${_el_mark($scope1_id, "#style/0", $wg__input_color)}<div class=row></div>`);
 		_write_if($scope0_reason, 0) && _scope($scope1_id, { _: $wi__input_color && _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:2");
-	}, 0, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), $wg__input_rows);
+	}, 0, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), _write_guard($scope0_reason, 5));
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
-		_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19closures-1btemplate-1amarko_2:${_escape_style_value(input.selected === item.id ? "red" : "blue")};`)}${_el_mark($scope2_id, "#style/0", $wg__input_selected)}<div class=selected></div>`);
+		_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19closures-1btemplate-1amarko_2:${_escape_style_value(input.selected === item.id ? "red" : "blue")};`)}${_el_mark($scope2_id, "#style/0", _write_guard($scope0_reason, 8))}<div class=selected></div>`);
 		_write_if($scope0_reason, 3) && _scope($scope2_id, {
 			"#LoopKey": _write_if($scope0_reason, 8) && item?.id,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "15:2", { "#LoopKey": ["item.id", "15:6"] });
-	}, "id", $scope0_id, "#text/1", _write_guard($scope0_reason, 3), $wg__input_items);
+	}, "id", $scope0_id, "#text/1", _write_guard($scope0_reason, 3), _write_guard($scope0_reason, 7));
 	_if(() => {
 		if (input.show) {
 			const $scope3_id = _scope_id();
@@ -91,9 +91,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_scope_reason(_write_guard($scope0_reason, 10) << 1);
 	let $item;
 	forOf(input.colors, (color) => $item = attrTags($item, { content: _content("__tests__/template.marko_6*content", () => {
-		const $scope6_reason = _scope_reason(), $wg__color2 = _write_guard($scope6_reason, 0);
+		const $scope6_reason = _scope_reason();
 		const $scope6_id = _scope_id();
-		_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19closures-1btemplate-1amarko_4:${_escape_style_value(color)};`)}${_el_mark($scope6_id, "#style/0", $wg__color2)}<div class=item></div>`);
+		_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19closures-1btemplate-1amarko_4:${_escape_style_value(color)};`)}${_el_mark($scope6_id, "#style/0", _write_guard($scope6_reason, 0))}<div class=item></div>`);
 		_write_if($scope6_reason, 0) && _scope($scope6_id, {}, "__tests__/template.marko", "35:6");
 	}, $scope0_id) }));
 	const $childScope3 = _peek_scope_id();
