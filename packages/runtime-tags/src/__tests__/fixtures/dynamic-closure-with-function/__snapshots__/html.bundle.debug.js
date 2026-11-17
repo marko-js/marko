@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_c = _write_guard($scope0_reason, 3), $wg__input_b = _write_guard($scope0_reason, 5), $wi__input_c__OR__input_a__OR__input_b = _write_if($scope0_reason, 2), $wg__input_a = _write_guard($scope0_reason, 4), $wi__input_a__OR__input_b = _write_if($scope0_reason, 1), $wi__input_c = _write_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_c = _write_guard($scope0_reason, 3), $wg__input_b = _write_guard($scope0_reason, 5), $wi__input_c__OR__input_a__OR__input_b = _write_if($scope0_reason, 2), $wi__input_a__OR__input_b = _write_if($scope0_reason, 1), $wi__input_c = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $bar2__closures = new Set();
 	const bar = _resume(function(test) {
@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "3:1", { foo: "4:9" });
 			return 0;
 		}
-	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 1), $wg__input_a);
+	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 1), _write_guard($scope0_reason, 4));
 	$wi__input_c__OR__input_a__OR__input_b && _scope($scope0_id, {
 		input_c: $wi__input_a__OR__input_b && input.c,
 		input_b: _write_if($scope0_reason, 4) && input.b,

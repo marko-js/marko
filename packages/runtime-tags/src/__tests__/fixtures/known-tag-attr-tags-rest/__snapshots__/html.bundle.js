@@ -1,22 +1,22 @@
 // tags/inner/index.marko
 var inner_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_stuff_row = _write_guard($scope0_reason, 1), $wg__input_stuff_other_y = _write_guard($scope0_reason, 2), $wg__input_stuff_cond_a = _write_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_stuff_row = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_for_of(input.stuff.row, (row) => {
 		const $scope1_id = _scope_id();
 		_html(`<div>row ${_text_mark($scope1_id, "a", row.x, $wg__input_stuff_row * 2)}</div>`);
 		_write_if($scope0_reason, 1) && _scope($scope1_id, {});
 	}, 0, $scope0_id, "a", $wg__input_stuff_row, $wg__input_stuff_row, 0, 0, 1);
-	_html(`<div>other ${_text_mark($scope0_id, "b", input.stuff.other.y, $wg__input_stuff_other_y * 2)}</div><div>cond ${_text_mark($scope0_id, "c", input.stuff.cond.a, $wg__input_stuff_cond_a * 2)}</div>`);
+	_html(`<div>other ${_text_mark($scope0_id, "b", input.stuff.other.y, _write_guard($scope0_reason, 2) * 2)}</div><div>cond ${_text_mark($scope0_id, "c", input.stuff.cond.a, _write_guard($scope0_reason, 3) * 2)}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/child/index.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__rest = _write_guard($scope0_reason, 2), $wg__input_title = _write_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__rest = _write_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const { title, ...rest } = input;
-	_html(`<h1>${_text_mark($scope0_id, "a", title, $wg__input_title)}</h1>`);
+	_html(`<h1>${_text_mark($scope0_id, "a", title, _write_guard($scope0_reason, 1))}</h1>`);
 	_set_scope_reason($wg__rest << 1 | $wg__rest << 3 | $wg__rest << 5 | $wg__rest << 7);
 	const $childScope = _peek_scope_id();
 	inner_default({ stuff: rest });

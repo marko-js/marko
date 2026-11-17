@@ -7,9 +7,9 @@ const tone = { warn: "warn" };
 // tags/input-toggle.marko
 const $class$1 = [_attr_class(item), _attr_class(`${item} ${"on"}`)];
 var input_toggle_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_on = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div${$class$1[input.on ? 1 : 0]}></div>${_el_mark($scope0_id, "a", $wg__input_on)}`);
+	_html(`<div${$class$1[input.on ? 1 : 0]}></div>${_el_mark($scope0_id, "a", _write_guard($scope0_reason, 0))}`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 

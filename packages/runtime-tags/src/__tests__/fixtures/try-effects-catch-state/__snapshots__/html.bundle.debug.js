@@ -15,9 +15,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_script($scope1_id, "__tests__/template.marko_1");
 		_subscribe($clickCount__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"), "__tests__/template.marko_1_clickCount#0:2/subscribe");
 	}, void 0, (err) => {
-		const $scope2_reason = _scope_reason(), $wg__err = _write_guard($scope2_reason, 0);
+		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
-		_html(_text_mark($scope2_id, "#text/0", err, $wg__err * 2));
+		_html(_text_mark($scope2_id, "#text/0", err, _write_guard($scope2_reason, 0) * 2));
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/template.marko", "12:4");
 	}, 0, "__tests__/template.marko_2*content");
 	_scope($scope0_id, {

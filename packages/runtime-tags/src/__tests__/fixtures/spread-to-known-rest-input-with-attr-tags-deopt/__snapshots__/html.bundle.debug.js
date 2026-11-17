@@ -15,7 +15,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 
 // tags/wrap.marko
 var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_foo = _write_if($scope0_reason, 2), $wg__input_foo = _write_guard($scope0_reason, 2), $wi__input_foo__OR__input_class__OR__rest = _write_if($scope0_reason, 1), $wg__input_class__OR__rest = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_foo = _write_if($scope0_reason, 2), $wg__input_foo = _write_guard($scope0_reason, 2), $wi__input_foo__OR__input_class__OR__rest = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_foo__closures = new Set();
 	const { class: _class, foo, ...rest } = input;
@@ -34,7 +34,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 			"#childScope/0": $wi__input_foo && _existing_scope($childScope)
 		}, "__tests__/tags/wrap.marko", "2:4"), "__tests__/tags/wrap.marko_1_input_foo#0:3/subscribe", 0);
 		$wi__input_foo__OR__input_class__OR__rest && $wg__input_foo && _resume_branch($scope1_id);
-	}, $scope0_id), 0, $wg__input_class__OR__rest);
+	}, $scope0_id), 0, _write_guard($scope0_reason, 0));
 	$wi__input_foo__OR__input_class__OR__rest && _scope($scope0_id, {
 		input_foo: _write_if($scope0_reason, 0) && input.foo,
 		_class: _write_if($scope0_reason, 4) && _class,

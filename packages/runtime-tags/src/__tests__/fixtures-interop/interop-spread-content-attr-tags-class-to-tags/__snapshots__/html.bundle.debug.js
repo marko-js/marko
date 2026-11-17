@@ -3,7 +3,7 @@ var import_escape_xml = require_escape_xml();
 var import_html = require_html();
 var import_attr_tag = require_attr_tag();
 var tags_list_default = _template("__tests__/components/tags-list.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 1), $wg__input_id__OR__input_item = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html(`<section${_attr("id", input.id)}>`);
 	_for_of(input.item, (item) => {
@@ -13,7 +13,7 @@ var tags_list_default = _template("__tests__/components/tags-list.marko", (input
 		_html(`</div>${_el_mark($scope1_id, "#div/0")}`);
 		_script($scope1_id, "__tests__/components/tags-list.marko_1_item#2");
 		_scope($scope1_id, {}, "__tests__/components/tags-list.marko", "3:4", { "EventAttributes:#div/0": ["...item", "3:36"] });
-	}, 0, $scope0_id, "#section/0", $wg__input_item, $wg__input_id__OR__input_item, $wg__input_item, "</section>", 1);
+	}, 0, $scope0_id, "#section/0", $wg__input_item, _write_guard($scope0_reason, 0), $wg__input_item, "</section>", 1);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/components/tags-list.marko", 0);
 });
 

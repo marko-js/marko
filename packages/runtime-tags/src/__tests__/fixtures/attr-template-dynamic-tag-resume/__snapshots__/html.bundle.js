@@ -1,16 +1,16 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_mark($scope0_id, "a", input.value, $wg__input_value)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "a", input.value, _write_guard($scope0_reason, 0))}</span>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/wrapper.marko
 var wrapper_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_type__OR__input_value = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "a", input.type, { value: input.value }, 0, 0, $wg__input_type__OR__input_value);
+	_dynamic_tag($scope0_id, "a", input.type, { value: input.value }, 0, 0, _write_guard($scope0_reason, 0));
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {
 		d: _write_if($scope0_reason, 2) && input.type,
 		e: _write_if($scope0_reason, 1) && input.value

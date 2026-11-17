@@ -1,9 +1,9 @@
 // tags/cyc-b/index.marko
 var cyc_b_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_depth = _write_guard($scope0_reason, 1), $wg__input_content = _write_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_depth = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html(`<span>b ${_text_mark($scope0_id, "a", input.depth, $wg__input_depth * 2)}</span>`);
-	_dynamic_tag($scope0_id, "b", input.content, {}, 0, 0, $wg__input_content);
+	_dynamic_tag($scope0_id, "b", input.content, {}, 0, 0, _write_guard($scope0_reason, 2));
 	_dynamic_tag($scope0_id, "c", cyc_a_default, { depth: input.depth + 1 }, 0, 0, $wg__input_depth);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });

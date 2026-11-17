@@ -1,6 +1,6 @@
 // tags/child.marko
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_obj_list = _write_guard($scope0_reason, 2), $wg__input_obj_show = _write_guard($scope0_reason, 3), $wg__input_obj_list__OR__input_obj_show = _write_guard($scope0_reason, 0), $wi__input_obj = _write_if($scope0_reason, 1), $wi__input_count = _write_if($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $wg__input_obj_list = _write_guard($scope0_reason, 2), $wg__input_obj_list__OR__input_obj_show = _write_guard($scope0_reason, 0), $wi__input_obj = _write_if($scope0_reason, 1), $wi__input_count = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_obj__closures = new Set();
 	const $input_count__closures = new Set();
@@ -15,7 +15,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 				$wg__input_obj_list || (_write_guard($scope0_reason, 1) || _write_guard($scope0_reason, 4)) && _resume_branch($scope2_id);
 				return 0;
 			}
-		}, $scope1_id, "#text/0", $wg__input_obj_list__OR__input_obj_show, $wg__input_obj_show, 0, 0, 1);
+		}, $scope1_id, "#text/0", $wg__input_obj_list__OR__input_obj_show, _write_guard($scope0_reason, 3), 0, 0, 1);
 		_scope($scope1_id, {
 			item,
 			_: _scope_with_id($scope0_id)

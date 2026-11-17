@@ -1,16 +1,16 @@
 // tags/child1.marko
 var child1_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div>Child 1 has ${_text_mark($scope0_id, "a", input.value, $wg__input_value * 2)}</div>`);
+	_html(`<div>Child 1 has ${_text_mark($scope0_id, "a", input.value, _write_guard($scope0_reason, 0) * 2)}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/child2.marko
 var child2_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div>Child 2 has ${_text_mark($scope0_id, "a", input.value, $wg__input_value * 2)}</div>`);
+	_html(`<div>Child 2 has ${_text_mark($scope0_id, "a", input.value, _write_guard($scope0_reason, 0) * 2)}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 

@@ -17,9 +17,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		})()));
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2");
 	}, void 0, (err) => {
-		const $scope3_reason = _scope_reason(), $wg__err_message = _write_guard($scope3_reason, 0);
+		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
-		_html(`<p>${_text_mark($scope3_id, "#text/0", err.message, $wg__err_message)}</p>`);
+		_html(`<p>${_text_mark($scope3_id, "#text/0", err.message, _write_guard($scope3_reason, 0))}</p>`);
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "7:4");
 	}, 0, "__tests__/template.marko_3*content");
 	_html(`<button class=toggle>${_text_mark($scope0_id, "#text/2", show)}</button>${_el_mark($scope0_id, "#button/1")}`);

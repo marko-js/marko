@@ -1,10 +1,10 @@
 // tags/tree/index.marko
 const $content = (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_depth = _write_guard($scope0_reason, 1), $wi__input_depth = _write_if($scope0_reason, 1), $wg__input_content = _write_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_depth = _write_guard($scope0_reason, 1), $wi__input_depth = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_depth__closures = /* @__PURE__ */ new Set();
 	_html(`<div>d${_text_mark($scope0_id, "a", input.depth, $wg__input_depth * 2)}`);
-	_dynamic_tag($scope0_id, "b", input.content, {}, 0, 0, $wg__input_content);
+	_dynamic_tag($scope0_id, "b", input.content, {}, 0, 0, _write_guard($scope0_reason, 2));
 	_if(() => {
 		if (input.depth) {
 			const $scope1_id = _scope_id();

@@ -7,9 +7,9 @@ var static_child_default = _template("c", (input) => {
 
 // tags/label-child.marko
 var label_child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_item_label = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_mark($scope0_id, "a", input.item.label, $wg__input_item_label)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "a", input.item.label, _write_guard($scope0_reason, 0))}</span>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 

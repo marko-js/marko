@@ -1,14 +1,14 @@
 // tags/hello/index.marko
 var hello_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_header_class = _write_guard($scope0_reason, 1), $wg__input_header_content = _write_guard($scope0_reason, 2), $wg__input_content = _write_guard($scope0_reason, 3), $wg__input_footer_class = _write_guard($scope0_reason, 4), $wg__input_footer_content = _write_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<header${_attr_class(input.header.class)}>`);
-	_dynamic_tag($scope0_id, "b", input.header.content, {}, 0, 0, $wg__input_header_content);
-	_html(`</header>${_el_mark($scope0_id, "a", $wg__input_header_class)}<main>`);
-	_dynamic_tag($scope0_id, "c", input.content, {}, 0, 0, $wg__input_content);
+	_dynamic_tag($scope0_id, "b", input.header.content, {}, 0, 0, _write_guard($scope0_reason, 2));
+	_html(`</header>${_el_mark($scope0_id, "a", _write_guard($scope0_reason, 1))}<main>`);
+	_dynamic_tag($scope0_id, "c", input.content, {}, 0, 0, _write_guard($scope0_reason, 3));
 	_html(`</main><footer${_attr_class(input.footer.class)}>`);
-	_dynamic_tag($scope0_id, "e", input.footer.content, {}, 0, 0, $wg__input_footer_content);
-	_html(`</footer>${_el_mark($scope0_id, "d", $wg__input_footer_class)}`);
+	_dynamic_tag($scope0_id, "e", input.footer.content, {}, 0, 0, _write_guard($scope0_reason, 5));
+	_html(`</footer>${_el_mark($scope0_id, "d", _write_guard($scope0_reason, 4))}`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 

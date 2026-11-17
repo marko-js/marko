@@ -1,10 +1,10 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_n = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const doubled = input.n * 2;
 	const tripled = input.n * 3;
-	_html(`<div>${_text_mark($scope0_id, "a", doubled + tripled, $wg__input_n)}</div>`);
+	_html(`<div>${_text_mark($scope0_id, "a", doubled + tripled, _write_guard($scope0_reason, 0))}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 

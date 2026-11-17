@@ -6,8 +6,8 @@ const $content = (input) => {
 	_html(`<button>${_text_mark($scope0_id, "#text/1", input.depth, $wg__input_depth)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	const Label = { content: _content("__tests__/tags/tree.marko_2*content", ({ depth }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__depth = _write_guard($scope2_reason, 0);
-		_html(`<b>${_text_mark($scope2_id, "#text/0", depth, $wg__depth)}</b>`);
+		const $scope2_reason = _scope_reason();
+		_html(`<b>${_text_mark($scope2_id, "#text/0", depth, _write_guard($scope2_reason, 0))}</b>`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/tags/tree.marko", "3:2");
 	}, $scope0_id) };
 	const Child = { content: _content("__tests__/tags/tree.marko_3*content", ({ depth }) => {

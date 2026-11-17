@@ -1,13 +1,13 @@
 // tags/hello/index.marko
 var hello_default = _template("__tests__/tags/hello/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 1), $wg__input_other = _write_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_for_of(input.item, (item) => {
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "#text/0", item.content, {}, 0, 0, $wg__input_item);
 		_write_if($scope0_reason, 1) && _scope($scope1_id, {}, "__tests__/tags/hello/index.marko", "1:1");
 	}, 0, $scope0_id, "#text/0", $wg__input_item, $wg__input_item);
-	_dynamic_tag($scope0_id, "#text/1", input.other, {}, 0, 0, $wg__input_other);
+	_dynamic_tag($scope0_id, "#text/1", input.other, {}, 0, 0, _write_guard($scope0_reason, 2));
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/hello/index.marko", 0);
 });
 
@@ -20,9 +20,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		a: 1,
 		b: 2
 	}, (a, v) => $item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
-		const $scope1_reason = _scope_reason(), $wg__a = _write_guard($scope1_reason, 1), $wg__v = _write_guard($scope1_reason, 2);
+		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`${_text_mark($scope1_id, "#text/0", a, $wg__a * 2)}:${_text_mark($scope1_id, "#text/1", v, $wg__v * 2)}`);
+		_html(`${_text_mark($scope1_id, "#text/0", a, _write_guard($scope1_reason, 1) * 2)}:${_text_mark($scope1_id, "#text/1", v, _write_guard($scope1_reason, 2) * 2)}`);
 		_write_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "3:8");
 	}, $scope0_id) }));
 	hello_default({

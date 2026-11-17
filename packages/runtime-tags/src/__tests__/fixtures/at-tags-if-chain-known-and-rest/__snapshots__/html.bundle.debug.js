@@ -1,6 +1,6 @@
 // tags/child.marko
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 1), $wg__rest = _write_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const { item, ...rest } = input;
 	_for_of(item, (it) => {
@@ -8,7 +8,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", it.content, {}, 0, 0, $wg__input_item);
 		_write_if($scope0_reason, 1) && _scope($scope1_id, {}, "__tests__/tags/child.marko", "2:2");
 	}, 0, $scope0_id, "#text/0", $wg__input_item, $wg__input_item);
-	_html(`<p>${_text_mark($scope0_id, "#text/1", Object.keys(rest).join(), $wg__rest)}</p>`);
+	_html(`<p>${_text_mark($scope0_id, "#text/1", Object.keys(rest).join(), _write_guard($scope0_reason, 2))}</p>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 

@@ -1,14 +1,14 @@
 // tags/custom-tag.marko
 var custom_tag_default = _template("__tests__/tags/custom-tag.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_test_style = _write_guard($scope0_reason, 4), $wg__input_test_content = _write_guard($scope0_reason, 5), $wg__input_test = _write_guard($scope0_reason, 3), $wg__input_style = _write_guard($scope0_reason, 2), $wi__input_test = _write_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_test = _write_guard($scope0_reason, 3), $wi__input_test = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
-	_html(`<div${_attr_style(input.style)}></div>${_el_mark($scope0_id, "#div/0", $wg__input_style)}`);
+	_html(`<div${_attr_style(input.style)}></div>${_el_mark($scope0_id, "#div/0", _write_guard($scope0_reason, 2))}`);
 	_if(() => {
 		if (input.test) {
 			const $scope1_id = _scope_id();
 			_html(`<div${_attr_style(input.test.style)} id=test>`);
-			_dynamic_tag($scope1_id, "#text/1", input.test.content, {}, 0, 0, $wg__input_test_content);
-			_html(`</div>${_el_mark($scope1_id, "#div/0", $wg__input_test_style)}`);
+			_dynamic_tag($scope1_id, "#text/1", input.test.content, {}, 0, 0, _write_guard($scope0_reason, 5));
+			_html(`</div>${_el_mark($scope1_id, "#div/0", _write_guard($scope0_reason, 4))}`);
 			$wi__input_test && _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/custom-tag.marko", "3:2");
 			return 0;
 		}

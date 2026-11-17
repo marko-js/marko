@@ -7,20 +7,20 @@ var child_default = _template("b", (input) => {
 
 // tags/row.marko
 var row_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_x = _write_guard($scope0_reason, 0), $wi__input_x = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_x = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $childScope = _peek_scope_id();
 	let v = child_default({ x: input.x });
 	$wi__input_x && _var($scope0_id, "b", $childScope, "c0");
-	_html(`<p class=row>${_text_mark($scope0_id, "c", v, $wg__input_x)}</p>`);
+	_html(`<p class=row>${_text_mark($scope0_id, "c", v, _write_guard($scope0_reason, 0))}</p>`);
 	$wi__input_x && _scope($scope0_id, { a: _existing_scope($childScope) });
 });
 
 // tags/wrap.marko
 var wrap_default = _template("d", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "a", input.content, { value: "w" }, 0, 0, $wg__input_content);
+	_dynamic_tag($scope0_id, "a", input.content, { value: "w" }, 0, 0, _write_guard($scope0_reason, 0));
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
@@ -57,12 +57,12 @@ var template_default = _template("a", (input) => {
 	const $childScope4 = _peek_scope_id();
 	Count.content({ x: list.length });
 	wrap_default({ content: _content("a4", ({ value }) => {
-		const $scope3_reason = _scope_reason(), $wg__value = _write_guard($scope3_reason, 0), $wi__value = _write_if($scope3_reason, 0);
+		const $scope3_reason = _scope_reason(), $wi__value = _write_if($scope3_reason, 0);
 		const $scope3_id = _scope_id();
 		const $childScope5 = _peek_scope_id();
 		let v = child_default({ x: value });
 		$wi__value && _var($scope3_id, "b", $childScope5, "a3");
-		_html(`<p class=wrap>${_text_mark($scope3_id, "c", v, $wg__value)}</p>`);
+		_html(`<p class=wrap>${_text_mark($scope3_id, "c", v, _write_guard($scope3_reason, 0))}</p>`);
 		$wi__value && _scope($scope3_id, { a: _existing_scope($childScope5) });
 	}, $scope0_id) });
 	_await($scope0_id, "e", resolveAfter("a", 1), (value) => {
@@ -78,12 +78,12 @@ var template_default = _template("a", (input) => {
 			_html(_escape(value));
 		}, 0);
 	}, void 0, (err) => {
-		const $scope6_reason = _scope_reason(), $wg__err_message = _write_guard($scope6_reason, 0), $wi__err_message = _write_if($scope6_reason, 0);
+		const $scope6_reason = _scope_reason(), $wi__err_message = _write_if($scope6_reason, 0);
 		const $scope6_id = _scope_id();
 		const $childScope6 = _peek_scope_id();
 		let v = child_default({ x: err.message });
 		$wi__err_message && _var($scope6_id, "b", $childScope6, "a5");
-		_html(`<p class=catch>${_text_mark($scope6_id, "c", v, $wg__err_message)}</p>`);
+		_html(`<p class=catch>${_text_mark($scope6_id, "c", v, _write_guard($scope6_reason, 0))}</p>`);
 		$wi__err_message && _scope($scope6_id, { a: _existing_scope($childScope6) });
 	}, 0, "a6");
 	_script($scope0_id, "a7");

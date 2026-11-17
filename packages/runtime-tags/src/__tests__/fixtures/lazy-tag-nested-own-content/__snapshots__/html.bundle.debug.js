@@ -47,9 +47,9 @@ var grand_child_default = _template("__tests__/grand-child.marko", (input) => {
 			count += step;
 		}, "__tests__/grand-child.marko_0/onPress2", { "step/7": step }, $scope0_id),
 		content: _content("__tests__/grand-child.marko_2*content", () => {
-			const $scope2_reason = _scope_reason(), $wg__step = _write_guard($scope2_reason, 0);
+			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`add ${_text_mark($scope2_id, "#text/0", step, $wg__step * 2)}`);
+			_html(`add ${_text_mark($scope2_id, "#text/0", step, _write_guard($scope2_reason, 0) * 2)}`);
 			_write_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/grand-child.marko", "5:6");
 		}, $scope0_id)
 	}));

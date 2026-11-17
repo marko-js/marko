@@ -1,13 +1,13 @@
 // components/tags-inner.marko
 var import_html = require_html();
 var tags_inner_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "a", input.item, {}, _content_resume("b0", () => {
 		_scope_id();
 		_scope_reason();
 		_html("<i>body</i>");
-	}, $scope0_id), 0, $wg__input_item);
+	}, $scope0_id), 0, _write_guard($scope0_reason, 0));
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 

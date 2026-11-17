@@ -1,6 +1,6 @@
 // tags/child.marko
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -11,7 +11,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			$wg__input_item || _resume_branch($scope1_id);
 			return 0;
 		}
-	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), $wg__input_show, 0, 0, 1);
+	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), _write_guard($scope0_reason, 1), 0, 0, 1);
 	_scope($scope0_id, {
 		input,
 		input_item: _write_if($scope0_reason, 1) && input.item

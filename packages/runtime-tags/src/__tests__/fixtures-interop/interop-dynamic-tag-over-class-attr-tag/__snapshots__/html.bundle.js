@@ -3,10 +3,10 @@ var import_escape_xml = require_escape_xml();
 var import_html = require_html();
 var import_attr_tag = require_attr_tag();
 var tags_child_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_foo = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<div>");
-	_dynamic_tag($scope0_id, "a", input.foo, {}, 0, 0, $wg__input_foo);
+	_dynamic_tag($scope0_id, "a", input.foo, {}, 0, 0, _write_guard($scope0_reason, 0));
 	_html("</div>");
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });

@@ -5,16 +5,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let on = true;
 	const Label = { content: _content_resume("__tests__/template.marko_1*content", ($label) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__$label = _write_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason();
 		const label = void 0 !== $label ? $label : "none";
-		_html(`<i>${_text_mark($scope1_id, "#text/0", label, $wg__$label)}</i>`);
+		_html(`<i>${_text_mark($scope1_id, "#text/0", label, _write_guard($scope1_reason, 0))}</i>`);
 		_write_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "2:2");
 	}, $scope0_id) };
 	const Count = { content: _content_resume("__tests__/template.marko_2*content", ($pattern) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__$pattern = _write_guard($scope2_reason, 0);
+		const $scope2_reason = _scope_reason();
 		const { count } = void 0 !== $pattern ? $pattern : { count: 1 };
-		_html(`<b>${_text_mark($scope2_id, "#text/0", count, $wg__$pattern)}</b>`);
+		_html(`<b>${_text_mark($scope2_id, "#text/0", count, _write_guard($scope2_reason, 0))}</b>`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/template.marko", "3:2");
 	}, $scope0_id) };
 	_html("<div>");
@@ -24,9 +24,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`</section>${_el_mark($scope0_id, "#section/1")}`);
 	_dynamic_tag($scope0_id, "#text/2", input.tag, {}, _content_resume("__tests__/template.marko_3*content", ($label2) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason(), $wg__$label2 = _write_guard($scope3_reason, 0);
+		const $scope3_reason = _scope_reason();
 		const label = void 0 !== $label2 ? $label2 : "body";
-		_html(_text_mark($scope3_id, "#text/0", label, $wg__$label2 * 2));
+		_html(_text_mark($scope3_id, "#text/0", label, _write_guard($scope3_reason, 0) * 2));
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "6:4");
 	}, $scope0_id), 0, _write_guard($scope0_reason, 0));
 	_dynamic_tag($scope0_id, "#text/3", input.tag, { content: on ? Label.content : Count.content });

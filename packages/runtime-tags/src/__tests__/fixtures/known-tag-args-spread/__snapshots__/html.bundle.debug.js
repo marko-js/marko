@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input = _write_guard($scope0_reason, 0), $wi__input = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input = _write_if($scope0_reason, 0), $wg__input = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input__closures = new Set();
 	let x = 1;

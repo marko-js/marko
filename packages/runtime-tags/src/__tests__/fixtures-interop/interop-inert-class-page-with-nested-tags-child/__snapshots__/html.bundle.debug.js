@@ -1,8 +1,8 @@
 // tags/tags-label.marko
 var tags_label_default = _template("__tests__/tags/tags-label.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_text = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_mark($scope0_id, "#text/0", input.text, $wg__input_text)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "#text/0", input.text, _write_guard($scope0_reason, 0))}</span>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/tags-label.marko", 0);
 });
 

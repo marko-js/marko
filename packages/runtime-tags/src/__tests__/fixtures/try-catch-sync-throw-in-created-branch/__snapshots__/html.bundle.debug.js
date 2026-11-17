@@ -20,9 +20,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id, "#text/0");
 		_subscribe($show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"), "__tests__/template.marko_1_show#0:5/subscribe");
 	}, void 0, (err) => {
-		const $scope5_reason = _scope_reason(), $wg__err_message = _write_guard($scope5_reason, 0);
+		const $scope5_reason = _scope_reason();
 		const $scope5_id = _scope_id();
-		_html(`caught ${_text_mark($scope5_id, "#text/0", err.message, $wg__err_message * 2)}`);
+		_html(`caught ${_text_mark($scope5_id, "#text/0", err.message, _write_guard($scope5_reason, 0) * 2)}`);
 		_write_if($scope5_reason, 0) && _scope($scope5_id, {}, "__tests__/template.marko", "8:4");
 	}, 0, "__tests__/template.marko_5*content");
 	_try($scope0_id, "#text/2", () => {
@@ -38,9 +38,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						throw new Error("try body");
 					})()));
 				}, void 0, (err) => {
-					const $scope10_reason = _scope_reason(), $wg__err_message3 = _write_guard($scope10_reason, 0);
+					const $scope10_reason = _scope_reason();
 					const $scope10_id = _scope_id();
-					_html(`caught ${_text_mark($scope10_id, "#text/0", err.message, $wg__err_message3 * 2)}`);
+					_html(`caught ${_text_mark($scope10_id, "#text/0", err.message, _write_guard($scope10_reason, 0) * 2)}`);
 					_write_if($scope10_reason, 0) && _scope($scope10_id, {}, "__tests__/template.marko", "15:8");
 				}, 0, "__tests__/template.marko_10*content");
 				_scope($scope8_id, {}, "__tests__/template.marko", "12:4");
@@ -52,9 +52,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"ClosureSignalIndex:show/6": 1
 		}, "__tests__/template.marko", "11:2"), "__tests__/template.marko_2_show#0:5/subscribe");
 	}, void 0, (err) => {
-		const $scope7_reason = _scope_reason(), $wg__err_message2 = _write_guard($scope7_reason, 0);
+		const $scope7_reason = _scope_reason();
 		const $scope7_id = _scope_id();
-		_html(`outer caught ${_text_mark($scope7_id, "#text/0", err.message, $wg__err_message2 * 2)}`);
+		_html(`outer caught ${_text_mark($scope7_id, "#text/0", err.message, _write_guard($scope7_reason, 0) * 2)}`);
 		_write_if($scope7_reason, 0) && _scope($scope7_id, {}, "__tests__/template.marko", "18:4");
 	}, 0, "__tests__/template.marko_7*content");
 	_try($scope0_id, "#text/3", () => {
@@ -85,9 +85,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"ClosureSignalIndex:show/6": 2
 		}, "__tests__/template.marko", "21:2"), "__tests__/template.marko_3_show#0:5/subscribe");
 	}, void 0, (err) => {
-		const $scope11_reason = _scope_reason(), $wg__err_message4 = _write_guard($scope11_reason, 0);
+		const $scope11_reason = _scope_reason();
 		const $scope11_id = _scope_id();
-		_html(`outer caught ${_text_mark($scope11_id, "#text/0", err.message, $wg__err_message4 * 2)}`);
+		_html(`outer caught ${_text_mark($scope11_id, "#text/0", err.message, _write_guard($scope11_reason, 0) * 2)}`);
 		_write_if($scope11_reason, 0) && _scope($scope11_id, {}, "__tests__/template.marko", "30:4");
 	}, 0, "__tests__/template.marko_11*content");
 	_try($scope0_id, "#text/4", () => {
@@ -103,11 +103,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						throw new Error("try body");
 					})()));
 				}, void 0, (err) => {
-					const $scope18_reason = _scope_reason(), $wg__err_message6 = _write_guard($scope18_reason, 0);
+					const $scope18_reason = _scope_reason();
 					const $scope18_id = _scope_id();
 					_html(_text_mark($scope18_id, "#text/0", (() => {
 						throw new Error(`catch of ${err.message}`);
-					})(), $wg__err_message6 * 2));
+					})(), _write_guard($scope18_reason, 0) * 2));
 					_write_if($scope18_reason, 0) && _scope($scope18_id, {}, "__tests__/template.marko", "37:8");
 				}, 0, "__tests__/template.marko_18*content");
 				_scope($scope16_id, {}, "__tests__/template.marko", "34:4");
@@ -119,9 +119,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"ClosureSignalIndex:show/6": 3
 		}, "__tests__/template.marko", "33:2"), "__tests__/template.marko_4_show#0:5/subscribe");
 	}, void 0, (err) => {
-		const $scope15_reason = _scope_reason(), $wg__err_message5 = _write_guard($scope15_reason, 0);
+		const $scope15_reason = _scope_reason();
 		const $scope15_id = _scope_id();
-		_html(`outer caught ${_text_mark($scope15_id, "#text/0", err.message, $wg__err_message5 * 2)}`);
+		_html(`outer caught ${_text_mark($scope15_id, "#text/0", err.message, _write_guard($scope15_reason, 0) * 2)}`);
 		_write_if($scope15_reason, 0) && _scope($scope15_id, {}, "__tests__/template.marko", "42:4");
 	}, 0, "__tests__/template.marko_15*content");
 	_script($scope0_id, "__tests__/template.marko_0");

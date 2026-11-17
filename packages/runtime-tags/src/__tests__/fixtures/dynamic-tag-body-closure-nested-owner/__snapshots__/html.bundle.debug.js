@@ -1,13 +1,13 @@
 // tags/card.marko
 var card_default = _template("__tests__/tags/card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
 	_html(`<button id=toggle>toggle</button>${_el_mark($scope0_id, "#button/0")}`);
 	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
-			_dynamic_tag($scope1_id, "#text/0", input.content, {}, 0, 0, $wg__input_content);
+			_dynamic_tag($scope1_id, "#text/0", input.content, {}, 0, 0, _write_guard($scope0_reason, 0));
 			_scope($scope1_id, {}, "__tests__/tags/card.marko", "3:2");
 			return 0;
 		}
@@ -24,7 +24,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 
 // tags/heading.marko
 var heading_default = _template("__tests__/tags/heading.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_depth = _write_guard($scope0_reason, 4), $wg__input_type = _write_guard($scope0_reason, 3), $wi__input_show__OR__input_type__OR__input_depth = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 2), $wi__input_depth = _write_if($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $wg__input_depth = _write_guard($scope0_reason, 4), $wi__input_show__OR__input_type__OR__input_depth = _write_if($scope0_reason, 1), $wi__input_depth = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_depth__closures = new Set();
 	_if(() => {
@@ -35,11 +35,11 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 				const $scope2_reason = _scope_reason();
 				_html(`depth ${_text_mark($scope2_id, "#text/0", input.depth, $wg__input_depth * 2)}`);
 				$wi__input_show__OR__input_type__OR__input_depth && _subscribe($wi__input_depth && $input_depth__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/heading.marko", "2:6"), "__tests__/tags/heading.marko_2_input_depth#0:5/subscribe", $wg__input_depth);
-			}, $scope1_id, ($scope) => [{ input_depth: input.depth }, { _: $scope($scope0_id) }]), 0, $wg__input_type);
+			}, $scope1_id, ($scope) => [{ input_depth: input.depth }, { _: $scope($scope0_id) }]), 0, _write_guard($scope0_reason, 3));
 			$wi__input_show__OR__input_type__OR__input_depth && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/heading.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), $wg__input_show);
+	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), _write_guard($scope0_reason, 2));
 	$wi__input_show__OR__input_type__OR__input_depth && _scope($scope0_id, {
 		input_type: _write_if($scope0_reason, 2) && input.type,
 		input_depth: _write_if($scope0_reason, 0) && input.depth,

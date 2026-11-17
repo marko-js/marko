@@ -8,7 +8,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 
 // tags/label-text.marko
 var label_text_default = _template("__tests__/tags/label-text.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 2), $wi__input_show = _write_if($scope0_reason, 2), $wi__input_label__OR__input_show = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 2), $wi__input_label__OR__input_show = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $childScope = _peek_scope_id();
 	let getLabel = child_default({ value: _resume(() => input.label, "__tests__/tags/label-text.marko_0/value", $scope0_id) });
@@ -16,11 +16,11 @@ var label_text_default = _template("__tests__/tags/label-text.marko", (input) =>
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<span>${_text_mark($scope1_id, "#text/0", getLabel(), $wg__input_label)}</span>`);
+			_html(`<span>${_text_mark($scope1_id, "#text/0", getLabel(), _write_guard($scope0_reason, 1))}</span>`);
 			$wi__input_label__OR__input_show && _scope($scope1_id, { _: $wi__input_label && _scope_with_id($scope0_id) }, "__tests__/tags/label-text.marko", "2:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/2", _write_guard($scope0_reason, 0), $wg__input_show, 0, 0, 1);
+	}, $scope0_id, "#text/2", _write_guard($scope0_reason, 0), _write_guard($scope0_reason, 2), 0, 0, 1);
 	$wi__input_label__OR__input_show && _scope($scope0_id, {
 		input_label: $wi__input_show && input.label,
 		getLabel: $wi__input_show && getLabel,

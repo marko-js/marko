@@ -1,6 +1,6 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_option = _write_guard($scope0_reason, 1), $wg__input_class__OR__input_option = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_option = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html(`<select${_attr_class(input.class)}>`);
 	_for_of(input.option, (option) => {
@@ -10,7 +10,7 @@ var child_default = _template("b", (input) => {
 		_html(`</option>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
 		_scope($scope1_id, {});
-	}, 0, $scope0_id, "a", $wg__input_option, $wg__input_class__OR__input_option, $wg__input_option, "</select>", 1);
+	}, 0, $scope0_id, "a", $wg__input_option, _write_guard($scope0_reason, 0), $wg__input_option, "</select>", 1);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 

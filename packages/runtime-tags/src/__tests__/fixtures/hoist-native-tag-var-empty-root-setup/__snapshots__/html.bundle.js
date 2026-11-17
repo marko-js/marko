@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_editable = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_editable = _write_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, 0, 0, 1);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 1), 0, 0, 1);
 	_if(() => {
 		if (input.editable) {
 			const $scope2_id = _scope_id();

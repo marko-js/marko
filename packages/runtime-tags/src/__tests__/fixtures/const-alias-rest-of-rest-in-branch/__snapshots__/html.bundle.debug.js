@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_o = _write_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 2), $wi__input_show = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_o = _write_guard($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const { a, ...r1 } = input.o;
 	const { a: $a, b: $b, ...r2 } = r1;
@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2", { "EventAttributes:#span/0": ["...r2", "2:49"] });
 			return 0;
 		}
-	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), $wg__input_show, 0, 0, 1);
+	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), _write_guard($scope0_reason, 2), 0, 0, 1);
 	_html(`<div>${_text_mark($scope0_id, "#text/1", a, $wg__input_o)}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {
 		b: $wi__input_show && r1.b,

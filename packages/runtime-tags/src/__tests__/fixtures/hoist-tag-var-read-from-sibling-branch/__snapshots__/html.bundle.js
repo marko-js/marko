@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $getLabel_getter = _hoist($scope0_id, "a1");
 	_if(() => {
@@ -29,6 +29,6 @@ var template_default = _template("a", (input) => {
 			});
 			return 1;
 		}
-	}, $scope0_id, "a", 1, $wg__input_a);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 1));
 	_scope($scope0_id, { e: input.dyn });
 }, 1);
