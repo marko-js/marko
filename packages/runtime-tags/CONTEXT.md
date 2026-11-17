@@ -55,6 +55,17 @@ alias, the binding it aliases (`aliasOf`), summarized by kind as its
 _sources_.
 _Avoid_: upstream, downstream, feed, feeder
 
+**Readers**:
+What reads a value through its aliases and derives links: its _reason_, and
+bits for the reads it lands in (a retained read, and one using it as more than
+a dynamic tag's name). An alias (`<const/b=a/>`) is no read, so `a`'s readers
+include `b`'s; a computing init (`<const/b=a + 1/>`) is a read of `a`, and the
+walk goes on into `b`'s readers.
+A call site maps the callee's param reasons through the expressions it passes,
+to their sources (a passed `<let>` gives a state reason). The reads themselves
+are walked when asked (`someReachedRead`), as for content sites.
+_Avoid_: landing read
+
 **Branch expression**:
 The expression a branch section is rendered by: an `<if>` condition, a
 `<for>` collection, or a dynamic tag's renderer (`branchExpr`).
@@ -82,6 +93,12 @@ The value a tag returns, named after `/` (`<let/count=0>`, `<child/api>`). It
 is a render-time value of the scope that declares it, so module scope
 (`static`, `export`) never sees it.
 _Avoid_: ref
+
+**Initial value**:
+A `<let>`'s value as its scope is created, from its `value=` (`initialValue`).
+An uncontrolled `<let>` still receives each later `value=`, but ignores it
+unless a change handler has since been set.
+_Avoid_: first value, init (for a `<let>`'s value)
 
 **Module read**:
 A read of an import binding (`styles.box`, `logo`) and its member names, which
