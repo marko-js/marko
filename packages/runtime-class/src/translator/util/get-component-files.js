@@ -1,8 +1,15 @@
 import path from "path";
 
+import { taglib } from "@marko/compiler";
+
 import { escapeRegExp } from "./escape-regexp";
 
 const COMPONENT_FILES_KEY = "___marko_component_files___";
+// A template's own files are `<name>.<kind>.<ext>`, or `<kind>.<ext>` beside an
+// `index` or `template` entry.
+const fileKinds = ["style", "component", "component-browser", "browser"];
+const indexNames = namesFor("index", true);
+const templateNames = namesFor("template", true);
 
 export default function getComponentFiles({ hub: { file } }) {
   const meta = file.metadata.marko;
@@ -12,17 +19,16 @@ export default function getComponentFiles({ hub: { file } }) {
   }
 
   const { filename } = file.opts;
-  const fs = file.markoOpts.fileSystem;
-  const dirname = path.dirname(filename);
-  let dirFiles;
-  try {
-    dirFiles = fs.readdirSync(dirname).sort();
-  } catch {
-    // An in-memory source may name a directory that does not exist.
-    dirFiles = [];
-  }
   const base = getBase(filename);
   const isEntry = "index" === base || "template" === base;
+  const entries = taglib.addDirectoryDependency(
+    path.dirname(filename),
+    base === "index"
+      ? indexNames
+      : base === "template"
+        ? templateNames
+        : namesFor(base, false),
+  );
   const fileMatch = `(${escapeRegExp(base)}\\.${isEntry ? "|" : ""})`;
   const styleMatch = new RegExp(`^${fileMatch}style\\.\\w+$`);
   const componentMatch = new RegExp(`^${fileMatch}component\\.\\w+$`);
@@ -35,26 +41,45 @@ export default function getComponentFiles({ hub: { file } }) {
   let componentFile;
   let componentBrowserFile;
 
-  for (const file of dirFiles) {
-    if (!styleFile && styleMatch.test(file)) {
-      styleFile = `./${file}`;
-    } else if (!packageFile && packageMatch.test(file)) {
-      packageFile = `./${file}`;
-    } else if (!componentFile && componentMatch.test(file)) {
-      componentFile = `./${file}`;
-      meta.hasComponent = true;
-    } else if (!componentBrowserFile && splitComponentMatch.test(file)) {
-      componentBrowserFile = `./${file}`;
-      meta.hasComponentBrowser = true;
+  // The first of each in sorted order, as they come unsorted.
+  for (const entry of entries) {
+    if ((!styleFile || entry < styleFile) && styleMatch.test(entry)) {
+      styleFile = entry;
+    } else if (
+      (!packageFile || entry < packageFile) &&
+      packageMatch.test(entry)
+    ) {
+      packageFile = entry;
+    } else if (
+      (!componentFile || entry < componentFile) &&
+      componentMatch.test(entry)
+    ) {
+      componentFile = entry;
+    } else if (
+      (!componentBrowserFile || entry < componentBrowserFile) &&
+      splitComponentMatch.test(entry)
+    ) {
+      componentBrowserFile = entry;
     }
   }
 
+  if (componentFile) meta.hasComponent = true;
+  if (componentBrowserFile) meta.hasComponentBrowser = true;
   return (meta[COMPONENT_FILES_KEY] = {
-    styleFile,
-    packageFile,
-    componentFile,
-    componentBrowserFile,
+    styleFile: styleFile && `./${styleFile}`,
+    packageFile: packageFile && `./${packageFile}`,
+    componentFile: componentFile && `./${componentFile}`,
+    componentBrowserFile: componentBrowserFile && `./${componentBrowserFile}`,
   });
+}
+
+function namesFor(base, isEntry) {
+  const names = [];
+  for (const kind of fileKinds) {
+    names.push(base + "." + kind);
+    if (isEntry) names.push(kind);
+  }
+  return names;
 }
 
 /**

@@ -1,4 +1,4 @@
-const SEEN_TAGS_KEY = Symbol();
+import { CompileDependencies } from "../taglib/dependencies";
 
 export function getTaglibLookup(file) {
   return file.___taglibLookup;
@@ -6,22 +6,8 @@ export function getTaglibLookup(file) {
 
 export function getTagDefForTagName(file, tagName) {
   const tagDef = getTaglibLookup(file).getTag(tagName);
-
   if (tagDef) {
-    let seen = file.metadata.marko[SEEN_TAGS_KEY];
-    if (!seen) {
-      seen = file.metadata.marko[SEEN_TAGS_KEY] = new Set();
-    }
-
-    if (!seen.has(tagDef)) {
-      seen.add(tagDef);
-      const { filePath } = tagDef;
-      const len = filePath.length;
-
-      if (filePath[len - 14] === "m" && filePath.endsWith("marko-tag.json")) {
-        file.metadata.marko.watchFiles.push(filePath);
-      }
-    }
+    CompileDependencies.addTag(file.metadata.marko.dependencies, tagDef);
   }
   return tagDef;
 }

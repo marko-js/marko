@@ -45,6 +45,11 @@ declare const Config: {
   getTemplateId?(request: string): string;
   /** Share one only across compiles whose config differs in nothing but `output`. */
   cache?: Map<unknown, unknown>;
+  /**
+   * Set when the caller reports what changes on disk (`taglib.invalidate`, `taglib.revalidate` or
+   * `taglib.clearCaches`): a cached template is then reused without checking what it read.
+   */
+  reportsChanges?: boolean;
   hot?: boolean;
   /** @deprecated Marko 5 (class API) only; currently inert under Marko 6. */
   meta?: boolean;

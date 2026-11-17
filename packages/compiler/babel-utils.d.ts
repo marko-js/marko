@@ -70,8 +70,6 @@ export interface TaglibLookup {
   migrators: PluginDefinition<t.Program>[];
   transformers: PluginDefinition<t.Program>[];
   translators: PluginDefinition<t.Program>[];
-  /** The `marko.json` files its directories load, with their imports, which its compiles watch. */
-  watchFiles: string[];
   exclusiveTagDiscoveryDirs: undefined | false | string;
   discoveryDirs: undefined | string[];
   manualTagsDirs: undefined | Set<string>;

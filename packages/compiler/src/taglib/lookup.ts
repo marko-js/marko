@@ -7,11 +7,17 @@ import type {
   TaglibLookup as TaglibLookupAPI,
 } from "@marko/compiler/babel-utils";
 import markoModules from "@marko/compiler/modules";
-import { resolveSync } from "resolve-sync";
 
-import { exists, type FileSystem, isDirectory, realpath } from "../util/fs";
-import { mainField, resolveFrom, resolveFS } from "../util/resolve";
-import { type Props, readJSON } from "./json";
+import {
+  exists,
+  type FileSystem,
+  isDirectory,
+  realpath,
+  stat,
+} from "../util/fs";
+import { resolveRequire } from "../util/resolve";
+import { inNodeModules, LookupDependencies, type State } from "./dependencies";
+import { readJSON } from "./json";
 import { createAttribute, definesTag, mergeTag } from "./tag";
 import {
   discoveredTaglib,
@@ -35,7 +41,6 @@ type ProgramHooks = PluginDefinition<t.Program>[];
 type RootPackage = NonNullable<ReturnType<typeof markoModules.readPackage>>;
 
 const emptyHooks: ProgramHooks = [];
-const emptyFiles: string[] = [];
 const emptyTaglibs: Taglib[] = [];
 const endsInTagsDir = /[/\\]tags[/\\]?$/;
 const backslashes = /\\/g;
@@ -54,23 +59,26 @@ export class Registry {
   /** The built-in taglibs' ids, which installed taglibs are not loaded again for. */
   readonly builtinIds = new Set<string>();
   readonly empty: TaglibLookup;
+  readonly #state: State;
   #tagDiscoveryDirs: string[];
   #excludedDirs: Set<string>;
   #excludedPackages: Set<string>;
   #builtin: Layer;
-  #dirs = new Map<string, TaglibLookup>();
-  #roots = new Map<string, RootPackage | null>();
-  #packages = new Map<string, Layer>();
+  /** Each directory's lookup and what it read. */
+  #dirs = new Map<string, LookupDependencies<TaglibLookup>>();
+  /** Each package's installed taglibs and what they read, by its root. */
+  #packages = new Map<string, LookupDependencies>();
 
   constructor(
-    fs: FileSystem,
+    state: State,
     translator: Translator,
     registered: TaglibEntry[],
     optional: TaglibEntry[],
     excludedDirs: Set<string>,
     excludedPackages: Set<string>,
   ) {
-    this.fs = fs;
+    this.fs = state.fs;
+    this.#state = state;
     // Translators released before the flag (Marko 5.39 and earlier) are class
     // API ones when they discover `components` dirs.
     this.classTaglibs =
@@ -88,49 +96,97 @@ export class Registry {
     this.empty = new TaglibLookup(this, this.#builtin, emptyTaglibs, undefined);
   }
 
-  lookup(dir: string): TaglibLookup {
-    let lookup = this.#dirs.get(dir);
+  /** A directory's lookup and what it read. */
+  dependencies(dir: string): LookupDependencies<TaglibLookup> {
+    let deps = this.#dirs.get(dir);
 
-    if (!lookup) {
-      const root = this.#rootOf(dir);
-      const parentDir = nodePath.dirname(dir);
-      let parent: Layer;
-      let parentLookup: TaglibLookup | undefined;
-      if (root?.__dirname === dir) {
-        parent = this.#packageLayer(root);
-      } else if (parentDir === dir || (!root && dir === markoModules.cwd)) {
-        parent = this.#builtin;
-      } else {
-        parent = parentLookup = this.lookup(parentDir);
-      }
-
-      let config: Taglib | undefined;
-      let taglibs: Taglib[] | undefined;
-      if (!this.#excludedDirs.has(dir)) {
-        const configPath = nodePath.join(dir, "marko.json");
-        if (exists(this.fs, configPath)) {
-          config = loadTaglib(configPath, readJSON(this.fs, configPath), {
-            fs: this.fs,
-            classTaglibs: this.classTaglibs,
-          });
+    if (!deps) {
+      const { fs } = this;
+      const time = Date.now();
+      // Held by the state to index only once built, or once it fails to.
+      deps = new LookupDependencies(this.#state, dir, this.#dirs, time);
+      const reads = inNodeModules(dir) ? undefined : deps;
+      let parent: LookupDependencies | undefined;
+      let lookup: TaglibLookup | undefined;
+      try {
+        const pkgPath = nodePath.join(dir, "package.json");
+        const pkgStats = stat(fs, pkgPath);
+        const root = pkgStats && readOwnPackage(fs, dir);
+        const parentDir = nodePath.dirname(dir);
+        let parentLookup: TaglibLookup | undefined;
+        if (root) {
+          parent = this.#packageDependencies(root, pkgPath, time);
+        } else if (
+          parentDir !== dir &&
+          (dir !== markoModules.cwd || this.#hasPackage(parentDir, reads))
+        ) {
+          const parentDeps = this.dependencies(parentDir);
+          parent = parentDeps;
+          parentLookup = LookupDependencies.getLayer(parentDeps);
         }
-        taglibs = this.#loadDir(dir, parent, config);
+        LookupDependencies.addStat(reads, pkgPath, pkgStats);
+
+        let config: Taglib | undefined;
+        let taglibs: Taglib[] | undefined;
+        const parentLayer = parent
+          ? LookupDependencies.getLayer(parent)
+          : this.#builtin;
+        if (!this.#excludedDirs.has(dir)) {
+          const configPath = nodePath.join(dir, "marko.json");
+          if (exists(fs, configPath)) {
+            config = loadTaglib(configPath, readJSON(fs, configPath, reads), {
+              fs,
+              classTaglibs: this.classTaglibs,
+              deps: reads,
+            });
+          } else if (reads) {
+            LookupDependencies.addMissing(reads, configPath);
+          }
+          taglibs = this.#loadDir(dir, parentLayer, config, reads);
+        }
+
+        lookup =
+          parentLookup && !config && !taglibs
+            ? parentLookup
+            : new TaglibLookup(
+                this,
+                parentLayer,
+                taglibs || emptyTaglibs,
+                config,
+              );
+      } catch (err) {
+        // Kept until what it read changes, as a lookup that built is.
+        LookupDependencies.fail(deps, err);
       }
 
-      lookup =
-        parentLookup && !config && !taglibs
-          ? parentLookup
-          : new TaglibLookup(this, parent, taglibs || emptyTaglibs, config);
-
-      this.#dirs.set(dir, lookup);
+      LookupDependencies.built(deps, parent, lookup);
+      this.#dirs.set(dir, deps);
     }
 
-    return lookup;
+    return deps;
+  }
+
+  // Whether `dir` or one above has a `package.json` naming a package.
+  #hasPackage(dir: string, deps: LookupDependencies | undefined) {
+    for (let cur = dir; ;) {
+      const pkgPath = nodePath.join(cur, "package.json");
+      const pkgStats = stat(this.fs, pkgPath);
+      LookupDependencies.addStat(deps, pkgPath, pkgStats);
+      if (pkgStats && readOwnPackage(this.fs, cur)) return true;
+      const parent = nodePath.dirname(cur);
+      if (parent === cur) return false;
+      cur = parent;
+    }
   }
 
   // A directory's taglibs not already loaded below it: its `marko.json` with
   // its imports, then its discovered tags dirs.
-  #loadDir(dir: string, parent: Layer, config: Taglib | undefined) {
+  #loadDir(
+    dir: string,
+    parent: Layer,
+    config: Taglib | undefined,
+    deps: LookupDependencies | undefined,
+  ) {
     let taglibs: Taglib[] | undefined;
 
     if (config) {
@@ -142,84 +198,93 @@ export class Registry {
 
     for (const name of this.#tagDiscoveryDirs) {
       const path = nodePath.join(dir, name);
-      if (!this.#excludedDirs.has(path) && isDirectory(this.fs, path)) {
+      if (this.#excludedDirs.has(path)) continue;
+      const stats = stat(this.fs, path);
+      if (stats?.isDirectory()) {
+        // A taglib of its own even when one below loads this directory, as a
+        // discovered tag's `taglibId` is its directory's path: none is shared.
         (taglibs ||= []).push(
-          discoveredTaglib(this.fs, this.classTaglibs, path, name),
+          discoveredTaglib(this.fs, this.classTaglibs, path, name, deps),
         );
+      } else {
+        // A tags dir made here later changes the lookup.
+        LookupDependencies.addStat(deps, path, stats);
       }
     }
 
     return taglibs;
   }
 
-  // The package a directory belongs to: its own `package.json`, if it names a
-  // package, or else its parent's. One stat per directory, each read once.
-  #rootOf(dir: string): RootPackage | null {
-    let root = this.#roots.get(dir);
+  // A package's installed taglibs, from its `package.json` read since `time`.
+  #packageDependencies(root: RootPackage, pkgPath: string, time: number) {
+    const rootDir = root.__dirname;
+    let deps = this.#packages.get(rootDir);
 
-    if (root === undefined) {
-      const parent = nodePath.dirname(dir);
-      root =
-        (exists(this.fs, nodePath.join(dir, "package.json")) &&
-          readOwnPackage(this.fs, dir)) ||
-        (parent === dir ? null : this.#rootOf(parent));
-      this.#roots.set(dir, root);
-    }
+    if (!deps) {
+      const { fs } = this;
+      deps = new LookupDependencies(this.#state, rootDir, this.#packages, time);
+      // Its dependencies, which name the taglibs installed.
+      if (!inNodeModules(rootDir)) LookupDependencies.addFile(deps, pkgPath);
+      let layer: Layer | undefined;
+      try {
+        const taglibs: Taglib[] = [];
+        const ids = new Set<string>();
+        // Searched for on the first dependency, as a package may have none.
+        let nodeModules: string[] | undefined | false = false;
+        const isNew = (taglib: Taglib) =>
+          !this.builtinIds.has(taglib.id) &&
+          !ids.has(taglib.id) &&
+          !!ids.add(taglib.id);
+        for (const name of dependencyNames(root)) {
+          if (this.#excludedPackages.has(name)) continue;
+          if (nodeModules === false) {
+            nodeModules = findNodeModules(fs, rootDir);
+          }
+          let taglibPath: string | undefined;
+          if (nodeModules) {
+            const foundPath = findInstalledTaglib(fs, name, nodeModules);
+            if (!foundPath) continue;
+            // Realpathed as Node resolves it: a linked workspace package's files
+            // are outside `node_modules`, where they are the project's.
+            taglibPath = realpath(fs, foundPath);
+          } else {
+            // Found by resolution where there is no `node_modules`.
+            taglibPath = resolveRequire(
+              fs,
+              rootDir,
+              name + "/marko.json",
+              deps,
+            );
+            if (!taglibPath) continue;
+          }
+          if (this.builtinIds.has(taglibPath)) continue;
 
-    return root;
-  }
-
-  #packageLayer(root: RootPackage) {
-    let layer = this.#packages.get(root.__dirname);
-
-    if (!layer) {
-      const taglibs: Taglib[] = [];
-      const ids = new Set<string>();
-      // Searched for on the first dependency, as a package may have none.
-      let nodeModules: string[] | undefined | false = false;
-      const deps = root.dependencies as Props | undefined;
-      const peerDeps = root.peerDependencies as Props | undefined;
-      const devDeps = root.devDependencies as Props | undefined;
-      const isNew = (taglib: Taglib) =>
-        !this.builtinIds.has(taglib.id) &&
-        !ids.has(taglib.id) &&
-        !!ids.add(taglib.id);
-      const add = (name: string) => {
-        if (this.#excludedPackages.has(name)) return;
-        if (nodeModules === false) {
-          nodeModules = findNodeModules(this.fs, root.__dirname);
+          // Its realpath bears no relation to how it is imported, so its tags keep the
+          // name it is installed as, which those its own templates look up lack.
+          const taglibDeps = inNodeModules(taglibPath) ? undefined : deps;
+          const taglib = loadTaglib(
+            taglibPath,
+            readJSON(fs, taglibPath, taglibDeps),
+            {
+              fs,
+              packageName: name,
+              classTaglibs: this.classTaglibs,
+              isInstalled: true,
+              deps: taglibDeps,
+            },
+          );
+          pushTaglib(taglibs, taglib, isNew);
         }
-        const taglibPath = findInstalledTaglib(
-          this.fs,
-          name,
-          root.__dirname,
-          nodeModules,
-        );
-        if (!taglibPath || this.builtinIds.has(taglibPath)) return;
-
-        // Its realpath bears no relation to how it is imported, so it keeps
-        // the name it is installed as.
-        const taglib = loadTaglib(taglibPath, readJSON(this.fs, taglibPath), {
-          fs: this.fs,
-          packageName: name,
-          classTaglibs: this.classTaglibs,
-          isInstalled: true,
-        });
-        pushTaglib(taglibs, taglib, isNew);
-      };
-
-      // A package listed under more than one kind of dependency is read once.
-      for (const name in deps) add(name);
-      for (const name in peerDeps) if (!hasOwn(deps, name)) add(name);
-      for (const name in devDeps) {
-        if (!hasOwn(deps, name) && !hasOwn(peerDeps, name)) add(name);
+        layer = new Layer(this, this.#builtin, taglibs);
+      } catch (err) {
+        LookupDependencies.fail(deps, err);
       }
 
-      layer = new Layer(this, this.#builtin, taglibs);
-      this.#packages.set(root.__dirname, layer);
+      LookupDependencies.built(deps, undefined, layer);
+      this.#packages.set(rootDir, deps);
     }
 
-    return layer;
+    return deps;
   }
 }
 
@@ -238,6 +303,7 @@ export class Layer {
   readonly manualTagsDirs: Set<string> | undefined;
   #tags = new Map<string, TagDefinition | null>();
   #errors: Map<string, Error> | undefined;
+  #sorted: TagDefinition[] | undefined;
 
   constructor(
     registry: Registry,
@@ -305,6 +371,26 @@ export class Layer {
     this.parent?.addNames(names);
   }
 
+  // Every tag in reach, so each source lists all it has.
+  getTagsSorted() {
+    let sorted = this.#sorted;
+    if (!sorted) {
+      const names = new Set<string>();
+      this.addNames(names);
+
+      sorted = [];
+      for (const name of names) {
+        // A tag that fails to load is reported where it is used, not here.
+        const tag = this.resolve(name);
+        if (tag) sorted.push(tag);
+      }
+
+      this.#sorted = sorted.sort(compareTagNames);
+    }
+
+    return sorted;
+  }
+
   #find(name: string) {
     const coreTag = this.registry.coreTags.get(name);
     let exts: TagDefinition[] | undefined;
@@ -336,9 +422,6 @@ export class TaglibLookup extends Layer implements TaglibLookupAPI {
   readonly discoveryDirs: string[] | undefined;
   /** The discovery dir name when the only kind found, `false` for a mix or a `tags-dir`. */
   readonly exclusiveTagDiscoveryDirs: string | false | undefined;
-  /** `marko.json` files that shape this lookup, for compile cache staleness. */
-  readonly watchFiles: string[];
-  #sorted: TagDefinition[] | undefined;
 
   constructor(
     registry: Registry,
@@ -356,9 +439,6 @@ export class TaglibLookup extends Layer implements TaglibLookupAPI {
     let exclusiveTagDiscoveryDirs: string | false | undefined = config?.tagsDir
       ? false
       : undefined;
-    // Each `marko.json` its directories load, with their imports; its own even
-    // when loaded further up.
-    let watchFiles = config ? [config.filePath] : undefined;
 
     for (const taglib of taglibs) {
       if (taglib.discoveryDir) {
@@ -367,15 +447,8 @@ export class TaglibLookup extends Layer implements TaglibLookupAPI {
           exclusiveTagDiscoveryDirs,
           taglib.discoveryDir,
         );
-      } else if (taglib !== config && taglib.filePath.endsWith("marko.json")) {
-        (watchFiles ||= []).push(taglib.filePath);
       }
     }
-
-    const inheritedFiles = inherited ? inherited.watchFiles : emptyFiles;
-    this.watchFiles = watchFiles
-      ? inheritedFiles.concat(watchFiles)
-      : inheritedFiles;
 
     if (inherited) {
       if (inherited.discoveryDirs) {
@@ -418,26 +491,6 @@ export class TaglibLookup extends Layer implements TaglibLookupAPI {
   // Released language servers still call these; remove once none do.
   getAttribute(): undefined {}
   forEachAttribute(): void {}
-
-  // Every tag in reach, so each source lists all it has.
-  getTagsSorted() {
-    let sorted = this.#sorted;
-    if (!sorted) {
-      const names = new Set<string>();
-      this.addNames(names);
-
-      sorted = [];
-      for (const name of names) {
-        // A tag that fails to load is reported where it is used, not here.
-        const tag = this.resolve(name);
-        if (tag) sorted.push(tag);
-      }
-
-      this.#sorted = sorted.sort(compareTagNames);
-    }
-
-    return sorted;
-  }
 }
 
 // Registered taglibs, then the translator's own, then its optional ones (so
@@ -476,6 +529,7 @@ function createBuiltinLayer(
         fs: registry.fs,
         classTaglibs: registry.classTaglibs,
         packageName: installedPackageName(id),
+        deps: undefined,
       });
       add(taglib, isCore);
       if (taglib.imports) {
@@ -538,6 +592,21 @@ function readOwnPackage(fs: FileSystem, dir: string) {
   }
 }
 
+// The names of a package's dependencies of every kind.
+function dependencyNames(pkg: Record<string, unknown>) {
+  const deps = pkg.dependencies as Record<string, unknown> | undefined;
+  const peerDeps = pkg.peerDependencies as Record<string, unknown> | undefined;
+  const devDeps = pkg.devDependencies as Record<string, unknown> | undefined;
+  const names: string[] = [];
+  // A package listed under more than one kind of dependency is read once.
+  for (const name in deps) names.push(name);
+  for (const name in peerDeps) if (!deps?.[name]) names.push(name);
+  for (const name in devDeps) {
+    if (!deps?.[name] && !peerDeps?.[name]) names.push(name);
+  }
+  return names;
+}
+
 // The `node_modules` folders Node searches from `dir`, nearest first, found
 // once per package; `undefined` without any, as with Yarn PnP.
 function findNodeModules(fs: FileSystem, dir: string) {
@@ -554,39 +623,21 @@ function findNodeModules(fs: FileSystem, dir: string) {
 }
 
 // The package's `marko.json` where Node would find it: in the nearest
-// `node_modules` holding the package, or resolved without any.
+// `node_modules` holding the package.
 function findInstalledTaglib(
   fs: FileSystem,
   name: string,
-  dir: string,
-  nodeModules: string[] | undefined,
+  nodeModules: string[],
 ) {
-  // Found by resolution where there is no `node_modules` (eg Yarn PnP).
-  if (!nodeModules) {
-    return resolveSync(name + "/marko.json", {
-      from: resolveFrom(fs, dir),
-      require: true,
-      fields: mainField,
-      silent: true,
-      fs: resolveFS(fs),
-    });
-  }
-
   // Joined by hand, as `path.join` would: the folders are already normalized,
   // so only a scoped name's slash needs the platform's separator.
   const { sep } = nodePath;
   const packagePath = sep === "/" ? name : name.replace("/", sep);
-  const last = nodeModules.length - 1;
-  for (let i = 0; i <= last; i++) {
-    const packageDir = nodeModules[i] + sep + packagePath;
-    // The outermost folder is the last place to look, so its package
-    // directory needs no check of its own.
-    if (i === last || isDirectory(fs, packageDir)) {
-      const taglibPath = packageDir + sep + "marko.json";
-      // Realpathed as Node resolves it, which for a virtual store (eg pnpm)
-      // is where the package's files are.
-      return exists(fs, taglibPath) ? realpath(fs, taglibPath) : undefined;
-    }
+  for (const folder of nodeModules) {
+    const packageDir = folder + sep + packagePath;
+    if (!isDirectory(fs, packageDir)) continue;
+    const taglibPath = packageDir + sep + "marko.json";
+    return exists(fs, taglibPath) ? taglibPath : undefined;
   }
 }
 
@@ -643,10 +694,6 @@ function combineDiscoveryDir(
   b: string | false | undefined,
 ) {
   return a === undefined ? b : b === undefined || a === b ? a : false;
-}
-
-function hasOwn(props: Props | undefined, key: string) {
-  return props !== undefined && Object.hasOwn(props, key);
 }
 
 function compareTagNames(a: TagDefinition, b: TagDefinition) {

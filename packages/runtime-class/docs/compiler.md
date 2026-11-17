@@ -34,7 +34,7 @@ type CompileResult = {
 - `map`: [A source map, used for debugging.](https://firefox-source-docs.mozilla.org/devtools-user/debugger/how_to/use_a_source_map/index.html)
 - `meta`: Metadata gathered while compiling — nothing terribly useful, probably going to get deprecated.
   - Data about child dependencies. Was useful back when it was primarily the bundlers that handled tree-shaking out server components. Now that happens in the compiler, so we don’t use this anymore and therefore might become inaccurate in the future.
-  - A list of `watchFiles`: files that were used to compile the template (e.g. `marko.json`). Used to tell bundlers which files should be watched in dev mode.
+  - `dependencies`: what the compile read beyond the template outside `node_modules` (files, paths it looked for, directories it looked in), which bundlers watch in dev mode; `compiler.taglib.invalidate(paths, cache)`, given one path or an iterable of them, returns the templates a changed path affects, dropping them from the cache. What is installed is not recorded: after an install, call `compiler.taglib.clearCaches()`. (`watchFiles` is always empty.)
 
 #### `compileFile()` and `compileFileSync`
 

@@ -117,7 +117,7 @@ const config = {
   })(),
 
   /**
-   * Use a different file system object, eg webpack's CachedInputFileSystem.
+   * Reads through another file system: any object with the `fs` methods its type lists.
    */
   fileSystem: fs,
   /**
@@ -152,6 +152,12 @@ const config = {
    * To prevent compiling templates more than once, most of the compilation is cached.
    */
   cache: new Map(),
+
+  /**
+   * Set when the caller reports what changes on disk (`taglib.invalidate`, `taglib.revalidate` or
+   * `taglib.clearCaches`): a cached template is then reused without checking what it read.
+   */
+  reportsChanges: false,
 
   /**
    * A regexp or function that receives an import path that matches file types known to be client side assets.

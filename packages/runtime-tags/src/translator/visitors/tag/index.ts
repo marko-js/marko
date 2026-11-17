@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { getFile, getTagDef } from "@marko/compiler/babel-utils";
+import { getTagDef } from "@marko/compiler/babel-utils";
 
 import { reportAnalyzeError } from "../../util/analyze-errors";
 import { writeBodyStatements } from "../../util/replace-with-statements";
@@ -72,9 +72,6 @@ export default {
       const tagDef = getTagDef(tag);
 
       if (tagDef?.translator) {
-        if (tagDef.translator.path) {
-          getFile().metadata.marko.watchFiles.push(tagDef.translator.path);
-        }
         enterHook(tagDef.translator.hook, tag);
         return;
       }

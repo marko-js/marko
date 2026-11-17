@@ -45,7 +45,7 @@ Add a changeset with `pnpm run change --patch <pkg> -m "<summary>"` (`--minor` a
 
 Organize files top-down (progressive disclosure): public API/exports first, then orchestration, helpers, and low-level detail last — use function-declaration hoisting.
 
-Comments are a last resort and never exceed two lines: prefer self-describing code, and when one is needed it captures intent — never what the code was or what was removed. Wording is plain and direct, with no invented shorthand.
+Comments are a last resort and never exceed two lines: prefer self-describing code, and when one is needed it captures intent — never what the code was or what was removed, and never names a tool that calls the code. Wording is plain and direct, with no invented shorthand.
 
 One system per question. Before adding a field, flag, helper, state container, parameter, test config, or module, find what already answers it and extend that; where it falls short, replace it and move its callers over. A second system beside it, above all one built for a single feature, signals a problem not looked at as a whole: say in the summary why nothing existing fits. A new generic helper goes in the module that owns what it reads (beside the field it checks, or the helpers on the same data), and every site that inlines the same logic moves to it.
 

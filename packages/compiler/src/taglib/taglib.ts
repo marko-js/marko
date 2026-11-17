@@ -5,10 +5,16 @@ import type {
   PluginDefinition,
   TagDefinition,
 } from "@marko/compiler/babel-utils";
-import { resolveSync } from "resolve-sync";
 
-import { exists, type FileSystem, isDirectory } from "../util/fs";
-import { mainField, resolveFrom, resolveFS } from "../util/resolve";
+import { exists, type FileSystem, isDirectory, stat } from "../util/fs";
+import { resolveRequire } from "../util/resolve";
+import {
+  inNodeModules,
+  isTagsDirName,
+  LookupDependencies,
+  type Names,
+  stateOf,
+} from "./dependencies";
 import { isProps, type Props, readJSON } from "./json";
 import { addHooks, createTemplateTag, loadTag, propName, toHook } from "./tag";
 
@@ -29,12 +35,14 @@ export interface Taglib {
   /** For a discovered tags dir, the name it was discovered by. */
   discoveryDir: string | undefined;
   /** Where its tags are found, in search order. */
-  sources: TagSource[];
+  sources: (TagEntries | TagsDir)[];
   migrators: PluginDefinition<t.Program>[] | undefined;
   transformers: PluginDefinition<t.Program>[] | undefined;
   translators: PluginDefinition<t.Program>[] | undefined;
   /** The taglibs its `taglib-imports` name, theirs included, in import order. */
   imports: Taglib[] | undefined;
+  /** Where its lookup records what it reads; none for a built-in or installed taglib. */
+  deps: LookupDependencies | undefined;
 }
 
 /** Tags found by name. */
@@ -42,8 +50,6 @@ export interface TagSource {
   get(name: string): TagDefinition | undefined;
   names(): Iterable<string>;
 }
-
-const inNodeModules = /[\\/]node_modules[\\/]/;
 
 /**
  * Reads a taglib from its props. Its sources are its `<tag>` entries, then its
@@ -61,6 +67,7 @@ export function loadTaglib(
     packageRoot?: string;
     /** Installed, though not under `node_modules` (eg a linked workspace). */
     isInstalled?: boolean;
+    deps: LookupDependencies | undefined;
   },
   // Taglib files already imported, so mutual imports end.
   imported?: Set<string>,
@@ -83,6 +90,7 @@ export function loadTaglib(
     transformers: undefined,
     translators: undefined,
     imports: undefined,
+    deps: options.deps,
   };
   let entries: TagEntries | undefined;
   let importSpecs: unknown[] | undefined;
@@ -115,7 +123,7 @@ export function loadTaglib(
         break;
       }
       case "exports":
-        if (options.isInstalled || inNodeModules.test(filePath)) {
+        if (options.isInstalled || inNodeModules(filePath)) {
           taglib.tagsDir = false;
           tagsDirs.push(resolveTagsDir(taglib, value as string));
         }
@@ -159,6 +167,7 @@ export function discoveredTaglib(
   classTaglibs: boolean,
   path: string,
   name: string,
+  deps: LookupDependencies | undefined,
 ): Taglib {
   const taglib: Taglib = {
     fs,
@@ -177,6 +186,7 @@ export function discoveredTaglib(
     transformers: undefined,
     translators: undefined,
     imports: undefined,
+    deps,
   };
   taglib.sources.push(new TagsDir(path, taglib));
   return taglib;
@@ -248,12 +258,13 @@ export class TagsDir implements TagSource {
     const tags = new Map<string, TagDefinition | BrokenDir>();
     let entries: string[];
     try {
-      // Listed without options, as file systems adding virtual files expect.
-      entries = this.#taglib.fs.readdirSync(this.#path);
+      // Any template or directory added or removed changes its tags.
+      entries = listDir(this.#taglib, this.#path, undefined);
     } catch (err) {
-      // Removed since it was found; it stays empty until the caches are cleared.
+      // Removed since it was found; it stays empty until it comes back.
       if ((err as NodeJS.ErrnoException).code !== "ENOENT") throw err;
-      return tags;
+      LookupDependencies.addTagsDir(this.#taglib.deps, this.#path);
+      entries = [];
     }
 
     const groups: Listed[] = [];
@@ -270,20 +281,12 @@ export class TagsDir implements TagSource {
     level: Listed[],
     groups: Listed[] | undefined,
   ) {
+    const taglib = this.#taglib;
+    const { fs, deps } = taglib;
     const dirs: string[] = [];
-    for (const { path: dir, entries: listed } of level) {
-      let entries = listed;
-      if (!entries) {
-        try {
-          entries = this.#taglib.fs.readdirSync(dir);
-        } catch {
-          // An unreadable group holds no tags anyone could name.
-          continue;
-        }
-      }
-
+    for (const { path: dir, entries } of level) {
       for (const name of entries) {
-        if (name[0] === "." || name === "node_modules") continue;
+        if (!isTagsDirName(name)) continue;
         const path = nodePath.join(dir, name);
         if (name.endsWith(".marko")) {
           // A class API entry left in a grouped folder would shadow `<template>`.
@@ -292,7 +295,7 @@ export class TagsDir implements TagSource {
           if (!tags.has(tagName)) {
             tags.set(
               tagName,
-              createTemplateTag(tagName, path, this.#path, this.#taglib),
+              createTemplateTag(tagName, path, this.#path, taglib),
             );
           }
         } else {
@@ -304,17 +307,20 @@ export class TagsDir implements TagSource {
     for (let i = 0; i < dirs.length; i += 2) {
       const name = dirs[i];
       const path = dirs[i + 1];
-      if (tags.has(name) || !isDirectory(this.#taglib.fs, path)) continue;
+      if (tags.has(name) || !isDirectory(fs, path)) continue;
 
-      let entries: string[] | undefined;
+      let entries: string[];
       let tag: TagDefinition | undefined;
       try {
-        if (this.#taglib.classTaglibs) {
-          entries = this.#taglib.fs.readdirSync(path);
-          tag = loadClassTagDir(name, path, entries, this.#taglib);
-        } else {
-          tag = loadTagDir(name, path, this.#taglib);
-        }
+        // Only the files a tag directory is read by change its tag.
+        entries = listDir(
+          taglib,
+          path,
+          taglib.classTaglibs ? classTagDirFiles : tagDirFiles,
+        );
+        tag = taglib.classTaglibs
+          ? loadClassTagDir(name, path, entries, taglib)
+          : loadTagDir(name, path, entries, taglib);
       } catch (err) {
         tags.set(name, new BrokenDir(err));
         continue;
@@ -327,15 +333,15 @@ export class TagsDir implements TagSource {
       } else if (groups && name !== "tags" && name !== "components") {
         // `tags` and `components` folders stay private to their location.
         groups.push({ path, entries });
+        LookupDependencies.addTagsDir(deps, path);
       }
     }
   }
 }
 
-// A directory, with its entries if already listed.
 interface Listed {
   path: string;
-  entries: string[] | undefined;
+  entries: string[];
 }
 
 // A tag directory that failed to load, reported only when its tag is used.
@@ -357,14 +363,16 @@ function loadImports(taglib: Taglib, specs: unknown[], imported: Set<string>) {
     const inherit =
       taglib.packageRoot !== undefined &&
       isWithin(taglib.packageRoot, nodePath.dirname(path));
+    const deps = inNodeModules(path) ? undefined : taglib.deps;
     const importedTaglib = loadTaglib(
       path,
-      readJSON(taglib.fs, path),
+      readJSON(taglib.fs, path, deps),
       {
         fs: taglib.fs,
         classTaglibs: taglib.classTaglibs,
         packageName: inherit ? taglib.packageName : undefined,
         packageRoot: inherit ? taglib.packageRoot : undefined,
+        deps,
       },
       imported,
     );
@@ -377,13 +385,7 @@ function loadImports(taglib: Taglib, specs: unknown[], imported: Set<string>) {
   for (const spec of specs) {
     if (typeof spec !== "string") continue;
     // As `require` resolves it, through the file system the taglib is read by.
-    const path = resolveSync(spec, {
-      from: resolveFrom(taglib.fs, taglib.dirname),
-      require: true,
-      fields: mainField,
-      silent: true,
-      fs: resolveFS(taglib.fs),
-    });
+    const path = resolveRequire(taglib.fs, taglib.dirname, spec, taglib.deps);
     if (!path) {
       throw new Error(`Import not found: ${spec} (from ${taglib.dirname})`);
     }
@@ -411,7 +413,10 @@ function resolveTagsDir(taglib: Taglib, dir: unknown) {
     );
   }
   const path = nodePath.resolve(taglib.dirname, dir);
-  if (!isDirectory(taglib.fs, path)) {
+  const stats = stat(taglib.fs, path);
+  if (!stats?.isDirectory()) {
+    // Its lookup fails until a directory is made there.
+    LookupDependencies.addStat(taglib.deps, path, stats);
     throw new Error(
       `The tags directory "${path}" does not exist. (${taglib.filePath})`,
     );
@@ -423,11 +428,12 @@ function loadEntry(name: string, value: unknown, taglib: Taglib) {
   if (typeof value === "string") {
     const filePath = nodePath.resolve(taglib.dirname, value);
     if (!exists(taglib.fs, filePath)) {
+      if (taglib.deps) LookupDependencies.addMissing(taglib.deps, filePath);
       throw new Error(
         `Tag at path "${filePath}" does not exist. (${taglib.filePath})`,
       );
     }
-    const props = readJSON(taglib.fs, filePath);
+    const props = readJSON(taglib.fs, filePath, taglib.deps);
     // Found by its key before its file is read, so it keeps that name.
     delete props.name;
     return loadTag(name, props, taglib, filePath);
@@ -449,46 +455,86 @@ const entryKeys = new Set([
   "parse",
 ]);
 const classEntryKeys = new Set([...entryKeys, "renderer"]);
-// The class API's entry files, in search order.
+
+// The class API's entry files in search order, each also found named for its
+// tag (`<tag>.marko` for `index.marko`).
 const classEntryFiles = [
-  { name: "index.marko", type: "template" },
-  { name: "renderer", type: "renderer" },
-  { name: "index", type: "renderer" },
-  { name: "template.marko", type: "template" },
-  { name: "migrate", type: "migrate" },
-  { name: "code-generator", type: "translate" },
-  { name: "translate", type: "translate" },
-  { name: "node-factory", type: "parse" },
-  { name: "parse", type: "parse" },
-  { name: "transformer", type: "transform" },
-  { name: "transform", type: "transform" },
+  { name: "index.marko", named: "marko", type: "template" },
+  { name: "renderer", named: "renderer", type: "renderer" },
+  { name: "index", named: "index", type: "renderer" },
+  { name: "template.marko", named: "template.marko", type: "template" },
+  { name: "migrate", named: "migrate", type: "migrate" },
+  { name: "code-generator", named: "code-generator", type: "translate" },
+  { name: "translate", named: "translate", type: "translate" },
+  { name: "node-factory", named: "node-factory", type: "parse" },
+  { name: "parse", named: "parse", type: "parse" },
+  { name: "transformer", named: "transformer", type: "transform" },
+  { name: "transform", named: "transform", type: "transform" },
 ];
 
-// A tag directory's marko-tag.json and template, checked without listing it; a
-// marko-tag.json without an entry still names a tag, reported where it is used.
-function loadTagDir(name: string, dir: string, taglib: Taglib) {
-  const tagJsonPath = nodePath.join(dir, "marko-tag.json");
+// The files a tag directory is read by (see `Names`); its others stay private.
+const tagDirFiles = {
+  names: ["marko-tag.json", "index.marko"],
+  named: ["marko"],
+};
 
-  if (exists(taglib.fs, tagJsonPath)) {
-    const props = readJSON(taglib.fs, tagJsonPath);
-    if (!hasEntry(props, taglib)) {
-      const template = findTemplate(taglib.fs, name, dir);
-      if (template) props.template = template;
-    }
-    return loadTag(name, props, taglib, tagJsonPath);
+// The class API's: its `marko-tag.json` and any of `classEntryFiles`.
+const classTagDirFiles = {
+  names: ["marko-tag.json"],
+  named: [] as string[],
+};
+for (const entry of classEntryFiles) {
+  classTagDirFiles.names.push(entry.name);
+  classTagDirFiles.named.push(entry.named);
+}
+
+// A tag directory's marko-tag.json and template; a marko-tag.json without an
+// entry still names a tag, reported where it is used.
+function loadTagDir(
+  name: string,
+  dir: string,
+  entries: string[],
+  taglib: Taglib,
+) {
+  if (entries.includes("marko-tag.json")) {
+    const tagJsonPath = nodePath.join(dir, "marko-tag.json");
+    const props = readJSON(taglib.fs, tagJsonPath, taglib.deps);
+    const template = !hasEntry(props, taglib)
+      ? findTemplate(name, entries, dir)
+      : undefined;
+    const tag = loadTag(name, props, taglib, tagJsonPath);
+    // Set past `loadTag`, which would check again that it exists.
+    if (template) tag.template = template;
+    return tag;
   }
 
-  const template = findTemplate(taglib.fs, name, dir);
+  const template = findTemplate(name, entries, dir);
   if (template) return createTemplateTag(name, template, dir, taglib);
 }
 
-// Its `index.marko`, or else the file named for it, so the directory's other
-// files stay private to it.
-function findTemplate(fs: FileSystem, name: string, dir: string) {
-  const indexPath = nodePath.join(dir, "index.marko");
-  if (exists(fs, indexPath)) return indexPath;
-  const namedPath = nodePath.join(dir, name + ".marko");
-  if (exists(fs, namedPath)) return namedPath;
+// Its `index.marko`, or else the file named for it.
+function findTemplate(name: string, entries: string[], dir: string) {
+  let named: string | undefined;
+  for (const entry of entries) {
+    if (entry === "index.marko") return nodePath.join(dir, entry);
+    if (
+      !named &&
+      entry.length === name.length + 6 &&
+      entry.startsWith(name) &&
+      entry.endsWith(".marko")
+    ) {
+      named = entry;
+    }
+  }
+  return named && nodePath.join(dir, named);
+}
+
+// A directory's entries, listed once per file system and recorded through its
+// lookup when it has one.
+function listDir(taglib: Taglib, dir: string, names: Names) {
+  return taglib.deps
+    ? LookupDependencies.list(taglib.deps, dir, names)
+    : stateOf(taglib.fs).list(dir);
 }
 
 // The class API's tag directory, whose entry may be any of several files.
@@ -498,27 +544,22 @@ function loadClassTagDir(
   entries: string[],
   taglib: Taglib,
 ) {
-  // A file by its full name, or by its name without the extension.
-  const files = new Map<string, string>();
-  for (const entry of entries) {
-    const path = nodePath.join(dir, entry);
-    const ext = nodePath.extname(entry);
-    files.set(entry, path);
-    if (ext) {
-      const base = entry.slice(0, -ext.length);
-      if (!files.has(base)) files.set(base, path);
-    }
-  }
-
-  const tagJsonPath = files.get("marko-tag.json");
-  const props = tagJsonPath ? readJSON(taglib.fs, tagJsonPath) : {};
+  const tagJson = findEntry(entries, "marko-tag.json");
+  const tagJsonPath = tagJson && nodePath.join(dir, tagJson);
+  const props = tagJsonPath
+    ? readJSON(taglib.fs, tagJsonPath, taglib.deps)
+    : {};
+  let template: string | undefined;
   if (!hasEntry(props, taglib)) {
     let found = false;
-    for (const { name: file, type } of classEntryFiles) {
-      const path =
-        files.get(file) || files.get(name + "." + file.replace("index.", ""));
-      if (path) {
-        props[type] = path;
+    for (const { name: file, named, type } of classEntryFiles) {
+      const entry =
+        findEntry(entries, file) || findNamedEntry(entries, name, named);
+      if (entry) {
+        const path = nodePath.join(dir, entry);
+        // Set past `loadTag`, which would check again that it exists.
+        if (type === "template") template = path;
+        else props[type] = path;
         found = true;
         break;
       }
@@ -526,7 +567,43 @@ function loadClassTagDir(
     if (!found && !tagJsonPath) return;
   }
 
-  return loadTag(name, props, taglib, tagJsonPath || dir);
+  const tag = loadTag(name, props, taglib, tagJsonPath || dir);
+  if (template) tag.template = template;
+  return tag;
+}
+
+// The entry named `file`, else the first named it with an extension.
+function findEntry(entries: string[], file: string) {
+  let found: string | undefined;
+  for (const entry of entries) {
+    if (entry === file) return entry;
+    if (
+      !found &&
+      entry.lastIndexOf(".") === file.length &&
+      entry.startsWith(file)
+    ) {
+      found = entry;
+    }
+  }
+  return found;
+}
+
+// As `findEntry`, for `file` named for its tag (`<name>.<file>`).
+function findNamedEntry(entries: string[], name: string, file: string) {
+  const start = name.length + 1;
+  const length = start + file.length;
+  let found: string | undefined;
+  for (const entry of entries) {
+    if (
+      entry[name.length] === "." &&
+      entry.startsWith(name) &&
+      entry.startsWith(file, start)
+    ) {
+      if (entry.length === length) return entry;
+      if (!found && entry.lastIndexOf(".") === length) found = entry;
+    }
+  }
+  return found;
 }
 
 function hasEntry(props: Props, taglib: Taglib) {

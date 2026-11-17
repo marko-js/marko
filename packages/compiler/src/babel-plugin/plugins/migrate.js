@@ -31,7 +31,6 @@ function getMigratorsForTag(path) {
   const {
     hub: { file },
   } = path;
-  const { watchFiles } = file.metadata.marko;
   const tagName = path.get("name.value").node || "*";
   const MIGRATOR_CACHE = (file.MIGRATOR_CACHE =
     file.MIGRATOR_CACHE || Object.create(null));
@@ -43,9 +42,6 @@ function getMigratorsForTag(path) {
     const addMigrators = (tagDef) => {
       if (tagDef && tagDef.migrators) {
         for (const migrator of tagDef.migrators) {
-          if (migrator.path) {
-            watchFiles.push(migrator.path);
-          }
           migrators.push(migrator.hook.default || migrator.hook);
         }
       }

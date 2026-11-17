@@ -173,36 +173,51 @@ describe("runtime-tags/translator-api", () => {
   });
 
   describe("getStyleFile name handling", () => {
-    const getStyleFile =
-      require("../translator/util/get-style-file") as typeof import("../translator/util/get-style-file");
-    const fakeFile = (filename: string, dirFiles: string[]) =>
-      ({
-        opts: { filename },
-        markoOpts: {
-          fileSystem: { readdirSync: () => dirFiles },
-        },
-      }) as never;
+    // The style file a template's dom output imports, given its directory's listing.
+    const styleFile = (filename: string, dirFiles: string[]) => {
+      const dir = path.dirname(filename);
+      return /^import "(\.\/[^"]+)"/m.exec(
+        compiler.compileSync("<div/>\n", filename, {
+          ...baseConfig,
+          output: "dom",
+          cache: new Map(),
+          fileSystem: {
+            statSync: fs.statSync,
+            readFileSync: fs.readFileSync,
+            readdirSync: ((p: string) =>
+              p === dir
+                ? dirFiles
+                : fs.readdirSync(p)) as typeof fs.readdirSync,
+          },
+        }).code,
+      )?.[1];
+    };
 
     it("matches a style file for an extension-less template name", () => {
       assert.equal(
-        getStyleFile.default(fakeFile("/dir/widget", ["widget.style.css"])),
+        styleFile("/dir/widget", ["widget.style.css"]),
         "./widget.style.css",
       );
     });
 
     it("strips arc flags from the template name", () => {
       assert.equal(
-        getStyleFile.default(
-          fakeFile("/dir/widget[mobile].marko", ["widget.style.css"]),
-        ),
+        styleFile("/dir/widget[mobile].marko", ["widget.style.css"]),
         "./widget.style.css",
       );
     });
 
     it("returns undefined when no style file matches", () => {
+      assert.equal(styleFile("/dir/widget.marko", ["other.css"]), undefined);
+    });
+
+    it("matches the first style file in sorted order, however listed", () => {
       assert.equal(
-        getStyleFile.default(fakeFile("/dir/widget.marko", ["other.css"])),
-        undefined,
+        styleFile("/dir/widget.marko", [
+          "widget.style.less",
+          "widget.style.css",
+        ]),
+        "./widget.style.css",
       );
     });
   });

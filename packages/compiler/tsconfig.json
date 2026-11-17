@@ -5,7 +5,8 @@
     "src/taglib",
     "src/util/fs.ts",
     "src/util/resolve.ts",
-    "src/taglib/*.json"
+    "src/taglib/*.json",
+    "src/babel-utils/get-file.js"
   ],
   "compilerOptions": {
     "skipLibCheck": false,

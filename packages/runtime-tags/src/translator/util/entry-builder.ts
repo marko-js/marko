@@ -1,6 +1,6 @@
 import path from "path";
 
-import { types as t } from "@marko/compiler";
+import { taglib, types as t } from "@marko/compiler";
 import {
   getTemplateId,
   resolveRelativePath,
@@ -193,10 +193,11 @@ const builder = {
     }
 
     if (isRoot) state.bundledDepth++;
-    // The templates its analysis loaded, which the compiler keeps on the file.
-    const analyzedFiles: ReadonlyMap<string, t.BabelFile> = (file as any)
+    // The templates its analysis loaded (`null` when not found), kept on the file.
+    const analyzedFiles: ReadonlyMap<string, t.BabelFile | null> = (file as any)
       .___analyzedFiles;
     for (const [filename, childFile] of analyzedFiles) {
+      if (!childFile) continue;
       // A lazily imported subtree is loaded by its own load entry, never here.
       const lazy = loadImports?.has(filename);
       if (lazy) {
@@ -257,7 +258,9 @@ export function markReached(
   const seen = visited.get(filename);
   if (seen !== undefined && seen <= reach) return false;
   visited.set(filename, reach);
-  // The entry reads its analysis, so lists it as the compiler lists one it loads.
-  ((entryFile.metadata.marko as any).analyzedTags ||= new Set()).add(filename);
+  // The entry reads its analysis: recorded as a load records it, unless it loaded it.
+  if (seen === undefined && !(entryFile as any).___loadedFiles.has(filename)) {
+    taglib.addFileDependency(filename);
+  }
   return true;
 }

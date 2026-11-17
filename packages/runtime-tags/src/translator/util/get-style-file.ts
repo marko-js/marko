@@ -1,28 +1,29 @@
 import path from "path";
 
-import type { types as t } from "@marko/compiler";
+import { taglib, type types as t } from "@marko/compiler";
+
+// What an `index.marko`'s style file is named, with any extension.
+const indexStyleNames = ["style", "index.style"];
 
 export default function getStyleFile(file: t.BabelFile) {
   const { filename } = file.opts;
-  const fs = file.markoOpts.fileSystem;
   const base = getBase(filename);
+  const isIndex = "index" === base;
   const styleMatch = new RegExp(
-    `^(${escapeRegExp(base)}\\.${"index" === base ? "|" : ""})style\\.\\w+$`,
+    `^(${escapeRegExp(base)}\\.${isIndex ? "|" : ""})style\\.\\w+$`,
   );
-
-  let dirFiles: string[];
-  try {
-    dirFiles = fs.readdirSync(path.dirname(filename)).sort();
-  } catch {
-    // An in-memory source may name a directory that does not exist.
-    return;
-  }
-
-  for (const file of dirFiles) {
-    if (styleMatch.test(file)) {
-      return `./${file}`;
+  const entries = taglib.addDirectoryDependency(
+    path.dirname(filename),
+    isIndex ? indexStyleNames : [base + ".style"],
+  );
+  // The first in sorted order, as they come unsorted.
+  let styleFile: string | undefined;
+  for (const entry of entries) {
+    if ((!styleFile || entry < styleFile) && styleMatch.test(entry)) {
+      styleFile = entry;
     }
   }
+  return styleFile && `./${styleFile}`;
 }
 
 /**

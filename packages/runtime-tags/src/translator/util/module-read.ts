@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 
 import { isCoreTagName } from "./is-core-tag";
 
-// The stylesheet modules `@marko/vite` keeps by path (its `styleImportReg`).
+// An import of a stylesheet module, told by its path.
 const styleImportReg =
   /\.(?:css(?:\.[cm]?[jt]s)?|less|s[ac]ss|styl(?:us)?|pcss|postcss)(?:\?|$)/i;
 

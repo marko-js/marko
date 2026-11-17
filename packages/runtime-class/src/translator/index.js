@@ -109,10 +109,6 @@ export const analyze = {
       if (!isNativeTag(tag)) {
         relativePath = resolveRelativeTagEntry(file, tagDef);
       }
-
-      if (tagDef.translator && tagDef.translator.path) {
-        meta.watchFiles.push(tagDef.translator.path);
-      }
     }
 
     if (!relativePath && t.isStringLiteral(tag.node.name)) {

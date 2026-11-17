@@ -73,7 +73,6 @@ export function parseMarko(file) {
 function createMarkoBuilder(file) {
   const { code } = file;
   const { htmlParseOptions = {} } = file.markoOpts;
-  const { watchFiles } = file.metadata.marko;
   const program = file.ast.program;
   const root = { node: undefined, body: program, parent: undefined };
   const parseVisits = [];
@@ -686,7 +685,6 @@ function createMarkoBuilder(file) {
 
       if (parserPlugin) {
         const { hook } = parserPlugin;
-        if (parserPlugin.path) watchFiles.push(parserPlugin.path);
         parseVisits.push(hook.default || hook, frame);
       }
 

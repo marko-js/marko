@@ -33,7 +33,6 @@ function getTransformersForTag(path) {
   const {
     hub: { file },
   } = path;
-  const { watchFiles } = file.metadata.marko;
   const tagName = path.get("name.value").node || "*";
   const TRANSFORMER_CACHE = (file.TRANSFORMER_CACHE =
     file.TRANSFORMER_CACHE || Object.create(null));
@@ -45,9 +44,6 @@ function getTransformersForTag(path) {
     const addTransformers = (tagDef) => {
       if (tagDef && tagDef.transformers) {
         for (const transformer of tagDef.transformers) {
-          if (transformer.path) {
-            watchFiles.push(transformer.path);
-          }
           transformers.push(transformer.hook.default || transformer.hook);
         }
       }

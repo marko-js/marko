@@ -49,7 +49,6 @@ export const entryBuilder = {
     const entryMarkoMeta = entryFile.metadata.marko;
     const { body } = state;
     let didExportInit = false;
-    entryMarkoMeta.watchFiles = [...state.watchFiles];
     entryMarkoMeta.deps = [...state.lassoDeps];
 
     if (state.hasComponents) {
@@ -97,7 +96,6 @@ export const entryBuilder = {
     const fileName = file.opts.filename;
     const state = (entryFile[kEntryState] ||= {
       shouldIncludeImport: toTestFn(file.markoOpts.hydrateIncludeImports),
-      watchFiles: new Set(),
       imports: new Set(),
       lassoDeps: new Set(),
       hasComponents: false,
@@ -105,7 +103,7 @@ export const entryBuilder = {
       body: [],
     });
 
-    const { watchFiles, imports, lassoDeps, body } = state;
+    const { imports, lassoDeps, body } = state;
 
     if (fileMeta.implicitSplitComponent) {
       state.hasComponents = true;
@@ -119,12 +117,6 @@ export const entryBuilder = {
         addImport(imports, body, resolveRelativePath(entryFile, fileName));
         return;
       }
-    }
-
-    watchFiles.add(fileName);
-
-    for (const watchFile of fileMeta.watchFiles) {
-      watchFiles.add(watchFile);
     }
 
     addBrowserImports(imports, lassoDeps, body, file, entryFile);

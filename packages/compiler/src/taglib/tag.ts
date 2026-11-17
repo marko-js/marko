@@ -10,8 +10,9 @@ import type {
 import markoModules from "@marko/compiler/modules";
 import { resolveSync } from "resolve-sync";
 
-import { exists, type FileSystem } from "../util/fs";
+import { exists } from "../util/fs";
 import { mainField, resolveFrom, resolveFS } from "../util/resolve";
+import { LookupDependencies } from "./dependencies";
 import { isProps, type Props } from "./json";
 import type { Taglib } from "./taglib";
 
@@ -52,10 +53,10 @@ export function loadTag(
         tag.name = value as string;
         break;
       case "template":
-        tag.template = resolveTemplate(taglib.fs, dirname, value as string);
+        tag.template = resolveTemplate(taglib, dirname, value as string);
         break;
       case "renderer":
-        tag.renderer = resolveRenderer(taglib.fs, dirname, value as string);
+        tag.renderer = resolveRenderer(taglib, dirname, value as string);
         // A `.marko` renderer is the tag's template too.
         if (tag.renderer.endsWith(".marko")) tag.template ||= tag.renderer;
         break;
@@ -432,9 +433,11 @@ function mergeObjects<T extends object>(
   return base && ext ? { ...base, ...ext } : base || ext;
 }
 
-function resolveTemplate(fs: FileSystem, dirname: string, value: string) {
+// Only whether it exists matters to the lookup; a compile of it reads it.
+function resolveTemplate(taglib: Taglib, dirname: string, value: string) {
   const path = nodePath.resolve(dirname, value);
-  if (!exists(fs, path)) {
+  if (taglib.deps) LookupDependencies.addFound(taglib.deps, path);
+  if (!exists(taglib.fs, path)) {
     throw new Error(`Template at path "${path}" does not exist.`);
   }
   return path;
@@ -442,16 +445,16 @@ function resolveTemplate(fs: FileSystem, dirname: string, value: string) {
 
 // A relative renderer resolves through the compile's file system, trying the
 // extensions `require` loads, then `.marko`.
-function resolveRenderer(fs: FileSystem, dirname: string, value: string) {
+function resolveRenderer(taglib: Taglib, dirname: string, value: string) {
   if (value[0] !== ".") return value;
 
   return (
     resolveSync(value, {
-      from: resolveFrom(fs, dirname),
+      from: resolveFrom(taglib.fs, dirname),
       exts: requireExtensions(),
       fields: mainField,
       silent: true,
-      fs: resolveFS(fs),
+      fs: resolveFS(taglib.fs, taglib.deps),
     }) || value
   );
 }

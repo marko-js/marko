@@ -3,6 +3,7 @@ import { basename, dirname, join, relative, resolve, sep } from "path";
 import { types as t } from "@marko/compiler";
 import markoModules from "@marko/compiler/modules";
 
+import { CompileDependencies } from "../taglib/dependencies";
 import { Hash } from "../util/quick-hash";
 import { resolveImport } from "../util/resolve";
 import { diagnosticWarn } from "./diagnostics";
@@ -286,26 +287,32 @@ function resolveMarkoFile(file, filename) {
     return file.___getMarkoFile(file.code, file.opts, file.markoOpts);
   }
 
-  // Analysis keeps references into each template it read, so later loads,
-  // translate's included, get that same template rather than a newer cache entry.
+  // Later loads, translate's included, get the template loaded before (`null`
+  // when not found) rather than a newer cache entry.
   const loadedFile = file.___loadedFiles.get(filename);
-  if (loadedFile) return loadedFile;
+  if (loadedFile !== undefined) return loadedFile || undefined;
 
+  const { dependencies } = file.metadata.marko;
+  let code;
   try {
-    const childFile = file.___getMarkoFile(
-      file.markoOpts.fileSystem.readFileSync(filename).toString("utf-8"),
-      createNewFileOpts(file.opts, filename),
-      file.markoOpts,
-    );
-
-    file.___loadedFiles.set(filename, childFile);
-    (file.metadata.marko.analyzedTags ||= new Set()).add(filename);
-    return childFile;
+    code = file.markoOpts.fileSystem.readFileSync(filename, "utf-8");
   } catch (err) {
-    // A file that exists but fails to compile is not a missing tag, so only a
-    // genuinely absent file is swallowed; the child's error surfaces instead.
+    // Only an absent file is not found; any other read error surfaces.
     if (err?.code !== "ENOENT" && err?.code !== "ENOTDIR") throw err;
+    file.___loadedFiles.set(filename, null);
+    CompileDependencies.addMissing(dependencies, filename);
+    return;
   }
+
+  // A change to it can change this template's analysis.
+  CompileDependencies.addFile(dependencies, filename);
+  const childFile = file.___getMarkoFile(
+    code,
+    createNewFileOpts(file.opts, filename),
+    file.markoOpts,
+  );
+  file.___loadedFiles.set(filename, childFile);
+  return childFile;
 }
 
 const idCache = new WeakMap();
@@ -344,7 +351,7 @@ export function getTemplateId(opts, request, child) {
       if (registered) {
         if (child) {
           // Numbered in request order, so the html and dom compiles must share
-          // one `optimizeKnownTemplates` array (as `@marko/vite` does) to agree.
+          // one `optimizeKnownTemplates` array to agree.
           let childId = registered.children.get(child);
           if (childId === undefined) {
             childId = registered.children.size;
