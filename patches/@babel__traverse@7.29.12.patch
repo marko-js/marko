@@ -1,3 +1,21 @@
+diff --git a/lib/cache.js b/lib/cache.js
+index 1b4f743..83f9f63 100644
+--- a/lib/cache.js
++++ b/lib/cache.js
+@@ -26,9 +26,12 @@ function getCachedPaths(path) {
+     parent,
+     parentPath
+   } = path;
+-  return pathsCache.get(parent);
++  return parentPath ? parentPath._store : pathsCache.get(parent);
+ }
+ function getOrCreateCachedPaths(node, parentPath) {
++  if (parentPath) {
++    return parentPath._store || (parentPath._store = new Map());
++  }
+   let paths = pathsCache.get(node);
+   if (!paths) pathsCache.set(node, paths = new Map());
+   return paths;
 diff --git a/lib/scope/index.js b/lib/scope/index.js
 index a607471..50580ac 100644
 --- a/lib/scope/index.js

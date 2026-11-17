@@ -16,6 +16,7 @@ import {
   types as t,
 } from "@marko/compiler";
 import { diagnosticError } from "@marko/compiler/babel-utils";
+import { File } from "@marko/compiler/internal/babel";
 import * as translator from "@marko/runtime-tags/translator";
 
 const template = path.join(
@@ -890,4 +891,17 @@ describe("compiler/compile", () => {
       () => compile("<div", template),
       /EOF reached while parsing/,
     ));
+
+  // The bundled traverse keeps a path's children on the path, as Babel 8 does.
+  describe("babel paths", () => {
+    it("gives each file its own paths for the nodes they share", () => {
+      const program = t.program([t.expressionStatement(t.identifier("a"))]);
+      const files = [0, 1].map(
+        () => new File({}, { code: "a", ast: t.file(program) }),
+      );
+      const [first, second] = files.map((file) => file.path.get("body.0"));
+      assert.notEqual(first, second);
+      assert.equal(second.hub, files[1].hub);
+    });
+  });
 });
