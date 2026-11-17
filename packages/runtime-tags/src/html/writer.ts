@@ -749,39 +749,6 @@ export class State implements Channel {
     flushSerializer(boundary, this);
   }
 
-  // The `$global` values `serializedGlobals` names, written once as scope 0.
-  getSerializedGlobals() {
-    const { $global } = this;
-    const serializedGlobals = $global.serializedGlobals as
-      | string[]
-      | Record<string, boolean>
-      | undefined;
-
-    if (!serializedGlobals) return 0;
-
-    let filtered: 0 | Record<string, unknown> = 0;
-
-    if (Array.isArray(serializedGlobals)) {
-      for (const key of serializedGlobals) {
-        const value = $global[key];
-        if (value !== undefined) {
-          (filtered ||= {})[key] = value;
-        }
-      }
-    } else {
-      for (const key in serializedGlobals) {
-        if (serializedGlobals[key]) {
-          const value = $global[key];
-          if (value !== undefined) {
-            (filtered ||= {})[key] = value;
-          }
-        }
-      }
-    }
-
-    return filtered;
-  }
-
   // Installs the walker runtime and opens this render's data.
   runtimeScript() {
     return (
@@ -1680,7 +1647,7 @@ function flushSerializer(boundary: Boundary, channel: Channel) {
     // values assigned mid-render are dropped — call is unsupported by design.
     if (!channel.readyId && !state.hasWrittenGlobals) {
       state.hasWrittenGlobals = true;
-      const globals = state.getSerializedGlobals();
+      const globals = getFilteredGlobals(state.$global);
       // Globals become scope 0 so we can reference them as `_(0)`.
       if (globals) flushes.push([0, globals, globals]);
     }
@@ -1718,7 +1685,7 @@ function flushSerializerGlobals(boundary: Boundary) {
   const { state } = boundary;
   if (state.hasWrittenGlobals) return;
   state.hasWrittenGlobals = true;
-  const globals = state.getSerializedGlobals();
+  const globals = getFilteredGlobals(state.$global);
   if (globals) {
     state.needsWalkerRuntime = true;
     state.resumes = concatSequence(
@@ -1750,6 +1717,37 @@ function readyBatch(
   }
   if (resumes) own[readyId]++;
   return concatSequence(wait && wait + "}", resumes);
+}
+
+function getFilteredGlobals($global: Record<string, unknown>) {
+  const serializedGlobals = $global.serializedGlobals as
+    | string[]
+    | Record<string, boolean>
+    | undefined;
+
+  if (!serializedGlobals) return 0;
+
+  let filtered: 0 | Record<string, unknown> = 0;
+
+  if (Array.isArray(serializedGlobals)) {
+    for (const key of serializedGlobals) {
+      const value = $global[key];
+      if (value !== undefined) {
+        (filtered ||= {})[key] = value;
+      }
+    }
+  } else {
+    for (const key in serializedGlobals) {
+      if (serializedGlobals[key]) {
+        const value = $global[key];
+        if (value !== undefined) {
+          (filtered ||= {})[key] = value;
+        }
+      }
+    }
+  }
+
+  return filtered;
 }
 
 function concatEffects(a: string, b: string) {
