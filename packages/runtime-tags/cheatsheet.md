@@ -94,12 +94,18 @@ Don't fetch while rendering: start data loads early, pass the promise through th
 
 ## Components
 
-- File `src/tags/product-card.marko` is auto-discovered as `<product-card>` from any template (no import needed). Attributes arrive as `input`: `${input.title}`.
+- File `src/tags/product-card.marko` is auto-discovered as `<product-card>` from any template (no import needed). Attributes arrive as `input` (`${input.title}`), typed by the template's `export interface Input` (see TypeScript).
 - Body content renders where the child places `<${input.content}/>`, and the child can hand it values: `<${input.content}(x, y)/>` in the child, `<my-tag|count, total|>${count}</my-tag>` in the parent. Placement is the child's: put it inside a `<for>` and the body appears once per item, each with its own values (`<for|...args| to=input.to><${input.content}(...args)/></>`). Those values exist only inside that body.
 - `<return=value>` publishes one value into the parent's scope, named by a tag variable; from there it is an ordinary value in that template. A native tag variable's value is itself a function returning the element, so `<div/el>` is read as `el()`. So: body parameters when the value belongs to the nested markup, including one set per item where the child loops; a tag variable when the parent needs one value outside the body. A tag var on a child that never returns is `undefined`.
 
 ```marko
 /* src/tags/toggle-section.marko */
+export interface Input {
+  title: string;
+  startExpanded?: boolean;
+  content: Marko.Body;
+}
+
 <let/open=input.startExpanded ?? false>
 <button onClick() { open = !open }>${input.title}</button>
 <if=open><div><${input.content}/></div></if>
@@ -121,6 +127,11 @@ Don't fetch while rendering: start data loads early, pass the promise through th
 </my-card>
 
 /* src/tags/my-card.marko */
+export interface Input {
+  header: Marko.AttrTag<{ content: Marko.Body }>;
+  content: Marko.Body;
+}
+
 <div class="card">
   <header><${input.header.content}/></header>
   <${input.content}/>
