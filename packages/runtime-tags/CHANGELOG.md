@@ -1,5 +1,39 @@
 # @marko/runtime-tags
 
+## 6.5.0
+
+### Minor Changes
+
+- [#4732](https://github.com/marko-js/marko/pull/4732) [`e06cace`](https://github.com/marko-js/marko/commit/e06cace2fe9c8c165f1e78e15322b4baebc1116e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add the `Marko.TemplateOf<Signature>` type: a template typed by its signature as a tag, such as a generic template's `<T>(input: Input<T>) => Return<T>`, so that a declaration can state a generic template's type with Marko's public types alone.
+
+### Patch Changes
+
+- [#4708](https://github.com/marko-js/marko/pull/4708) [`6ef72e0`](https://github.com/marko-js/marko/commit/6ef72e0651916305481e47eb9ac71f0cb271dd55) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A recursive `<define>` whose recursive call passes a param back (`depth=depth - 1`) now writes server data for that param only where its outer calls do, instead of guarding it at runtime in every render.
+
+- [#4710](https://github.com/marko-js/marko/pull/4710) [`e3b829c`](https://github.com/marko-js/marko/commit/e3b829c15f071d41b12aee84d063ae3581b0151c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Compile a recursive tag whose values branch and rejoin before it passes them back to itself in time linear in its size, instead of doubling with every branch.
+
+- [#4715](https://github.com/marko-js/marko/pull/4715) [`6b8d09a`](https://github.com/marko-js/marko/commit/6b8d09aee25e8c71a1eb8693d4561a1a7e785740) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - The deprecated `<attrs>` and `<effect>` tags no longer make an interop template Tags API: a template whose only Tags API sign was one of them is now Class API, which has neither tag (mark it `<!-- use tags -->` or move it into a `tags/` directory).
+
+- [#4712](https://github.com/marko-js/marko/pull/4712) [`7b8c967`](https://github.com/marko-js/marko/commit/7b8c967f7d2c657720db9fde505588c5c11b5366) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Compile faster by looking for a child `<return>` a render waits for only in sections with a tag variable that holds one.
+
+- [#4711](https://github.com/marko-js/marko/pull/4711) [`4559697`](https://github.com/marko-js/marko/commit/45596976c9de6a45ee89cc56b124c99e90992538) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Run the effects and event handlers of a `<try>` that finishes loading while an enclosing `<try>` is still pending, which were dropped.
+
+- [#4704](https://github.com/marko-js/marko/pull/4704) [`ae6e5c0`](https://github.com/marko-js/marko/commit/ae6e5c07ddb212327c0000d31c1711e150fd29b1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a `<for>` key read through a `<const>` rendering empty when content in a resumed row, such as an `<if>` toggled by state outside the loop, is shown again.
+
+- [#4727](https://github.com/marko-js/marko/pull/4727) [`e5031a6`](https://github.com/marko-js/marko/commit/e5031a6bbca36a614328d38428f54b040ce8a563) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - `$global.cspNonce` now always reaches the client `$global`, so a `<script>` or `<style>` rendered in the browser gets the nonce without listing it in `serializedGlobals`.
+
+- [#4716](https://github.com/marko-js/marko/pull/4716) [`bbd8075`](https://github.com/marko-js/marko/commit/bbd8075179f7bb2e44c33f74cc4b14d26bce70e4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A page entry walks the templates each template's analysis loaded rather than loading each again through the entry, so a compile whose analyses are cached reads none of them from disk, and a Marko 5 project's page entry imports a root that several templates reach once.
+
+- [#4729](https://github.com/marko-js/marko/pull/4729) [`33d16eb`](https://github.com/marko-js/marko/commit/33d16eb627e3e93a7ab995c81ca3b20e31270ff7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Server output inlines a write guard read only once instead of declaring it, since the section's marker guard is now built only where it is used.
+
+- [#4718](https://github.com/marko-js/marko/pull/4718) [`d0a4eba`](https://github.com/marko-js/marko/commit/d0a4ebaf88dd90d28b92c753c77a945cb3eeba21) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Keep the html runtime's generator patch out of the translator, so loading the compiler no longer replaces `next` on every generator in the build process.
+
+- [#4707](https://github.com/marko-js/marko/pull/4707) [`9b3c45e`](https://github.com/marko-js/marko/commit/9b3c45ebe11878a382bc7f8416f682db6f082127) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Server output for a `<define>` no longer keeps a write guard group that nothing writes, which shifted the index of every later guard.
+
+- [#4705](https://github.com/marko-js/marko/pull/4705) [`1382bad`](https://github.com/marko-js/marko/commit/1382bad4020d1d110865ddc61642adabaa600633) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a value that reads a property of something computed from a tag variable (`<child/r/>`, `<const/o={ ...r }/>`, then `${o.a + other}`) rendering before the tag's `<return>` updates, which left stale text after an update and showed `NaN` when rendered in the browser.
+- Updated dependencies [[`bbd8075`](https://github.com/marko-js/marko/commit/bbd8075179f7bb2e44c33f74cc4b14d26bce70e4), [`732f283`](https://github.com/marko-js/marko/commit/732f283d1ce1d3aba2778cd9b86344b24a8df8ef), [`942b5e6`](https://github.com/marko-js/marko/commit/942b5e60bb6536e4225a02c4e9d91b39f6d7907f)]:
+  - @marko/compiler@5.43.5
+
 ## 6.4.16
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.43.5
+
+### Patch Changes
+
+- [#4716](https://github.com/marko-js/marko/pull/4716) [`bbd8075`](https://github.com/marko-js/marko/commit/bbd8075179f7bb2e44c33f74cc4b14d26bce70e4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A file being translated keeps the templates its analysis loaded apart from those its translate loads.
+
+- [#4720](https://github.com/marko-js/marko/pull/4720) [`732f283`](https://github.com/marko-js/marko/commit/732f283d1ce1d3aba2778cd9b86344b24a8df8ef) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix every compile throwing `Cannot read properties of undefined (reading 'findConfigFile')` when the app depends on `@babel/core` but `browserslist` cannot be loaded from `@marko/compiler` (eg Yarn Plug'n'Play): without `browserslist` no browserslist config is searched for, and targets that need it (browser queries, a named browserslist config, `esmodules`) fail with an error naming the missing package.
+
+- [#4721](https://github.com/marko-js/marko/pull/4721) [`942b5e6`](https://github.com/marko-js/marko/commit/942b5e60bb6536e4225a02c4e9d91b39f6d7907f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Set Babel's Marko plugin up once instead of once per set of compile options, so compiles whose options are new objects each time (a new `babelConfig`, `fileSystem` or `resolveVirtualDependency` per file) no longer set it up again for every template. An unset `optimize` now follows `NODE_ENV`/`MARKO_DEBUG` on every compile; compiles that shared their options and cache kept the first compile's value.
+
 ## 5.43.4
 
 ### Patch Changes
