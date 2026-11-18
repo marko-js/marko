@@ -322,32 +322,28 @@ export function trackParamsReferences(
       const param = params[i];
       if (param.type === "RestElement") {
         assertRestNotAssigned(body.scope, param.argument);
-      }
-      if (
-        i === 0 &&
-        param.type === "RestElement" &&
-        param.argument.type === "Identifier"
-      ) {
-        // `|...args|` names the whole params array, so `args` is that binding.
-        const { argument } = param;
-        paramsBinding.name = argument.name;
-        paramsBinding.declared = true;
-        (argument.extra ??= {}).binding = paramsBinding;
-        trackReferencesForBinding(
-          body.scope.getBinding(argument.name)!,
-          paramsBinding,
-        );
-      } else if (param.type === "RestElement") {
-        createBindingsAndTrackReferences(
-          param.argument,
-          type,
-          body.scope,
-          section,
-          paramsBinding,
-          undefined,
-          i > 0 ? addNumericPropertiesUntil(undefined, i) : undefined,
-          i,
-        );
+        if (i === 0 && param.argument.type === "Identifier") {
+          // `|...args|` names the whole params array, so `args` is that binding.
+          const { argument } = param;
+          paramsBinding.name = argument.name;
+          paramsBinding.declared = true;
+          (argument.extra ??= {}).binding = paramsBinding;
+          trackReferencesForBinding(
+            body.scope.getBinding(argument.name)!,
+            paramsBinding,
+          );
+        } else {
+          createBindingsAndTrackReferences(
+            param.argument,
+            type,
+            body.scope,
+            section,
+            paramsBinding,
+            undefined,
+            addNumericPropertiesUntil(undefined, i),
+            i,
+          );
+        }
       } else if (t.isLVal(param)) {
         createBindingsAndTrackReferences(
           param,
@@ -1062,7 +1058,7 @@ export function addRead(
   getter: Getter | undefined,
 ) {
   // Every read records the expression it sits in, before any merge.
-  (extra as ReadExtra).exprRoot = exprRoot;
+  extra.exprRoot = exprRoot;
   const readsByExpression = getReadsByExpression();
   const read: Read = {
     binding,
