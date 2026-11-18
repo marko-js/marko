@@ -11,7 +11,7 @@ Marko is a modern UI framework for building web applications. It features a decl
 
 The Marko documentation is the source of truth for all Marko-related information. Always refer to the official docs for information about syntax and behavior. Marko changes over time, so prefer fetching current docs over relying on training data.
 
-The [docs index](https://markojs.com/llms.txt) lists every available page with its URL and a short description. Read it before writing code, and fetch the page for each feature you use, not just getting-started.
+The [docs index](https://markojs.com/llms.txt) lists every available page with its URL and a short description.
 
 All Marko docs pages can be fetched as markdown by appending `.md` to the URL (<https://markojs.com/docs/introduction/getting-started.md>)
 
@@ -28,4 +28,4 @@ Documentation and this skill target **Marko 6**. Do not use Marko 5 syntax.
 - [ ] Component stays small and readable; consider splitting large templates.
 - [ ] No unnecessary client-side JS; prefer built-in browser APIs and HTML/CSS features over scripts.
 - [ ] Props are declared with an exported `Input` interface, and templates are type checked with `mtc` (`@marko/type-check`) — `tsc` skips `.marko` files and reports nothing.
-- [ ] About to add an `onChange` prop? Make the state **controllable** instead: `<let/value:=input.value>` with `value?` and `valueChange?` in `Input`, so a parent can bind `<my-tag value:=x>` or omit it. See [Controllable Components](https://markojs.com/docs/explanation/controllable-components.md).
+- [ ] Never pair a value with a handler that writes it back (`checked=x onChange() { x = … }`, `<my-tag open=x onToggle(v) { x = v }>`). Bind with `:=` instead (`<input checked:=x>`, `<my-tag open:=x>`), and make custom-tag state controllable: `<let/open:=input.open>` with `open?` and `openChange?` in `Input`. See [Controllable Components](https://markojs.com/docs/explanation/controllable-components.md).
