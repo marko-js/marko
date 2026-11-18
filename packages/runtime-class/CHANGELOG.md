@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.42.0
+
+### Minor Changes
+
+- [#4744](https://github.com/marko-js/marko/pull/4744) [`f106d41`](https://github.com/marko-js/marko/commit/f106d41802e8dc896dee2bfcffba9e3afc99095f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add the `Marko.ComponentInput<Module>` type: the input of the component a module exports (a class, or an object), such as a split component's file, so that a declaration can state a template's input as its component's with Marko's public types alone: `export type Input = Marko.ComponentInput<typeof import("./component")>`.
+
+### Patch Changes
+
+- Updated dependencies [[`6210a47`](https://github.com/marko-js/marko/commit/6210a47517c0440ca10e1c1f432d7cb85cf7e0a2)]:
+  - @marko/runtime-tags@6.5.1
+
 ## 5.41.0
 
 ### Minor Changes

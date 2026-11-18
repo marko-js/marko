@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.5.1
+
+### Patch Changes
+
+- [#4742](https://github.com/marko-js/marko/pull/4742) [`6210a47`](https://github.com/marko-js/marko/commit/6210a47517c0440ca10e1c1f432d7cb85cf7e0a2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - `<for>` rows, `<await>` and `<@catch>` bodies receive their params as arguments instead of an array, removing an allocation per row, settle and catch. `<for>` and `<@catch>` now reject rest params, and `<@catch>` a second param, at compile time, as `<await>` already did.
+
 ## 6.5.0
 
 ### Minor Changes
