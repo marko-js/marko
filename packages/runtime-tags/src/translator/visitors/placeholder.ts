@@ -1,10 +1,9 @@
 import { types as t } from "@marko/compiler";
 
-import { _escape, _unescaped } from "../../html/content";
+import { _escape } from "../../html/content";
 import { BindingType, createBinding } from "../util/bindings";
 import { injectTextCoercion } from "../util/body-to-text";
 import buildStringExpression from "../util/build-string-expression";
-import evaluate from "../util/evaluate";
 import { isOutputHTML } from "../util/marko-config";
 import { addReasonExprs } from "../util/reasons";
 import { replaceWithStatements } from "../util/replace-with-statements";
@@ -24,7 +23,6 @@ import { addSetupExpr } from "../util/setup-work";
 import { addStatement } from "../util/signals";
 import { ensureSlot } from "../util/slots";
 import {
-  followsStaticText,
   getPlaceholderContentType,
   getStaticPlaceholderText,
 } from "../util/static-text";
@@ -92,11 +90,6 @@ export default {
             // A side at its section's edge leaves it to whether the section is a known child.
             (before === false && after === false ? false : undefined),
         );
-      }
-
-      // Adjacent static text merges into one DOM text node, so only the run's
-      // first node emits its walk step; later nodes defer to it.
-      if (contentType !== ContentType.Text || !followsStaticText(placeholder)) {
         structure.enterShallow(placeholder);
       }
     },
@@ -120,24 +113,15 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     return;
   }
 
-  const { confident, computed } = evaluate(value);
-
   const isHTML = isOutputHTML();
   const write = writer.writeTo(placeholder);
   const extra = node.extra || {};
   const nodeBinding = extra.nodeBinding;
-  const canWriteHTML = isHTML || (confident && node.escape);
-  const method = canWriteHTML
-    ? node.escape
-      ? "_escape"
-      : "_unescaped"
-    : node.escape
-      ? "_text"
-      : "_html";
+  const text = getStaticPlaceholderText(node);
 
-  if (confident && canWriteHTML) {
+  if (text !== undefined && (isHTML || node.escape)) {
     if (isHTML) {
-      write`${node.escape ? _escape(computed) : _unescaped(computed)}`;
+      write`${text}`;
     }
   } else {
     const section = getSection(placeholder);
@@ -159,9 +143,9 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
         )}`;
       } else {
         write`${
-          method === "_escape"
+          node.escape
             ? buildEscapedTextExpression(value)
-            : callRuntime(method, value)
+            : callRuntime("_unescaped", value)
         }`;
       }
     } else {
@@ -169,7 +153,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
         "render",
         section,
         value.extra,
-        method === "_text"
+        node.escape
           ? callRuntime("_text", createScopeReadExpression(nodeBinding!), value)
           : callRuntime(
               "_html",

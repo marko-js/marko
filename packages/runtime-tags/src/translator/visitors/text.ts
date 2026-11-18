@@ -2,7 +2,6 @@ import { types as t } from "@marko/compiler";
 
 import { isOutputHTML } from "../util/marko-config";
 import { replaceWithStatements } from "../util/replace-with-statements";
-import { followsStaticText } from "../util/static-text";
 import * as structure from "../util/structure";
 import { isInTextBody } from "../util/tag-facts";
 import type { TemplateVisitor } from "../util/visitors";
@@ -14,11 +13,6 @@ export default {
       if (isInTextBody(text)) return;
 
       structure.writeTextTo(text, text.node.value);
-      // Adjacent static text merges into one DOM text node, so only the run's
-      // first node emits its walk step; later nodes defer to it.
-      if (!followsStaticText(text)) {
-        structure.enterShallow(text);
-      }
     },
   },
   translate: {
