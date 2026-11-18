@@ -349,6 +349,18 @@ declare global {
       readonly _: Signature;
     }
 
+    /**
+     * The input of the component a module exports (a class, or an object), eg of
+     * a split component's file: `Marko.ComponentInput<typeof import("./component")>`.
+     */
+    export type ComponentInput<Module> = 0 extends 1 & Module
+      ? any
+      : Module extends { default: infer Exported }
+        ? ComponentInput<Exported>
+        : Module extends abstract new (...args: any) => infer Instance
+          ? (Instance & Component)["input"]
+          : (Module & Component)["input"];
+
     export type AttrTag<T> = T & {
       [Symbol.iterator](): Iterator<T>;
     };
