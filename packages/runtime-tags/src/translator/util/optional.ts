@@ -27,33 +27,18 @@ export class Sorted<T> {
     a: SortedOpt<U>,
     b: SortedOpt<U>,
   ): SortedOpt<U> {
-    if (a !== undefined) {
-      if (Array.isArray(a)) {
-        if (b !== undefined) {
-          if (Array.isArray(b)) {
-            return a === b
-              ? a
-              : (unionSorted(this.compare, a, b) as SortedOpt<U>);
-          } else {
-            return addSorted(this.compare, a, b) as SortedOneMany<U>;
-          }
-        }
-
-        return a;
-      }
-
-      if (b !== undefined) {
-        if (Array.isArray(b)) {
-          return addSorted(this.compare, b, a) as SortedMany<U>;
-        }
-
-        return joinRepeatable(this.compare, b, a) as SortedOneMany<U>;
-      }
-
-      return a;
+    if (a === undefined) return b;
+    if (b === undefined) return a;
+    if (Array.isArray(a)) {
+      return Array.isArray(b)
+        ? a === b
+          ? a
+          : (unionSorted(this.compare, a, b) as SortedOpt<U>)
+        : (addSorted(this.compare, a, b) as SortedOneMany<U>);
     }
-
-    return b;
+    return Array.isArray(b)
+      ? (addSorted(this.compare, b, a) as SortedMany<U>)
+      : (joinRepeatable(this.compare, b, a) as SortedOneMany<U>);
   }
 
   // Dropping items keeps the order; `data` itself when none drop, so `!==`
@@ -101,23 +86,6 @@ export class Sorted<T> {
       : data !== undefined && compareKeys(key(data), bound) < 0
         ? data
         : undefined;
-  }
-
-  // The items whose key is `bound`, found by binary search to their start and
-  // galloping to their end; `data` itself when all are.
-  range<U extends NonNullable<T>, K>(
-    data: SortedOpt<U>,
-    key: (item: U) => K,
-    compareKeys: Compare<K>,
-    bound: K,
-  ): SortedOpt<U> {
-    if (!Array.isArray(data)) {
-      return data !== undefined && compareKeys(key(data), bound) === 0
-        ? data
-        : undefined;
-    }
-    const start = partitionPoint(data, key, compareKeys, bound);
-    return slice(data, start, gallop(data, start, key, compareKeys, bound));
   }
 
   // Calls `fn` with each run of items sharing a key, in order, galloping to its

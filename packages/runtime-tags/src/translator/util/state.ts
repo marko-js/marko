@@ -37,21 +37,21 @@ function createKeyedState<K extends object, T>(getKey: () => K, init: () => T) {
 
 // One value per section in each output being built.
 export function createOutputSectionState<T = unknown>(
-  init?: ((section: Section) => T) | (() => T),
+  init?: (section: Section) => T,
 ) {
   return createSectionState(createOutputState, init);
 }
 
 // One value per section in the analysis, which every output shares.
 export function createAnalysisSectionState<T = unknown>(
-  init?: ((section: Section) => T) | (() => T),
+  init?: (section: Section) => T,
 ) {
   return createSectionState(createAnalysisState, init);
 }
 
 function createSectionState<T>(
   createState: typeof createOutputState,
-  init: ((section: Section) => T) | (() => T) | undefined,
+  init: ((section: Section) => T) | undefined,
 ) {
   const [getBySection] = createState(() => new Map<Section, T>());
   return [

@@ -76,9 +76,9 @@ export default {
 
         forEach(section.hoisted, (binding) => {
           const highestHoistSection = first(binding.hoists!);
-          let currentSection: Section | undefined = section;
-          while (currentSection && currentSection !== highestHoistSection) {
-            const parentSection: Section = currentSection.parent!;
+          let currentSection = section;
+          while (currentSection !== highestHoistSection) {
+            const parentSection = currentSection.parent!;
             if (
               !isOptionalBranch(currentSection) &&
               !sectionDynamicSubscribers.has(currentSection)

@@ -6,7 +6,7 @@ import {
   withLoc,
 } from "@marko/compiler/babel-utils";
 
-import { getExprRoot, getFnRoot, getMarkoRoot } from "../util/get-root";
+import { getExprRoot, getFnRoot } from "../util/get-root";
 import { canIgnoreRegister, trackFunction } from "../util/module-registrations";
 import type { RegisteredFnExtra } from "../util/references";
 import { getSection } from "../util/sections";
@@ -49,8 +49,8 @@ export default {
     if (fn !== getFnRoot(fn)) return;
 
     const exprRoot = getExprRoot(fn);
-    const markoRoot = getMarkoRoot(exprRoot);
-    if (!markoRoot || canIgnoreRegister(markoRoot, exprRoot)) return;
+    const markoRoot = exprRoot.parentPath;
+    if (canIgnoreRegister(markoRoot, exprRoot)) return;
 
     const section = getSection(fn);
     const fnExtra = (node.extra ??= {}) as RegisteredFnExtra;

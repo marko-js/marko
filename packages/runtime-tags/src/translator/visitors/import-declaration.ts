@@ -75,7 +75,7 @@ export default {
         }
       }
 
-      if (!node.specifiers.some(t.isImportDefaultSpecifier)) {
+      if (!node.specifiers.length) {
         throw importDecl.buildCodeFrameError(
           "Invalid load import, a default specifier is required.",
         );
@@ -90,7 +90,7 @@ export default {
 
       // A lazy template's uses are wrapped as its import translates, which is
       // too late for content above it.
-      const { local } = node.specifiers.find(t.isImportDefaultSpecifier)!;
+      const { local } = node.specifiers[0];
       const useAbove = importDecl.scope
         .getBinding(local.name)!
         .referencePaths.find(
@@ -136,7 +136,7 @@ export default {
       const loadImport = extra?.loadImport;
       if (tagImport) {
         if (loadImport) {
-          const { local } = node.specifiers.find(t.isImportDefaultSpecifier)!;
+          const { local } = node.specifiers[0];
           const binding = importDecl.scope.getBinding(local.name)!;
           const file = getFile();
           const loadFile = loadFileForImport(file, node.source.value)!;

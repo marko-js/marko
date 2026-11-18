@@ -238,10 +238,7 @@ export function mapParamBindingToExpr(
   // rest grains, and aliases.
   const isWholeAlias =
     binding.property === undefined && binding.aliasOf !== undefined;
-  const curExpr = getKnownExprsAt(
-    exprs,
-    isWholeAlias ? binding.aliasOf! : binding,
-  );
+  const curExpr = getKnownExprsAt(exprs, binding);
 
   if (isWholeAlias) {
     let result: Opt<t.NodeExtra> = curExpr.value;

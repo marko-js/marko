@@ -34,7 +34,6 @@ import {
 import { createScopeIdentifiers } from "../../util/scope-read";
 import { isSectionRendererElided } from "../../util/section-renderer";
 import {
-  forEachSection,
   ensureBodySection,
   getRendererReason,
   settleContent,
@@ -124,10 +123,9 @@ export default {
 
       // Anything revived or unconditionally registered against this module
       // has to reach the client on its own.
-      forEachSection((childSection) => {
-        if (programExtra.hasResumes) return;
+      programExtra.hasResumes = programExtra.sections!.some((childSection) => {
         const reason = mapBodyParams(childSection, childSection.reason);
-        programExtra.hasResumes ||= !!(
+        return !!(
           (reason && !isGuardedReason(reason)) ||
           (childSection !== section &&
             !isSectionRendererElided(childSection) &&

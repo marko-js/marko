@@ -231,7 +231,7 @@ export const IfTag = {
 } as Tag;
 
 // Collapse a text-only `<if>`/`<else-if>`/`<else>` chain into a single text
-// placeholder, avoiding the branch scopes and `_if` runtime entirely.
+// placeholder (true when it did), avoiding the branch scopes and `_if` runtime.
 export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
   if (!isCoreTagName(rootTag, "if")) return;
 
@@ -295,6 +295,7 @@ export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
     (placeholder.extra ??= {}).needsTextCoercion = true;
   }
   rootTag.replaceWith(placeholder);
+  return true;
 }
 
 function assertValidCondition(tag: t.NodePath<t.MarkoTag>) {
