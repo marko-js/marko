@@ -23,7 +23,7 @@ export function getExprRoot(path: t.NodePath<t.Node>) {
     curPath = curPath.parentPath!;
   }
 
-  return curPath;
+  return curPath as t.NodePath<t.Node> & { parentPath: MarkoRootPath };
 }
 
 export function getFnRoot(path: t.NodePath<t.Node>) {

@@ -48,25 +48,18 @@ export function preAnalyze(program: t.NodePath<t.Program>) {
 }
 
 function normalizeBody(
-  body:
-    | undefined
-    | t.NodePath<
-        | t.Program["body"][number]
-        | t.MarkoTagBody["body"][number]
-        | t.MarkoTag["attributeTags"]
-      >[],
+  body: t.NodePath<
+    | t.Program["body"][number]
+    | t.MarkoTagBody["body"][number]
+    | t.MarkoTag["attributeTags"]
+  >[],
 ) {
-  if (body?.length) {
-    for (const child of body) {
-      if (child.isMarkoTag()) {
-        // May replace a text-only `<if>` chain with a single placeholder.
-        flattenTextOnlyConditional(child);
-        if (child.isMarkoTag()) {
-          normalizeTag(child);
-        }
-      } else if (child.isMarkoPlaceholder()) {
-        splitStaticPlaceholderText(child);
-      }
+  for (const child of body) {
+    if (child.isMarkoTag()) {
+      // A text-only `<if>` chain becomes a single placeholder.
+      if (!flattenTextOnlyConditional(child)) normalizeTag(child);
+    } else if (child.isMarkoPlaceholder()) {
+      splitStaticPlaceholderText(child);
     }
   }
 }

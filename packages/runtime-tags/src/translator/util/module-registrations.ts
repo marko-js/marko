@@ -14,7 +14,6 @@ import {
   getDeclarationRoot,
   getExprRoot,
   getFnRoot,
-  getMarkoRoot,
   type MarkoRootPath,
 } from "./get-root";
 import isInvokedFunction from "./is-invoked-function";
@@ -448,8 +447,8 @@ function addBindingExprs(
   for (const ref of binding.referencePaths) {
     if (isInvokedFunction(ref) || ref.parentPath!.type === "Program") continue;
     const exprRoot = getExprRoot(ref);
-    const markoRoot = getMarkoRoot(exprRoot);
-    if (!markoRoot || canIgnoreRegister(markoRoot, exprRoot)) continue;
+    const markoRoot = exprRoot.parentPath;
+    if (canIgnoreRegister(markoRoot, exprRoot)) continue;
     if (fnRoots) {
       const fnRoot = getFnRoot(ref);
       if (fnRoot) fnRoots.add((fnRoot.node.extra ??= {}));

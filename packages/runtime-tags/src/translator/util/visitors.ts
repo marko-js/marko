@@ -50,28 +50,24 @@ export function translateByTarget<T extends t.Node>({
 }
 
 export function enterHook<T extends t.Node>(
-  modulePlugin: Plugin | void,
+  modulePlugin: Plugin,
   path: t.NodePath<T>,
 ) {
-  if (modulePlugin) {
-    const plugin = getPlugin(modulePlugin);
-    if (isFunctionPlugin(plugin)) {
-      plugin(path, t);
-    } else if (plugin.enter) {
-      plugin.enter(path, t);
-    }
+  const plugin = getPlugin(modulePlugin);
+  if (isFunctionPlugin(plugin)) {
+    plugin(path, t);
+  } else if (plugin.enter) {
+    plugin.enter(path, t);
   }
 }
 
 export function exitHook<T extends t.Node>(
-  modulePlugin: Plugin | void,
+  modulePlugin: Plugin,
   path: t.NodePath<T>,
 ) {
-  if (modulePlugin) {
-    const plugin = getPlugin(modulePlugin);
-    if (!isFunctionPlugin(plugin) && plugin.exit) {
-      plugin.exit(path, t);
-    }
+  const plugin = getPlugin(modulePlugin);
+  if (!isFunctionPlugin(plugin) && plugin.exit) {
+    plugin.exit(path, t);
   }
 }
 

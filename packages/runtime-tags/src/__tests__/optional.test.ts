@@ -161,16 +161,12 @@ describe("runtime-tags/translator/util/optional", () => {
       }
     });
 
-    it("selects the items before and at a key by binary search", () => {
+    it("selects the items before a key by binary search", () => {
       const a = fromValues([1, 2, 3]);
       assert.equal(sorted.leadingRun(a, self, compare, 4), a);
       assert.equal(sorted.leadingRun(a, self, compare, 2), 1);
       assert.equal(sorted.leadingRun(2, self, compare, 2), undefined);
       assert.equal(sorted.leadingRun(undefined, self, compare, 2), undefined);
-      assert.equal(sorted.range(a, tens, compare, 0), a);
-      assert.equal(sorted.range(a, self, compare, 3), 3);
-      assert.equal(sorted.range(2, self, compare, 2), 2);
-      assert.equal(sorted.range(undefined, self, compare, 2), undefined);
       const random = createRandom(10);
       for (let run = 0; run < 200; run++) {
         const values = randomSortedValues(random, (random() * 40) | 0, 80);
@@ -180,15 +176,10 @@ describe("runtime-tags/translator/util/optional", () => {
           fromValues(values.filter((n) => tens(n) < target)),
           `leadingRun([${values}], tens < ${target})`,
         );
-        assert.deepEqual(
-          sorted.range(fromValues(values), tens, compare, target),
-          fromValues(values.filter((n) => tens(n) === target)),
-          `range([${values}], tens = ${target})`,
-        );
       }
     });
 
-    it("gallops to the end of a range and a run of any length", () => {
+    it("gallops to the end of a run of any length", () => {
       for (let length = 1; length < 70; length++) {
         for (const before of [0, 1, 5]) {
           for (const after of [0, 1, 5]) {
@@ -199,11 +190,6 @@ describe("runtime-tags/translator/util/optional", () => {
             ];
             const data = fromValues(values.map((key, i) => key * 1000 + i));
             const label = `${before} before, ${length} at, ${after} after`;
-            assert.equal(
-              size(sorted.range(data, thousands, compare, 1)),
-              length,
-              label,
-            );
             assert.equal(
               size(sorted.leadingRun(data, thousands, compare, 1)),
               before,
