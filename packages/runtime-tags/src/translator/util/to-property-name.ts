@@ -56,16 +56,6 @@ export function toMemberExpression(
 export function toMemberExpression(
   object: t.Expression,
   key: string,
-  optional: false | undefined,
-): t.MemberExpression;
-export function toMemberExpression(
-  object: t.Expression,
-  key: string,
-  optional: true,
-): t.OptionalMemberExpression;
-export function toMemberExpression(
-  object: t.Expression,
-  key: string,
   optional?: boolean,
 ): t.MemberExpression | t.OptionalMemberExpression;
 export function toMemberExpression(

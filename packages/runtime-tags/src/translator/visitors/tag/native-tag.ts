@@ -433,8 +433,8 @@ export default {
 
         let exprExtras: Opt<t.NodeExtra>;
         if (controllable) {
-          const values = controllable.attrs.map((index) =>
-            index === undefined ? undefined : attributes[index].value,
+          const values = controllable.attrs.map(
+            (index) => attrAt(attributes, index)?.value,
           );
           exprExtras = mergeReferenceGroup(tagSection, values);
         }
@@ -558,7 +558,6 @@ export default {
         const tagName = getCanonicalTagName(tag);
         const tagExtra = tag.node.extra!;
         const nodeBinding = tagExtra.nodeBinding;
-        const tagDef = getTagDef(tag);
         const write = writer.writeTo(tag);
         const tagSection = getSection(tag);
         const nodeAccessor =
@@ -606,22 +605,26 @@ export default {
                   spreadLoc.start.index,
                   spreadLoc.end.index,
                 );
-              for (const prefix of [
-                getAccessorPrefix().ControlledHandler,
-                getAccessorPrefix().EventAttributes,
-              ] as const) {
-                if (
-                  prefix !== getAccessorPrefix().ControlledHandler ||
-                  controllableElements.has(tagName)
-                ) {
-                  setSectionDebugVar(
-                    tagSection,
-                    getPrefixedScopeAccessor(nodeBinding, prefix),
-                    name,
-                    spreadLoc,
-                  );
-                }
+              if (controllableElements.has(tagName)) {
+                setSectionDebugVar(
+                  tagSection,
+                  getPrefixedScopeAccessor(
+                    nodeBinding,
+                    getAccessorPrefix().ControlledHandler,
+                  ),
+                  name,
+                  spreadLoc,
+                );
               }
+              setSectionDebugVar(
+                tagSection,
+                getPrefixedScopeAccessor(
+                  nodeBinding,
+                  getAccessorPrefix().EventAttributes,
+                ),
+                name,
+                spreadLoc,
+              );
             }
           }
         }
@@ -740,7 +743,7 @@ export default {
           }
         }
 
-        const isOpenOnly = !!(tagDef && tagDef.parseOptions?.openTagOnly);
+        const isOpenOnly = getTagDef(tag)?.parseOptions?.openTagOnly;
         const isTextOnly = getTagFacts(tag).textBody;
         const { spreadContent } = nativeAttrs;
         let spreadCall: t.Expression | undefined;
@@ -907,11 +910,7 @@ export default {
             "render",
             tagSection,
             undefined,
-            callRuntime(
-              "_attr_nonce",
-              scopeIdentifier,
-              getScopeAccessorLiteral(nodeBinding),
-            ),
+            callRuntime("_attr_nonce", scopeIdentifier, nodeAccessor),
             true,
           );
         }
@@ -1801,10 +1800,7 @@ function buildClassTogglesAssert({ staticParts, toggles }: DelimitedAttrMeta) {
   if (
     isOptimize() ||
     !toggles ||
-    [
-      ...staticParts,
-      ...toggles.flatMap(({ key, alternate }) => [key, alternate]),
-    ].every((part) => part === undefined || isLiteralPart(part))
+    (staticParts.every(isLiteralPart) && toggles.every(isLiteralToggle))
   ) {
     return;
   }
@@ -1979,6 +1975,12 @@ function getDelimitedAttrItems(
 
 function isLiteralPart(part: DelimitedAttrPart): part is string {
   return typeof part === "string";
+}
+
+function isLiteralToggle({ key, alternate }: DelimitedAttrValue) {
+  return (
+    isLiteralPart(key) && (alternate === undefined || isLiteralPart(alternate))
+  );
 }
 
 function getDelimitedAttrMeta(
