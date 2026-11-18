@@ -175,13 +175,10 @@ export function getParamsTreeAt(
 }
 
 export function getAllKnownPropertyNames(paramsTree: ParamsTree) {
-  const keys = paramsTree.properties ? Object.keys(paramsTree.properties) : [];
+  const keys = new Set<string>();
   // Intentionally shallow: own prop names plus the immediate `rest`'s.
-  if (paramsTree.rest?.properties) {
-    for (const key of Object.keys(paramsTree.rest.properties)) {
-      keys.push(key);
-    }
-  }
+  for (const key in paramsTree.properties) keys.add(key);
+  for (const key in paramsTree.rest?.properties) keys.add(key);
   return keys;
 }
 

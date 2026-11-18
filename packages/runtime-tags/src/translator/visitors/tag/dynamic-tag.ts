@@ -447,10 +447,8 @@ export default {
       } else {
         if (contentProp) {
           properties.splice(properties.indexOf(contentProp), 1);
-          args.push(propsToExpression(properties), contentProp.value);
-        } else {
-          args.push(propsToExpression(properties));
         }
+        args.push(propsToExpression(properties));
       }
 
       const argsOrInput = node.arguments
