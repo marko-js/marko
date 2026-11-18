@@ -75,26 +75,11 @@ export function withSources(
 export const sourcesUtil = new Sorted(compareSources);
 
 export function compareSources(a: Sources, b: Sources) {
-  let delta: number;
-
   if (a.always !== b.always) return a.always ? 1 : -1;
   if (a.global !== b.global) return a.global ? 1 : -1;
-
-  if (a.param) {
-    if (!b.param) return 1;
-    if ((delta = compareReferences(a.param, b.param))) return delta;
-  } else if (b.param) {
-    return -1;
-  }
-
-  if (a.state) {
-    if (!b.state) return 1;
-    if ((delta = compareReferences(a.state, b.state))) return delta;
-  } else if (b.state) {
-    return -1;
-  }
-
-  return 0;
+  return (
+    compareReferences(a.param, b.param) || compareReferences(a.state, b.state)
+  );
 }
 
 export function mergeSources(a: Sources, b: undefined | Sources): Sources;

@@ -77,7 +77,7 @@ export function getReadReplacement(
 
   if (read.getter?.invoked) return;
   const base = isOutputDOM()
-    ? getDOMReadBase(read, extra.section, signal)
+    ? getDOMReadBase(read, extra.section!, signal)
     : getHTMLReadBase(node, read);
   if (!base) return;
 
@@ -99,7 +99,7 @@ export function getReadReplacement(
 // What a DOM read stands for before its properties: a value from its scope.
 function getDOMReadBase(
   read: ResolvedRead,
-  section: Section | undefined,
+  section: Section,
   signal: Signal | undefined,
 ) {
   const { binding, properties, getter } = read;
@@ -111,7 +111,7 @@ function getDOMReadBase(
       : t.identifier(binding.name);
   }
 
-  const inlined = getSignals(section!).get(binding)?.inline?.value;
+  const inlined = getSignals(section).get(binding)?.inline?.value;
   if (inlined) return t.cloneNode(inlined, true);
 
   if (signal?.referencedBindings === binding && !signal.storesValue) {
@@ -123,7 +123,7 @@ function getDOMReadBase(
     return binding.aliasOf
       ? callRuntime("_hoist_read_error")
       : t.callExpression(getBindingGetterIdentifier(binding, getter.hoisted), [
-          getScopeExpression(section!, getter.hoisted),
+          getScopeExpression(section, getter.hoisted),
         ]);
   }
 
@@ -131,7 +131,7 @@ function getDOMReadBase(
     return (
       getter &&
       t.callExpression(getBindingGetterIdentifier(binding, binding.section), [
-        getScopeExpression(section!, binding.section),
+        getScopeExpression(section, binding.section),
       ])
     );
   }
@@ -139,7 +139,7 @@ function getDOMReadBase(
   if (!isOptimize() && read.inOwnBody && isChildReturnVar(binding)) {
     return callRuntime(
       "_assert_init",
-      section ? getScopeExpression(section, binding.section) : scopeIdentifier,
+      getScopeExpression(section, binding.section),
       getScopeAccessorLiteral(binding),
     );
   }

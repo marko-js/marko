@@ -269,7 +269,7 @@ function addReadByFunction(
 // A value retained as written keeps what it reads outside a function, so client
 // code reads those with it.
 function addRetainedReadReason(read: Read, expr: ReferencedExtra) {
-  if (!read.fnRoot && read.extra.exprRoot?.retained) {
+  if (!read.fnRoot && read.extra.exprRoot.retained) {
     addReasonExprs(ensureSlot(read.binding), expr);
   }
 }
@@ -688,13 +688,8 @@ export function readsValuesOnResume(expr: t.NodeExtra) {
   return !!expr.isEffect && !expr.retained;
 }
 
-// Whether an expression (or the one a node's extra sits in) is emitted.
-function isEmitted(exprExtra: t.NodeExtra) {
-  return !getCanonicalExpr(exprExtra).dropped;
-}
-
 function inEmittedExpr({ exprRoot, section }: AssignedBindingExtra) {
-  return !section.dropped && isEmitted(exprRoot);
+  return !section.dropped && !getCanonicalExpr(exprRoot).dropped;
 }
 
 // A value with no side effects, or a call site's value, which only the child
