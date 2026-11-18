@@ -11,7 +11,7 @@ Marko is a modern UI framework for building web applications. It features a decl
 
 The Marko documentation is the source of truth for all Marko-related information. Always refer to the official docs for information about syntax and behavior. Marko changes over time, so prefer fetching current docs over relying on training data.
 
-The [docs index](https://markojs.com/llms.txt) lists every available page with its URL and a short description.
+The [docs index](https://markojs.com/llms.txt) lists every available page with its URL and a short description. Read it before writing code, and fetch the page for each feature you are about to use (state, events, forms, setup), not only the getting-started pages.
 
 All Marko docs pages can be fetched as markdown by appending `.md` to the URL (<https://markojs.com/docs/introduction/getting-started.md>)
 
@@ -28,3 +28,4 @@ Documentation and this skill target **Marko 6**. Do not use Marko 5 syntax.
 - [ ] Component stays small and readable; consider splitting large templates.
 - [ ] No unnecessary client-side JS; prefer built-in browser APIs and HTML/CSS features over scripts.
 - [ ] Props are declared with an exported `Input` interface, and templates are type checked with `mtc` (`@marko/type-check`) — `tsc` skips `.marko` files and reports nothing.
+- [ ] State a parent might need to read or drive is **controllable**, not synchronized: bind with `:=` (`<let/count:=input.count>`, `<input value:=text>`) and declare `count` plus an optional `countChange` in `Input`. Never mirror state into a parent copy with a change handler that assigns it back; the docs call that an anti-pattern. Read [Controllable Components](https://markojs.com/docs/explanation/controllable-components.md) before writing any stateful component.
