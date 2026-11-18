@@ -116,6 +116,17 @@ declare global {
       /** @marko-overload-end */
     }
 
+    /**
+     * A template typed by its signature as a tag (eg `<T>(input: Input<T>) => Return<T>`),
+     * from which a tag using a generic template infers its type arguments.
+     */
+    export interface TemplateOf<
+      Signature extends (input: any) => any,
+    > extends Template<Parameters<Signature>[0], ReturnType<Signature>> {
+      /** Types only: its signature as a tag, never one to call. */
+      readonly _: Signature;
+    }
+
     export type AttrTag<T> = T & {
       [Symbol.iterator](): Iterator<T>;
     };
