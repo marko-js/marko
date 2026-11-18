@@ -8,7 +8,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__n._($scope);
 };
 const $for_content__n = /*@__PURE__*/ _for_closure("#p/0", ($scope) => _text($scope["#text/0"], $scope._.n), 7);
-const $for_content__$params = ($scope, $params2) => _text($scope["#text/2"], $params2[0]);
+const $for_content__$params = ($scope, i) => _text($scope["#text/2"], i);
 const $n = /*@__PURE__*/ _let("n/5", $for_content__n);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#p/0", "<!><!><!><!><!>", "%b%b%b%", $for_content__setup, $for_content__$params);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

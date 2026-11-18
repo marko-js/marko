@@ -6,7 +6,7 @@ const $for_content__label = ($scope, label) => {
 	$for_content__show($scope, label?.length > 1);
 };
 const $for_content__show = /*@__PURE__*/ _show("#text/1");
-const $for_content__$params = ($scope, $params2) => $for_content__label($scope, $params2[0]);
+const $for_content__$params = ($scope, label) => $for_content__label($scope, label);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#ul/2", "<!><li> </li><!><!>", "bD l%", 0, $for_content__$params);
 const $labels = /*@__PURE__*/ _let("labels/3", ($scope) => $for($scope, [$scope.labels]));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {

@@ -30,7 +30,7 @@ const $await_content2__setup = ($scope) => {
 	$load_Counter_tag_input_class($scope["#childScope/3"], "lazy-b");
 	$await_content2__setup__script($scope);
 };
-const $await_content2__$params = ($scope, $params3) => $await_content2__v($scope, $params3[0]);
+const $await_content2__$params = $await_content2__v;
 const $await_content__v = ($scope, v) => {
 	_attr_class($scope["#button/0"], v);
 	_text($scope["#text/1"], v);
@@ -43,7 +43,7 @@ const $await_content__setup = ($scope) => {
 	$load_Counter_tag_input_class($scope["#childScope/3"], "lazy-a");
 	$await_content__setup__script($scope);
 };
-const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
+const $await_content__$params = $await_content__v;
 const $clicks = /*@__PURE__*/ _let("clicks/3", ($scope) => _text($scope["#text/0"], $scope.clicks));
 const $await_content = /*@__PURE__*/ _await_content("#text/1", "<button> </button><!><!>", " D l%/&", $await_content__setup);
 const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content__$params);

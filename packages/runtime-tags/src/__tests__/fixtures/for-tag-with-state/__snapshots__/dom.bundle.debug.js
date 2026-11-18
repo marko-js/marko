@@ -2,9 +2,9 @@
 const $template = "<!><!><!><!>";
 const $walks = "b%b%c";
 const $for_content2__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
-const $for_content2__$params = ($scope, $params3) => _text($scope["#text/1"], $params3[0]);
+const $for_content2__$params = ($scope, val) => _text($scope["#text/1"], val);
 const $for_content__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
-const $for_content__$params = ($scope, $params2) => _text($scope["#text/1"], $params2[0]);
+const $for_content__$params = ($scope, val) => _text($scope["#text/1"], val);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<div><!>: <!></div>", "D%c%", $for_content__setup, $for_content__$params);
 const $for2 = /*@__PURE__*/ _for_of_unkeyed("#text/1", "<div><!>: <!></div>", "D%c%", $for_content2__setup, $for_content2__$params);
 const $arrB = /*@__PURE__*/ _let("arrB/3", ($scope) => $for2($scope, [$scope.arrB]));

@@ -1,5 +1,5 @@
 // template.marko
-const $catch_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]);
+const $catch_content__$params = ($scope, err) => _text($scope.a, err);
 const $catch_content = _content("a3", " ", " ", 0, $catch_content__$params);
 const $try_content__clickCount__script = _script("a0", ($scope) => $scope._.a.textContent = $scope._.c);
 const $try_content__clickCount = /*@__PURE__*/ _closure_get(3, ($scope) => {

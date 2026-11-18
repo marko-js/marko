@@ -10,7 +10,7 @@ const $placeholder_content__setup = ($scope) => {
 const $placeholder_content = _content_resume("__tests__/template.marko_4*content", "<!><!><!>", "b%/&", $placeholder_content__setup);
 const $await_content2__t = /*@__PURE__*/ _closure_get("t/3", ($scope) => _text($scope["#text/0"], $scope._._.t), ($scope) => $scope._._);
 const $await_content2__setup = $await_content2__t;
-const $await_content2__$params = ($scope, $params3) => _text($scope["#text/1"], $params3[0]);
+const $await_content2__$params = ($scope, v) => _text($scope["#text/1"], v);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", "<!> <!>", "%c%", $await_content2__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content2__$params);
 const $try_content__setup = ($scope) => {
@@ -19,8 +19,8 @@ const $try_content__setup = ($scope) => {
 };
 const $await_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 const $await_content__setup = $await_content__try;
-const $await_content__$params = ($scope, $params2) => $await_content__t($scope, $params2[0]);
 const $await_content__t = /*@__PURE__*/ _const("t");
+const $await_content__$params = $await_content__t;
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "b%", $await_content__setup);
 const $await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 function $setup($scope) {

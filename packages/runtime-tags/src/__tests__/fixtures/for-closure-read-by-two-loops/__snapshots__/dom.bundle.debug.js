@@ -7,10 +7,10 @@ const $for_content2__setup = ($scope) => {
 	$for_content2__suffix._($scope);
 };
 const $for_content2__suffix = /*@__PURE__*/ _for_closure("#ol/1", ($scope) => _text($scope["#text/2"], $scope._.suffix), 11);
-const $for_content2__$params = ($scope, $params3) => _text($scope["#text/1"], $params3[0]);
+const $for_content2__$params = ($scope, item) => _text($scope["#text/1"], item);
 const $for_content__label = /*@__PURE__*/ _for_closure("#ul/0", ($scope) => _text($scope["#text/0"], $scope._.label), 9);
 const $for_content__setup = $for_content__label;
-const $for_content__$params = ($scope, $params2) => _text($scope["#text/1"], $params2[0]);
+const $for_content__$params = ($scope, item) => _text($scope["#text/1"], item);
 const $label = /*@__PURE__*/ _let("label/7", ($scope) => {
 	$for_content__label($scope);
 	$for_content2__label($scope);

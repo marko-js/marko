@@ -6,7 +6,7 @@ const $for_content__setup__script = _script("__tests__/template.marko_1", ($scop
 }));
 const $for_content__setup = $for_content__setup__script;
 const $for_content__i = /*@__PURE__*/ _const("i", ($scope) => _text($scope["#text/1"], $scope.i));
-const $for_content__$params = ($scope, $params2) => $for_content__i($scope, $params2[0]);
+const $for_content__$params = $for_content__i;
 const $total = /*@__PURE__*/ _let("total/4", ($scope) => _text($scope["#text/2"], $scope.total));
 const $seen = /*@__PURE__*/ _let("seen/5", ($scope) => _text($scope["#text/3"], $scope.seen));
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<button>pick <!></button>", " Db%", $for_content__setup, $for_content__$params);

@@ -3,7 +3,7 @@ const $Row_content__walks = "D l";
 const $Row_content__template = "<li> </li>";
 const $template = "<ul></ul><button id=add>Add</button><button id=remove>Remove</button>";
 const $walks = " b b b";
-const $for_content__$params = ($scope, $params3) => $Row_content__item($scope["#childScope/0"], $params3[0]);
+const $for_content__$params = ($scope, item) => $Row_content__item($scope["#childScope/0"], item);
 const $Row_content__item = ($scope, item) => _text($scope["#text/0"], item);
 const $Row_content__$params = ($scope, $params2) => $Row_content__$temp($scope, $params2[0]);
 const $Row_content__$temp = ($scope, $temp) => $Row_content__item($scope, $temp.item);

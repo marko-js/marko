@@ -10,7 +10,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__selected._($scope);
 	$for_content__setup__script($scope);
 };
-const $for_content__$params = ($scope, $params2) => _text($scope["#text/2"], $params2[0]?.label);
+const $for_content__$params = ($scope, row) => _text($scope["#text/2"], row?.label);
 const $selected = /*@__PURE__*/ _let("selected/1", $for_content__selected);
 const $for = /*@__PURE__*/ _for_of("#ul/0", "<li><!><button class=select> </button></li>", "D%b D ", $for_content__setup, $for_content__$params);
 const $rows = /*@__PURE__*/ _let("rows/2", ($scope) => $for($scope, [$scope.rows, "id"]));

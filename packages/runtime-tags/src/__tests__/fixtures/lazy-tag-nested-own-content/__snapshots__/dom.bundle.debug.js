@@ -35,9 +35,9 @@ var press_button_default = /*@__PURE__*/ _template("__tests__/tags/press-button.
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $for_content__$params = ($scope, $params2) => {
-	$input_onPress($scope["#childScope/0"], $params2[0]?.onPress);
-	$input_content($scope["#childScope/0"], $params2[0]?.content);
+const $for_content__$params = ($scope, button) => {
+	$input_onPress($scope["#childScope/0"], button?.onPress);
+	$input_content($scope["#childScope/0"], button?.content);
 };
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2), 0, $for_content__$params);
 const $input_button = ($scope, input_button) => $for($scope, [input_button]);

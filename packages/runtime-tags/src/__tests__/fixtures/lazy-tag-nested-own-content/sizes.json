@@ -14,18 +14,18 @@
     },
     "grand-child.mjs": {
       "total": {
-        "min": 726,
-        "brotli": 460
+        "min": 720,
+        "brotli": 429
       },
       "files": {
         "tags/press-button.marko": 316,
-        "tags/press-buttons.marko": 362,
+        "tags/press-buttons.marko": 350,
         "grand-child.marko": 874
       }
     },
     "shared": {
       "min": 10976,
-      "brotli": 4888
+      "brotli": 4883
     }
   },
   "html": {

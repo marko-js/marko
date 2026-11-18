@@ -25,7 +25,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__setup__script($scope);
 };
 const $for_content__outer = /*@__PURE__*/ _const("outer", $for_content__outer__OR__l_length__OR__short);
-const $for_content__$params = ($scope, $params2) => $for_content__outer($scope, $params2[0]);
+const $for_content__$params = $for_content__outer;
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><button>go</button>", "b%b ", $for_content__setup, $for_content__$params);
 function $setup($scope) {
 	$for($scope, [[0, 0]]);

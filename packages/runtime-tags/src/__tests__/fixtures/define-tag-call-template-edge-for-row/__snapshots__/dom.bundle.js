@@ -7,7 +7,7 @@ const $Item_content__label = ($scope, label) => _text($scope.a, label);
 const $input_label = ($scope, input_label) => $Item_content__label($scope.a, input_label);
 
 // template.marko
-const $for_content__$params = ($scope, $params2) => $input_label($scope.a, $params2[0]);
+const $for_content__$params = ($scope, label) => $input_label($scope.a, label);
 const $for = /*@__PURE__*/ _for_of_unkeyed(0, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), 0, $for_content__$params);
 const $labels = /*@__PURE__*/ _let(3, ($scope) => $for($scope, [$scope.d]));
 const $setup__script = _script("a0", ($scope) => {

@@ -2,8 +2,8 @@
 const $await_content__value = ($scope, value) => _text($scope.a, value > 1 ? (() => {
 	throw new Error("ERROR!");
 })() : value);
-const $await_content__$params = ($scope, $params3) => $await_content__value($scope, $params3[0]);
-const $catch_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]);
+const $await_content__$params = $await_content__value;
+const $catch_content__$params = ($scope, err) => _text($scope.a, err);
 const $catch_content = _content("a3", " ", " ", 0, $catch_content__$params);
 const $placeholder_content = _content("a2", "LOADING...");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);

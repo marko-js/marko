@@ -31,9 +31,9 @@ const $Count_content__walks = /*@__PURE__*/ ((_w0) => `0${_w0}&D l`)("");
 const $Count_content__template = /*@__PURE__*/ ((_w0) => `${_w0}<p class=define> </p>`)("");
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<button></button><!>${_w0}${_w1}<!><!><!>`)($Count_content__template, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => ` b%b/${_w0}&/${_w1}&%b%c`)($Count_content__walks, "b%c");
-const $await_content2__$params = ($scope, $params7) => _text($scope["#text/0"], $params7[0]);
+const $await_content2__$params = ($scope, value) => _text($scope["#text/0"], value);
 const $catch_content__v = _var_resume("__tests__/template.marko_6_v#6/var", ($scope, v) => _text($scope["#text/2"], v));
-const $catch_content__$params = ($scope, $params6) => $input_x$1($scope["#childScope/0"], $params6[0]?.message);
+const $catch_content__$params = ($scope, err) => $input_x$1($scope["#childScope/0"], err?.message);
 const $catch_content__setup = ($scope) => _var($scope, "#childScope/0", $catch_content__v);
 const $catch_content = _content_resume("__tests__/template.marko_6*content", /*@__PURE__*/ ((_w0) => `${_w0}<p class=catch> </p>`)(""), /*@__PURE__*/ ((_w0) => `0${_w0}&D l`)(""), $catch_content__setup, $catch_content__$params);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", " ", " ");
@@ -43,7 +43,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__await_promise($scope, rejectAfter(new Error("e"), 2));
 };
 const $await_content__v = ($scope, v) => _text($scope["#text/2"], v);
-const $await_content__$params = ($scope, $params5) => $input_x$1($scope["#childScope/0"], $params5[0]);
+const $await_content__$params = ($scope, value) => $input_x$1($scope["#childScope/0"], value);
 const $await_content__setup = ($scope) => _var($scope, "#childScope/0", $await_content__v);
 const $wrap_content__v = _var_resume("__tests__/template.marko_3_v#6/var", ($scope, v) => _text($scope["#text/2"], v));
 const $wrap_content__$params = ($scope, $params4) => $input_x$1($scope["#childScope/0"], $params4[0].value);
@@ -63,7 +63,7 @@ const $for_content__setup = ($scope) => {
 	$setup$2($scope["#childScope/3"]);
 	_var($scope, "#childScope/0", $for_content__v);
 };
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
+const $for_content__$params = ($scope, item) => $for_content__item($scope, item);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/1", /*@__PURE__*/ ((_w0, _w1) => `${_w0}<p> </p>${_w1}`)("", $template$2), /*@__PURE__*/ ((_w0, _w1) => `0${_w0}&D l/${_w1}&`)("", $walks$2), $for_content__setup, $for_content__$params);
 const $list = /*@__PURE__*/ _let("list/6", ($scope) => {
 	$list_length($scope, $scope.list?.length);

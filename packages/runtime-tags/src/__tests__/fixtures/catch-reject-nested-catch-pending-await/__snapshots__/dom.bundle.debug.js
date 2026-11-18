@@ -9,7 +9,7 @@ const $try_content3__setup = ($scope) => {
 	$await_content2($scope);
 	$try_content3__await_promise($scope, never);
 };
-const $catch_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]?.message);
+const $catch_content__$params = ($scope, err) => _text($scope["#text/0"], err?.message);
 const $catch_content = _content_resume("__tests__/template.marko_5*content", "caught: <!>", "b%", 0, $catch_content__$params);
 const $try_content2__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content3__setup, 0, $catch_content2);
 const $await_content3 = /*@__PURE__*/ _await_content("#text/1", "never outer");

@@ -9,7 +9,7 @@ const $for_content__item = ($scope, item) => {
 	_text($scope["#text/0"], item?.name);
 	item.make();
 };
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
+const $for_content__$params = ($scope, item) => $for_content__item($scope, item);
 const $input_y = ($scope, input_y) => makeHandler();
 const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/1", "<span> </span>", "D ", 0, $for_content__$params);

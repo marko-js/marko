@@ -1,0 +1,5 @@
+<let/clicked=""/>
+<for|item, index| of=["a", "b"]>
+  <button onClick() { clicked = [item, index].join(",") }>${item}</button>
+</for>
+<span>${clicked}</span>

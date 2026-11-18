@@ -5,13 +5,13 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_4*content", " ", " "), { item_text: ($scope) => _text($scope["#text/0"], $scope.item_text) });
 const $for_content2__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $for_content2__$params = ($scope, $params3) => $for_content2__dynamicTag($scope, $params3[0]);
+const $for_content2__$params = ($scope, item) => $for_content2__dynamicTag($scope, item);
 const $for_content__texts = /*@__PURE__*/ _const("texts", ($scope) => {
 	let $item;
 	forOf($scope.texts, (item) => $item = attrTags($item, { content: $item_content($scope, { item_text: item?.text }) }));
 	$Child_content__items($scope["#childScope/0"], $item);
 });
-const $for_content__$params = ($scope, $params4) => $for_content__texts($scope, $params4[0]);
+const $for_content__$params = $for_content__texts;
 const $Child_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!>", "b%", 0, $for_content2__$params);
 const $Child_content__items = ($scope, items) => $Child_content__for($scope, [items]);
 const $Child_content__$params = ($scope, $params2) => $Child_content__$temp($scope, $params2[0]);

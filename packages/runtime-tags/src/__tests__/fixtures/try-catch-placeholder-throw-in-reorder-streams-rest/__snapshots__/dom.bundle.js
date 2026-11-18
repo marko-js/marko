@@ -7,5 +7,5 @@ const $placeholder_content2__setup = ($scope) => _text($scope.a, (() => {
 })());
 const $placeholder_content2 = _content("a0", " ", " ", $placeholder_content2__setup);
 const $placeholder_content = _content("a1", "loading");
-const $catch_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]?.message);
+const $catch_content__$params = ($scope, err) => _text($scope.a, err?.message);
 const $catch_content = _content("a2", "caught <!>", "b%", 0, $catch_content__$params);

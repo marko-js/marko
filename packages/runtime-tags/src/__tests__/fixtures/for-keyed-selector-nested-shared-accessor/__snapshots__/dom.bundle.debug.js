@@ -20,7 +20,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__setup__script($scope);
 };
 const $for_content__hovered = /*@__PURE__*/ _for_selector("#ul/0", "hovered", $for_content__selected__OR__hovered);
-const $for_content__$params = ($scope, $params2) => _text($scope["#text/2"], $params2[0]?.label);
+const $for_content__$params = ($scope, row) => _text($scope["#text/2"], row?.label);
 const $if_content__selected = /*@__PURE__*/ _if_closure("#text/0", 0, $for_content__selected);
 const $if_content__hovered = /*@__PURE__*/ _let("hovered/1", $for_content__hovered);
 const $if_content__setup = ($scope) => {

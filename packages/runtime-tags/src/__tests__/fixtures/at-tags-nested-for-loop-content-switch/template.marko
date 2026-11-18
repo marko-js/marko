@@ -1,9 +1,9 @@
 <tabs>
-  <for|...row| of=["x", "y"]>
+  <for|row| of=["x", "y"]>
     <for|col| until=2>
-      <@tab title=row[0] + col>
+      <@tab title=row + col>
         <let/count=0/>
-        <button class="inc" onClick() { count++ }>${row[0]}${col}: ${count}</button>
+        <button class="inc" onClick() { count++ }>${row}${col}: ${count}</button>
       </@tab>
     </for>
   </for>

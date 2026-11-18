@@ -13,8 +13,8 @@ var btn_default = /*@__PURE__*/ _template("__tests__/tags/btn.marko", $template$
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $for_content__$params = ($scope, $params2) => $input$1($scope["#childScope/0"], {
-	...$params2[0],
+const $for_content__$params = ($scope, item) => $input$1($scope["#childScope/0"], {
+	...item,
 	class: "item"
 });
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b"), 0, $for_content__$params);

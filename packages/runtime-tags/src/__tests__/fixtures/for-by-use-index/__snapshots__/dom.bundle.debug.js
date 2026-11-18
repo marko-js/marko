@@ -11,7 +11,7 @@ const $for_content__setup = ($scope) => {
 	_html($scope, $scope["#LoopKey"], "#text/1");
 	$for_content__setup__script($scope);
 };
-const $for_content__$params = ($scope, $params2) => $for_content__index($scope, $params2[1]);
+const $for_content__$params = ($scope, $_, index) => $for_content__index($scope, index);
 const $for_content__index = /*@__PURE__*/ _const("index");
 const $for = /*@__PURE__*/ _for_of("#div/0", "<button> </button>", " D ", $for_content__setup, $for_content__$params);
 const $messages = /*@__PURE__*/ _let("messages/2", ($scope) => $for($scope, [$scope.messages, (f) => f]));
