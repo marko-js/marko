@@ -16,6 +16,7 @@ import {
   type Getter,
   hasNonConstantPropertyAlias,
   type Intersection,
+  type IntersectionMeta,
   isDirectAlias,
   isRest,
   type ReferencedBindings,
@@ -398,7 +399,7 @@ export function getSignal(
       signal.build = () => buildSignalFn(signal);
     } else if (Array.isArray(referencedBindings)) {
       const meta = section.intersections!.get(referencedBindings)!;
-      subscribe(meta.source || referencedBindings, signal);
+      forEach(meta.source || referencedBindings, subscribeToBinding, signal);
       if (meta.source) {
         const sourceSignal = getSignal(section, meta.source);
         forEach(referencedBindings, (member) => {
@@ -418,7 +419,7 @@ export function getSignal(
         });
       }
       signal.build = () =>
-        buildIntersection(section, referencedBindings, buildSignalFn(signal));
+        buildIntersection(meta, referencedBindings, buildSignalFn(signal));
     } else if (
       referencedBindings.section !== section &&
       sectionUtil.has(referencedBindings.closureSections, section)
@@ -654,11 +655,10 @@ function isInlinedValue(signal: Signal) {
 
 // A source intersection runs in its source's pass, so it needs no `_or`.
 function buildIntersection(
-  section: Section,
+  { source, id, returnedBy }: IntersectionMeta,
   intersection: Intersection,
   fn: t.Expression,
 ) {
-  const { source, id, returnedBy } = section.intersections!.get(intersection)!;
   if (source) return fn;
   return callRuntime(
     "_or",
@@ -866,7 +866,7 @@ function getTranslatedExtraArgs(signal: { extraArgs?: t.Expression[] }) {
 }
 
 function isOwnValueRead(node: t.Node, binding: Binding) {
-  const extra = (node as { extra?: t.NodeExtra }).extra;
+  const { extra } = node;
   const read = extra?.read;
   return (
     !!read &&
@@ -875,12 +875,6 @@ function isOwnValueRead(node: t.Node, binding: Binding) {
     read.properties === undefined &&
     !read.getter?.invoked
   );
-}
-
-function subscribe(references: ReferencedBindings, intersection: Signal) {
-  if (references) {
-    forEach(references, subscribeToBinding, intersection);
-  }
 }
 
 function subscribeToBinding(binding: Binding, intersection: Signal) {
@@ -898,42 +892,33 @@ function subscribeToBinding(binding: Binding, intersection: Signal) {
 export function trimEmptyArgs(
   args: (t.Expression | undefined | false)[],
 ): t.Expression[] {
-  const len = args.length;
-  let finalLen: undefined | number = undefined;
+  let finalLen = 0;
 
-  for (let i = len; i--;) {
+  for (let i = args.length; i--;) {
     const arg = args[i];
-    if (!arg) {
-      args[i] = t.numericLiteral(0);
-      continue;
-    }
-
     if (
+      !arg ||
       t.isNullLiteral(arg) ||
-      (t.isUnaryExpression(arg) && arg.operator === "void")
+      (t.isUnaryExpression(arg) && arg.operator === "void") ||
+      (t.isArrowFunctionExpression(arg) &&
+        t.isBlockStatement(arg.body) &&
+        !arg.body.body.length)
     ) {
       args[i] = t.numericLiteral(0);
-      continue;
-    }
-
-    if (t.isArrowFunctionExpression(arg) && t.isBlockStatement(arg.body)) {
-      const body = arg.body.body;
-      if (body.length === 0) {
-        args[i] = t.numericLiteral(0);
-        continue;
+    } else {
+      if (
+        t.isArrowFunctionExpression(arg) &&
+        t.isBlockStatement(arg.body) &&
+        arg.body.body.length === 1 &&
+        t.isExpressionStatement(arg.body.body[0])
+      ) {
+        arg.body = arg.body.body[0].expression;
       }
-
-      if (body.length === 1 && t.isExpressionStatement(body[0])) {
-        arg.body = body[0].expression;
-      }
-    }
-
-    if (finalLen === undefined) {
-      finalLen = i + 1;
+      finalLen ||= i + 1;
     }
   }
 
-  args.length = finalLen || 0;
+  args.length = finalLen;
   return args as t.Expression[];
 }
 // Work for `expr` runs when what it references changes, in setup if nothing
@@ -1037,7 +1022,7 @@ export function getResumeRegistryId(
 export function writeSignals(section: Section) {
   const seen = new Set<Signal>();
   const written = new Set<Signal>();
-  forEach(section.bindings, writeBindingGetters, section);
+  forEach(section.bindings, writeBindingGetters);
 
   for (const signal of getSignals(section).values()) {
     writeSignal(signal);
@@ -1148,7 +1133,7 @@ export function writeSignals(section: Section) {
   return written;
 }
 
-function writeBindingGetters(binding: Binding, section: Section) {
+function writeBindingGetters(binding: Binding) {
   if (!binding.getters) return;
   for (const [hoistSection, hasReference] of binding.getters) {
     const getterIdentifier = getBindingGetterIdentifier(binding, hoistSection);
@@ -1179,7 +1164,7 @@ function writeBindingGetters(binding: Binding, section: Section) {
               : callRuntime("_hoist", ...accessors)
             : callRuntime(
                 "_el",
-                t.stringLiteral(getResumeRegistryId(section, binding)),
+                t.stringLiteral(getResumeRegistryId(binding.section, binding)),
                 ...accessors,
               ),
         ),
@@ -1775,7 +1760,6 @@ function getChangeHandlerRead(
     ? toMemberExpression(
         getChangeHandlerRead(binding.aliasOf, section),
         binding.property,
-        false,
       )
     : createScopeReadExpression(binding, section);
 }

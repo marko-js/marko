@@ -720,13 +720,11 @@ function getKnownChildContent(tag: t.NodePath<t.MarkoTag>) {
 
 export function getRendererReason(section: Section) {
   // A branch's tag reads its renderer.
-  if (isOptionalBranch(section)) return false;
+  if (isOptionalBranch(section)) return;
 
   // Only a component receives a dynamic tag's body as a value; SSR otherwise
   // writes just its id, to compare against the client's renderer.
-  if (section.branchExpr?.tagNameType === TagNameType.NativeTag) {
-    return false;
-  }
+  if (section.branchExpr?.tagNameType === TagNameType.NativeTag) return;
 
   const { derives } = section;
 
@@ -746,7 +744,7 @@ export function getRendererReason(section: Section) {
         );
       },
     );
-    return derivedReasons || false;
+    return derivedReasons;
   }
 
   return ALWAYS;
