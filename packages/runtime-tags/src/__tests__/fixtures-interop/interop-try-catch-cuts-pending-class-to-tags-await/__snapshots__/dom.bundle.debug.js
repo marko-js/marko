@@ -18,10 +18,10 @@ const $await_content__setup = ($scope) => {
 	console.log("child rendered");
 	$await_content__setup__script($scope);
 };
-const $await_content__value = /*@__PURE__*/ _let("value/4", ($scope) => _text($scope["#text/1"], $scope.value));
-const $await_content__$params$1 = ($scope, $params2) => $await_content__value($scope, $params2[0]);
+const $await_content__value = /*@__PURE__*/ _let("value/3", ($scope) => _text($scope["#text/1"], $scope.value));
+const $await_content__v$1 = $await_content__value;
 const $await_content$1 = /*@__PURE__*/ _await_content("#text/0", "<button> </button>", " D ", $await_content__setup);
-const $await_promise$1 = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params$1);
+const $await_promise$1 = /*@__PURE__*/ _await_promise("#text/0", $await_content__v$1);
 function $setup$1($scope) {
 	$await_content$1($scope);
 	$await_promise$1($scope, resolveAfter("child", 2));
@@ -51,13 +51,13 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 // template.marko
 const $template = "<!><!><!><!>";
 const $walks = "b%b%c";
-const $await_content2__$params = ($scope, $params4) => _text($scope["#text/0"], $params4[0]);
-const $await_content__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]);
-const $catch_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]?.message);
-const $catch_content = _content_resume("__tests__/template.marko_2*content", "caught <!>", "b%", 0, $catch_content__$params);
+const $await_content2__done = ($scope, done) => _text($scope["#text/0"], done);
+const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
+const $catch_content__err = ($scope, err) => _text($scope["#text/0"], err?.message);
+const $catch_content = _content_resume("__tests__/template.marko_2*content", "caught <!>", "b%", 0, $catch_content__err);
 const $try_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $await_content = /*@__PURE__*/ _await_content("#text/1", " ", " ");
-const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content__$params);
+const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content__v);
 const $try_content__setup = ($scope) => {
 	$await_content($scope);
 	$try_content__dynamicTag($scope, _marko_template);
@@ -65,7 +65,7 @@ const $try_content__setup = ($scope) => {
 };
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!><!>", "b%b%", $try_content__setup, 0, $catch_content);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/1", " ", " ");
-const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content2__$params);
+const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content2__done);
 function $setup($scope) {
 	$await_content2($scope);
 	$try($scope);

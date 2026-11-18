@@ -33,6 +33,7 @@ import {
 } from "./optional";
 import { addOwnerReason, type KnownExprs, type Reason } from "./reasons";
 import {
+  ensureBodySection,
   getCommonSection,
   ensureSection,
   getSectionForBody,
@@ -361,6 +362,47 @@ export function trackParamsReferences(
   }
 }
 
+// A body its tag renders with one value (`<await|value|>`, `<@catch|err|>`), not a
+// params array: that value is the section's params, set before its reads track.
+export function trackParamReferences(
+  body: t.NodePath<t.MarkoTagBody>,
+  type: BindingType,
+) {
+  const [param] = body.node.params;
+  if (body.node.body.length && param) {
+    const section = ensureBodySection(body)!;
+    const identifier = param.type === "Identifier" && param;
+    const binding = (section.params = createBinding(
+      identifier ? identifier.name : generateUid("pattern"),
+      type,
+      section,
+      undefined,
+      undefined,
+      undefined,
+      param.loc,
+      !!identifier,
+    ) as typeof section.params)!;
+    if (identifier) {
+      (identifier.extra ??= {}).binding = binding;
+      trackReferencesForBinding(
+        body.scope.getBinding(identifier.name)!,
+        binding,
+      );
+    } else {
+      createBindingsAndTrackReferences(
+        param as t.LVal,
+        type,
+        body.scope,
+        section,
+        binding,
+        undefined,
+        undefined,
+      );
+    }
+    return binding;
+  }
+}
+
 function getMarkoRootAsTag(path: t.NodePath) {
   const tag = path.isMarkoTag() ? path : getMarkoRoot(path)?.parentPath;
   if (tag?.isMarkoTag()) {
@@ -543,6 +585,12 @@ function trackAssignment(
       if (fnExtra) {
         fnExtra.section = section;
         fnExtra.exprRoot = idExtra.exprRoot;
+      }
+
+      if (assigned === assigned.section.params) {
+        throw assignment.buildCodeFrameError(
+          `\`${binding.name}\` is a tag parameter and cannot be assigned to.`,
+        );
       }
 
       if (assigned.aliasOf && assigned.property !== undefined) {

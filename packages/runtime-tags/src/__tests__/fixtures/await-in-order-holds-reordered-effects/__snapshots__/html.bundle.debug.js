@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_await($scope0_id, "#text/1", value ? value : resolveAfter(value, 3), (v) => {
 		const $scope4_id = _scope_id();
 		_html(`<div>${_text_mark($scope4_id, "#text/0", v)}</div>`);
-		_script($scope4_id, "__tests__/template.marko_4_v#2");
+		_script($scope4_id, "__tests__/template.marko_4_v#1");
 		_scope($scope4_id, { v }, "__tests__/template.marko", "10:2", { v: "10:8" });
 	});
 	_scope($scope0_id, {

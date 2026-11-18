@@ -1,15 +1,15 @@
 // template.marko
-const $await_content2__$params = ($scope, $params3) => _text($scope.a, $params3[0]);
-const $await_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]);
+const $await_content2__value = ($scope, value) => _text($scope.a, value);
+const $await_content__value = ($scope, value) => _text($scope.a, value);
 const $await_content2 = /*@__PURE__*/ _await_content(0, " ", " ");
-const $else_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content2__$params);
+const $else_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content2__value);
 const $else_content__setup = ($scope) => {
 	$await_content2($scope);
 	$else_content__await_promise($scope, resolveAfter("tab 2", 2));
 };
 const $placeholder_content = _content("a2", "LOADING");
 const $await_content = /*@__PURE__*/ _await_content(0, " ", " ");
-const $if_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);
+const $if_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content__value);
 const $if_content__tab = /*@__PURE__*/ _closure_get(3, ($scope) => $if_content__await_promise($scope, $scope._._.c === 1 ? new Promise(() => {}) : "ready"), ($scope) => $scope._._, "a0");
 const $if_content__setup = ($scope) => {
 	$if_content__tab($scope);

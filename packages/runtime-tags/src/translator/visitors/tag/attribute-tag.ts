@@ -7,8 +7,13 @@ import {
 
 import { BindingType } from "../../util/bindings";
 import { getAttributeTagParent } from "../../util/get-parent-tag";
+import { getTagName } from "../../util/get-tag-name";
+import { isCoreTagName } from "../../util/is-core-tag";
 import { isOutputHTML } from "../../util/marko-config";
-import { trackParamsReferences } from "../../util/references";
+import {
+  trackParamReferences,
+  trackParamsReferences,
+} from "../../util/references";
 import { ensureBodySection, removeDroppedContent } from "../../util/sections";
 import { writeHTMLResumeStatements } from "../../util/signals";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
@@ -22,7 +27,6 @@ export default {
       assertNoArgs(tag);
       const body = tag.get("body");
       const bodySection = ensureBodySection(body);
-      trackParamsReferences(body, BindingType.param);
       if (!findParentTag(tag)) {
         throw tag
           .get("name")
@@ -31,8 +35,15 @@ export default {
           );
       }
 
-      // Content given to a dynamic tag depends on the whole tag, as its body does.
       const parentTag = getAttributeTagParent(tag);
+      // A `<try>` renders its `@catch` with the one error, not a params array.
+      if (isCoreTagName(parentTag, "try") && getTagName(tag) === "@catch") {
+        trackParamReferences(body, BindingType.param);
+      } else {
+        trackParamsReferences(body, BindingType.param);
+      }
+
+      // Content given to a dynamic tag depends on the whole tag, as its body does.
       if (
         bodySection &&
         analyzeTagNameType(parentTag) === TagNameType.DynamicTag &&

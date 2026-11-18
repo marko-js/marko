@@ -5,10 +5,9 @@ const $await_content__v = ($scope, v) => {
 	_attr($scope["#option/0"], "value", v);
 	_text($scope["#text/1"], v);
 };
-const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
 const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "<option value=b>placeholder b</option>");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<option>async <!></option>", " Db%");
-const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
+const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__v);
 const $try_content__setup = ($scope) => {
 	$await_content($scope);
 	$try_content__await_promise($scope, resolveAfter("b", 1));

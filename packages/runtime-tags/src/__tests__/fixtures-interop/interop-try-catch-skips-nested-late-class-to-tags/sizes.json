@@ -2,15 +2,15 @@
   "dom": {
     "template.marko.page.mjs": {
       "total": {
-        "min": 69065,
-        "brotli": 21731
+        "min": 69060,
+        "brotli": 21741
       },
       "files": {
         "components/tags-leaf.marko": 499,
         "components/class-inner.marko": 1440,
         "components/tags-middle.marko": 255,
         "components/class-outer.marko": 655,
-        "template.marko": 180,
+        "template.marko": 159,
         "v:template.marko.hydrate-6.js": 57,
         "v:template.marko.hydrate-5.js": 51
       }

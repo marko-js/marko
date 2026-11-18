@@ -4,10 +4,10 @@ var v_template_marko_hydrate_6_default = ($_) => {};
 // tags/tags-child.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $await_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]);
+const $await_content__value = ($scope, value) => _text($scope.a, value);
 const $catch_content = _content("c0", "<div id=caught>caught</div>");
 const $await_content = /*@__PURE__*/ _await_content(0, "<div id=tags> </div>", "D ");
-const $try_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);
+const $try_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content__value);
 const $try_content__setup = ($scope) => {
 	$await_content($scope);
 	$try_content__await_promise($scope, rejectAfter(/* @__PURE__ */ new Error("x"), 1));

@@ -33,8 +33,8 @@ const $catch_content__setup = ($scope) => {
 	$load_Lazy_setup($scope, $scope.b, $scope.a);
 	$load_Lazy_tag_input_value($scope.b, "catch");
 };
-const $catch_content__$params = ($scope, $params2) => _text($scope.c, $params2[0]?.message);
-const $catch_content = _content("a0", "<!><!> caught <!>", "b%/&c%", $catch_content__setup, $catch_content__$params);
+const $catch_content__err = ($scope, err) => _text($scope.c, err?.message);
+const $catch_content = _content("a0", "<!><!> caught <!>", "b%/&c%", $catch_content__setup, $catch_content__err);
 
 // v:template.marko.hydrate-6.js
 var v_template_marko_hydrate_6_default = ($_) => init$1();

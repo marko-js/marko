@@ -2,17 +2,17 @@
 const $template = "<!><!><!><p>after</p>";
 const $walks = "b%b%c";
 let $load_Thrower_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:thrower.marko.setup.mjs"));
-const $await_content3__$params = ($scope, $params5) => _text($scope["#text/0"], $params5[0]);
-const $await_content2__$params = ($scope, $params4) => _text($scope["#text/0"], $params4[0]);
+const $await_content3__d = ($scope, d) => _text($scope["#text/0"], d);
+const $await_content2__c = ($scope, c) => _text($scope["#text/0"], c);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/2", " ", " ");
-const $await_content__await_promise = /*@__PURE__*/ _await_promise("#text/2", $await_content2__$params);
+const $await_content__await_promise = /*@__PURE__*/ _await_promise("#text/2", $await_content2__c);
 const $await_content__setup = ($scope) => {
 	$load_Thrower_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$await_content2($scope);
 	$await_content__await_promise($scope, resolveAfter("c", 4));
 };
-const $catch_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]?.message);
-const $catch_content = _content_resume("__tests__/template.marko_2*content", "caught <!>", "b%", 0, $catch_content__$params);
+const $catch_content__err = ($scope, err) => _text($scope["#text/0"], err?.message);
+const $catch_content = _content_resume("__tests__/template.marko_2*content", "caught <!>", "b%", 0, $catch_content__err);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!><!>", "b%/&b%", $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");
 const $try_content__setup = ($scope) => {
@@ -21,7 +21,7 @@ const $try_content__setup = ($scope) => {
 };
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);
 const $await_content3 = /*@__PURE__*/ _await_content("#text/1", " ", " ");
-const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content3__$params);
+const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content3__d);
 function $setup($scope) {
 	$await_content3($scope);
 	$try($scope);

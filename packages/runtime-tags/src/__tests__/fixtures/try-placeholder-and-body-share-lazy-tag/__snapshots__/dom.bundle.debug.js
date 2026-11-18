@@ -16,14 +16,14 @@ const $await_content__setup = ($scope) => {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$await_content__setup__script($scope);
 };
-const $await_content__$params = ($scope, $params2) => $load_Child_tag_input_value($scope["#childScope/1"], $params2[0]);
+const $await_content__v = ($scope, v) => $load_Child_tag_input_value($scope["#childScope/1"], v);
 const $placeholder_content__setup = ($scope) => {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$load_Child_tag_input_value($scope["#childScope/1"], "p");
 };
 const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "<!><!><!>", "b%/&", $placeholder_content__setup);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "b%/&", $await_content__setup);
-const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
+const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__v);
 const $try_content__setup = ($scope) => {
 	$await_content($scope);
 	$try_content__await_promise($scope, resolveAfter("b", 1));

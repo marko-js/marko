@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 			_if(() => {}, $scope3_id, "a");
 			_html(`<button>${_escape(value)} ${_text_mark($scope3_id, "d", n, 2)}</button>${_el_mark($scope3_id, "b")}`);
 			_script($scope3_id, "a0");
-			_scope($scope3_id, { g: n });
+			_scope($scope3_id, { f: n });
 		});
 	}, void 0, (err) => {
 		const $scope2_reason = _scope_reason();

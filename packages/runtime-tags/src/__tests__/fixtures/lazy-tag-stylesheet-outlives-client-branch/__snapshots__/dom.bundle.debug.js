@@ -20,7 +20,7 @@ const $if_content__setup = ($scope) => {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 };
 const $await_content__if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%/&", $if_content__setup);
-const $await_content__show = /*@__PURE__*/ _let("show/4", ($scope) => $await_content__if($scope, $scope.show ? 0 : 1));
+const $await_content__show = /*@__PURE__*/ _let("show/3", ($scope) => $await_content__if($scope, $scope.show ? 0 : 1));
 const $await_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$await_content__show($scope, !$scope.show);
 }));
@@ -28,10 +28,9 @@ const $await_content__setup = ($scope) => {
 	$await_content__show($scope, true);
 	$await_content__setup__script($scope);
 };
-const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
 const $await_content__v = /*@__PURE__*/ _const("v");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<button></button><!><!>", " b%", $await_content__setup);
-const $await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
+const $await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__v);
 function $setup($scope) {
 	$await_content($scope);
 	$await_promise($scope, resolveAfter("x", 1));

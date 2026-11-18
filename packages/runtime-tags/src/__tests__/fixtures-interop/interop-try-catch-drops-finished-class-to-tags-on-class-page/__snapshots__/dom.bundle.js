@@ -34,12 +34,12 @@ _marko_template$1.Component = (0, import_defineComponent.default)(_marko_compone
 // components/tags-page.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $await_content__$params = ($scope, $params3) => _text($scope.a, $params3[0]);
-const $catch_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]?.message);
-const $catch_content = _content("d0", "caught <!>", "b%", 0, $catch_content__$params);
+const $await_content__v = ($scope, v) => _text($scope.a, v);
+const $catch_content__err = ($scope, err) => _text($scope.a, err?.message);
+const $catch_content = _content("d0", "caught <!>", "b%", 0, $catch_content__err);
 const $try_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $await_content = /*@__PURE__*/ _await_content(1, " ", " ");
-const $try_content__await_promise = /*@__PURE__*/ _await_promise(1, $await_content__$params);
+const $try_content__await_promise = /*@__PURE__*/ _await_promise(1, $await_content__v);
 const $try_content__setup = ($scope) => {
 	$await_content($scope);
 	$try_content__dynamicTag($scope, _marko_template$1);

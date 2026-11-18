@@ -1,7 +1,7 @@
 // template.marko
-const $await_content2__$params = ($scope, $params4) => _text($scope.a, $params4[0]);
+const $await_content2__v = ($scope, v) => _text($scope.a, v);
 const $await_content2 = /*@__PURE__*/ _await_content(0, " ", " ");
-const $try_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content2__$params);
+const $try_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content2__v);
 const $try_content__setup = ($scope) => {
 	$await_content2($scope);
 	$try_content__await_promise($scope, rejectAfter(/* @__PURE__ */ new Error("nope"), 1));

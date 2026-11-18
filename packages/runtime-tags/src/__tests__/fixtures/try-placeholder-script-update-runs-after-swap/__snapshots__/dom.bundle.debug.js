@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button id=load>load</button><button id=inc>inc</button><!><!>";
 const $walks = " b b%c";
-const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
+const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
 const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "LOADING");
 const $try_content__n__script = _script("__tests__/template.marko_1_n#0:3", ($scope) => console.log("script n=" + $scope._.n + " connected=" + _el_read($scope["#div/0"]).isConnected));
 const $try_content__n = /*@__PURE__*/ _closure_get("n/5", ($scope) => {
@@ -14,7 +14,7 @@ const $try_content__setup = ($scope) => {
 	$await_content($scope);
 };
 const $await_content = /*@__PURE__*/ _await_content("#text/2", "value <!>", "b%");
-const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/2", $await_content__$params);
+const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/2", $await_content__v);
 const $try_content__m = /*@__PURE__*/ _closure_get("m/6", ($scope) => $try_content__await_promise($scope, $scope._.m ? resolveAfter($scope._.m) : 0), 0, "__tests__/template.marko_1_m#0:4/subscribe");
 const $n__closure = /*@__PURE__*/ _closure($try_content__n);
 const $n = /*@__PURE__*/ _let("n/3", $n__closure);

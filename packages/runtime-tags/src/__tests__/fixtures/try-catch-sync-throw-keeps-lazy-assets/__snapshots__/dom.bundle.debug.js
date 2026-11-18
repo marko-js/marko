@@ -19,8 +19,8 @@ var log_effect_default = /*@__PURE__*/ _template("__tests__/tags/log-effect.mark
 const $template = /*@__PURE__*/ ((_w0) => `<div id=log></div><!>${_w0}<!>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `b%/${_w0}&c`)("");
 let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
-const $catch_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]?.message);
-const $catch_content = _content_resume("__tests__/template.marko_2*content", "caught <!>", "b%", 0, $catch_content__$params);
+const $catch_content__err = ($scope, err) => _text($scope["#text/0"], err?.message);
+const $catch_content = _content_resume("__tests__/template.marko_2*content", "caught <!>", "b%", 0, $catch_content__err);
 const $try_content__setup = ($scope) => {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	_text($scope["#text/2"], (() => {

@@ -1,12 +1,11 @@
 // template.marko
 const $template = "<!><!><!><!>";
 const $walks = "b%b%c";
-const $await_content2__v__script = _script("__tests__/template.marko_4_v#2", ($scope) => console.log("effect " + $scope.v));
+const $await_content2__v__script = _script("__tests__/template.marko_4_v#1", ($scope) => console.log("effect " + $scope.v));
 const $await_content2__v = /*@__PURE__*/ _const("v", ($scope) => {
 	_text($scope["#text/0"], $scope.v);
 	$await_content2__v__script($scope);
 });
-const $await_content2__$params = ($scope, $params3) => $await_content2__v($scope, $params3[0]);
 const $placeholder_content = _content_resume("__tests__/template.marko_3*content", "loading button");
 const $await_content__value = /*@__PURE__*/ _closure_get("value/3", ($scope) => _text($scope["#text/1"], $scope._._.value), ($scope) => $scope._._, "__tests__/template.marko_2_value#0:2/subscribe");
 const $await_content__setup__script = _script("__tests__/template.marko_2", ($scope) => {
@@ -26,7 +25,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__await_promise($scope, resolveAfter(1, 1));
 };
 const $await_content2 = /*@__PURE__*/ _await_content("#text/1", "<div> </div>", "D ");
-const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content2__$params);
+const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content2__v);
 const $value__closure = /*@__PURE__*/ _closure($await_content__value);
 const $value = /*@__PURE__*/ _let("value/2", ($scope) => {
 	$await_promise($scope, $scope.value ? $scope.value : resolveAfter($scope.value, 3));

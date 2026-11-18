@@ -1,11 +1,11 @@
 // template.marko
-const $await_content2__$params = ($scope, $params4) => _text($scope.a, $params4[0]);
+const $await_content2__v = ($scope, v) => _text($scope.a, v);
 const $await_content__setup = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	console.log($scope.d);
+	console.log($scope.c);
 }));
 const $placeholder_content = _content("a1", "loading");
 const $await_content2 = /*@__PURE__*/ _await_content(2, " ", " ");
-const $for_content__await_promise = /*@__PURE__*/ _await_promise(2, $await_content2__$params);
+const $for_content__await_promise = /*@__PURE__*/ _await_promise(2, $await_content2__v);
 const $for_content__setup__script = _script("a2", ($scope) => _on($scope.a, "click", function() {
 	$items($scope._, $scope._.c.filter((i) => i !== $scope.M));
 }));

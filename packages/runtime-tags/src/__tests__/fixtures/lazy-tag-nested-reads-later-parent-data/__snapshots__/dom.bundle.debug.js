@@ -39,6 +39,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__await_promise($scope, resolveAfter("third", 2));
 };
 const $await_content__second = /*@__PURE__*/ _const("second", ($scope) => $load_Child_tag_input_item($scope["#childScope/2"], $scope.second));
+const $await_content__name = ($scope, name) => $await_content__second($scope, { name });
 const $await_content__try = /*@__PURE__*/ _try("#text/3", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 const $await_content__setup__script = _script("__tests__/parent.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	console.log("later", JSON.stringify($scope.second));
@@ -48,10 +49,9 @@ const $await_content__setup = ($scope) => {
 	$await_content__try($scope);
 	$await_content__setup__script($scope);
 };
-const $await_content__$params = ($scope, $params2) => $await_content__second($scope, { name: $params2[0] });
 const $first = /*@__PURE__*/ _const("first", ($scope) => $load_Child_tag_input_item($scope["#childScope/2"], $scope.first));
 const $await_content = /*@__PURE__*/ _await_content("#text/3", "<button class=later>later</button><!><!><!>", " b%/&b%", $await_content__setup);
-const $await_promise = /*@__PURE__*/ _await_promise("#text/3", $await_content__$params);
+const $await_promise = /*@__PURE__*/ _await_promise("#text/3", $await_content__name);
 const $setup__script = _script("__tests__/parent.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	console.log("parent", JSON.stringify($scope.first));
 }));

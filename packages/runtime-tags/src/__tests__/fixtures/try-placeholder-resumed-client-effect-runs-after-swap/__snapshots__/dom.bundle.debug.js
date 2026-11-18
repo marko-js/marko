@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button id=show>show</button><!><!>";
 const $walks = " b%c";
-const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
+const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
 const $if_content__setup__script = _script("__tests__/template.marko_3", ($scope) => _on($scope["#button/0"], "click", function() {
 	console.log("inner clicked");
 }));
@@ -10,7 +10,7 @@ const $placeholder_content = _content_resume("__tests__/template.marko_2*content
 const $try_content__if = /*@__PURE__*/ _if("#text/0", "<button id=inner>inner</button>", " ", $if_content__setup);
 const $try_content__show = /*@__PURE__*/ _closure_get("show/3", ($scope) => $try_content__if($scope, $scope._.show ? 0 : 1), 0, "__tests__/template.marko_1_show#0:2/subscribe");
 const $await_content = /*@__PURE__*/ _await_content("#text/1", "<div> </div>", "D ");
-const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content__$params);
+const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content__v);
 const $try_content__setup = ($scope) => {
 	$try_content__show($scope);
 	$await_content($scope);

@@ -15,9 +15,9 @@ const $Box_content__walks = " c";
 const $Box_content__template = "<style></style><div class=box></div>";
 const $Later_content__walks = "b%c";
 const $Later_content__template = "<!><!><!>";
-const $await_content__$params = ($scope, $params4) => _text($scope.a, $params4[0]);
+const $await_content__v = ($scope, v) => _text($scope.a, v);
 const $await_content = /*@__PURE__*/ _await_content(0, "<span> </span>", "D ");
-const $Later_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);
+const $Later_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content__v);
 const $Later_content__setup = $await_content;
 const $Later_content__value = $Later_content__await_promise;
 const $if_content__color = ($scope, color) => {

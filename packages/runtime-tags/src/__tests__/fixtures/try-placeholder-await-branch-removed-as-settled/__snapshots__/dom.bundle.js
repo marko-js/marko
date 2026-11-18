@@ -1,8 +1,8 @@
 // template.marko
-const $await_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]);
+const $await_content__value = ($scope, value) => _text($scope.a, value);
 const $placeholder_content = _content("a2", "LOADING");
 const $await_content = /*@__PURE__*/ _await_content(0, " ", " ");
-const $if_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);
+const $if_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content__value);
 const $if_content__promise = /*@__PURE__*/ _closure_get(5, ($scope) => $if_content__await_promise($scope, $scope._._.d || "idle"), ($scope) => $scope._._, "a0");
 const $if_content__setup = ($scope) => {
 	$if_content__promise($scope);

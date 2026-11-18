@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 		const $scope4_id = _scope_id();
 		_html(`<div>${_text_mark($scope4_id, "a", v)}</div>`);
 		_script($scope4_id, "a3");
-		_scope($scope4_id, { c: v });
+		_scope($scope4_id, { b: v });
 	});
 	_scope($scope0_id, {
 		c: value,

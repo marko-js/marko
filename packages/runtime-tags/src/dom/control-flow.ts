@@ -83,7 +83,7 @@ export function _await_promise(
       );
       referenceNode.remove();
     }
-    params?.(awaitBranch, [value]);
+    params?.(awaitBranch, value);
     return awaitBranch;
   };
   const awaitPromise = (scope: Scope, promise: unknown): unknown => {
@@ -440,7 +440,7 @@ export function renderCatch(scope: Scope, error?: unknown) {
       ],
       (branch) => {
         setupBranch(catchContent, branch);
-        catchContent[RendererProp.Params]?.(branch, [error]);
+        catchContent[RendererProp.Params]?.(branch, error);
       },
       -1,
     );

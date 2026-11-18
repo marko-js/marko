@@ -24,8 +24,8 @@ var parent_default = _template("b", (input) => {
 		$Nested_withLoadAssets({ shared });
 		_script($scope1_id, "b0");
 		_scope($scope1_id, {
-			h: shared,
-			i: count
+			g: shared,
+			h: count
 		});
 	});
 });

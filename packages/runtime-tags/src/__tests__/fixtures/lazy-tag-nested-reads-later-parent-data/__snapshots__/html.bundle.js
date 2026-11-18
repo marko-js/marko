@@ -34,7 +34,7 @@ var parent_default = _template("b", (input) => {
 			_html("loading");
 		}, void 0, "b0");
 		_script($scope1_id, "b1");
-		_scope($scope1_id, { g: second });
+		_scope($scope1_id, { f: second });
 	});
 	_script($scope0_id, "b2");
 	_scope($scope0_id, { e: first });

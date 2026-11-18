@@ -1,10 +1,10 @@
 // template.marko
 const $template = "<button> </button><!><!>";
 const $walks = " D l%c";
-const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
+const $await_content__result = ($scope, result) => _text($scope["#text/0"], result);
 const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "loading");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<div> </div>", "D ");
-const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
+const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__result);
 const $try_content__query = /*@__PURE__*/ _closure_get("query/4", ($scope) => $try_content__await_promise($scope, $scope._.query ? resolveAfter(`found ${$scope._.query}`, 1) : "no query"), 0, "__tests__/template.marko_1_query#0:3/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__query($scope);

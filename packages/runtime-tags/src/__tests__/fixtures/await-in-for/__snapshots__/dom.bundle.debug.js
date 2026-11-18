@@ -2,9 +2,9 @@
 const $template = "<ul></ul>";
 const $walks = " b";
 const $setup = ($_) => {};
-const $await_content__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]);
+const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", " ", " ");
-const $for_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
+const $for_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__v);
 const $for_content__setup = $await_content;
 const $for_content__$params = ($scope, $params2) => $for_content__await_promise($scope, resolveAfter($params2[0]?.label, 1));
 const $for = /*@__PURE__*/ _for_of_unkeyed("#ul/0", "<li><!></li>", "D%", $for_content__setup, $for_content__$params);

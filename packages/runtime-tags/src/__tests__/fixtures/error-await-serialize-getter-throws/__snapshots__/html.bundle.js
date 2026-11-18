@@ -9,6 +9,6 @@ var template_default = _template("a", (input) => {
 		} };
 		_html(`<button>${_escape(value)}</button>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "a0");
-		_scope($scope1_id, { e: obj });
+		_scope($scope1_id, { d: obj });
 	});
 }, 1);

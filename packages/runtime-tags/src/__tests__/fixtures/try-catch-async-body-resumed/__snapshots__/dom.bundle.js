@@ -4,12 +4,12 @@ const $if_content__setup = ($scope) => $if_content__x($scope, (() => {
 	throw new Error("bang");
 })());
 const $await_content__if = /*@__PURE__*/ _if(0, " ", " ", $if_content__setup);
-const $await_content__n = /*@__PURE__*/ _let(6, ($scope) => {
-	_text($scope.d, $scope.g);
-	$await_content__if($scope, $scope.g ? 0 : 1);
+const $await_content__n = /*@__PURE__*/ _let(5, ($scope) => {
+	_text($scope.d, $scope.f);
+	$await_content__if($scope, $scope.f ? 0 : 1);
 });
 const $await_content__setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
-	$await_content__n($scope, +$scope.g + 1);
+	$await_content__n($scope, +$scope.f + 1);
 }));
-const $catch_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]?.message);
-const $catch_content = _content("a1", "caught <!>", "b%", 0, $catch_content__$params);
+const $catch_content__err = ($scope, err) => _text($scope.a, err?.message);
+const $catch_content = _content("a1", "caught <!>", "b%", 0, $catch_content__err);

@@ -4,12 +4,12 @@ const $walks = "D%l%c";
 let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_value.mjs"));
 const $await_content2__setup = ($scope) => $load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
-const $await_content2__$params = ($scope, $params3) => $load_Child_tag_input_value($scope["#childScope/1"], $params3[0]);
-const $await_content__$params = ($scope, $params2) => _attr($scope["#rect/0"], "width", $params2[0]?.length);
+const $await_content2__v = ($scope, v) => $load_Child_tag_input_value($scope["#childScope/1"], v);
+const $await_content__v = ($scope, v) => _attr($scope["#rect/0"], "width", v?.length);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<rect height=1></rect>", " ");
-const $await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
+const $await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__v);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/1", "<!><!><!>", "b%/&", $await_content2__setup);
-const $await_promise2 = /*@__PURE__*/ _await_promise("#text/1", $await_content2__$params);
+const $await_promise2 = /*@__PURE__*/ _await_promise("#text/1", $await_content2__v);
 function $setup($scope) {
 	$await_content($scope);
 	$await_content2($scope);

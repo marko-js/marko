@@ -18,9 +18,9 @@ var template_default = _template("a", (input) => {
 		_html(`<button>${_text_mark($scope2_id, "b", error.message)}</button>${_el_mark($scope2_id, "a")}`);
 		_script($scope2_id, "a0");
 		_scope($scope2_id, {
-			e: error?.message,
-			f: message,
-			g: _write_if($scope2_reason, 0) && clicked
+			d: error?.message,
+			e: message,
+			f: _write_if($scope2_reason, 0) && clicked
 		});
 	}, 0, "a1");
 }, 1);

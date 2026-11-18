@@ -12,9 +12,9 @@ function $setup($scope) {
 
 // template.marko
 const $catch_content__v = _var_resume("a5", ($scope, v) => _text($scope.c, v));
-const $catch_content__$params = ($scope, $params6) => $input_x$1($scope.a, $params6[0]?.message);
+const $catch_content__err = ($scope, err) => $input_x$1($scope.a, err?.message);
 const $catch_content__setup = ($scope) => _var($scope, 0, $catch_content__v);
-const $catch_content = _content("a6", /*@__PURE__*/ ((_w0) => `${_w0}<p class=catch> </p>`)(""), /*@__PURE__*/ ((_w0) => `0${_w0}&D l`)(""), $catch_content__setup, $catch_content__$params);
+const $catch_content = _content("a6", /*@__PURE__*/ ((_w0) => `${_w0}<p class=catch> </p>`)(""), /*@__PURE__*/ ((_w0) => `0${_w0}&D l`)(""), $catch_content__setup, $catch_content__err);
 const $wrap_content__v = _var_resume("a3", ($scope, v) => _text($scope.c, v));
 const $Count_content__v = _var_resume("a1", ($scope, v) => _text($scope.c, v));
 const $Count_content__x = ($scope, x) => $input_x$1($scope.a, x);

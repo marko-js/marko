@@ -6,8 +6,8 @@ const $catch_content__setup = ($scope) => {
 	$load_Child_setup($scope, $scope.b, $scope.a);
 	$load_Child_tag_input_value($scope.b, "catch");
 };
-const $catch_content__$params = ($scope, $params2) => _text($scope.c, $params2[0]?.message);
-const $catch_content = _content("b1", "<!><!> caught <!>", "b%/&c%", $catch_content__setup, $catch_content__$params);
+const $catch_content__err = ($scope, err) => _text($scope.c, err?.message);
+const $catch_content = _content("b1", "<!><!> caught <!>", "b%/&c%", $catch_content__setup, $catch_content__err);
 
 // child.marko
 var child_exports = /* @__PURE__ */ __exportAll({});

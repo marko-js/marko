@@ -6,12 +6,12 @@
     },
     "template.marko.page.mjs": {
       "total": {
-        "min": 1277,
-        "brotli": 708
+        "min": 1272,
+        "brotli": 704
       },
       "files": {
         "tags/log-effect.marko": 183,
-        "template.marko": 373
+        "template.marko": 352
       }
     },
     "child.mjs": {

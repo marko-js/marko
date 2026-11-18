@@ -9,7 +9,7 @@ var tags_grandchild_default = _template("c", (input) => {
 		let value = v;
 		_html(`<button>${_text_mark($scope1_id, "b", value)}</button>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "c0");
-		_scope($scope1_id, { e: value });
+		_scope($scope1_id, { d: value });
 	});
 });
 

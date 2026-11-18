@@ -1,9 +1,9 @@
 // components/tags-child.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $await_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]);
+const $await_content__value = ($scope, value) => _text($scope.a, value);
 const $await_content = /*@__PURE__*/ _await_content(0, "<div id=tags> </div>", "D ");
-const $await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);
+const $await_promise = /*@__PURE__*/ _await_promise(0, $await_content__value);
 function $setup($scope) {
 	$await_content($scope);
 	$await_promise($scope, rejectAfter(/* @__PURE__ */ new Error("ERROR!"), 1));

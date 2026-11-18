@@ -31,19 +31,19 @@ const $Count_content__walks = /*@__PURE__*/ ((_w0) => `0${_w0}&D l`)("");
 const $Count_content__template = /*@__PURE__*/ ((_w0) => `${_w0}<p class=define> </p>`)("");
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<button></button><!>${_w0}${_w1}<!><!><!>`)($Count_content__template, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => ` b%b/${_w0}&/${_w1}&%b%c`)($Count_content__walks, "b%c");
-const $await_content2__$params = ($scope, $params7) => _text($scope["#text/0"], $params7[0]);
-const $catch_content__v = _var_resume("__tests__/template.marko_6_v#6/var", ($scope, v) => _text($scope["#text/2"], v));
-const $catch_content__$params = ($scope, $params6) => $input_x$1($scope["#childScope/0"], $params6[0]?.message);
+const $await_content2__value = ($scope, value) => _text($scope["#text/0"], value);
+const $catch_content__v = _var_resume("__tests__/template.marko_6_v#5/var", ($scope, v) => _text($scope["#text/2"], v));
+const $catch_content__err = ($scope, err) => $input_x$1($scope["#childScope/0"], err?.message);
 const $catch_content__setup = ($scope) => _var($scope, "#childScope/0", $catch_content__v);
-const $catch_content = _content_resume("__tests__/template.marko_6*content", /*@__PURE__*/ ((_w0) => `${_w0}<p class=catch> </p>`)(""), /*@__PURE__*/ ((_w0) => `0${_w0}&D l`)(""), $catch_content__setup, $catch_content__$params);
+const $catch_content = _content_resume("__tests__/template.marko_6*content", /*@__PURE__*/ ((_w0) => `${_w0}<p class=catch> </p>`)(""), /*@__PURE__*/ ((_w0) => `0${_w0}&D l`)(""), $catch_content__setup, $catch_content__err);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", " ", " ");
-const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content2__$params);
+const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content2__value);
 const $try_content__setup = ($scope) => {
 	$await_content2($scope);
 	$try_content__await_promise($scope, rejectAfter(new Error("e"), 2));
 };
 const $await_content__v = ($scope, v) => _text($scope["#text/2"], v);
-const $await_content__$params = ($scope, $params5) => $input_x$1($scope["#childScope/0"], $params5[0]);
+const $await_content__value = ($scope, value) => $input_x$1($scope["#childScope/0"], value);
 const $await_content__setup = ($scope) => _var($scope, "#childScope/0", $await_content__v);
 const $wrap_content__v = _var_resume("__tests__/template.marko_3_v#6/var", ($scope, v) => _text($scope["#text/2"], v));
 const $wrap_content__$params = ($scope, $params4) => $input_x$1($scope["#childScope/0"], $params4[0].value);
@@ -71,7 +71,7 @@ const $list = /*@__PURE__*/ _let("list/6", ($scope) => {
 });
 const $list_length = /*@__PURE__*/ _const("list_length", ($scope) => $Count_content__x($scope["#childScope/2"], $scope.list_length));
 const $await_content = /*@__PURE__*/ _await_content("#text/4", /*@__PURE__*/ ((_w0) => `${_w0}<p class=await> </p>`)(""), /*@__PURE__*/ ((_w0) => `0${_w0}&D l`)(""), $await_content__setup);
-const $await_promise = /*@__PURE__*/ _await_promise("#text/4", $await_content__$params);
+const $await_promise = /*@__PURE__*/ _await_promise("#text/4", $await_content__value);
 const $try = /*@__PURE__*/ _try("#text/5", "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$list($scope, [...$scope.list, "c"]);

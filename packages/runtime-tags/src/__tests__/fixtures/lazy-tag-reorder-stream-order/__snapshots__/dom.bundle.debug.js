@@ -33,15 +33,15 @@ const $await_content2__setup = ($scope) => {
 	$await_content2__shared($scope);
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 };
-const $await_content2__$params = ($scope, $params3) => $load_Child_tag_input_label($scope["#childScope/1"], $params3[0]);
+const $await_content2__label = ($scope, label) => $load_Child_tag_input_label($scope["#childScope/1"], label);
 const $await_content__shared = /*@__PURE__*/ _closure_get("shared/3", ($scope) => $load_Child_tag_input_shared($scope["#childScope/1"], $scope._._.shared), ($scope) => $scope._._);
 const $await_content__setup = ($scope) => {
 	$await_content__shared($scope);
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 };
-const $await_content__$params = ($scope, $params2) => $load_Child_tag_input_label($scope["#childScope/1"], $params2[0]);
+const $await_content__label = ($scope, label) => $load_Child_tag_input_label($scope["#childScope/1"], label);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "b%/&", $await_content__setup);
-const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
+const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__label);
 const $try_content__setup = ($scope) => {
 	$await_content($scope);
 	$try_content__await_promise($scope, resolveAfter("reordered", 1));
@@ -49,7 +49,7 @@ const $try_content__setup = ($scope) => {
 const $shared = /*@__PURE__*/ _const("shared");
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/1", "<!><!><!>", "b%/&", $await_content2__setup);
-const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content2__$params);
+const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content2__label);
 function $setup($scope) {
 	$await_content2($scope);
 	$shared($scope, {

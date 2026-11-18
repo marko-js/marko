@@ -1,13 +1,12 @@
 // template.marko
-const $await_content__value__script = _script("a0", ($scope) => console.log(`effect ran value=${$scope.c}`));
-const $await_content__value = /*@__PURE__*/ _const(2, ($scope) => {
-	_text($scope.a, $scope.c);
+const $await_content__value__script = _script("a0", ($scope) => console.log(`effect ran value=${$scope.b}`));
+const $await_content__value = /*@__PURE__*/ _const(1, ($scope) => {
+	_text($scope.a, $scope.b);
 	$await_content__value__script($scope);
 });
 const $await_content__setup = _script("a1", ($scope) => console.log(`setup effect ran`));
-const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);
 const $placeholder_content = _content("a3", "loading...");
-const $try_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);
+const $try_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content__value);
 const $try_content__value = /*@__PURE__*/ _closure_get(3, ($scope) => $try_content__await_promise($scope, resolveAfter($scope._.c, 3)), 0, "a2");
 const $value__closure = /*@__PURE__*/ _closure($try_content__value);
 const $value = /*@__PURE__*/ _let(2, ($scope) => {

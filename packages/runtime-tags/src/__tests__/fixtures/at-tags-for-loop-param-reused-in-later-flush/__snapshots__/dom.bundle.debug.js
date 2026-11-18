@@ -28,7 +28,6 @@ const $await_content__setup__script = _script("__tests__/template.marko_1", ($sc
 	$picked($scope._, $scope.v);
 }));
 const $await_content__setup = $await_content__setup__script;
-const $await_content__$params = ($scope, $params3) => $await_content__v($scope, $params3[0]);
 const $await_content__v = /*@__PURE__*/ _const("v");
 const $picked = /*@__PURE__*/ _let("picked/7", ($scope) => _text($scope["#text/2"], $scope.picked && $scope.picked.text));
 function $setup($scope) {
@@ -43,6 +42,6 @@ const $input_items = /*@__PURE__*/ _const("input_items", ($scope) => {
 	$await_promise($scope, resolveAfter($scope.input_items?.[1]));
 });
 const $await_content = /*@__PURE__*/ _await_content("#text/1", "<button id=pick>pick</button>", " ", $await_content__setup);
-const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content__$params);
+const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content__v);
 const $input = ($scope, input) => $input_items($scope, input.items);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

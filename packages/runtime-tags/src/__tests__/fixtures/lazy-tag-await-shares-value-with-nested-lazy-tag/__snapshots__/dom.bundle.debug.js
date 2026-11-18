@@ -28,7 +28,7 @@ const $walks = "b%c";
 let $load_Nested_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:nested.marko.setup.mjs"));
 let $load_Nested_tag_input_shared = /*@__PURE__*/ _load_signal(($_) => import("./v:nested.marko.input_shared.mjs"));
 const $await_content__shared = /*@__PURE__*/ _const("shared", ($scope) => $load_Nested_tag_input_shared($scope["#childScope/4"], $scope.shared));
-const $await_content__count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope["#text/2"], $scope.count));
+const $await_content__count = /*@__PURE__*/ _let("count/7", ($scope) => _text($scope["#text/2"], $scope.count));
 const $await_content__setup__script = _script("__tests__/parent.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$await_content__count($scope, $scope.count + Object.keys($scope.shared).length);
 }));
@@ -38,9 +38,9 @@ const $await_content__setup = ($scope) => {
 	$await_content__count($scope, 0);
 	$await_content__setup__script($scope);
 };
-const $await_content__$params = ($scope, $params2) => _text($scope["#text/1"], $params2[0]);
+const $await_content__v = ($scope, v) => _text($scope["#text/1"], v);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<button class=parent><!>:<!></button><!><!>", " D%c%l%/&", $await_content__setup);
-const $await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
+const $await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__v);
 function $setup($scope) {
 	$await_content($scope);
 	$await_promise($scope, resolveAfter("parent", 1));

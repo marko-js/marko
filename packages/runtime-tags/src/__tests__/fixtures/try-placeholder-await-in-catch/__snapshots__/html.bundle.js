@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 				_html(`<p>caught ${_text_mark($scope5_id, "a", err.message, $wg__err_message * 2)}, ${_escape(retry)}</p>`);
 				$wi__err_message && _subscribe($catch_content__err_message__closures, _scope($scope5_id, {}), "a0", $wg__err_message);
 			}, $wg__err_message);
-			$wi__err_message && _scope($scope4_id, { e: $catch_content__err_message__closures });
+			$wi__err_message && _scope($scope4_id, { d: $catch_content__err_message__closures });
 		}, 0, "a1");
 	}, () => {
 		_scope_reason();

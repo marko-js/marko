@@ -24,14 +24,14 @@ const $await_content__setup = ($scope) => {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$load_Child_tag_input_id($scope["#childScope/1"], "async");
 };
-const $await_content__$params = ($scope, $params2) => $load_Child_tag_input_value($scope["#childScope/1"], $params2[0]);
+const $await_content__value = ($scope, value) => $load_Child_tag_input_value($scope["#childScope/1"], value);
 function $setup($scope) {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$load_Child_tag_input_id($scope["#childScope/1"], "sync");
 	$await_content($scope);
 }
 const $await_content = /*@__PURE__*/ _await_content("#text/2", "<!><!><!>", "b%/&", $await_content__setup);
-const $await_promise = /*@__PURE__*/ _await_promise("#text/2", $await_content__$params);
+const $await_promise = /*@__PURE__*/ _await_promise("#text/2", $await_content__value);
 const $input_value = ($scope, input_value) => {
 	$load_Child_tag_input_value($scope["#childScope/1"], input_value);
 	$await_promise($scope, resolveAfter(input_value + 1, 1));

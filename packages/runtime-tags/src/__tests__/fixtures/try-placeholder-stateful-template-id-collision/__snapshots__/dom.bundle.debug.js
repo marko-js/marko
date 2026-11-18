@@ -40,7 +40,7 @@ var n1_default = /*@__PURE__*/ _template("__tests__/tags/n1.marko", $template$1,
 const $template = "<button>clicks <!></button><button class=swap>swap</button><!><!>";
 const $walks = " Db%l b%c";
 const $await_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $await_content__clicks__OR__tag__OR__body = /*@__PURE__*/ _or(3, ($scope) => $await_content__dynamicTag($scope, $scope._._.tag, ($_) => ({ label: `${$scope.body} ${$scope._._.clicks}` })), 2);
+const $await_content__clicks__OR__tag__OR__body = /*@__PURE__*/ _or(2, ($scope) => $await_content__dynamicTag($scope, $scope._._.tag, ($_) => ({ label: `${$scope.body} ${$scope._._.clicks}` })), 2);
 const $await_content__clicks = /*@__PURE__*/ _closure_get("clicks/6", $await_content__clicks__OR__tag__OR__body, ($scope) => $scope._._, "__tests__/template.marko_3_clicks#0:4/subscribe");
 const $await_content__setup = ($scope) => {
 	$await_content__clicks($scope);
@@ -48,9 +48,8 @@ const $await_content__setup = ($scope) => {
 };
 const $await_content__tag = /*@__PURE__*/ _closure_get("tag/7", $await_content__clicks__OR__tag__OR__body, ($scope) => $scope._._, "__tests__/template.marko_3_tag#0:5/subscribe");
 const $await_content__body = /*@__PURE__*/ _const("body", $await_content__clicks__OR__tag__OR__body);
-const $await_content__$params = ($scope, $params2) => $await_content__body($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "b%", $await_content__setup);
-const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
+const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__body);
 const $try_content__setup = ($scope) => {
 	$await_content($scope);
 	$try_content__await_promise($scope, resolveAfter("body", 2));

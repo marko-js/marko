@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 			const $scope4_id = _scope_id();
 			_html(`<span>${_escape(x)}</span>${_el_mark($scope4_id, "a")}`);
 			_script($scope4_id, "a0");
-			_scope($scope4_id, { d: x });
+			_scope($scope4_id, { c: x });
 		});
 	}, () => {
 		_scope_reason();

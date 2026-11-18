@@ -1,15 +1,15 @@
 // template.marko
 let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ (/* @__PURE__ */ _load_event_trigger("click", "#load"))(($_) => import("./v:child.marko.setup.mjs")));
-const $await_content__$params = ($scope, $params3) => _text($scope.a, $params3[0]);
+const $await_content__value = ($scope, value) => _text($scope.a, value);
 const $await_content = /*@__PURE__*/ _await_content(2, " ", " ");
-const $if_content__await_promise = /*@__PURE__*/ _await_promise(2, $await_content__$params);
+const $if_content__await_promise = /*@__PURE__*/ _await_promise(2, $await_content__value);
 const $if_content__setup = ($scope) => {
 	$load_Child_setup($scope, $scope.b, $scope.a);
 	$await_content($scope);
 	$if_content__await_promise($scope, rejectAfter(/* @__PURE__ */ new Error("rejected"), 1));
 };
-const $catch_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]?.message);
-const $catch_content = _content("b2", "caught: <!>", "b%", 0, $catch_content__$params);
+const $catch_content__err = ($scope, err) => _text($scope.a, err?.message);
+const $catch_content = _content("b2", "caught: <!>", "b%", 0, $catch_content__err);
 const $placeholder_content = _content("b1", "loading");
 const $try_content__if = /*@__PURE__*/ _if(0, "<!><!><!><!>", "b%/&b%", $if_content__setup);
 const $try_content__show = /*@__PURE__*/ _closure_get(3, ($scope) => $try_content__if($scope, $scope._.c ? 0 : 1), 0, "b0");

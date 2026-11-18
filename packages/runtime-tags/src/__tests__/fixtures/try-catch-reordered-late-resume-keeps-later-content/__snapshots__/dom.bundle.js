@@ -1,18 +1,17 @@
 // template.marko
 const $placeholder_content = _content("a1", "loading");
-const $await_content3__setup = /* @__PURE__ */ _closure_get(8, ($scope) => _text($scope.a, $scope._._.c), ($scope) => $scope._._);
-const $await_content3__$params = ($scope, $params4) => _text($scope.b, $params4[0]);
+const $await_content3__setup = /* @__PURE__ */ _closure_get(8, ($scope) => _text($scope.a, $scope._._.b), ($scope) => $scope._._);
+const $await_content3__x = ($scope, x) => _text($scope.b, x);
 const $await_content3 = /*@__PURE__*/ _await_content(0, "<!><!>", "%b%", $await_content3__setup);
-const $try_content2__await_promise = /*@__PURE__*/ _await_promise(0, $await_content3__$params);
+const $try_content2__await_promise = /*@__PURE__*/ _await_promise(0, $await_content3__x);
 const $try_content2__setup = ($scope) => {
 	$await_content3($scope);
 	$try_content2__await_promise($scope, rejectAfter(/* @__PURE__ */ new Error("nope"), 2));
 };
 const $await_content2__setup = /* @__PURE__ */ _try(0, "<!><!><!>", "b%", $try_content2__setup, $placeholder_content);
-const $await_content2__$params = ($scope, $params3) => $await_content2__v($scope, $params3[0]);
-const $await_content2__v = /*@__PURE__*/ _const(2);
+const $await_content2__v = /*@__PURE__*/ _const(1);
 const $await_content2 = /*@__PURE__*/ _await_content(0, "<!><!><!>", "b%", $await_content2__setup);
-const $try_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content2__$params);
+const $try_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content2__v);
 const $try_content__setup = ($scope) => {
 	$await_content2($scope);
 	$try_content__await_promise($scope, resolveAfter(1, 1));

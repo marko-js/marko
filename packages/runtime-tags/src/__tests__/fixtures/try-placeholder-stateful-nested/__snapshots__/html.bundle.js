@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 					const $childScope = _peek_scope_id();
 					note_default({ label: `${inner} ${clicks}` });
 					_subscribe($clicks__closures, _scope($scope4_id, {
-						c: inner,
+						b: inner,
 						a: _existing_scope($childScope),
 						Ce: 1
 					}), "a0", 0);

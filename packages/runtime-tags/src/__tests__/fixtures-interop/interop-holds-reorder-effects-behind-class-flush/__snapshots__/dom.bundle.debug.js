@@ -34,13 +34,13 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 // template.marko
 const $template = "<!><!><!><!><!>";
 const $walks = "b%b%b%c";
-const $await_content3__$params = ($scope, $params4) => _text($scope["#text/0"], $params4[0]);
+const $await_content3__v = ($scope, v) => _text($scope["#text/0"], v);
 const $await_content2__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $await_content2__setup = ($scope) => $await_content2__dynamicTag($scope, _marko_template);
-const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
+const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
 const $placeholder_content = _content_resume("__tests__/template.marko_4*content", "loading");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", " ", " ");
-const $try_content2__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
+const $try_content2__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__v);
 const $try_content2__setup = ($scope) => {
 	$await_content($scope);
 	$try_content2__await_promise($scope, rejectAfter(new Error("ERROR!"), 1));
@@ -54,7 +54,7 @@ const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setu
 const $await_content2 = /*@__PURE__*/ _await_content("#text/1", "<!><!><!>", "b%", $await_content2__setup);
 const $await_promise = /*@__PURE__*/ _await_promise("#text/1");
 const $await_content3 = /*@__PURE__*/ _await_content("#text/2", "<div id=slow> </div>", "D ");
-const $await_promise2 = /*@__PURE__*/ _await_promise("#text/2", $await_content3__$params);
+const $await_promise2 = /*@__PURE__*/ _await_promise("#text/2", $await_content3__v);
 function $setup($scope) {
 	$await_content2($scope);
 	$await_content3($scope);

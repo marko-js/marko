@@ -30,8 +30,8 @@ var template_default = _template("a", (input) => {
 			_html(`<button>${_text_mark($scope4_id, "b", err.message)}</button>${_el_mark($scope4_id, "a")}`);
 			_script($scope4_id, "a0");
 			_scope($scope4_id, {
-				e: err?.message,
-				f: n
+				d: err?.message,
+				e: n
 			});
 		}, 0, "a2");
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });

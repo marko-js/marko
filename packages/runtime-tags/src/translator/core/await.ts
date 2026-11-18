@@ -14,7 +14,7 @@ import {
 } from "../util/assert";
 import { BindingType } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
-import { setDerivedFrom, trackParamsReferences } from "../util/references";
+import { setDerivedFrom, trackParamReferences } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime, importRuntimeFeature } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
@@ -81,12 +81,12 @@ export default {
     const bodySection = ensureBodySection(tagBody)!;
     const valueExtra = (valueAttr.value.extra ??= {});
 
-    const paramsBinding = trackParamsReferences(tagBody, BindingType.derived);
+    const paramBinding = trackParamReferences(tagBody, BindingType.derived);
 
-    if (paramsBinding) {
+    if (paramBinding) {
       // The content waits on the promise even when nothing reads its result.
       valueExtra.pure = false;
-      setDerivedFrom(paramsBinding, valueExtra);
+      setDerivedFrom(paramBinding, valueExtra);
     }
 
     tagExtra.textBefore = mayMergeWithText(tag, true);

@@ -30,13 +30,13 @@ const $for_content__collection = ($scope, collection) => {
 	_attr($scope["#a/0"], "href", `/something/${collection}`);
 	_text($scope["#text/1"], collection);
 };
-const $for_content__$params = ($scope, $params3) => $for_content__collection($scope, $params3[0]);
+const $for_content__$params = ($scope, $params2) => $for_content__collection($scope, $params2[0]);
 const $await_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<a> </a>", " D ", 0, $for_content__$params);
-const $await_content__$params = ($scope, $params2) => $await_content__for($scope, [$params2[0]]);
+const $await_content__collections = ($scope, collections) => $await_content__for($scope, [collections]);
 const $pattern2 = _var_resume("__tests__/template.marko_0_$pattern#4/var", ($scope, $pattern) => $if($scope, !($pattern.cart !== null) ? 0 : 1));
 const $if = /*@__PURE__*/ _if("#text/3", "<a href=/go-to>Go</a>", 0, 0, "<button>Go to</button>");
 const $await_content = /*@__PURE__*/ _await_content("#text/2", "<!><!><!>", "b%");
-const $await_promise = /*@__PURE__*/ _await_promise("#text/2", $await_content__$params);
+const $await_promise = /*@__PURE__*/ _await_promise("#text/2", $await_content__collections);
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$await_content($scope);

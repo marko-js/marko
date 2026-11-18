@@ -1,4 +1,4 @@
-// size: 25790 (min) 9608 (brotli)
+// size: 25786 (min) 9603 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -1719,7 +1719,7 @@ function _await_promise(nodeAccessor, params) {
           (awaitBranch.V = 0),
           insertBranchBefore(awaitBranch, scope[nodeAccessor].parentNode, scope[nodeAccessor]),
           referenceNode.remove()),
-        params?.(awaitBranch, [value]),
+        params?.(awaitBranch, value),
         awaitBranch
       );
     },
@@ -1917,7 +1917,7 @@ function renderCatch(scope, error) {
       queueRender(
         owner["A" + tryWithCatch.C],
         (branch) => {
-          (setupBranch(catchContent, branch), catchContent.d?.(branch, [error]));
+          (setupBranch(catchContent, branch), catchContent.d?.(branch, error));
         },
         -1,
       ));

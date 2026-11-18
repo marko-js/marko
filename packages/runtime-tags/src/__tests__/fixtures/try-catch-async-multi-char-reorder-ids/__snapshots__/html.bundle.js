@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 				let clicks = 0;
 				_html(`<button>${_text_mark($scope4_id, "b", message, _write_guard($scope3_reason, 0))} ${_text_mark($scope4_id, "c", clicks, 2)}</button>${_el_mark($scope4_id, "a")}`);
 				_script($scope4_id, "a0");
-				_scope($scope4_id, { f: clicks });
+				_scope($scope4_id, { e: clicks });
 			});
 		}, 0, "a1");
 	});

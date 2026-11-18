@@ -1,8 +1,8 @@
 // template.marko
+const $await_content__value = ($scope, value) => _text($scope.a, value);
 const $await_content__setup = ($scope) => _text($scope.b, $scope._._.M);
-const $await_content__$params = ($scope, $params3) => _text($scope.a, $params3[0]);
 const $await_content = /*@__PURE__*/ _await_content(0, "<!>:<!>", "%c%", $await_content__setup);
-const $if_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);
+const $if_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content__value);
 const $if_content__item = /*@__PURE__*/ _if_closure(0, 0, ($scope) => $if_content__await_promise($scope, resolveAfter($scope._.c, 1)));
 const $if_content__setup = ($scope) => {
 	$if_content__item._($scope);

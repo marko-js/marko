@@ -26,8 +26,8 @@ var template_default = _template("b", (input) => {
 		}, $scope1_id, "b");
 		_script($scope1_id, "b0");
 		_scope($scope1_id, {
-			d: v,
-			e: show
+			c: v,
+			d: show
 		});
 	});
 	_trailers("</body></html>");

@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 			_html(`<div id=inside>${_text_mark($scope3_id, "a", value)}</div>`);
 			_script($scope3_id, "a0");
 			_script($scope3_id, "a1");
-			_scope($scope3_id, { c: value });
+			_scope($scope3_id, { b: value });
 		});
 		_subscribe($value__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a2", 0);
 		_resume_branch($scope1_id);

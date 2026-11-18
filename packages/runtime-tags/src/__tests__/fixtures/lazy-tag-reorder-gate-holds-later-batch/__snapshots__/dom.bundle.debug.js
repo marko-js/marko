@@ -27,17 +27,17 @@ const $walks = "b%/&b%b%c";
 let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_label.mjs"));
 let $load_Child_tag_input_shared = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_shared.mjs"));
-const $await_content2__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
+const $await_content2__value = ($scope, value) => _text($scope["#text/0"], value);
 const $placeholder_content = _content_resume("__tests__/template.marko_3*content", "loading");
 const $await_content__shared = /*@__PURE__*/ _closure_get("shared/5", ($scope) => $load_Child_tag_input_shared($scope["#childScope/1"], $scope._.shared));
 const $await_content__setup = ($scope) => {
 	$await_content__shared($scope);
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 };
-const $await_content__$params = ($scope, $params3) => $load_Child_tag_input_label($scope["#childScope/1"], $params3[0]);
+const $await_content__label = ($scope, label) => $load_Child_tag_input_label($scope["#childScope/1"], label);
 const $try_content__shared = /*@__PURE__*/ _closure_get("shared/5", ($scope) => $load_Child_tag_input_shared($scope["#childScope/1"], $scope._.shared));
 const $await_content2 = /*@__PURE__*/ _await_content("#text/2", " ", " ");
-const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/2", $await_content2__$params);
+const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/2", $await_content2__value);
 const $try_content__setup = ($scope) => {
 	$try_content__shared($scope);
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
@@ -48,7 +48,7 @@ const $try_content__setup = ($scope) => {
 const $shared = /*@__PURE__*/ _const("shared");
 const $try = /*@__PURE__*/ _try("#text/2", "<!><!><!><!>", "b%/&b%", $try_content__setup, $placeholder_content);
 const $await_content = /*@__PURE__*/ _await_content("#text/3", "<!><!><!>", "b%/&", $await_content__setup);
-const $await_promise = /*@__PURE__*/ _await_promise("#text/3", $await_content__$params);
+const $await_promise = /*@__PURE__*/ _await_promise("#text/3", $await_content__label);
 function $setup($scope) {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$load_Child_tag_input_label($scope["#childScope/1"], "first");
