@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 import { getScopeIdIdentifier, getSection } from "../util/sections";
-import { type Binding, BindingType } from "./bindings";
+import type { Binding } from "./bindings";
 import buildStringExpression, {
   appendLiteral,
 } from "./build-string-expression";
@@ -12,12 +12,9 @@ import { getScopeAccessorLiteral } from "./scope-accessor";
 import { createOutputSectionState } from "./state";
 import { getMarkerGuard, isMarkerWritten } from "./write-guard";
 
-type Write = string | t.Expression | (() => undefined | string | t.Expression);
+type Write = string | t.Expression;
 const [getWrites] = createOutputSectionState<Write[]>(() => [""]);
-
-const [getTrailerWrites] = createOutputSectionState<(string | t.Expression)[]>(
-  () => [""],
-);
+const [getTrailerWrites] = createOutputSectionState<Write[]>(() => [""]);
 
 export function writeTo(path: t.NodePath<any>, trailer?: boolean) {
   const section = getSection(path);
@@ -37,7 +34,7 @@ function consumeHTML(path: t.NodePath<any>) {
   const section = getSection(path);
   const writes = getWrites(section);
   const trailers = getTrailerWrites(section);
-  const writeResult = buildStringExpression(writes.map(unwrapWrite));
+  const writeResult = buildStringExpression(writes);
   const trailerResult = buildStringExpression(trailers);
   writes.length = 0;
   writes[0] = "";
@@ -84,12 +81,6 @@ export function markNode(
   nodeBinding: Binding,
   deferred?: boolean,
 ) {
-  if (nodeBinding.type !== BindingType.dom) {
-    throw path.buildCodeFrameError(
-      "POTENTIAL MARKO BUG: Tried to mark a node that was not determined to need a mark during analyze.",
-    );
-  }
-
   if (isOutputHTML() && isMarkerWritten(nodeBinding)) {
     // Deferred markers ride the stream trailer alongside a deferred end tag
     // (html/body), keeping the marker adjacent to the element it resumes.
@@ -100,8 +91,4 @@ export function markNode(
       getMarkerGuard(nodeBinding),
     )}`;
   }
-}
-
-function unwrapWrite(write: Write) {
-  return typeof write === "function" ? write() || "" : write;
 }

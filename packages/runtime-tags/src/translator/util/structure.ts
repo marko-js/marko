@@ -23,6 +23,7 @@ import {
   type StructureRef,
 } from "./sections";
 import { createOutputState, createOutputSectionState } from "./state";
+import { followsStaticText } from "./static-text";
 import { withLeadingComment } from "./with-comment";
 
 const walkCodeToName = {
@@ -89,9 +90,14 @@ export function writeModuleReadTo(path: t.NodePath<any>, read: string[]) {
   });
 }
 
+// Text beside a static `${"literal"}`, or across a tag that renders no node, is one
+// DOM text node with the text before it: only the run's first node emits a walk step.
 export function writeTextTo(path: t.NodePath<any>, value: string) {
   if (value) {
     getSection(path).structure?.push({ kind: StructureKind.Text, value });
+  }
+  if (!followsStaticText(path)) {
+    enterShallow(path);
   }
 }
 
