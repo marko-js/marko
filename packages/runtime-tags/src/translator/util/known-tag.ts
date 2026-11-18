@@ -21,6 +21,7 @@ import { generateUidIdentifier } from "./generate-uid";
 import { getTagName, getTagNameHint } from "./get-tag-name";
 import {
   analyzeAttributeTags,
+  type AttrTagGroup,
   type AttrTagLookup,
   type AttrTagMeta,
   getAttrTagIdentifier,
@@ -50,7 +51,6 @@ import {
   dropContent,
   dropNodes,
   getAllTagReferenceNodes,
-  getChildTagReferenceNodes,
   mergeReferences,
   type ReferencedExtra,
   setDerivedFrom,
@@ -107,8 +107,6 @@ import {
   getWriteReason,
   isEverWritten,
 } from "./write-guard";
-
-type AttrTagGroup = AttrTagLookup[string]["group"];
 
 // Bound after every tag in the section is set up, so a `<return>` a setup
 // sends early reaches tags that read it only once they are set up too.
@@ -410,22 +408,17 @@ export function knownTagTranslateHTML(
     }
   }
 
+  const renderCall = t.callExpression(
+    tagIdentifier,
+    getRenderArgs(tag, properties),
+  );
   if (tagVar) {
     // The render call reads attr-tag bindings, so its declaration must follow
     // the attr statements rather than precede the tag.
-    translateVar(
-      tag,
-      t.callExpression(tagIdentifier, getRenderArgs(tag, properties)),
-      "let",
-      statements,
-    );
+    translateVar(tag, renderCall, "let", statements);
     if (varStatement) statements.push(varStatement);
   } else {
-    statements.push(
-      t.expressionStatement(
-        t.callExpression(tagIdentifier, getRenderArgs(tag, properties)),
-      ),
-    );
+    statements.push(t.expressionStatement(renderCall));
   }
 
   replaceWithStatements(tag, statements);
@@ -446,7 +439,7 @@ export function knownTagTranslateDOM(
     const varBinding = node.var.extra!.binding!;
     const signal = initValue(varBinding);
     // The `_var` setup call below references the signal.
-    signal.register = isChildScopeResumed(getSection(tag), extra);
+    signal.register = isChildScopeResumed(tagSection, extra);
     signal.referenced = true;
     signal.buildAssignment = (valueSection, value) =>
       buildVarChange(
@@ -654,7 +647,7 @@ function analyzeAttrs(
   const known: NonNullable<KnownExprs["known"]> = (inputExpr.known = {});
   const attrTagLookup = analyzeAttributeTags(tag);
   const seen = new Set<string>();
-  const remaining = new Set(getAllKnownPropertyNames(paramsTree));
+  const remaining = getAllKnownPropertyNames(paramsTree);
   const dropReferenceNodes: t.Node[] = [];
   let restReferenceNodes: t.Node[] | undefined;
 
@@ -670,7 +663,14 @@ function analyzeAttrs(
     ) => {
       // Within control flow, an attribute tag the child never reads is dropped
       // with its content, while the flow around it stays.
-      const referenceNodes: t.Node[] = [];
+      let groupReferences = nodeReferencesByGroup.get(group);
+      if (!groupReferences) {
+        nodeReferencesByGroup.set(
+          group,
+          (groupReferences = { firstTag: child, referenceNodes: [] }),
+        );
+      }
+      const { referenceNodes } = groupReferences;
       const collectAttrTag = (attrTag: t.MarkoTag) =>
         collectAttrTagReferenceNodes(
           attrTag,
@@ -683,16 +683,6 @@ function analyzeAttrs(
         collectAttrTag(child.node);
       } else {
         getAllTagReferenceNodes(child.node, referenceNodes, collectAttrTag);
-      }
-      const groupReferences = nodeReferencesByGroup.get(group);
-      if (groupReferences) {
-        groupReferences.referenceNodes =
-          groupReferences.referenceNodes.concat(referenceNodes);
-      } else {
-        nodeReferencesByGroup.set(group, {
-          firstTag: child,
-          referenceNodes,
-        });
       }
     };
 
@@ -874,16 +864,12 @@ function analyzeAttrs(
     for (const prop of remaining) {
       const propBinding = ensurePropertyAlias(knownSpread, prop);
       const propExtra: ReferencedExtra = { section };
-      const attrTree = getParamsTreeAt(paramsTree, prop)!;
+      const attrTree = getParamsTreeAt(paramsTree, prop) as ParamsTree;
 
       known[prop] = { value: propExtra };
       rootAttrExprs.add(propExtra);
       addRead(propExtra, propExtra, propExtra, propBinding, section, undefined);
-      setDerivedFrom(
-        attrTree === true ? paramsTree.rest!.binding : attrTree.binding,
-        propExtra,
-        rootExprs,
-      );
+      setDerivedFrom(attrTree.binding, propExtra, rootExprs);
     }
   } else if (spreadReferenceNodes) {
     if (remaining.size || (paramsTree.rest && !paramsTree.rest.properties)) {
@@ -999,14 +985,10 @@ function collectInvokeOnlyInputNodes(
   tag: t.MarkoTag,
   referenceNodes: t.Node[] = [],
 ) {
-  if (tag.arguments) {
-    for (const arg of tag.arguments) referenceNodes.push(arg);
-  }
   for (const attr of tag.attributes) {
     (attr.value.extra ??= {}).invokeOnly = true;
-    referenceNodes.push(attr.value);
   }
-  return getChildTagReferenceNodes(tag, referenceNodes, (attrTag) =>
+  return getAllTagReferenceNodes(tag, referenceNodes, (attrTag) =>
     collectInvokeOnlyInputNodes(attrTag, referenceNodes),
   );
 }
@@ -1213,7 +1195,7 @@ function writeAttrsToSignals(
   const attrTagLookup = analyzeAttributeTags(tag);
   const seen = new Set<string>();
   const tagExtra = tag.node.extra;
-  const remaining = new Set(getAllKnownPropertyNames(paramsTree));
+  const remaining = getAllKnownPropertyNames(paramsTree);
   const contentProps: t.ObjectExpression["properties"] = [];
 
   if (attrTagLookup) {

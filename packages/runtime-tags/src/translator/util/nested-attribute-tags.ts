@@ -11,28 +11,26 @@ export interface AttrTagMeta {
   name: string;
   dynamic: boolean;
   repeated: boolean;
-  group: AttrTagNames;
+  group: AttrTagGroup;
 }
 
 export type AttrTagLookup = Record<string, AttrTagMeta>;
 
-type AttrTagNames = string[];
+export type AttrTagGroup = string[];
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     attrTagLookup?: AttrTagLookup;
-    attributeTagGroup?: AttrTagLookup[string]["group"];
+    attributeTagGroup?: AttrTagGroup;
   }
 }
 
 // Per program because the analyze-owned meta outlives the per-output AST
 // clone, and each translate mints its own uids from its own counters.
 const [getAttrTagIdentifiers] = createOutputState(
-  () => new WeakMap<AttrTagLookup[string], string>(),
+  () => new WeakMap<AttrTagMeta, string>(),
 );
-export function getAttrTagIdentifier(
-  meta: AttrTagLookup[string],
-): t.Identifier {
+export function getAttrTagIdentifier(meta: AttrTagMeta): t.Identifier {
   const identifiers = getAttrTagIdentifiers();
   let name = identifiers.get(meta);
   if (!name) {
@@ -64,7 +62,7 @@ export function analyzeAttributeTags(tag: t.NodePath<t.MarkoTag>) {
     string
   >();
 
-  let chainGroup: AttrTagNames | undefined;
+  let chainGroup: AttrTagGroup | undefined;
   for (const child of attrTags) {
     if (child.isMarkoTag()) {
       if (isAttributeTag(child)) {
@@ -79,18 +77,6 @@ export function analyzeAttributeTags(tag: t.NodePath<t.MarkoTag>) {
           child,
           attrTagNodesByName,
         )) {
-          const oldMeta = lookup[name];
-          if (oldMeta) {
-            if (!curGroup) {
-              curGroup = oldMeta.group;
-            } else if (curGroup !== oldMeta.group) {
-              for (const name of oldMeta.group) {
-                lookup[name].group = curGroup;
-                curGroup.push(name);
-              }
-            }
-          }
-
           let attrTagMeta = lookup[name];
           if (!attrTagMeta) {
             attrTagMeta = lookup[name] = createAttrTagMeta(
@@ -98,6 +84,13 @@ export function analyzeAttributeTags(tag: t.NodePath<t.MarkoTag>) {
               (curGroup ||= []),
             );
             curGroup.push(name);
+          } else if (!curGroup) {
+            curGroup = attrTagMeta.group;
+          } else if (curGroup !== attrTagMeta.group) {
+            for (const name of attrTagMeta.group) {
+              lookup[name].group = curGroup;
+              curGroup.push(name);
+            }
           }
 
           attrTagMeta.dynamic = true;
@@ -129,10 +122,7 @@ export function analyzeAttributeTags(tag: t.NodePath<t.MarkoTag>) {
   return lookup;
 }
 
-function createAttrTagMeta(
-  name: string,
-  group: AttrTagNames,
-): AttrTagLookup[string] {
+function createAttrTagMeta(name: string, group: AttrTagGroup): AttrTagMeta {
   return {
     name: name.slice(1),
     dynamic: false,

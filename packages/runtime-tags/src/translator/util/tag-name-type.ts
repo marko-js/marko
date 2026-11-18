@@ -152,7 +152,7 @@ function analyzeExpressionTagName(
   let path: (typeof pending)[0] | undefined;
   let type: TagNameType | undefined;
   let nullable = false;
-  let tagNameImported: string | false | undefined;
+  let tagNameImported: string | undefined;
   let tagNameLoad: LoadImportConfig | undefined;
   let tagNameTemplates: t.ProgramExtra[] | undefined = [];
 
@@ -233,7 +233,6 @@ function analyzeExpressionTagName(
             tagNameLoad = loadImport;
           } else if (type === TagNameType.NativeTag) {
             type = TagNameType.DynamicTag;
-            tagNameImported = undefined;
           } else if (tagNameImported !== resolvedImport) {
             tagNameImported = undefined;
           }
@@ -261,15 +260,10 @@ function analyzeExpressionTagName(
           );
           continue;
         }
-
-        if (bindingTagName === "let") {
-          // Deliberately dynamic: narrowing by every value assigned to a `<let>` is not worth it.
-          type = TagNameType.DynamicTag;
-          continue;
-        }
       }
 
-      // Any other tag variable (a `<define>`'s, a child's) may name a component.
+      // Any other tag variable (a `<define>`'s, a child's) may name a component;
+      // narrowing by every value assigned to a `<let>` is not worth it.
       type = TagNameType.DynamicTag;
     } else {
       type = TagNameType.DynamicTag;
