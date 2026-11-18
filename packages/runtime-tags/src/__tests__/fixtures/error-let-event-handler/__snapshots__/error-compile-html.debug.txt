@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-let-event-handler/template.marko:1:14
+    > 1 | <let/count=0 onChange(next) { localStorage.setItem("count", String(next)) }>
+        |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value) and its change handler. To act when `count` is assigned, keep its state in a second `<let>` and store it from `valueChange`: `<let/_count=...>` `<let/count=_count valueChange(next) { _count = next; ... }>`. A `valueChange` handler replaces the assignment, so `count` only changes if the handler stores `next`.
+      2 | <button onClick() { count++ }>${count}</button>
+      3 |

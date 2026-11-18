@@ -50,7 +50,7 @@ export default {
       tag,
       false,
       true,
-      tagVar ? undefined : getDeclarationHint,
+      tagVar ? (attr) => getEventHandlerHint(attr, tagVar) : getDeclarationHint,
     );
     assertNoArgs(tag);
     assertNoParams(tag);
@@ -179,6 +179,13 @@ export default {
 } as Tag;
 
 // Written like a JS declaration (`let count = 0;` or `<let count=0>`).
+function getEventHandlerHint(attr: t.MarkoAttribute, tagVar: t.LVal) {
+  if (/^on[A-Z-]/.test(attr.name) && t.isIdentifier(tagVar)) {
+    const { name } = tagVar;
+    return `To act when \`${name}\` is assigned, keep its state in a second \`<let>\` and store it from \`valueChange\`: \`<let/_${name}=...>\` \`<let/${name}=_${name} valueChange(next) { _${name} = next; ... }>\`. A \`valueChange\` handler replaces the assignment, so \`${name}\` only changes if the handler stores \`next\`.`;
+  }
+}
+
 function getDeclarationHint(attr: t.MarkoAttribute) {
   if (/^[A-Za-z_$][\w$]*$/.test(attr.name)) {
     return `To declare reactive state, the variable goes after a slash: \`<let/${attr.name}=...>\`. For a one time module level value, prefix a plain JavaScript statement with \`static\`.`;
