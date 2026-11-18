@@ -14,7 +14,7 @@ var row_default = /*@__PURE__*/ _template("__tests__/tags/row.marko", $template$
 // template.marko
 const $template = "<ul></ul><button id=add>Add</button><button id=remove>Remove</button>";
 const $walks = " b b b";
-const $for_content__$params = ($scope, $params2) => $input_label($scope["#childScope/0"], $params2[0]);
+const $for_content__$params = ($scope, label) => $input_label($scope["#childScope/0"], label);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#ul/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), 0, $for_content__$params);
 const $labels = /*@__PURE__*/ _let("labels/3", ($scope) => $for($scope, [$scope.labels]));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {

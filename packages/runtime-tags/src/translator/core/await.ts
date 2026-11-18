@@ -79,6 +79,7 @@ export default {
     tagExtra.nodeBinding = structure.markerNode(tag, section);
 
     const bodySection = ensureBodySection(tagBody)!;
+    bodySection.suppliedParams = 1;
     const valueExtra = (valueAttr.value.extra ??= {});
 
     const paramsBinding = trackParamsReferences(tagBody, BindingType.derived);

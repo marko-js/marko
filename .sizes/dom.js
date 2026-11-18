@@ -1,4 +1,4 @@
-// size: 25790 (min) 9608 (brotli)
+// size: 25774 (min) 9612 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -230,7 +230,7 @@ let loop = /*@__PURE__*/ withBranches(
         oldScopesByKey,
         hasPotentialMoves,
         start = 0;
-      (forEach(value, (key, args) => {
+      (forEach(value, (key, a, b) => {
         let i = newScopes.length,
           oldScope = oldScopes[i],
           branch =
@@ -246,7 +246,7 @@ let loop = /*@__PURE__*/ withBranches(
           : (((branch = createBranch(scope.$, renderer, scope, parentNode)).M = key),
             setupBranch(renderer, branch)),
           newScopes.push(branch),
-          params?.(branch, args));
+          params?.(branch, a, b));
       }),
         (scope[scopesAccessor] = newScopes));
       let newLen = newScopes.length,
@@ -285,24 +285,24 @@ let loop = /*@__PURE__*/ withBranches(
 let _for_of = /*@__PURE__*/ loop(([all, by], cb) => {
   ((by ||= bySecondArg),
     typeof by == "string"
-      ? forOf(all, (item, i) => cb(item[by], [item, i]))
-      : forOf(all, (item, i) => cb(by(item, i), [item, i])));
+      ? forOf(all, (item, i) => cb(item[by], item, i))
+      : forOf(all, (item, i) => cb(by(item, i), item, i)));
 }, reorderKeyed);
 let _for_in = /*@__PURE__*/ loop(([obj, by], cb) => {
-  ((by ||= byFirstArg), forIn(obj, (key, value) => cb(by(key, value), [key, value])));
+  ((by ||= byFirstArg), forIn(obj, (key, value) => cb(by(key, value), key, value)));
 }, reorderKeyed);
 let _for_to = /*@__PURE__*/ loop(([to, from, step, by], cb) => {
-  ((by ||= byFirstArg), forTo(to, from, step, (v) => cb(by(v), [v])));
+  ((by ||= byFirstArg), forTo(to, from, step, (v) => cb(by(v), v)));
 }, reorderKeyed);
 let _for_until = /*@__PURE__*/ loop(([until, from, step, by], cb) => {
-  ((by ||= byFirstArg), forUntil(until, from, step, (v) => cb(by(v), [v])));
+  ((by ||= byFirstArg), forUntil(until, from, step, (v) => cb(by(v), v)));
 }, reorderKeyed);
-let _for_of_unkeyed = /*@__PURE__*/ loop(([all], cb) => forOf(all, (item, i) => cb(i, [item, i])));
+let _for_of_unkeyed = /*@__PURE__*/ loop(([all], cb) => forOf(all, (item, i) => cb(i, item, i)));
 let _for_to_unkeyed = /*@__PURE__*/ loop(([to, from, step], cb) =>
-  forTo(to, from, step, (v) => cb(v, [v])),
+  forTo(to, from, step, (v) => cb(v, v)),
 );
 let _for_until_unkeyed = /*@__PURE__*/ loop(([until, from, step], cb) =>
-  forUntil(until, from, step, (v) => cb(v, [v])),
+  forUntil(until, from, step, (v) => cb(v, v)),
 );
 function _call(fn, v) {
   return (fn(v), v);
@@ -1719,7 +1719,7 @@ function _await_promise(nodeAccessor, params) {
           (awaitBranch.V = 0),
           insertBranchBefore(awaitBranch, scope[nodeAccessor].parentNode, scope[nodeAccessor]),
           referenceNode.remove()),
-        params?.(awaitBranch, [value]),
+        params?.(awaitBranch, value),
         awaitBranch
       );
     },
@@ -1917,7 +1917,7 @@ function renderCatch(scope, error) {
       queueRender(
         owner["A" + tryWithCatch.C],
         (branch) => {
-          (setupBranch(catchContent, branch), catchContent.d?.(branch, [error]));
+          (setupBranch(catchContent, branch), catchContent.d?.(branch, error));
         },
         -1,
       ));

@@ -1,5 +1,5 @@
 // template.marko
-const $catch_content__$params = ($scope, $params3) => _text($scope.a, $params3[0]?.message);
+const $catch_content__$params = ($scope, err) => _text($scope.a, err?.message);
 const $catch_content = _content("a2", " ", " ", 0, $catch_content__$params);
 const $placeholder_content__promise__script = _script("a0", ($scope) => (async () => {
 	document.getElementById("ref").textContent = await $scope.a;

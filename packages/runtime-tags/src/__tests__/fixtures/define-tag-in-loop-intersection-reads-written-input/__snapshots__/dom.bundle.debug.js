@@ -11,7 +11,7 @@ const $for_content__setup = ($scope) => {
 	$D_content__setup($scope["#childScope/0"]);
 };
 const $for_content__i = /*@__PURE__*/ _const("i", $for_content__v__OR__i);
-const $for_content__$params = ($scope, $params3) => $for_content__i($scope, $params3[0]);
+const $for_content__$params = $for_content__i;
 const $D_content__input_p1__OR__q = /*@__PURE__*/ _or(4, ($scope) => _text($scope["#text/0"], $scope._.input_p1 + $scope.q));
 const $D_content__input_p = /*@__PURE__*/ _closure_get("input_p1/5", $D_content__input_p1__OR__q, 0, "__tests__/template.marko_1_input_p1#0:3/subscribe");
 const $D_content__setup = $D_content__input_p;

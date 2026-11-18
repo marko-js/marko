@@ -25,8 +25,7 @@ const $for_content__show__OR__item = /*@__PURE__*/ _or(3, ($scope) => $input($sc
 }));
 const $for_content__show = /*@__PURE__*/ _for_closure(3, $for_content__show__OR__item, 6);
 const $for_content__setup = $for_content__show;
-const $for_content__item = /*@__PURE__*/ _const(2, $for_content__show__OR__item);
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
+const $for_content__$params = /* @__PURE__ */ _const(2, $for_content__show__OR__item);
 const $log_getter = _el("a0", 2);
 const $for = /*@__PURE__*/ _for_of_unkeyed(3, /*@__PURE__*/ ((_w0) => `<div>${_w0}</div>`)($template), /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)("b%c"), $for_content__setup, $for_content__$params);
 const $items = /*@__PURE__*/ _let(4, ($scope) => $for($scope, [$scope.e]));

@@ -4,11 +4,10 @@ var import_attr_tag = require_attr_tag();
 const $template = "<section></section>";
 const $walks = " b";
 const $for_content__item__script = _script("b0", ($scope) => _attrs_script($scope, "a"));
-const $for_content__item = /*@__PURE__*/ _const(2, ($scope) => {
+const $for_content__$params = /* @__PURE__ */ _const(2, ($scope) => {
 	_attrs_content($scope, "a", $scope.c);
 	$for_content__item__script($scope);
 });
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $input_id = ($scope, input_id) => _attr($scope.a, "id", input_id);
 const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<div></div>", " ", 0, $for_content__$params);
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);

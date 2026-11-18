@@ -36,7 +36,7 @@ const $for_content__item = /*@__PURE__*/ _const("item", ($scope) => {
 	_attr_class($scope["#button/0"], "row" + $scope.item);
 	$for_content__v_n__OR__item($scope);
 });
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
+const $for_content__$params = $for_content__item;
 const $v = _var_resume("__tests__/template.marko_0_v#3/var", /*@__PURE__*/ _const("v", ($scope) => $v_n($scope, $scope.v?.n)));
 const $v_n = /*@__PURE__*/ _const("v_n", $for_content__v_n);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/2", "<button> </button>", " D ", $for_content__setup, $for_content__$params);

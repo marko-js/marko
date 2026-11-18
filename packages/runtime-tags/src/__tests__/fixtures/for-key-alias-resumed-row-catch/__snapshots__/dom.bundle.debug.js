@@ -15,8 +15,8 @@ const $try_content__setup = ($scope) => {
 const $try_content__item = /*@__PURE__*/ _closure_get("item/4", $try_content__failing__OR__item);
 const $for_content__try = /*@__PURE__*/ _try("#text/0", " ", " ", $try_content__setup, 0, $catch_content);
 const $for_content__setup = $for_content__try;
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $for_content__item = /*@__PURE__*/ _const("item");
+const $for_content__$params = $for_content__item;
 const $failing__closure = /*@__PURE__*/ _closure($try_content__failing);
 const $failing = /*@__PURE__*/ _let("failing/2", $failing__closure);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);

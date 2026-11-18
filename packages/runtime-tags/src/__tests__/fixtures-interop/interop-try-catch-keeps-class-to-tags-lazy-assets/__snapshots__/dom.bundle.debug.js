@@ -53,13 +53,13 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 let $load_Lazy_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:lazy-child.marko.setup.mjs"));
 let $load_Lazy_tag_input_value = /*@__PURE__*/ _load_signal(($_) => import("./v:lazy-child.marko.input_value.mjs"));
-const $await_content2__$params = ($scope, $params4) => _text($scope["#text/0"], $params4[0]);
-const $await_content__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]);
+const $await_content2__$params = ($scope, v) => _text($scope["#text/0"], v);
+const $await_content__$params = ($scope, v) => _text($scope["#text/0"], v);
 const $catch_content__setup = ($scope) => {
 	$load_Lazy_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$load_Lazy_tag_input_value($scope["#childScope/1"], "catch");
 };
-const $catch_content__$params = ($scope, $params2) => _text($scope["#text/2"], $params2[0]?.message);
+const $catch_content__$params = ($scope, err) => _text($scope["#text/2"], err?.message);
 const $catch_content = _content_resume("__tests__/template.marko_2*content", "<!><!> caught <!>", "b%/&c%", $catch_content__setup, $catch_content__$params);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", " ", " ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);

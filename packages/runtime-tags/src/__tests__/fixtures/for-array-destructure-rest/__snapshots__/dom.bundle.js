@@ -1,6 +1,6 @@
 // template.marko
 const $for_content__setup = ($scope) => _text($scope.a, $scope.M);
-const $for_content__$params = ($scope, $params2) => $for_content__$temp($scope, $params2[0]);
+const $for_content__$params = ($scope, $temp) => $for_content__$temp($scope, $temp);
 const $for_content__$temp = ($scope, $temp) => {
 	$for_content__rest($scope, (([, ...rest]) => rest)($temp));
 	_text($scope.b, $temp[0]);

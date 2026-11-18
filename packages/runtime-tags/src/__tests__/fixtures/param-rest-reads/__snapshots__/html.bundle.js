@@ -14,25 +14,16 @@ var child_default = _template("b", (input) => {
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let list = ["a", "b"];
-	forOf(list, (item, ...meta) => {
-		_scope_id();
-		_html(`<div>${_escape(item)}:${_escape(meta[0])}:${_escape(meta.length)}</div>`);
-	});
-	forOf(list, (item, ...[idx]) => {
-		_scope_id();
-		_html(`<div>${_escape(item)}@${_escape(idx)}</div>`);
-	});
 	child_default({ content: _content("a0", (first, ...others) => {
-		const $scope3_reason = _scope_reason();
-		const $scope3_id = _scope_id();
-		_html(`<div>${_text_mark($scope3_id, "a", first, _write_guard($scope3_reason, 1))}|${_text_mark($scope3_id, "b", others[0], _write_guard($scope3_reason, 2) * 2)}|${_text_mark($scope3_id, "c", others[1], _write_guard($scope3_reason, 3) * 2)}|${_text_mark($scope3_id, "d", others.length, _write_guard($scope3_reason, 4) * 2)}</div>`);
-		_write_if($scope3_reason, 0) && _scope($scope3_id, {});
+		const $scope1_reason = _scope_reason();
+		const $scope1_id = _scope_id();
+		_html(`<div>${_text_mark($scope1_id, "a", first, _write_guard($scope1_reason, 1))}|${_text_mark($scope1_id, "b", others[0], _write_guard($scope1_reason, 2) * 2)}|${_text_mark($scope1_id, "c", others[1], _write_guard($scope1_reason, 3) * 2)}|${_text_mark($scope1_id, "d", others.length, _write_guard($scope1_reason, 4) * 2)}</div>`);
+		_write_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) });
 	child_default({ content: _content("a1", (x, ...[y, z]) => {
-		const $scope4_reason = _scope_reason();
-		const $scope4_id = _scope_id();
-		_html(`<div>${_text_mark($scope4_id, "a", x, _write_guard($scope4_reason, 1))}-${_text_mark($scope4_id, "b", y, _write_guard($scope4_reason, 2) * 2)}-${_text_mark($scope4_id, "c", z, _write_guard($scope4_reason, 3) * 2)}</div>`);
-		_write_if($scope4_reason, 0) && _scope($scope4_id, {});
+		const $scope2_reason = _scope_reason();
+		const $scope2_id = _scope_id();
+		_html(`<div>${_text_mark($scope2_id, "a", x, _write_guard($scope2_reason, 1))}-${_text_mark($scope2_id, "b", y, _write_guard($scope2_reason, 2) * 2)}-${_text_mark($scope2_id, "c", z, _write_guard($scope2_reason, 3) * 2)}</div>`);
+		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
 	}, $scope0_id) });
 }, 1);

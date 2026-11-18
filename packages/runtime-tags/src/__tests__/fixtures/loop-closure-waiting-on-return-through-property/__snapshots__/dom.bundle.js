@@ -7,8 +7,7 @@ const $input_y = /*@__PURE__*/ _const(3, $input_x__OR__input_y);
 const $for_content__other__OR__item = /*@__PURE__*/ _or(3, ($scope) => _text($scope.a, $scope.c + $scope._.f));
 const $for_content__other = /*@__PURE__*/ _for_closure(2, $for_content__other__OR__item, 9, 1);
 const $for_content__setup = $for_content__other;
-const $for_content__item = /*@__PURE__*/ _const(2, $for_content__other__OR__item);
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
+const $for_content__$params = /* @__PURE__ */ _const(2, $for_content__other__OR__item);
 const $count = /*@__PURE__*/ _let(4, ($scope) => $input_x($scope.a, $scope.e));
 const $other = /*@__PURE__*/ _let(5, ($scope) => {
 	$input_y($scope.a, $scope.f);

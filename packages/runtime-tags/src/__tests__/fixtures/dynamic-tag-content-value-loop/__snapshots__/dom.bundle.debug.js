@@ -37,9 +37,9 @@ const $for_content__setup = ($scope) => {
 	$for_content__input_on._($scope);
 	$for_content__Label($scope, { content: $Label_content($scope) });
 };
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $for_content__item__closure = /*@__PURE__*/ _closure($Label_content__item);
 const $for_content__item = /*@__PURE__*/ _const("item", $for_content__item__closure);
+const $for_content__$params = $for_content__item;
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
 const $input_items = ($scope, input_items) => $for($scope, [input_items]);
 const $input = ($scope, input) => {

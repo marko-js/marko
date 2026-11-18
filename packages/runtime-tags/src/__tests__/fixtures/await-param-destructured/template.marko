@@ -1,0 +1,6 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/count=0/>
+<button onClick() { count++ }>${count}</button>
+<await|{ name, tags: [first] }|=resolveAfter(input.user)>
+  <span>${name}:${first}:${count}</span>
+</await>

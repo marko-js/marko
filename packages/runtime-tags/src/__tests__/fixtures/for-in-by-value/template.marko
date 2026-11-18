@@ -1,0 +1,7 @@
+<let/entries={ a: 1, b: 2 }/>
+<button onClick() { entries = { b: 2, a: 3, c: 1 } }>change</button>
+<ul>
+  <for|key, value| in=entries by=(_key, value) => value>
+    <li>${key}=${value}</li>
+  </for>
+</ul>

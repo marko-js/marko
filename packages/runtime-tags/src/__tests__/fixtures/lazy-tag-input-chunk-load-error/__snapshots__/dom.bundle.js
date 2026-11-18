@@ -5,7 +5,7 @@ const $if_content__setup = ($scope) => {
 	$load_Child_setup($scope, $scope.b, $scope.a);
 	$load_Child_tag_input_value($scope.b, 1);
 };
-const $catch_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]?.message);
+const $catch_content__$params = ($scope, err) => _text($scope.a, err?.message);
 const $catch_content = _content("b2", "<div id=error> </div>", "D ", 0, $catch_content__$params);
 const $placeholder_content = _content("b1", "<div id=loading>loading</div>");
 const $try_content__if = /*@__PURE__*/ _if(0, "<!><!><!>", "b%/&", $if_content__setup);

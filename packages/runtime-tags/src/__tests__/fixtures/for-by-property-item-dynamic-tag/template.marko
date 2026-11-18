@@ -1,0 +1,7 @@
+<let/ids=["a"]/>
+<child>
+  <for|id| of=ids>
+    <@item id=id><b>${id}</b></@item>
+  </for>
+</child>
+<button onClick() { ids = [...ids, "b"] }>add</button>

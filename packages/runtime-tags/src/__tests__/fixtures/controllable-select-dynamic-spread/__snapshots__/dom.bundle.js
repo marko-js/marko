@@ -1,12 +1,10 @@
 // template.marko
 const $for_content__option__script = _script("a1", ($scope) => _attrs_script($scope, "a"));
-const $for_content__option = /*@__PURE__*/ _const(3, ($scope) => {
+const $tagselect_content__for = /*@__PURE__*/ _for_of_unkeyed(0, "<option> </option>", " D ", 0, /* @__PURE__ */ _const(3, ($scope) => {
 	_attrs($scope, "a", $scope.d);
 	_text($scope.b, ($scope.d?.value).toUpperCase());
 	$for_content__option__script($scope);
-});
-const $for_content__$params = ($scope, $params2) => $for_content__option($scope, $params2[0]);
-const $tagselect_content__for = /*@__PURE__*/ _for_of_unkeyed(0, "<option> </option>", " D ", 0, $for_content__$params);
+}));
 const $tagselect_content__setup = ($scope) => $tagselect_content__for($scope, [[
 	{ value: "a" },
 	{ value: "b" },

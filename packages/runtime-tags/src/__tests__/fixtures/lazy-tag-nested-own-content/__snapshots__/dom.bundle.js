@@ -7,9 +7,9 @@ const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
 const $input_content = $dynamicTag;
 
 // tags/press-buttons.marko
-const $for_content__$params = ($scope, $params2) => {
-	$input_onPress($scope.a, $params2[0]?.onPress);
-	$input_content($scope.a, $params2[0]?.content);
+const $for_content__$params = ($scope, button) => {
+	$input_onPress($scope.a, button?.onPress);
+	$input_content($scope.a, button?.content);
 };
 const $for = /*@__PURE__*/ _for_of_unkeyed(0, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), 0, $for_content__$params);
 const $input_button = ($scope, input_button) => $for($scope, [input_button]);

@@ -1,5 +1,5 @@
 // template.marko
-const $for_content2__$params = ($scope, $params3) => _text($scope.a, $params3[0]);
+const $for_content2__$params = ($scope, item) => _text($scope.a, item);
 const $if2 = /*@__PURE__*/ _if(2, "<span>if state</span>");
 const $for2 = /*@__PURE__*/ _for_of_unkeyed(4, "<p> </p>", "D ", 0, $for_content2__$params);
 const $show2 = /*@__PURE__*/ _show(6);

@@ -6,7 +6,7 @@ const $input_text = ($scope, input_text) => _text($scope.b, input_text);
 
 // tags/list.marko
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
-const $for_content__$params = ($scope, $params2) => $for_content__dynamicTag($scope, $params2[0]?.content);
+const $for_content__$params = ($scope, item) => $for_content__dynamicTag($scope, item?.content);
 const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<!><!><!>", "b%", 0, $for_content__$params);
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 

@@ -23,7 +23,7 @@ const $for_content__button = /*@__PURE__*/ _const("button", ($scope) => {
 	$for_content__if($scope, $scope.button ? 0 : 1);
 	$if_content__button($scope);
 });
-const $for_content__$params = ($scope, $params2) => $for_content__button($scope, $params2[0]);
+const $for_content__$params = $for_content__button;
 const $htmlInput__script = _script("__tests__/tags/child.marko_0_htmlInput#4", ($scope) => _attrs_script($scope, "#div/0"));
 const $htmlInput = /*@__PURE__*/ _const("htmlInput", ($scope) => {
 	_attrs($scope, "#div/0", $scope.htmlInput);

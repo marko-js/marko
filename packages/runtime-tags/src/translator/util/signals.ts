@@ -23,7 +23,11 @@ import {
 } from "./bindings";
 import { getLastOwnSourceReturn } from "./finalize-references";
 import { forEachIdentifier } from "./for-each-identifier";
-import { generateUid, generateUidIdentifier } from "./generate-uid";
+import {
+  generateUid,
+  generateUidIdentifier,
+  getUnusedParamIdentifier,
+} from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputHTML } from "./marko-config";
@@ -477,12 +481,7 @@ export function initValue(binding: Binding, isLet = false) {
     }
 
     const fn = buildSignalFn(signal);
-    if (
-      !signal.forceStore &&
-      (isDirectAlias(binding) ||
-        (!signal.storesValue && !aliasStoresValue(binding)) ||
-        !signalHasWork(signal))
-    ) {
+    if (!buildsStore(binding, signal)) {
       return fn;
     }
 
@@ -496,6 +495,16 @@ export function initValue(binding: Binding, isLet = false) {
   binding.aliases?.forEach(initAliasValue);
   binding.propertyAliases?.forEach(initAliasValue);
   return signal;
+}
+
+// The signal is the `_const`/`_let` store keeping the value in its slot.
+function buildsStore(binding: Binding, signal: Signal) {
+  return (
+    signal.forceStore ||
+    (!isDirectAlias(binding) &&
+      (signal.storesValue || aliasStoresValue(binding)) &&
+      signalHasWork(signal))
+  );
 }
 
 function initAliasValue(alias: Binding) {
@@ -560,6 +569,29 @@ function isPureMemberForwarder(binding: Binding): boolean {
   return hasNonConstantPropertyAlias(binding);
 }
 
+// Each param the body reads, named in its position.
+function getParamArgs(
+  params: NonNullable<Binding["propertyAliases"]>,
+  supplied: number,
+) {
+  let length = supplied;
+  while (length && !getReadParam(params, length - 1)) length--;
+  const args: t.Identifier[] = [];
+  for (let i = 0; i < length; i++) {
+    const alias = getReadParam(params, i);
+    args.push(alias ? t.identifier(alias.name) : getUnusedParamIdentifier());
+  }
+  return args;
+}
+
+function getReadParam(
+  params: NonNullable<Binding["propertyAliases"]>,
+  index: number,
+) {
+  const alias = params.get(index + "");
+  return alias?.type !== BindingType.constant && alias;
+}
+
 // Forwards each member of `value`, the value of `binding`, to its property alias,
 // or past one that only forwards its own members.
 function pushMemberForwards(
@@ -569,17 +601,24 @@ function pushMemberForwards(
 ) {
   for (const [key, alias] of binding.propertyAliases!) {
     if (alias.type !== BindingType.constant) {
-      const member = toMemberExpression(
-        t.cloneNode(value, true),
-        key,
-        binding.nullable,
+      pushMemberForward(
+        signal,
+        alias,
+        toMemberExpression(t.cloneNode(value, true), key, binding.nullable),
       );
-      if (isPureMemberForwarder(alias)) {
-        pushMemberForwards(signal, member, alias);
-      } else {
-        pushForward(signal, getSignal(alias.section, alias), member);
-      }
     }
+  }
+}
+
+function pushMemberForward(
+  signal: Signal,
+  alias: Binding,
+  member: t.Expression,
+) {
+  if (isPureMemberForwarder(alias)) {
+    pushMemberForwards(signal, member, alias);
+  } else {
+    pushForward(signal, getSignal(alias.section, alias), member);
   }
 }
 
@@ -678,6 +717,12 @@ export function buildSignalFn(signal: Signal): t.Expression {
   const isBinding = binding && !isIntersection;
   const isValue = isBinding && binding.section === section;
   const assertsHoists = isValue && binding.hoists && !isOptimize();
+  const paramArgs =
+    isValue &&
+    binding.propertyAliases &&
+    binding === section.params &&
+    section.suppliedParams &&
+    getParamArgs(binding.propertyAliases, section.suppliedParams);
 
   if (isValue) {
     if (binding.aliases) {
@@ -700,7 +745,13 @@ export function buildSignalFn(signal: Signal): t.Expression {
       }
     }
 
-    if (binding.propertyAliases) {
+    if (paramArgs) {
+      for (const [key, alias] of binding.propertyAliases!) {
+        if (alias.type !== BindingType.constant) {
+          pushMemberForward(signal, alias, t.cloneNode(paramArgs[+key]));
+        }
+      }
+    } else if (binding.propertyAliases) {
       pushMemberForwards(signal, createScopeReadExpression(binding), binding);
     }
 
@@ -772,6 +823,25 @@ export function buildSignalFn(signal: Signal): t.Expression {
 
   if (signal.effect.length) {
     pushScopeCall(signal.render, getSignalEffectIdentifier(signal));
+  }
+
+  if (paramArgs) {
+    // A body given one value forwards it to its signal; one given more may stand in
+    // only by a param's `_const` store, which takes one value.
+    const first = binding.propertyAliases!.get("0");
+    const target = signal.forwards;
+    if (
+      first &&
+      target === getSignal(first.section, first) &&
+      getOnlyCall(signal.render) &&
+      (section.suppliedParams === 1 || buildsStore(first, target))
+    ) {
+      return target.identifier;
+    }
+    return t.arrowFunctionExpression(
+      [scopeIdentifier, ...paramArgs],
+      toOnlyExpressionOrBlock(signal.render),
+    );
   }
 
   if (isValue && !signal.storesValue) {

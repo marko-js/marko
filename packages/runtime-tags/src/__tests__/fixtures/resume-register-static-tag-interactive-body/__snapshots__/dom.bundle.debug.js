@@ -5,7 +5,7 @@ const $for_content__count__OR__i = /*@__PURE__*/ _or(3, ($scope) => _text($scope
 const $for_content__count = /*@__PURE__*/ _closure_get("count/4", $for_content__count__OR__i, ($scope) => $scope._._._, "__tests__/template.marko_3_count#0:2/subscribe");
 const $for_content__setup = $for_content__count;
 const $for_content__i = /*@__PURE__*/ _const("i", $for_content__count__OR__i);
-const $for_content__$params = ($scope, $params2) => $for_content__i($scope, $params2[0]);
+const $for_content__$params = $for_content__i;
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<span class=inner> </span>", "D ", $for_content__setup, $for_content__$params);
 const $if_content__setup = ($scope) => $if_content__for($scope, [[1, 2]]);
 const $tag_content__count = /*@__PURE__*/ _closure_get("count/4", ($scope) => _text($scope["#text/1"], $scope._.count), 0, "__tests__/template.marko_1_count#0:2/subscribe");

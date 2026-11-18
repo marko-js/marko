@@ -13,7 +13,7 @@ const $for_content2__setup = ($scope) => {
 const $for_content__selected = /*@__PURE__*/ _for_closure("#text/0", $for_content2__selected, 4);
 const $for_content__setup = $for_content__selected;
 const $for_content__for = /*@__PURE__*/ _for_of("#ul/0", "<li><button class=select> </button></li>", " D D ", $for_content2__setup);
-const $for_content__$params = ($scope, $params2) => $for_content__for($scope, [$params2[0]?.rows, "id"]);
+const $for_content__$params = ($scope, group) => $for_content__for($scope, [group?.rows, "id"]);
 const $selected = /*@__PURE__*/ _let("selected/2", $for_content__selected);
 const $for = /*@__PURE__*/ _for_of("#text/0", "<ul></ul>", " ", $for_content__setup, $for_content__$params);
 const $groups = /*@__PURE__*/ _let("groups/3", ($scope) => $for($scope, [$scope.groups, "id"]));

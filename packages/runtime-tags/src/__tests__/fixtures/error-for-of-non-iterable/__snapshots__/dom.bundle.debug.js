@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $for_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
+const $for_content__$params = ($scope, item) => _text($scope["#text/0"], item);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<li> </li>", "D ", 0, $for_content__$params);
 const $input_value = ($scope, input_value) => $for($scope, [input_value]);
 const $input = ($scope, input) => $input_value($scope, input.value);

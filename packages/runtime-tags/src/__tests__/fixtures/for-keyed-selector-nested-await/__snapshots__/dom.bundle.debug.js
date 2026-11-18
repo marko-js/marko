@@ -9,11 +9,11 @@ const $for_content__setup = ($scope) => {
 	$for_content__selected._($scope);
 	$for_content__setup__script($scope);
 };
-const $for_content__$params = ($scope, $params3) => _text($scope["#text/2"], $params3[0]?.label);
+const $for_content__$params = ($scope, row) => _text($scope["#text/2"], row?.label);
 const $await_content__selected = /*@__PURE__*/ _closure_get("selected/2", $for_content__selected, 0, "__tests__/template.marko_1_selected#0:1/subscribe");
 const $await_content__setup = $await_content__selected;
 const $await_content__for = /*@__PURE__*/ _for_of("#ul/0", "<li><button class=select> </button></li>", " D D ", $for_content__setup, $for_content__$params);
-const $await_content__$params = ($scope, $params2) => $await_content__for($scope, [$params2[0], "id"]);
+const $await_content__$params = ($scope, rows) => $await_content__for($scope, [rows, "id"]);
 const $selected__closure = /*@__PURE__*/ _closure($await_content__selected);
 const $selected = /*@__PURE__*/ _let("selected/1", $selected__closure);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<ul></ul>", " ", $await_content__setup);

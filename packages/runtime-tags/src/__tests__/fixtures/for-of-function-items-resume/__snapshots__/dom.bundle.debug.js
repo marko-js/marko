@@ -5,8 +5,8 @@ const $for_content__setup__script = _script("__tests__/template.marko_1", ($scop
 	$last($scope._, $scope.fn());
 }));
 const $for_content__setup = $for_content__setup__script;
-const $for_content__$params = ($scope, $params2) => $for_content__fn($scope, $params2[0]);
 const $for_content__fn = /*@__PURE__*/ _const("fn");
+const $for_content__$params = $for_content__fn;
 const $last = /*@__PURE__*/ _let("last/2", ($scope) => _text($scope["#text/1"], $scope.last));
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<button>x</button>", " ", $for_content__setup, $for_content__$params);
 function $setup($scope) {
