@@ -1,5 +1,17 @@
 # Change Log
 
+## 5.41.0
+
+### Minor Changes
+
+- [#4732](https://github.com/marko-js/marko/pull/4732) [`e06cace`](https://github.com/marko-js/marko/commit/e06cace2fe9c8c165f1e78e15322b4baebc1116e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add the `Marko.TemplateOf<Signature>` type: a template typed by its signature as a tag, such as a generic template's `<T>(input: Input<T>) => Return<T>`, so that a declaration can state a generic template's type with Marko's public types alone.
+
+### Patch Changes
+
+- Updated dependencies [[`6ef72e0`](https://github.com/marko-js/marko/commit/6ef72e0651916305481e47eb9ac71f0cb271dd55), [`e3b829c`](https://github.com/marko-js/marko/commit/e3b829c15f071d41b12aee84d063ae3581b0151c), [`6b8d09a`](https://github.com/marko-js/marko/commit/6b8d09aee25e8c71a1eb8693d4561a1a7e785740), [`7b8c967`](https://github.com/marko-js/marko/commit/7b8c967f7d2c657720db9fde505588c5c11b5366), [`4559697`](https://github.com/marko-js/marko/commit/45596976c9de6a45ee89cc56b124c99e90992538), [`e06cace`](https://github.com/marko-js/marko/commit/e06cace2fe9c8c165f1e78e15322b4baebc1116e), [`bbd8075`](https://github.com/marko-js/marko/commit/bbd8075179f7bb2e44c33f74cc4b14d26bce70e4), [`732f283`](https://github.com/marko-js/marko/commit/732f283d1ce1d3aba2778cd9b86344b24a8df8ef), [`ae6e5c0`](https://github.com/marko-js/marko/commit/ae6e5c07ddb212327c0000d31c1711e150fd29b1), [`e5031a6`](https://github.com/marko-js/marko/commit/e5031a6bbca36a614328d38428f54b040ce8a563), [`bbd8075`](https://github.com/marko-js/marko/commit/bbd8075179f7bb2e44c33f74cc4b14d26bce70e4), [`33d16eb`](https://github.com/marko-js/marko/commit/33d16eb627e3e93a7ab995c81ca3b20e31270ff7), [`d0a4eba`](https://github.com/marko-js/marko/commit/d0a4ebaf88dd90d28b92c753c77a945cb3eeba21), [`942b5e6`](https://github.com/marko-js/marko/commit/942b5e60bb6536e4225a02c4e9d91b39f6d7907f), [`9b3c45e`](https://github.com/marko-js/marko/commit/9b3c45ebe11878a382bc7f8416f682db6f082127), [`1382bad`](https://github.com/marko-js/marko/commit/1382bad4020d1d110865ddc61642adabaa600633)]:
+  - @marko/runtime-tags@6.5.0
+  - @marko/compiler@5.43.5
+
 ## 5.40.4
 
 ### Patch Changes
