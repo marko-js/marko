@@ -28,7 +28,7 @@ import {
   type Section,
 } from "./sections";
 import { getContentClosureValues, getResumeRegistryId } from "./signals";
-import { toObjectProperty } from "./to-property-name";
+import { getLiteralName, toObjectProperty } from "./to-property-name";
 import { getScopeReasonStatement } from "./write-guard";
 
 const contentProps = new WeakSet<t.Node>();
@@ -46,10 +46,7 @@ export function translateAttrs(
   if (attrTagLookup) {
     for (const name in attrTagLookup) {
       const attrTagMeta = attrTagLookup[name];
-      if (
-        !seen.has(attrTagMeta.name) &&
-        getParamsTreeAt(paramsTree, attrTagMeta.name)
-      ) {
+      if (getParamsTreeAt(paramsTree, attrTagMeta.name)) {
         seen.add(attrTagMeta.name);
         if (attrTagMeta.dynamic) {
           statements.push(
@@ -202,16 +199,15 @@ export function addDynamicAttrTagStatements(
             contentKey,
           );
 
-        case "for": {
-          return translateForAttrTag(
-            attrTags,
-            index,
+        case "for":
+          translateForAttrTag(
+            tag,
             attrTagLookup,
             statements,
             paramsTree,
             contentKey,
           );
-        }
+          break;
       }
     }
   }
@@ -252,14 +248,12 @@ export function propsToExpression(
 }
 
 function translateForAttrTag(
-  attrTags: t.NodePath<t.MarkoTag["attributeTags"][number]>[],
-  index: number,
+  forTag: t.NodePath<t.MarkoTag>,
   attrTagLookup: AttrTagLookup,
   statements: t.Statement[],
   paramsTree: ParamsTree | true,
   contentKey: ContentKey,
 ) {
-  const forTag = attrTags[index] as t.NodePath<t.MarkoTag>;
   const bodyStatements: t.Statement[] = [];
   addAllAttrTagsAsDynamic(
     forTag,
@@ -276,8 +270,6 @@ function translateForAttrTag(
       bodyStatements,
     ),
   );
-
-  return index;
 }
 
 function translateIfAttrTag(
@@ -368,23 +360,10 @@ function findObjectProperty(
   props: t.ObjectExpression["properties"],
 ) {
   for (const prop of props) {
-    if (prop.type === "ObjectProperty") {
-      switch (prop.key.type) {
-        case "StringLiteral":
-          if (prop.key.value === name) {
-            return prop;
-          }
-          break;
-        case "Identifier":
-          if (prop.key.name === name) {
-            return prop;
-          }
-          break;
-      }
+    if (prop.type === "ObjectProperty" && getLiteralName(prop.key) === name) {
+      return prop;
     }
   }
-
-  return false;
 }
 
 function getConditionTestValue({
