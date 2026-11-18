@@ -197,7 +197,7 @@ function getBranchExprReason(section: Section) {
   const { derives, branchExpr } = section;
   if (derives) {
     let reason = mergeSources(
-      getRendererReason(section) || undefined,
+      getRendererReason(section),
       getSourcesForDerived(derives),
     );
     // A direct call renders the body in place, so what creates a section from

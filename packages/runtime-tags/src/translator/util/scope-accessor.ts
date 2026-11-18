@@ -46,14 +46,12 @@ export function getScopeOffsetAccessorLiteral(
   nodeBinding: Binding,
   encoded?: boolean,
 ) {
-  return encoded && isOptimize()
-    ? t.numericLiteral(getReservedId(nodeBinding, ReservedId.ScopeOffset))
-    : t.stringLiteral(getScopeOffsetAccessor(nodeBinding));
-}
-
-function getScopeOffsetAccessor(nodeBinding: Binding) {
   const id = getReservedId(nodeBinding, ReservedId.ScopeOffset);
-  return isOptimize() ? decodeAccessor(id) : `#scopeOffset/${id}`;
+  return !isOptimize()
+    ? t.stringLiteral(`#scopeOffset/${id}`)
+    : encoded
+      ? t.numericLiteral(id)
+      : t.stringLiteral(decodeAccessor(id));
 }
 
 // The scope id a binding holds at `offset` past its own (see `reserveId`).
@@ -120,11 +118,11 @@ export function getPrefixedScopeAccessor(
           getReservedId(canonicalBinding, ReservedId.ChangeHandler),
         );
       case getAccessorPrefix().ClosureScopes:
-        return decodeAccessor(getClosureAccessorId(canonicalBinding));
+        return decodeAccessor(canonicalBinding.closureId!);
       case getAccessorPrefix().ClosureSignalIndex:
         // Keeps the letter to not collide with the closing scope's own ids;
         // closure ids are unique among the closures one section reads.
-        return prefix + decodeAccessor(getClosureAccessorId(canonicalBinding));
+        return prefix + decodeAccessor(canonicalBinding.closureId!);
     }
   } else if (
     prefix === getAccessorPrefix().ClosureScopes ||
@@ -138,25 +136,14 @@ export function getPrefixedScopeAccessor(
 // `_closure_get` builds a closure's scopes and signal index keys from this.
 export function getClosureAccessorLiteral(binding: Binding) {
   return isOptimize()
-    ? t.numericLiteral(getClosureAccessorId(binding))
+    ? t.numericLiteral(binding.canonical.closureId!)
     : t.stringLiteral(getDebugClosureAccessor(binding));
 }
 
 // Names repeat across owner sections, so the closure id keeps apart the
 // same-named closures one section reads.
 function getDebugClosureAccessor(binding: Binding) {
-  return `${getScopeAccessor(binding)}/${getClosureAccessorId(binding)}`;
-}
-
-function getClosureAccessorId(binding: Binding) {
-  const id = binding.canonical.closureId;
-  /* v8 ignore next 5 -- analyze reserves an id for every closure binding */
-  if (id === undefined) {
-    throw new Error(
-      `No closure accessor id was reserved for "${binding.name}".`,
-    );
-  }
-  return id;
+  return `${getScopeAccessor(binding)}/${binding.canonical.closureId!}`;
 }
 
 function getSectionInstancesAccessor(section: Section) {

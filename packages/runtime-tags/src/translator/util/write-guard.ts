@@ -247,14 +247,8 @@ export function isWrittenForCall(
         (groupSection === childSection &&
           getWriteBit(
             callSection,
-            findSlot(
-              childScopeBinding,
-              SlotKind.ParamGroup,
-              callSection,
-              childSection.paramReasonGroups![
-                getParamReasonGroupIndex(childSection, group)
-              ],
-            )?.reason,
+            findSlot(childScopeBinding, SlotKind.ParamGroup, callSection, group)
+              ?.reason,
           ) === 1),
       false,
     )
