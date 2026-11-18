@@ -117,10 +117,7 @@ export const IfTag = {
         const bodySection = getSectionForBody(tag.get("body"));
 
         if (bodySection) {
-          resumeOwnerByMarkerWhenUnconditional(
-            bodySection,
-            ifTag.node.extra!.nodeBinding!,
-          );
+          resumeOwnerByMarkerWhenUnconditional(bodySection);
           writeHTMLResumeStatements(tag);
         }
 
@@ -211,9 +208,9 @@ export const IfTag = {
             const rendererArgs: (t.Expression | undefined)[] = [];
             for (const [_, branchBodySection] of branches) {
               if (branchBodySection) {
-                rendererArgs.push(
-                  ...getBranchRendererArgs(branchBodySection).slice(0, 3),
-                ); // Slice to 3 to ignore params
+                const [template, walks, setup] =
+                  getBranchRendererArgs(branchBodySection);
+                rendererArgs.push(template, walks, setup);
               } else {
                 rendererArgs.push(undefined, undefined, undefined);
               }

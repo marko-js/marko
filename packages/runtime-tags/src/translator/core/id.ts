@@ -41,9 +41,7 @@ export default {
     // Minting is unobservable, so a tag without a value is itself the pure
     // value its variable takes, dropped with it when unread.
     const valueNode = valueAttr ? valueAttr.value : tag.node;
-    const valueExtra = valueAttr
-      ? (valueAttr.value.extra ??= {})
-      : (tag.node.extra ??= {});
+    const valueExtra = (valueNode.extra ??= {});
     valueExtra.pure = !valueAttr || evaluate(valueAttr.value).pure;
     const binding = trackVarReferences(tag, BindingType.derived);
     if (binding) {

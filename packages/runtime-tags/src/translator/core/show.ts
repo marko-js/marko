@@ -30,7 +30,6 @@ import {
   getContentInfo,
   getScopeIdIdentifier,
   getSection,
-  type Section,
 } from "../util/sections";
 import { addSetupWork } from "../util/setup-work";
 import { addValue, getSignal } from "../util/signals";
@@ -42,14 +41,14 @@ import * as writer from "../util/writer";
 
 const kStartBinding = Symbol("<show> range start binding");
 const kStaticDisplay = Symbol("<show> static display");
-const kBodyContent = Symbol("<show> body content");
+const kSingleNode = Symbol("<show> body is a single node");
 const htmlDisplayRefs = new WeakMap<t.MarkoTag, t.Identifier>();
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kStartBinding]?: Binding;
     [kStaticDisplay]?: boolean;
-    [kBodyContent]?: Section["content"];
+    [kSingleNode]?: boolean;
   }
 }
 
@@ -80,15 +79,15 @@ export default {
       assertLegalHiddenContext(tag);
 
       const tagSection = ensureSection(tag);
-      const content = (tagExtra[kBodyContent] = getContentInfo(
-        tag.get("body"),
+      const singleNode = (tagExtra[kSingleNode] = isSingleNodeContent(
+        getContentInfo(tag.get("body")),
       ));
 
       // The only-child parent, or the start marker of a body other than one
       // element, precedes the body, so it is recorded here.
       if (getOnlyChildParentTagName(tag)) {
         structure.controlFlowNode(tag, tagSection);
-      } else if (!isSingleNodeContent(content)) {
+      } else if (!singleNode) {
         tagExtra[kStartBinding] = structure.markerNode(tag, tagSection);
       }
 
@@ -164,7 +163,7 @@ export default {
           htmlDisplayRefs.get(tag.node) || tag.node.attributes[0].value;
         const nodeBinding = tagExtra.nodeBinding!;
         const onlyChildParentTagName = getOnlyChildParentTagName(tag);
-        const singleNode = isSingleNodeContent(tagExtra[kBodyContent]);
+        const singleNode = tagExtra[kSingleNode]!;
         const endArgs = buildBranchEndArgs(
           tagSection,
           nodeBinding,

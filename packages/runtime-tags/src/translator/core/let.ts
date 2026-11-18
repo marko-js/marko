@@ -120,7 +120,7 @@ export default {
           // `<const>`'s.
           for (const expr of [value, valueChange]) {
             if (expr && !evaluate(expr).pure) {
-              addValue(section, tagExtra, initValue(binding)!, expr);
+              addValue(section, tagExtra, initValue(binding), expr);
             }
           }
           replaceWithStatements(tag);

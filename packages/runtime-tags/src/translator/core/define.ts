@@ -74,37 +74,35 @@ export default {
     const paramsBinding = trackParamsReferences(tagBody, BindingType.param);
     setTagContentDerives(tag, varBinding);
 
-    if (bodySection) {
-      // TODO: support destructure
-      if (babelBinding) {
-        let allDirectReferences = true;
-        let allHaveInput = true;
-        for (const ref of babelBinding.referencePaths) {
-          if (isReferenceHoisted(babelBinding.path, ref)) {
-            throw ref.buildCodeFrameError(
-              "Hoisted values must be functions. The `<define>` tag variable may not be hoisted. Please move the `<define>` tag prior to any references or extract to a separate `.marko` file.",
-            );
-          }
+    // TODO: support destructure
+    if (bodySection && babelBinding) {
+      let allDirectReferences = true;
+      let allHaveInput = true;
+      for (const ref of babelBinding.referencePaths) {
+        if (isReferenceHoisted(babelBinding.path, ref)) {
+          throw ref.buildCodeFrameError(
+            "Hoisted values must be functions. The `<define>` tag variable may not be hoisted. Please move the `<define>` tag prior to any references or extract to a separate `.marko` file.",
+          );
+        }
 
-          if (ref.parent.type === "MarkoTag" && ref.parent.name === ref.node) {
-            (ref.parent.extra ??= {}).defineBodySection = bodySection;
-            allHaveInput &&= !ref.parent.arguments?.length;
-            dropNodes(ref.parent.name);
-          } else {
-            allHaveInput = false;
-            allDirectReferences = false;
-          }
+        if (ref.parent.type === "MarkoTag" && ref.parent.name === ref.node) {
+          (ref.parent.extra ??= {}).defineBodySection = bodySection;
+          allHaveInput &&= !ref.parent.arguments?.length;
+          dropNodes(ref.parent.name);
+        } else {
+          allHaveInput = false;
+          allDirectReferences = false;
         }
-        if (allDirectReferences) {
-          const inputAlias =
-            allHaveInput && paramsBinding?.propertyAliases?.get("0");
-          if (inputAlias) {
-            inputAlias.nullable = false;
-          }
-          tag.node.extra![kOnlyDirectReferences] = true;
-          dropNodes(getAllTagReferenceNodes(tag.node));
-          return;
+      }
+      if (allDirectReferences) {
+        const inputAlias =
+          allHaveInput && paramsBinding?.propertyAliases?.get("0");
+        if (inputAlias) {
+          inputAlias.nullable = false;
         }
+        tag.node.extra![kOnlyDirectReferences] = true;
+        dropNodes(getAllTagReferenceNodes(tag.node));
+        return;
       }
     }
 
@@ -183,7 +181,7 @@ export default {
         addValue(
           section,
           node.extra,
-          initValue(tag.get("var").node!.extra!.binding!)!,
+          initValue(tag.get("var").node!.extra!.binding!),
           propsToExpression(translatedAttrs.properties),
         );
         replaceWithStatements(tag);

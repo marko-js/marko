@@ -59,10 +59,7 @@ export default function translateVar(
   forEachIdentifierPath(tag.get("var"), (id) => {
     if (id.node === tagVar) return;
 
-    const idExtra = id.node.extra;
-    if (!idExtra) return;
-
-    const binding = idExtra.binding;
+    const binding = id.node.extra?.binding;
     if (!binding?.aliasOf) return;
 
     if (binding.assignments && binding.property !== undefined) {

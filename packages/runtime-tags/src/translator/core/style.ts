@@ -212,7 +212,7 @@ function assertNoStyleAttributes(tag: t.NodePath<t.MarkoTag>) {
 
 function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
-  const binding = node.extra?.nodeBinding;
+  const binding = node.extra!.nodeBinding;
 
   if (binding) {
     writer.writeTo(tag)`${callRuntime("_style_html", buildStyleDecls(node))}`;
@@ -225,12 +225,11 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
 
 function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
-  const binding = node.extra?.nodeBinding;
+  const binding = node.extra!.nodeBinding;
 
   if (binding) {
     const names = node.extra![kCustomPropertyNames]!;
     const section = getSection(tag);
-    const readEl = () => createScopeReadExpression(binding);
 
     addStatement(
       "render",
@@ -244,20 +243,22 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       true,
     );
 
-    dynamicStyleValues(node).forEach((value, i) => {
+    const values = dynamicStyleValues(node);
+    for (let i = 0; i < values.length; i++) {
+      const value = values[i];
       addStatement(
         "render",
         section,
         value.extra,
         callRuntime(
           "_style_rule_item",
-          readEl(),
+          createScopeReadExpression(binding),
           t.stringLiteral(names[i]),
           value,
         ),
         !getReferencedBindings(value.extra),
       );
-    });
+    }
   }
 
   emitStyleImport(tag);
@@ -276,7 +277,7 @@ function dynamicStyleValues(node: t.MarkoTag) {
 
 function emitStyleImport(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
-  const importPath = node.extra?.[kStyleImportPath];
+  const importPath = node.extra![kStyleImportPath];
   if (!importPath) return;
 
   if (!node.var) {
@@ -307,11 +308,14 @@ function buildStyleDecls(node: t.MarkoTag) {
   const names = node.extra![kCustomPropertyNames]!;
   const parts: (string | t.Expression)[] = [];
 
-  dynamicStyleValues(node).forEach((value, i) => {
-    parts.push(`${names[i]}:`);
-    parts.push(callRuntime("_escape_style_value", value));
-    parts.push(";");
-  });
+  const values = dynamicStyleValues(node);
+  for (let i = 0; i < values.length; i++) {
+    parts.push(
+      `${names[i]}:`,
+      callRuntime("_escape_style_value", values[i]),
+      ";",
+    );
+  }
 
   return buildStringExpression(parts)!;
 }
