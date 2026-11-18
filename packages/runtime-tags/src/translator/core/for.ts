@@ -184,14 +184,13 @@ export default {
         const tagBody = tag.get("body");
         const bodySection = getSectionForBody(tagBody)!;
         const { node } = tag;
-        const nodeBinding = node.extra!.nodeBinding!;
         const forAttrs = getKnownAttrValues(node);
         const forType = getForType(node)!;
         const params = node.body.params;
         const bodyStatements = node.body.body;
         const branchReason = getBranchWriteReason(bodySection);
 
-        resumeOwnerByMarkerWhenUnconditional(bodySection, nodeBinding);
+        resumeOwnerByMarkerWhenUnconditional(bodySection);
 
         writeHTMLResumeStatements(tag);
 

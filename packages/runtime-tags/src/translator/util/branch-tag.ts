@@ -40,10 +40,8 @@ export function initBranchSection(
 // The branch id rides the always-rendered resume marker, which resume decodes
 // in a bundle with branches: a branch whose state has a resumable writer keeps
 // its runtime there.
-export function resumeOwnerByMarkerWhenUnconditional(
-  bodySection: Section,
-  nodeBinding: Binding,
-) {
+export function resumeOwnerByMarkerWhenUnconditional(bodySection: Section) {
+  const { nodeBinding } = bodySection.branch!.tag;
   const branchExprReason = findSlot(nodeBinding, SlotKind.BranchExpr)?.reason;
   if (!isStateReason(branchExprReason)) return;
   const branchReason = getBranchWriteReason(bodySection);
@@ -203,22 +201,11 @@ export function getBaseArgsInForTag(
   type: ForType,
   attrs: Record<string, t.Expression>,
 ) {
-  switch (type) {
-    case "in":
-      return [attrs.in];
-    case "of":
-      return [attrs.of];
-    case "to":
-      return [
-        attrs.to,
+  return type === "of" || type === "in"
+    ? [attrs[type]]
+    : [
+        attrs[type],
         attrs.from || t.numericLiteral(0),
         attrs.step || t.numericLiteral(1),
       ];
-    case "until":
-      return [
-        attrs.until,
-        attrs.from || t.numericLiteral(0),
-        attrs.step || t.numericLiteral(1),
-      ];
-  }
 }

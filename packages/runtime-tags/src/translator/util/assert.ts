@@ -109,20 +109,15 @@ export function assertIdentifierVar(tag: t.NodePath<t.MarkoTag>) {
 }
 
 export function assertNoTagVarMutation(tag: t.NodePath<t.MarkoTag>) {
-  const tagVar = tag.node.var;
-  if (tagVar?.type === "Identifier") {
-    const constantViolations = tag.scope.getBinding(
-      tagVar.name,
-    )?.constantViolations;
-    if (constantViolations?.length) {
-      for (const assignment of constantViolations) {
-        // Ignore duplicate declaration violations.
-        if (assignment.type !== "MarkoTag") {
-          throw assignment.buildCodeFrameError(
-            `${tagVar.name} is readonly and cannot be mutated.`,
-          );
-        }
-      }
+  const tagVar = tag.node.var!;
+  if (tagVar.type !== "Identifier") return;
+  for (const assignment of tag.scope.getBinding(tagVar.name)!
+    .constantViolations) {
+    // Ignore duplicate declaration violations.
+    if (assignment.type !== "MarkoTag") {
+      throw assignment.buildCodeFrameError(
+        `${tagVar.name} is readonly and cannot be mutated.`,
+      );
     }
   }
 }
@@ -304,7 +299,7 @@ export function isValueAttr(
   return attr.type === "MarkoAttribute" && attr.name === "value";
 }
 
-export function isValueChangeAttr(
+function isValueChangeAttr(
   attr: t.MarkoTag["attributes"][number],
 ): attr is t.MarkoAttribute {
   return attr.type === "MarkoAttribute" && attr.name === "valueChange";

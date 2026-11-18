@@ -229,9 +229,8 @@ function isTextOnlyNativeTag(tag: t.NodePath<t.MarkoTag>) {
 }
 
 function getStyleContentType(tag: t.MarkoTag) {
-  return tag.body.body.some(isMarkoPlaceholder) ? ContentType.Tag : null;
-}
-
-function isMarkoPlaceholder(node: t.Node) {
-  return t.isMarkoPlaceholder(node);
+  for (const child of tag.body.body) {
+    if (child.type === "MarkoPlaceholder") return ContentType.Tag;
+  }
+  return null;
 }
