@@ -28,4 +28,4 @@ Documentation and this skill target **Marko 6**. Do not use Marko 5 syntax.
 - [ ] Component stays small and readable; consider splitting large templates.
 - [ ] No unnecessary client-side JS; prefer built-in browser APIs and HTML/CSS features over scripts.
 - [ ] Props are declared with an exported `Input` interface, and templates are type checked with `mtc` (`@marko/type-check`) — `tsc` skips `.marko` files and reports nothing.
-- [ ] State a parent may read or drive is **controllable**: bind with `:=` (`<let/count:=input.count>`, `<input value:=text>`) and type `count` and `countChange?` in `Input`. Don't sync a parent copy via change handlers (anti-pattern). See [Controllable Components](https://markojs.com/docs/explanation/controllable-components.md).
+- [ ] About to add an `onChange` prop? Make the state **controllable** instead: `<let/value:=input.value>` with `value?` and `valueChange?` in `Input`, so a parent can bind `<my-tag value:=x>` or omit it. See [Controllable Components](https://markojs.com/docs/explanation/controllable-components.md).
