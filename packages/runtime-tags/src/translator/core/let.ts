@@ -178,7 +178,6 @@ export default {
   types: runtimeInfo.name + "/tags/let.d.marko",
 } as Tag;
 
-// Written like a JS declaration (`let count = 0;` or `<let count=0>`).
 function getEventHandlerHint(attr: t.MarkoAttribute, tagVar: t.LVal) {
   if (/^on[A-Z-]/.test(attr.name) && t.isIdentifier(tagVar)) {
     const { name } = tagVar;
@@ -186,6 +185,7 @@ function getEventHandlerHint(attr: t.MarkoAttribute, tagVar: t.LVal) {
   }
 }
 
+// Written like a JS declaration (`let count = 0;` or `<let count=0>`).
 function getDeclarationHint(attr: t.MarkoAttribute) {
   if (/^[A-Za-z_$][\w$]*$/.test(attr.name)) {
     return `To declare reactive state, the variable goes after a slash: \`<let/${attr.name}=...>\`. For a one time module level value, prefix a plain JavaScript statement with \`static\`.`;
