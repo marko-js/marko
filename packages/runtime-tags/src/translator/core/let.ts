@@ -58,26 +58,14 @@ export default {
     assertHasVar(tag, "For example: `<let/count=0>`.");
     assertIdentifierVar(tag);
 
-    const valueChange = tag
-      .get("attributes")
-      .find((attr) => attr.node === valueChangeAttr)
-      ?.get("value");
-    if (valueChange) {
-      if (evaluate(valueChange.node).computed) {
-        throw valueChange.buildCodeFrameError(
+    if (valueChangeAttr && evaluate(valueChangeAttr.value).computed) {
+      throw tag
+        .get("attributes")
+        .find((attr) => attr.node === valueChangeAttr)!
+        .get("value")
+        .buildCodeFrameError(
           `The ${coreTagLink(tag)} [\`valueChange=\` attribute](https://markojs.com/docs/reference/core-tag#controllable-let) must be a function.`,
         );
-      }
-
-      const { name } = tagVar as t.Identifier;
-      const selfAssignment = tag.scope
-        .getBinding(name)!
-        .constantViolations.find((ref) => ref.isDescendant(valueChange));
-      if (selfAssignment) {
-        throw selfAssignment.buildCodeFrameError(
-          `Assigning \`${name}\` calls its \`valueChange\`, so assigning it inside \`valueChange\` recurses forever. Store \`next\` in other state instead, such as a second \`<let>\`: ${getBackingLetExample(name)}.`,
-        );
-      }
     }
 
     const tagSection = ensureSection(tag);
@@ -194,12 +182,8 @@ export default {
 function getEventHandlerHint(attr: t.MarkoAttribute, tagVar: t.LVal) {
   if (/^on[A-Z-]/.test(attr.name) && t.isIdentifier(tagVar)) {
     const { name } = tagVar;
-    return `To act when \`${name}\` is assigned, keep its state in a second \`<let>\` and store it from \`valueChange\`: ${getBackingLetExample(name)}. A \`valueChange\` handler replaces the assignment, so \`${name}\` only changes if the handler stores \`next\`.`;
+    return `To act when \`${name}\` is assigned, keep its state in a second \`<let>\` and store it from \`valueChange\`: \`<let/_${name}=...>\` \`<let/${name}=_${name} valueChange(next) { _${name} = next; ... }>\`. A \`valueChange\` handler replaces the assignment, so \`${name}\` only changes if the handler stores \`next\`.`;
   }
-}
-
-function getBackingLetExample(name: string) {
-  return `\`<let/_${name}=...>\` \`<let/${name}=_${name} valueChange(next) { _${name} = next; ... }>\``;
 }
 
 function getDeclarationHint(attr: t.MarkoAttribute) {
