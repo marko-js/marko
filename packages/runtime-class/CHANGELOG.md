@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.43.0
+
+### Minor Changes
+
+- [#4746](https://github.com/marko-js/marko/pull/4746) [`20d80ab`](https://github.com/marko-js/marko/commit/20d80ab3e9c9a58fa692a52c8900f08ffb0ae4d5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add the `Marko.ComponentOf<Module>` type: the component a module exports (a class's instance, or an object), such as a split component's file, so that a declaration can name a template's component with Marko's public types alone: `export type Component = Marko.ComponentOf<typeof import("./component")>`.
+
 ## 5.42.0
 
 ### Minor Changes
