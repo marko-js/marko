@@ -134,6 +134,9 @@ export interface Section {
   children: Section[];
   program: Section;
   params: undefined | ParamBinding;
+  /** How many params its tag supplies as it renders it: a `<for>` row's, an
+   * `<await>`'s value, a `<try>`'s caught error. */
+  suppliedParams: number | undefined;
   /** The attribute tag `<for>` params this content reads, held as its own
    * bindings that the loop binds as it creates it. */
   localClosures: ReferencedBindings;
@@ -275,6 +278,7 @@ export function ensureBodySection(
       children: [],
       program: undefined as unknown as Section,
       params: undefined,
+      suppliedParams: undefined,
       localClosures: undefined,
       referencedClosures: undefined,
       referencedConstants: undefined,

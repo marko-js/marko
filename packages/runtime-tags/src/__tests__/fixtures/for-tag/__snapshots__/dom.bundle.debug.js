@@ -10,9 +10,9 @@ const $for_content5__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopK
 const $for_content4__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
 const $for_content3__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
 const $for_content2__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
-const $for_content2__$params = ($scope, $params3) => _text($scope["#text/1"], $params3[1]);
+const $for_content2__$params = ($scope, $_, val) => _text($scope["#text/1"], val);
 const $for_content__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
-const $for_content__$params = ($scope, $params2) => _text($scope["#text/1"], $params2[0]);
+const $for_content__$params = ($scope, val) => _text($scope["#text/1"], val);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<div><!>: <!></div><div></div><div></div>", "D%c%", $for_content__setup, $for_content__$params);
 const $for2 = /*@__PURE__*/ _for_in("#text/1", "<div><!>: <!></div><div></div><div></div>", "D%c%", $for_content2__setup, $for_content2__$params);
 const $for3 = /*@__PURE__*/ _for_to_unkeyed("#text/2", " ", " ", $for_content3__setup);

@@ -36,7 +36,7 @@ const $for_content__c = /*@__PURE__*/ _for_closure("#text/0", ($scope) => {
 }, 5);
 const $for_content__setup = $for_content__c;
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $for_content__$params = ($scope, $params3) => $for_content__dynamicTag($scope, $params3[0]?.content);
+const $for_content__$params = ($scope, o) => $for_content__dynamicTag($scope, o?.content);
 const $uifield_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<span><!></span>", " D%", $for_content__setup, $for_content__$params);
 const $uifield_content__input_option = /*@__PURE__*/ _closure_get("input_option/4", ($scope) => $uifield_content__for($scope, [$scope._.input_option]), 0, "__tests__/tags/ui-select.marko_1_input_option#0:3/subscribe");
 const $uifield_content__setup = $uifield_content__input_option;

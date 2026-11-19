@@ -12,9 +12,9 @@ const $item2 = ($scope, $item) => {
 };
 
 // tags/child-for/index.marko
-const $for_content__$params = ($scope, $params2) => {
-	_text($scope.a, $params2[0]?.foo);
-	_text($scope.b, $params2[0]?.sub?.x);
+const $for_content__$params = ($scope, item) => {
+	_text($scope.a, item?.foo);
+	_text($scope.b, item?.sub?.x);
 };
 const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<span><!> <!></span>", "D%c%", 0, $for_content__$params);
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);

@@ -17,7 +17,7 @@ const $for_content__num = /*@__PURE__*/ _const("num", ($scope) => {
 	_text($scope["#text/1"], $scope.num);
 	$for_content__selected__OR__num($scope);
 });
-const $for_content__$params = ($scope, $params2) => $for_content__num($scope, $params2[0]);
+const $for_content__$params = $for_content__num;
 const $selected = /*@__PURE__*/ _let("selected/1", $for_content__selected);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<button> </button>", " D ", $for_content__setup, $for_content__$params);
 function $setup($scope) {

@@ -10,8 +10,8 @@ const $if_content__setup = $if_content__item;
 const $for_content__if = /*@__PURE__*/ _if("#text/0", "<div></div>", " ", $if_content__setup);
 const $for_content__show = /*@__PURE__*/ _for_closure("#text/1", ($scope) => $for_content__if($scope, $scope._.show ? 0 : 1), 6);
 const $for_content__setup = $for_content__show;
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $for_content__item = /*@__PURE__*/ _const("item", $if_content__item);
+const $for_content__$params = $for_content__item;
 const $show = /*@__PURE__*/ _let("show/5", $for_content__show);
 const $setup__script$1 = _script("__tests__/tags/list.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$show($scope, !$scope.show);

@@ -18,7 +18,7 @@ const $for_content__other__OR__item = /*@__PURE__*/ _or(3, ($scope) => _text($sc
 const $for_content__other = /*@__PURE__*/ _for_closure("#text/2", $for_content__other__OR__item, 9, "#scopeOffset/1");
 const $for_content__setup = $for_content__other;
 const $for_content__item = /*@__PURE__*/ _const("item", $for_content__other__OR__item);
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
+const $for_content__$params = $for_content__item;
 const $count = /*@__PURE__*/ _let("count/4", ($scope) => $input_x($scope["#childScope/0"], $scope.count));
 const $other = /*@__PURE__*/ _let("other/5", ($scope) => {
 	$input_y($scope["#childScope/0"], $scope.other);

@@ -10,9 +10,9 @@ var log_effect_default = /*@__PURE__*/ _template("__tests__/tags/log-effect.mark
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<div id=log></div>${_w0}<!>${_w1}<!>`)("", "");
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&b%/${_w1}&c`)("", "");
-const $await_content3__$params = ($scope, $params5) => _text($scope["#text/0"], $params5[0]);
-const $await_content2__$params = ($scope, $params4) => _text($scope["#text/0"], $params4[0]);
-const $await_content__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]);
+const $await_content3__$params = ($scope, v) => _text($scope["#text/0"], v);
+const $await_content2__$params = ($scope, v) => _text($scope["#text/0"], v);
+const $await_content__$params = ($scope, v) => _text($scope["#text/0"], v);
 const $placeholder_content2__setup = ($scope) => _text($scope["#text/0"], (() => {
 	throw new Error("inner placeholder");
 })());
@@ -33,7 +33,7 @@ const $try_content2__setup = ($scope) => {
 	$try_content2__try($scope);
 	$try_content2__await_promise($scope, resolveAfter("y", 2));
 };
-const $catch_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]?.message);
+const $catch_content__$params = ($scope, err) => _text($scope["#text/0"], err?.message);
 const $catch_content = _content_resume("__tests__/template.marko_2*content", "caught <!>", "b%", 0, $catch_content__$params);
 const $try_content__try = /*@__PURE__*/ _try("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><!><!>`)(""), /*@__PURE__*/ ((_w0) => `/${_w0}&b%b%c`)(""), $try_content2__setup, $placeholder_content);
 const $await_content3 = /*@__PURE__*/ _await_content("#text/1", " ", " ");

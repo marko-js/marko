@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $await_content__value = ($scope, value) => _text($scope.a, value);
-const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);
+const $await_content__$params = $await_content__value;
 const $await_content = /*@__PURE__*/ _await_content(0, "<div id=tags> </div><!><!>", "D l%");
 const $await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);
 function $setup($scope) {

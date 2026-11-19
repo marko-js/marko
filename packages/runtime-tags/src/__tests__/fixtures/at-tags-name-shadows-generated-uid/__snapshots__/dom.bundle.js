@@ -1,5 +1,5 @@
 // tags/child/index.marko
-const $for_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]?.a);
+const $for_content__$params = ($scope, s) => _text($scope.a, s?.a);
 const $for = /*@__PURE__*/ _for_of_unkeyed(0, " ", " ", 0, $for_content__$params);
 const $input_scope = ($scope, input_scope) => $for($scope, [input_scope]);
 

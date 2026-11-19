@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-try-catch-extra-param/template.marko:2:16
+      1 | <try>
+    > 2 |   <@catch|err, extra|>
+        |                ^^^^^ The [`<try>` tag](https://markojs.com/docs/reference/core-tag#try)'s `<@catch>` takes one parameter, the caught error: `<@catch|err|>`.
+      3 |     ${err.message}${extra}
+      4 |   </@catch>
+      5 |   ${input.value}

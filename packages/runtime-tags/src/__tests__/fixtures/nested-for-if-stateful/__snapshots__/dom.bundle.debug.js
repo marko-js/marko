@@ -25,11 +25,11 @@ const $if_content__setup = ($scope) => {
 const $for_content__if = /*@__PURE__*/ _if("#text/0", "<button>Confirm <!></button>", " Db%", $if_content__setup, "<button>Increment <!></button>", " Db%", $else_content__setup);
 const $for_content__editing = /*@__PURE__*/ _let("editing/4", ($scope) => $for_content__if($scope, $scope.editing ? 0 : 1));
 const $for_content__setup = ($scope) => $for_content__editing($scope, false);
-const $for_content__$params = ($scope, $params2) => $for_content__count($scope, $params2[0]);
 const $for_content__count = /*@__PURE__*/ _const("count", ($scope) => {
 	$if_content__count($scope);
 	$else_content__count($scope);
 });
+const $for_content__$params = $for_content__count;
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
 const $counts = /*@__PURE__*/ _let("counts/1", ($scope) => $for($scope, [$scope.counts]));
 function $setup($scope) {

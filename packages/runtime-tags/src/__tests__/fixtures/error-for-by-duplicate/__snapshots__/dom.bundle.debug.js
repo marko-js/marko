@@ -6,7 +6,7 @@ const $for_content__setup__script = _script("__tests__/template.marko_1", ($scop
 	$items($scope._, []);
 }));
 const $for_content__setup = $for_content__setup__script;
-const $for_content__$params = ($scope, $params2) => _text($scope["#text/1"], $params2[0]?.id);
+const $for_content__$params = ($scope, item) => _text($scope["#text/1"], item?.id);
 const $for = /*@__PURE__*/ _for_of("#text/0", "<button> </button>", " D ", $for_content__setup, $for_content__$params);
 const $items = /*@__PURE__*/ _let("items/4", ($scope) => $for($scope, [$scope.items, () => "dup"]));
 const $input_items = $items;

@@ -19,13 +19,11 @@ const $for_content__setup = _script("a1", ($scope) => _on($scope.a, "click", fun
 	$count($scope._, +$scope._.c + 1);
 }));
 const $for_content__if = /*@__PURE__*/ _if(2, "<span> </span>", "D ", $if_content__setup);
-const $for_content___ = /*@__PURE__*/ _const(4, ($scope) => {
+const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<button class=inc> </button><!><!>", " D l%", $for_content__setup, /* @__PURE__ */ _const(4, ($scope) => {
 	_text($scope.b, $scope.e);
 	$for_content__if($scope, $scope.e ? 0 : 1);
 	$if_content___($scope);
-});
-const $for_content__$params = ($scope, $params2) => $for_content___($scope, $params2[0]);
-const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<button class=inc> </button><!><!>", " D l%", $for_content__setup, $for_content__$params);
+}));
 const $if = /*@__PURE__*/ _if(1, "<button class=mul> </button>", " D ", $if_content2__setup);
 const $count__closure = /*@__PURE__*/ _closure($if_content__count);
 const $count = /*@__PURE__*/ _let(2, ($scope) => {

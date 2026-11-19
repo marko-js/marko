@@ -22,8 +22,8 @@ const $if_content__item = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
 const $for_content__if = /*@__PURE__*/ _if("#text/0", "<span> </span>", "D ", $if_content__setup);
 const $for_content__input_obj_show = /*@__PURE__*/ _for_closure("#text/0", ($scope) => $for_content__if($scope, $scope._.input_obj_show ? 0 : 1), 8);
 const $for_content__setup = $for_content__input_obj_show;
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $for_content__item = /*@__PURE__*/ _const("item", $if_content__item);
+const $for_content__$params = $for_content__item;
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
 const $input = ($scope, input) => {
 	$input_obj($scope, input.obj);

@@ -4,8 +4,8 @@ const $walks = " b b%c";
 const $await_content__value = ($scope, value) => _text($scope["#text/0"], value > 1 ? (() => {
 	throw new Error("ERROR!");
 })() : value);
-const $await_content__$params = ($scope, $params3) => $await_content__value($scope, $params3[0]);
-const $catch_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
+const $await_content__$params = $await_content__value;
+const $catch_content__$params = ($scope, err) => _text($scope["#text/0"], err);
 const $catch_content = _content_resume("__tests__/template.marko_3*content", " ", " ", 0, $catch_content__$params);
 const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "LOADING...");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "Async: <!>", "b%");

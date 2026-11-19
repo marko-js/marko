@@ -9,8 +9,8 @@
       "brotli": 80
     },
     "child.mjs": {
-      "min": 1097,
-      "brotli": 620
+      "min": 1092,
+      "brotli": 617
     },
     "log-effect.mjs": {
       "min": 144,

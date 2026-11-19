@@ -40,82 +40,98 @@ import { getScopeReasonStatement } from "../util/write-guard";
 import * as writer from "../util/writer";
 
 export default {
-  analyze(tag) {
-    assertNoVar(tag);
-    assertNoArgs(tag);
-    assertNoParams(tag);
-    assertNoAttributes(tag);
-    const attrTags = analyzeAttributeTags(tag);
-    // The runtime reads only `placeholder` and `catch`, so any other attribute
-    // tag (usually a typo) would silently drop its pending/error UI.
-    if (attrTags) {
-      for (const name in attrTags) {
-        if (name !== "@placeholder" && name !== "@catch") {
-          const suggestion =
-            name[1] === "p" ? "`<@placeholder>`" : "`<@catch>`";
-          throw tag.buildCodeFrameError(
-            `The ${coreTagLink(tag)} only supports the \`<@placeholder>\` and \`<@catch>\` attribute tags, but received \`<${name}>\`. Did you mean ${suggestion}?`,
+  analyze: {
+    enter(tag) {
+      assertNoVar(tag);
+      assertNoArgs(tag);
+      assertNoParams(tag);
+      assertNoAttributes(tag);
+      const attrTags = analyzeAttributeTags(tag);
+      // The runtime reads only `placeholder` and `catch`, so any other attribute
+      // tag (usually a typo) would silently drop its pending/error UI.
+      if (attrTags) {
+        for (const name in attrTags) {
+          if (name !== "@placeholder" && name !== "@catch") {
+            const suggestion =
+              name[1] === "p" ? "`<@placeholder>`" : "`<@catch>`";
+            throw tag.buildCodeFrameError(
+              `The ${coreTagLink(tag)} only supports the \`<@placeholder>\` and \`<@catch>\` attribute tags, but received \`<${name}>\`. Did you mean ${suggestion}?`,
+            );
+          }
+
+          // Each is static content of the try, written once, directly inside it.
+          const { dynamic, repeated } = attrTags[name];
+          if (dynamic || repeated) {
+            throw tag
+              .get("name")
+              .buildCodeFrameError(
+                dynamic
+                  ? `The ${coreTagLink(tag)} needs its \`<${name}>\` written directly inside it, not within control flow such as \`<if>\` or \`<for>\`.`
+                  : `The ${coreTagLink(tag)} takes a single \`<${name}>\`.`,
+              );
+          }
+        }
+
+        for (const child of tag.get("attributeTags")) {
+          if (
+            child.isMarkoTag() &&
+            (child.node.attributes.length || child.node.arguments)
+          ) {
+            throw child
+              .get("name")
+              .buildCodeFrameError(
+                `The ${coreTagLink(tag)}'s \`<${getTagName(child)}>\` takes no attributes, only content.`,
+              );
+          }
+          if (child.isMarkoTag() && getTagName(child) === "@catch") {
+            const [error, extra] = child.node.body.params;
+            if (extra || error?.type === "RestElement") {
+              throw tag.hub.buildError(
+                extra || error,
+                `The ${coreTagLink(tag)}'s \`<@catch>\` takes one parameter, the caught error: \`<@catch|err|>\`.`,
+              );
+            }
+          }
+          if (
+            child.isMarkoTag() &&
+            child.node.body.params.length &&
+            getTagName(child) === "@placeholder"
+          ) {
+            throw child
+              .get("name")
+              .buildCodeFrameError(
+                `The ${coreTagLink(tag)}'s \`<@placeholder>\` takes no parameters: nothing passes it arguments.`,
+              );
+          }
+        }
+      }
+      assertHasBody(tag);
+
+      if (!attrTags) {
+        throw tag
+          .get("name")
+          .buildCodeFrameError(
+            `The ${coreTagLink(tag)} needs a \`<@catch>\` to handle errors or a \`<@placeholder>\` to show while its content is pending. Without either it has no effect, so render its content directly.`,
           );
-        }
-
-        // Each is static content of the try, written once, directly inside it.
-        const { dynamic, repeated } = attrTags[name];
-        if (dynamic || repeated) {
-          throw tag
-            .get("name")
-            .buildCodeFrameError(
-              dynamic
-                ? `The ${coreTagLink(tag)} needs its \`<${name}>\` written directly inside it, not within control flow such as \`<if>\` or \`<for>\`.`
-                : `The ${coreTagLink(tag)} takes a single \`<${name}>\`.`,
-            );
-        }
       }
 
-      for (const child of tag.get("attributeTags")) {
-        if (
-          child.isMarkoTag() &&
-          (child.node.attributes.length || child.node.arguments)
-        ) {
-          throw child
-            .get("name")
-            .buildCodeFrameError(
-              `The ${coreTagLink(tag)}'s \`<${getTagName(child)}>\` takes no attributes, only content.`,
-            );
-        }
-        if (
-          child.isMarkoTag() &&
-          child.node.body.params.length &&
-          getTagName(child) === "@placeholder"
-        ) {
-          throw child
-            .get("name")
-            .buildCodeFrameError(
-              `The ${coreTagLink(tag)}'s \`<@placeholder>\` takes no parameters: nothing passes it arguments.`,
-            );
-        }
-      }
-    }
-    assertHasBody(tag);
-
-    if (!attrTags) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          `The ${coreTagLink(tag)} needs a \`<@catch>\` to handle errors or a \`<@placeholder>\` to show while its content is pending. Without either it has no effect, so render its content directly.`,
-        );
-    }
-
-    const section = ensureSection(tag);
-    const tagExtra = mergeTagReferences(
-      section,
-      tag.node,
-    ) as ControlFlowTagExtra;
-    tagExtra.nodeBinding = structure.markerNode(tag, section);
-    tagExtra.textBefore = mayMergeWithText(tag, true);
-    initBranchSection(ensureBodySection(tag.get("body"))!, tagExtra, {
-      kind: "try",
-      tag: tagExtra,
-    });
+      const section = ensureSection(tag);
+      const tagExtra = mergeTagReferences(
+        section,
+        tag.node,
+      ) as ControlFlowTagExtra;
+      tagExtra.nodeBinding = structure.markerNode(tag, section);
+      tagExtra.textBefore = mayMergeWithText(tag, true);
+      initBranchSection(ensureBodySection(tag.get("body"))!, tagExtra, {
+        kind: "try",
+        tag: tagExtra,
+      });
+    },
+    // Its `@catch` section exists once its attribute tags are analyzed.
+    exit(tag) {
+      const { catchSection } = getTryParts(tag);
+      if (catchSection) catchSection.suppliedParams = 1;
+    },
   },
   translate: translateByTarget({
     html: {

@@ -1,0 +1,9 @@
+import { rejectAfter } from "../../utils/resolve";
+<try>
+  <@catch|{ message }|>
+    <b>${message}</b>
+  </@catch>
+  <await|value|=rejectAfter(new Error("boom"))>
+    ${value}
+  </await>
+</try>

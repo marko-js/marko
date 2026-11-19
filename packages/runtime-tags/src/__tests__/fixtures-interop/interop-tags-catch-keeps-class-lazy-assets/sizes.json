@@ -6,12 +6,12 @@
     },
     "template.marko.page.mjs": {
       "total": {
-        "min": 20036,
-        "brotli": 7978
+        "min": 20026,
+        "brotli": 7974
       },
       "files": {
         "components/class-wrap.marko": 1310,
-        "components/tags-try.marko": 951,
+        "components/tags-try.marko": 921,
         "template.marko": 721
       }
     },

@@ -37,8 +37,8 @@ _marko_template$1.Component = (0, import_defineComponent.default)(_marko_compone
 // components/tags-page.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $await_content__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]);
-const $catch_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]?.message);
+const $await_content__$params = ($scope, v) => _text($scope["#text/0"], v);
+const $catch_content__$params = ($scope, err) => _text($scope["#text/0"], err?.message);
 const $catch_content = _content_resume("__tests__/components/tags-page.marko_2*content", "caught <!>", "b%", 0, $catch_content__$params);
 const $try_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $await_content = /*@__PURE__*/ _await_content("#text/1", " ", " ");

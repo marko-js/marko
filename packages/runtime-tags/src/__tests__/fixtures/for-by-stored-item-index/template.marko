@@ -1,0 +1,9 @@
+<let/items=[{ id: "a", name: "A" }, { id: "b", name: "B" }]/>
+<let/picked/>
+<ul>
+  <for|item, i| of=items by="id">
+    <li><button onClick() { picked = item }>${i}</button></li>
+  </for>
+</ul>
+<button#rotate onClick() { items = [...items.slice(1), items[0]] }>rotate</button>
+<span>${picked?.name}</span>

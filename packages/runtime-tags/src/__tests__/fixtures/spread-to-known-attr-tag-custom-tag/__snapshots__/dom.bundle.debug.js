@@ -41,7 +41,7 @@ const $for_content__option = /*@__PURE__*/ _const("option", ($scope) => {
 	_attrs_content($scope, "#option/0", $scope.option);
 	$for_content__option__script($scope);
 });
-const $for_content__$params = ($scope, $params2) => $for_content__option($scope, $params2[0]);
+const $for_content__$params = $for_content__option;
 const $input_class = ($scope, input_class) => _attr_class($scope["#select/0"], input_class);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#select/0", "<option></option>", " ", 0, $for_content__$params);
 const $input_option = ($scope, input_option) => $for($scope, [input_option]);
