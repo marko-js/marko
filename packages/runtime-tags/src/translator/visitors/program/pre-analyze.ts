@@ -430,14 +430,14 @@ function buildChangeHandlerAttr(
       refiningFn ? `${refiningFn.name}(${value})` : value;
     let changeHandler: string;
     if (t.isIdentifier(bound)) {
-      const next = `_${bound.name}`;
-      changeHandler = `${changeAttrName}(${next}) { ${bound.name} = ${refine(next)} }`;
+      const param = `_${bound.name}`;
+      changeHandler = `${changeAttrName}(${param}) { ${bound.name} = ${refine(param)} }`;
     } else {
       const property = (bound.property as t.Identifier).name;
       const handler = `${source(bound.object)}.${property}Change`;
-      const next = `_${property}`;
+      const param = `_${property}`;
       changeHandler = refiningFn
-        ? `${changeAttrName}=${handler} && ((${next}) => ${handler}(${refine(next)}))`
+        ? `${changeAttrName}=${handler} && ((${param}) => ${handler}(${refine(param)}))`
         : `${changeAttrName}=${handler}`;
     }
     throw tag.hub.buildError(
