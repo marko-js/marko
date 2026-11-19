@@ -1,6 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/error-bind-fallback-refine-member/template.marko:2:36
-      1 | export interface Input { count?: number; countChange?(count: number): void }
-    > 2 | <input type="number" value:Number:=input.count ?? 0>
-        |                                    ^^^^^^^^^^^^^^^^ Cannot two-way bind to `input.count ?? 0`: `:=` derives the change handler from an identifier or member expression, so it cannot take a fallback. Pass the value and its change handler separately: `value=input.count ?? 0 valueChange=input.countChange && ((_count) => input.countChange(Number(_count)))`. See [two-way binding](https://markojs.com/docs/reference/language#shorthand-change-handlers-two-way-binding).
-      3 |
