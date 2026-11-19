@@ -2,7 +2,7 @@
 const $template$1 = "<button id=open>open</button><!><!>";
 const $walks$1 = " b%c";
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $for_content__$params = ($scope, $params2) => $for_content__dynamicTag($scope, $params2[0]?.content);
+const $for_content__$params = ($scope, item) => $for_content__dynamicTag($scope, item?.content);
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!>", "b%", 0, $for_content__$params);
 const $if_content__input_item = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__for($scope, [$scope._.input_item]));
 const $if_content__setup = $if_content__input_item;
@@ -28,8 +28,8 @@ const $await_content__setup__script = _script("__tests__/template.marko_1", ($sc
 	$picked($scope._, $scope.v);
 }));
 const $await_content__setup = $await_content__setup__script;
-const $await_content__$params = ($scope, $params3) => $await_content__v($scope, $params3[0]);
 const $await_content__v = /*@__PURE__*/ _const("v");
+const $await_content__$params = $await_content__v;
 const $picked = /*@__PURE__*/ _let("picked/7", ($scope) => _text($scope["#text/2"], $scope.picked && $scope.picked.text));
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);

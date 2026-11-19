@@ -20,7 +20,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__setup__script($scope);
 };
 const $for_content__g_items = /*@__PURE__*/ _const("g_items", $for_content__g_items__OR__short);
-const $for_content__$params = ($scope, $params2) => $for_content__g_items($scope, $params2[0]?.items);
+const $for_content__$params = ($scope, g) => $for_content__g_items($scope, g?.items);
 const $for = /*@__PURE__*/ _for_of("#text/0", "<!><!><button>go</button>", "b%b ", $for_content__setup, $for_content__$params);
 function $setup($scope) {
 	$for($scope, [[{

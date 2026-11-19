@@ -7,7 +7,7 @@ const $for_content__item = /*@__PURE__*/ _const("item", ($scope) => {
 	_attrs_content($scope, "#button/0", $scope.item);
 	$for_content__item__script($scope);
 });
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
+const $for_content__$params = $for_content__item;
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<button></button>", " ", 0, $for_content__$params);
 const $input_list = ($scope, input_list) => $for($scope, [input_list]);
 const $input$1 = ($scope, input) => $input_list($scope, input.list);

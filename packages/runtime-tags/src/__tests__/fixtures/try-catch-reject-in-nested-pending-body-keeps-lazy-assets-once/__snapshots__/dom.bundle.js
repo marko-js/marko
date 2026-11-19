@@ -2,13 +2,13 @@
 let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_value.mjs"));
 const $catch_content3 = _content("b0", "never caught");
-const $catch_content2__$params = ($scope, $params3) => _text($scope.a, $params3[0]?.message);
+const $catch_content2__$params = ($scope, err) => _text($scope.a, err?.message);
 const $catch_content2 = _content("b1", "caught <!>", "b%", 0, $catch_content2__$params);
 const $catch_content__setup = ($scope) => {
 	$load_Child_setup($scope, $scope.b, $scope.a);
 	$load_Child_tag_input_value($scope.b, "catch");
 };
-const $catch_content__$params = ($scope, $params2) => _text($scope.c, $params2[0]?.message);
+const $catch_content__$params = ($scope, err) => _text($scope.c, err?.message);
 const $catch_content = _content("b2", "<!><!> caught <!>", "b%/&c%", $catch_content__setup, $catch_content__$params);
 
 // child.marko

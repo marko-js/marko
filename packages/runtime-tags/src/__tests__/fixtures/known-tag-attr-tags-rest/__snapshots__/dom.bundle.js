@@ -1,5 +1,5 @@
 // tags/inner/index.marko
-const $for_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]?.x);
+const $for_content__$params = ($scope, row) => _text($scope.a, row?.x);
 const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<div>row <!></div>", "Db%", 0, $for_content__$params);
 const $input_stuff_row = ($scope, input_stuff_row) => $for($scope, [input_stuff_row]);
 const $input_stuff_other_y = ($scope, input_stuff_other_y) => _text($scope.b, input_stuff_other_y);

@@ -12,7 +12,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__setup__script($scope);
 };
 const $for_content__enabled = /*@__PURE__*/ _for_closure("#tbody/0", $for_content__selected__OR__enabled, 6);
-const $for_content__$params = ($scope, $params2) => _text($scope["#text/2"], $params2[0]?.label);
+const $for_content__$params = ($scope, row) => _text($scope["#text/2"], row?.label);
 const $selected = /*@__PURE__*/ _let("selected/2", $for_content__selected);
 const $enabled = /*@__PURE__*/ _let("enabled/3", $for_content__enabled);
 const $for = /*@__PURE__*/ _for_of("#tbody/0", "<tr><td><button class=select> </button></td></tr>", " E D ", $for_content__setup, $for_content__$params);

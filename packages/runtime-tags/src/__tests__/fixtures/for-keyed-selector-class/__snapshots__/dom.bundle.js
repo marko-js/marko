@@ -7,7 +7,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__selected._($scope);
 	$for_content__setup__script($scope);
 };
-const $for_content__$params = ($scope, $params2) => _text($scope.c, $params2[0]?.label);
+const $for_content__$params = ($scope, row) => _text($scope.c, row?.label);
 const $selected = /*@__PURE__*/ _let(4, $for_content__selected);
 const $for = /*@__PURE__*/ _for_of(0, "<tr><td><button class=select> </button></td></tr>", " E D ", $for_content__setup, $for_content__$params);
 const $rows = /*@__PURE__*/ _let(5, ($scope) => $for($scope, [$scope.f, "id"]));

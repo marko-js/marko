@@ -27,7 +27,7 @@ const $for_content___ = /*@__PURE__*/ _const("_/4", ($scope) => {
 	$for_content__if($scope, $scope["_/4"] ? 0 : 1);
 	$if_content___($scope);
 });
-const $for_content__$params = ($scope, $params2) => $for_content___($scope, $params2[0]);
+const $for_content__$params = $for_content___;
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<button class=inc> </button><!><!>", " D l%", $for_content__setup, $for_content__$params);
 const $if = /*@__PURE__*/ _if("#text/1", "<button class=mul> </button>", " D ", $if_content2__setup);
 const $count__closure = /*@__PURE__*/ _closure($if_content__count);

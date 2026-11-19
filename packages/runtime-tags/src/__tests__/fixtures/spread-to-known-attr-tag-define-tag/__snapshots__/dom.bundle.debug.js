@@ -13,7 +13,7 @@ const $for_content__option = /*@__PURE__*/ _const("option", ($scope) => {
 	_attrs_content($scope, "#option/0", $scope.option);
 	$for_content__option__script($scope);
 });
-const $for_content__$params = ($scope, $params3) => $for_content__option($scope, $params3[0]);
+const $for_content__$params = $for_content__option;
 const $Wrap_content___class = ($scope, _class) => $Child_content__input_class($scope["#childScope/0"], _class);
 const $Wrap_content__rest_option = ($scope, rest_option) => $Child_content__input_option($scope["#childScope/0"], rest_option);
 const $Wrap_content__$params = ($scope, $params4) => $Wrap_content__$temp($scope, $params4[0]);

@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-for-rest-param/template.marko:1:12
+    > 1 | <for|item, ...rest| of=["a", "b"]>
+        |            ^^^^^^^ The [`<for>` tag](https://markojs.com/docs/reference/core-tag#for) provides `|item, index|` with `of=`: name each parameter instead of collecting them with a rest parameter.
+      2 |   ${item}${rest.length}
+      3 | </for>
+      4 |

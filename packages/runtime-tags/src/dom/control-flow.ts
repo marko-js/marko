@@ -83,7 +83,7 @@ export function _await_promise(
       );
       referenceNode.remove();
     }
-    params?.(awaitBranch, [value]);
+    params?.(awaitBranch, value);
     return awaitBranch;
   };
   const awaitPromise = (scope: Scope, promise: unknown): unknown => {
@@ -440,7 +440,7 @@ export function renderCatch(scope: Scope, error?: unknown) {
       ],
       (branch) => {
         setupBranch(catchContent, branch);
-        catchContent[RendererProp.Params]?.(branch, [error]);
+        catchContent[RendererProp.Params]?.(branch, error);
       },
       -1,
     );
@@ -863,7 +863,10 @@ export function setBranch<T>(
 
 const loop = /*@__PURE__*/ withBranches(
   <T extends unknown[] = unknown[]>(
-    forEach: (value: T, cb: (key: unknown, args: unknown[]) => void) => void,
+    forEach: (
+      value: T,
+      cb: (key: unknown, a: unknown, b?: unknown) => void,
+    ) => void,
     reorder?: typeof reorderKeyed,
   ) =>
     (
@@ -871,7 +874,7 @@ const loop = /*@__PURE__*/ withBranches(
       template?: string | 0,
       walks?: string | 0,
       setup?: SetupFn | 0,
-      params?: Signal<unknown>,
+      params?: (scope: Scope, a: unknown, b: unknown) => void,
     ) => {
       if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
       const scopesAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
@@ -898,7 +901,7 @@ const loop = /*@__PURE__*/ withBranches(
           var seenKeys = new Set<unknown>();
         }
 
-        forEach(value, (key, args) => {
+        forEach(value, (key, a, b) => {
           if (MARKO_DEBUG) {
             assertValidLoopKey(key, seenKeys);
           }
@@ -932,7 +935,7 @@ const loop = /*@__PURE__*/ withBranches(
             setupBranch(renderer, branch);
           }
           newScopes.push(branch);
-          params?.(branch, args);
+          params?.(branch, a, b);
         });
         // Owned once every row rendered: a row that throws leaves the old rows owned.
         scope[scopesAccessor] = newScopes;
@@ -1015,11 +1018,9 @@ export const _for_of = /*@__PURE__*/ loop<
 >(([all, by], cb) => {
   by ||= bySecondArg;
   if (typeof by === "string") {
-    forOf(all, (item, i) =>
-      cb((item as Record<string, unknown>)[by], [item, i]),
-    );
+    forOf(all, (item, i) => cb((item as Record<string, unknown>)[by], item, i));
   } else {
-    forOf(all, (item, i) => cb(by(item, i), [item, i]));
+    forOf(all, (item, i) => cb(by(item, i), item, i));
   }
 }, reorderKeyed);
 
@@ -1027,36 +1028,36 @@ export const _for_in = /*@__PURE__*/ loop<
   [obj: {}, by?: (key: string, v: unknown) => unknown]
 >(([obj, by], cb) => {
   by ||= byFirstArg;
-  forIn(obj, (key, value) => cb(by(key, value), [key, value]));
+  forIn(obj, (key, value) => cb(by(key, value), key, value));
 }, reorderKeyed);
 
 export const _for_to = /*@__PURE__*/ loop<
   [to: number, from?: number, step?: number, by?: (v: number) => unknown]
 >(([to, from, step, by], cb) => {
   by ||= byFirstArg;
-  forTo(to, from, step, (v) => cb(by(v), [v]));
+  forTo(to, from, step, (v) => cb(by(v), v));
 }, reorderKeyed);
 
 export const _for_until = /*@__PURE__*/ loop<
   [until: number, from?: number, step?: number, by?: (v: number) => unknown]
 >(([until, from, step, by], cb) => {
   by ||= byFirstArg;
-  forUntil(until, from, step, (v) => cb(by(v), [v]));
+  forUntil(until, from, step, (v) => cb(by(v), v));
 }, reorderKeyed);
 
 // Loops without `by=` whose rows keep their position (`of=` keyed by index, or a
 // range with constant `from` and `step` keyed by value) never move: no `reorderKeyed`.
 export const _for_of_unkeyed = /*@__PURE__*/ loop<[all: unknown[]]>(
-  ([all], cb) => forOf(all, (item, i) => cb(i, [item, i])),
+  ([all], cb) => forOf(all, (item, i) => cb(i, item, i)),
 );
 
 export const _for_to_unkeyed = /*@__PURE__*/ loop<
   [to: number, from?: number, step?: number]
->(([to, from, step], cb) => forTo(to, from, step, (v) => cb(v, [v])));
+>(([to, from, step], cb) => forTo(to, from, step, (v) => cb(v, v)));
 
 export const _for_until_unkeyed = /*@__PURE__*/ loop<
   [until: number, from?: number, step?: number]
->(([until, from, step], cb) => forUntil(until, from, step, (v) => cb(v, [v])));
+>(([until, from, step], cb) => forUntil(until, from, step, (v) => cb(v, v)));
 
 function reorderKeyed(
   newScopes: BranchScope[],

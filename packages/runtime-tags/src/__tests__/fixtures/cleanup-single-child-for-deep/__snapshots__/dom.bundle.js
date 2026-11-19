@@ -21,21 +21,17 @@ const $for_content2__setup = ($scope) => {
 };
 const $for_content2__outerItem__OR__middleItem = /*@__PURE__*/ _or(3, ($scope) => $name($scope.a, `${$scope._.d}.${$scope.c}`));
 const $for_content2__outerItem = /*@__PURE__*/ _for_closure(1, $for_content2__outerItem__OR__middleItem, 7);
-const $for_content2__middleItem = /*@__PURE__*/ _const(2, $for_content2__outerItem__OR__middleItem);
-const $for_content2__$params = ($scope, $params3) => $for_content2__middleItem($scope, $params3[0]);
-const $for_content__for = /*@__PURE__*/ _for_of_unkeyed(1, /*@__PURE__*/ ((_w0) => `<div>${_w0}</div>`)($template), /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)("D l"), $for_content2__setup, $for_content2__$params);
+const $for_content__for = /*@__PURE__*/ _for_of_unkeyed(1, /*@__PURE__*/ ((_w0) => `<div>${_w0}</div>`)($template), /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)("D l"), $for_content2__setup, /* @__PURE__ */ _const(2, $for_content2__outerItem__OR__middleItem));
 const $for_content__items = /*@__PURE__*/ _for_closure(2, ($scope) => $for_content__for($scope, [$scope._.d]), 5);
 const $for_content__setup = ($scope) => {
 	$for_content__items._($scope);
 	$for_content__write._($scope);
 };
 const $for_content__write = /*@__PURE__*/ _for_closure(2, ($scope) => $write$1($scope.a, $scope._.e), 6);
-const $for_content__outerItem = /*@__PURE__*/ _const(3, ($scope) => {
+const $for = /*@__PURE__*/ _for_of_unkeyed(2, /*@__PURE__*/ ((_w0) => `<div>${_w0}<!></div>`)($template), /*@__PURE__*/ ((_w0) => `D/${_w0}&%l`)("D l"), $for_content__setup, /* @__PURE__ */ _const(3, ($scope) => {
 	$name($scope.a, `${$scope.d}`);
 	$for_content2__outerItem($scope);
-});
-const $for_content__$params = ($scope, $params2) => $for_content__outerItem($scope, $params2[0]);
-const $for = /*@__PURE__*/ _for_of_unkeyed(2, /*@__PURE__*/ ((_w0) => `<div>${_w0}<!></div>`)($template), /*@__PURE__*/ ((_w0) => `D/${_w0}&%l`)("D l"), $for_content__setup, $for_content__$params);
+}));
 const $items = /*@__PURE__*/ _let(3, ($scope) => {
 	$for($scope, [$scope.d]);
 	$for_content__items($scope);

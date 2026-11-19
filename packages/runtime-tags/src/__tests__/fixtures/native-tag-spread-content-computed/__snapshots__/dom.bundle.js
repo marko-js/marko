@@ -3,15 +3,13 @@ function same(item) {
 	return item;
 }
 const $for_content__item__script = _script("b0", ($scope) => _attrs_script($scope, "a"));
-const $for_content__item = /*@__PURE__*/ _const(2, ($scope) => {
+const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<button></button>", " ", 0, /* @__PURE__ */ _const(2, ($scope) => {
 	_attrs_content($scope, "a", {
 		...$scope.c,
 		...same($scope.c)
 	});
 	$for_content__item__script($scope);
-});
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
-const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<button></button>", " ", 0, $for_content__$params);
+}));
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 
 // template.marko

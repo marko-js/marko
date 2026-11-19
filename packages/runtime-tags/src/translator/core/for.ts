@@ -6,14 +6,7 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import {
-  assertForParams,
-  assertForType,
-  assertNoSpreadAttrs,
-  coreTagLink,
-  getForAttrs,
-  getForParamNames,
-} from "../util/assert";
+import { assertNoSpreadAttrs, coreTagLink } from "../util/assert";
 import { type Binding, BindingType, getPropertyAlias } from "../util/bindings";
 import {
   type ForType,
@@ -135,6 +128,7 @@ export default {
       return;
     }
 
+    bodySection.suppliedParams = getForParamCount(forType);
     const nodeBinding = structure.controlFlowNode(tag, tagSection);
     const tagExtra = mergeTagReferences(
       tagSection,
@@ -394,4 +388,50 @@ function isKeyAttr(attr: t.MarkoTag["attributes"][number]) {
 
 function getAttrValueExtra(attr: t.MarkoTag["attributes"][number]) {
   return (attr.value.extra ??= {});
+}
+
+/** The loop a `<for>` tag's attributes run, which it requires. */
+function assertForType(tag: t.NodePath<t.MarkoTag>) {
+  const type = getForType(tag.node);
+  if (!type) {
+    throw tag.buildCodeFrameError(
+      `The ${coreTagLink(tag)} requires an \`of=\`, \`in=\`, \`to=\`, or \`until=\` attribute.`,
+    );
+  }
+  return type;
+}
+
+/** The attributes a loop of `type` takes, besides `by=`. */
+function getForAttrs(type: ForType) {
+  return type === "of" || type === "in" ? [type] : [type, "from", "step"];
+}
+
+/** Throws for a param that a loop of `type` never supplies, or a rest param. */
+function assertForParams(tag: t.NodePath<t.MarkoTag>, type: ForType) {
+  const { params } = tag.node.body;
+  for (let i = 0; i < params.length; i++) {
+    const param = params[i];
+    if (param.type === "RestElement") {
+      throw tag.hub.buildError(
+        param,
+        `The ${coreTagLink(tag)} provides \`|${getForParamNames(type)}|\` with \`${type}=\`: name each parameter instead of collecting them with a rest parameter.`,
+      );
+    }
+    if (i === getForParamCount(type)) {
+      throw tag.hub.buildError(
+        param,
+        `The ${coreTagLink(tag)} only provides \`|${getForParamNames(type)}|\` with \`${type}=\`, so this parameter is never supplied.`,
+      );
+    }
+  }
+}
+
+/** How many params a loop of `type` supplies. */
+function getForParamCount(type: ForType) {
+  return type === "of" || type === "in" ? 2 : 1;
+}
+
+/** The params a loop of `type` supplies, as its docs name them. */
+function getForParamNames(type: ForType) {
+  return type === "of" ? "item, index" : type === "in" ? "key, value" : "num";
 }

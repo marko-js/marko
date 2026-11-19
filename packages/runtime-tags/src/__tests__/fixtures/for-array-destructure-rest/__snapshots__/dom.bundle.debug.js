@@ -2,7 +2,7 @@
 const $template = "<ul></ul><button>update</button>";
 const $walks = " b b";
 const $for_content__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
-const $for_content__$params = ($scope, $params2) => $for_content__$temp($scope, $params2[0]);
+const $for_content__$params = ($scope, $temp) => $for_content__$temp($scope, $temp);
 const $for_content__$temp = ($scope, $temp) => {
 	$for_content__rest($scope, (([, ...rest]) => rest)($temp));
 	_text($scope["#text/1"], $temp[0]);

@@ -23,3 +23,12 @@
        8 |   <div>${num} ${extra}</div>
        9 | </for>
       10 | <for|...args| of=[1, 2, 3]>
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-for-extra-param/template.marko:10:6
+       8 |   <div>${num} ${extra}</div>
+       9 | </for>
+    > 10 | <for|...args| of=[1, 2, 3]>
+         |      ^^^^^^^ The [`<for>` tag](https://markojs.com/docs/reference/core-tag#for) provides `|item, index|` with `of=`: name each parameter instead of collecting them with a rest parameter.
+      11 |   <div>${args[0]}</div>
+      12 | </for>
+      13 |

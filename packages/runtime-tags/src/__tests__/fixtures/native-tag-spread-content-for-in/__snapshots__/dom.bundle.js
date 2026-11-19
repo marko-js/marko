@@ -9,7 +9,7 @@ const $if_content__tag = /*@__PURE__*/ _if_closure(0, 0, ($scope) => {
 });
 const $for_content__if = /*@__PURE__*/ _if(0, "<div></div>", " ", $if_content__tag);
 const $for_content__setup = ($scope) => $for_content__if($scope, $scope.M !== "content" ? 0 : 1);
-const $for_content__$params = ($scope, $params2) => $for_content__tag($scope, $params2[1]);
+const $for_content__$params = ($scope, $_, tag) => $for_content__tag($scope, tag);
 const $for_content__tag = /*@__PURE__*/ _const(3, $if_content__tag);
 const $for = /*@__PURE__*/ _for_in(0, "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
 const $input = ($scope, input) => $for($scope, [input]);

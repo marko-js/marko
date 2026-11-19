@@ -1,9 +1,9 @@
 // template.marko
 const $template = "<div><!><button id=add>Add</button><button id=remove>Remove</button></div>";
 const $walks = "D%b b l";
-const $for_content__$params = ($scope, $params2) => {
-	_text($scope["#text/0"], $params2[0].name);
-	_text($scope["#text/1"], $params2[0].description);
+const $for_content__$params = ($scope, $temp) => {
+	_text($scope["#text/0"], $temp.name);
+	_text($scope["#text/1"], $temp.description);
 };
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<div><!>: <!></div>", "D%c%", 0, $for_content__$params);
 const $items = /*@__PURE__*/ _let("items/3", ($scope) => $for($scope, [$scope.items]));

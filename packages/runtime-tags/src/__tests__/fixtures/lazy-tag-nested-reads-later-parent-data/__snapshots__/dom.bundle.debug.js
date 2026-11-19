@@ -48,7 +48,7 @@ const $await_content__setup = ($scope) => {
 	$await_content__try($scope);
 	$await_content__setup__script($scope);
 };
-const $await_content__$params = ($scope, $params2) => $await_content__second($scope, { name: $params2[0] });
+const $await_content__$params = ($scope, name) => $await_content__second($scope, { name });
 const $first = /*@__PURE__*/ _const("first", ($scope) => $load_Child_tag_input_item($scope["#childScope/2"], $scope.first));
 const $await_content = /*@__PURE__*/ _await_content("#text/3", "<button class=later>later</button><!><!><!>", " b%/&b%", $await_content__setup);
 const $await_promise = /*@__PURE__*/ _await_promise("#text/3", $await_content__$params);

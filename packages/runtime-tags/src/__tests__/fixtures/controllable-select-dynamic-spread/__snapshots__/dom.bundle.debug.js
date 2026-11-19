@@ -7,7 +7,7 @@ const $for_content__option = /*@__PURE__*/ _const("option", ($scope) => {
 	_text($scope["#text/1"], ($scope.option?.value).toUpperCase());
 	$for_content__option__script($scope);
 });
-const $for_content__$params = ($scope, $params2) => $for_content__option($scope, $params2[0]);
+const $for_content__$params = $for_content__option;
 const $tagselect_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<option> </option>", " D ", 0, $for_content__$params);
 const $tagselect_content__setup = ($scope) => $tagselect_content__for($scope, [[
 	{ value: "a" },

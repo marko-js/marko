@@ -1,0 +1,16 @@
+// template.marko
+const $template = "<!><!><span> </span>";
+const $walks = "b%bD l";
+const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
+	$clicked($scope._, [$scope.item, $scope["#LoopKey"]].join(","));
+}));
+const $for_content__setup = $for_content__setup__script;
+const $for_content__item = /*@__PURE__*/ _const("item", ($scope) => _text($scope["#text/1"], $scope.item));
+const $for_content__$params = $for_content__item;
+const $clicked = /*@__PURE__*/ _let("clicked/2", ($scope) => _text($scope["#text/1"], $scope.clicked));
+const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<button> </button>", " D ", $for_content__setup, $for_content__$params);
+function $setup($scope) {
+	$clicked($scope, "");
+	$for($scope, [["a", "b"]]);
+}
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

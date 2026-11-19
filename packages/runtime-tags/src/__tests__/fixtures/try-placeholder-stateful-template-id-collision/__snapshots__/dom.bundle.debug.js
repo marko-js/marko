@@ -48,7 +48,7 @@ const $await_content__setup = ($scope) => {
 };
 const $await_content__tag = /*@__PURE__*/ _closure_get("tag/7", $await_content__clicks__OR__tag__OR__body, ($scope) => $scope._._, "__tests__/template.marko_3_tag#0:5/subscribe");
 const $await_content__body = /*@__PURE__*/ _const("body", $await_content__clicks__OR__tag__OR__body);
-const $await_content__$params = ($scope, $params2) => $await_content__body($scope, $params2[0]);
+const $await_content__$params = $await_content__body;
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "b%", $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $try_content__setup = ($scope) => {

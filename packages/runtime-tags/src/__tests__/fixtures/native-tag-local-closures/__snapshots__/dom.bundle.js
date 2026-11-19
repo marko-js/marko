@@ -1,12 +1,10 @@
 // template.marko
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a2", " ", " "), { 1: ($scope) => _text($scope.a, $scope.b) });
 const $for_content__item__script = _script("a0", ($scope) => _attrs_script($scope, "a"));
-const $for_content__item = /*@__PURE__*/ _const(2, ($scope) => {
+const $Child_content__for = /*@__PURE__*/ _for_of_unkeyed(0, "<div></div>", " ", 0, /* @__PURE__ */ _const(2, ($scope) => {
 	_attrs_content($scope, "a", $scope.c);
 	$for_content__item__script($scope);
-});
-const $for_content__$params = ($scope, $params3) => $for_content__item($scope, $params3[0]);
-const $Child_content__for = /*@__PURE__*/ _for_of_unkeyed(0, "<div></div>", " ", 0, $for_content__$params);
+}));
 const $Child_content__input_item = ($scope, input_item) => $Child_content__for($scope, [input_item]);
 const $size = /*@__PURE__*/ _let(2, ($scope) => {
 	let $item;

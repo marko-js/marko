@@ -1,4 +1,4 @@
-// size: 5726 (min) 2547 (brotli)
+// size: 5728 (min) 2549 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let branchesEnabled;
@@ -69,7 +69,7 @@ let _for_of_unkeyed = /*@__PURE__*/ /* @__PURE__ */ withBranches(
         oldScopesByKey,
         hasPotentialMoves,
         start = 0;
-      (forEach(value, (key, args) => {
+      (forEach(value, (key, a, b) => {
         let i = newScopes.length,
           oldScope = oldScopes[i],
           branch =
@@ -85,7 +85,7 @@ let _for_of_unkeyed = /*@__PURE__*/ /* @__PURE__ */ withBranches(
           : (((branch = createBranch(scope.$, renderer, scope, parentNode)).M = key),
             setupBranch(renderer, branch)),
           newScopes.push(branch),
-          params?.(branch, args));
+          params?.(branch, a, b));
       }),
         (scope[scopesAccessor] = newScopes));
       let newLen = newScopes.length,
@@ -120,7 +120,7 @@ let _for_of_unkeyed = /*@__PURE__*/ /* @__PURE__ */ withBranches(
       }
     };
   },
-)(([all], cb) => forOf(all, (item, i) => cb(i, [item, i])));
+)(([all], cb) => forOf(all, (item, i) => cb(i, item, i)));
 function isNotNullishOrFalse(value) {
   return value != null && value !== !1;
 }

@@ -15,7 +15,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $for_content__$params = ($scope, $params2) => $for_content__dynamicTag($scope, $params2[0]?.content);
+const $for_content__$params = ($scope, item) => $for_content__dynamicTag($scope, item?.content);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!>", "b%", 0, $for_content__$params);
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 const $input = ($scope, input) => $input_item($scope, input.item);

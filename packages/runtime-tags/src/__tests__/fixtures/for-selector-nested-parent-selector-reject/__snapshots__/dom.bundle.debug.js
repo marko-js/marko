@@ -13,7 +13,7 @@ const $for_content2__setup = ($scope) => {
 const $for_content__selected = /*@__PURE__*/ _for_selector("#text/0", "selected", ($scope) => _attr_class_item($scope["#ul/0"], "group", $scope._.selected === $scope["#LoopKey"]));
 const $for_content__setup = $for_content__selected;
 const $for_content__for = /*@__PURE__*/ _for_of("#ul/0", "<li><button class=select> </button></li>", " D D ", $for_content2__setup);
-const $for_content__$params = ($scope, $params2) => $for_content__for($scope, [$params2[0]?.rows, "id"]);
+const $for_content__$params = ($scope, group) => $for_content__for($scope, [group?.rows, "id"]);
 const $selected__closure = /*@__PURE__*/ _closure($for_content2__selected);
 const $selected = /*@__PURE__*/ _let("selected/1", ($scope) => {
 	$for_content__selected($scope);

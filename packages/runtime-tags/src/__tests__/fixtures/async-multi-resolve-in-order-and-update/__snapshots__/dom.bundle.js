@@ -1,10 +1,10 @@
 // template.marko
 const multiply = (multiplier, n) => resolveAfter(multiplier * n);
-const $await_content5__$params = ($scope, $params6) => _text($scope.a, $params6[0]);
-const $await_content4__$params = ($scope, $params5) => _text($scope.a, $params5[0]);
-const $await_content3__$params = ($scope, $params4) => _text($scope.a, $params4[0]);
-const $await_content2__$params = ($scope, $params3) => _text($scope.a, $params3[0]);
-const $await_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]);
+const $await_content5__$params = ($scope, result) => _text($scope.a, result);
+const $await_content4__$params = ($scope, result) => _text($scope.a, result);
+const $await_content3__$params = ($scope, result) => _text($scope.a, result);
+const $await_content2__$params = ($scope, result) => _text($scope.a, result);
+const $await_content__$params = ($scope, result) => _text($scope.a, result);
 const $await_promise = /*@__PURE__*/ _await_promise(2, $await_content__$params);
 const $await_promise2 = /*@__PURE__*/ _await_promise(4, $await_content2__$params);
 const $await_promise3 = /*@__PURE__*/ _await_promise(6, $await_content3__$params);

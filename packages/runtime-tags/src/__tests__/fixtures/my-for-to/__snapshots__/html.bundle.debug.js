@@ -1,15 +1,15 @@
 // tags/my-for.marko
 var my_for_default = _template("__tests__/tags/my-for.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_to__OR__input_content = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_for_to(input.to, 0, 1, (...args) => {
+	_for_to(input.to, 0, 1, (num) => {
 		const $scope1_id = _scope_id();
-		_dynamic_tag($scope1_id, "#text/0", input.content, [...args], 0, 1, $wg__input_to__OR__input_content);
+		_dynamic_tag($scope1_id, "#text/0", input.content, [num], 0, 1, _write_guard($scope0_reason, 2));
 		_write_if($scope0_reason, 0) && _scope($scope1_id, {
-			args: _write_if($scope0_reason, 2) && args,
+			"#LoopKey": _write_if($scope0_reason, 2) && num,
 			_: _scope_with_id($scope0_id)
-		}, "__tests__/tags/my-for.marko", "1:2", { args: "1:6" });
-	}, 0, $scope0_id, "#text/0", $wg__input_to__OR__input_content, _write_guard($scope0_reason, 1));
+		}, "__tests__/tags/my-for.marko", "1:2", { "#LoopKey": "1:6" });
+	}, 0, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), _write_guard($scope0_reason, 1));
 	_write_if($scope0_reason, 1) && _scope($scope0_id, { input_content: input.content }, "__tests__/tags/my-for.marko", 0, { input_content: ["input.content"] });
 });
 

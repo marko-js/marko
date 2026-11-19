@@ -8,7 +8,7 @@ const $placeholder_content2__setup = ($scope) => {
 	$placeholder_content2__setup__script($scope);
 };
 const $placeholder_content2 = _content("a1", "<button>placeholder <!></button>", " Db%", $placeholder_content2__setup);
-const $catch_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]?.message);
+const $catch_content__$params = ($scope, err) => _text($scope.a, err?.message);
 const $catch_content = _content("a2", "caught <!>", "b%", 0, $catch_content__$params);
 const $placeholder_content = _content("a3", "loading");
 const $count = /*@__PURE__*/ _let(4, ($scope) => _text($scope.b, $scope.e));

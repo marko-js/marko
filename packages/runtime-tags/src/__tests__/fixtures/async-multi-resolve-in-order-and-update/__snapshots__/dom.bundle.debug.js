@@ -2,11 +2,11 @@
 const $template = "<button>increment</button><p>1 * <!> = <!></p><p>2 * <!> = <!></p><p>3 * <!> = <!></p><p>4 * <!> = <!></p><p>5 * <!> = <!></p>";
 const $walks = " bDb%c%lDb%c%lDb%c%lDb%c%lDb%c%l";
 const multiply = (multiplier, n) => resolveAfter(multiplier * n);
-const $await_content5__$params = ($scope, $params6) => _text($scope["#text/0"], $params6[0]);
-const $await_content4__$params = ($scope, $params5) => _text($scope["#text/0"], $params5[0]);
-const $await_content3__$params = ($scope, $params4) => _text($scope["#text/0"], $params4[0]);
-const $await_content2__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]);
-const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
+const $await_content5__$params = ($scope, result) => _text($scope["#text/0"], result);
+const $await_content4__$params = ($scope, result) => _text($scope["#text/0"], result);
+const $await_content3__$params = ($scope, result) => _text($scope["#text/0"], result);
+const $await_content2__$params = ($scope, result) => _text($scope["#text/0"], result);
+const $await_content__$params = ($scope, result) => _text($scope["#text/0"], result);
 const $await_content = /*@__PURE__*/ _await_content("#text/2", " ", " ");
 const $await_promise = /*@__PURE__*/ _await_promise("#text/2", $await_content__$params);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/4", " ", " ");
