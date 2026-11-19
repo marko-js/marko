@@ -1,0 +1,5 @@
+<let/count=0 valueChange(next) {
+  localStorage.setItem("count", String(next));
+  count = next;
+}>
+<button onClick() { count++ }>${count}</button>

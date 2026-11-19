@@ -58,14 +58,26 @@ export default {
     assertHasVar(tag, "For example: `<let/count=0>`.");
     assertIdentifierVar(tag);
 
-    if (valueChangeAttr && evaluate(valueChangeAttr.value).computed) {
-      throw tag
-        .get("attributes")
-        .find((attr) => attr.node === valueChangeAttr)!
-        .get("value")
-        .buildCodeFrameError(
+    const valueChange = tag
+      .get("attributes")
+      .find((attr) => attr.node === valueChangeAttr)
+      ?.get("value");
+    if (valueChange) {
+      if (evaluate(valueChange.node).computed) {
+        throw valueChange.buildCodeFrameError(
           `The ${coreTagLink(tag)} [\`valueChange=\` attribute](https://markojs.com/docs/reference/core-tag#controllable-let) must be a function.`,
         );
+      }
+
+      const { name } = tagVar as t.Identifier;
+      const selfAssignment = tag.scope
+        .getBinding(name)
+        ?.constantViolations.find((ref) => ref.isDescendant(valueChange));
+      if (selfAssignment) {
+        throw selfAssignment.buildCodeFrameError(
+          `Assigning \`${name}\` calls its \`valueChange\`, so assigning it inside \`valueChange\` recurses forever. Store \`next\` in other state instead, such as a second \`<let>\`: \`<let/_${name}=...>\` \`<let/${name}=_${name} valueChange(next) { _${name} = next; ... }>\`.`,
+        );
+      }
     }
 
     const tagSection = ensureSection(tag);

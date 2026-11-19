@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-let-value-change-self-assign/template.marko:3:3
+      1 | <let/count=0 valueChange(next) {
+      2 |   localStorage.setItem("count", String(next));
+    > 3 |   count = next;
+        |   ^^^^^^^^^^^^ Assigning `count` calls its `valueChange`, so assigning it inside `valueChange` recurses forever. Store `next` in other state instead, such as a second `<let>`: `<let/_count=...>` `<let/count=_count valueChange(next) { _count = next; ... }>`.
+      4 | }>
+      5 | <button onClick() { count++ }>${count}</button>
+      6 |
