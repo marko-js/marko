@@ -426,9 +426,20 @@ function buildChangeHandlerAttr(
     const { code } = getFile();
     const source = (node: t.Node) => code.slice(node.start!, node.end!);
     const bound = attr.value.left;
-    const changeHandler = t.isIdentifier(bound)
-      ? `${changeAttrName}(v) { ${bound.name} = v }`
-      : `${changeAttrName}=${source(bound.object)}.${(bound.property as t.Identifier).name}Change`;
+    const refine = (value: string) =>
+      refiningFn ? `${refiningFn.name}(${value})` : value;
+    let changeHandler: string;
+    if (t.isIdentifier(bound)) {
+      const next = `_${bound.name}`;
+      changeHandler = `${changeAttrName}(${next}) { ${bound.name} = ${refine(next)} }`;
+    } else {
+      const property = (bound.property as t.Identifier).name;
+      const handler = `${source(bound.object)}.${property}Change`;
+      const next = `_${property}`;
+      changeHandler = refiningFn
+        ? `${changeAttrName}=${handler} && ((${next}) => ${handler}(${refine(next)}))`
+        : `${changeAttrName}=${handler}`;
+    }
     throw tag.hub.buildError(
       attr.value,
       `Cannot two-way bind to \`${source(attr.value)}\`: \`:=\` derives the change handler from an identifier or member expression, so it cannot take a fallback. Pass the value and its change handler separately: \`${attrName}=${source(attr.value)} ${changeHandler}\`. See [two-way binding](https://markojs.com/docs/reference/language#shorthand-change-handlers-two-way-binding).`,

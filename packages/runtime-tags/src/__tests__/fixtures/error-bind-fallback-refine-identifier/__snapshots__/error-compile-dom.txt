@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-bind-fallback-refine-identifier/template.marko:2:36
+      1 | <let/v=0/>
+    > 2 | <input type="number" value:Number:=v || 1>
+        |                                    ^^^^^^ Cannot two-way bind to `v || 1`: `:=` derives the change handler from an identifier or member expression, so it cannot take a fallback. Pass the value and its change handler separately: `value=v || 1 valueChange(_v) { v = Number(_v) }`. See [two-way binding](https://markojs.com/docs/reference/language#shorthand-change-handlers-two-way-binding).
+      3 |
