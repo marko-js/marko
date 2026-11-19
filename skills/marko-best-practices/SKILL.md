@@ -29,3 +29,4 @@ Documentation and this skill target **Marko 6**. Do not use Marko 5 syntax.
 - [ ] No unnecessary client-side JS; prefer built-in browser APIs and HTML/CSS features over scripts.
 - [ ] Props are declared with an exported `Input` interface, and templates are type checked with `mtc` (`@marko/type-check`) — `tsc` skips `.marko` files and reports nothing.
 - [ ] Never pair a value with a handler that writes it back (`checked=x onChange() { x = … }`, `<my-tag open=x onToggle(v) { x = v }>`). Bind with `:=` instead (`<input checked:=x>`, `<my-tag open:=x>`), and make custom-tag state controllable: `<let/open:=input.open>` with `open?` and `openChange?` in `Input`. See [Controllable Components](https://markojs.com/docs/explanation/controllable-components.md).
+- [ ] In a `@marko/run` app, run `marko-run build` before finishing; it compiles every template and reports Marko's errors.
