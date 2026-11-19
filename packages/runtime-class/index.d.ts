@@ -350,16 +350,24 @@ declare global {
     }
 
     /**
+     * The component a module exports (a class's instance, or an object), eg of
+     * a split component's file: `Marko.ComponentOf<typeof import("./component")>`.
+     */
+    export type ComponentOf<Module> = 0 extends 1 & Module
+      ? any
+      : Module extends { default: infer Exported }
+        ? ComponentOf<Exported>
+        : Module extends abstract new (...args: any) => infer Instance
+          ? Instance extends Component
+            ? Instance
+            : Instance & Component
+          : Module & Component;
+
+    /**
      * The input of the component a module exports (a class, or an object), eg of
      * a split component's file: `Marko.ComponentInput<typeof import("./component")>`.
      */
-    export type ComponentInput<Module> = 0 extends 1 & Module
-      ? any
-      : Module extends { default: infer Exported }
-        ? ComponentInput<Exported>
-        : Module extends abstract new (...args: any) => infer Instance
-          ? (Instance & Component)["input"]
-          : (Module & Component)["input"];
+    export type ComponentInput<Module> = ComponentOf<Module>["input"];
 
     export type AttrTag<T> = T & {
       [Symbol.iterator](): Iterator<T>;
