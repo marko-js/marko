@@ -18,7 +18,6 @@ export { parse, parseExpression } from "@babel/parser";
 export { NodePath } from "@babel/traverse";
 
 import generatorModule from "@babel/generator";
-import pluginSyntaxTypeScriptModule from "@babel/plugin-syntax-typescript";
 import pluginTransformModulesCommonjsModule from "@babel/plugin-transform-modules-commonjs";
 import pluginTransformTypeScriptModule from "@babel/plugin-transform-typescript";
 import traverseModule from "@babel/traverse";
@@ -31,9 +30,6 @@ import typesModule from "@babel/types";
 
 export const types = typesModule as typeof import("@babel/types");
 export const generator = interopDefault(generatorModule);
-export const pluginSyntaxTypeScript = interopDefault(
-  pluginSyntaxTypeScriptModule,
-);
 export const pluginTransformModulesCommonjs = interopDefault(
   pluginTransformModulesCommonjsModule,
 );
