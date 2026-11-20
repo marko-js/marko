@@ -415,6 +415,37 @@ function buildChangeHandlerAttr(
     }
   }
 
+  if (
+    t.isLogicalExpression(attr.value) &&
+    attr.value.operator !== "&&" &&
+    (t.isIdentifier(attr.value.left) ||
+      (t.isMemberExpression(attr.value.left) &&
+        !attr.value.left.computed &&
+        t.isIdentifier(attr.value.left.property)))
+  ) {
+    const { code } = getFile();
+    const source = (node: t.Node) => code.slice(node.start!, node.end!);
+    const bound = attr.value.left;
+    const refine = (value: string) =>
+      refiningFn ? `${refiningFn.name}(${value})` : value;
+    let changeHandler: string;
+    if (t.isIdentifier(bound)) {
+      const param = `_${bound.name}`;
+      changeHandler = `${changeAttrName}(${param}) { ${bound.name} = ${refine(param)} }`;
+    } else {
+      const property = (bound.property as t.Identifier).name;
+      const handler = `${source(bound.object)}.${property}Change`;
+      const param = `_${property}`;
+      changeHandler = refiningFn
+        ? `${changeAttrName}=${handler} && ((${param}) => ${handler}(${refine(param)}))`
+        : `${changeAttrName}=${handler}`;
+    }
+    throw tag.hub.buildError(
+      attr.value,
+      `Cannot two-way bind to \`${source(attr.value)}\`: \`:=\` derives the change handler from an identifier or member expression, so it cannot take a fallback. Pass the value and its change handler separately: \`${attrName}=${source(attr.value)} ${changeHandler}\`. See [two-way binding](https://markojs.com/docs/reference/language#shorthand-change-handlers-two-way-binding).`,
+    );
+  }
+
   throw tag.hub.buildError(
     attr.value,
     "Attributes may only be bound to identifiers or member expressions",
