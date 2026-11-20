@@ -100,7 +100,9 @@ and never set directly, while each slot is still written under its own guard.
 They originate at client-observable roots—state, effects, handlers/registered
 functions, closures, hoists, control-flow identity, DOM getters, tag variables,
 and stateful derived bindings—and propagate backward through aliases/reads and upward
-through owners. Intersections cross-propagate because all members must exist
+through owners. Back across a call, state survives only from outside the body the call
+renders (`getStateSurvivingCall`): the body's own belongs to that call's instance, so a
+mapped reason reads it `always` and a tag variable is its own source for it. Intersections cross-propagate because all members must exist
 when their combined work becomes relevant. Reasons that follow others
 (intersections, closures through registered content, registered functions,
 known-tag param groups) are solved together, repeating until none moves; every
