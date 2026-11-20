@@ -123,6 +123,8 @@ export interface StructureChild {
 export interface StructureModuleRead {
   kind: typeof StructureKind.ModuleRead;
   read: string[];
+  /** The read is a `style` value, written as its declarations. */
+  style: boolean;
 }
 
 export interface Section {

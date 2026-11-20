@@ -2,6 +2,7 @@ export { attrTag, attrTags } from "./common/attr-tag";
 export {
   _assert_class_toggles,
   _assert_hoist,
+  _assert_style_items,
   _hoist_read_error,
 } from "./common/errors";
 export { forIn, forOf, forTo, forUntil } from "./common/for";
@@ -63,6 +64,7 @@ export {
   _attr_style,
   _attr_style_item,
   _attr_style_items,
+  _attr_style_text,
   _attrs,
   _attrs_content,
   _attrs_partial,

@@ -1,6 +1,13 @@
 import { RendererProp } from "./accessor.debug";
 import { isAttrTag } from "./attr-tag";
-import { getWrongAttrSuggestion, invalidNativeAttrNameReg } from "./helpers";
+import {
+  findRepeatedName,
+  getStyleProperties,
+  getWrongAttrSuggestion,
+  invalidNativeAttrNameReg,
+  stringifyStyleEntry,
+  toDelimitedString,
+} from "./helpers";
 
 export const lowercaseOnAttrReg = /^on[a-z]/;
 
@@ -33,19 +40,42 @@ export function assertValidAttrValue(name: string, value: unknown) {
 // the client adds and removes it by itself; style import reads are only known here.
 export function _assert_class_toggles(classes: string, toggles: string[]) {
   if (MARKO_DEBUG) {
-    const written = new Set(classes.split(" "));
-    for (const toggle of toggles) {
-      const names = new Set(toggle.split(" "));
-      for (const name of names) {
-        if (written.has(name)) {
-          throw new Error(
-            `The toggled class \`${name}\` is also written by another part of the \`class\` value; a toggled class may appear only once.`,
-          );
-        }
-      }
-      for (const name of names) written.add(name);
+    const name = findRepeatedName(
+      [classes].concat(toggles).map(splitClassNames),
+    );
+    if (name !== undefined) {
+      throw new Error(
+        `The toggled class \`${name}\` is also written by another part of the \`class\` value; a toggled class may appear only once.`,
+      );
     }
   }
+}
+
+// A style item must not share a property with any other part of its value, since the
+// client sets it by itself; module reads' properties are only known here.
+export function _assert_style_items(parts: unknown[], items: string[]) {
+  if (MARKO_DEBUG) {
+    const name = findRepeatedName(
+      parts.map(getStylePartProperties).concat(items.map(toGroup)),
+    );
+    if (name !== undefined) {
+      throw new Error(
+        `The style property \`${name}\` is also written by another part of the \`style\` value; a style property may appear only once in a \`style\` value.`,
+      );
+    }
+  }
+}
+
+function splitClassNames(classes: string) {
+  return classes.split(" ");
+}
+
+function getStylePartProperties(part: unknown) {
+  return getStyleProperties(toDelimitedString(part, ";", stringifyStyleEntry));
+}
+
+function toGroup(name: string) {
+  return [name];
 }
 
 export function assertValidTextValue(value: unknown) {
