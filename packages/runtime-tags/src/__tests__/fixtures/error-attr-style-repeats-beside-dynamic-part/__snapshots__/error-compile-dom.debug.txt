@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-attr-style-repeats-beside-dynamic-part/template.marko:1:6
+    > 1 | <div style=[input.base, "color:blue", { color: input.tint }]/>
+        |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ The style property `color` is also written by another part of the `style` value; a [style property](https://markojs.com/docs/reference/native-tag#style) may appear only once in a `style` value.
+      2 |

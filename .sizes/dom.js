@@ -1,4 +1,4 @@
-// size: 25774 (min) 9612 (brotli)
+// size: 25893 (min) 9651 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -373,6 +373,7 @@ function withDynamicHtml(runtime) {
   return ((dynamicHtmlEnabled = 1), runtime);
 }
 function _assert_class_toggles(classes, toggles) {}
+function _assert_style_items(parts, items) {}
 function _hoist_read_error() {}
 function _assert_hoist(value) {}
 function forIn(obj, cb) {
@@ -1222,6 +1223,12 @@ function _attr_style_items(element, items) {
 }
 function _attr_style_item(element, name, value) {
   element.style.setProperty(name, _to_text(value));
+}
+function _attr_style_text(value) {
+  return toDelimitedString(value, ";", stringifyStyleEntry).replace(/[&"]/g, escapeStyleTextChar);
+}
+function escapeStyleTextChar(char) {
+  return char === "&" ? "&amp;" : "&#34;";
 }
 function _style_shell(scope, nodeAccessor) {
   let element = scope[nodeAccessor],

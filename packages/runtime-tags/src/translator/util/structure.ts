@@ -11,6 +11,7 @@ import { generateUidIdentifier } from "./generate-uid";
 import { getParentTag } from "./get-parent-tag";
 import { getOnlyChildParentTagName } from "./is-only-child-in-parent";
 import { toModuleReadExpression } from "./module-read";
+import { callRuntime } from "./runtime";
 import {
   ContentType,
   getSection,
@@ -83,10 +84,15 @@ export function writeTo(path: t.NodePath<any>) {
   };
 }
 
-export function writeModuleReadTo(path: t.NodePath<any>, read: string[]) {
+export function writeModuleReadTo(
+  path: t.NodePath<any>,
+  read: string[],
+  style: boolean,
+) {
   getSection(path).structure?.push({
     kind: StructureKind.ModuleRead,
     read,
+    style,
   });
 }
 
@@ -218,10 +224,15 @@ function resolveStructure(section: Section) {
         case StructureKind.Text:
           writeText(op.value);
           break;
-        case StructureKind.ModuleRead:
-          resolved.writes.push(toModuleReadExpression(op.read), "");
+        case StructureKind.ModuleRead: {
+          const read = toModuleReadExpression(op.read);
+          resolved.writes.push(
+            op.style ? callRuntime("_attr_style_text", read) : read,
+            "",
+          );
           textEdge = undefined;
           break;
+        }
         case StructureKind.Node: {
           if (!op.binding) continue;
           const marker = op.marker ?? isKnownChild(section);

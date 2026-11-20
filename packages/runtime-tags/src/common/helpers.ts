@@ -144,6 +144,43 @@ export function toDelimitedString(
   return str;
 }
 
+// The first name a group shares with an earlier group; a group may repeat its own.
+export function findRepeatedName<T>(groups: T[][]) {
+  const written = new Set<T>();
+  for (const names of groups) {
+    for (const name of names) {
+      if (written.has(name)) return name;
+    }
+    for (const name of names) written.add(name);
+  }
+}
+
+// The property each declaration of a `style` value sets; a `;` or `:` inside
+// quotes, an escape or parentheses is part of a value.
+export function getStyleProperties(declarations: string) {
+  const properties: string[] = [];
+  let depth = 0;
+  let start = 0;
+  for (const { 0: token, index } of declarations.matchAll(styleTokenReg)) {
+    if (token === "(") {
+      depth++;
+    } else if (token === ")") {
+      depth--;
+    } else if (!depth) {
+      if (token === ";") {
+        start = index + 1;
+      } else if (token === ":" && start >= 0) {
+        properties.push(declarations.slice(start, index).trim());
+        start = -1;
+      }
+    }
+  }
+  return properties;
+}
+
+const styleTokenReg =
+  /\\[\s\S]|"(?:\\[\s\S]|[^"\\])*"?|'(?:\\[\s\S]|[^'\\])*'?|[():;]/g;
+
 // The runtime lowercases event names, but the types accept only the exact DOM
 // camelCase spelling (eg `onKeyDown`) — deliberate; type-check flags the rest.
 export function isEventHandler(name: string): name is `on${string}` {

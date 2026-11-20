@@ -132,6 +132,18 @@ export function _attr_style_item(
   element.style.setProperty(name, _to_text(value));
 }
 
+// A style value read from a module, as text in the template's double-quoted attribute.
+export function _attr_style_text(value: unknown) {
+  return toDelimitedString(value, ";", stringifyStyleEntry).replace(
+    /[&"]/g,
+    escapeStyleTextChar,
+  );
+}
+
+function escapeStyleTextChar(char: string) {
+  return char === "&" ? "&amp;" : "&#34;";
+}
+
 export function _style_shell(scope: Scope, nodeAccessor: Accessor) {
   const element = scope[nodeAccessor] as Element;
   const id = _id(scope);

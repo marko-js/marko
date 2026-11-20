@@ -14,7 +14,9 @@ import {
   lowercaseOnAttrReg,
 } from "../../../common/errors";
 import {
+  findRepeatedName,
   getEventType,
+  getStyleProperties,
   getWrongAttrSuggestion,
   isEventHandler,
   stringifyClassEntry,
@@ -50,6 +52,7 @@ import {
   isOutputHTML,
 } from "../../util/marko-config";
 import {
+  getModuleRead,
   getStyleImportRead,
   toModuleReadExpression,
 } from "../../util/module-read";
@@ -257,9 +260,7 @@ export default {
           if (attr.name === "class" || attr.name === "style") {
             delimitedAttrMeta = delimitedAttrMetas[attr.name] =
               getDelimitedAttrMeta(tag, attr.name, attr.value);
-            if (attr.name === "class") {
-              assertUniqueClassToggles(tag, attr, delimitedAttrMeta);
-            }
+            assertUniqueDelimitedNames(tag, attr, delimitedAttrMeta);
           }
 
           if (isEventHandlerAttr) {
@@ -497,14 +498,15 @@ export default {
               if (staticParts.every(isLiteralPart)) {
                 write`${getStaticAttrMarkup(name, staticParts)}`;
               } else {
-                write` class="`;
+                const [delimiter] = delimitedAttrStringify[name];
+                write` ${name}="`;
                 for (let i = 0; i < staticParts.length; i++) {
                   const part = staticParts[i];
-                  if (i) write` `;
+                  if (i) write`${delimiter}`;
                   if (isLiteralPart(part)) {
                     write`${escapeDoubleQuotedAttrValue(part)}`;
                   } else {
-                    structure.writeModuleReadTo(tag, part);
+                    structure.writeModuleReadTo(tag, part, name === "style");
                   }
                 }
                 write`"`;
@@ -980,7 +982,7 @@ export default {
             const calls: t.Expression[] = [];
             const meta = getDelimitedAttrMeta(tag, name, value);
             const items = getDelimitedAttrItems(name, meta);
-            const assert = buildClassTogglesAssert(meta);
+            const assert = buildDelimitedAttrAssert(name, meta);
             if (assert) calls.push(assert);
             if (!items) {
               calls.push(
@@ -1001,7 +1003,7 @@ export default {
                     callRuntime(
                       "_attr_class_names",
                       createScopeReadExpression(nodeBinding),
-                      toClassPartExpression(key),
+                      toDelimitedPartExpression(key),
                       value,
                     ),
                   );
@@ -1596,8 +1598,15 @@ function buildAttrExpression(
         buildClassAttrExpression(tag, value) ||
         callRuntime("_attr_class", value)
       );
-    case "style":
-      return buildStyleAttrAnd(value) || callRuntime("_attr_style", value);
+    case "style": {
+      const markup =
+        buildStyleAttrAnd(value) || callRuntime("_attr_style", value);
+      const assert = buildDelimitedAttrAssert(
+        "style",
+        getDelimitedAttrMeta(tag, "style", value),
+      );
+      return assert ? t.sequenceExpression([assert, markup]) : markup;
+    }
     default:
       return (
         buildLogicalAttr(name, value) ||
@@ -1702,7 +1711,7 @@ function buildClassAttrExpression(
   const meta = getDelimitedAttrMeta(tag, "class", value);
   if (meta.needsWholeValue) return;
   const markup = buildClassMarkup(meta);
-  const assert = markup && buildClassTogglesAssert(meta);
+  const assert = markup && buildDelimitedAttrAssert("class", meta);
   return assert ? t.sequenceExpression([assert, markup!]) : markup;
 }
 
@@ -1795,8 +1804,11 @@ function ensureModuleClassMarkup(key: string, build: () => t.Expression) {
   return t.cloneNode(id);
 }
 
-// Debug output checks a toggled style import read against the value's other names.
-function buildClassTogglesAssert({ staticParts, toggles }: DelimitedAttrMeta) {
+// Debug output checks the names of a module read against the value's other names.
+function buildDelimitedAttrAssert(
+  name: "class" | "style",
+  { staticParts, toggles }: DelimitedAttrMeta,
+) {
   if (
     isOptimize() ||
     !toggles ||
@@ -1805,15 +1817,25 @@ function buildClassTogglesAssert({ staticParts, toggles }: DelimitedAttrMeta) {
     return;
   }
 
-  return callRuntime(
-    "_assert_class_toggles",
-    buildClassString(staticParts, []),
-    t.arrayExpression(
-      toggles.map(({ key, alternate }) =>
-        buildClassString(alternate ? [key, alternate] : [key], []),
-      ),
-    ),
-  );
+  return name === "class"
+    ? callRuntime(
+        "_assert_class_toggles",
+        buildClassString(staticParts, []),
+        t.arrayExpression(
+          toggles.map(({ key, alternate }) =>
+            buildClassString(alternate ? [key, alternate] : [key], []),
+          ),
+        ),
+      )
+    : callRuntime(
+        "_assert_style_items",
+        t.arrayExpression(staticParts.map(toDelimitedPartExpression)),
+        t.arrayExpression(toggles.map(toToggleKeyExpression)),
+      );
+}
+
+function toToggleKeyExpression({ key }: DelimitedAttrValue) {
+  return toDelimitedPartExpression(key);
 }
 
 // Each toggle's bit, summed to index its combination.
@@ -1845,7 +1867,7 @@ function buildClassString(
   const strs: (string | t.Expression)[] = [];
   for (let i = 0; i < parts.length; i++) {
     if (i) strs.push(" ");
-    strs.push(toClassPartExpression(parts[i]));
+    strs.push(toDelimitedPartExpression(parts[i]));
   }
   for (const { key, value, alternate } of toggles) {
     strs.push(
@@ -1859,7 +1881,7 @@ function buildClassString(
   return buildStringExpression(strs) || t.stringLiteral("");
 }
 
-function toClassPartExpression(part: DelimitedAttrPart) {
+function toDelimitedPartExpression(part: DelimitedAttrPart) {
   return isLiteralPart(part)
     ? t.stringLiteral(part)
     : toModuleReadExpression(part);
@@ -1886,7 +1908,7 @@ interface DelimitedAttrMeta {
   toggles: DelimitedAttrValue[] | undefined;
 }
 
-/** A literal, or a style import read (class only). */
+/** A literal, or a module read: a style import read in a `class`, any in a `style`. */
 type DelimitedAttrPart = string | string[];
 
 interface DelimitedAttrValue {
@@ -1902,27 +1924,30 @@ const delimitedAttrStringify = {
   style: [";", stringifyStyleEntry],
 } as const;
 
-// A toggled class must not share a name with any other part, since the client adds and
-// removes it by itself; style import reads' names are checked as they render in dev.
-function assertUniqueClassToggles(
+// A name may appear in only one part, since the client writes a toggled class or a style
+// property by itself; static class names may repeat, and module reads are checked in dev.
+function assertUniqueDelimitedNames(
   tag: t.NodePath<t.MarkoTag>,
   attr: t.MarkoAttribute,
   { staticParts, toggles = [] }: DelimitedAttrMeta,
 ) {
-  const written = new Set(staticParts.flatMap(getClassNames));
-  for (const { key, alternate } of toggles) {
-    // A toggle writes its key or its alternate, never both.
-    const names = new Set([...getClassNames(key), ...getClassNames(alternate)]);
-    for (const name of names) {
-      if (written.has(name)) {
-        throw tag.hub.buildError(
-          attr,
-          `The toggled class \`${name}\` is also written by another part of the \`class\` value; a toggled [class name](https://markojs.com/docs/reference/native-tag#class) may appear only once.`,
-          Error,
-        );
-      }
-    }
-    for (const name of names) written.add(name);
+  const isClass = attr.name === "class";
+  const groups: DelimitedAttrPart[][] = isClass
+    ? [staticParts.flatMap(getClassNames)].concat(
+        toggles.map(getToggleClassNames),
+      )
+    : staticParts
+        .map<DelimitedAttrPart[]>(getStylePartProperties)
+        .concat(toggles.map(toKeyGroup));
+  const name = findRepeatedName(groups);
+  if (name !== undefined) {
+    throw tag.hub.buildError(
+      attr,
+      isClass
+        ? `The toggled class \`${name}\` is also written by another part of the \`class\` value; a toggled [class name](https://markojs.com/docs/reference/native-tag#class) may appear only once.`
+        : `The style property \`${name}\` is also written by another part of the \`style\` value; a [style property](https://markojs.com/docs/reference/native-tag#style) may appear only once in a \`style\` value.`,
+      Error,
+    );
   }
 }
 
@@ -1932,6 +1957,19 @@ function getClassNames(part: DelimitedAttrPart | undefined) {
     : isLiteralPart(part)
       ? part.split(/\s+/).filter(Boolean)
       : [part.join(".")];
+}
+
+// A toggle writes its key or its alternate, never both.
+function getToggleClassNames({ key, alternate }: DelimitedAttrValue) {
+  return getClassNames(key).concat(getClassNames(alternate));
+}
+
+function getStylePartProperties(part: DelimitedAttrPart) {
+  return isLiteralPart(part) ? getStyleProperties(part) : [];
+}
+
+function toKeyGroup({ key }: DelimitedAttrValue) {
+  return [key];
 }
 
 // A class or style value the template holds whole never needs the element.
@@ -1948,7 +1986,7 @@ function isDynamicAttr(
 }
 
 // The values the client writes one at a time, leaving the template's static part
-// (none when only the whole value can be written); a toggled class repeats no other name.
+// (none when only the whole value can be written); no item repeats another part's name.
 function getDelimitedAttrItems(
   name: "class" | "style",
   { needsWholeValue, toggles }: DelimitedAttrMeta,
@@ -1956,14 +1994,10 @@ function getDelimitedAttrItems(
   if (needsWholeValue) return;
   const items: { key: DelimitedAttrPart; value: t.Expression }[] = [];
   if (!toggles) return items;
-  const keys = new Set<string>();
   for (const { key, value, alternate } of toggles) {
     if (
       alternate !== undefined ||
-      (name === "style" &&
-        (!isLiteralPart(key) ||
-          /\s/.test(key) ||
-          keys.size === keys.add(key).size))
+      (name === "style" && (!isLiteralPart(key) || /\s/.test(key)))
     ) {
       return;
     }
@@ -2098,7 +2132,7 @@ function getDelimitedAttrKey(
   }
 }
 
-// A literal's written string (possibly empty), or a style import read (class only).
+// A literal's written string (possibly empty), or a module read (see `DelimitedAttrPart`).
 function getDelimitedAttrPart(
   tag: t.NodePath<t.MarkoTag>,
   name: "class" | "style",
@@ -2110,9 +2144,9 @@ function getDelimitedAttrPart(
     return toDelimitedString(computed, delimiter, stringify);
   }
 
-  if (name === "class") {
-    return getStyleImportRead(tag, value);
-  }
+  return name === "class"
+    ? getStyleImportRead(tag, value)
+    : getModuleRead(tag, value)?.read;
 }
 
 function addToggle(
