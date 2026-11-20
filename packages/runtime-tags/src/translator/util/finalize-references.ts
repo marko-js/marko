@@ -42,6 +42,7 @@ import {
   addReason,
   applyReasonExprs,
   getSourcesForReferencedBindings,
+  getStateSurvivingCall,
   mapParamBindingToExpr,
 } from "./reasons";
 import {
@@ -648,8 +649,8 @@ function resolveDerivedSources(binding: Binding) {
   }
 }
 
-// A tag variable reads a `<define>` body's params through its call, so it
-// takes their sources from the expressions the call passes.
+// A tag variable takes a `<define>` body's params from what its call passes, and
+// is its own source for the body's state, held by the instance that call renders.
 function mapReturnedParams(
   binding: Binding,
   sources: Sources,
@@ -665,11 +666,12 @@ function mapReturnedParams(
     );
     return false;
   });
-  if (params !== sources.param) {
-    binding.sources = mergeSources(
-      mapped,
-      withSources(sources, sources.state, params),
-    );
+  const state = getStateSurvivingCall(sources.state, section!);
+  if (state !== sources.state) {
+    mapped = mergeSources(mapped, createSources(binding, undefined));
+  }
+  if (params !== sources.param || state !== sources.state) {
+    binding.sources = mergeSources(mapped, withSources(sources, state, params));
   }
 }
 

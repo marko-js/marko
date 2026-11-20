@@ -1,0 +1,7 @@
+<let/shown=false/>
+<button onClick() { shown = !shown }>${input.depth}</button>
+<if=input.depth < 1>
+  <rec/v depth=input.depth + 1/>
+  <if=shown><em>${v}</em></if>
+</if>
+<return=shown ? "on" : "off"/>

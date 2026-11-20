@@ -1,0 +1,10 @@
+<let/shown=false/>
+<const/label=shown ? "on" : "off"/>
+<button onClick() { shown = !shown }>toggle</button>
+<define/Rec|input|>
+  <if=shown><${input.content}/></if>
+  <if=input.depth < 1>
+    <Rec depth=input.depth + 1><em>held ${label}</em></Rec>
+  </if>
+</define>
+<Rec depth=0/>

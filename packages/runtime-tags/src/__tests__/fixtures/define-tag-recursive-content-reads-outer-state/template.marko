@@ -1,0 +1,10 @@
+<define/Rec|{ depth, content }|>
+  <let/shown=false/>
+  <const/label=shown ? "on" : "off"/>
+  <button onClick() { shown = !shown }>${depth}</button>
+  <if=shown><${content}/></if>
+  <if=depth < 1>
+    <Rec depth=depth + 1><em>held ${label}</em></Rec>
+  </if>
+</define>
+<Rec depth=0/>

@@ -1,0 +1,7 @@
+<let/show=false/>
+<const/label=show ? "on" : "off"/>
+<define/Box>
+  <em>${label}</em>
+</define>
+<button onClick() { show = !show }>toggle</button>
+<${show ? Box : null}/>

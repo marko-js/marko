@@ -443,12 +443,7 @@ function readersOf(
   const linked = bindingReaders(getWalkKey(binding, path));
   return exprs && linked.reason
     ? {
-        reason: mapParamReason(
-          binding.section.program,
-          linked.reason,
-          exprs,
-          true,
-        ),
+        reason: mapParamReason(binding.section, linked.reason, exprs, true),
         lands: linked.lands,
       }
     : linked;

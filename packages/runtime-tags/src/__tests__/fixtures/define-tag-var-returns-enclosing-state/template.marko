@@ -1,0 +1,7 @@
+<let/count=0/>
+<button onClick() { count++ }>${count}</button>
+<define/Double|input|>
+  <return=count * 2/>
+</define>
+<Double/doubled/>
+<if=count><em>${doubled}</em></if>

@@ -172,7 +172,7 @@ function mergeBindingSources(sources: Sources | undefined, binding: Binding) {
 // deriving program's params (`ownParams`), or every other program's,
 // for a reason a deriving template recorded in its own terms.
 export function mapParamReason(
-  program: Section,
+  body: Section,
   reason: Sources,
   exprs: KnownExprs | undefined,
   ownParams: boolean,
@@ -180,7 +180,7 @@ export function mapParamReason(
   let mapped: Reason | undefined;
   // The params kept in their own terms: mapping one drops it.
   const params = bindingUtil.filter(reason.param, (param) => {
-    if ((param.section.program === program) !== ownParams) return true;
+    if ((param.section.program === body.program) !== ownParams) return true;
     mapped = exprs
       ? mergeSources(
           mapped,
@@ -189,14 +189,27 @@ export function mapParamReason(
       : ALWAYS;
     return false;
   });
-  // Another template's state is nothing this one tracks: it is read always.
-  const state = bindingUtil.filter(reason.state, isOwnBinding);
+  // Another template's state is nothing this one tracks, nor is the called
+  // body's past its call: each is read always.
+  const state = exprs
+    ? getStateSurvivingCall(reason.state, body)
+    : bindingUtil.filter(reason.state, isOwnBinding);
   const foreignState = state !== reason.state;
   if (params === reason.param && !foreignState) return reason;
   return mergeSources(
     mergeSources(mapped, withSources(reason, state, params)),
     foreignState ? ALWAYS : undefined,
   );
+}
+
+// State survives a call only from outside the body it renders: the body's own
+// belongs to the instance the call renders, not to any other reading it.
+export function getStateSurvivingCall(state: Sources["state"], body: Section) {
+  return bindingUtil.filter(state, isDeclaredOutside, body);
+}
+
+function isDeclaredOutside(binding: Binding, body: Section) {
+  return !isSameOrAncestorSection(body, binding.section);
 }
 
 // The call site expressions a child template's params derive from, keyed the

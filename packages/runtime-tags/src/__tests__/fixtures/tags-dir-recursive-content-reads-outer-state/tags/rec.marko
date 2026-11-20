@@ -1,0 +1,7 @@
+<let/shown=false/>
+<const/label=shown ? "on" : "off"/>
+<button onClick() { shown = !shown }>${input.depth}</button>
+<if=shown><${input.content}/></if>
+<if=input.depth < 1>
+  <rec depth=input.depth + 1><em>held ${label}</em></rec>
+</if>

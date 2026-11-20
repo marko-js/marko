@@ -1,0 +1,8 @@
+<define/Child|input|>
+  <let/x=false/>
+  <button onClick() { x = !x }>t</button>
+  <return=x ? "on" : "off"/>
+</define>
+<Child/v/>
+<Child/w/>
+<p>${v + w}</p>
