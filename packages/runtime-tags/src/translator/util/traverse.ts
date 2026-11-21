@@ -33,6 +33,25 @@ export function traverseReplace<T, K extends VisitKeys<T>, S>(
   }
 }
 
+// Whether `check` holds for one of `node`'s direct children.
+export function someChild<T extends t.Node>(
+  node: T,
+  check: (child: t.Node) => boolean,
+): boolean {
+  const keys = t.VISITOR_KEYS[node.type] as VisitKeys<T>[];
+  for (let i = 0; i < keys.length; i++) {
+    const child = node[keys[i]] as VisitValue;
+    if (Array.isArray(child)) {
+      for (let j = 0; j < child.length; j++) {
+        if (child[j] && check(child[j])) return true;
+      }
+    } else if (child && check(child)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 export function traverseContains(
   node: undefined | null | t.Node | t.Node[],
   check: (node: t.Node) => void | boolean | typeof skip,

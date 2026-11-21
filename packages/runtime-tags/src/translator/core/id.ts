@@ -14,7 +14,7 @@ import {
   assertOnlyValueAttr,
 } from "../util/assert";
 import { BindingType } from "../util/bindings";
-import evaluate from "../util/evaluate";
+import evaluate, { isConfident, isPure } from "../util/evaluate";
 import { getAccessorPrefix } from "../util/get-accessor-enums";
 import { isOutputHTML } from "../util/marko-config";
 import { setDerivedFrom, trackVarReferences } from "../util/references";
@@ -42,7 +42,7 @@ export default {
     // value its variable takes, dropped with it when unread.
     const valueNode = valueAttr ? valueAttr.value : tag.node;
     const valueExtra = (valueNode.extra ??= {});
-    valueExtra.pure = !valueAttr || evaluate(valueAttr.value).pure;
+    valueExtra.pure = !valueAttr || isPure(evaluate(valueAttr.value));
     const binding = trackVarReferences(tag, BindingType.derived);
     if (binding) {
       assertNoTagVarMutation(tag);
@@ -90,7 +90,7 @@ export default {
               // The fallback memoizes into a prefixed slot on the tag
               // variable's binding, so a nullish value cannot re-mint on
               // every recompute.
-              evaluate(value).confident
+              isConfident(evaluate(value))
                 ? id
                 : callRuntime(
                     "_id",

@@ -1,0 +1,5 @@
+import Compact from "./tags/compact.marko";
+import Full from "./tags/full.marko";
+<let/compact = true/>
+<button onClick() { compact = !compact }>toggle</button>
+<${compact && Compact || Full} label="row">Hello</>

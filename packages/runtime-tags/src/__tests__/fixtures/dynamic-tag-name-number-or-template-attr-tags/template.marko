@@ -1,0 +1,9 @@
+import List from "./tags/list.marko";
+
+<let/hidden=false/>
+<${hidden ? +hidden - 1 : List}>
+  <@item>one</@item>
+  <@item>two</@item>
+  <em>after</em>
+</>
+<button onClick() { hidden = !hidden }>toggle</button>

@@ -2,7 +2,6 @@ import { types as t } from "@marko/compiler";
 import {
   assertNoArgs,
   assertNoParams,
-  computeNode,
   diagnosticWarn,
   getFile,
   getProgram,
@@ -35,7 +34,16 @@ import { BindingType, createBinding } from "../../util/bindings";
 import { bodyToText, bodyToUncoercedText } from "../../util/body-to-text";
 import { isEndTagWrittenByBranch } from "../../util/branch-tag";
 import buildStringExpression from "../../util/build-string-expression";
-import evaluate from "../../util/evaluate";
+import evaluate, {
+  getAllKinds,
+  getKinds,
+  getValueKind,
+  isConfident,
+  KIND_FALSY,
+  KIND_FUNCTION,
+  KIND_SCALAR,
+  KIND_STRING,
+} from "../../util/evaluate";
 import {
   generateUidIdentifier,
   declareConstBefore,
@@ -301,8 +309,9 @@ export default {
           controllable &&
           controllable.stateIsAttr &&
           controllable.attrs[1] === undefined &&
-          evaluate(attributes[controllable.attrs.find(isDefined)!].value)
-            .confident
+          isConfident(
+            evaluate(attributes[controllable.attrs.find(isDefined)!].value),
+          )
         ) {
           controllable = undefined;
         }
@@ -358,7 +367,7 @@ export default {
       const typeAttr = attrAt(attributes, indexByName.type);
       if (
         valueChangeEval &&
-        !(valueChangeEval.confident && valueChangeEval.computed == null) &&
+        !(isConfident(valueChangeEval) && valueChangeEval.computed == null) &&
         getInputValueMode(typeAttr) === "attribute"
       ) {
         const type = evaluate(typeAttr!.value).computed as string;
@@ -488,9 +497,9 @@ export default {
       if (own) {
         for (const index of own) {
           const { name, value } = attributes[index] as t.MarkoAttribute;
-          const { confident, computed } = evaluate(value);
-          if (confident) {
-            write`${getStaticAttrMarkup(name, computed)}`;
+          const evaluated = evaluate(value);
+          if (isConfident(evaluated)) {
+            write`${getStaticAttrMarkup(name, evaluated.computed)}`;
           } else if (name === "class" || name === "style") {
             const meta = delimitedAttrMetas[name]!;
             const { staticParts } = meta;
@@ -581,7 +590,7 @@ export default {
           const changeAttr = attrAt(attributes, controllable?.attrs[1]);
           if (changeAttr) {
             const handler = evaluate(changeAttr.value);
-            if (!(handler.confident && handler.computed == null)) {
+            if (!(isConfident(handler) && handler.computed == null)) {
               setSectionDebugVar(
                 tagSection,
                 getPrefixedScopeAccessor(
@@ -724,7 +733,7 @@ export default {
         if (own) {
           for (const index of own) {
             const { name, value } = attributes[index] as t.MarkoAttribute;
-            const { confident, computed } = evaluate(value);
+            const evaluated = evaluate(value);
 
             if (tagName === "option" && name === "value") {
               write`${callRuntime("_attr_option_value", value)}`;
@@ -732,8 +741,8 @@ export default {
             }
 
             write`${
-              confident
-                ? getStaticAttrMarkup(name, computed)
+              isConfident(evaluated)
+                ? getStaticAttrMarkup(name, evaluated.computed)
                 : factorAttrConditional(buildAttrExpression(tag, name, value))
             }`;
           }
@@ -963,7 +972,7 @@ export default {
           for (const index of own) {
             const { name, value } = attributes[index] as t.MarkoAttribute;
             // Confident values are recorded into the template at analyze.
-            if (evaluate(value).confident) continue;
+            if (isConfident(evaluate(value))) continue;
             if (name !== "class" && name !== "style") {
               addStatement(
                 "render",
@@ -1248,7 +1257,7 @@ function getInputValueMode(typeAttr: t.MarkoAttribute | undefined) {
   }
 
   const type = evaluate(typeAttr.value);
-  if (!type.confident) {
+  if (!isConfident(type)) {
     return "dynamic" as const;
   }
 
@@ -1389,8 +1398,8 @@ function assertNativeAttrValueType(
     const { value } = attr;
     let invalid = t.isFunction(value);
     if (!invalid) {
-      const { confident, computed } = evaluate(value);
-      invalid = confident && !!computed && typeof computed !== "string";
+      const { computed } = evaluate(value);
+      invalid = !!computed && typeof computed !== "string";
     }
 
     if (invalid) {
@@ -1478,7 +1487,16 @@ function assertNativeHandlerAttr(
       Error,
     );
   }
-  if (computeNode(attr.value)?.value) {
+  const value = getValueKind(attr.value, tag);
+  const kinds = getKinds(value);
+  // With no falsy part, a string or number part is never empty or zero: a
+  // truthy value that is no function, unless another part may be one.
+  if (
+    value.computed ||
+    (kinds & (KIND_STRING | KIND_SCALAR) &&
+      !(kinds & KIND_FALSY) &&
+      !(getAllKinds(value) & KIND_FUNCTION))
+  ) {
     throw tag.hub.buildError(
       attr.value,
       `The \`${attr.name}\` ${kind} on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (\`null\`, \`undefined\`, \`false\`, \`0\`, …).`,
@@ -1587,9 +1605,9 @@ function buildAttrExpression(
     );
   }
 
-  const { confident, computed } = evaluate(value);
-  if (confident) {
-    return t.stringLiteral(getStaticAttrMarkup(name, computed));
+  const evaluated = evaluate(value);
+  if (isConfident(evaluated)) {
+    return t.stringLiteral(getStaticAttrMarkup(name, evaluated.computed));
   }
 
   switch (name) {
@@ -1666,12 +1684,12 @@ function buildLogicalAttr(name: string, value: t.Expression) {
     return;
   }
 
-  const { confident, computed } = evaluate(value.right);
-  if (!confident) {
+  const right = evaluate(value.right);
+  if (!isConfident(right)) {
     return;
   }
 
-  const attr = _attr(name, computed);
+  const attr = _attr(name, right.computed);
   const helper =
     value.operator === "&&"
       ? "_attr_and"
@@ -1690,11 +1708,11 @@ function buildLogicalAttr(name: string, value: t.Expression) {
 // operand is used once and no helper is needed (unlike `_attr`).
 function buildStyleAttrAnd(value: t.Expression) {
   if (value.type === "LogicalExpression" && value.operator === "&&") {
-    const { confident, computed } = evaluate(value.right);
-    if (confident) {
+    const right = evaluate(value.right);
+    if (isConfident(right)) {
       return t.conditionalExpression(
         value.left,
-        t.stringLiteral(getStaticAttrMarkup("style", computed)),
+        t.stringLiteral(getStaticAttrMarkup("style", right.computed)),
         t.stringLiteral(""),
       );
     }
@@ -1981,7 +1999,7 @@ function isDynamicAttr(
     (!delimitedAttrMeta ||
       delimitedAttrMeta.needsWholeValue ||
       !!delimitedAttrMeta.toggles) &&
-    !evaluate(value).confident
+    !isConfident(evaluate(value))
   );
 }
 
@@ -2098,13 +2116,13 @@ function addDelimitedAttrObject(
     }
 
     const value = prop.value as t.Expression;
-    const { confident, computed } = evaluate(value);
-    if (!confident) {
+    const evaluated = evaluate(value);
+    if (!isConfident(evaluated)) {
       addToggle(meta, key, value, undefined);
     } else if (!isLiteralPart(key)) {
-      if (computed) meta.staticParts.push(key);
+      if (evaluated.computed) meta.staticParts.push(key);
     } else {
-      const part = delimitedAttrStringify[name][1](key, computed);
+      const part = delimitedAttrStringify[name][1](key, evaluated.computed);
       if (part) meta.staticParts.push(part);
     }
   }
@@ -2120,8 +2138,9 @@ function getDelimitedAttrKey(
   }
 
   const key = prop.key as t.Expression;
-  const { confident, computed } = evaluate(key);
-  if (confident) {
+  const evaluated = evaluate(key);
+  if (isConfident(evaluated)) {
+    const { computed } = evaluated;
     return typeof computed === "string" || typeof computed === "number"
       ? computed + ""
       : undefined;
@@ -2138,10 +2157,10 @@ function getDelimitedAttrPart(
   name: "class" | "style",
   value: t.Expression,
 ): DelimitedAttrPart | undefined {
-  const { confident, computed } = evaluate(value);
-  if (confident) {
+  const evaluated = evaluate(value);
+  if (isConfident(evaluated)) {
     const [delimiter, stringify] = delimitedAttrStringify[name];
-    return toDelimitedString(computed, delimiter, stringify);
+    return toDelimitedString(evaluated.computed, delimiter, stringify);
   }
 
   return name === "class"

@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-const-no-default-value-tag-name/template.marko:1:2
+    > 1 | <const/Tag/>
+        |  ^^^^^ The [`<const>` tag](https://markojs.com/docs/reference/core-tag#const) requires a [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).
+      2 | <${Tag}/>
+      3 |

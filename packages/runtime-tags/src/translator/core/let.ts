@@ -16,7 +16,7 @@ import {
   coreTagLink,
 } from "../util/assert";
 import { BindingType, getDebugAccess, reserveId } from "../util/bindings";
-import evaluate from "../util/evaluate";
+import evaluate, { isPure } from "../util/evaluate";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { isOptimize, isOutputDOM } from "../util/marko-config";
 import { addReason } from "../util/reasons";
@@ -76,14 +76,14 @@ export default {
     ]);
 
     setDerivedFrom(binding, tagExtra);
-    tagExtra.pure = !valueAttr || evaluate(valueAttr.value).pure;
+    tagExtra.pure = !valueAttr || isPure(evaluate(valueAttr.value));
 
     if (valueChangeAttr) {
       const changeSlot = ensureSlot(binding, SlotKind.ChangeHandler);
       // The runtime reads the change handler at the value's reserved id.
       reserveId(binding, ReservedId.ChangeHandler);
       tagExtra.retained = true;
-      tagExtra.pure &&= evaluate(valueChangeAttr.value).pure;
+      tagExtra.pure &&= isPure(evaluate(valueChangeAttr.value));
       // Only an assignment to the tag variable calls the change handler, so
       // nothing reads it when nothing assigns.
       onFinalizeReferences(() => {
@@ -119,7 +119,7 @@ export default {
           // Its impure values run only for what they do, inline as an unread
           // `<const>`'s.
           for (const expr of [value, valueChange]) {
-            if (expr && !evaluate(expr).pure) {
+            if (expr && !isPure(evaluate(expr))) {
               addValue(section, tagExtra, initValue(binding), expr);
             }
           }
@@ -147,7 +147,7 @@ export default {
         translateVar(tag, value || t.buildUndefinedNode(), "let");
 
         if (unused) {
-          if (valueChange && !evaluate(valueChange).pure) {
+          if (valueChange && !isPure(evaluate(valueChange))) {
             replaceWithStatements(tag, [t.expressionStatement(valueChange)]);
           }
         } else if (valueChange) {

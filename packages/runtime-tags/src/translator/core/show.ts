@@ -14,7 +14,7 @@ import {
 } from "../util/assert";
 import type { Binding } from "../util/bindings";
 import { buildBranchEndArgs, isSingleNodeContent } from "../util/branch-tag";
-import evaluate from "../util/evaluate";
+import evaluate, { isConfident } from "../util/evaluate";
 import { declareConstBefore } from "../util/generate-uid";
 import { getParentTag } from "../util/get-parent-tag";
 import { getTagName } from "../util/get-tag-name";
@@ -70,7 +70,7 @@ export default {
       const display = tag.node.attributes[0].value;
       const displayEval = evaluate(display);
 
-      if (displayEval.confident) {
+      if (isConfident(displayEval)) {
         tagExtra[kStaticDisplay] = !!displayEval.computed;
       }
 

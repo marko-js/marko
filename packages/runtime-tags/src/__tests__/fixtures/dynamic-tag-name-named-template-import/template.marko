@@ -1,0 +1,7 @@
+import Card, { wrapper } from "./tags/card.marko";
+import SameCard from "./tags/card.marko";
+
+<Card title="default"/>
+<${wrapper} class="named">body</>
+<${input.same ? Card : SameCard} title="same file"/>
+<${input.same ? (input.other ? Card : SameCard) : Card} title="listed once"/>

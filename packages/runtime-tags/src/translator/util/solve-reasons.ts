@@ -359,11 +359,15 @@ export function getContentSites({
   binding,
   properties,
 }: NonNullable<Section["derives"]>) {
-  return reduce(
-    binding,
-    (sites, part) => joinSites(sites, getSitesAt(getWalkKey(part, properties))),
-    NO_SITES,
-  );
+  return reduce(binding, joinSitesAt, NO_SITES, properties);
+}
+
+function joinSitesAt(
+  sites: ContentSites,
+  binding: Binding,
+  properties: Opt<string>,
+) {
+  return joinSites(sites, getSitesAt(getWalkKey(binding, properties)));
 }
 
 interface ContentSites {
