@@ -5,7 +5,6 @@ import { isTranslate } from "./get-compile-stage";
 import { insertStatementBefore } from "./replace-with-statements";
 import type { Section } from "./sections";
 import { createOutputState } from "./state";
-import { traverse } from "./traverse";
 
 const kUidCounts = Symbol("uid counts");
 declare module "@marko/compiler/dist/types" {
@@ -89,15 +88,15 @@ function getInitialCounts(file: t.BabelFile) {
     }
   };
 
+  // Babel's crawl records every name read but never declared in `globals`,
+  // and every name a scope declares in `references`.
   for (const name in program.scope.globals) {
     countName(name);
   }
 
-  traverse((node, parent, grandParent) => {
-    if (node.type === "Identifier" && t.isBinding(node, parent!, grandParent)) {
-      countName(node.name);
-    }
-  }, program.node);
+  for (const name in program.scope.references) {
+    countName(name);
+  }
 
   return counts;
 }
