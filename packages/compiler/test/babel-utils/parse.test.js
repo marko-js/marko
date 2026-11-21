@@ -1,6 +1,10 @@
 import assert from "assert/strict";
 
-import { parseArgs, parseExpression } from "@marko/compiler/babel-utils";
+import {
+  parseArgs,
+  parseExpression,
+  parseTemplateLiteral,
+} from "@marko/compiler/babel-utils";
 
 // Only the source, the parser options and the metadata the line index is
 // cached on are read.
@@ -16,6 +20,13 @@ describe("compiler/babel-utils parse", () => {
     assert.equal(err.type, "MarkoParseError");
     assert.equal(err.loc, undefined);
     assert.equal(err.source, "), (1");
+  });
+
+  it("gives a template literal that fails to parse as a parse error", () => {
+    const source = { ...file, code: "${" };
+    const err = parseTemplateLiteral(source, "${", 0, 2);
+    assert.equal(err.type, "MarkoParseError");
+    assert.equal(err.source, "${");
   });
 
   it("gives a parse error without a source end no loc", () => {

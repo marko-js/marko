@@ -1,0 +1,252 @@
+import fs from "fs";
+
+import type { Config } from "@marko/compiler";
+import { pkg as rootPackage, tryResolve } from "@marko/compiler/modules";
+
+type Deps = Record<string, string> | undefined;
+interface RootPackage {
+  dependencies?: Deps;
+  peerDependencies?: Deps;
+  devDependencies?: Deps;
+}
+
+/** The defaults: every option, set for those it has a default for. */
+export type Defaults = Config &
+  Required<
+    Pick<
+      Config,
+      | "output"
+      | "runtimeId"
+      | "ast"
+      | "code"
+      | "writeVersionComment"
+      | "ignoreUnrecognizedTags"
+      | "sourceMaps"
+      | "meta"
+      | "fileSystem"
+      | "modules"
+      | "resolveVirtualDependency"
+      | "cache"
+      | "hydrateIncludeImports"
+      | "hydrateInit"
+      | "hot"
+      | "errorRecovery"
+    >
+  >;
+
+// The two runtimes that kept `translator` from being detected, if any.
+export let translatorConflict: [string, string] | undefined;
+
+const config: Defaults = {
+  // The default output mode for compiled templates
+  output: "html",
+
+  // Specifies whether this is a page or load entry point.
+  entry: undefined,
+
+  /**
+   * Provides browser asset resolution and runtime hooks for lazy loading and server entries.
+   */
+  linkAssets: undefined,
+
+  // Override the runtimeid used when calling `marko/components.init` in the `hydrate` output.
+  runtimeId: null,
+
+  /**
+   * Remove all typescript types from the output.
+   * By default, the compiler will remove types from the output if the
+   * `output` option is not `source` or `migrate`.
+   */
+  stripTypes: undefined,
+
+  // Have Marko provide the final AST in the compile result.
+  ast: false,
+
+  // Set the false to have Marko not generate the final code string, useful if just reading metadata or AST.
+  code: true,
+
+  /**
+   * Whether the version should be written to the template as a comment e.g.
+   * // Compiled using marko@x.x.x - DO NOT EDIT
+   *
+   * Implemented by the Marko 5 (class API) translator only; currently inert
+   * under the Marko 6 translator.
+   */
+  writeVersionComment: true,
+
+  /**
+   * Whether unrecognized tags should be ignored or not. This flag will
+   * be enabled by default when compiling XML.
+   *
+   * Implemented by the Marko 5 (class API) translator only; currently inert
+   * under the Marko 6 translator.
+   */
+  ignoreUnrecognizedTags: false,
+
+  /**
+   * Whether source maps should be output with the compiled templates.
+   * When `true` a `map` property will be available on the compile result.
+   * When `"inline"` the sourcemap will be inlined as a comment in the output code.
+   * When `"both"` both of the above will be used.
+   */
+  sourceMaps: false,
+
+  /**
+   * This option inlines all of the meta data in the template.
+   * You can also access this metadata via `compile(...).meta`.
+   * This API is sticking around for compatibility purposes.
+   *
+   * Implemented by the Marko 5 (class API) translator only; currently inert
+   * under the Marko 6 translator.
+   */
+  meta: false,
+
+  /**
+   * Allows configuring Marko to compile to different runtimes.
+   */
+  translator: (() => {
+    const translatorReg = /^(?:@marko\/|marko-)runtime-/;
+    const translatorInterop = "@marko/translator-interop-class-tags";
+    let translator: string | undefined;
+    const pkg = rootPackage as RootPackage | null;
+
+    if (pkg) {
+      if (
+        pkg.dependencies?.[translatorInterop] ||
+        pkg.devDependencies?.[translatorInterop]
+      ) {
+        return translatorInterop;
+      }
+
+      for (const deps of [
+        pkg.dependencies,
+        pkg.peerDependencies,
+        pkg.devDependencies,
+      ]) {
+        for (const name in deps) {
+          if (translatorReg.test(name)) {
+            if (translator && translator !== name) {
+              translatorConflict = [translator, name];
+              return;
+            }
+
+            translator = name;
+          }
+        }
+      }
+
+      // marko@5's translator compiles both APIs; the runtime-tags one rejects
+      // the Class API, so a project migrating from marko@5 keeps marko's.
+      if (translator === "@marko/runtime-tags" && dependsOnMarko5(pkg)) {
+        return "marko/translator";
+      }
+    }
+
+    if (translator) {
+      translator += "/translator";
+    }
+
+    return translator || "marko/translator";
+  })(),
+
+  /**
+   * Use a different file system object, eg webpack's CachedInputFileSystem.
+   */
+  fileSystem: fs,
+  /**
+   * By default Marko 5 outputs esm, you can optionally specify commonjs.
+   *
+   * Valid options: esm | cjs
+   */
+  modules: "esm",
+
+  /**
+   * Enables production mode optimizations if true, or not if false.
+   * If left as undefined checks for env === "production".
+   */
+  optimize: undefined,
+
+  /**
+   * If `optimize` is enabled you can provide an array of template paths which the compiler will
+   * use to generate shorter registry/template ids using incrementing ids. This can only be used
+   * if the same `optimizeKnownTemplates` are used for both server and client compilations.
+   */
+  optimizeKnownTemplates: undefined,
+
+  /**
+   * This option should be set if `hydrate` output is specified.
+   * Maps a virtual dependency to a resolved file which can be implemented
+   * for specific bundlers.
+   */
+  resolveVirtualDependency: null,
+
+  /**
+   * Compiling a Marko template may require other (used) Marko templates to compile.
+   * To prevent compiling templates more than once, most of the compilation is cached.
+   */
+  cache: new Map(),
+
+  /**
+   * A regexp or function that receives an import path that matches file types known to be client side assets.
+   */
+  hydrateIncludeImports:
+    /\.(css(\.[cm]?[jt]s)?|less|s[ac]ss|styl(us)?|p(ost)?css|sss|png|jpe?g|gif|svg|ico|webp|avif|mp4|webm|ogg|mp3|wav|flac|aac|woff2?|eot|ttf|otf)$/,
+
+  /**
+   * When compiling in hydrate mode, this option will cause the compiler to
+   * call the `marko/components.init` function to begin hydrating components.
+   *
+   * Implemented by the Marko 5 (class API) translator only; currently inert
+   * under the Marko 6 translator.
+   */
+  hydrateInit: true,
+
+  /**
+   * Set to true in order to bring in the hot module replacement runtime.
+   */
+  hot: false,
+
+  /**
+   * Wether error diagnostics should be thrown as errors
+   * before the compile result is returned.
+   *
+   * Note that the compiler can still throw errors even when true.
+   * When the errorRecovery is true, any recoverable errors will be
+   * returned in the `meta.diagnostics` property of the compile result.
+   */
+  errorRecovery: false,
+
+  // When supplied, any diagnostics which have a fix specified in the lookup will be applied to the source code.
+  applyFixes: undefined,
+};
+
+if (
+  typeof process === "object" &&
+  typeof process.env === "object" &&
+  process.env.MARKO_CONFIG
+) {
+  Object.assign(config, JSON.parse(process.env.MARKO_CONFIG));
+}
+
+export default config;
+
+/** The defaults, with what `configure()` last set over them. */
+export let globalConfig: Defaults = { ...config };
+export function configure(newConfig: Config) {
+  globalConfig = { ...config, ...newConfig } as Defaults;
+}
+
+function dependsOnMarko5(pkg: RootPackage) {
+  if (
+    !pkg.dependencies?.marko &&
+    !pkg.peerDependencies?.marko &&
+    !pkg.devDependencies?.marko
+  ) {
+    return false;
+  }
+
+  const file = tryResolve("marko/package.json");
+  return (
+    !!file && JSON.parse(fs.readFileSync(file, "utf8")).version.startsWith("5.")
+  );
+}

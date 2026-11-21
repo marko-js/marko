@@ -2,7 +2,7 @@
 type: bug
 impact: low
 effort: med
-site: packages/compiler/src/babel-utils/tags.js › resolveMarkoFile
+site: packages/compiler/src/babel-utils/tags.ts › resolveMarkoFile
 ---
 
 # Record a load through another template as the current compile's read

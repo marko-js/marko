@@ -188,6 +188,30 @@ describe("compiler/compile", () => {
     });
   });
 
+  describe("template literals the parser builds", () => {
+    const parse = (src) =>
+      compileSync(src, template, {
+        translator,
+        output: "source",
+        ast: true,
+        code: false,
+      }).ast.program.body[0];
+    const elements = ({ quasis }) =>
+      quasis.map(({ tail, value }) => ({ tail, value }));
+
+    it("mark only their last element as the tail", () => {
+      const tag = parse('<div.a class="b"/>');
+      assert.deepEqual(elements(tag.attributes[0].value), [
+        { tail: false, value: { raw: "", cooked: "" } },
+        { tail: false, value: { raw: " ", cooked: " " } },
+        { tail: true, value: { raw: "", cooked: "" } },
+      ]);
+      assert.deepEqual(elements(parse('<${"div"}/>').name), [
+        { tail: true, value: { raw: "div", cooked: "div" } },
+      ]);
+    });
+  });
+
   describe("synthetic filenames", () => {
     const missingDir = path.join(os.tmpdir(), "marko-missing-dir", "x.marko");
 

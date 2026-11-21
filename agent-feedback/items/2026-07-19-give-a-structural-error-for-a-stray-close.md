@@ -2,7 +2,7 @@
 type: dx
 impact: low
 effort: med
-site: packages/compiler/src/babel-plugin/parser.js › onError
+site: packages/compiler/src/babel-plugin/parser.ts › onError
 ---
 
 # Give a structural error for a stray close tag / unwrapped text on a concise line

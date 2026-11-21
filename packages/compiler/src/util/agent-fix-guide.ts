@@ -1,0 +1,74 @@
+import tryLoadTranslator from "./try-load-translator";
+
+const applied = Symbol("markoAgentFixGuide");
+
+interface Guided extends Error {
+  [applied]?: true;
+  label?: string;
+}
+
+// The guide an agent-facing surface should carry, or nothing for a human run.
+export function agentFixGuide(translator: unknown) {
+  return isCodingAgent() ? fixGuide(translator) : undefined;
+}
+
+export default function appendAgentFixGuide<T>(
+  error: T,
+  translator: unknown,
+): T {
+  const guided: Guided | undefined = error instanceof Error ? error : undefined;
+  if (guided && !guided[applied]) {
+    const guide = agentFixGuide(translator);
+    if (guide) {
+      // `message` is locked against Babel mutations, so redefine rather than assign.
+      guided[applied] = true;
+      Object.defineProperty(guided, "message", {
+        value: guided.message + guide,
+        enumerable: true,
+        writable: true,
+        configurable: true,
+      });
+      // Bundler plugins print `label` in place of the framed `message`.
+      if (typeof guided.label === "string") {
+        guided.label += guide;
+      }
+    }
+  }
+
+  return error;
+}
+
+// Env markers terminal coding agents set. `MARKO_AGENT_FIX_GUIDE` overrides
+// the sniff in either direction (`0` suppresses, anything else forces on).
+function isCodingAgent() {
+  if (typeof process !== "object") return false;
+  const override = process.env.MARKO_AGENT_FIX_GUIDE;
+  if (override) return override !== "0";
+  return !!(
+    process.env.CLAUDECODE ||
+    process.env.CLAUDE_CODE ||
+    process.env.CURSOR_AGENT ||
+    process.env.GEMINI_CLI ||
+    process.env.CODEX_SANDBOX ||
+    process.env.CODEX_THREAD_ID ||
+    process.env.AI_AGENT
+  );
+}
+
+// Whole-file pointer is intended; do not key this to the diagnostic
+// or add a per-error section anchor.
+function fixGuide(translator: unknown) {
+  // Only resolved specifiers expose a cheat sheet; inline objects (tests,
+  // embedders) opt out.
+  if (typeof translator !== "string") return undefined;
+
+  try {
+    const cheatsheet = tryLoadTranslator(translator)?.cheatsheet;
+    return cheatsheet
+      ? `\n\nFix guide: READ ${cheatsheet} before writing a fix.`
+      : undefined;
+  } catch {
+    // Leave the real compile error untouched if the translator can't load.
+    return undefined;
+  }
+}

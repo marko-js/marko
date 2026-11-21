@@ -2,7 +2,7 @@
 type: dx
 impact: med
 effort: med
-site: packages/compiler/src/babel-plugin/parser.js › onOpenTagEnd
+site: packages/compiler/src/babel-plugin/parser.ts › onOpenTagEnd
 ---
 
 # Diagnose a TS type argument that a tag-ending `>` split into a comparison
