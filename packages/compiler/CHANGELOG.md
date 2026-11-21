@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.43.6
+
+### Patch Changes
+
+- [#4755](https://github.com/marko-js/marko/pull/4755) [`7257bdc`](https://github.com/marko-js/marko/commit/7257bdc2e7eedc2e1f6e0bc7d53f83d997e69dbe) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Port the compiler's remaining sources to TypeScript. Compiled output and published types are unchanged; `isNativeTag` now always returns a boolean, as its type declares.
+
+- [#4755](https://github.com/marko-js/marko/pull/4755) [`7257bdc`](https://github.com/marko-js/marko/commit/7257bdc2e7eedc2e1f6e0bc7d53f83d997e69dbe) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Template literals the compiler builds (from class shorthands, interpolated tag names and `normalizeTemplateString`) mark their last element as the tail.
+
+- [#4754](https://github.com/marko-js/marko/pull/4754) [`7c37c20`](https://github.com/marko-js/marko/commit/7c37c2016b849260c683813c6f35acf2b70b7246) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Remove the unused `pluginSyntaxTypeScript` export from `@marko/compiler/internal/babel`; `pluginTransformTypeScript` still includes the syntax plugin it needs.
+
 ## 5.43.5
 
 ### Patch Changes
