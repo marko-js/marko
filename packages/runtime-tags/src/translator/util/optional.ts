@@ -408,23 +408,33 @@ export function every<T, C>(
 
 export function reduce<T, R>(
   data: Opt<T>,
-  cb: (acc: R | undefined, item: T, index: number) => R | undefined,
+  cb: (acc: R | undefined, item: T) => R | undefined,
 ): R | undefined;
 export function reduce<T, R>(
   data: Opt<T>,
-  cb: (acc: R, item: T, index: number) => R,
+  cb: (acc: R, item: T) => R,
   initial: R,
 ): R;
-export function reduce<T, R>(
+export function reduce<T, R, C>(
   data: Opt<T>,
-  cb: (acc: R | undefined, item: T, index: number) => R | undefined,
+  cb: (acc: R, item: T, context: C) => R,
+  initial: R,
+  context: C,
+): R;
+export function reduce<T, R, C>(
+  data: Opt<T>,
+  cb: (acc: R | undefined, item: T, context: C | undefined) => R | undefined,
   initial?: R,
+  context?: C,
 ): R | undefined {
-  return data !== undefined
-    ? Array.isArray(data)
-      ? data.reduce(cb, initial)
-      : cb(initial, data, 0)
-    : initial;
+  if (Array.isArray(data)) {
+    let acc = initial;
+    for (let i = 0, len = data.length; i < len; i++) {
+      acc = cb(acc, data[i], context);
+    }
+    return acc;
+  }
+  return data !== undefined ? cb(initial, data, context) : initial;
 }
 
 // `reduce` until the callback returns `undefined`, which it then returns.

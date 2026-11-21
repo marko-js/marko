@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 import { _escape, _unescaped } from "../../html/content";
-import evaluate from "./evaluate";
+import evaluate, { isConfident } from "./evaluate";
 import { ContentType, getNodeContentType } from "./sections";
 
 // A run of adjacent static text (literal `MarkoText` and confident non-void escaped
@@ -43,8 +43,10 @@ export function getPlaceholderContentType(placeholder: t.MarkoPlaceholder) {
 // What a placeholder known at compile time writes. Asking the runtime's own text
 // writers keeps these checks in lockstep with it (`""`, `NaN` and `0n` write nothing).
 export function getStaticPlaceholderText(placeholder: t.MarkoPlaceholder) {
-  const { confident, computed } = evaluate(placeholder.value);
-  if (confident) {
-    return placeholder.escape ? _escape(computed) : _unescaped(computed);
+  const evaluated = evaluate(placeholder.value);
+  if (isConfident(evaluated)) {
+    return placeholder.escape
+      ? _escape(evaluated.computed)
+      : _unescaped(evaluated.computed);
   }
 }

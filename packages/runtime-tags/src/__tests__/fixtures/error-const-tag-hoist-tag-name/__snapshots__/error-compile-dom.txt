@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-const-tag-hoist-tag-name/template.marko:3:4
+      1 | import Child from "./tags/child.marko";
+      2 |
+    > 3 | <${Tag} title="hoisted"/>
+        |    ^^^ Hoisted values must be functions. The `<const>` tag variable is not one, so it may not be hoisted as a tag name. Please move the `<const>` tag prior to any tag that it names.
+      4 | <const/Tag=Child/>
+      5 |

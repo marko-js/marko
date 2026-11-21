@@ -1,0 +1,5 @@
+import A from "./tags/a.marko";
+import B from "./tags/b.marko";
+<div><${input.tag !== B && A} label="left">${input.name}</></div>
+// Contrived: only a part computing a known value from a template reaches `joinKinds`'s `!(a & KIND_TEMPLATE)`.
+<${input.a ? A : (B ? 1 : 2)} label="alternate">Hello</>

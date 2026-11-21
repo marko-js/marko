@@ -100,6 +100,13 @@ An uncontrolled `<let>` still receives each later `value=`, but ignores it
 unless a change handler has since been set.
 _Avoid_: first value, init (for a `<let>`'s value)
 
+**Value kind**:
+What a value may be, as far as the template shows: a non-empty string, a falsy
+primitive, nullish, another primitive, a function or object written in the
+template, a template, or unknown; with which templates. An expression's is
+read from the expression, the `<const>` values it names and its imports.
+_Avoid_: type, inferred type, shape
+
 **Module read**:
 A read of an import binding (`styles.box`, `logo`) and its member names, which
 the module can evaluate once its imports load: so a template may write it into

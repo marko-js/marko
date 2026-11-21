@@ -20,7 +20,7 @@ import {
   isSingleNodeContent,
   resumeOwnerByMarkerWhenUnconditional,
 } from "../util/branch-tag";
-import evaluate from "../util/evaluate";
+import evaluate, { isConfident } from "../util/evaluate";
 import { detectForSelector, isForSelectorClosure } from "../util/for-selector";
 import { getAccessorProp } from "../util/get-accessor-enums";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
@@ -375,7 +375,7 @@ function zeroIfOmitted(arg: t.Expression | undefined) {
 }
 
 function isConstantOrOmitted(node: t.Expression | undefined) {
-  return !node || evaluate(node).confident;
+  return !node || isConfident(evaluate(node));
 }
 
 function isNumberOrOmitted(node: t.Expression | undefined, value: number) {

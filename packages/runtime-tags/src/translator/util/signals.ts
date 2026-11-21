@@ -1066,11 +1066,7 @@ function buildResumeRegisterKey(
     if (typeof referencedBindings === "string") {
       name += `*${referencedBindings}`;
     } else {
-      name = reduce(
-        referencedBindings,
-        (name, binding) => appendBindingKey(name, binding, section),
-        name,
-      );
+      name = reduce(referencedBindings, appendBindingKey, name, section);
     }
   }
   return `${section.id}${name}${type ? "/" + type : ""}`;

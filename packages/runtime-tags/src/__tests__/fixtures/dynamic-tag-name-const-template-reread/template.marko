@@ -1,0 +1,7 @@
+import A from "./tags/a.marko";
+import B from "./tags/b.marko";
+<const/Tag = A/>
+<let/x = true/>
+<button onClick() { x = !x }>toggle</button>
+<${Tag} label="first"/>
+<${x ? B : Tag} label="second">Hello</>

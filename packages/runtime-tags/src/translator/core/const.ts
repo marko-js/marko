@@ -12,7 +12,13 @@ import {
   assertOnlyValueAttr,
 } from "../util/assert";
 import { BindingType } from "../util/bindings";
-import evaluate from "../util/evaluate";
+import evaluate, {
+  getAllKinds,
+  getValueKind,
+  isNullable,
+  isPure,
+  KIND_FUNCTION,
+} from "../util/evaluate";
 import { isOutputDOM } from "../util/marko-config";
 import {
   dropNodes,
@@ -36,7 +42,7 @@ export default {
     const { valueAttr } = assertOnlyValueAttr(tag, true);
 
     const valueExtra = (valueAttr.value.extra ??= {});
-    valueExtra.pure = evaluate(valueAttr.value).pure;
+    valueExtra.pure = isPure(evaluate(valueAttr.value));
     const valueBinding = t.isIdentifier(valueAttr.value)
       ? tag.scope.getBinding(valueAttr.value.name)
       : undefined;
@@ -54,7 +60,8 @@ export default {
 
     if (binding) {
       assertNoTagVarMutation(tag);
-      if (!evaluate(valueAttr.value).nullable) binding.nullable = false;
+      assertNoHoistedTagName(tag);
+      if (!isNullable(evaluate(valueAttr.value))) binding.nullable = false;
       if (aliased) {
         // Never read as written: its parts read through the aliased binding, and
         // a pattern holding a rest is declared from it.
@@ -94,6 +101,28 @@ export default {
   },
   types: runtimeInfo.name + "/tags/const.d.marko",
 } as Tag;
+
+// A hoisted value must be a function, which `_assert_hoist` reports at run time.
+// A tag name reading one that is certainly none is reported here instead.
+function assertNoHoistedTagName(tag: t.NodePath<t.MarkoTag>) {
+  if (t.isIdentifier(tag.node.var)) {
+    const babelBinding = tag.scope.getBinding(tag.node.var.name)!;
+    for (const ref of babelBinding.referencePaths) {
+      if (
+        ref.parent.type === "MarkoTag" &&
+        ref.parent.name === ref.node &&
+        isReferenceHoisted(babelBinding.path, ref)
+      ) {
+        const kind = getValueKind(tag.node.attributes[0].value, tag);
+        if (!(getAllKinds(kind) & KIND_FUNCTION)) {
+          throw ref.buildCodeFrameError(
+            "Hoisted values must be functions. The `<const>` tag variable is not one, so it may not be hoisted as a tag name. Please move the `<const>` tag prior to any tag that it names.",
+          );
+        }
+      }
+    }
+  }
+}
 
 function getVarHint(tag: t.NodePath<t.MarkoTag>) {
   const { attributes } = tag.node;

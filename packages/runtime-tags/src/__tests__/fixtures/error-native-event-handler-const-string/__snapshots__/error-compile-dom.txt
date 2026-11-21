@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-native-event-handler-const-string/template.marko:2:17
+      1 | <const/handler="alert(1)"/>
+    > 2 | <button onClick=handler>
+        |                 ^^^^^^^ The `onClick` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).
+      3 |   Click me
+      4 | </button>
+      5 |

@@ -1,0 +1,12 @@
+import Child from "<child>";
+
+<let/count=0/>
+<${false || Child}>
+  <button onClick() { count++ }>${count}</button>
+</>
+<${0 || "section"}>
+  <span>${count}</span>
+</>
+<const/compact=(1 > 2)/>
+<const/Wrap=(compact || Child)/>
+<Wrap><em>wrapped</em></Wrap>
