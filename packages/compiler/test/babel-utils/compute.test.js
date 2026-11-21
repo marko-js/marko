@@ -1,5 +1,6 @@
 import assert from "assert/strict";
 
+import { types as t } from "@marko/compiler";
 import { computeNode } from "@marko/compiler/babel-utils";
 import { parseExpression } from "@marko/compiler/internal/babel";
 
@@ -129,6 +130,12 @@ describe("compiler/babel-utils computeNode", () => {
       assert.equal(compute("({ a() { return 1 }, b: 2 })"), undefined));
     it("an accessor is not constant", () =>
       assert.equal(compute("({ get a() { return 1 } })"), undefined));
+    // Marko parses no decorators; a plugin can still build a decorated property.
+    it("a decorated property is not constant", () => {
+      const prop = t.objectProperty(t.identifier("a"), t.numericLiteral(1));
+      prop.decorators = [t.decorator(t.identifier("d"))];
+      assert.equal(computeNode(t.objectExpression([prop])), undefined);
+    });
   });
 
   describe("array", () => {

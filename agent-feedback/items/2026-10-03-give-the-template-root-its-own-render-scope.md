@@ -2,7 +2,7 @@
 type: bug
 impact: low
 effort: high
-site: packages/compiler/src/babel-plugin/parser.js › parseMarko
+site: packages/compiler/src/babel-plugin/parser.ts › parseMarko
 ---
 
 # Give the template root its own render scope, apart from module-level statements

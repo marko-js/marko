@@ -30,9 +30,7 @@ export function buildLookup(
   onError?: (err: Error) => void,
   fileSystem: FileSystem = globalConfig.fileSystem,
 ): TaglibLookup {
-  const translator = tryLoadTranslator(requestedTranslator) as
-    | Translator
-    | undefined;
+  const translator = tryLoadTranslator(requestedTranslator);
   if (!translator || !Array.isArray(translator.taglibs)) {
     throw new Error(
       "@marko/compiler: Invalid translator provided to buildLookup(dir, translator)",

@@ -21,8 +21,8 @@ if (fs.existsSync(distDir)) {
 const bundled = /^entities(?:\/|$)/;
 
 const selfReferences: Record<string, string> = {
-  "@marko/compiler": "src/index.js",
-  "@marko/compiler/babel-utils": "src/babel-utils/index.js",
+  "@marko/compiler": "src/index.ts",
+  "@marko/compiler/babel-utils": "src/babel-utils/index.ts",
 };
 
 // @babel/core reads this version to decide whether to suggest upgrading, in the
@@ -159,10 +159,10 @@ await Promise.all([
     cwd,
     platform: "node",
     input: {
-      index: "src/index.js",
-      config: "src/config.js",
-      register: "src/register.cjs",
-      "babel-utils": "src/babel-utils/index.js",
+      index: "src/index.ts",
+      config: "src/config.ts",
+      register: "src/register.cts",
+      "babel-utils": "src/babel-utils/index.ts",
     },
     // Bare specifiers stay external, except the two self-references that are
     // themselves `src` code. Leaving those external would send a chunk back

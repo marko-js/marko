@@ -1,15 +1,12 @@
 {
   "extends": "../../tsconfig.json",
-  "include": [
-    "*.d.ts",
-    "src/taglib",
-    "src/util/fs.ts",
-    "src/util/resolve.ts",
-    "src/taglib/*.json"
-  ],
+  "include": ["*.d.ts", "src", "src/taglib/*.json", "package.json"],
   "compilerOptions": {
     "skipLibCheck": false,
     "outDir": "../../dist/compiler",
-    "tsBuildInfoFile": "../../dist/tsconfig.compiler.tsbuildinfo"
+    "tsBuildInfoFile": "../../dist/tsconfig.compiler.tsbuildinfo",
+    "paths": {
+      "@marko/compiler/internal/babel": ["./src/internal-babel.d.ts"]
+    }
   }
 }

@@ -1,0 +1,66 @@
+export {
+  assertAllowedAttributes,
+  assertAttributesOrArgs,
+  assertAttributesOrSingleArg,
+  assertNoArgs,
+  assertNoAttributes,
+  assertNoAttributeTags,
+  assertNoParams,
+  assertNoVar,
+} from "./assert";
+export { computeNode } from "./compute";
+export { decodeHTML } from "./decode-html";
+export {
+  diagnosticDeprecate,
+  diagnosticError,
+  diagnosticSuggest,
+  DiagnosticType,
+  diagnosticWarn,
+} from "./diagnostics";
+export { getFile, getProgram } from "./get-file";
+export {
+  importDefault,
+  importNamed,
+  importStar,
+  resolveRelativePath,
+} from "./imports";
+export { getEnd, getLoc, getLocRange, getStart, withLoc } from "./loc";
+export {
+  parseArgs,
+  parseBlock,
+  parseExpression,
+  parseParams,
+  parseStatements,
+  parseTemplateLiteral,
+  parseTypeArgs,
+  parseTypeParams,
+  parseVar,
+} from "./parse";
+export { getTagDefForTagName, getTaglibLookup } from "./taglib";
+export {
+  findAttributeTags,
+  findParentTag,
+  getArgOrSequence,
+  getFullyResolvedTagName,
+  getMacroIdentifier,
+  getMacroIdentifierForName,
+  getTagDef,
+  getTagTemplate,
+  getTemplateId,
+  hasMacro,
+  isAttributeTag,
+  isDynamicTag,
+  isLoopTag,
+  isMacroTag,
+  isNativeTag,
+  isTransparentTag,
+  loadFileForImport,
+  loadFileForTag,
+  registerMacro,
+  resolveTagImport,
+} from "./tags";
+export { normalizeTemplateString } from "./template-string";
+
+export function defineTag<T>(tag: T): T {
+  return tag;
+} // just used for adding types for compiler plugins.

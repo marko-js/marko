@@ -2,7 +2,7 @@
 type: unclear
 impact: med
 effort: low
-site: packages/compiler/src/config.js › config (default export) (the hot key)
+site: packages/compiler/src/config.ts › config (default export) (the hot key)
 ---
 
 # Mark the `hot` `@marko/compiler` option as Marko 5 only, or implement it for Marko 6

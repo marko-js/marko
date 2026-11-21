@@ -32,24 +32,24 @@
     "register.js",
     "register.d.ts"
   ],
-  "main": "src/index.js",
+  "main": "src/index.ts",
   "types": "index.d.ts",
   "exports": {
     ".": {
       "types": "./index.d.ts",
-      "default": "./src/index.js"
+      "default": "./src/index.ts"
     },
     "./babel-utils": {
       "types": "./babel-utils.d.ts",
-      "default": "./src/babel-utils/index.js"
+      "default": "./src/babel-utils/index.ts"
     },
     "./config": {
       "types": "./config.d.ts",
-      "default": "./src/config.js"
+      "default": "./src/config.ts"
     },
     "./register": {
       "types": "./register.d.ts",
-      "default": "./src/register.cjs"
+      "default": "./src/register.cts"
     },
     "./modules": {
       "types": "./modules.d.ts",
