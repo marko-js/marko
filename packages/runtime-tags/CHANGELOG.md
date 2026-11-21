@@ -1,5 +1,21 @@
 # @marko/runtime-tags
 
+## 6.5.2
+
+### Patch Changes
+
+- [#4741](https://github.com/marko-js/marko/pull/4741) [`74a44ad`](https://github.com/marko-js/marko/commit/74a44ad3dec6fbbf32f7ce5726b4734e16787a9d) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Explain how to act on `<let>` writes when it is given an event handler such as `onChange`, and how to bind with a fallback when `:=` is given `??` or `||`.
+
+- [#4753](https://github.com/marko-js/marko/pull/4753) [`b2b661e`](https://github.com/marko-js/marko/commit/b2b661e38aa21cba54324b73080b93accad27e47) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A `style` property may now appear only once across a `style` value. A repeat the compiler can see, such as `style=["color:blue", { color: tint }]` or `style=[{ color: a }, { color: b }]`, is a compile error, and one known only while rendering, such as an imported part that also sets `color`, throws in development. Before, the server wrote every declaration so the later one won, while the client could keep one in the template and update the other alone, so the two disagreed. Give each property one source, such as `style={ color: tint ?? "blue" }`.
+  
+  In exchange more `style` values update one property at a time: an imported part such as `style=[base, { color: tint }]` stays in the template, and only `color` updates when `tint` changes.
+
+- [#4752](https://github.com/marko-js/marko/pull/4752) [`ab416ad`](https://github.com/marko-js/marko/commit/ab416ad05adf7128622a9b5f079f9a95017d895b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix values lost on resume when a template or `<define>` renders itself, or reads the tag variables of several calls to one `<define>`: content an outer instance passes down reads the outer instance's values, and a tag variable no longer takes another instance's state for its own.
+
+- [#4750](https://github.com/marko-js/marko/pull/4750) [`0eec052`](https://github.com/marko-js/marko/commit/0eec05218b7aaa0435e925858bd4a865b9c2df2e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix dynamic tag names typed wrongly from a named import of a template or a number beside a template. A tag name that is a hoisted `<const>` whose value is certainly not a function (`<${Tag}/>` above `<const/Tag=Child/>`) no longer compiles: it read the value from outside the tag that declares it, so it rendered even where that tag did not. A native tag's event or change handler that is certainly a truthy value other than a function (`onClick=(input.x ? "a" : "b")`, `onClick=("alert" + input.y)`, or a `<const>` holding a string) no longer compiles.
+- Updated dependencies [[`7257bdc`](https://github.com/marko-js/marko/commit/7257bdc2e7eedc2e1f6e0bc7d53f83d997e69dbe), [`7257bdc`](https://github.com/marko-js/marko/commit/7257bdc2e7eedc2e1f6e0bc7d53f83d997e69dbe), [`7c37c20`](https://github.com/marko-js/marko/commit/7c37c2016b849260c683813c6f35acf2b70b7246)]:
+  - @marko/compiler@5.43.6
+
 ## 6.5.1
 
 ### Patch Changes

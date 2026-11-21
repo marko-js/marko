@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.43.1
+
+### Patch Changes
+
+- Updated dependencies [[`74a44ad`](https://github.com/marko-js/marko/commit/74a44ad3dec6fbbf32f7ce5726b4734e16787a9d), [`7257bdc`](https://github.com/marko-js/marko/commit/7257bdc2e7eedc2e1f6e0bc7d53f83d997e69dbe), [`7257bdc`](https://github.com/marko-js/marko/commit/7257bdc2e7eedc2e1f6e0bc7d53f83d997e69dbe), [`7c37c20`](https://github.com/marko-js/marko/commit/7c37c2016b849260c683813c6f35acf2b70b7246), [`b2b661e`](https://github.com/marko-js/marko/commit/b2b661e38aa21cba54324b73080b93accad27e47), [`ab416ad`](https://github.com/marko-js/marko/commit/ab416ad05adf7128622a9b5f079f9a95017d895b), [`0eec052`](https://github.com/marko-js/marko/commit/0eec05218b7aaa0435e925858bd4a865b9c2df2e)]:
+  - @marko/runtime-tags@6.5.2
+  - @marko/compiler@5.43.6
+
 ## 5.43.0
 
 ### Minor Changes
