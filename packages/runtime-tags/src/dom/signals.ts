@@ -49,6 +49,12 @@ export function _let<T>(id: EncodedAccessor, fn?: SignalFn) {
   return (scope: Scope, value: T) => {
     if (rendering) {
       if (scope[AccessorProp.Gen] === runId) {
+        // Its initial value sets it once, as its scope first renders.
+        if (MARKO_DEBUG && valueAccessor in scope) {
+          throw new Error(
+            `\`${valueAccessor}\` is a [tag variable](https://markojs.com/docs/reference/language#tag-variables) and can only be assigned within a script or event handler, not while rendering.`,
+          );
+        }
         scope[valueAccessor] = value;
         fn?.(scope);
       }

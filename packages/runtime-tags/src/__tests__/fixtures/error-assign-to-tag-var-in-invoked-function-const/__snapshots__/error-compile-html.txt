@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-assign-to-tag-var-in-invoked-function-const/template.marko:2:20
+      1 | <let/count=0/>
+    > 2 | <const/next=(() => count++)()/>
+        |                    ^^^^^ `count` is a tag variable and can only be assigned within a script or function, not one invoked while rendering.
+      3 | <div>${next}</div>
+      4 |

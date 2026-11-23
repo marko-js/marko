@@ -1,0 +1,6 @@
+<let/a=0/>
+<let/b=0/>
+<div title=(() => {
+  ({ x: [a, b = 2] } = { x: [1] });
+  return a + b;
+})()/>

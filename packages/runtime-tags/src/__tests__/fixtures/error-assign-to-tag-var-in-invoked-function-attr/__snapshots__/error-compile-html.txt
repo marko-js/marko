@@ -1,0 +1,18 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-assign-to-tag-var-in-invoked-function-attr/template.marko:4:4
+      2 | <let/b=0/>
+      3 | <div title=(() => {
+    > 4 |   ({ x: [a, b = 2] } = { x: [1] });
+        |    ^^^^^^^^^^^^^^^^^ `a` is a tag variable and can only be assigned within a script or function, not one invoked while rendering.
+      5 |   return a + b;
+      6 | })()/>
+      7 |
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-assign-to-tag-var-in-invoked-function-attr/template.marko:4:4
+      2 | <let/b=0/>
+      3 | <div title=(() => {
+    > 4 |   ({ x: [a, b = 2] } = { x: [1] });
+        |    ^^^^^^^^^^^^^^^^^ `b` is a tag variable and can only be assigned within a script or function, not one invoked while rendering.
+      5 |   return a + b;
+      6 | })()/>
+      7 |

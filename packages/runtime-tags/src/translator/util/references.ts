@@ -509,9 +509,14 @@ function trackAssignment(
   binding: Binding,
 ) {
   const fnParent = getFnParent(assignment);
-  if (!fnParent) {
+  // A function invoked where it is written runs as the code around it does.
+  let runsAs = fnParent;
+  while (runsAs && isInvokedFunction(runsAs)) {
+    runsAs = getFnParent(runsAs.parentPath);
+  }
+  if (!runsAs) {
     throw assignment.buildCodeFrameError(
-      `\`${binding.name}\` is a tag ${binding.type === BindingType.param ? "parameter" : "variable"} and can only be assigned within a script or function.`,
+      `\`${binding.name}\` is a tag ${binding.type === BindingType.param ? "parameter" : "variable"} and can only be assigned within a script or function${fnParent ? ", not one invoked while rendering" : ""}.`,
     );
   }
 
@@ -526,7 +531,7 @@ function trackAssignment(
   // A name for a value another declares (`b` of `{ a: b }` beside `{ a }`) is
   // read as that one, so assigning it assigns that one.
   const assigned = binding.canonical;
-  const fnRoot = getFnRoot(fnParent);
+  const fnRoot = getFnRoot(runsAs);
   const fnExtra =
     fnRoot && ((fnRoot.node.extra ??= {}) as ReferencedFunctionExtra);
   const section = ensureSection(assignment);
