@@ -76,6 +76,7 @@ import {
 import { replaceWithStatements } from "../../util/replace-with-statements";
 import {
   absentArg,
+  callDebugRuntime,
   callRuntime,
   importRuntime,
   importRuntimeFeature,
@@ -1828,7 +1829,6 @@ function buildDelimitedAttrAssert(
   { staticParts, toggles }: DelimitedAttrMeta,
 ) {
   if (
-    isOptimize() ||
     !toggles ||
     (staticParts.every(isLiteralPart) && toggles.every(isLiteralToggle))
   ) {
@@ -1836,7 +1836,7 @@ function buildDelimitedAttrAssert(
   }
 
   return name === "class"
-    ? callRuntime(
+    ? callDebugRuntime(
         "_assert_class_toggles",
         buildClassString(staticParts, []),
         t.arrayExpression(
@@ -1845,7 +1845,7 @@ function buildDelimitedAttrAssert(
           ),
         ),
       )
-    : callRuntime(
+    : callDebugRuntime(
         "_assert_style_items",
         t.arrayExpression(staticParts.map(toDelimitedPartExpression)),
         t.arrayExpression(toggles.map(toToggleKeyExpression)),

@@ -526,7 +526,7 @@ async function buildRuntime(kind: "dom" | "html", optimize: boolean) {
 
   const srcDir = path.join(import.meta.dirname, "../..");
   const input: Record<string, string> = {
-    runtime: path.join(srcDir, `${kind}.ts`),
+    runtime: path.join(srcDir, optimize ? `${kind}.ts` : `debug/${kind}.ts`),
   };
   for (const file of fs.readdirSync(path.join(srcDir, kind))) {
     if (file.endsWith(featExt)) {

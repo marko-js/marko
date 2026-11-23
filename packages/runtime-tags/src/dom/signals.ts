@@ -419,7 +419,7 @@ export function _script(id: string, fn: (scope: Scope) => void) {
 
 // Emitted only for a debug build, around a client-reactive `$global` read.
 export function _global_read($global: Record<string, unknown>, key: string) {
-  if (MARKO_DEBUG && !(key in $global)) {
+  if (!(key in $global)) {
     console.error(
       `\`$global.${key}\` is not serialized to the client, so this read is \`undefined\`. Serialized globals are embedded in the page: add \`${key}\` to \`serializedGlobals\` at the render call only if it holds no secrets; otherwise copy the field the client needs into its own \`$global\` key and serialize that.`,
     );

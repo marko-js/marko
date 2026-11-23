@@ -55,7 +55,12 @@ import {
   insertStatementBefore,
   replaceWithStatements,
 } from "./replace-with-statements";
-import { callRuntime, registerRuntimeValue, trimFalsyArgs } from "./runtime";
+import {
+  callDebugRuntime,
+  callRuntime,
+  registerRuntimeValue,
+  trimFalsyArgs,
+} from "./runtime";
 import {
   getClosureAccessorLiteral,
   getLocalsScopeAccessor,
@@ -716,7 +721,6 @@ export function buildSignalFn(signal: Signal): t.Expression {
   const isIntersection = Array.isArray(binding);
   const isBinding = binding && !isIntersection;
   const isValue = isBinding && binding.section === section;
-  const assertsHoists = isValue && binding.hoists && !isOptimize();
   const paramArgs =
     isValue &&
     binding.propertyAliases &&
@@ -755,13 +759,10 @@ export function buildSignalFn(signal: Signal): t.Expression {
       pushMemberForwards(signal, createScopeReadExpression(binding), binding);
     }
 
-    if (assertsHoists) {
-      signal.render.push(
-        t.expressionStatement(
-          callRuntime("_assert_hoist", createScopeReadExpression(binding)),
-        ),
-      );
-    }
+    const assertHoist =
+      binding.hoists &&
+      callDebugRuntime("_assert_hoist", createScopeReadExpression(binding));
+    if (assertHoist) signal.render.push(t.expressionStatement(assertHoist));
   }
 
   for (const value of signal.values) {
@@ -1602,9 +1603,7 @@ export function writeHTMLResumeStatements(
     );
   }
 
-  if (debug) {
-    forEach(section.bindings, pushAssertHoist, body);
-  }
+  forEach(section.bindings, pushAssertHoist, body);
 
   const returnIdentifier = getSectionReturnValueIdentifier(section);
   if (returnIdentifier !== undefined) {
@@ -1617,13 +1616,11 @@ function isAlwaysWritten(reason: Reason, section: Section) {
 }
 
 function pushAssertHoist(binding: Binding, body: t.Statement[]) {
-  if (binding.hoists && binding.type !== BindingType.dom) {
-    body.push(
-      t.expressionStatement(
-        callRuntime("_assert_hoist", t.identifier(binding.name)),
-      ),
-    );
-  }
+  const assertHoist =
+    binding.hoists &&
+    binding.type !== BindingType.dom &&
+    callDebugRuntime("_assert_hoist", t.identifier(binding.name));
+  if (assertHoist) body.push(t.expressionStatement(assertHoist));
 }
 
 export function getSetup(section: Section) {
@@ -1658,9 +1655,7 @@ function replaceBindingReadNode(node: t.Node, signal?: Signal) {
 
         if (binding.type === BindingType.dom && !getter) {
           const replacement = createScopeReadExpression(binding, extra.section);
-          return isOptimize()
-            ? replacement
-            : callRuntime("_el_read", replacement);
+          return callDebugRuntime("_el_read", replacement) || replacement;
         } else if (getter?.hoisted) {
           node.callee = t.callExpression(
             getBindingGetterIdentifier(binding, getter.hoisted),

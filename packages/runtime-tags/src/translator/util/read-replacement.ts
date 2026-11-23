@@ -3,14 +3,14 @@ import { types as t } from "@marko/compiler";
 import { type Binding, BindingType, getAliasRoot } from "./bindings";
 import { getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
-import { isOptimize, isOutputDOM } from "./marko-config";
+import { isOutputDOM } from "./marko-config";
 import { reduce, size } from "./optional";
 import {
   getReferencedBindings,
   isRegisteredFnExtra,
   type ResolvedRead,
 } from "./references";
-import { callRuntime } from "./runtime";
+import { callDebugRuntime, callRuntime } from "./runtime";
 import {
   getLocalsScopeAccessor,
   getScopeAccessorLiteral,
@@ -35,7 +35,6 @@ export function getReadReplacement(
 ) {
   if (
     isOutputDOM() &&
-    !isOptimize() &&
     node.type === "MemberExpression" &&
     !node.computed &&
     node.property.type === "Identifier" &&
@@ -44,11 +43,12 @@ export function getReadReplacement(
   ) {
     // A debug build checks each `$global` key a signal reads, since a signal
     // re-runs against the resumed globals, which hold only serialized keys.
-    return callRuntime(
+    const globalRead = callDebugRuntime(
       "_global_read",
       node.object,
       t.stringLiteral(node.property.name),
     );
+    if (globalRead) return globalRead;
   }
 
   const { extra } = node;
@@ -119,9 +119,10 @@ function getDOMReadBase(
   }
 
   if (getter?.hoisted) {
-    // Alias getters are never declared on section.bindings.
+    // Alias getters are never declared on section.bindings, so debug throws
+    // where the optimized build reads `undefined`.
     return binding.aliasOf
-      ? callRuntime("_hoist_read_error")
+      ? callDebugRuntime("_hoist_read_error") || t.buildUndefinedNode()
       : t.callExpression(getBindingGetterIdentifier(binding, getter.hoisted), [
           getScopeExpression(section, getter.hoisted),
         ]);
@@ -136,15 +137,16 @@ function getDOMReadBase(
     );
   }
 
-  if (!isOptimize() && read.inOwnBody && isChildReturnVar(binding)) {
-    return callRuntime(
-      "_assert_init",
-      getScopeExpression(section, binding.section),
-      getScopeAccessorLiteral(binding),
-    );
-  }
-
-  return createScopeReadExpression(binding, section);
+  return (
+    (read.inOwnBody &&
+      isChildReturnVar(binding) &&
+      callDebugRuntime(
+        "_assert_init",
+        getScopeExpression(section, binding.section),
+        getScopeAccessorLiteral(binding),
+      )) ||
+    createScopeReadExpression(binding, section)
+  );
 }
 
 // Only a child's `<return>` sets a tag variable after its body may render.

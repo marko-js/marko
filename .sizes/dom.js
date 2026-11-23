@@ -1,4 +1,4 @@
-// size: 25893 (min) 9651 (brotli)
+// size: 25721 (min) 9626 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -372,10 +372,6 @@ function withBranches(runtime) {
 function withDynamicHtml(runtime) {
   return ((dynamicHtmlEnabled = 1), runtime);
 }
-function _assert_class_toggles(classes, toggles) {}
-function _assert_style_items(parts, items) {}
-function _hoist_read_error() {}
-function _assert_hoist(value) {}
 function forIn(obj, cb) {
   for (let key in obj) cb(key, obj[key]);
 }
@@ -523,9 +519,6 @@ function createScope($global, closestBranch) {
 }
 function syncGen(scope) {
   scope.H = runId;
-}
-function _assert_init(scope, accessor) {
-  return scope[accessor];
 }
 function collectScopes(fn) {
   let prev = collectingScopes;
@@ -745,12 +738,6 @@ function _id(scope, accessor) {
 }
 function _script(id, fn) {
   return ((_resumed[id] = fn), (scope) => queueEffect(scope, fn));
-}
-function _global_read($global, key) {
-  return $global[key];
-}
-function _el_read(value) {
-  return value;
 }
 function* traverse(scope, path, args, i = path.length - 1) {
   if (scope) {
@@ -1124,9 +1111,6 @@ function createAndSetupBranch($global, renderer, parentScope, parentNode) {
 }
 function setupBranch(renderer, branch) {
   return (renderer.c?.(branch), branch);
-}
-function _return_setup(setup) {
-  return setup;
 }
 function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
   ((walks = walks ? walks.replace(/[^\0-1]+$/, "") : ""),

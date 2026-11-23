@@ -92,9 +92,7 @@ export function setupBranch(renderer: Renderer, branch: BranchScope) {
 export function _return_setup<
   T extends ((...args: any[]) => unknown) & ReturnMark,
 >(setup: T) {
-  if (MARKO_DEBUG) {
-    setup[RendererProp.Returns] = 1;
-  }
+  setup[RendererProp.Returns] = 1;
   return setup;
 }
 

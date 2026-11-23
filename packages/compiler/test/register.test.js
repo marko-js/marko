@@ -18,7 +18,10 @@ const run = (env) =>
 
 describe("compiler/register", () => {
   it("compiles templates required through the hook", () => {
-    assert.equal(run(), "<div>hello world</div><p>second 2</p>");
+    assert.equal(
+      run(),
+      "<div>hello world</div><p>second 2</p><p style=width:1px;color:red></p>",
+    );
   });
 
   it("maps a stack back to the template it came from", () => {
@@ -28,7 +31,7 @@ describe("compiler/register", () => {
   it("compiles with source maps off", () => {
     assert.equal(
       run({ NODE_ENV: "production" }),
-      "<div>hello world</div><p>second 2</p>",
+      "<div>hello world</div><p>second 2</p><p style=width:1px;color:red></p>",
     );
   });
 });
