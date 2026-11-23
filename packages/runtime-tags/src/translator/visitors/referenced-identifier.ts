@@ -11,17 +11,19 @@ import {
 import { callRuntime, importRuntime } from "../util/runtime";
 import { scopeIdentifier } from "../util/scope-read";
 import { ensureSection, getSection } from "../util/sections";
-import { addStatement } from "../util/signals";
-import { createOutputSectionState } from "../util/state";
+import { addAbortReset } from "../util/signals";
 import type { TemplateVisitor } from "../util/visitors";
 
 const kAbortId = Symbol("abort id");
 const kAbortCleanupOnly = Symbol("abort cleanup only");
+const kAbortReset = Symbol("abort reset");
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     /** `$signal` abort id for this expression root, allocated in analyze
      * (see below) so every translate reads the same id. */
     [kAbortId]?: number;
+    /** The `$signal` read that allocated its root's abort id resets it. */
+    [kAbortReset]?: true;
     /** Its every `$signal` only sets `onabort`, so it needs no controller. */
     [kAbortCleanupOnly]?: boolean;
   }
@@ -31,13 +33,7 @@ declare module "@marko/compiler/dist/types" {
 // output/entry compile addresses the same resumed scopes with
 // `$signal(scope, id)`). Analyze runs once per cached file and stamps
 // each id on its expression root's extra, so translates are REQUIRED to
-// agree by construction — they read, never allocate. The only
-// per-translate state is which roots already emitted their `$signalReset`
-// in the output being built (`createOutputSectionState`; each translate works
-// on a fresh AST clone).
-const [getAbortResetEmitted] = createOutputSectionState<Set<t.NodeExtra>>(
-  () => new Set<t.NodeExtra>(),
-);
+// agree by construction — they read, never allocate.
 
 export default {
   analyze(identifier) {
@@ -59,7 +55,10 @@ export default {
       section.hasAbortSignal = true;
       // Stamped on the raw (not canonical) extra: ids stay one-per-root
       // even if this extra later merges with another expression's.
-      rootExtra[kAbortId] ??= section.abortSignalExprs++;
+      if (rootExtra[kAbortId] === undefined) {
+        rootExtra[kAbortId] = section.abortSignalExprs++;
+        identifier.node.extra[kAbortReset] = true;
+      }
       rootExtra[kAbortCleanupOnly] =
         (rootExtra[kAbortCleanupOnly] ?? true) &&
         isOnabortStatement(identifier);
@@ -76,21 +75,9 @@ export default {
       // A dropped expression is never emitted, so it needs no signal or reset.
       if (canonicalExtra.dropped) return;
 
-      const section = getSection(identifier);
       const exprId = exprRoot[kAbortId]!;
-      const resetEmitted = getAbortResetEmitted(section);
-
-      if (!resetEmitted.has(exprRoot)) {
-        resetEmitted.add(exprRoot);
-        addStatement(
-          "render",
-          section,
-          canonicalExtra,
-          t.callExpression(importRuntime("$signalReset"), [
-            scopeIdentifier,
-            t.numericLiteral(exprId),
-          ]),
-        );
+      if (identifier.node.extra![kAbortReset]) {
+        addAbortReset(getSection(identifier), canonicalExtra, exprId);
       }
 
       if (exprRoot[kAbortCleanupOnly]) {
