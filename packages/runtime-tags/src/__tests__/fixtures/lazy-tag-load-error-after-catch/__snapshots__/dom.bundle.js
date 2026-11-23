@@ -1,5 +1,6 @@
 // template.marko
-let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ (/* @__PURE__ */ _load_event_trigger("click", "#load"))(($_) => import("./v:child.marko.setup.mjs")));
+const $load_Child_trigger = /*@__PURE__*/ _load_event_trigger("click", "#load");
+let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.setup.mjs")));
 const $await_content__$params = ($scope, value) => _text($scope.a, value);
 const $await_content = /*@__PURE__*/ _await_content(2, " ", " ");
 const $if_content__await_promise = /*@__PURE__*/ _await_promise(2, $await_content__$params);

@@ -12,7 +12,6 @@ import {
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
 
-import type { LoadTrigger } from "../../../html/assets";
 import { BindingType, createBinding } from "../../util/bindings";
 import {
   generateUidIdentifier,
@@ -46,16 +45,18 @@ import {
 import { addStatement, getSignal } from "../../util/signals";
 import { createOutputState } from "../../util/state";
 import * as structure from "../../util/structure";
-import type { LoadImportConfig } from "../../util/tag-import";
 import { getTagRelativePath, tagNotFoundError } from "../../util/tag-name-type";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as writer from "../../util/writer";
-import { ensureHtmlLoadWrapped } from "../import-declaration";
+import {
+  applyLoadTrigger,
+  ensureHtmlLoadWrapped,
+  getLoadTriggers,
+} from "../import-declaration";
 
-// Caches the trigger and attr signal declarations for a load import so they
-// are shared by all tags in a template using that import.
+// Caches the attr signal and setup declarations for a load import so they are
+// shared by all tags in a template using that import.
 const [getLoadIdentifiers] = createOutputState(() => ({
-  triggers: new Map<LoadImportConfig, t.Identifier>(),
   signals: new Map<string, t.Identifier>(),
   setups: new Map<string, t.Identifier>(),
 }));
@@ -185,20 +186,9 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
 
   if (loadConfig) {
     const childFileName = childFile.opts.filename;
-    const { triggers, signals, setups } = getLoadIdentifiers();
-    let triggerIdent = triggers.get(loadConfig);
-    if (!triggerIdent) {
-      const triggerExpr = loadTriggersToExpression(loadConfig);
-      if (triggerExpr) {
-        triggerIdent = generateUidIdentifier(`load_${tagName}_trigger`);
-        triggers.set(loadConfig, triggerIdent);
-        getProgram().node.body.push(
-          t.variableDeclaration("const", [
-            t.variableDeclarator(triggerIdent, triggerExpr),
-          ]),
-        );
-      }
-    }
+    const { signals, setups } = getLoadIdentifiers();
+    // The import declared it, as it is above every use.
+    const triggerIdent = getLoadTriggers().get(loadConfig);
 
     knownTagTranslateDOM(
       tag,
@@ -327,18 +317,7 @@ function createLoadIdentifier(
     t.variableDeclaration("let", [
       t.variableDeclarator(
         id,
-        callRuntime(
-          runtime,
-          // Applying a trigger only wraps the load, so it is pure: a load no
-          // signal reads still drops. Not a runtime helper call.
-          trigger
-            ? t.addComment(
-                t.callExpression(trigger, [load]),
-                "leading",
-                "@__PURE__",
-              )
-            : load,
-        ),
+        callRuntime(runtime, applyLoadTrigger(trigger, load)),
       ),
     ]),
   );
@@ -367,46 +346,6 @@ function buildLoadSignalVirtualModule(
     virtualPath: `${resolveRelativePath(file, childFileName)}.${childBinding}.js`,
     code: `export { ${childExport} as _ } from "./${path.basename(childFileName)}"`,
   });
-}
-
-function loadTriggersToExpression(loadConfig: LoadImportConfig) {
-  if (loadConfig.render) return;
-
-  const triggers = loadConfig.triggers.map(toDOMTriggerExpression);
-  return triggers.length === 1
-    ? triggers[0]
-    : callRuntime("_load_race_trigger", ...triggers);
-}
-
-function toDOMTriggerExpression(trigger: LoadTrigger) {
-  switch (trigger.type) {
-    case "visible":
-      return callRuntime(
-        "_load_visible_trigger",
-        t.stringLiteral(trigger.selector),
-        optionalValueToNode(trigger.options),
-      );
-    case "idle":
-      return callRuntime(
-        "_load_idle_trigger",
-        optionalValueToNode(trigger.options),
-      );
-    case "media":
-      return callRuntime(
-        "_load_media_trigger",
-        t.stringLiteral(trigger.selector),
-      );
-    default:
-      return callRuntime(
-        "_load_event_trigger",
-        t.stringLiteral(trigger.type.slice("on-".length)),
-        t.stringLiteral(trigger.selector),
-      );
-  }
-}
-
-function optionalValueToNode(value: unknown) {
-  return value ? t.valueToNode(value) : undefined;
 }
 
 // A name the template's own import binds, which HTML calls it by.
