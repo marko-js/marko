@@ -24,8 +24,8 @@ LOG "loaded catch"
 # Update
 ```js
 document.defaultView.console.log(
-document.querySelectorAll('script[src="child.marko.load.mjs"]').length,
-  );
+  document.querySelectorAll('script[src="child.marko.load.mjs"]').length,
+);
 ```
 ## Console
 ```
