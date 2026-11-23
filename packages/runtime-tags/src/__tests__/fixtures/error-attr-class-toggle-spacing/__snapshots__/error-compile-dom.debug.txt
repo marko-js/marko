@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-attr-class-toggle-spacing/template.marko:1:12
+    > 1 | <div class=["d", { "j  k": input.on }]/>
+        |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^ The toggled class `"j  k"` must separate its [class names](https://markojs.com/docs/reference/native-tag#class) with single spaces.
+      2 |

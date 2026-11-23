@@ -13,6 +13,7 @@ import {
   lowercaseOnAttrReg,
 } from "../../../common/errors";
 import {
+  classNamesReg,
   findRepeatedName,
   getEventType,
   getStyleProperties,
@@ -270,6 +271,9 @@ export default {
             delimitedAttrMeta = delimitedAttrMetas[attr.name] =
               getDelimitedAttrMeta(tag, attr.name, attr.value);
             assertUniqueDelimitedNames(tag, attr, delimitedAttrMeta);
+            if (attr.name === "class") {
+              assertToggledClassNames(tag, attr, delimitedAttrMeta);
+            }
           }
 
           if (isEventHandlerAttr) {
@@ -1966,6 +1970,27 @@ function assertUniqueDelimitedNames(
         : `The style property \`${name}\` is also written by another part of the \`style\` value; a [style property](https://markojs.com/docs/reference/native-tag#style) may appear only once in a \`style\` value.`,
       Error,
     );
+  }
+}
+
+// The client toggles a class written by itself name by name, split on single spaces.
+function assertToggledClassNames(
+  tag: t.NodePath<t.MarkoTag>,
+  attr: t.MarkoAttribute,
+  { toggles = [] }: DelimitedAttrMeta,
+) {
+  for (const { key, alternate } of toggles) {
+    if (
+      alternate === undefined &&
+      isLiteralPart(key) &&
+      !classNamesReg.test(key)
+    ) {
+      throw tag.hub.buildError(
+        attr.value,
+        `The toggled class \`${JSON.stringify(key)}\` must separate its [class names](https://markojs.com/docs/reference/native-tag#class) with single spaces.`,
+        Error,
+      );
+    }
   }
 }
 

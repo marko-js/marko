@@ -1,6 +1,7 @@
 import { RendererProp } from "./accessor.debug";
 import { isAttrTag } from "./attr-tag";
 import {
+  classNamesReg,
   findRepeatedName,
   getStyleProperties,
   getWrongAttrSuggestion,
@@ -47,6 +48,15 @@ export function _assert_class_toggles(classes: string, toggles: string[]) {
   }
 }
 
+// A style import read the client toggles holds names one space apart.
+export function assertToggledClassNames(names: string) {
+  if (!classNamesReg.test(names)) {
+    throw new Error(
+      `The toggled class ${JSON.stringify(names)} read from a style import must separate its class names with single spaces.`,
+    );
+  }
+}
+
 // A style item must not share a property with any other part of its value, since the
 // client sets it by itself; module reads' properties are only known here.
 export function _assert_style_items(parts: unknown[], items: string[]) {
@@ -61,7 +71,7 @@ export function _assert_style_items(parts: unknown[], items: string[]) {
 }
 
 function splitClassNames(classes: string) {
-  return classes.split(" ");
+  return classes.split(/\s+/).filter(Boolean);
 }
 
 function getStylePartProperties(part: unknown) {
