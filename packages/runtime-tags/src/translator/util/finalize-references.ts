@@ -862,16 +862,17 @@ function addBindingGetter(
   read: Read,
   expr: ReferencedExtra,
 ) {
-  const written = !invoked && !(hoisted && isClientOnlyRead(read, expr));
   const getters = (binding.getters ??= new Map());
-  if (written || !getters.has(hoisted)) {
-    if (hoisted === binding.section) {
-      getters.delete(false);
-    }
-    if (hoisted || !getters.has(binding.section)) {
-      getters.set(hoisted, written);
-    }
+  let written = !invoked && !(hoisted && isClientOnlyRead(read, expr));
+  let key = hoisted;
+  // A getter in its own section serves its reads in place too.
+  if (hoisted === binding.section) {
+    written ||= !!getters.get(false);
+    getters.delete(false);
+  } else if (!hoisted && getters.has(binding.section)) {
+    key = binding.section;
   }
+  getters.set(key, written || !!getters.get(key));
 }
 
 // The server never runs an effect it does not send (a handler, a script), nor
