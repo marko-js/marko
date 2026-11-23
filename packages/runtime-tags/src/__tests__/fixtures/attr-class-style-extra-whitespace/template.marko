@@ -1,0 +1,7 @@
+import * as styles from "./styles.css.ts";
+<let/on=false/>
+<button onClick() { on = !on }>toggle</button>
+<div class=["a  b ", on ? styles.on : " d  e "]/>
+<div class=["f", on ? "g  h" : "i"]/>
+<div class=[styles.item, { [styles.pair]: on }]/>
+<div style={ "color ": on && "red" }/>

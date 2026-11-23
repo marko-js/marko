@@ -1,4 +1,4 @@
-// size: 25721 (min) 9626 (brotli)
+// size: 25748 (min) 9617 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -1192,12 +1192,11 @@ function _attr_class_item(element, name, value) {
   element.classList.toggle(name, !!value);
 }
 function _attr_class_names(element, names, value) {
-  let start = 0,
-    end;
-  do
-    ((end = names.indexOf(" ", start)),
-      element.classList.toggle(names.slice(start, end >>> 0), !!value));
-  while ((start = end + 1));
+  names.includes(" ")
+    ? value
+      ? element.classList.add(...names.split(" "))
+      : element.classList.remove(...names.split(" "))
+    : element.classList.toggle(names, !!value);
 }
 function _attr_style(element, value) {
   setAttribute(element, "style", toDelimitedString(value, ";", stringifyStyleEntry) || void 0);

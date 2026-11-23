@@ -2,6 +2,8 @@ import { RendererProp } from "./accessor.debug";
 
 export const invalidNativeAttrNameReg = /^[^a-z_]|[^a-z0-9._:-]/i;
 export const invalidAttrNameReg = /^[^a-z_$]|[^a-z0-9._:-]/i;
+// Class names one space apart, as the client splits a toggled class.
+export const classNamesReg = /^\S+(?: \S+)*$/;
 const knownWrongAttrs: Record<string, string> = {
   className: "class",
   classList: "class",

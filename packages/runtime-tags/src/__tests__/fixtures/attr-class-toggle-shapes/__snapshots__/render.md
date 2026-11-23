@@ -48,7 +48,6 @@ UPDATE: .c.d[class] "c" => "c d"
 UPDATE: .e[class] null => "e"
 UPDATE: .f.g[class] "f h" => "f g"
 UPDATE: .i.j.k[class] "i" => "i j k"
-UPDATE: .i.j.k[class] "i j" => "i j k"
 ```
 
 # Update
@@ -81,5 +80,4 @@ UPDATE: .c[class] "c d" => "c"
 UPDATE: div:nth-of-type(2)[class] "e" => ""
 UPDATE: .f.h[class] "f g" => "f h"
 UPDATE: .i[class] "i j k" => "i"
-UPDATE: .i[class] "i k" => "i"
 ```

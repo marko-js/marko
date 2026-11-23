@@ -1,5 +1,6 @@
 import {
   assertExclusiveAttrs,
+  assertToggledClassNames,
   assertValidAttrName,
   assertValidAttrValue,
   assertValidContent,
@@ -93,18 +94,22 @@ export function _attr_class_item(
   element.classList.toggle(name, !!value);
 }
 
-// A style import's class can hold several space separated names.
+// A style import's class or a key can hold several names, one space apart.
 export function _attr_class_names(
   element: Element,
   names: string,
   value: unknown,
 ) {
-  let start = 0;
-  let end;
-  do {
-    end = names.indexOf(" ", start);
-    element.classList.toggle(names.slice(start, end >>> 0), !!value);
-  } while ((start = end + 1));
+  if (MARKO_DEBUG) {
+    assertToggledClassNames(names);
+  }
+  if (!names.includes(" ")) {
+    element.classList.toggle(names, !!value);
+  } else if (value) {
+    element.classList.add(...names.split(" "));
+  } else {
+    element.classList.remove(...names.split(" "));
+  }
 }
 
 export function _attr_style(element: Element, value: unknown) {
