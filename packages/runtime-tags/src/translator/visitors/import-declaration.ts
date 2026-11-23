@@ -9,7 +9,11 @@ import {
 
 import type { LoadTrigger } from "../../html/assets";
 import { addAssetImport, isClientAssetImport } from "../util/asset-imports";
-import { generateUid, getUnusedParamIdentifier } from "../util/generate-uid";
+import {
+  generateUid,
+  generateUidIdentifier,
+  getUnusedParamIdentifier,
+} from "../util/generate-uid";
 import { getMarkoOpts, getReadyId, isOutputHTML } from "../util/marko-config";
 import {
   resolveRegisteredExport,
@@ -26,6 +30,7 @@ import { createOutputState } from "../util/state";
 import {
   getImportFacts,
   getLoadAttr,
+  type LoadImportConfig,
   trackTagImport,
 } from "../util/tag-import";
 import { getLiteralName, toMemberExpression } from "../util/to-property-name";
@@ -39,6 +44,10 @@ declare module "@marko/compiler/dist/types" {
 }
 
 const [getHtmlLoadWrapped] = createOutputState(() => new Map<string, string>());
+// The trigger each load import declares, which every load of it waits for.
+export const [getLoadTriggers] = createOutputState(
+  () => new Map<LoadImportConfig, t.Identifier>(),
+);
 
 export default {
   analyze(importDecl) {
@@ -158,13 +167,24 @@ export default {
             node.attributes = undefined;
             return;
           } else {
+            const statements: t.Statement[] = [];
+            const triggerExpr = loadTriggersToExpression(loadImport);
+            let trigger: t.Identifier | undefined;
+            if (triggerExpr) {
+              trigger = generateUidIdentifier(`load_${local.name}_trigger`);
+              getLoadTriggers().set(loadImport, trigger);
+              statements.push(
+                t.variableDeclaration("const", [
+                  t.variableDeclarator(trigger, triggerExpr),
+                ]),
+              );
+            }
+
             const onlyLoadTagReferences = binding.referencePaths.every(
               (ref) =>
                 t.isMarkoTag(ref.parent) && ref.parent.extra?.tagNameLoad,
             );
-            if (onlyLoadTagReferences) {
-              importDecl.remove();
-            } else {
+            if (!onlyLoadTagReferences) {
               importRuntimeFeature("catch");
               const load = t.arrowFunctionExpression(
                 [getUnusedParamIdentifier()],
@@ -176,8 +196,11 @@ export default {
                   ),
                 ),
               );
-              const args = [t.stringLiteral(loadFile.metadata.marko.id), load];
-              importDecl.replaceWith(
+              const args = [
+                t.stringLiteral(loadFile.metadata.marko.id),
+                applyLoadTrigger(trigger, load),
+              ];
+              statements.push(
                 t.variableDeclaration("const", [
                   t.variableDeclarator(
                     local,
@@ -190,6 +213,8 @@ export default {
                 ]),
               );
             }
+
+            importDecl.replaceWithMultiple(statements);
           }
 
           return;
@@ -242,6 +267,17 @@ export function ensureHtmlLoadWrapped(
   return wrappedName;
 }
 
+// Applying a trigger only wraps the load, so it is pure: a load nothing reads
+// still drops. Not a runtime helper call.
+export function applyLoadTrigger(
+  trigger: t.Identifier | undefined,
+  load: t.Expression,
+) {
+  return trigger
+    ? t.addComment(t.callExpression(trigger, [load]), "leading", "@__PURE__")
+    : load;
+}
+
 function trackRegisteredImports(importDecl: t.NodePath<t.ImportDeclaration>) {
   const { node } = importDecl;
   // Type imports are already stripped: the compiler turns `stripTypes` on for
@@ -268,4 +304,44 @@ function trackRegisteredImports(importDecl: t.NodePath<t.ImportDeclaration>) {
       );
     }
   }
+}
+
+function loadTriggersToExpression(loadConfig: LoadImportConfig) {
+  if (loadConfig.render) return;
+
+  const triggers = loadConfig.triggers.map(toDOMTriggerExpression);
+  return triggers.length === 1
+    ? triggers[0]
+    : callRuntime("_load_race_trigger", ...triggers);
+}
+
+function toDOMTriggerExpression(trigger: LoadTrigger) {
+  switch (trigger.type) {
+    case "visible":
+      return callRuntime(
+        "_load_visible_trigger",
+        t.stringLiteral(trigger.selector),
+        optionalValueToNode(trigger.options),
+      );
+    case "idle":
+      return callRuntime(
+        "_load_idle_trigger",
+        optionalValueToNode(trigger.options),
+      );
+    case "media":
+      return callRuntime(
+        "_load_media_trigger",
+        t.stringLiteral(trigger.selector),
+      );
+    default:
+      return callRuntime(
+        "_load_event_trigger",
+        t.stringLiteral(trigger.type.slice("on-".length)),
+        t.stringLiteral(trigger.selector),
+      );
+  }
+}
+
+function optionalValueToNode(value: unknown) {
+  return value ? t.valueToNode(value) : undefined;
 }

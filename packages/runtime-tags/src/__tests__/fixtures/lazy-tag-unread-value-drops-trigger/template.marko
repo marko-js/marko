@@ -1,0 +1,5 @@
+import Child from "./child.marko" with { load: "on-click#go" }
+
+<const/unread=Child/>
+<let/count=0/>
+<button#go onClick() { count++ }>${count}</button>
