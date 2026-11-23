@@ -2,6 +2,8 @@ import {
   assertExclusiveAttrs,
   assertHandlerIsFunction,
   assertNoValueBindingOnCheckable,
+  assertUniqueClassNames,
+  assertUniqueStyleProperties,
   assertValidAttrName,
   assertValidAttrValue,
 } from "../common/errors";
@@ -29,6 +31,9 @@ import {
 } from "./writer";
 
 export function _attr_class(value: unknown) {
+  if (MARKO_DEBUG) {
+    assertUniqueClassNames(value);
+  }
   return stringAttr(
     "class",
     toDelimitedString(value, " ", stringifyClassEntry),
@@ -36,6 +41,9 @@ export function _attr_class(value: unknown) {
 }
 
 export function _attr_style(value: unknown) {
+  if (MARKO_DEBUG) {
+    assertUniqueStyleProperties(value);
+  }
   return stringAttr(
     "style",
     toDelimitedString(value, ";", stringifyStyleEntry),

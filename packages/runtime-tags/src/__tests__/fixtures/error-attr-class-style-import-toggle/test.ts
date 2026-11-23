@@ -1,9 +1,8 @@
 import type { TestConfig } from "../../main.test";
 
-// Two style import reads resolving to one class name are only known as they
-// render, so debug builds throw where the toggle could drop the other's name.
+// Two style import reads resolving to one class name meet in a combination the server's
+// class table writes as the module loads; the client does not check.
 export const config: TestConfig = {
   error_html: true,
-  error_dom: true,
   skip_optimize: true,
 };

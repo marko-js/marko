@@ -1,1 +1,0 @@
-The style property `color` is also written by another part of the `style` value; a style property may appear only once in a `style` value.

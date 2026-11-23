@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>resolve</button>${_el_mark($scope0_id, "#button/0")}<span${_attr_class([
 		"flag",
 		flag,
-		inc.status
+		"is-" + inc.status
 	])}></span>${_el_mark($scope0_id, "#span/1")}`);
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();

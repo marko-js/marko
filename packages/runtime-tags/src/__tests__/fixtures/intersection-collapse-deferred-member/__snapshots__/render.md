@@ -4,7 +4,7 @@
   resolve
 </button>
 <span
-  class="flag open open"
+  class="flag open is-open"
 />
 <div
   class="row open"
@@ -32,7 +32,7 @@ document.querySelector("button").click();
   resolve
 </button>
 <span
-  class="flag resolved resolved"
+  class="flag resolved is-resolved"
 />
 <div
   class="row resolved"
@@ -49,7 +49,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: .flag.resolved[class] "flag open open" => "flag resolved resolved"
+UPDATE: .flag.resolved.is-resolved[class] "flag open is-open" => "flag resolved is-resolved"
 UPDATE: .badge::text "open!" => "resolved!"
 UPDATE: .row.resolved[class] "row open" => "row resolved"
 REMOVE: .state.RESOLVED + form

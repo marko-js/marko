@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 		"a",
 		["b", d],
 		...more,
-		...["n1", d],
+		...["n1", "dyn1"],
 		{
 			[k]: d,
 			...obj,

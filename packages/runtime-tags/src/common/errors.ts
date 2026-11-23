@@ -6,7 +6,7 @@ import {
   getStyleProperties,
   getWrongAttrSuggestion,
   invalidNativeAttrNameReg,
-  stringifyStyleEntry,
+  stringifyClassEntry,
   toDelimitedString,
 } from "./helpers";
 
@@ -37,13 +37,17 @@ export function assertValidAttrValue(name: string, value: unknown) {
   }
 }
 
-// A toggled class must not share a name with any other part of its value, since
-// the client adds and removes it by itself; style import reads are only known here.
-export function _assert_class_toggles(classes: string, toggles: string[]) {
-  const name = findRepeatedName([classes].concat(toggles).map(splitClassNames));
+// A class name may appear only once in a `class` value, since the client toggles one by
+// itself; a module's class table meets every combination of its toggles as it loads.
+export function assertUniqueClassNames(value: unknown) {
+  const name = findRepeatedName(
+    splitClassNames(toDelimitedString(value, " ", stringifyClassEntry)).map(
+      toGroup,
+    ),
+  );
   if (name !== undefined) {
     throw new Error(
-      `The toggled class \`${name}\` is also written by another part of the \`class\` value; a toggled class may appear only once.`,
+      `The class \`${name}\` appears more than once in the \`class\` value; a class name may appear only once.`,
     );
   }
 }
@@ -57,12 +61,10 @@ export function assertToggledClassNames(names: string) {
   }
 }
 
-// A style item must not share a property with any other part of its value, since the
-// client sets it by itself; module reads' properties are only known here.
-export function _assert_style_items(parts: unknown[], items: string[]) {
-  const name = findRepeatedName(
-    parts.map(getStylePartProperties).concat(items.map(toGroup)),
-  );
+// A style property may appear in only one part of a `style` value, an array item or an
+// object entry, since the client sets an item by itself; one string may repeat its own.
+export function assertUniqueStyleProperties(value: unknown) {
+  const name = findRepeatedName(addStylePartProperties(value, []));
   if (name !== undefined) {
     throw new Error(
       `The style property \`${name}\` is also written by another part of the \`style\` value; a style property may appear only once in a \`style\` value.`,
@@ -74,8 +76,17 @@ function splitClassNames(classes: string) {
   return classes.split(/\s+/).filter(Boolean);
 }
 
-function getStylePartProperties(part: unknown) {
-  return getStyleProperties(toDelimitedString(part, ";", stringifyStyleEntry));
+function addStylePartProperties(value: unknown, groups: string[][]) {
+  if (value) {
+    if (typeof value !== "object") {
+      groups.push(getStyleProperties(value + ""));
+    } else if (Array.isArray(value)) {
+      for (const part of value) addStylePartProperties(part, groups);
+    } else {
+      for (const name in value) groups.push([name]);
+    }
+  }
+  return groups;
 }
 
 function toGroup(name: string) {

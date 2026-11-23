@@ -77,7 +77,6 @@ import {
 import { replaceWithStatements } from "../../util/replace-with-statements";
 import {
   absentArg,
-  callDebugRuntime,
   callRuntime,
   importRuntime,
   importRuntimeFeature,
@@ -996,8 +995,6 @@ export default {
             const calls: t.Expression[] = [];
             const meta = getDelimitedAttrMeta(tag, name, value);
             const items = getDelimitedAttrItems(name, meta);
-            const assert = buildDelimitedAttrAssert(name, meta);
-            if (assert) calls.push(assert);
             if (!items) {
               calls.push(
                 callRuntime(
@@ -1621,15 +1618,8 @@ function buildAttrExpression(
         buildClassAttrExpression(tag, value) ||
         callRuntime("_attr_class", value)
       );
-    case "style": {
-      const markup =
-        buildStyleAttrAnd(value) || callRuntime("_attr_style", value);
-      const assert = buildDelimitedAttrAssert(
-        "style",
-        getDelimitedAttrMeta(tag, "style", value),
-      );
-      return assert ? t.sequenceExpression([assert, markup]) : markup;
-    }
+    case "style":
+      return buildStyleAttrAnd(value) || callRuntime("_attr_style", value);
     default:
       return (
         buildLogicalAttr(name, value) ||
@@ -1732,10 +1722,7 @@ function buildClassAttrExpression(
   value: t.Expression,
 ) {
   const meta = getDelimitedAttrMeta(tag, "class", value);
-  if (meta.needsWholeValue) return;
-  const markup = buildClassMarkup(meta);
-  const assert = markup && buildDelimitedAttrAssert("class", meta);
-  return assert ? t.sequenceExpression([assert, markup!]) : markup;
+  if (!meta.needsWholeValue) return buildClassMarkup(meta);
 }
 
 function buildClassMarkup({ staticParts, toggles = [] }: DelimitedAttrMeta) {
@@ -1827,39 +1814,6 @@ function ensureModuleClassMarkup(key: string, build: () => t.Expression) {
   return t.cloneNode(id);
 }
 
-// Debug output checks the names of a module read against the value's other names.
-function buildDelimitedAttrAssert(
-  name: "class" | "style",
-  { staticParts, toggles }: DelimitedAttrMeta,
-) {
-  if (
-    !toggles ||
-    (staticParts.every(isLiteralPart) && toggles.every(isLiteralToggle))
-  ) {
-    return;
-  }
-
-  return name === "class"
-    ? callDebugRuntime(
-        "_assert_class_toggles",
-        buildClassString(staticParts, []),
-        t.arrayExpression(
-          toggles.map(({ key, alternate }) =>
-            buildClassString(alternate ? [key, alternate] : [key], []),
-          ),
-        ),
-      )
-    : callDebugRuntime(
-        "_assert_style_items",
-        t.arrayExpression(staticParts.map(toDelimitedPartExpression)),
-        t.arrayExpression(toggles.map(toToggleKeyExpression)),
-      );
-}
-
-function toToggleKeyExpression({ key }: DelimitedAttrValue) {
-  return toDelimitedPartExpression(key);
-}
-
 // Each toggle's bit, summed to index its combination.
 function buildToggleIndex(toggles: DelimitedAttrValue[]) {
   let index: t.Expression = t.conditionalExpression(
@@ -1946,27 +1900,26 @@ const delimitedAttrStringify = {
   style: [";", stringifyStyleEntry],
 } as const;
 
-// A name may appear in only one part, since the client writes a toggled class or a style
-// property by itself; static class names may repeat, and module reads are checked in dev.
+// A style property may appear in only one part, since the client sets an item by itself, and
+// a class name once in what the value writes; the server checks module reads as it writes.
 function assertUniqueDelimitedNames(
   tag: t.NodePath<t.MarkoTag>,
   attr: t.MarkoAttribute,
   { staticParts, toggles = [] }: DelimitedAttrMeta,
 ) {
   const isClass = attr.name === "class";
-  const groups: DelimitedAttrPart[][] = isClass
-    ? [staticParts.flatMap(getClassNames)].concat(
-        toggles.map(getToggleClassNames),
-      )
-    : staticParts
-        .map<DelimitedAttrPart[]>(getStylePartProperties)
-        .concat(toggles.map(toKeyGroup));
-  const name = findRepeatedName(groups);
+  const name = isClass
+    ? findRepeatedClassName(staticParts, toggles)
+    : findRepeatedName(
+        staticParts
+          .map<DelimitedAttrPart[]>(getStylePartProperties)
+          .concat(toggles.map(toKeyGroup)),
+      );
   if (name !== undefined) {
     throw tag.hub.buildError(
       attr,
       isClass
-        ? `The toggled class \`${name}\` is also written by another part of the \`class\` value; a toggled [class name](https://markojs.com/docs/reference/native-tag#class) may appear only once.`
+        ? `The class \`${name}\` appears more than once in the \`class\` value; a [class name](https://markojs.com/docs/reference/native-tag#class) may appear only once.`
         : `The style property \`${name}\` is also written by another part of the \`style\` value; a [style property](https://markojs.com/docs/reference/native-tag#style) may appear only once in a \`style\` value.`,
       Error,
     );
@@ -2002,9 +1955,34 @@ function getClassNames(part: DelimitedAttrPart | undefined) {
       : [part.join(".")];
 }
 
-// A toggle writes its key or its alternate, never both.
+// Each combination the value writes holds every static name and each toggle's key or
+// its alternate, never both, so only those two may share a name.
+function findRepeatedClassName(
+  staticParts: DelimitedAttrPart[],
+  toggles: DelimitedAttrValue[],
+) {
+  let name = findRepeatedName(
+    staticParts
+      .flatMap(getClassNames)
+      .map(toGroup)
+      .concat(toggles.map(getToggleClassNames)),
+  );
+  for (const { key, alternate } of toggles) {
+    name ??= findOwnRepeatedName(key) ?? findOwnRepeatedName(alternate);
+  }
+  return name;
+}
+
 function getToggleClassNames({ key, alternate }: DelimitedAttrValue) {
   return getClassNames(key).concat(getClassNames(alternate));
+}
+
+function findOwnRepeatedName(part: DelimitedAttrPart | undefined) {
+  return findRepeatedName(getClassNames(part).map(toGroup));
+}
+
+function toGroup(name: string) {
+  return [name];
 }
 
 function getStylePartProperties(part: DelimitedAttrPart) {
@@ -2052,12 +2030,6 @@ function getDelimitedAttrItems(
 
 function isLiteralPart(part: DelimitedAttrPart): part is string {
   return typeof part === "string";
-}
-
-function isLiteralToggle({ key, alternate }: DelimitedAttrValue) {
-  return (
-    isLiteralPart(key) && (alternate === undefined || isLiteralPart(alternate))
-  );
 }
 
 function getDelimitedAttrMeta(

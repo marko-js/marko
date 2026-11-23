@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		"a",
 		["b", d],
 		...more,
-		...["n1", d],
+		...["n1", d + "1"],
 		{
 			[k]: d,
 			...obj,

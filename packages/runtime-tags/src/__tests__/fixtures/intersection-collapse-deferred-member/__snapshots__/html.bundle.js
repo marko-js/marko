@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>resolve</button>${_el_mark($scope0_id, "a")}<span${_attr_class([
 		"flag",
 		flag,
-		inc.status
+		"is-" + inc.status
 	])}></span>${_el_mark($scope0_id, "b")}`);
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();
