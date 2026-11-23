@@ -1,0 +1,15 @@
+<let/show=true/>
+<script>
+  const get = el;
+  get().dataset.read = "script";
+  const getLater = later;
+  getLater().dataset.read = "script";
+</script>
+<div/el/>
+<let/ref=el/>
+<div/later/>
+<const/laterRef=show && later/>
+<button onClick() {
+  ref().textContent = "clicked";
+  laterRef().textContent = "clicked";
+}/>
