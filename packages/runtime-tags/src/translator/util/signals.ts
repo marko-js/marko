@@ -98,7 +98,11 @@ import { sourcesUtil } from "./sources";
 import { createOutputState, createOutputSectionState } from "./state";
 import { toOnlyExpressionOrBlock } from "./to-only-or-block";
 import { toMemberExpression, toObjectProperty } from "./to-property-name";
-import { getRestPattern, withRestFallback } from "./translate-var";
+import {
+  destructureAssignedChangeHandlers,
+  getRestPattern,
+  withRestFallback,
+} from "./translate-var";
 import { traverseReplace } from "./traverse";
 import { withLeadingComment } from "./with-comment";
 import {
@@ -1381,6 +1385,16 @@ export function writeHTMLResumeStatements(
   const bodyPath = flushInto(path);
   const section = getSectionForBody(bodyPath);
   if (!section) return;
+
+  // The scope written below names each assigned param's change handler; only
+  // a tag body's section has params.
+  if (section.params) {
+    for (const param of (bodyPath as t.NodePath<t.MarkoTagBody>).get(
+      "params",
+    )) {
+      destructureAssignedChangeHandlers(param);
+    }
+  }
 
   const body = bodyPath.node.body as t.Statement[];
   const allSignals = Array.from(getSignals(section).values());
