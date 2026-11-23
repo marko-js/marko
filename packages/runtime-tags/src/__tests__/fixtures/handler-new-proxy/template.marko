@@ -1,0 +1,8 @@
+<let/count=0/>
+<const/increment=new Proxy(() => count++, {})/>
+<const/log=new Proxy((next: number) => console.log("const", next), {})/>
+<let/a=1 valueChange=new Proxy((next: number) => console.log("direct", next), {})/>
+<let/b=1 valueChange=log/>
+<button id="direct" onClick=new Proxy(() => count++, {})>${count}</button>
+<button id="const" onClick=increment>${count}</button>
+<button id="assign" onClick() { a = 2; b = 3 }>${a} ${b}</button>

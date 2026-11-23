@@ -36,14 +36,9 @@ import { bodyToText, bodyToUncoercedText } from "../../util/body-to-text";
 import { isEndTagWrittenByBranch } from "../../util/branch-tag";
 import buildStringExpression from "../../util/build-string-expression";
 import evaluate, {
-  getAllKinds,
-  getKinds,
   getValueKind,
   isConfident,
-  KIND_FALSY,
-  KIND_FUNCTION,
-  KIND_SCALAR,
-  KIND_STRING,
+  isNoFunction,
 } from "../../util/evaluate";
 import {
   generateUidIdentifier,
@@ -1489,16 +1484,7 @@ function assertNativeHandlerAttr(
       Error,
     );
   }
-  const value = getValueKind(attr.value, tag);
-  const kinds = getKinds(value);
-  // With no falsy part, a string or number part is never empty or zero: a
-  // truthy value that is no function, unless another part may be one.
-  if (
-    value.computed ||
-    (kinds & (KIND_STRING | KIND_SCALAR) &&
-      !(kinds & KIND_FALSY) &&
-      !(getAllKinds(value) & KIND_FUNCTION))
-  ) {
+  if (isNoFunction(getValueKind(attr.value, tag))) {
     throw tag.hub.buildError(
       attr.value,
       `The \`${attr.name}\` ${kind} on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (\`null\`, \`undefined\`, \`false\`, \`0\`, …).`,

@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-native-event-handler-const-array/template.marko:3:17
+      1 | <let/count=0/>
+      2 | <const/handlers=[() => count++]/>
+    > 3 | <button onClick=handlers>${count}</button>
+        |                 ^^^^^^^^ The `onClick` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).
+      4 |
