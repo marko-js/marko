@@ -1,0 +1,1 @@
+`count` is a [tag variable](https://markojs.com/docs/reference/language#tag-variables) and can only be assigned within a script or event handler, not while rendering.

@@ -1,0 +1,9 @@
+export interface Input {
+  start: number;
+}
+<let/count=input.start/>
+<const/reset=() => {
+  count = 0;
+  return "";
+}/>
+<div>${reset()}${count}</div>
