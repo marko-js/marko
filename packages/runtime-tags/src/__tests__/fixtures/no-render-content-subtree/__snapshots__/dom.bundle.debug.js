@@ -32,7 +32,7 @@ const $if_content__setup = ($scope) => {
 		output: $output_getter($scope._)
 	});
 };
-const $output_getter = _el("__tests__/template.marko_0_#div#0", "#div/0");
+const $output_getter = _el_resume("__tests__/template.marko_0_#div#0", "#div/0");
 const $if = /*@__PURE__*/ _if("#text/1", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => $input_show($scope, input.show);

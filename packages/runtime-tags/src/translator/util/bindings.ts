@@ -58,7 +58,7 @@ export interface Binding {
    * the first is the outermost. */
   hoists: SortedOpt<Section>;
   /** By the section each is in, whether the server may write it: a read of it
-   * as a value, for a hoist one in code the server can run. */
+   * as a value in code the server can run. */
   getters: Map<Getter["hoisted"], boolean> | undefined;
   property: string | undefined;
   propertyAliases: Map<string, Binding> | undefined;

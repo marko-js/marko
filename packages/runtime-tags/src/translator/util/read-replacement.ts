@@ -180,9 +180,12 @@ function getHTMLReadBase(
   }
 
   if (binding.type === BindingType.dom) {
-    return binding.getters?.has(binding.section)
-      ? getBindingGetterIdentifier(binding, binding.section)
-      : undefined;
+    if (!getter) return;
+    const key = binding.getters!.has(binding.section) && binding.section;
+    // As for a hoist above, a getter only client code reads has a stand-in.
+    return binding.getters!.get(key)
+      ? key && getBindingGetterIdentifier(binding, key)
+      : importRuntime("_el_read_error");
   }
 
   let root: t.Node = node;

@@ -1,8 +1,8 @@
 // template.marko
 const $template = "<div>first</div><div>second</div>";
 const $walks = " b b";
-const $a_getter = _el("__tests__/template.marko_0_#div#0", "#div/0");
-const $b_getter = _el("__tests__/template.marko_0_#div#1", "#div/1");
+const $a_getter = _el_resume("__tests__/template.marko_0_#div#0", "#div/0");
+const $b_getter = _el_resume("__tests__/template.marko_0_#div#1", "#div/1");
 const $box__script = _script("__tests__/template.marko_0_box#2", ($scope) => {
 	_el_read($scope["#div/0"]).dataset.ref = "a";
 	_el_read($scope["#div/1"]).dataset.ref = "b";

@@ -571,14 +571,17 @@ export function _var_resume<T extends Signal<unknown>>(
   return signal;
 }
 
-export function _el(id: string, accessor: EncodedAccessor) {
+export function _el(accessor: EncodedAccessor) {
   if (MARKO_DEBUG) {
-    return (_resumed[id] = (scope: Scope) => (_?: never) =>
-      _el_read(scope[accessor]));
+    return (scope: Scope) => (_?: never) => _el_read(scope[accessor]);
   } else {
     accessor = decodeAccessor(accessor as number);
-    return (_resumed[id] = (scope: Scope) => (_?: never) => scope[accessor]);
+    return (scope: Scope) => (_?: never) => scope[accessor];
   }
+}
+
+export function _el_resume(id: string, accessor: EncodedAccessor) {
+  return (_resumed[id] = _el(accessor));
 }
 
 // A native dynamic tag's variable resumes off its parent's node visit, which

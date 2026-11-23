@@ -1259,11 +1259,15 @@ function writeBindingGetters(binding: Binding) {
                   ...accessors,
                 )
               : callRuntime("_hoist", ...accessors)
-            : callRuntime(
-                "_el",
-                t.stringLiteral(getResumeRegistryId(binding.section, binding)),
-                ...accessors,
-              ),
+            : hasReference
+              ? callRuntime(
+                  "_el_resume",
+                  t.stringLiteral(
+                    getResumeRegistryId(binding.section, binding),
+                  ),
+                  ...accessors,
+                )
+              : callRuntime("_el", ...accessors),
         ),
       ]),
     );

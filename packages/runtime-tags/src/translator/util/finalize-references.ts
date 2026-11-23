@@ -863,7 +863,7 @@ function addBindingGetter(
   expr: ReferencedExtra,
 ) {
   const getters = (binding.getters ??= new Map());
-  let written = !invoked && !(hoisted && isClientOnlyRead(read, expr));
+  let written = !invoked && !isClientOnlyRead(read, expr);
   let key = hoisted;
   // A getter in its own section serves its reads in place too.
   if (hoisted === binding.section) {
@@ -876,7 +876,7 @@ function addBindingGetter(
 }
 
 // The server never runs an effect it does not send (a handler, a script), nor
-// a function value only event handlers read, so a hoist read there is never a
+// a function value only event handlers read, so a getter read there is never a
 // value it writes.
 function isClientOnlyRead({ fnRoot }: Read, expr: ReferencedExtra) {
   return (
