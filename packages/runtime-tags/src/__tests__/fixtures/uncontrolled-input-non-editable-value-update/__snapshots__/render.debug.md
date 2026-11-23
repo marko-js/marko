@@ -119,16 +119,17 @@ UPDATE: form > input:nth-of-type(8)[value] "a" => "b"
 # Update
 ```js
 for (const input of document.querySelectorAll("input")) {
-assert.equal(input.value, "b", `${input.type} value`);
-  const form = document.querySelector("form");
-  form.querySelector("[type=checkbox]").checked = true;
-  form.querySelector("[type=radio]").checked = true;
-  const data = new form.ownerDocument.defaultView.FormData(form);
-  assert.equal(data.get("checkbox"), "b");
-  assert.equal(data.get("dynamic"), "b");
-  assert.equal(data.get("hidden"), "b");
-  assert.equal(data.get("radio"), "b");
+  assert.equal(input.value, "b", `${input.type} value`);
 }
+
+const form = document.querySelector("form");
+form.querySelector("[type=checkbox]").checked = true;
+form.querySelector("[type=radio]").checked = true;
+const data = new form.ownerDocument.defaultView.FormData(form);
+assert.equal(data.get("checkbox"), "b");
+assert.equal(data.get("dynamic"), "b");
+assert.equal(data.get("hidden"), "b");
+assert.equal(data.get("radio"), "b");
 ```
 
 # Update
@@ -194,17 +195,18 @@ UPDATE: form > input:nth-of-type(8)[value] "b" => null
 # Update
 ```js
 for (const input of document.querySelectorAll("input")) {
-assert.equal(input.hasAttribute("value"), false, `${input.type} attribute`);
-assert.equal(
-  input.value,
-  input.type === "checkbox" || input.type === "radio" ? "on" : "",
-  `${input.type} value`,
-);
-  const form = document.querySelector("form");
-  const data = new form.ownerDocument.defaultView.FormData(form);
-  assert.equal(data.get("checkbox"), "on");
-  assert.equal(data.get("dynamic"), "");
-  assert.equal(data.get("hidden"), "");
-  assert.equal(data.get("radio"), "on");
+  assert.equal(input.hasAttribute("value"), false, `${input.type} attribute`);
+  assert.equal(
+    input.value,
+    input.type === "checkbox" || input.type === "radio" ? "on" : "",
+    `${input.type} value`,
+  );
 }
+
+const form = document.querySelector("form");
+const data = new form.ownerDocument.defaultView.FormData(form);
+assert.equal(data.get("checkbox"), "on");
+assert.equal(data.get("dynamic"), "");
+assert.equal(data.get("hidden"), "");
+assert.equal(data.get("radio"), "on");
 ```

@@ -68,7 +68,7 @@ REMOVE: button:nth-of-type(2) + span
 # Update
 ```js
 for (const button of document.querySelectorAll(".inc")) {
-button.click();
+  button.click();
 }
 ```
 ```html

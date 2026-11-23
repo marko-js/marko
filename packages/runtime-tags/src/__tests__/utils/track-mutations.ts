@@ -218,7 +218,7 @@ function normalizeTree(source: Node, target: Node, ignoredNodes: ChildNode[]) {
 function getUpdateString(update: unknown) {
   switch (typeof update) {
     case "function":
-      return `\n\`\`\`js\n${getFunctionBody(update.toString()).replace(/^ {4}/gm, "")}\n\`\`\``;
+      return `\n\`\`\`js\n${getFunctionBody(update.toString())}\n\`\`\``;
     case "string":
       return ` ${update}`;
   }
@@ -352,23 +352,25 @@ function getFunctionBody(rawSource: string) {
       return trimDedent(
         source
           .slice(match[0].length)
-          .replace(/;?\s*}\s*$/m, ";")
+          .replace(/\s*}\s*$/, "")
           .trim(),
       );
     }
-    return trimDedent(source.slice(match[0].length).replace(/;?\s*$/m, ";"));
+    return trimDedent(source.slice(match[0].length).replace(/;?\s*$/, ";"));
   }
 
   return trimDedent(source);
 }
 
 function trimDedent(str: string) {
-  const indent = str.match(/^[ \t]+(?=\S)/gm);
-  if (!indent) {
-    return str.trim();
+  let indent = Infinity;
+  for (const [space] of str.matchAll(/^[ \t]+(?=\S)/gm)) {
+    if (space.length < indent) indent = space.length;
   }
 
   return str
-    .replace(new RegExp(`^[ \\t]{${indent[0].length}}`, "gm"), "")
+    .replace(/^[ \t]+/gm, (space) =>
+      space.length < indent ? space : space.slice(indent),
+    )
     .trim();
 }

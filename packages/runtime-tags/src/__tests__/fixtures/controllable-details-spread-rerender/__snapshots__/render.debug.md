@@ -23,14 +23,14 @@ const Observer = view.MutationObserver;
 view.__attached = 0;
 view.MutationObserver = class extends Observer {
   constructor(callback) {
-super(callback);
-view.__attached++;
+    super(callback);
+    view.__attached++;
+  }
   disconnect() {
-view.__attached--;
-super.disconnect();
+    view.__attached--;
+    super.disconnect();
   }
 };
-}
 ```
 
 # Update
