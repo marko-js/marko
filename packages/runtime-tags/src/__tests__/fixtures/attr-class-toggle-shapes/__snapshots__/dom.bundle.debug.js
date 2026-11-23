@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<button>toggle</button><div class=c></div><div></div><div></div><div class=i></div><div class=\"l m l\"></div>";
-const $walks = " b b b b c";
+const $template = "<button>toggle</button><div class=c></div><div></div><div></div><div class=i></div>";
+const $walks = " b b b b b";
 const $on = /*@__PURE__*/ _let("on/5", ($scope) => {
 	_attr_class_item($scope["#div/1"], "d", $scope.on);
 	_attr_class_item($scope["#div/2"], "e", $scope.on);

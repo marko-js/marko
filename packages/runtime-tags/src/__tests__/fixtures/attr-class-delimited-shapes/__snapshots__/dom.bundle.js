@@ -3,7 +3,7 @@ const $d__OR__more__OR__obj__OR__k = /*@__PURE__*/ _or(9, ($scope) => _attr_clas
 	"a",
 	["b", $scope.d],
 	...$scope.e,
-	...["n1", $scope.d],
+	...["n1", $scope.d + "1"],
 	{
 		[$scope.i]: $scope.d,
 		...$scope.h,

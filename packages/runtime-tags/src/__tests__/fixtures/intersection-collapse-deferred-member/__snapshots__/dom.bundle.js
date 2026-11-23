@@ -44,7 +44,7 @@ const $inc_status__OR__inc_pending = ($scope) => $flag($scope, $scope.e + ($scop
 const $inc_status__OR__flag = ($scope) => _attr_class($scope.b, [
 	"flag",
 	$scope.g,
-	$scope.e
+	"is-" + $scope.e
 ]);
 const $inc = /*@__PURE__*/ _let(3, ($scope) => {
 	$input_inc($scope.c, $scope.d);

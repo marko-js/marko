@@ -10,6 +10,9 @@
   style="display:block"
 />
 <button />
+<div
+  style="display:-webkit-box;display:flex"
+/>
 ```
 
 # Update
@@ -27,11 +30,15 @@ document.querySelector("button").click();
   style="display:block"
 />
 <button />
+<div
+  style="color:green;display:flex"
+/>
 ```
 ## Change
 ```
 UPDATE: div:nth-of-type(1)[style] "display:block" => "display: block; color: green;"
 UPDATE: div:nth-of-type(2)[style] "font-family:\"Helvetica Neue\", sans-serif;background-image:url(/tile.svg?size=2&tone=light);margin:0" => "font-family: Helvetica Neue, sans-serif; background-image: url(\"/tile.svg?size=2&tone=light\"); margin: 0px; color: green;"
+UPDATE: div:nth-of-type(4)[style] "display:-webkit-box;display:flex" => "display: flex; color: green;"
 ```
 
 # Update
@@ -49,9 +56,13 @@ document.querySelector("button").click();
   style="display:block"
 />
 <button />
+<div
+  style="display:flex"
+/>
 ```
 ## Change
 ```
 UPDATE: div:nth-of-type(1)[style] "display: block; color: green;" => "display: block;"
 UPDATE: div:nth-of-type(2)[style] "font-family: Helvetica Neue, sans-serif; background-image: url(\"/tile.svg?size=2&tone=light\"); margin: 0px; color: green;" => "font-family: Helvetica Neue, sans-serif; background-image: url(\"/tile.svg?size=2&tone=light\"); margin: 0px;"
+UPDATE: div:nth-of-type(4)[style] "display: flex; color: green;" => "display: flex;"
 ```

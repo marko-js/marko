@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-attr-class-alternate-repeats-own-name/template.marko:1:6
+    > 1 | <div class=[input.on ? "b" : "a a"]/>
+        |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ The class `a` appears more than once in the `class` value; a [class name](https://markojs.com/docs/reference/native-tag#class) may appear only once.
+      2 |

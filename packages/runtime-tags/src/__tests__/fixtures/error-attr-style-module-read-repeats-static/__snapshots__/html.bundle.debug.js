@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let width = "10px";
-	_html(`<div${_assert_style_items([card, "color:red"], ["width"]), _attr_style([
+	_html(`<div${_attr_style([
 		card,
 		"color:red",
 		{ width }

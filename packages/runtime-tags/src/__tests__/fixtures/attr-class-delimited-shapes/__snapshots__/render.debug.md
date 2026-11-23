@@ -4,7 +4,7 @@
   inc
 </button>
 <div
-  class="a b dyn m1 n1 dyn computed o q"
+  class="a b dyn m1 n1 dyn1 computed o q"
 />
 <div
   style="color:red;display:block;margin:0;padding:0"
@@ -20,7 +20,7 @@ document.querySelector("button").click();
   inc
 </button>
 <div
-  class="a b dyn2 m1 n1 dyn2 computed o q"
+  class="a b dyn2 m1 n1 dyn21 computed o q"
 />
 <div
   style="color:red;display:block;margin:0;padding:0"
@@ -28,5 +28,5 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: .a.b.dyn2.m1.n1.computed.o.q[class] "a b dyn m1 n1 dyn computed o q" => "a b dyn2 m1 n1 dyn2 computed o q"
+UPDATE: .a.b.dyn2.m1.n1.dyn21.computed.o.q[class] "a b dyn m1 n1 dyn1 computed o q" => "a b dyn2 m1 n1 dyn21 computed o q"
 ```

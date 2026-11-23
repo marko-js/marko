@@ -1,5 +1,6 @@
 // theme.ts
 const base = "display:block";
+const fallback = "display:-webkit-box;display:flex";
 const card = {
 	"font-family": "\"Helvetica Neue\", sans-serif",
 	"background-image": "url(/tile.svg?size=2&tone=light)"
@@ -14,7 +15,7 @@ var template_default = _template("a", (input) => {
 		card,
 		"margin:0",
 		{ color: tint }
-	])}></div>${_el_mark($scope0_id, "b")}<div${_attr_style(base)}></div><button></button>${_el_mark($scope0_id, "c")}`);
+	])}></div>${_el_mark($scope0_id, "b")}<div${_attr_style(base)}></div><button></button>${_el_mark($scope0_id, "c")}<div${_attr_style([fallback, { color: tint }])}></div>${_el_mark($scope0_id, "d")}`);
 	_script($scope0_id, "a0");
-	_scope($scope0_id, { d: tint });
+	_scope($scope0_id, { e: tint });
 }, 1);

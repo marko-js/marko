@@ -13,9 +13,6 @@
 <div
   class="i"
 />
-<div
-  class="l m l"
-/>
 ```
 
 # Update
@@ -37,9 +34,6 @@ document.querySelector("button").click();
 />
 <div
   class="i j k"
-/>
-<div
-  class="l m l"
 />
 ```
 ## Change
@@ -69,9 +63,6 @@ document.querySelector("button").click();
 />
 <div
   class="i"
-/>
-<div
-  class="l m l"
 />
 ```
 ## Change
