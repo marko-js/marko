@@ -1,31 +1,30 @@
 import { types as t } from "@marko/compiler";
 
 import { getExprRoot } from "../util/get-root";
-import { isOutputHTML } from "../util/marko-config";
+import { isOutputDOM } from "../util/marko-config";
 import {
   assertReferencedInRender,
   getCanonicalExpr,
   setReferencesScope,
   trackGlobalReference,
 } from "../util/references";
-import { callRuntime, importRuntime } from "../util/runtime";
+import { importRuntime } from "../util/runtime";
 import { scopeIdentifier } from "../util/scope-read";
 import { ensureSection, getSection } from "../util/sections";
 import { addAbortReset } from "../util/signals";
 import type { TemplateVisitor } from "../util/visitors";
 
-const kAbortId = Symbol("abort id");
 const kAbortCleanupOnly = Symbol("abort cleanup only");
 const kAbortReset = Symbol("abort reset");
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
-    /** `$signal` abort id for this expression root, allocated in analyze
-     * (see below) so every translate reads the same id. */
-    [kAbortId]?: number;
     /** The `$signal` read that allocated its root's abort id resets it. */
     [kAbortReset]?: true;
     /** Its every `$signal` only sets `onabort`, so it needs no controller. */
     [kAbortCleanupOnly]?: boolean;
+    /** `$signal` abort id for this expression root, allocated in analyze so
+     * every translate reads the same id. */
+    abortId?: number;
   }
 }
 
@@ -55,8 +54,8 @@ export default {
       section.hasAbortSignal = true;
       // Stamped on the raw (not canonical) extra: ids stay one-per-root
       // even if this extra later merges with another expression's.
-      if (rootExtra[kAbortId] === undefined) {
-        rootExtra[kAbortId] = section.abortSignalExprs++;
+      if (rootExtra.abortId === undefined) {
+        rootExtra.abortId = section.abortSignalExprs++;
         identifier.node.extra[kAbortReset] = true;
       }
       rootExtra[kAbortCleanupOnly] =
@@ -67,15 +66,15 @@ export default {
   translate(identifier) {
     const { name } = identifier.node;
     if (name !== "$signal" || identifier.scope.hasBinding(name)) return;
-    if (isOutputHTML()) {
-      replaceWithExtra(identifier, callRuntime("_signal_read_error"));
-    } else {
+    // Reads are rewritten where emitted code is written (`getReadReplacement`),
+    // since a tag may hold this node from before it translates.
+    if (isOutputDOM()) {
       const exprRoot = identifier.node.extra!.exprRoot!;
       const canonicalExtra = getCanonicalExpr(exprRoot);
       // A dropped expression is never emitted, so it needs no signal or reset.
       if (canonicalExtra.dropped) return;
 
-      const exprId = exprRoot[kAbortId]!;
+      const exprId = exprRoot.abortId!;
       if (identifier.node.extra![kAbortReset]) {
         addAbortReset(getSection(identifier), canonicalExtra, exprId);
       }
@@ -88,13 +87,6 @@ export default {
             scopeIdentifier,
             t.numericLiteral(exprId),
             assignment.node.right,
-          ]),
-        );
-      } else {
-        identifier.replaceWith(
-          t.callExpression(importRuntime("$signal"), [
-            scopeIdentifier,
-            t.numericLiteral(exprId),
           ]),
         );
       }
@@ -116,11 +108,4 @@ function isOnabortStatement(identifier: t.NodePath<t.Identifier>) {
     assignment.left === member &&
     identifier.parentPath.parentPath!.parent.type === "ExpressionStatement"
   );
-}
-
-// A bare `$signal` can be a tag's whole value, which the tag checks for
-// `dropped` after its children translate, so the replacement must keep it.
-function replaceWithExtra(path: t.NodePath, replacement: t.Expression) {
-  replacement.extra = path.node.extra;
-  path.replaceWith(replacement);
 }

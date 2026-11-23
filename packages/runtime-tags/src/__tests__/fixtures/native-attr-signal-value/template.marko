@@ -1,0 +1,7 @@
+<let/open=false/>
+<if=open>
+  <div class={ live: $signal }/>
+  <input type="checkbox" checked=$signal/>
+  <input type="checkbox" ...input.attrs checked=$signal/>
+</if>
+<button onClick() { open = true }/>

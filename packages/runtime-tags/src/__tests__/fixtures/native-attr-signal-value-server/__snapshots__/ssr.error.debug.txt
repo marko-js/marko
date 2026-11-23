@@ -1,0 +1,1 @@
+Cannot use $signal in a server render.

@@ -56,21 +56,29 @@ export function getReadReplacement(
   const { read, binding } = extra;
 
   if (!read) {
-    if (binding) {
-      if (binding.type === BindingType.global) {
-        // HTML reads the `$global` its program declares; the client reads the
-        // scope's, keeping the extra its debug key check reads.
-        if (isOutputDOM()) {
-          const globals = toMemberExpression(
-            scopeIdentifier,
-            getAccessorProp().Global,
-          );
-          globals.extra = extra;
-          return globals;
-        }
-      } else if (node.type === "Identifier" && node.name !== binding.name) {
-        node.name = binding.name;
+    if (!binding) {
+      if (node.type === "Identifier" && node.name === "$signal") {
+        // The server has no abort controller to read.
+        return isOutputDOM()
+          ? t.callExpression(importRuntime("$signal"), [
+              scopeIdentifier,
+              t.numericLiteral(extra.exprRoot!.abortId!),
+            ])
+          : callRuntime("_signal_read_error");
       }
+    } else if (binding.type === BindingType.global) {
+      // HTML reads the `$global` its program declares; the client reads the
+      // scope's, keeping the extra its debug key check reads.
+      if (isOutputDOM()) {
+        const globals = toMemberExpression(
+          scopeIdentifier,
+          getAccessorProp().Global,
+        );
+        globals.extra = extra;
+        return globals;
+      }
+    } else if (node.type === "Identifier" && node.name !== binding.name) {
+      node.name = binding.name;
     }
     return;
   }
