@@ -1,0 +1,12 @@
+import Child from "./child.marko" with { load: "on-click#go" }
+import Other from "./other.marko" with { load: "on-click#other" }
+
+<let/show=false/>
+<button.toggle onClick() { show = true }>toggle</button>
+<span#go>go</span>
+<span#other>other</span>
+<Child/>
+<Other/>
+<if=show>
+  <Child/>
+</if>

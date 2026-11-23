@@ -1,0 +1,28 @@
+<button class=toggle>toggle</button><!--M_$1 a--><span
+  id=first>first</span><span id=second>second</span><span>first
+  loaded</span><button
+  class=count>0<!--M_$3 b--></button><!--M_$3 a--><!--M_]1 f-->
+<script>
+  ((h, d, l = $ => {
+    d || document.head.append(new Range().createContextualFragment(d = h))
+  }) => (e => e?.addEventListener("click", l, {
+    once: 1
+  }))(document.querySelector("#first") || l()))(
+    `\x3Cscript async type=module src="first.marko.load.mjs">\x3C/script>`);
+  ((h, d, l = $ => {
+    d || document.head.append(new Range().createContextualFragment(d = h))
+  }) => (e => e?.addEventListener("click", l, {
+    once: 1
+  }))(document.querySelector("#second") || l()))(
+    `\x3Cscript async type=module src="second.marko.load.mjs">\x3C/script>`);
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    _b: [_ => [3, {
+      c: 0
+    }], "b0 3"]
+  };
+  M._.r = [_ => [1, {
+    g: !1
+  }], "c0 1"];
+  M._.w()
+</script>

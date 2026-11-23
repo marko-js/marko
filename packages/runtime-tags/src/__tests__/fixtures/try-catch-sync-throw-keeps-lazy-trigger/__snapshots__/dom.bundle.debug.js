@@ -10,7 +10,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 // template.marko
 const $template = "<!><!><!><!>";
 const $walks = "b%b%/&c";
-const $load_Child_trigger = /*@__PURE__*/ _load_event_trigger("click", "body");
+const $load_Child_trigger = /*@__PURE__*/ _load_trigger("ready:__tests__/child.marko", /*@__PURE__*/ _load_event_trigger("click", "body"));
 let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.setup.mjs")));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.input_value.mjs")));
 const $catch_content__$params = ($scope, err) => _text($scope["#text/0"], err?.message);

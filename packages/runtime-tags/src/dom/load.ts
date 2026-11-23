@@ -8,6 +8,7 @@ import {
 import { startAwait, renderCatch } from "./control-flow";
 import { queueAsyncRender, queueRender, runId } from "./queue";
 import { _content, type Renderer, setupBranch, type SetupFn } from "./renderer";
+import { onReady } from "./resume";
 import { insertBranchBefore, syncGen } from "./scope";
 import type { Signal } from "./signals";
 import { _template } from "./template";
@@ -24,9 +25,8 @@ interface LoadApply extends Signal {
 interface LoadSignal {
   _: Signal;
 }
-export interface LoadTrigger {
-  <T>(load: () => Promise<T>): () => Promise<T>;
-}
+// One of a load import's triggers: arms its listener, which calls `resolve`.
+type LoadTrigger = (resolve: (value?: unknown) => void) => unknown;
 
 // A stand-in signal or load: the callers ignore its result.
 const noop = (_?: unknown): any => 0;
@@ -189,65 +189,58 @@ export function _load_signal(load: () => Promise<LoadSignal>): Signal {
   return apply;
 }
 
+// Waits for the first of a load import's triggers; a resumed page's trigger
+// script may already have loaded its module, or be loading it.
+export function _load_trigger(
+  readyId: string,
+  ...triggers: LoadTrigger[]
+): <T>(load: () => Promise<T>) => () => Promise<T> {
+  let pending: Promise<unknown> | undefined;
+  return (load) => (_?: never) =>
+    (pending ||= new Promise((resolve: (value?: unknown) => void) =>
+      onReady(readyId, resolve)
+        ? resolve()
+        : triggers.forEach((trigger) => trigger(resolve)),
+    )).then(load);
+}
+
 export function _load_visible_trigger(
   selector: string,
   options?: IntersectionObserverInit,
 ): LoadTrigger {
-  let pending: Promise<unknown> | undefined;
   let el: Element | undefined;
-  return (load) => (_?: never) =>
-    (pending ||= new Promise(
-      (resolve) =>
-        (el = getSelectorOrResolve(selector, resolve)) &&
-        new IntersectionObserver(
-          (entries, io) =>
-            entries.some((entry) => entry.isIntersecting) &&
-            resolve(io.disconnect()),
-          options,
-        ).observe(el),
-    )).then(load);
+  return (resolve) =>
+    (el = getSelectorOrResolve(selector, resolve)) &&
+    new IntersectionObserver(
+      (entries, io) =>
+        entries.some((entry) => entry.isIntersecting) &&
+        resolve(io.disconnect()),
+      options,
+    ).observe(el);
 }
 
 export function _load_idle_trigger(options?: {
   timeout?: number;
 }): LoadTrigger {
-  let pending: Promise<unknown> | undefined;
-  return (load) => (_?: never) =>
-    (pending ||= new Promise((resolve) =>
-      (self.requestIdleCallback || resolve)(resolve, options),
-    )).then(load);
+  return (resolve) => (self.requestIdleCallback || resolve)(resolve, options);
 }
 
 export function _load_event_trigger(
   event: string,
   selector: string,
 ): LoadTrigger {
-  let pending: Promise<unknown> | undefined;
-  return (load) => (_?: never) =>
-    (pending ||= new Promise((resolve) =>
-      getSelectorOrResolve(selector, resolve)?.addEventListener(
-        event,
-        resolve,
-        { once: true },
-      ),
-    )).then(load);
+  return (resolve) =>
+    getSelectorOrResolve(selector, resolve)?.addEventListener(event, resolve, {
+      once: true,
+    });
 }
 
 export function _load_media_trigger(query: string): LoadTrigger {
-  let pending: Promise<unknown> | undefined;
   let mql: MediaQueryList;
-  return (load) => (_?: never) =>
-    (pending ||= new Promise((resolve) =>
-      (mql = matchMedia(query)).matches
-        ? (resolve as () => void)()
-        : mql.addEventListener("change", resolve, { once: true }),
-    )).then(load);
-}
-
-export function _load_race_trigger(...triggers: LoadTrigger[]): LoadTrigger {
-  let pending: Promise<unknown> | undefined;
-  return (load) => (_?: never) =>
-    (pending ||= Promise.race(triggers.map((t) => t(noop)()))).then(load);
+  return (resolve) =>
+    (mql = matchMedia(query)).matches
+      ? resolve()
+      : mql.addEventListener("change", resolve, { once: true });
 }
 
 function getSelectorOrResolve(

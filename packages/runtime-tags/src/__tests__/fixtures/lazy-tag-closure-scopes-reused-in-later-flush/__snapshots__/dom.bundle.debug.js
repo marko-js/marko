@@ -22,7 +22,7 @@ const $Item_content__walks = " b";
 const $Item_content__template = "<span>x</span>";
 const $template = "<!><!><!><!>";
 const $walks = "b%/&b%c";
-const $load_Child_trigger = /*@__PURE__*/ _load_event_trigger("click", "body");
+const $load_Child_trigger = /*@__PURE__*/ _load_trigger("ready:__tests__/child.marko", /*@__PURE__*/ _load_event_trigger("click", "body"));
 let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.setup.mjs")));
 let $load_Child_tag_input_content = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.input_content.mjs")));
 const $el_getter = /*@__PURE__*/ _hoist("#span/0", "ClosureScopes:1");

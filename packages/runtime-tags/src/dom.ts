@@ -77,10 +77,10 @@ export {
   _load_event_trigger,
   _load_idle_trigger,
   _load_media_trigger,
-  _load_race_trigger,
   _load_setup,
   _load_signal,
   _load_template,
+  _load_trigger,
   _load_visible_trigger,
 } from "./dom/load";
 export { run } from "./dom/queue";

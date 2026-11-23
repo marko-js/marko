@@ -16,7 +16,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 // template.marko
 const $template = "<main><!></main>";
 const $walks = "D%l";
-const $load_Child_trigger = /*@__PURE__*/ _load_event_trigger("click", "body");
+const $load_Child_trigger = /*@__PURE__*/ _load_trigger("ready:__tests__/child.marko", /*@__PURE__*/ _load_event_trigger("click", "body"));
 let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.setup.mjs")));
 let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.input_label.mjs")));
 const $catch_content = _content_resume("__tests__/template.marko_2*content", "<div id=error>failed</div>");

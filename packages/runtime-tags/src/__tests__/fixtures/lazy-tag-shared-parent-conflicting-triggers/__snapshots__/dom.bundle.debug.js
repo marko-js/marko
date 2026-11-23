@@ -1,7 +1,7 @@
 // tags/parent-a.marko
 const $template$2 = "<!><!><!>";
 const $walks$2 = "b%/&c";
-const $load_Child_trigger$1 = /*@__PURE__*/ _load_visible_trigger("body");
+const $load_Child_trigger$1 = /*@__PURE__*/ _load_trigger("ready:__tests__/tags/child.marko", /*@__PURE__*/ _load_visible_trigger("body"));
 let $load_Child_setup$1 = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trigger$1(($_) => import("./v:child.marko.setup.mjs")));
 let $load_Child_tag_input_value$1 = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load_Child_trigger$1(($_) => import("./v:child.marko.input_value.mjs")));
 function $setup$2($scope) {
@@ -13,7 +13,7 @@ var parent_a_default = /*@__PURE__*/ _template("__tests__/tags/parent-a.marko", 
 // tags/parent-b.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%/&c";
-const $load_Child_trigger = /*@__PURE__*/ _load_idle_trigger();
+const $load_Child_trigger = /*@__PURE__*/ _load_trigger("ready:__tests__/tags/child.marko", /*@__PURE__*/ _load_idle_trigger());
 let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.setup.mjs")));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.input_value.mjs")));
 function $setup$1($scope) {

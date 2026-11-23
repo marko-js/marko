@@ -1,5 +1,5 @@
 // template.marko
-const Child = /*@__PURE__*/ _load_template("a", /*@__PURE__*/ (/* @__PURE__ */ _load_event_trigger("click", "#go"))(($_) => import("./child.mjs").then((mod) => mod.default)));
+const Child = /*@__PURE__*/ _load_template("a", /*@__PURE__*/ (/* @__PURE__ */ _load_trigger("_a", /*@__PURE__*/ _load_event_trigger("click", "#go")))(($_) => import("./child.mjs").then((mod) => mod.default)));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
 const $show = /*@__PURE__*/ _let(2, ($scope) => $dynamicTag($scope, $scope.c ? Child : null));
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {

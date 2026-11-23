@@ -1,5 +1,5 @@
 // template.marko
-const $load_Child_trigger = /*@__PURE__*/ _load_event_trigger("click", "#load");
+const $load_Child_trigger = /*@__PURE__*/ _load_trigger("_a", /*@__PURE__*/ _load_event_trigger("click", "#load"));
 let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.setup.mjs")));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.input_value.mjs")));
 const $if_content__value = /*@__PURE__*/ _if_closure(1, 0, ($scope) => $load_Child_tag_input_value($scope.b, $scope._.e));

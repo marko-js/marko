@@ -1,0 +1,9 @@
+import Child from "./child.marko" with { load: "media(width <= 600px)" }
+
+<let/show=false/>
+<button.toggle onClick() { show = !show }>toggle</button>
+<Child label="server"/>
+<if=show>
+  <Child label="tag"/>
+</if>
+<${show ? Child : null} label="dynamic"/>

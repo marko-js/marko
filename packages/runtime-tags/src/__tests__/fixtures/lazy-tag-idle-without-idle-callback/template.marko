@@ -1,0 +1,7 @@
+import Child from "./child.marko" with { load: "idle" }
+
+<let/show=false/>
+<button.toggle onClick() { show = true }>toggle</button>
+<if=show>
+  <Child/>
+</if>
