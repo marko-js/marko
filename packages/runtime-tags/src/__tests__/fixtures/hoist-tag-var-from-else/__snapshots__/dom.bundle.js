@@ -1,5 +1,5 @@
 // template.marko
-const $getLabel_getter = _hoist_resume("a1", 0, [
+const $getLabel_getter = /*@__PURE__*/ _hoist(0, [
 	"Ab",
 	"Db",
 	1
@@ -9,7 +9,7 @@ const $else_content__setup = ($scope) => $else_content__getLabel($scope, $getLab
 const $if = /*@__PURE__*/ _if(1, "<span>a</span>", 0, 0, 0, 0, $else_content__setup);
 const $a = /*@__PURE__*/ _let(4, ($scope) => $if($scope, $scope.e ? 0 : 1));
 const $label = /*@__PURE__*/ _let(5, ($scope) => _text($scope.d, $scope.f));
-const $setup__script = _script("a2", ($scope) => {
+const $setup__script = _script("a1", ($scope) => {
 	_on($scope.a, "click", function() {
 		$a($scope, !$scope.e);
 	});

@@ -1,0 +1,7 @@
+<define/Counter>
+  <let/count=0/>
+  <return=count valueChange=setCount/>
+  <const/setCount=(value) => { count = value }/>
+</define>
+<Counter/c/>
+<button onClick() { c++ }>${c}</button>

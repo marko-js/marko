@@ -2,7 +2,6 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const $getLabel_getter = _hoist($scope0_id, "__tests__/template.marko_0_getLabel#1:0/hoist");
 	_if(() => {
 		if (input.a) {
 			const $scope1_id = _scope_id();

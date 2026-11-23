@@ -30,7 +30,6 @@ const $Child_withLoadAssets = withLoadAssets(() => child_default, "__tests__/chi
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $el_getter = _hoist($scope0_id, "__tests__/template.marko_0_#span#1:0/hoist");
 	const $Item_content__subscribers = new Set();
 	const Item = { content: _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();

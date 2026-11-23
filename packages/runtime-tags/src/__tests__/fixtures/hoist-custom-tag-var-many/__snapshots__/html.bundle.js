@@ -12,7 +12,6 @@ var child_default = _template("b", (input) => {
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_hoist($scope0_id, "a0");
 	_for_to(5, 0, 1, () => {
 		const $scope1_id = _scope_id();
 		let setHtml = child_default({});
@@ -37,5 +36,5 @@ var template_default = _template("a", (input) => {
 		_html("</ul>");
 		_scope($scope3_id, {});
 	}, 0, $scope0_id, "c", 1, 0, 0, 0, 1);
-	_script($scope0_id, "a1", 0);
+	_script($scope0_id, "a0", 0);
 }, 1);

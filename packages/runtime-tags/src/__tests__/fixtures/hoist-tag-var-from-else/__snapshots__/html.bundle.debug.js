@@ -2,7 +2,6 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $getLabel_getter = _hoist($scope0_id, "__tests__/template.marko_0_getLabel#2:0/hoist");
 	let a = false;
 	_html(`<button class=toggle>toggle</button>${_el_mark($scope0_id, "#button/0")}`);
 	_if(() => {

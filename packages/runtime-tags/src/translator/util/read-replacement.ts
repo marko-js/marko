@@ -10,7 +10,7 @@ import {
   isRegisteredFnExtra,
   type ResolvedRead,
 } from "./references";
-import { callDebugRuntime, callRuntime } from "./runtime";
+import { callDebugRuntime, callRuntime, importRuntime } from "./runtime";
 import {
   getLocalsScopeAccessor,
   getScopeAccessorLiteral,
@@ -162,9 +162,13 @@ function getHTMLReadBase(
   { binding, getter }: ResolvedRead,
 ) {
   if (getter?.hoisted) {
+    // Only client code reads this one as a value, so the server has no getter
+    // for it; the stand-in throws when called, as the getter does.
     return binding.aliasOf
       ? callRuntime("_hoist_read_error")
-      : getBindingGetterIdentifier(binding, getter.hoisted);
+      : binding.getters!.get(getter.hoisted)
+        ? getBindingGetterIdentifier(binding, getter.hoisted)
+        : importRuntime("_hoist_read_error");
   }
 
   if (binding.type === BindingType.dom) {

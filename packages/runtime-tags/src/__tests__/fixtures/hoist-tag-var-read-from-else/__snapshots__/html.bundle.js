@@ -2,7 +2,6 @@
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_hoist($scope0_id, "a1");
 	_if(() => {
 		if (input.a) {
 			const $scope1_id = _scope_id();
@@ -12,7 +11,7 @@ var template_default = _template("a", (input) => {
 		} else {
 			const $scope2_id = _scope_id();
 			_html(`<button>${_text_mark($scope2_id, "b", "none")}</button>${_el_mark($scope2_id, "a")}`);
-			_script($scope2_id, "a2");
+			_script($scope2_id, "a1");
 			_scope($scope2_id, { _: _scope_with_id($scope0_id) });
 			return 1;
 		}

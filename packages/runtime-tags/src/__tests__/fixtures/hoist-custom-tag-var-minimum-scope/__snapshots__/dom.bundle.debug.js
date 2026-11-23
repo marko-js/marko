@@ -11,9 +11,9 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", ""
 // template.marko
 const $template = "<pre id=root></pre><pre id=outer></pre><pre id=inner></pre><!><!>";
 const $walks = " b b b%c";
-const $ref_getter = _hoist_resume("__tests__/template.marko_0_ref#2:3/hoist", "ref", "BranchScopes:#text/0", "BranchScopes:#text/3");
-const $for_content__ref_getter = _hoist_resume("__tests__/template.marko_1_ref#2:3/hoist", "ref", "BranchScopes:#text/0");
-const $for_content2__ref_getter = _hoist_resume("__tests__/template.marko_2_ref#3/hoist", "ref");
+const $ref_getter = /*@__PURE__*/ _hoist("ref", "BranchScopes:#text/0", "BranchScopes:#text/3");
+const $for_content__ref_getter = /*@__PURE__*/ _hoist("ref", "BranchScopes:#text/0");
+const $for_content2__ref_getter = /*@__PURE__*/ _hoist("ref");
 const $for_content2__setup__script = _script("__tests__/template.marko_2", ($scope) => _el_read($scope._._["#pre/2"]).innerHTML += `${[...$for_content2__ref_getter($scope)].length}; ${$for_content2__ref_getter($scope)()}\n\t`);
 const $for_content2__setup = ($scope) => {
 	$input_value($scope["#childScope/0"], `${$scope._["#LoopKey"]},${$scope["#LoopKey"]}`);

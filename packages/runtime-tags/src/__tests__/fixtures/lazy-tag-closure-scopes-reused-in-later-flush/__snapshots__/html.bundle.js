@@ -27,9 +27,8 @@ const $Child_withLoadAssets = withLoadAssets(() => child_default, "a", flush$1, 
 var template_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_hoist($scope0_id, "b0");
 	const $Item_content__subscribers = /* @__PURE__ */ new Set();
-	const Item = { content: _content_resume("b1", () => {
+	const Item = { content: _content_resume("b0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<span>x</span>${_el_mark($scope1_id, "a")}`);
@@ -40,6 +39,6 @@ var template_default = _template("b", (input) => {
 		_scope_id();
 		Item.content({});
 	}, 0);
-	_script($scope0_id, "b2", 0);
+	_script($scope0_id, "b1", 0);
 	_scope($scope0_id, { B1: $Item_content__subscribers });
 }, 1);

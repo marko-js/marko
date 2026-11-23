@@ -11,9 +11,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const $el_getter = _hoist($scope0_id, "__tests__/template.marko_0_#span#1:0/hoist");
 	const $child_content__subscribers = new Set();
-	const $el2_getter = _hoist($scope0_id, "__tests__/template.marko_0_#div#3:0/hoist");
 	const $inputshowChildnull_content__subscribers = new Set();
 	const $inputshowsectionnull_content__subscribers = new Set();
 	child_default({ content: _content("__tests__/template.marko_1*content", () => {
@@ -24,7 +22,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) });
 	_dynamic_tag($scope0_id, "#text/1", input.show ? child_default : null, {}, _content("__tests__/template.marko_2*content", () => {
 		const $scope2_id = _scope_id();
-		const $inputshowChildnull_content__$el2_getter = _hoist($scope2_id, "__tests__/template.marko_2_#div#3:0/hoist");
 		const $child_content2__subscribers = new Set();
 		_scope_reason();
 		child_default({ content: _content("__tests__/template.marko_3*content", () => {
