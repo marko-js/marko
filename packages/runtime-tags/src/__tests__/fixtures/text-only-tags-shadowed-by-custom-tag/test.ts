@@ -1,9 +1,10 @@
 import assert from "node:assert/strict";
 
 import type { TestConfig } from "../../main.test";
+import { named } from "../../utils/resolve";
 
 export const config: TestConfig = {
-  steps: [{}, initial, click, incremented],
+  steps: [{}, named(initial), click, named(incremented)],
 };
 
 function initial(document: Document) {

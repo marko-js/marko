@@ -1,12 +1,13 @@
 import assert from "node:assert/strict";
 
 import type { TestConfig } from "../../main.test";
+import { named } from "../../utils/resolve";
 
 const a = "</script><!--<script>";
 
 export const config: TestConfig = {
   equivalent: false,
-  steps: [{ a }, parseJSON],
+  steps: [{ a }, named(parseJSON)],
 };
 
 function parseJSON(document: Document) {

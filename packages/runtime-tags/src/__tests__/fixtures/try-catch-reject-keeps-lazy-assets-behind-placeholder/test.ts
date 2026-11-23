@@ -1,10 +1,10 @@
 import type { TestConfig } from "../../main.test";
-import { flush } from "../../utils/resolve";
+import { flush, named } from "../../utils/resolve";
 
 // A sibling rejects before the first flush, dropping the body behind the
 // placeholder and its lazy tag's script; the catch's own tag writes it again.
 export const config: TestConfig = {
-  steps: [{}, flush, countLoadScripts],
+  steps: [{}, flush, named(countLoadScripts)],
   equivalent: false,
   skip_csr: true,
 };

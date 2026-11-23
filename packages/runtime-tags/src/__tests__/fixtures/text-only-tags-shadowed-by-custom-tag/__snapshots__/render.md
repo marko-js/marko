@@ -15,10 +15,7 @@
 </div>
 ```
 
-# Update
-```js
-assertBodies(document, 1);
-```
+# Update initial
 
 # Update
 ```js
@@ -45,7 +42,4 @@ UPDATE: .title::text@6 "1" => "2"
 UPDATE: .textarea::text@9 "1" => "2"
 ```
 
-# Update
-```js
-assertBodies(document, 2);
-```
+# Update incremented

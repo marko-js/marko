@@ -16,22 +16,7 @@
 </output>
 ```
 
-# Update
-```js
-const view = document.defaultView;
-const Observer = view.MutationObserver;
-view.__attached = 0;
-view.MutationObserver = class extends Observer {
-  constructor(callback) {
-    super(callback);
-    view.__attached++;
-  }
-  disconnect() {
-    view.__attached--;
-    super.disconnect();
-  }
-};
-```
+# Update trackObservers
 
 # Update
 ```js
@@ -85,14 +70,7 @@ UPDATE: output::text@7 "1" => "2"
 UPDATE: details[data-n] "1" => "2"
 ```
 
-# Update
-```js
-const attached = (document.defaultView).__attached;
-assert.ok(
-  attached <= 1,
-  `two spread re-renders left ${attached} MutationObservers attached`,
-);
-```
+# Update assertNoExtraObservers
 
 # Update
 ```js

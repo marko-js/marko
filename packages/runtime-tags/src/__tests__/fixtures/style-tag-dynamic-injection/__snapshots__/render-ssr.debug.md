@@ -7,11 +7,4 @@
 </div>
 ```
 
-# Update
-```js
-const text = document.querySelector("style").textContent;
-assert.equal(
-  text.slice(text.indexOf("{")).replace(/--[^:]+:/, "--x:"),
-  expected,
-);
-```
+# Update assertShellRule
