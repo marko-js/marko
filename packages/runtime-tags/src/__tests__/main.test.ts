@@ -25,6 +25,7 @@ import {
   type FlushType,
   isDestroy,
   isFlush,
+  isNamed,
   isThrows,
   isWait,
   resetResolveState,
@@ -663,7 +664,7 @@ async function runSteps(
       if (isThrows(update)) {
         tracker.logErrors(update);
       } else {
-        tracker.logUpdate(update);
+        tracker.logUpdate(isNamed(update) ? update.name : update);
       }
     } else if (opts.onInput) {
       opts.onInput(update);

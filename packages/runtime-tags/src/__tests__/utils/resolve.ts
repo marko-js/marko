@@ -80,6 +80,13 @@ export function throws(fn: (...args: any[]) => void) {
   return Object.assign(fn, { throws: true });
 }
 
+// A step that is no page action (an assertion, a probe, instrumentation): the
+// log names it by its function's name instead of printing its body.
+export type Named = ReturnType<typeof named>;
+export function named(fn: (document: Document) => unknown) {
+  return Object.assign(fn, { named: true });
+}
+
 export function isWait(value: any): value is Wait {
   return typeof value === "function" && value.wait;
 }
@@ -94,6 +101,10 @@ export function isDestroy(value: any): value is Destroy {
 
 export function isThrows(value: any): value is Throws {
   return typeof value === "function" && value.throws;
+}
+
+export function isNamed(value: any): value is Named {
+  return typeof value === "function" && value.named;
 }
 
 export function resolveAfter<T>(value: T, id?: number) {

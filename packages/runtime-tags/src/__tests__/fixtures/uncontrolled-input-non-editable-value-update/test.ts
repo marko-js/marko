@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 
 import type { TestConfig } from "../../main.test";
+import { named } from "../../utils/resolve";
 
 function update(document: Document) {
   document.querySelectorAll("button")[0].click();
@@ -44,5 +45,5 @@ function assertRemoved(document: Document) {
 }
 
 export const config: TestConfig = {
-  steps: [{}, update, assertUpdated, remove, assertRemoved],
+  steps: [{}, update, assertUpdated, remove, named(assertRemoved)],
 };

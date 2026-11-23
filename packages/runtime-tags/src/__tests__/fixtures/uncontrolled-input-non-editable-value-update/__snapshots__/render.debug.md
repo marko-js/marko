@@ -192,21 +192,4 @@ UPDATE: form > input:nth-of-type(7)[value] "b" => null
 UPDATE: form > input:nth-of-type(8)[value] "b" => null
 ```
 
-# Update
-```js
-for (const input of document.querySelectorAll("input")) {
-  assert.equal(input.hasAttribute("value"), false, `${input.type} attribute`);
-  assert.equal(
-    input.value,
-    input.type === "checkbox" || input.type === "radio" ? "on" : "",
-    `${input.type} value`,
-  );
-}
-
-const form = document.querySelector("form");
-const data = new form.ownerDocument.defaultView.FormData(form);
-assert.equal(data.get("checkbox"), "on");
-assert.equal(data.get("dynamic"), "");
-assert.equal(data.get("hidden"), "");
-assert.equal(data.get("radio"), "on");
-```
+# Update assertRemoved

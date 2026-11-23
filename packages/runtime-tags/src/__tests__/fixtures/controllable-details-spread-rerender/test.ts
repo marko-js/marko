@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 
 import type { TestConfig } from "../../main.test";
+import { named } from "../../utils/resolve";
 
 // Tracks observers still attached, so replacing one reads the same as never
 // attaching a second.
@@ -43,10 +44,10 @@ const toggle = (document: Document) => {
 export const config: TestConfig = {
   steps: [
     {},
-    trackObservers,
+    named(trackObservers),
     bump,
     bump,
-    assertNoExtraObservers,
+    named(assertNoExtraObservers),
     toggle,
     toggle,
   ],

@@ -21,12 +21,7 @@ INSERT: span, ::text(" caught ERROR!")
 LOG "loaded catch"
 ```
 
-# Update
-```js
-document.defaultView.console.log(
-  document.querySelectorAll('script[src="child.marko.load.mjs"]').length,
-);
-```
+# Update countLoadScripts
 ## Console
 ```
 LOG 1

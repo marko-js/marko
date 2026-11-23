@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 
 import type { TestConfig } from "../../main.test";
+import { named } from "../../utils/resolve";
 
 export const config: TestConfig = {
   equivalent: false,
@@ -23,11 +24,11 @@ export const config: TestConfig = {
 // Asserts the current declarations of the dynamic style shell rule, with the
 // selector prefix and generated custom property name normalized away.
 function shellRule(expected: string) {
-  return (document: Document) => {
+  return named(function assertShellRule(document: Document) {
     const text = document.querySelector("style")!.textContent!;
     assert.equal(
       text.slice(text.indexOf("{")).replace(/--[^:]+:/, "--x:"),
       expected,
     );
-  };
+  });
 }

@@ -7,8 +7,4 @@
 </script>
 ```
 
-# Update
-```js
-const script = document.querySelector("[type='application/ld+json']");
-assert.deepEqual(JSON.parse(script.textContent), { a });
-```
+# Update parseJSON

@@ -21,12 +21,4 @@
 document.querySelectorAll(`input`)[1].click();
 ```
 
-# Update
-```js
-assert.deepEqual(
-  [...document.querySelectorAll(`input`)].map(
-    (input) => (input).checked,
-  ),
-  [true, false],
-);
-```
+# Update assertGroupReverted

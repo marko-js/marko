@@ -5,10 +5,7 @@
 </button>
 ```
 
-# Update
-```js
-assertTitles(document, "&amp;", 1);
-```
+# Update initial
 
 # Update
 ```js
@@ -28,7 +25,4 @@ REMOVE: title::text("& & & < &amp; - 1")
 INSERT: title::text("& & & < &amp; - 2")
 ```
 
-# Update
-```js
-assertTitles(document, "&amp;", 2);
-```
+# Update incremented

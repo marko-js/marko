@@ -7,14 +7,7 @@
 </div>
 ```
 
-# Update
-```js
-const text = document.querySelector("style").textContent;
-assert.equal(
-  text.slice(text.indexOf("{")).replace(/--[^:]+:/, "--x:"),
-  expected,
-);
-```
+# Update assertShellRule
 
 # Update `{"color":"red/* ("}`
 ```html
@@ -30,14 +23,7 @@ REMOVE: .cM_0::text(".cM_0~*{--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bf
 INSERT: .cM_0::text(".cM_0~*{--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19injection-1btemplate-1amarko_0:red\\/* ();}")
 ```
 
-# Update
-```js
-const text = document.querySelector("style").textContent;
-assert.equal(
-  text.slice(text.indexOf("{")).replace(/--[^:]+:/, "--x:"),
-  expected,
-);
-```
+# Update assertShellRule
 
 # Update `{"color":"red; background: blue"}`
 ```html
@@ -53,14 +39,7 @@ REMOVE: .cM_0::text(".cM_0~*{--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bf
 INSERT: .cM_0::text(".cM_0~*{--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19injection-1btemplate-1amarko_0:red\\3B  background: blue;}")
 ```
 
-# Update
-```js
-const text = document.querySelector("style").textContent;
-assert.equal(
-  text.slice(text.indexOf("{")).replace(/--[^:]+:/, "--x:"),
-  expected,
-);
-```
+# Update assertShellRule
 
 # Update `{"color":"green\\"}`
 ```html
@@ -76,14 +55,7 @@ REMOVE: .cM_0::text(".cM_0~*{--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bf
 INSERT: .cM_0::text(".cM_0~*{--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19injection-1btemplate-1amarko_0:green\\\\;}")
 ```
 
-# Update
-```js
-const text = document.querySelector("style").textContent;
-assert.equal(
-  text.slice(text.indexOf("{")).replace(/--[^:]+:/, "--x:"),
-  expected,
-);
-```
+# Update assertShellRule
 
 # Update `{"color":"green"}`
 ```html
@@ -99,11 +71,4 @@ REMOVE: .cM_0::text(".cM_0~*{--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bf
 INSERT: .cM_0::text(".cM_0~*{--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19injection-1btemplate-1amarko_0:green;}")
 ```
 
-# Update
-```js
-const text = document.querySelector("style").textContent;
-assert.equal(
-  text.slice(text.indexOf("{")).replace(/--[^:]+:/, "--x:"),
-  expected,
-);
-```
+# Update assertShellRule
