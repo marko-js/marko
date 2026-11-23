@@ -1,0 +1,3 @@
+<let/a=1 valueChange=(input.on ? "log" : "")/>
+<let/b=1 valueChange=(input.on ? "log" : ((next) => console.log(next)))/>
+<button onClick() { a++; b++ }>${a}|${b}</button>

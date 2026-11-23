@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-let-value-change-number/template.marko:1:23
+    > 1 | <let/x=1 valueChange=(input.wide ? 2 : 1)/>
+        |                       ^^^^^^^^^^^^^^^^^^ The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) [`valueChange=` attribute](https://markojs.com/docs/reference/core-tag#controllable-let) must be a function.
+      2 | <button onClick() { x++ }>${x}</button>
+      3 |

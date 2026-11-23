@@ -1,4 +1,8 @@
-import { _el_read_error, _hoist_read_error } from "../common/errors";
+import {
+  _el_read_error,
+  _hoist_read_error,
+  assertHandlerIsFunction,
+} from "../common/errors";
 import { decodeAccessor } from "../common/helpers";
 import { toArray } from "../common/opt";
 import {
@@ -84,6 +88,9 @@ export function _let_change<T>(id: EncodedAccessor, fn?: SignalFn) {
         base(scope, value);
       }
     } else if (scope[valueChangeAccessor]) {
+      if (MARKO_DEBUG) {
+        assertHandlerIsFunction("valueChange", scope[valueChangeAccessor]);
+      }
       scope[valueChangeAccessor](value);
     } else {
       base(scope, value);
