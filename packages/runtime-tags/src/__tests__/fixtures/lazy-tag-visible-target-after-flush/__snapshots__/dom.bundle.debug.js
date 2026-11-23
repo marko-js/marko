@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!><!>";
 const $walks = "b%/&b%c";
-const $load_Child_trigger = /*@__PURE__*/ _load_visible_trigger("#footer");
+const $load_Child_trigger = /*@__PURE__*/ _load_trigger("ready:__tests__/child.marko", /*@__PURE__*/ _load_visible_trigger("#footer"));
 let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.setup.mjs")));
 let $load_Child_tag_value = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.value.mjs")));
 const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "loading...");

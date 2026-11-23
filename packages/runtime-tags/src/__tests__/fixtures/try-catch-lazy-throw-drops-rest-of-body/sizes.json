@@ -5,8 +5,8 @@
       "brotli": 50
     },
     "thrower.marko.load.mjs": {
-      "min": 214,
-      "brotli": 157
+      "min": 230,
+      "brotli": 169
     },
     "shared": {
       "min": 379,

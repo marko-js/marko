@@ -9,7 +9,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 // template.marko
 const $template = "<button>Inc</button><!><!>";
 const $walks = " b%/&c";
-const $load_Child_trigger = /*@__PURE__*/ _load_visible_trigger("body");
+const $load_Child_trigger = /*@__PURE__*/ _load_trigger("ready:__tests__/child.marko", /*@__PURE__*/ _load_visible_trigger("body"));
 let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.setup.mjs")));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.input_value.mjs")));
 const $value = /*@__PURE__*/ _let("value/3", ($scope) => $load_Child_tag_input_value($scope["#childScope/2"], $scope.value));

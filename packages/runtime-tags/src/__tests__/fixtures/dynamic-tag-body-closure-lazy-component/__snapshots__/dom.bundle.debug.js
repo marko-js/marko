@@ -38,7 +38,7 @@ var heading_default = /*@__PURE__*/ _template("__tests__/tags/heading.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button id=inc>inc</button>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)("b%c");
-const $load_Card_trigger = /*@__PURE__*/ _load_idle_trigger();
+const $load_Card_trigger = /*@__PURE__*/ _load_trigger("ready:__tests__/tags/card.marko", /*@__PURE__*/ _load_idle_trigger());
 const Card = /*@__PURE__*/ _load_template("__tests__/tags/card.marko", /*@__PURE__*/ $load_Card_trigger(($_) => import("./card.mjs").then((mod) => mod.default)));
 const $depth = /*@__PURE__*/ _let("depth/2", ($scope) => $input_depth($scope["#childScope/1"], $scope.depth));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

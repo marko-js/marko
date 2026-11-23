@@ -9,7 +9,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 // template.marko
 const $template = "<button class=show-tag>tag</button><button class=show-dynamic>dynamic</button><span id=go>go</span><!><!><!>";
 const $walks = " b c%b%c";
-const $load_Child_trigger = /*@__PURE__*/ _load_event_trigger("click", "#go");
+const $load_Child_trigger = /*@__PURE__*/ _load_trigger("ready:__tests__/child.marko", /*@__PURE__*/ _load_event_trigger("click", "#go"));
 const Child = /*@__PURE__*/ _load_template("__tests__/child.marko", /*@__PURE__*/ $load_Child_trigger(($_) => import("./child.mjs").then((mod) => mod.default)));
 let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.setup.mjs")));
 let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.input_label.mjs")));

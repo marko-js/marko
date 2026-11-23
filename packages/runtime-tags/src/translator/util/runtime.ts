@@ -60,11 +60,11 @@ const pureDOMFunctions = new Set<string>([
   "_load_signal",
   "_load_setup",
   "_load_template",
+  "_load_trigger",
   "_load_visible_trigger",
   "_load_event_trigger",
   "_load_idle_trigger",
   "_load_media_trigger",
-  "_load_race_trigger",
 ] satisfies (DOMRuntimeHelpers | DebugRuntimeHelpers)[]);
 
 export function importRuntime(name: RuntimeHelpers) {

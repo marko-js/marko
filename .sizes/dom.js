@@ -1,4 +1,4 @@
-// size: 25776 (min) 9616 (brotli)
+// size: 25726 (min) 9623 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -814,10 +814,13 @@ function walkInternal(currentWalkIndex, walkCodes, scope) {
     } else storedMultiplier = currentMultiplier * 10 + value - 117;
 }
 function ready(readyId) {
-  (readyIds ||= /* @__PURE__ */ new Set()).add(readyId);
+  ((readyIds ||= {})[readyId]?.forEach((resolve) => resolve()), (readyIds[readyId] = -1));
   for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
 }
 function readyFailed(readyId) {}
+function onReady(readyId, resolve) {
+  return !~(readyIds ||= {})[readyId] || !(readyIds[readyId] ||= []).push(resolve);
+}
 function initEmbedded(readyId, runtimeId) {
   (embedRenders ||
     ((embedRenders = /* @__PURE__ */ new Map()),
@@ -981,7 +984,7 @@ function init(runtimeId = "M") {
                   if (
                     typeof serialized == "number" ||
                     !Object.keys(serialized).every(
-                      (dep) => readyIds.has(dep) && (render.b[dep]?.n || 0) >= serialized[dep],
+                      (dep) => !~readyIds[dep] && (render.b[dep]?.n || 0) >= serialized[dep],
                     )
                   )
                     break;
@@ -1010,8 +1013,8 @@ function init(runtimeId = "M") {
               if ((processResumes(render.r, effects), readyIds && render.b))
                 for (let progress = 1; progress;) {
                   progress = 0;
-                  for (let readyId of readyIds) {
-                    let resumes = render.b[readyId];
+                  for (let readyId in readyIds) {
+                    let resumes = !~readyIds[readyId] && render.b[readyId];
                     resumes && processResumes(resumes, effects) && (progress = 1);
                   }
                 }
@@ -2150,45 +2153,35 @@ function _load_signal(load) {
     };
   return apply;
 }
-function _load_visible_trigger(selector, options) {
-  let pending, el;
+function _load_trigger(readyId, ...triggers) {
+  let pending;
   return (load) => (_) =>
-    (pending ||= new Promise(
-      (resolve) =>
-        (el = getSelectorOrResolve(selector, resolve)) &&
-        new IntersectionObserver(
-          (entries, io) =>
-            entries.some((entry) => entry.isIntersecting) && resolve(io.disconnect()),
-          options,
-        ).observe(el),
+    (pending ||= new Promise((resolve) =>
+      onReady(readyId, resolve) ? resolve() : triggers.forEach((trigger) => trigger(resolve)),
     )).then(load);
+}
+function _load_visible_trigger(selector, options) {
+  let el;
+  return (resolve) =>
+    (el = getSelectorOrResolve(selector, resolve)) &&
+    new IntersectionObserver(
+      (entries, io) => entries.some((entry) => entry.isIntersecting) && resolve(io.disconnect()),
+      options,
+    ).observe(el);
 }
 function _load_idle_trigger(options) {
-  let pending;
-  return (load) => (_) =>
-    (pending ||= new Promise((resolve) =>
-      (self.requestIdleCallback || resolve)(resolve, options),
-    )).then(load);
+  return (resolve) => (self.requestIdleCallback || resolve)(resolve, options);
 }
 function _load_event_trigger(event, selector) {
-  let pending;
-  return (load) => (_) =>
-    (pending ||= new Promise((resolve) =>
-      getSelectorOrResolve(selector, resolve)?.addEventListener(event, resolve, { once: !0 }),
-    )).then(load);
+  return (resolve) =>
+    getSelectorOrResolve(selector, resolve)?.addEventListener(event, resolve, { once: !0 });
 }
 function _load_media_trigger(query) {
-  let pending, mql;
-  return (load) => (_) =>
-    (pending ||= new Promise((resolve) =>
-      (mql = matchMedia(query)).matches
-        ? resolve()
-        : mql.addEventListener("change", resolve, { once: !0 }),
-    )).then(load);
-}
-function _load_race_trigger(...triggers) {
-  let pending;
-  return (load) => (_) => (pending ||= Promise.race(triggers.map((t) => t(noop)()))).then(load);
+  let mql;
+  return (resolve) =>
+    (mql = matchMedia(query)).matches
+      ? resolve()
+      : mql.addEventListener("change", resolve, { once: !0 });
 }
 function getSelectorOrResolve(selector, resolve) {
   return document.querySelector(selector) || resolve();

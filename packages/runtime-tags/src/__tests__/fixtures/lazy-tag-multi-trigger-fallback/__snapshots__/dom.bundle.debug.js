@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%/&c";
-const $load_Child_trigger = /*@__PURE__*/ _load_race_trigger(/*@__PURE__*/ _load_event_trigger("click", ".nope1"), /*@__PURE__*/ _load_event_trigger("mouseover", ".nope2"));
+const $load_Child_trigger = /*@__PURE__*/ _load_trigger("ready:__tests__/child.marko", /*@__PURE__*/ _load_event_trigger("click", ".nope1"), /*@__PURE__*/ _load_event_trigger("mouseover", ".nope2"));
 let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.setup.mjs")));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.input_value.mjs")));
 function $setup($scope) {

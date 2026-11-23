@@ -1,0 +1,10 @@
+import Child from "./child.marko" with { load: "visible#target" }
+
+<let/show=false/>
+<button.toggle onClick() { show = !show }>toggle</button>
+<span#target>target</span>
+<Child label="server"/>
+<if=show>
+  <Child label="tag"/>
+</if>
+<${show ? Child : null} label="dynamic"/>

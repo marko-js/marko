@@ -1,0 +1,12 @@
+import First from "./first.marko" with { load: "on-click#first" }
+import Second from "./second.marko" with { load: "on-click#second" }
+
+<let/show=false/>
+<button.toggle onClick() { show = !show }>toggle</button>
+<span#first>first</span>
+<span#second>second</span>
+<First/>
+<Second/>
+<if=show>
+  <Second/>
+</if>

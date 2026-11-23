@@ -1,7 +1,7 @@
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!><!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&%/&c`)($walks$1);
-const $load_Child_trigger = /*@__PURE__*/ _load_idle_trigger();
+const $load_Child_trigger = /*@__PURE__*/ _load_trigger("ready:__tests__/child.marko", /*@__PURE__*/ _load_idle_trigger());
 let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.setup.mjs")));
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);

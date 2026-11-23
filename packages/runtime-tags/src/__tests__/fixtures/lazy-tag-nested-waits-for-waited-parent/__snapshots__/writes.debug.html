@@ -1,0 +1,45 @@
+<script async type=module src="grand-child.marko.load.mjs"></script><button
+  class=toggle>toggle</button><!--M_$1 #button/0--><span id=go>go</span><span
+  id=other>other</span><button
+  class=press>press</button><!--M_$3 #button/0--><span>other
+  loaded</span><!--M_]1 #text/5-->
+<script>
+  ((h, d, l = $ => {
+    d || (d = new Range().createContextualFragment(h), d.querySelectorAll(
+      "script").forEach(s => s.onerror = () => console.error(
+      `The lazy module for "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-waits-for-waited-parent/child.marko" failed to load; its server-rendered content cannot become interactive.`
+      )), document.head.append(d))
+  }) => (e => e?.addEventListener("click", l, {
+    once: 1
+  }))(document.querySelector("#go") || (console.warn(
+    "A lazy load trigger could not find an element matching \"#go\". The module was loaded immediately."
+    ), l())))(
+    `\x3Cscript async type=module src="child.marko.load.mjs">\x3C/script>`);
+  ((h, d, l = $ => {
+    d || (d = new Range().createContextualFragment(h), d.querySelectorAll(
+      "script").forEach(s => s.onerror = () => console.error(
+      `The lazy module for "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-waits-for-waited-parent/other.marko" failed to load; its server-rendered content cannot become interactive.`
+      )), document.head.append(d))
+  }) => (e => e?.addEventListener("click", l, {
+    once: 1
+  }))(document.querySelector("#other") || (console.warn(
+    "A lazy load trigger could not find an element matching \"#other\". The module was loaded immediately."
+    ), l())))(
+    `\x3Cscript async type=module src="other.marko.load.mjs">\x3C/script>`);
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-waits-for-waited-parent/grand-child.marko": [{
+        "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-waits-for-waited-parent/child.marko": 0
+      }, _ => [3, {
+        input_onPress: _._[
+          "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-waits-for-waited-parent/child.marko_0/onPress"
+          ]
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-waits-for-waited-parent/grand-child.marko_0_input_onPress#3 3"
+    ]
+  };
+  M._.r = [
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-waits-for-waited-parent/template.marko_0 1"
+  ];
+  M._.w()
+</script>

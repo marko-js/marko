@@ -1,0 +1,43 @@
+<button class=toggle>toggle</button><!--M_$1 #button/0--><span
+  id=first>first</span><span id=second>second</span><span>first
+  loaded</span><button
+  class=count>0<!--M_$3 #text/1--></button><!--M_$3 #button/0--><!--M_]1 #text/5-->
+<script>
+  ((h, d, l = $ => {
+    d || (d = new Range().createContextualFragment(h), d.querySelectorAll(
+      "script").forEach(s => s.onerror = () => console.error(
+      `The lazy module for "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-waits-past-other-server-trigger/first.marko" failed to load; its server-rendered content cannot become interactive.`
+      )), document.head.append(d))
+  }) => (e => e?.addEventListener("click", l, {
+    once: 1
+  }))(document.querySelector("#first") || (console.warn(
+    "A lazy load trigger could not find an element matching \"#first\". The module was loaded immediately."
+    ), l())))(
+    `\x3Cscript async type=module src="first.marko.load.mjs">\x3C/script>`);
+  ((h, d, l = $ => {
+    d || (d = new Range().createContextualFragment(h), d.querySelectorAll(
+      "script").forEach(s => s.onerror = () => console.error(
+      `The lazy module for "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-waits-past-other-server-trigger/second.marko" failed to load; its server-rendered content cannot become interactive.`
+      )), document.head.append(d))
+  }) => (e => e?.addEventListener("click", l, {
+    once: 1
+  }))(document.querySelector("#second") || (console.warn(
+    "A lazy load trigger could not find an element matching \"#second\". The module was loaded immediately."
+    ), l())))(
+    `\x3Cscript async type=module src="second.marko.load.mjs">\x3C/script>`);
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-waits-past-other-server-trigger/second.marko": [
+      _ => [3, {
+        count: 0
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-waits-past-other-server-trigger/second.marko_0 3"
+    ]
+  };
+  M._.r = [_ => [1, {
+      show: !1
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-waits-past-other-server-trigger/template.marko_0 1"
+  ];
+  M._.w()
+</script>

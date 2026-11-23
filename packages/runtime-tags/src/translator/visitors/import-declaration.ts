@@ -168,7 +168,10 @@ export default {
             return;
           } else {
             const statements: t.Statement[] = [];
-            const triggerExpr = loadTriggersToExpression(loadImport);
+            const triggerExpr = loadTriggersToExpression(
+              loadImport,
+              getReadyId(loadFile)!,
+            );
             let trigger: t.Identifier | undefined;
             if (triggerExpr) {
               trigger = generateUidIdentifier(`load_${local.name}_trigger`);
@@ -306,13 +309,17 @@ function trackRegisteredImports(importDecl: t.NodePath<t.ImportDeclaration>) {
   }
 }
 
-function loadTriggersToExpression(loadConfig: LoadImportConfig) {
+function loadTriggersToExpression(
+  loadConfig: LoadImportConfig,
+  readyId: string,
+) {
   if (loadConfig.render) return;
 
-  const triggers = loadConfig.triggers.map(toDOMTriggerExpression);
-  return triggers.length === 1
-    ? triggers[0]
-    : callRuntime("_load_race_trigger", ...triggers);
+  return callRuntime(
+    "_load_trigger",
+    t.stringLiteral(readyId),
+    ...loadConfig.triggers.map(toDOMTriggerExpression),
+  );
 }
 
 function toDOMTriggerExpression(trigger: LoadTrigger) {

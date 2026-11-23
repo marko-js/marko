@@ -62,16 +62,16 @@ export interface RenderData {
   p?: Record<string | number, AwaitCounter>;
 }
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
+type Resolve = (value?: unknown) => void;
 
 export const _resumed: Record<string, unknown> = {};
 let curRenders: Renders;
 let embedRenders:
   | undefined
   | Map<Text, [renderId: string, scopes: Record<string | number, Scope>]>;
-// Only assigned by `ready()`, so the lazy stream machinery guarded by
-// `readyIds` checks is dropped from apps without lazy tags.
-let readyIds: undefined | Set<string>;
-let failedIds: undefined | Set<string>;
+// Each ready id's load entry ran (-1, so `!~` tests it), or the load triggers waiting on it. Only
+// `ready()` and `onReady()` assign it, so apps without lazy tags fold its users.
+let readyIds: undefined | Record<string, -1 | Resolve[]>;
 // Lazy load support latch, set by `lazy.feat`, which an entry reaching lazy
 // tags imports ahead of resume; other pages fold it and the retention away.
 let lazyEnabled: undefined | 1;
@@ -79,24 +79,32 @@ let lazyEnabled: undefined | 1;
 // Rescans every render's ready channels: there is one per lazy module and a
 // page loads few, so an index would cost more than the scan.
 export function ready(readyId: string) {
-  (readyIds ||= new Set()).add(readyId);
+  // A load entry runs once, so its id is not ready yet.
+  ((readyIds ||= {})[readyId] as Resolve[] | undefined)?.forEach((resolve) =>
+    resolve(),
+  );
+  readyIds[readyId] = -1;
   for (const renderId in curRenders) {
     runResumeEffects(curRenders[renderId]);
   }
 }
 
-// A lazy module that will never arrive can never deliver its channel's
-// pending resume data: the debug build records the failure per channel
-// (repeat reports fold) and says so instead of staying silent. Production
-// builds compile no reporting call sites, so this strips away entirely.
+// A lazy module that never arrives leaves its channel's resume data pending;
+// its load entry, which runs once, reports it in debug builds only.
 export function readyFailed(readyId: string) {
   if (MARKO_DEBUG) {
-    if (failedIds?.has(readyId) || readyIds?.has(readyId)) return;
-    (failedIds ||= new Set()).add(readyId);
     console.error(
       `The lazy module for "${readyId}" failed to load; its server-rendered content cannot become interactive.`,
     );
   }
+}
+
+// Whether the load entry of `readyId` ran; until it does, `ready()` resolves it.
+export function onReady(readyId: string, resolve: Resolve) {
+  return (
+    !~((readyIds ||= {})[readyId] as number) ||
+    !((readyIds[readyId] ||= []) as Resolve[]).push(resolve)
+  );
 }
 
 export function withLazy() {
@@ -373,7 +381,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 typeof serialized === "number" ||
                 !Object.keys(serialized).every(
                   (dep) =>
-                    readyIds!.has(dep) &&
+                    !~(readyIds![dep] as number) &&
                     (render.b![dep]?.n || 0) >= serialized[dep],
                 )
               ) {
@@ -430,8 +438,9 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             // unblock another's deps marker.
             for (let progress: unknown = 1; progress;) {
               progress = 0;
-              for (const readyId of readyIds) {
-                const resumes = render.b[readyId];
+              for (const readyId in readyIds) {
+                const resumes =
+                  !~(readyIds[readyId] as number) && render.b[readyId];
                 if (resumes && processResumes(resumes, effects)) {
                   progress = 1;
                 }
