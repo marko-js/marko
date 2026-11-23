@@ -1,0 +1,20 @@
+<let/count=1/>
+<let/total=10/>
+<let/left=100/>
+<let/label="a"/>
+<define/Counter|{ value }|>
+  <button.counter onClick() { value++ }>${value}</button>
+</define>
+<Counter value:=count/>
+<for|{ amount }| of=[{ amount: total, amountChange(next) { total = next } }]>
+  <button.amount onClick() { amount += 5 }>${amount}</button>
+</for>
+<define/Pair|{ pair: { side } }|>
+  <button.side onClick() { side-- }>${side}</button>
+</define>
+<Pair pair={ side: left, sideChange(next) { left = next } }/>
+<define/Label|{ textChange, text }|>
+  <button.label onClick() { text += "!" }>${text} ${typeof textChange}</button>
+</define>
+<Label text:=label/>
+<div>${count} ${total} ${left} ${label}</div>

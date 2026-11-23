@@ -56,31 +56,7 @@ export default function translateVar(
     );
   }
 
-  forEachIdentifierPath(tag.get("var"), (id) => {
-    if (id.node === tagVar) return;
-
-    const binding = id.node.extra?.binding;
-    if (!binding?.aliasOf) return;
-
-    if (binding.assignments && binding.property !== undefined) {
-      const changeName = binding.property + "Change";
-      const changeBinding = binding.aliasOf.propertyAliases?.get(changeName);
-      if (changeBinding && changeName !== changeBinding.name) {
-        // add a new property to the destructure list when a change handler is implicitly added
-        // eg by assigning to a destructured property.
-        const pattern = getDestructurePattern(id);
-        if (pattern) {
-          pattern.unshiftContainer(
-            "properties",
-            t.objectProperty(
-              toPropertyName(changeName),
-              t.identifier(changeBinding.name),
-            ),
-          );
-        }
-      }
-    }
-  });
+  destructureAssignedChangeHandlers(tag.get("var"));
 
   const declaration = t.variableDeclaration(kind, [
     t.variableDeclarator(tagVar, initialValue),
@@ -90,6 +66,32 @@ export default function translateVar(
   } else {
     insertStatementBefore(tag, declaration);
   }
+}
+
+// Assigning a destructured name calls its change handler, which analysis named
+// beside it: the pattern destructures it under that name.
+export function destructureAssignedChangeHandlers(pattern: t.NodePath<any>) {
+  forEachIdentifierPath(pattern, (id) => {
+    const binding = id.node.extra?.binding;
+    if (
+      binding?.aliasOf &&
+      binding.assignments &&
+      binding.property !== undefined
+    ) {
+      const changeName = binding.property + "Change";
+      // An assignment always records its change handler as a property alias.
+      const changeBinding = binding.aliasOf.propertyAliases!.get(changeName)!;
+      if (changeName !== changeBinding.name) {
+        getDestructurePattern(id)?.unshiftContainer(
+          "properties",
+          t.objectProperty(
+            toPropertyName(changeName),
+            t.identifier(changeBinding.name),
+          ),
+        );
+      }
+    }
+  });
 }
 
 export function isTagVarAssigned(tag: t.NodePath<t.MarkoTag>) {
