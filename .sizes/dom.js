@@ -1,4 +1,4 @@
-// size: 25748 (min) 9617 (brotli)
+// size: 25776 (min) 9616 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -1079,10 +1079,11 @@ function runResumeEffects(render) {
 function _var_resume(id, signal) {
   return ((_resumed[id] = (scope) => (value) => signal(scope, value)), signal);
 }
-function _el(id, accessor) {
-  return (
-    (accessor = decodeAccessor(accessor)), (_resumed[id] = (scope) => (_) => scope[accessor])
-  );
+function _el(accessor) {
+  return ((accessor = decodeAccessor(accessor)), (scope) => (_) => scope[accessor]);
+}
+function _el_resume(id, accessor) {
+  return (_resumed[id] = _el(accessor));
 }
 function _dynamic_tag_var_resume(accessor) {
   ((accessor = decodeAccessor(accessor)),

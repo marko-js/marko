@@ -2,7 +2,6 @@
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_el($scope0_id, "a0");
 	let items = [0, 1];
 	_html(`<button></button>${_el_mark($scope0_id, "a")}<ul>`);
 	_for_of(items, (item) => {
@@ -10,6 +9,6 @@ var template_default = _template("a", (input) => {
 		_html(`<li>${_text_mark($scope1_id, "a", item)}</li>`);
 		_scope($scope1_id, {});
 	}, 0, $scope0_id, "b", 1, 1, 1, "</ul>", 1);
-	_script($scope0_id, "a1");
+	_script($scope0_id, "a0");
 	_scope($scope0_id, { c: items });
 }, 1);

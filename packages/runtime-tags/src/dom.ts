@@ -95,6 +95,7 @@ export {
 export {
   _dynamic_tag_var_resume,
   _el,
+  _el_resume,
   _resumed,
   _var_resume,
   init,

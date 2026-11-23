@@ -53,6 +53,7 @@ const pureDOMFunctions = new Set<string>([
   "_for_until",
   "_for_until_unkeyed",
   "_hoist",
+  "_el",
   "_let",
   "_let_change",
   "_const",
