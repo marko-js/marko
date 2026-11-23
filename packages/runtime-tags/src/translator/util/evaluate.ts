@@ -150,6 +150,17 @@ export function getAllKinds(kind: Evaluated) {
   return allKinds(kind.traits);
 }
 
+/** Whether the value may be truthy and no function, unless a part may be one.
+ * With no falsy part, a string or number part is never empty or zero. */
+export function isNoFunction(kind: Evaluated) {
+  const kinds = getKinds(kind);
+  return !!(
+    kinds & (KIND_STRING | KIND_SCALAR | KIND_OBJECT) &&
+    !(kinds & KIND_FALSY) &&
+    !(getAllKinds(kind) & KIND_FUNCTION)
+  );
+}
+
 function computeEvaluated(value: t.Expression): Evaluated {
   const traits = getKind(value, undefined);
   return traits & CONFIDENT
@@ -427,7 +438,9 @@ function getKind(node: t.Node, at: t.NodePath | undefined): number {
           : IMPURE)
       );
     case "NewExpression":
-      return KIND_OBJECT | IMPURE;
+      // A constructor may return a function in place of the instance, as
+      // `new Proxy(fn, {})` does, which the template does not show.
+      return KIND_OBJECT | (KIND_FUNCTION << UNKNOWN_SHIFT) | IMPURE;
     case "OptionalCallExpression":
     case "TaggedTemplateExpression":
     case "ThrowStatement":

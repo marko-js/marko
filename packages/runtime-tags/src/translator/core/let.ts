@@ -16,16 +16,7 @@ import {
   coreTagLink,
 } from "../util/assert";
 import { BindingType, getDebugAccess, reserveId } from "../util/bindings";
-import evaluate, {
-  getAllKinds,
-  getKinds,
-  getValueKind,
-  isPure,
-  KIND_FALSY,
-  KIND_FUNCTION,
-  KIND_SCALAR,
-  KIND_STRING,
-} from "../util/evaluate";
+import evaluate, { getValueKind, isNoFunction, isPure } from "../util/evaluate";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { isOptimize, isOutputDOM } from "../util/marko-config";
 import { addReason } from "../util/reasons";
@@ -67,7 +58,10 @@ export default {
     assertHasVar(tag, "For example: `<let/count=0>`.");
     assertIdentifierVar(tag);
 
-    if (valueChangeAttr && isNoFunction(valueChangeAttr.value, tag)) {
+    if (
+      valueChangeAttr &&
+      isNoFunction(getValueKind(valueChangeAttr.value, tag))
+    ) {
       throw tag
         .get("attributes")
         .find((attr) => attr.node === valueChangeAttr)!
@@ -199,19 +193,4 @@ function getDeclarationHint(attr: t.MarkoAttribute) {
   if (/^[A-Za-z_$][\w$]*$/.test(attr.name)) {
     return `To declare reactive state, the variable goes after a slash: \`<let/${attr.name}=...>\`. For a one time module level value, prefix a plain JavaScript statement with \`static\`.`;
   }
-}
-
-// A value certainly truthy and no function, as `assertNativeHandlerAttr` tests
-// a native handler, or an array or object literal, which is never one.
-function isNoFunction(value: t.Expression, tag: t.NodePath<t.MarkoTag>) {
-  if (value.type === "ArrayExpression" || value.type === "ObjectExpression") {
-    return true;
-  }
-  const kind = getValueKind(value, tag);
-  const kinds = getKinds(kind);
-  return !!(
-    kinds & (KIND_STRING | KIND_SCALAR) &&
-    !(kinds & KIND_FALSY) &&
-    !(getAllKinds(kind) & KIND_FUNCTION)
-  );
 }
