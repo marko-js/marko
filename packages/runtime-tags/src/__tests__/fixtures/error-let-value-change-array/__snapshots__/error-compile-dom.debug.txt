@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-let-value-change-array/template.marko:1:22
+    > 1 | <let/x=1 valueChange=[(next) => console.log(next)]/>
+        |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) [`valueChange=` attribute](https://markojs.com/docs/reference/core-tag#controllable-let) must be a function.
+      2 | <button onClick() { x++ }>${x}</button>
+      3 |
