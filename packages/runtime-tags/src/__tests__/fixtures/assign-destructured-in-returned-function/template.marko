@@ -1,0 +1,15 @@
+<let/a=0/>
+<let/b=0/>
+<let/c=0/>
+<let/d=0/>
+<let/show=false/>
+<button.show onClick() { show = true }>show</button>
+<if=show>
+  <const/set=(() => () => {
+    ({ a = 1 } = {});
+    [b, c] = [2, 3];
+    ({ x: [d] } = { x: [4] });
+  })()/>
+  <button.set onClick=set>set</button>
+</if>
+<div>${a} ${b} ${c} ${d}</div>

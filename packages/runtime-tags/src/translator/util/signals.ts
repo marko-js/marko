@@ -1765,6 +1765,10 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
           let assignments: undefined | t.Expression[];
           forEachIdentifier(node.left, (id) => {
             const { extra } = id;
+            if (!extra?.assignment) return;
+            // Now a param of the arrow below, which a render value's replace
+            // walks again (and copies), so it must not read as the tag variable.
+            id.extra = undefined;
             if (isAssignedBindingExtra(extra)) {
               const buildAssignment = getBuildAssignment(extra);
               if (buildAssignment) {
@@ -1782,9 +1786,7 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
               }
             }
 
-            if (extra?.assignment) {
-              (params ||= []).push(t.identifier(id.name));
-            }
+            (params ||= []).push(t.identifier(id.name));
           });
           if (assignments || params) {
             const resultId = generateUid("result");
