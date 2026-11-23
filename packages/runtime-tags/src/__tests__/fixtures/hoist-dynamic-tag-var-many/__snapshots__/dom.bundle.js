@@ -3,13 +3,13 @@ const $_return = ($scope) => () => (html) => $scope.a.innerHTML = html;
 _resumed.b0 = $_return;
 
 // template.marko
-const $setHtml3_getter = _hoist_resume("a0", 2, "Aa", "Ac");
-const $for_content4__setHtml = _var_resume("a3", /*@__PURE__*/ _const(2));
+const $setHtml3_getter = /*@__PURE__*/ _hoist(2, "Aa", "Ac");
+const $for_content4__setHtml = _var_resume("a2", /*@__PURE__*/ _const(2));
 const $setHtml2_getter = /*@__PURE__*/ _hoist(2, "Ab");
-const $for_content2__setHtml = _var_resume("a2", /*@__PURE__*/ _const(2));
+const $for_content2__setHtml = _var_resume("a1", /*@__PURE__*/ _const(2));
 const $setHtml_getter = /*@__PURE__*/ _hoist(2, "Aa");
-const $for_content__setHtml = _var_resume("a1", /*@__PURE__*/ _const(2));
-const $setup__script = _script("a4", ($scope) => {
+const $for_content__setHtml = _var_resume("a0", /*@__PURE__*/ _const(2));
+const $setup__script = _script("a3", ($scope) => {
 	$setHtml_getter($scope)()("First Only");
 	$setHtml2_getter($scope)()("First Only");
 	{

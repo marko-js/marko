@@ -6,7 +6,7 @@ const $inputitemType_content__setup = ($scope) => _text($scope["#text/0"], $scop
 const $inputitemType_content = /*@__PURE__*/ _content("__tests__/template.marko_4*content", "item <!>", "b%", $inputitemType_content__setup);
 _content_closures_resume($inputitemType_content);
 const $inputtype_content = _content_resume("__tests__/template.marko_3*content", "body");
-const $item_getter = _hoist_resume("__tests__/template.marko_0_$item#2:3/hoist", "$item", "BranchScopes:#text/1");
+const $item_getter = /*@__PURE__*/ _hoist("$item", "BranchScopes:#text/1");
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputitemType_content, ($_) => $for_content__$item);
 const $for_content__input_itemType = /*@__PURE__*/ _for_closure("#text/1", ($scope) => $for_content__dynamicTag($scope, $scope._.input_itemType), 8);
 const $for_content__setup = $for_content__input_itemType;

@@ -15,6 +15,7 @@ import {
   getAssignedObject,
   getPropertyPath,
   isDirectAlias,
+  isInvokeOnlyBinding,
   isRest,
   propertiesUtil,
 } from "./bindings";
@@ -855,16 +856,32 @@ function markLazyRead(binding: Binding) {
   binding.canonical.hasLazyReads = true;
 }
 
-function addBindingGetter(binding: Binding, { invoked, hoisted }: Getter) {
+function addBindingGetter(
+  binding: Binding,
+  { invoked, hoisted }: Getter,
+  read: Read,
+  expr: ReferencedExtra,
+) {
+  const written = !invoked && !(hoisted && isClientOnlyRead(read, expr));
   const getters = (binding.getters ??= new Map());
-  if (!invoked || !getters.has(hoisted)) {
+  if (written || !getters.has(hoisted)) {
     if (hoisted === binding.section) {
       getters.delete(false);
     }
     if (hoisted || !getters.has(binding.section)) {
-      getters.set(hoisted, !invoked);
+      getters.set(hoisted, written);
     }
   }
+}
+
+// The server never runs an effect it does not send (a handler, a script), nor
+// a function value only event handlers read, so a hoist read there is never a
+// value it writes.
+function isClientOnlyRead({ fnRoot }: Read, expr: ReferencedExtra) {
+  return (
+    !!(expr.isEffect && expr.consumed) ||
+    (!!fnRoot?.derives && every(fnRoot.derives, isInvokeOnlyBinding))
+  );
 }
 
 // A lazy read is excluded from `referencedBindings` and instead reads the
@@ -904,7 +921,7 @@ function resolveReferencedBindings(
     if (getter) {
       extra.section = expr.section;
       extra.read = createResolvedRead(binding, undefined, false, getter);
-      addBindingGetter(binding, getter);
+      addBindingGetter(binding, getter, read, expr);
       // A hoisted read calls the getter from the section the getter is in.
       if (getter.hoisted) {
         binding.hoists = sectionUtil.add(binding.hoists, getter.hoisted);

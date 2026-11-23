@@ -11,8 +11,8 @@ var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $templat
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>set</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)("D%l");
-const $el2_getter = _hoist_resume("__tests__/template.marko_0_#span#3:0/hoist", "#span/0", "BranchScopes:#text/1", "ClosureScopes:1");
-const $el1_getter = _hoist_resume("__tests__/template.marko_0_#p#2:0/hoist", "#p/0", "BranchScopes:#text/0", "ClosureScopes:1");
+const $el2_getter = /*@__PURE__*/ _hoist("#span/0", "BranchScopes:#text/1", "ClosureScopes:1");
+const $el1_getter = /*@__PURE__*/ _hoist("#p/0", "BranchScopes:#text/0", "ClosureScopes:1");
 const $wrap_content__if = /*@__PURE__*/ _if("#text/0", "<p></p>", " ");
 const $wrap_content__input_a = /*@__PURE__*/ _closure_get("input_a/6", ($scope) => $wrap_content__if($scope, $scope._.input_a ? 0 : 1), 0, "__tests__/template.marko_1_input_a#0:4/subscribe");
 const $wrap_content__setup = ($scope) => {

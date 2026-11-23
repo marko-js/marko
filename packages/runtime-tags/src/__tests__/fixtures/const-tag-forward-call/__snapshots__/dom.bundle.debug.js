@@ -2,7 +2,7 @@
 const $template = "<button id=direct>direct</button><button id=alias>alias</button><button id=nullary>nullary</button><button id=defaulted>defaulted</button><div> </div>";
 const $walks = " b b b bD l";
 const $second_getter = /*@__PURE__*/ _hoist("second");
-const $third_getter = _hoist_resume("__tests__/template.marko_0_third#9/hoist", "third");
+const $third_getter = /*@__PURE__*/ _hoist("third");
 const $nullary_getter = /*@__PURE__*/ _hoist("nullary");
 const $defaulted_getter = /*@__PURE__*/ _hoist("defaulted");
 const $result = /*@__PURE__*/ _let("result/5", ($scope) => _text($scope["#text/4"], $scope.result));

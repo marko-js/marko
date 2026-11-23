@@ -1,9 +1,9 @@
 // template.marko
 const $Item_content__walks = " b";
 const $Item_content__template = "<span>x</span>";
-const $el_getter = _hoist_resume("b0", 0, "B1");
-const $Item_content = _content("b1", $Item_content__template, $Item_content__walks, 0, 0, "B1");
-const $setup__script = _script("b2", ($scope) => {
+const $el_getter = /*@__PURE__*/ _hoist(0, "B1");
+const $Item_content = _content("b0", $Item_content__template, $Item_content__walks, 0, 0, "B1");
+const $setup__script = _script("b1", ($scope) => {
 	for (const e of $el_getter($scope)) e.textContent = "y";
 });
 

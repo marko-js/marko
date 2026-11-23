@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button class=toggle>toggle</button><!><button class=read> </button>";
 const $walks = " b%b D l";
-const $getLabel_getter = _hoist_resume("__tests__/template.marko_0_getLabel#2:0/hoist", "getLabel", [
+const $getLabel_getter = /*@__PURE__*/ _hoist("getLabel", [
 	"BranchScopes:#text/1",
 	"ConditionalRenderer:#text/1",
 	1

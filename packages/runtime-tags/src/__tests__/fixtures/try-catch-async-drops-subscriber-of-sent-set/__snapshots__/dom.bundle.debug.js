@@ -17,7 +17,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__await_promise($scope, resolveAfter(1, 1));
 	$try_content__await_promise2($scope, rejectAfter(new Error("ERROR!"), 2));
 };
-const $el_getter = _hoist_resume("__tests__/template.marko_0_#span#1:0/hoist", "#span/0", "ClosureScopes:1");
+const $el_getter = /*@__PURE__*/ _hoist("#span/0", "ClosureScopes:1");
 const $await_content2 = /*@__PURE__*/ _await_content("#text/1", " ", " ");
 const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content2__$params);
 const $try = /*@__PURE__*/ _try("#text/2", "<!><!><!><!>", "b%b%", $try_content__setup, 0, $catch_content);

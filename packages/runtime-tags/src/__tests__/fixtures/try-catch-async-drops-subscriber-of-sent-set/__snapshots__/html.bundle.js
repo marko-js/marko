@@ -2,9 +2,8 @@
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_hoist($scope0_id, "a0");
 	const $Item_content__subscribers = /* @__PURE__ */ new Set();
-	const Item = { content: _content("a1", () => {
+	const Item = { content: _content("a0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<span>x</span>${_el_mark($scope1_id, "a")}`);
@@ -31,7 +30,7 @@ var template_default = _template("a", (input) => {
 		const $scope5_id = _scope_id();
 		_html(`caught ${_text_mark($scope5_id, "a", err.message, _write_guard($scope5_reason, 0) * 2)}`);
 		_write_if($scope5_reason, 0) && _scope($scope5_id, {});
-	}, 0, "a2");
-	_script($scope0_id, "a3", 0);
+	}, 0, "a1");
+	_script($scope0_id, "a2", 0);
 	_scope($scope0_id, { B1: $Item_content__subscribers });
 }, 1);

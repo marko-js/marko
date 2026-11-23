@@ -20,14 +20,13 @@ var thing_default = _template("c", (input) => {
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_hoist($scope0_id, "a0");
 	const $what_content__subscribers = /* @__PURE__ */ new Set();
-	thing_default({ what: attrTag({ content: _content("a1", () => {
+	thing_default({ what: attrTag({ content: _content("a0", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		let setHtml = child_default({});
 		_subscribe($what_content__subscribers, _scope($scope1_id, { c: setHtml }));
 	}, $scope0_id) }) });
-	_script($scope0_id, "a2", 0);
+	_script($scope0_id, "a1", 0);
 	_scope($scope0_id, { B1: $what_content__subscribers });
 }, 1);

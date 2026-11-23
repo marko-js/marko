@@ -2,7 +2,6 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $el3_getter = _hoist($scope0_id, "__tests__/template.marko_0_#li#4:0/hoist");
 	_for_to(5, 0, 1, () => {
 		const $scope1_id = _scope_id();
 		_html(`<div></div>${_el_mark($scope1_id, "#div/0")}`);

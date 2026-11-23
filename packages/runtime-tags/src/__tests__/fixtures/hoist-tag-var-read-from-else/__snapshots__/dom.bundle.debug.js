@@ -10,7 +10,7 @@ const $else_content__setup = ($scope) => {
 	$else_content__label($scope, "none");
 	$else_content__setup__script($scope);
 };
-const $getLabel_getter = _hoist_resume("__tests__/template.marko_0_getLabel#1:0/hoist", "getLabel", [
+const $getLabel_getter = /*@__PURE__*/ _hoist("getLabel", [
 	"BranchScopes:#text/0",
 	"ConditionalRenderer:#text/0",
 	0

@@ -12,9 +12,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $wg__input_b = _write_guard($scope0_reason, 2), $wi__input_a = _write_if($scope0_reason, 1), $wi__input_b = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	const $el1_getter = _hoist($scope0_id, "__tests__/template.marko_0_#p#2:0/hoist");
 	const $wrap_content__subscribers = new Set();
-	const $el2_getter = _hoist($scope0_id, "__tests__/template.marko_0_#span#3:0/hoist");
 	const $input_a__closures = new Set();
 	const $input_b__closures = new Set();
 	wrap_default({ content: _content("__tests__/template.marko_1*content", () => {

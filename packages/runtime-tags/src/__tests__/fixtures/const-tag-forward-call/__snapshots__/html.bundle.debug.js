@@ -2,14 +2,13 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $third_getter = _hoist($scope0_id, "__tests__/template.marko_0_third#9/hoist");
 	let result = "pending";
 	const first = _resume(() => {
 		result = ((second) => second("A", 42))(_hoist_read_error);
 	}, "__tests__/template.marko_0/first", $scope0_id);
 	const second = _resume((name, num) => `${name}:${num}`, "__tests__/template.marko_0/second");
 	const viaAlias = _resume(() => {
-		const alias = $third_getter;
+		const alias = _hoist_read_error;
 		result = alias(1, 2, 3);
 	}, "__tests__/template.marko_0/viaAlias", $scope0_id);
 	const third = _resume((...nums) => nums.join("-"), "__tests__/template.marko_0/third");
