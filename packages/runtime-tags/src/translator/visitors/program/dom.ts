@@ -4,10 +4,13 @@ import { getFile, importDefault } from "@marko/compiler/babel-utils";
 import type { Binding } from "../../util/bindings";
 import { getUnusedParamIdentifier } from "../../util/generate-uid";
 import { addTagVarBindings } from "../../util/known-tag";
-import { isOptimize } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
-import { callRuntime, registerRuntimeValue } from "../../util/runtime";
+import {
+  callDebugRuntime,
+  callRuntime,
+  registerRuntimeValue,
+} from "../../util/runtime";
 import {
   getScopeAccessor,
   getSectionScopesAccessorLiteral,
@@ -262,10 +265,13 @@ function markReturn(
   setup: t.Expression | undefined,
   params: t.Expression | undefined,
 ) {
-  return section.returnValueExpr && !isOptimize()
+  return section.returnValueExpr
     ? setup || !params
-      ? [callRuntime("_return_setup", setup || emptySetup()), params]
-      : [setup, callRuntime("_return_setup", params)]
+      ? [
+          callDebugRuntime("_return_setup", setup || emptySetup()) || setup,
+          params,
+        ]
+      : [setup, callDebugRuntime("_return_setup", params) || params]
     : [setup, params];
 }
 

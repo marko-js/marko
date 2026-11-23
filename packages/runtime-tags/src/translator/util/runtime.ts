@@ -3,13 +3,27 @@ import { getFile, getProgram, importNamed } from "@marko/compiler/babel-utils";
 
 import type { Falsy } from "../../common/types";
 import { isTranslate } from "./get-compile-stage";
-import { getMarkoOpts, isOutputDOM, isOutputHTML } from "./marko-config";
+import {
+  getMarkoOpts,
+  isOptimize,
+  isOutputDOM,
+  isOutputHTML,
+} from "./marko-config";
 import runtimeInfo from "./runtime-info";
 import { createOutputState } from "./state";
 import { toMemberExpression } from "./to-property-name";
 
 export type DOMRuntimeHelpers = keyof typeof import("../../dom");
 export type HTMLRuntimeHelpers = keyof typeof import("../../html");
+// What only a debug runtime exports, emitted by `callDebugRuntime`; the html
+// runtime still exports `_hoist_read_error`, which `callRuntime` emits there.
+export type DebugRuntimeHelpers =
+  | Exclude<keyof typeof import("../../debug/dom"), DOMRuntimeHelpers>
+  | Exclude<keyof typeof import("../../debug/html"), HTMLRuntimeHelpers>;
+type RuntimeHelpers = DOMRuntimeHelpers | HTMLRuntimeHelpers;
+type RuntimeArgs = Array<
+  Parameters<typeof t.callExpression>[1][number] | Falsy
+>;
 
 // Pure despite registering into `_resumed` (`_template`, `_closure_get`): that
 // matters only for a value a serialized register id keeps in the module graph.
@@ -50,13 +64,10 @@ const pureDOMFunctions = new Set<string>([
   "_load_idle_trigger",
   "_load_media_trigger",
   "_load_race_trigger",
-] satisfies DOMRuntimeHelpers[]);
+] satisfies (DOMRuntimeHelpers | DebugRuntimeHelpers)[]);
 
-export function importRuntime(name: DOMRuntimeHelpers | HTMLRuntimeHelpers) {
-  // The `dom`/`html` import path is only known at translate; emitting it into
-  // the cached, output-shared earlier AST leaks one runtime into the other.
-  assertTranslate("importRuntime", name);
-  return importNamed(getFile(), getRuntimePath(getMarkoOpts().output), name);
+export function importRuntime(name: RuntimeHelpers) {
+  return importHelper(name);
 }
 
 // A bare registration is an assignment into the registry: no call.
@@ -68,18 +79,16 @@ export function registerRuntimeValue(id: string, value: t.Expression) {
   );
 }
 
-export function callRuntime(
-  name: DOMRuntimeHelpers | HTMLRuntimeHelpers,
-  ...args: Array<Parameters<typeof t.callExpression>[1][number] | Falsy>
+export function callRuntime(name: RuntimeHelpers, ...args: RuntimeArgs) {
+  return callHelper(name, args);
+}
+
+// Optimized output gets `undefined`, so each caller says what it emits instead.
+export function callDebugRuntime(
+  name: DebugRuntimeHelpers,
+  ...args: RuntimeArgs
 ) {
-  const callExpression = t.callExpression(
-    importRuntime(name),
-    trimFalsyArgs(args),
-  );
-  if (isOutputDOM() && pureDOMFunctions.has(name)) {
-    return t.addComment(callExpression, "leading", "@__PURE__");
-  }
-  return callExpression;
+  if (!isOptimize()) return callHelper(name, args);
 }
 
 export function dynamicImport(
@@ -149,6 +158,27 @@ export function getRuntimePath(output: string) {
   return (getMarkoOpts().optimize ? runtimePaths : debugRuntimePaths)[
     output === "html" ? "html" : "dom"
   ];
+}
+
+function importHelper(name: RuntimeHelpers | DebugRuntimeHelpers) {
+  // The `dom`/`html` import path is only known at translate; emitting it into
+  // the cached, output-shared earlier AST leaks one runtime into the other.
+  assertTranslate("importRuntime", name);
+  return importNamed(getFile(), getRuntimePath(getMarkoOpts().output), name);
+}
+
+function callHelper(
+  name: RuntimeHelpers | DebugRuntimeHelpers,
+  args: RuntimeArgs,
+) {
+  const callExpression = t.callExpression(
+    importHelper(name),
+    trimFalsyArgs(args),
+  );
+  if (isOutputDOM() && pureDOMFunctions.has(name)) {
+    return t.addComment(callExpression, "leading", "@__PURE__");
+  }
+  return callExpression;
 }
 
 function assertTranslate(helper: string, name: string) {

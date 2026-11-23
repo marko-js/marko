@@ -1,8 +1,5 @@
 export { attrTag, attrTags } from "./common/attr-tag";
 export {
-  _assert_class_toggles,
-  _assert_hoist,
-  _assert_style_items,
   _el_read_error,
   _hoist_read_error,
   _signal_read_error,

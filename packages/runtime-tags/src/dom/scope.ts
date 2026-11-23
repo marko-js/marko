@@ -30,10 +30,7 @@ export function syncGen(scope: Scope) {
 }
 
 export function _assert_init(scope: Scope, accessor: string) {
-  if (
-    MARKO_DEBUG &&
-    (scope[AccessorProp.Gen] === runId || !(accessor in scope))
-  ) {
+  if (scope[AccessorProp.Gen] === runId || !(accessor in scope)) {
     try {
       // @ts-expect-error create a browser uninitialized variable error, and then update the message.
       __UNINITIALIZED__;

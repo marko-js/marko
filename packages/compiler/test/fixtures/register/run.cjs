@@ -5,6 +5,8 @@ register({ translator: require.resolve("@marko/runtime-tags/translator") });
 // Two templates, so the hook handles more than its first require.
 const first = require(path.join(__dirname, "template.marko"));
 const second = require(path.join(__dirname, "other.marko"));
+// A debug compile calls a helper only the debug runtime entry exports.
+const third = require(path.join(__dirname, "debug-only-helper.marko"));
 const render = (m, input) => String((m.default || m).render(input));
 
 if (process.env.REGISTER_MODE === "throw") {
@@ -17,4 +19,8 @@ if (process.env.REGISTER_MODE === "throw") {
   }
 }
 
-process.stdout.write(render(first, { name: "world" }) + render(second, { n: 2 }));
+process.stdout.write(
+  render(first, { name: "world" }) +
+    render(second, { n: 2 }) +
+    render(third, { color: "red" }),
+);

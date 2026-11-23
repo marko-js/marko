@@ -44,7 +44,7 @@ await Promise.all([
       const bundle = await rolldown({
         cwd,
         input: {
-          [name]: `src/${name}.ts`,
+          [name]: isProd ? `src/${name}.ts` : `src/debug/${name}.ts`,
           ...Object.fromEntries(
             featureEntries
               .filter((entry) => entry.startsWith(`${name}/`))

@@ -39,6 +39,8 @@
     "./package.json": "./package.json",
     "./translator": "./src/translator/index.ts",
     "./tags/*": "./tags/*",
+    "./debug/dom": "./src/debug/dom.ts",
+    "./debug/html": "./src/debug/html.ts",
     "./debug/*": "./src/*.ts",
     "./*": "./src/*.ts"
   },
@@ -69,6 +71,16 @@
     "./package.json": "./package.json",
     "./translator": "./dist/translator/index.js",
     "./tags/*": "./tags/*",
+    "./debug/dom": {
+      "types": "./dist/debug/dom.d.ts",
+      "import": "./dist/debug/dom.mjs",
+      "default": "./dist/debug/dom.js"
+    },
+    "./debug/html": {
+      "types": "./dist/debug/html.d.ts",
+      "import": "./dist/debug/html.mjs",
+      "default": "./dist/debug/html.js"
+    },
     "./debug/*": {
       "types": "./dist/*.d.ts",
       "import": "./dist/debug/*.mjs",

@@ -1,10 +1,4 @@
 export { attrTag, attrTags } from "./common/attr-tag";
-export {
-  _assert_class_toggles,
-  _assert_hoist,
-  _assert_style_items,
-  _hoist_read_error,
-} from "./common/errors";
 export { forIn, forOf, forTo, forUntil } from "./common/for";
 export { _call } from "./common/helpers";
 export { $signal, $signalReset, onAbort } from "./dom/abort-signal";
@@ -97,7 +91,6 @@ export {
   _content as _content_resume,
   _content_closures,
   _content_closures_resume,
-  _return_setup,
 } from "./dom/renderer";
 export {
   _dynamic_tag_var_resume,
@@ -109,13 +102,10 @@ export {
   ready,
   readyFailed,
 } from "./dom/resume";
-export { _assert_init } from "./dom/scope";
 export {
   _closure,
   _closure_get,
   _const,
-  _el_read,
-  _global_read,
   _for_closure,
   _for_selector,
   _hoist,

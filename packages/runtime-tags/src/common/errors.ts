@@ -39,30 +39,24 @@ export function assertValidAttrValue(name: string, value: unknown) {
 // A toggled class must not share a name with any other part of its value, since
 // the client adds and removes it by itself; style import reads are only known here.
 export function _assert_class_toggles(classes: string, toggles: string[]) {
-  if (MARKO_DEBUG) {
-    const name = findRepeatedName(
-      [classes].concat(toggles).map(splitClassNames),
+  const name = findRepeatedName([classes].concat(toggles).map(splitClassNames));
+  if (name !== undefined) {
+    throw new Error(
+      `The toggled class \`${name}\` is also written by another part of the \`class\` value; a toggled class may appear only once.`,
     );
-    if (name !== undefined) {
-      throw new Error(
-        `The toggled class \`${name}\` is also written by another part of the \`class\` value; a toggled class may appear only once.`,
-      );
-    }
   }
 }
 
 // A style item must not share a property with any other part of its value, since the
 // client sets it by itself; module reads' properties are only known here.
 export function _assert_style_items(parts: unknown[], items: string[]) {
-  if (MARKO_DEBUG) {
-    const name = findRepeatedName(
-      parts.map(getStylePartProperties).concat(items.map(toGroup)),
+  const name = findRepeatedName(
+    parts.map(getStylePartProperties).concat(items.map(toGroup)),
+  );
+  if (name !== undefined) {
+    throw new Error(
+      `The style property \`${name}\` is also written by another part of the \`style\` value; a style property may appear only once in a \`style\` value.`,
     );
-    if (name !== undefined) {
-      throw new Error(
-        `The style property \`${name}\` is also written by another part of the \`style\` value; a style property may appear only once in a \`style\` value.`,
-      );
-    }
   }
 }
 
@@ -212,7 +206,7 @@ export function _signal_read_error() {
 }
 
 export function _assert_hoist(value: unknown) {
-  if (MARKO_DEBUG && value !== undefined && typeof value !== "function") {
+  if (value !== undefined && typeof value !== "function") {
     throw new Error(
       `Hoisted values must be functions, received type "${typeof value}".`,
     );
