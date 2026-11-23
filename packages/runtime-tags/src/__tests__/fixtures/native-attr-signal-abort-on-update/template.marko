@@ -1,0 +1,18 @@
+static function watch(signal: AbortSignal, name: string, value: unknown) {
+  console.log("read", name, value, signal.aborted);
+  signal.onabort = () => console.log("abort", name, value);
+  return value;
+}
+
+<let/count=0/>
+<if=count>
+  <const/big=(count > 1)/>
+  <div ...{ "data-spread": watch($signal, "spread", count), ...input.attrs }/>
+  <div
+    data-first=watch($signal, "first", count)
+    data-second=watch($signal, "second", count)
+  />
+  <div data-big=watch($signal, "big", big)/>
+</if>
+<button#inc onClick() { count++ }>${count}</button>
+<button#hide onClick() { count = 0 }/>

@@ -10,8 +10,8 @@ const $placeholder_content = _content_resume("__tests__/template.marko_4*content
 const $await_content__show = /*@__PURE__*/ _closure_get("show/3", ($scope) => _text($scope["#text/0"], $scope._._._.show), ($scope) => $scope._._._, "__tests__/template.marko_3_show#0:2/subscribe");
 const $await_content__setup__script = _script("__tests__/template.marko_3", ($scope) => onAbort($scope, 0, () => document.querySelector("#one").textContent = "Pass"));
 const $await_content__setup = ($scope) => {
-	$await_content__show($scope);
 	$signalReset($scope, 0);
+	$await_content__show($scope);
 	$await_content__setup__script($scope);
 };
 const $await_content = /*@__PURE__*/ _await_content("#text/0", " ", " ", $await_content__setup);

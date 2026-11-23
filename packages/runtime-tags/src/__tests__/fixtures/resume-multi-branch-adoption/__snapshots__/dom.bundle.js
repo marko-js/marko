@@ -1,8 +1,8 @@
 // template.marko
 const $if_content__item__script = _script("a0", ($scope) => onAbort($scope, 0, () => $scope._._.b.append(`destroyed ${$scope._.c}`)));
 const $if_content__item = /*@__PURE__*/ _if_closure(0, 0, ($scope) => {
-	_text($scope.a, $scope._.c);
 	$signalReset($scope, 0);
+	_text($scope.a, $scope._.c);
 	$if_content__item__script($scope);
 });
 const $for_content__if = /*@__PURE__*/ _if(0, "<span> </span>", "D ", $if_content__item);

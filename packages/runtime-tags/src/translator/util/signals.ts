@@ -58,6 +58,7 @@ import {
 import {
   callDebugRuntime,
   callRuntime,
+  importRuntime,
   registerRuntimeValue,
   trimFalsyArgs,
 } from "./runtime";
@@ -130,6 +131,8 @@ export interface Signal {
    * forward simplifies to a bare, eagerly evaluated reference. */
   forwards: Opt<Signal>;
   render: t.Statement[];
+  /** The `$signal` controller resets each run makes before its render. */
+  abortResets: t.Statement[] | undefined;
   effect: t.Statement[];
   hasHTMLEffect: boolean;
   storesValue: boolean;
@@ -379,6 +382,7 @@ export function getSignal(
         intersections: undefined,
         forwards: undefined,
         render: [],
+        abortResets: undefined,
         effect: [],
         hasHTMLEffect: false,
         build: undefined,
@@ -716,6 +720,10 @@ function buildIntersection(
 }
 
 export function buildSignalFn(signal: Signal): t.Expression {
+  if (signal.abortResets) {
+    signal.render = signal.abortResets.concat(signal.render);
+  }
+
   const section = signal.section;
   const binding = signal.referencedBindings;
   const isIntersection = Array.isArray(binding);
@@ -1034,6 +1042,24 @@ export function addTagStatement(
     );
     replaceWithStatements(tag);
   }
+}
+
+// A `$signal` read's controller is reset whenever its expression's signal runs.
+export function addAbortReset(
+  targetSection: Section,
+  expr: t.NodeExtra,
+  abortId: number,
+) {
+  const signal = getSignal(targetSection, getReferencedBindings(expr));
+  (signal.abortResets ||= []).push(
+    t.expressionStatement(
+      t.callExpression(importRuntime("$signalReset"), [
+        scopeIdentifier,
+        t.numericLiteral(abortId),
+      ]),
+    ),
+  );
+  signal.storesValue = true;
 }
 
 export function addValue(

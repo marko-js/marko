@@ -5,8 +5,8 @@ const $placeholder_content = _content_resume("__tests__/template.marko_3*content
 const $await_content__count = /*@__PURE__*/ _closure_get("count/3", ($scope) => _text($scope["#text/0"], $scope._._.count), ($scope) => $scope._._, "__tests__/template.marko_2_count#0:2/subscribe");
 const $await_content__setup__script = _script("__tests__/template.marko_2", ($scope) => onAbort($scope, 0, () => {}));
 const $await_content__setup = ($scope) => {
-	$await_content__count($scope);
 	$signalReset($scope, 0);
+	$await_content__count($scope);
 	$await_content__setup__script($scope);
 };
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<span> </span>", "D ", $await_content__setup);

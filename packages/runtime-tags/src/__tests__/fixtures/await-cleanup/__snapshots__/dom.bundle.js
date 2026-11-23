@@ -8,8 +8,8 @@ const $placeholder_content = _content("a3", "loading...");
 const $await_content__show = /*@__PURE__*/ _closure_get(3, ($scope) => _text($scope.a, $scope._._._.c), ($scope) => $scope._._._, "a1");
 const $await_content__setup__script = _script("a0", ($scope) => onAbort($scope, 0, () => document.querySelector("#one").textContent = "Pass"));
 const $await_content__setup = ($scope) => {
-	$await_content__show($scope);
 	$signalReset($scope, 0);
+	$await_content__show($scope);
 	$await_content__setup__script($scope);
 };
 const $await_content = /*@__PURE__*/ _await_content(0, " ", " ", $await_content__setup);
