@@ -738,6 +738,53 @@ describe("compiler/compile", () => {
       ]);
     });
 
+    it("lists the templates its analysis read, which a bundler walks in reverse to compile again each template an edit reaches", () => {
+      writeTag("my-child", `<my-grandchild/y/>\n<return=y/>\n`);
+      writeTag("my-grandchild", `<my-leaf/z/>\n<return=z/>\n`);
+      writeTag("my-leaf", `<return=1/>\n`);
+      const edited = path.join(dir, "tags", "my-leaf.marko");
+      const cache = new Map();
+      const compiled = new Map();
+      const compileAll = (only) => {
+        for (const file of [
+          path.join(dir, "template.marko"),
+          path.join(dir, "tags", "my-child.marko"),
+          path.join(dir, "tags", "my-grandchild.marko"),
+          edited,
+        ]) {
+          if (!only || only.has(file)) {
+            compiled.set(
+              file,
+              compileFileSync(file, {
+                cache,
+                output: "dom",
+                writeVersionComment: false,
+              }),
+            );
+          }
+        }
+      };
+      compileAll();
+      assert.deepEqual(
+        compiled.get(path.join(dir, "template.marko")).meta.analyzedTags,
+        [path.join(dir, "tags", "my-child.marko")],
+      );
+      writeTag("my-leaf", STATEFUL);
+      // As a bundler's dev server does: the edited template, and each listing
+      // one compiled again.
+      const stale = new Set([edited]);
+      for (const file of stale) {
+        for (const [reader, { meta }] of compiled) {
+          if (meta.analyzedTags?.includes(file)) stale.add(reader);
+        }
+      }
+      compileAll(stale);
+      assert.equal(
+        compiled.get(path.join(dir, "template.marko")).code,
+        compileParent(new Map()),
+      );
+    });
+
     it("reads no template below a page entry again while their analyses are cached", () => {
       writeTag("my-child", `<my-grandchild/y/>\n<return=y/>\n`, -60_000);
       writeTag("my-grandchild", STATEFUL, -60_000);

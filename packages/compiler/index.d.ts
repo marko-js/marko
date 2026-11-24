@@ -27,6 +27,9 @@ export interface MarkoMeta {
   watchFiles: string[];
   tags?: string[];
   deps: Array<string | Dep | VirtualDep>;
+  /** The templates whose analysis this compile read for its output: a template's own
+   * loads, or every template a page entry reaches. Its output also follows what those
+   * read, so a bundler plugin recompiles each template an edit reaches through these. */
   analyzedTags?: [string, ...string[]];
   diagnostics: Diagnostic[];
   api: undefined | string;
