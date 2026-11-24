@@ -182,7 +182,7 @@ export function _attr_input_checkedValue_script(
             // `newValue` is only undefined here when the firing radio is being
             // unchecked (a form reset); adopt the group's reset-restored default
             // instead of dropping the value.
-            if (newValue === undefined && radio.defaultChecked)
+            if (newValue == null && radio.defaultChecked)
               newValue = radio.value;
             // A member whose controlled slot was never written (a non-default
             // member on a pristine resume) reverts to its SSR default.
@@ -329,7 +329,7 @@ export function _attr_select_value_default(
       }
     }
 
-    if (restoreValue !== undefined) {
+    if (restoreValue != null) {
       setSelectValue(el, restoreValue, multiple);
     }
   }, scope);

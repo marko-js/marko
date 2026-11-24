@@ -235,7 +235,7 @@ function keyedScopes(
   if (!map.size) {
     for (const scope of toArray(ownerScope[scopeAccessor] as BranchScope)) {
       const key = scope[AccessorProp.LoopKey];
-      if (key === undefined) {
+      if (key == null) {
         return (ownerScope[mapAccessor] = null);
       }
       map.set(key, scope);

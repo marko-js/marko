@@ -1,4 +1,4 @@
-// size: 25726 (min) 9623 (brotli)
+// size: 25688 (min) 9612 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -52,7 +52,7 @@ let _html = /*@__PURE__*/ withDynamicHtml(function (scope, value, accessor) {
       parentNode = firstChild.parentNode,
       lastChild = scope["H" + accessor] || firstChild,
       newContent = parseHTML(scope["R" + accessor], parentNode.namespaceURI);
-    if (prevValue === void 0 && lastChild !== firstChild) {
+    if (prevValue == null && lastChild !== firstChild) {
       let node = firstChild,
         newNode = newContent.firstChild;
       for (; (node = node.nextSibling) !== lastChild && node.isEqualNode(newNode);)
@@ -92,7 +92,7 @@ let _if = /*@__PURE__*/ withBranches((nodeAccessor, ...branchesArgs) => {
 });
 let _show = /*@__PURE__*/ withBranches((nodeAccessor, startNodeAccessor) => {
   ((nodeAccessor = decodeAccessor(nodeAccessor)),
-    startNodeAccessor !== void 0 && (startNodeAccessor = decodeAccessor(startNodeAccessor)));
+    startNodeAccessor != null && (startNodeAccessor = decodeAccessor(startNodeAccessor)));
   let rangeAccessor = "A" + nodeAccessor;
   return (scope, display) => {
     let referenceNode = scope[nodeAccessor],
@@ -658,7 +658,7 @@ function keyedScopes(ownerScope, scopeAccessor, mapAccessor) {
   if (!map.size)
     for (let scope of toArray(ownerScope[scopeAccessor])) {
       let key = scope.M;
-      if (key === void 0) return (ownerScope[mapAccessor] = null);
+      if (key == null) return (ownerScope[mapAccessor] = null);
       map.set(key, scope);
     }
   return map;
@@ -988,11 +988,9 @@ function init(runtimeId = "M") {
                     )
                   )
                     break;
-                } else {
-                  readyIds && (resumes.n = (resumes.n || 0) + 1);
-                  let scopes = serialized(serializeContext);
-                  Array.isArray(scopes) && applyScopes(scopes);
-                }
+                } else
+                  (readyIds && (resumes.n = (resumes.n || 0) + 1),
+                    (serialized = serialized(serializeContext)) && applyScopes(serialized));
               }
               return (resumes.splice(0, i), i);
             },
@@ -1184,7 +1182,7 @@ function _attr(element, name, value) {
 }
 function setAttribute(element, name, value) {
   element.getAttribute(name) != value &&
-    (value === void 0 ? element.removeAttribute(name) : element.setAttribute(name, value));
+    (value == null ? element.removeAttribute(name) : element.setAttribute(name, value));
 }
 function _attr_class(element, value) {
   setAttribute(element, "class", toDelimitedString(value, " ", stringifyClassEntry) || void 0);
@@ -1444,7 +1442,7 @@ function _attr_input_checkedValue_script(scope, nodeAccessor) {
         if (el.name && el.type[0] === "r")
           for (let radio of document.querySelectorAll(`[type=radio][name=${CSS.escape(el.name)}]`))
             radio.form === el.form &&
-              (newValue === void 0 && radio.defaultChecked && (newValue = radio.value),
+              (newValue == null && radio.defaultChecked && (newValue = radio.value),
               (radio.checked = Array.isArray(oldValue)
                 ? oldValue.includes(radio.value)
                 : controlledValueKey in scope
@@ -1524,7 +1522,7 @@ function _attr_select_value_default(scope, nodeAccessor, value) {
       opt.defaultSelected !== selected &&
         (live && (restoreValue ??= getSelectValue(el, multiple)), (opt.defaultSelected = selected));
     }
-    restoreValue !== void 0 && setSelectValue(el, restoreValue, multiple);
+    restoreValue != null && setSelectValue(el, restoreValue, multiple);
   }, scope);
 }
 function _attr_select_value(scope, nodeAccessor, value, valueChange) {

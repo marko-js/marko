@@ -1,4 +1,4 @@
-// size: 2507 (min) 1252 (brotli)
+// size: 2483 (min) 1240 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let rendering;
@@ -178,10 +178,7 @@ function init(runtimeId = "M") {
                     /\D/.test(lastToken)
                       ? (lastEffect = _resumed[lastToken])
                       : effects.push(lastEffect, getScope(lastToken));
-                else {
-                  let scopes = serialized(serializeContext);
-                  Array.isArray(scopes) && applyScopes(scopes);
-                }
+                else (serialized = serialized(serializeContext)) && applyScopes(serialized);
               }
               return (resumes.splice(0, i), i);
             },
@@ -239,7 +236,7 @@ function _attr(element, name, value) {
 }
 function setAttribute(element, name, value) {
   element.getAttribute(name) != value &&
-    (value === void 0 ? element.removeAttribute(name) : element.setAttribute(name, value));
+    (value == null ? element.removeAttribute(name) : element.setAttribute(name, value));
 }
 function _text(node, value) {
   let normalizedValue = _to_text(value);
