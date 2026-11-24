@@ -1,0 +1,6 @@
+<const/base={ hi() { return "hi"; } }/>
+<const/o={ __proto__: base, hi() { return super.hi() + "!"; } }/>
+<let/n = 1/>
+<button#a onClick=o.hi>a</button>
+<button#b onClick() { n++ }>b ${n}</button>
+<div>${o.hi()}</div>
