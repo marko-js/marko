@@ -10,10 +10,14 @@ import * as nodeInfo from "./get-node-info";
 
 const { DOMElement, DOMCollection } = plugins;
 
-export default function createMutationTracker(browser: {
-  window: JSDOM["window"];
-  virtualConsole: VirtualConsole;
-}) {
+export default function createMutationTracker(
+  browser: {
+    window: JSDOM["window"];
+    virtualConsole: VirtualConsole;
+  },
+  /** Rejections the run leaves unhandled by design (`String(reason)`). */
+  allowedRejections: string[] = [],
+) {
   let cleaned = false;
   let hasRendered = false;
   let pendingMutations: undefined | MutationRecord[];
@@ -31,7 +35,8 @@ export default function createMutationTracker(browser: {
     }
   });
   window.addEventListener("error", handleError);
-  window.addEventListener("unhandledrejection", handleRejection);
+  // jsdom never fires a window's `unhandledrejection`; Node reports every realm's.
+  process.on("unhandledRejection", handleRejection);
 
   return {
     beginUpdate() {
@@ -77,11 +82,13 @@ export default function createMutationTracker(browser: {
     getLogs() {
       return logs.length ? logs.join("\n\n") + "\n" : "";
     },
-    cleanup() {
-      window.removeEventListener("error", handleError);
-      window.removeEventListener("unhandledrejection", handleRejection);
+    async cleanup() {
       observer.disconnect();
       consoleCapture.cleanup();
+      // A rejection the last step left surfaces once its task ends.
+      await new Promise((resolve) => setImmediate(resolve));
+      window.removeEventListener("error", handleError);
+      process.off("unhandledRejection", handleRejection);
       throwErrors();
       cleaned = true;
     },
@@ -123,9 +130,8 @@ export default function createMutationTracker(browser: {
     ev.preventDefault();
   }
 
-  function handleRejection(ev: PromiseRejectionEvent) {
-    errors.add(ev.reason.detail || ev.reason);
-    ev.preventDefault();
+  function handleRejection(reason: Error) {
+    if (!allowedRejections.includes(String(reason))) errors.add(reason);
   }
 }
 

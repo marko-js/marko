@@ -9,8 +9,8 @@
       "brotli": 79
     },
     "a.mjs": {
-      "min": 2207,
-      "brotli": 1134
+      "min": 2219,
+      "brotli": 1144
     },
     "b.mjs": {
       "min": 463,

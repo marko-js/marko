@@ -1,4 +1,4 @@
-// size: 25693 (min) 9642 (brotli)
+// size: 25706 (min) 9625 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -2142,7 +2142,7 @@ function loadFailed(scope, awaitCounter) {
 function _load_signal(load) {
   let pending,
     apply = (scope, value) => {
-      ((pending ||= load()),
+      (pending || (pending = load()).catch(noop),
         scope.X || (!("X" in scope) && scope.H === runId)
           ? (scope.X ||= /* @__PURE__ */ new Map()).set(pending, [value, apply])
           : apply._
