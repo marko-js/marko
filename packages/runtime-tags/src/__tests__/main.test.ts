@@ -94,7 +94,10 @@ export type TestConfig = {
   fix_guide?: boolean;
   /** Compiles the fixture with a custom `runtimeId` compiler option. */
   runtime_id?: string;
+  /** Rejections a run leaves unhandled by design (`String(reason)`), by run. */
+  unhandled_rejections?: Partial<Record<Run, string[]>>;
 };
+type Run = `${"debug" | "optimize"} ssr` | "debug csr";
 
 // `scripts/test-parallel` fans the fixtures across CPU cores by giving each
 // worker a subset of round-robin "slots" via the env below: a fixture runs here
@@ -202,7 +205,7 @@ function testFixtures(interop?: true) {
       }
 
       for (const mode of config.skip_optimize
-        ? ["debug"]
+        ? (["debug"] as const)
         : (["debug", "optimize"] as const)) {
         describe(mode, () => {
           const optimize = mode === "optimize";
@@ -357,25 +360,38 @@ function testFixtures(interop?: true) {
             const runClient = (await ssrRunner()).clientRunner!;
             const { document } = browser.window;
             const { input, steps } = await getSteps(config);
-            const tracker = createMutationTracker(browser);
-            const { template, run } = await runClient(
-              browser.ctx,
-              loadFault || undefined,
+            const tracker = createMutationTracker(
+              browser,
+              config.unhandled_rejections?.["debug csr"],
             );
-            const instance = template.mount(input, document.body, "afterbegin");
-            tracker.logRender(input);
+            try {
+              const { template, run } = await runClient(
+                browser.ctx,
+                loadFault || undefined,
+              );
+              const instance = template.mount(
+                input,
+                document.body,
+                "afterbegin",
+              );
+              tracker.logRender(input);
 
-            await runSteps(steps, tracker, browser, run, {
-              onInput(input) {
-                instance.update(input);
-                tracker.logUpdate(input);
-              },
-              onDestroy() {
-                instance.destroy();
-              },
-            });
+              await runSteps(steps, tracker, browser, run, {
+                onInput(input) {
+                  instance.update(input);
+                  tracker.logUpdate(input);
+                },
+                onDestroy() {
+                  instance.destroy();
+                },
+              });
+            } catch (err) {
+              // A run that throws still removes its listeners before its error stands.
+              await tracker.cleanup().catch(() => {});
+              throw err;
+            }
 
-            tracker.cleanup();
+            await tracker.cleanup();
             return { browser, tracker };
           });
 
@@ -453,34 +469,44 @@ function testFixtures(interop?: true) {
             };
             // Attach the tracker's error listener before the first flush so
             // errors thrown by inline resume scripts in it aren't swallowed.
-            const tracker = createMutationTracker(browser);
-            let hasFlush = flushNext();
-            for (let i = config.entry_delay || 0; i && hasFlush; i--) {
+            const tracker = createMutationTracker(
+              browser,
+              config.unhandled_rejections?.[`${mode} ssr`],
+            );
+            let hasFlush = false;
+            try {
               hasFlush = flushNext();
-            }
-
-            for (const group of logs) {
-              for (const { type, args } of group) {
-                window.console[type](...args);
+              for (let i = config.entry_delay || 0; i && hasFlush; i--) {
+                hasFlush = flushNext();
               }
+
+              for (const group of logs) {
+                for (const { type, args } of group) {
+                  window.console[type](...args);
+                }
+              }
+
+              await browser.runAsyncScripts(() => tracker.logRender(input));
+              const { run } =
+                browser.ctx as typeof import("@marko/runtime-tags/dom");
+
+              await runSteps(steps, tracker, browser, run, {
+                onFlush: hasFlush ? flushAndResume : undefined,
+              });
+
+              while (hasFlush) {
+                await resolveAfter(0, 1);
+                tracker.beginUpdate();
+                await flushAndResume();
+                tracker.logUpdate();
+              }
+            } catch (err) {
+              // A run that throws still removes its listeners before its error stands.
+              await tracker.cleanup().catch(() => {});
+              throw err;
             }
 
-            await browser.runAsyncScripts(() => tracker.logRender(input));
-            const { run } =
-              browser.ctx as typeof import("@marko/runtime-tags/dom");
-
-            await runSteps(steps, tracker, browser, run, {
-              onFlush: hasFlush ? flushAndResume : undefined,
-            });
-
-            while (hasFlush) {
-              await resolveAfter(0, 1);
-              tracker.beginUpdate();
-              await flushAndResume();
-              tracker.logUpdate();
-            }
-
-            tracker.cleanup();
+            await tracker.cleanup();
 
             return { browser, tracker, chunks };
           });

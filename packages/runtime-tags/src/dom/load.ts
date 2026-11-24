@@ -168,7 +168,9 @@ function loadFailed(
 export function _load_signal(load: () => Promise<LoadSignal>): Signal {
   let pending: Promise<LoadSignal> | undefined;
   const apply: LoadApply = (scope: Scope, value: unknown) => {
-    pending ||= load();
+    // `insertLoaded` reads a buffered chunk's rejection only once the setup chunk
+    // lands; when that fails too, the setup's own rejection drives `@catch`.
+    if (!pending) (pending = load()).catch(noop);
     if (
       scope[AccessorProp.Load] ||
       (!(AccessorProp.Load in scope) && scope[AccessorProp.Gen] === runId)

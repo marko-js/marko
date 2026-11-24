@@ -14,5 +14,10 @@ export const config: TestConfig = {
   skip_parity: true,
   equivalent: false,
   reject_load: ["child.mjs"],
+  // An optimized load entry has no rejection arm: the browser reports the
+  // failed chunk itself.
+  unhandled_rejections: {
+    "optimize ssr": ["Error: simulated chunk load failure: ./child.mjs"],
+  },
   steps: [{ label: "a" }, load, wait],
 };

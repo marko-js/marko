@@ -10,8 +10,8 @@
     },
     "b.mjs": {
       "total": {
-        "min": 2942,
-        "brotli": 1343
+        "min": 2954,
+        "brotli": 1344
       },
       "files": {
         "a.marko": 997,
