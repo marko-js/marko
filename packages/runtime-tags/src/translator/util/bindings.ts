@@ -33,6 +33,8 @@ export interface Binding {
   /** Creation order, never renumbered: the order `bindingUtil` sorts by. */
   uid: number;
   name: string;
+  /** The name the template declares it by: a native tag's variable, or the
+   * identifier it is created for. */
   originalName: string | undefined;
   type: BindingType;
   loc: t.SourceLocation | null;
@@ -144,16 +146,30 @@ export function createBinding(
   loc: t.SourceLocation | null = null,
   refDeclared = false,
   restOffset?: number,
+  originalName?: string,
 ): Binding {
-  const id = getNextBindingId();
   const section = aliased ? aliased.section : refSection;
   const sameSection = refSection === section;
   const declared = sameSection && refDeclared;
+  const propBinding = property
+    ? aliased!.propertyAliases?.get(property)
+    : undefined;
+  if (propBinding?.declared && originalName && !propBinding.originalName) {
+    // A change handler analysis declared beside an assigned property, before
+    // the template named it, takes the template's name.
+    propBinding.name = name;
+    propBinding.originalName = originalName;
+    propBinding.loc = loc;
+    propBinding.declared = declared;
+    return propBinding;
+  }
+
+  const id = getNextBindingId();
   const binding: Binding = {
     id,
     uid: id,
     name,
-    originalName: undefined,
+    originalName,
     type,
     loc,
     section,
@@ -192,8 +208,6 @@ export function createBinding(
   };
 
   if (property) {
-    // TODO: should prefer declared properties as alias roots.
-    const propBinding = aliased!.propertyAliases?.get(property);
     if (propBinding) {
       binding.property = undefined;
       binding.aliasOf = propBinding;

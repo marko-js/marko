@@ -1,0 +1,14 @@
+<let/show=false/>
+<button.show onClick() { show = true }>show</button>
+<if=show>
+  <child/{ value, valueChange }/>
+  <const/run=[1].map((valueChange) => () => { value = "first" + valueChange })[0]/>
+  <runner class="first" run=run/>
+  <span>${value} ${typeof valueChange}</span>
+</if>
+<if=show>
+  <child/{ valueChange, value }/>
+  <const/run=[2].map((valueChange) => () => { value = "last" + valueChange })[0]/>
+  <runner class="last" run=run/>
+  <span>${value} ${typeof valueChange}</span>
+</if>

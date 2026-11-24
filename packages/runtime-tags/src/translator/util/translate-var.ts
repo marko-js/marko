@@ -68,8 +68,8 @@ export default function translateVar(
   }
 }
 
-// Assigning a destructured name calls its change handler, which analysis named
-// beside it: the pattern destructures it under that name.
+// Assigning a destructured name calls its change handler, which the pattern
+// destructures beside it unless the template names the handler.
 export function destructureAssignedChangeHandlers(pattern: t.NodePath<any>) {
   forEachIdentifierPath(pattern, (id) => {
     const binding = id.node.extra?.binding;
@@ -81,8 +81,8 @@ export function destructureAssignedChangeHandlers(pattern: t.NodePath<any>) {
       const changeName = binding.property + "Change";
       // An assignment always records its change handler as a property alias.
       const changeBinding = binding.aliasOf.propertyAliases!.get(changeName)!;
-      if (changeName !== changeBinding.name) {
-        getDestructurePattern(id)?.unshiftContainer(
+      if (!changeBinding.originalName) {
+        getDestructurePattern(id)!.unshiftContainer(
           "properties",
           t.objectProperty(
             toPropertyName(changeName),

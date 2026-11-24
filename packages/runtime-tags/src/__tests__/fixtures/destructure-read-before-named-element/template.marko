@@ -1,0 +1,7 @@
+<let/list=[1, 2, 3]/>
+<const/[, ...copy]=list/>
+<div>${copy[0]}</div>
+<child/>
+<const/[, ...[second, ...more]]=list/>
+<div>${second} ${more.length}</div>
+<button onClick() { list = [4, 5, 6, 7] }>update</button>

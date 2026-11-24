@@ -1,0 +1,21 @@
+<child/{ value, valueChange }/>
+<child/{ valueChange: onValue, value: renamed }/>
+<div.value>${value} ${typeof valueChange}</div>
+<div.renamed>${renamed} ${typeof onValue}</div>
+<button.param onClick() { ((valueChange) => { value = "param" + valueChange })(1) }>param</button>
+<if=true>
+  <const/valueChange="const"/>
+  <button.const onClick() { value = valueChange }>${valueChange}</button>
+</if>
+<for|valueChange| of=["for"]>
+  <button.for onClick() { value = valueChange }>${valueChange}</button>
+</for>
+<define/Inner|{ valueChange }|>
+  <button.define onClick() { value = valueChange }>${valueChange}</button>
+</define>
+<Inner valueChange="define"/>
+<if=true>
+  <let/valueChange="let"/>
+  <button.let onClick() { value = valueChange }>${valueChange}</button>
+</if>
+<button.renamed-param onClick() { ((onValue) => { renamed = "renamed" + onValue })(2) }>renamed</button>
