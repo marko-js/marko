@@ -1868,7 +1868,11 @@ function getChangeHandlerRead(
         getChangeHandlerRead(binding.aliasOf, section),
         binding.property,
       )
-    : createScopeReadExpression(binding, section);
+    : // Through the scope, never the signal's param an inner name may shadow.
+      toMemberExpression(
+        getScopeExpression(section, binding.section),
+        getScopeAccessor(binding),
+      );
 }
 
 function getBuildAssignment(extra: AssignedBindingExtra) {

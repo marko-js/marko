@@ -1,0 +1,32 @@
+<child/{ a, aChange }/>
+<child/{ bChange, b }/>
+<child/{ a: c, aChange: onC }/>
+<child/{ bChange: onD, b: d }/>
+<button.a onClick() { a += "!" }>${a} ${typeof aChange}</button>
+<button.b onClick() { b += "!" }>${b} ${typeof bChange}</button>
+<button.c onClick() { c += "!" }>${c} ${typeof onC}</button>
+<button.d onClick() { d += "!" }>${d} ${typeof onD}</button>
+<child/obj/>
+<const/{ a: e, ...rest } = obj/>
+<button.e onClick() { e += "!" }>${e} ${typeof obj.aChange} ${Object.keys(rest).join()}</button>
+<define/First|{ value, valueChange }|>
+  <button.first onClick() { value += "?" }>${value} ${typeof valueChange}</button>
+</define>
+<define/Last|{ valueChange, value }|>
+  <button.last onClick() { value += "?" }>${value} ${typeof valueChange}</button>
+</define>
+<define/FirstRenamed|{ value, valueChange: onValue }|>
+  <button.first-renamed onClick() { value += "?" }>${value} ${typeof onValue}</button>
+</define>
+<define/LastRenamed|{ valueChange: onValue, value }|>
+  <button.last-renamed onClick() { value += "?" }>${value} ${typeof onValue}</button>
+</define>
+<let/w="w"/>
+<let/x="x"/>
+<let/y="y"/>
+<let/z="z"/>
+<First value:=w/>
+<Last value:=x/>
+<FirstRenamed value:=y/>
+<LastRenamed value:=z/>
+<div>${w} ${x} ${y} ${z}</div>

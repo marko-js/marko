@@ -649,6 +649,7 @@ function createBindingsAndTrackReferences(
         lVal.loc,
         declared,
         restOffset,
+        lVal.name,
       ));
       trackReferencesForBinding(scope.getBinding(lVal.name)!, binding);
       break;

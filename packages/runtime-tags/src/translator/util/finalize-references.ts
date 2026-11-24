@@ -934,6 +934,8 @@ function resolveReferencedBindings(
       const isChangeHandlerRead = extra.assignmentTo === binding;
       if (isChangeHandlerRead) {
         binding = read.holder;
+        // An assignment calls it from its slot, so the slot holds it.
+        markLazyRead(binding);
       } else if (binding.type !== BindingType.global) {
         extra.section = expr.section;
         ({ binding } = extra.read =
