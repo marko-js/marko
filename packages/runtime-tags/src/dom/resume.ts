@@ -69,9 +69,9 @@ let curRenders: Renders;
 let embedRenders:
   | undefined
   | Map<Text, [renderId: string, scopes: Record<string | number, Scope>]>;
-// Each ready id's load entry ran (-1, so `!~` tests it), or the load triggers waiting on it. Only
-// `ready()` and `onReady()` assign it, so apps without lazy tags fold its users.
-let readyIds: undefined | Record<string, -1 | Resolve[]>;
+// Each ready id's load entry ran (1, tested by identity), or the load triggers waiting on it.
+// Only `ready()` and `onReady()` assign it, so apps without lazy tags fold its users.
+let readyIds: undefined | Record<string, 1 | Resolve[]>;
 // Lazy load support latch, set by `lazy.feat`, which an entry reaching lazy
 // tags imports ahead of resume; other pages fold it and the retention away.
 let lazyEnabled: undefined | 1;
@@ -83,7 +83,7 @@ export function ready(readyId: string) {
   ((readyIds ||= {})[readyId] as Resolve[] | undefined)?.forEach((resolve) =>
     resolve(),
   );
-  readyIds[readyId] = -1;
+  readyIds[readyId] = 1;
   for (const renderId in curRenders) {
     runResumeEffects(curRenders[renderId]);
   }
@@ -102,7 +102,7 @@ export function readyFailed(readyId: string) {
 // Whether the load entry of `readyId` ran; until it does, `ready()` resolves it.
 export function onReady(readyId: string, resolve: Resolve) {
   return (
-    !~((readyIds ||= {})[readyId] as number) ||
+    (readyIds ||= {})[readyId] === 1 ||
     !((readyIds[readyId] ||= []) as Resolve[]).push(resolve)
   );
 }
@@ -382,7 +382,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 typeof serialized === "number" ||
                 !Object.keys(serialized).every(
                   (dep) =>
-                    !~(readyIds![dep] as number) &&
+                    readyIds![dep] === 1 &&
                     (render.b![dep]?.n || 0) >=
                       (serialized as Record<string, number>)[dep],
                 )
@@ -442,8 +442,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             for (let progress: unknown = 1; progress;) {
               progress = 0;
               for (const readyId in readyIds) {
-                const resumes =
-                  !~(readyIds[readyId] as number) && render.b[readyId];
+                const resumes = readyIds[readyId] === 1 && render.b[readyId];
                 if (resumes && processResumes(resumes, effects)) {
                   progress = 1;
                 }

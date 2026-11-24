@@ -1,8 +1,8 @@
 {
   "dom": {
     "lazy-wrap.marko.load.mjs": {
-      "min": 230,
-      "brotli": 169
+      "min": 229,
+      "brotli": 167
     },
     "template.marko.page.mjs": {
       "min": 49,

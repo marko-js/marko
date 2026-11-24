@@ -1,4 +1,4 @@
-// size: 25688 (min) 9612 (brotli)
+// size: 25693 (min) 9642 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -814,12 +814,12 @@ function walkInternal(currentWalkIndex, walkCodes, scope) {
     } else storedMultiplier = currentMultiplier * 10 + value - 117;
 }
 function ready(readyId) {
-  ((readyIds ||= {})[readyId]?.forEach((resolve) => resolve()), (readyIds[readyId] = -1));
+  ((readyIds ||= {})[readyId]?.forEach((resolve) => resolve()), (readyIds[readyId] = 1));
   for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
 }
 function readyFailed(readyId) {}
 function onReady(readyId, resolve) {
-  return !~(readyIds ||= {})[readyId] || !(readyIds[readyId] ||= []).push(resolve);
+  return (readyIds ||= {})[readyId] === 1 || !(readyIds[readyId] ||= []).push(resolve);
 }
 function initEmbedded(readyId, runtimeId) {
   (embedRenders ||
@@ -984,7 +984,7 @@ function init(runtimeId = "M") {
                   if (
                     typeof serialized == "number" ||
                     !Object.keys(serialized).every(
-                      (dep) => !~readyIds[dep] && (render.b[dep]?.n || 0) >= serialized[dep],
+                      (dep) => readyIds[dep] === 1 && (render.b[dep]?.n || 0) >= serialized[dep],
                     )
                   )
                     break;
@@ -1012,7 +1012,7 @@ function init(runtimeId = "M") {
                 for (let progress = 1; progress;) {
                   progress = 0;
                   for (let readyId in readyIds) {
-                    let resumes = !~readyIds[readyId] && render.b[readyId];
+                    let resumes = readyIds[readyId] === 1 && render.b[readyId];
                     resumes && processResumes(resumes, effects) && (progress = 1);
                   }
                 }
