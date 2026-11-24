@@ -1,4 +1,4 @@
-// size: 5728 (min) 2549 (brotli)
+// size: 5725 (min) 2554 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let branchesEnabled;
@@ -408,7 +408,7 @@ function _attr(element, name, value) {
 }
 function setAttribute(element, name, value) {
   element.getAttribute(name) != value &&
-    (value === void 0 ? element.removeAttribute(name) : element.setAttribute(name, value));
+    (value == null ? element.removeAttribute(name) : element.setAttribute(name, value));
 }
 function _text(node, value) {
   let normalizedValue = _to_text(value);

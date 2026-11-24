@@ -511,7 +511,7 @@ export const _show = /*@__PURE__*/ withBranches(
   (nodeAccessor: EncodedAccessor, startNodeAccessor?: EncodedAccessor) => {
     if (!MARKO_DEBUG) {
       nodeAccessor = decodeAccessor(nodeAccessor as number);
-      if (startNodeAccessor !== undefined) {
+      if (startNodeAccessor != null) {
         startNodeAccessor = decodeAccessor(startNodeAccessor as number);
       }
     }

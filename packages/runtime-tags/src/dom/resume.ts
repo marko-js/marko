@@ -24,7 +24,7 @@ import { destroyScope } from "./scope";
 import { _el_read, type Signal } from "./signals";
 import { getDebugKey } from "./walker";
 
-type ResumeFn = (ctx: SerializeContext) => unknown;
+type ResumeFn = (ctx: SerializeContext) => 0 | (Scope | number)[];
 // `n` counts the payloads a stream has run, the position a wait names.
 type ResumeData = (string | number | Record<string, number> | ResumeFn)[] & {
   n?: number;
@@ -363,7 +363,8 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         ) => {
           let i = 0;
           for (; i < resumes.length; i++) {
-            const serialized = resumes[i];
+            let serialized: ResumeData[number] | ReturnType<ResumeFn> =
+              resumes[i];
             if (typeof serialized === "string") {
               lastTokenIndex = 0;
               visitText = serialized;
@@ -382,7 +383,8 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 !Object.keys(serialized).every(
                   (dep) =>
                     !~(readyIds![dep] as number) &&
-                    (render.b![dep]?.n || 0) >= serialized[dep],
+                    (render.b![dep]?.n || 0) >=
+                      (serialized as Record<string, number>)[dep],
                 )
               ) {
                 break;
@@ -391,8 +393,9 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               // A payload returns its scopes or applies them and ends in `,0`; only
               // pages with ready streams, where waits read it, count it.
               if (readyIds) resumes.n = (resumes.n || 0) + 1;
-              const scopes = (serialized as ResumeFn)(serializeContext);
-              if (Array.isArray(scopes)) applyScopes(scopes);
+              if ((serialized = (serialized as ResumeFn)(serializeContext))) {
+                applyScopes(serialized as (Scope | number)[]);
+              }
             }
           }
           resumes.splice(0, i);

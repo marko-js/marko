@@ -61,7 +61,7 @@ function setAttribute(
 ) {
   // TODO: benchmark if it is actually faster to check first
   if (element.getAttribute(name) != value) {
-    if (value === undefined) {
+    if (value == null) {
       element.removeAttribute(name);
     } else {
       element.setAttribute(name, value);
@@ -420,7 +420,7 @@ export const _html = /*@__PURE__*/ withDynamicHtml(function _html(
     );
 
     // Resumed markup sits between its markers with no value kept: equal nodes stay.
-    if (prevValue === undefined && lastChild !== firstChild) {
+    if (prevValue == null && lastChild !== firstChild) {
       let node = firstChild;
       let newNode = newContent.firstChild;
       while (
