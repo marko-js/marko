@@ -409,7 +409,7 @@ This way, if the order of `input.users` changes, the DOM will be rerendered more
 
 The `:scoped` attribute modifier results in the attribute value getting prefixed with a unique ID associated with the current UI component. `:scoped` attribute modifiers can be used to assign a globally unique attribute value from a value that only needs to be unique to the current UI component.
 
-Here’s a use-case: certain HTML attributes reference the `id` of other elements on the page. For example, the [HTML `<label>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label) `for` attribute takes an `id` as its value. Many `ARIA` attributes like [`aria-describedby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-describedby_attribute) also take an `id` as their value.
+Here’s a use-case: certain HTML attributes reference the `id` of other elements on the page. For example, the [HTML `<label>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label) `for` attribute takes an `id` as its value. Many `ARIA` attributes like [`aria-describedby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-describedby) also take an `id` as their value.
 
 The `:scoped` modifier on an attribute allows you to reference another element without fear of duplicate `id`s, as shown in the following examples:
 
