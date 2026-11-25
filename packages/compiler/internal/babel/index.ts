@@ -14,30 +14,12 @@ export {
   transformAsync,
   transformSync,
 } from "@babel/core";
+export { generate as generator } from "@babel/generator";
 export { parse, parseExpression } from "@babel/parser";
-export { NodePath } from "@babel/traverse";
+export { NodePath, traverse } from "@babel/traverse";
 
-import generatorModule from "@babel/generator";
-import pluginTransformModulesCommonjsModule from "@babel/plugin-transform-modules-commonjs";
-import pluginTransformTypeScriptModule from "@babel/plugin-transform-typescript";
-import traverseModule from "@babel/traverse";
-// Static default imports (not `* as` namespaces, not `createRequire`) on
-// purpose: this file is the rolldown entry that bundles babel into
-// `dist/babel.js`, so the imports must stay statically analyzable — and a
-// CJS default import is the whole `module.exports`, which keeps the
-// runtime-patched Marko AST additions that a namespace import would hide.
+// A static default import (not `* as`, not `createRequire`): this file is the rolldown
+// entry for `dist/babel.js`, and a CJS default import keeps the runtime-patched Marko nodes.
 import typesModule from "@babel/types";
 
 export const types = typesModule as typeof import("@babel/types");
-export const generator = interopDefault(generatorModule);
-export const pluginTransformModulesCommonjs = interopDefault(
-  pluginTransformModulesCommonjsModule,
-);
-export const pluginTransformTypeScript = interopDefault(
-  pluginTransformTypeScriptModule,
-);
-export const traverse = interopDefault(traverseModule);
-
-function interopDefault(mod: any): any {
-  return mod.default || mod;
-}

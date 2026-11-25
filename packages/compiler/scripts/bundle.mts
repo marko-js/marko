@@ -76,29 +76,9 @@ const pruneParserPlugins = {
   },
 };
 
-// `plugin-transform-typescript` reaches for exactly one export here,
-// `injectInitialization`, but the package barrel eagerly requires its class
-// fields and decorators transforms, which no plugin in either bundle runs.
-// Point the specifier at the module that export actually lives in. A user's
-// own babel plugins resolve their copy of this package themselves, so they are
-// unaffected.
-const CLASS_FEATURES = "@babel/helper-create-class-features-plugin";
-const classFeaturesMiscOnly = {
-  name: "class-features-misc-only",
-  async resolveId(id: string, importer: string | undefined) {
-    if (id !== CLASS_FEATURES) return null;
-    const resolved = await this.resolve(id, importer, { skipSelf: true });
-    return resolved && resolved.id.replace(/index\.js$/, "misc.js");
-  },
-};
-
-// Babel ships 122 runtime helpers in one object literal indexed by name. The
-// only ones anything here can request are the four the bundled transforms name
-// outright, and none of those declare dependencies, so the rest is unreachable
-// weight. A helper that is dropped but somehow asked for still fails loudly:
-// babel reports it as an unknown helper.
+// Babel's 122 helpers sit in one table indexed by name: traverse asks for `newArrowCheck`,
+// a project's own CommonJS plugin for the interop pair. One dropped but asked for fails.
 const USED_HELPERS = new Set([
-  "classNameTDZError",
   "interopRequireDefault",
   "interopRequireWildcard",
   "newArrowCheck",
@@ -202,12 +182,7 @@ await Promise.all([
   ...(["browser", "node"] as const).map((platform) =>
     build({
       platform,
-      plugins: [
-        presetTypeScriptVersionStub,
-        pruneParserPlugins,
-        classFeaturesMiscOnly,
-        pruneHelpers,
-      ],
+      plugins: [presetTypeScriptVersionStub, pruneParserPlugins, pruneHelpers],
       input: "internal/babel/index.ts",
       cwd,
       // htmljs-parser is a dependency of the compiler, whose own code loads it.

@@ -6,11 +6,7 @@ import type {
   DiagnosticOptions,
   PluginDefinition,
 } from "@marko/compiler/babel-utils";
-import {
-  pluginTransformTypeScript,
-  traverse,
-  types as t,
-} from "@marko/compiler/internal/babel";
+import { traverse, types as t } from "@marko/compiler/internal/babel";
 
 import { diagnosticError, DiagnosticType } from "../babel-utils/diagnostics";
 import { getFileInternal, setFileInternal } from "../babel-utils/get-file";
@@ -29,10 +25,12 @@ import { stat } from "../util/fs";
 import throwAggregateError from "../util/merge-errors";
 import { Hash } from "../util/quick-hash";
 import type { Visitors } from "../util/try-load-translator";
+import { toCommonJS } from "./commonjs";
 import { MarkoFile } from "./file";
 import { parseMarko } from "./parser";
 import { visitor as migrate } from "./plugins/migrate";
 import { visitor as transform } from "./plugins/transform";
+import { stripTypes } from "./strip-types";
 
 /** A template's analysis as a compiler's cache keeps it. */
 interface Cached {
@@ -49,6 +47,8 @@ type CompileMeta = Omit<MarkoMeta, "analyzedTags"> & {
 /** What the plugin keeps on its pass, Babel's `this` in its hooks. */
 interface PluginPass {
   hasLaterPlugins?: boolean;
+  /** Whether the compile's output is CommonJS, converted once every plugin has run. */
+  commonjs?: boolean;
 }
 
 /** The hooks of Babel's plugin API that the plugin implements. */
@@ -57,25 +57,14 @@ interface Plugin {
   manipulateOptions(opts: FileOpts): void;
   parserOverride(code: string, parserOpts: FileOpts["parserOpts"]): t.File;
   pre(this: PluginPass, file: t.BabelFile): void;
+  post(this: PluginPass, file: t.BabelFile): void;
   visitor: t.Visitor<PluginPass>;
 }
 
 const SOURCE_FILES = new WeakMap<t.File, CompileFile>();
-let stripTypesVisitor: t.Visitor[] | undefined;
 
 export default (api: ConfigAPI): Plugin => {
   api.assertVersion(7);
-  stripTypesVisitor ||= [
-    pluginTransformTypeScript(api, {
-      isTSX: false,
-      allowNamespaces: true,
-      allowDeclareFields: true,
-      optimizeConstEnums: true,
-      onlyRemoveTypeImports: true,
-      disallowAmbiguousJSXLike: false,
-    }).visitor,
-    stripTagTypesVisitor,
-  ];
 
   let curOpts: FileOpts | undefined;
 
@@ -119,6 +108,8 @@ export default (api: ConfigAPI): Plugin => {
       const { markoOpts } = file.opts.parserOpts;
       this.hasLaterPlugins =
         file.opts.plugins.length > 1 || file.opts.presets.length > 0;
+      this.commonjs =
+        markoOpts.modules === "cjs" && !isMarkoOutput(markoOpts.output);
       const { buildError: prevBuildError } = file.hub;
       const { buildCodeFrameError: prevCodeFrameError } = file;
       const prevFile = getFileInternal();
@@ -185,6 +176,9 @@ export default (api: ConfigAPI): Plugin => {
           cleared.___loadedFiles =
             undefined;
       }
+    },
+    post(babelFile) {
+      if (this.commonjs) toCommonJS(babelFile as CompileFile);
     },
     visitor: {
       Program(program) {
@@ -540,62 +534,6 @@ function addPlugin(
     arr.push(...hook);
   } else {
     arr.push(hook);
-  }
-}
-
-// The TypeScript plugin does not know the type syntax of a tag's head.
-const stripTagTypesVisitor: t.Visitor = {
-  MarkoTag(tag) {
-    tag.node.typeArguments = null;
-  },
-  MarkoTagBody(body) {
-    body.node.typeParameters = null;
-  },
-};
-
-function stripTypes(file: CompileFile) {
-  // The TypeScript transform strips type imports only from the program's own
-  // body, so those of `static`, `server` and `client` statements go here.
-  for (const path of file.path.get("body")) {
-    if (path.isMarkoScriptlet() && path.node.static) {
-      for (const stmt of path.get("body")) {
-        if (stmt.isImportDeclaration()) stripTypeImports(stmt);
-      }
-    }
-  }
-
-  traverseAll(file, stripTypesVisitor!);
-
-  for (const path of file.path.get("body")) {
-    if (
-      path.isExportNamedDeclaration() &&
-      !(path.node.declaration || path.node.specifiers.length)
-    ) {
-      // The babel typescript plugin will add an empty export declaration
-      // if there are no other imports/exports in the file.
-      // This is not needed for Marko file outputs since there is always
-      // a default export.
-      path.remove();
-    }
-  }
-}
-
-function stripTypeImports(decl: t.NodePath<t.ImportDeclaration>) {
-  if (decl.node.importKind === "type") {
-    decl.remove();
-    return;
-  }
-
-  let hasTypes = false;
-  for (const specifier of decl.get("specifiers")) {
-    if ((specifier.node as { importKind?: string }).importKind === "type") {
-      hasTypes = true;
-      specifier.remove();
-    }
-  }
-
-  if (hasTypes && !decl.node.specifiers.length) {
-    decl.remove();
   }
 }
 

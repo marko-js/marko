@@ -19,6 +19,7 @@ packageExtensions:
 overrides:
   it-fails: "-"
 patchedDependencies:
+  "@babel/core@7.29.7": patches/@babel__core@7.29.7.patch
   "@babel/generator@7.29.12": patches/@babel__generator@7.29.12.patch
   "@babel/helper-compilation-targets@7.29.7": patches/@babel__helper-compilation-targets@7.29.7.patch
   "@babel/traverse@7.29.12": patches/@babel__traverse@7.29.12.patch

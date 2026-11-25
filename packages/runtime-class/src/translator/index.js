@@ -334,7 +334,7 @@ export const translate = {
             t.program(
               parseStatements(file, file.metadata.marko.moduleCode),
               undefined,
-              file.markoOpts.modules === "cjs" ? "script" : "module",
+              "module",
             ),
           )[0]
           .skip();
