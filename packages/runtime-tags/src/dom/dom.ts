@@ -189,9 +189,10 @@ export function _text(node: Text | Comment, value: unknown) {
 
 export function _text_content(node: ParentNode, value: unknown) {
   const normalizedValue = _to_text(value);
-  // TODO: benchmark if it is actually faster to check data first
   if (node.textContent !== normalizedValue) {
-    node.textContent = normalizedValue;
+    // Text-only, so a child is its one text node: updating it in place is
+    // faster than replacing it.
+    (node.firstChild || node).textContent = normalizedValue;
   }
 }
 

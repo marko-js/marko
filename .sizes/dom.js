@@ -1,4 +1,4 @@
-// size: 25706 (min) 9625 (brotli)
+// size: 25722 (min) 9631 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -1243,7 +1243,7 @@ function _text(node, value) {
 }
 function _text_content(node, value) {
   let normalizedValue = _to_text(value);
-  node.textContent !== normalizedValue && (node.textContent = normalizedValue);
+  node.textContent !== normalizedValue && ((node.firstChild || node).textContent = normalizedValue);
 }
 function _attrs(scope, nodeAccessor, nextAttrs, controllable) {
   let el = scope[nodeAccessor];

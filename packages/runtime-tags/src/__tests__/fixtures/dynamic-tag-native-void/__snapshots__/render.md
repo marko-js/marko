@@ -71,7 +71,6 @@ document.querySelector("button").click();
 UPDATE: p::text "0" => "1"
 REMOVE: textarea::text("count & 0")
 INSERT: textarea::text("count & 1")
-REMOVE: title::text("count 0")
-INSERT: title::text("count 1")
+UPDATE: title::text "count 0" => "count 1"
 UPDATE: div::text@6 "0" => "1"
 ```
