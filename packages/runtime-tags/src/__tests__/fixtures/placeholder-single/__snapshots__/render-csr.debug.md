@@ -9,9 +9,9 @@ a_A_eg
 ```
 ## Change
 ```
-INSERT: ::text@0 + ::text("_A_")
-REMOVE: ::text@1 + ::text("b")
-REMOVE: ::text@1 + ::text("d")
+REMOVE: ::text("b")
+REMOVE: ::text("d")
+INSERT: ::text("_A_")
 ```
 
 # Update
@@ -20,7 +20,7 @@ a_A_efg
 ```
 ## Change
 ```
-INSERT: ::text@4 + ::text("f")
+INSERT: ::text("f")
 UPDATE: ::text@5 " " => "f"
 ```
 
@@ -30,6 +30,6 @@ abcdefg
 ```
 ## Change
 ```
-INSERT: ::text@0 + :is(::text("b"), ::text("c"), ::text("d"))
-REMOVE: ::text@3 + ::text("_A_")
+REMOVE: ::text("_A_")
+INSERT: ::text("b"), ::text("c"), ::text("d")
 ```

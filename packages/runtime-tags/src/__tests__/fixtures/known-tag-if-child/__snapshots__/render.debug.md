@@ -26,6 +26,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: section > i
 INSERT: section > b
-REMOVE: section > b + i
 ```

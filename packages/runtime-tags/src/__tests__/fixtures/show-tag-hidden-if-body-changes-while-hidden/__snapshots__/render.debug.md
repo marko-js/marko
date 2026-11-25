@@ -47,7 +47,7 @@ document.getElementById("t").click();
 ```
 ## Change
 ```
-INSERT: #c::text@0 + :is(b, i)
+INSERT: #c > b, #c > i
 ```
 
 # Update
@@ -73,8 +73,8 @@ document.getElementById("t").click();
 ```
 ## Change
 ```
-REMOVE: #c::text@0 + b
-REMOVE: #c::text@0 + i
+REMOVE: #c > b
+REMOVE: #c > i
 ```
 
 # Update
@@ -109,5 +109,5 @@ document.getElementById("t").click();
 ```
 ## Change
 ```
-INSERT: #c::text@0 + i
+INSERT: #c > i
 ```

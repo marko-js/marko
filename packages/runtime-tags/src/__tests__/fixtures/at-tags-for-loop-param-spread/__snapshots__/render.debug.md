@@ -75,9 +75,9 @@ document.querySelector("#rename").click();
 UPDATE: p:nth-of-type(1)[title] "ta" => "ta!"
 UPDATE: p:nth-of-type(1)::text "a" => "a!"
 UPDATE: em:nth-of-type(1)::text "a" => "a!"
+UPDATE: p:nth-of-type(2)::text "a" => "a!"
 UPDATE: p:nth-of-type(3)[title] "tb" => "tb!"
 UPDATE: p:nth-of-type(3)::text "b" => "b!"
 UPDATE: em:nth-of-type(2)::text "b" => "b!"
-UPDATE: p:nth-of-type(2)::text "a" => "a!"
 UPDATE: p:nth-of-type(4)::text "b" => "b!"
 ```

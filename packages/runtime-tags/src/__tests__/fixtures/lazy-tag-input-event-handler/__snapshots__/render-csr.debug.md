@@ -22,7 +22,7 @@
 ```
 ## Change
 ```
-INSERT: .main + .child
+INSERT: .child
 ```
 
 # Update

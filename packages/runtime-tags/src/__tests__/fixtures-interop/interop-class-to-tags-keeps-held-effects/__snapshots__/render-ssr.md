@@ -7,7 +7,7 @@ valuevalue
 ## Change
 ```
 INSERT: ::text("value")
-INSERT: ::text@0 + ::text("value")
+INSERT: ::text("value")
 ```
 ## Console
 ```

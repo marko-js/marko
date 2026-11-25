@@ -54,8 +54,8 @@ UPDATE: #tags::text "0" => "1"
 ```
 ## Change
 ```
-UPDATE: #tags[data-parent] "0" => "1"
 UPDATE: #class::text "0" => "1"
+UPDATE: #tags[data-parent] "0" => "1"
 ```
 
 # Update
@@ -99,8 +99,8 @@ UPDATE: #tags::text "1" => "2"
 ```
 ## Change
 ```
-UPDATE: #tags[data-parent] "1" => "2"
 UPDATE: #class::text "1" => "2"
+UPDATE: #tags[data-parent] "1" => "2"
 ```
 
 # Update

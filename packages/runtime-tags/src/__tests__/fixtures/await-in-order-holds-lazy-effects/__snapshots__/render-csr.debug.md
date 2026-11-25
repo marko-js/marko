@@ -31,7 +31,7 @@ LOG "child effect"
 ```
 ## Change
 ```
-INSERT: button + div
+INSERT: div
 UPDATE: div::text " " => "0"
 ```
 

@@ -9,11 +9,11 @@ a_B_hj
 ```
 ## Change
 ```
-INSERT: ::text@0 + ::text("_B_")
-REMOVE: ::text@1 + ::text("b")
-REMOVE: ::text@1 + ::text("d")
-REMOVE: ::text@1 + ::text("e")
-REMOVE: ::text@1 + ::text("g")
+REMOVE: ::text("b")
+REMOVE: ::text("d")
+REMOVE: ::text("e")
+REMOVE: ::text("g")
+INSERT: ::text("_B_")
 ```
 
 # Update
@@ -22,7 +22,7 @@ a_B_hij
 ```
 ## Change
 ```
-INSERT: ::text@4 + ::text("i")
+INSERT: ::text("i")
 UPDATE: ::text@5 " " => "i"
 ```
 
@@ -32,8 +32,8 @@ abcd_A_hij
 ```
 ## Change
 ```
-INSERT: ::text@0 + :is(::text("b"), ::text("c"), ::text("d"), ::text("_A_"))
-REMOVE: ::text@4 + ::text("_B_")
+REMOVE: ::text("_B_")
+INSERT: ::text("b"), ::text("c"), ::text("d"), ::text("_A_")
 ```
 
 # Update
@@ -42,6 +42,6 @@ abcdefghij
 ```
 ## Change
 ```
-INSERT: ::text@3 + :is(::text("e"), ::text("f"), ::text("g"))
-REMOVE: ::text@6 + ::text("_A_")
+REMOVE: ::text("_A_")
+INSERT: ::text("e"), ::text("f"), ::text("g")
 ```

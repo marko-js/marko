@@ -43,7 +43,7 @@
 ```
 ## Change
 ```
-INSERT: div > div:nth-of-type(1) + div
+INSERT: div > div:nth-of-type(2)
 ```
 
 # Update
@@ -69,7 +69,7 @@ INSERT: div > div:nth-of-type(1) + div
 ```
 ## Change
 ```
-REMOVE: div > div + div
+REMOVE: div > div
 ```
 
 # Update

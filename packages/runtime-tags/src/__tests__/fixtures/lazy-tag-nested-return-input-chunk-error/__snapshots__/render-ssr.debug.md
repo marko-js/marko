@@ -27,6 +27,6 @@ document.querySelector(".mount").click();
 ```
 ## Change
 ```
-INSERT: .mount + .err
+INSERT: .err
 UPDATE: .err::text " " => "simulated chunk load failure: ./v:child.marko.input_label.mjs"
 ```

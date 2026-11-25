@@ -23,9 +23,9 @@ none
 ```
 ## Change
 ```
+REMOVE: b
+REMOVE: b
 INSERT: ::text("none")
-REMOVE: ::text + b
-REMOVE: ::text + b
 ```
 
 # Update
@@ -45,6 +45,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: b, b
-REMOVE: b:nth-of-type(2) + ::text("none")
+REMOVE: ::text("none")
+INSERT: b:nth-of-type(1), b:nth-of-type(2)
 ```

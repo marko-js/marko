@@ -20,7 +20,7 @@
 ```
 ## Change
 ```
-INSERT: #inc + span
+INSERT: span
 ```
 
 # Update

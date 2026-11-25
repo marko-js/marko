@@ -14,7 +14,7 @@
 ## Change
 ```
 REMOVE: div::text("a")
-INSERT: div::text@1 + ::text("a")
+INSERT: div::text("a")
 ```
 
 # Update `{"children":[]}`

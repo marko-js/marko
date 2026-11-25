@@ -13,7 +13,7 @@
 ```
 ## Change
 ```
-REMOVE: div::text@0 + ::text("b")
+REMOVE: div::text("b")
 ```
 
 # Update `{"children":[{"id":4,"text":"d"},{"id":3,"text":"c"}]}`

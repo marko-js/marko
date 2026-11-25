@@ -34,8 +34,8 @@ document.querySelector("button#clear").click();
 ```
 ## Change
 ```
-REMOVE: div + div
-REMOVE: div + div
+REMOVE: div
+REMOVE: div
 INSERT: div::text("destroyed first")
-INSERT: div::text@0 + ::text("destroyed second")
+INSERT: div::text("destroyed second")
 ```

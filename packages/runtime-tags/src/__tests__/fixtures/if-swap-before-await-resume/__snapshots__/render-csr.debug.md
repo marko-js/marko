@@ -35,8 +35,8 @@
 ```
 ## Change
 ```
-INSERT: header > div::text + button
-REMOVE: header > div > button + a
+REMOVE: header > div > a
+INSERT: header > div > button
 ```
 
 # Update
@@ -72,7 +72,7 @@ REMOVE: header > div > button + a
 ```
 ## Change
 ```
-INSERT: header > div > a
-INSERT: header > div > a:nth-of-type(1) + a
-INSERT: header > div > a:nth-of-type(2) + a
+INSERT: header > div > a:nth-of-type(1)
+INSERT: header > div > a:nth-of-type(2)
+INSERT: header > div > a:nth-of-type(3)
 ```

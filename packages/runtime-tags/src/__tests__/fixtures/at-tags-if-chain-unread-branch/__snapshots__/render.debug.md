@@ -21,5 +21,5 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-REMOVE: #toggle + ::text("A")
+REMOVE: ::text("A")
 ```

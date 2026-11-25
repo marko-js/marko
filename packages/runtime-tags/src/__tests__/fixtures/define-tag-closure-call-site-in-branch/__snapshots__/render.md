@@ -19,7 +19,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: button + div
+REMOVE: div
 ```
 
 # Update
@@ -36,6 +36,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: button + .a
+INSERT: .a
 UPDATE: .a[class] null => "a"
 ```

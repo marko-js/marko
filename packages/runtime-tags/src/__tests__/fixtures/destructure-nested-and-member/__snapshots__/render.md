@@ -22,6 +22,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: div::text@2 "2" => "4"
 UPDATE: div::text@0 "1" => "3"
+UPDATE: div::text@2 "2" => "4"
 ```

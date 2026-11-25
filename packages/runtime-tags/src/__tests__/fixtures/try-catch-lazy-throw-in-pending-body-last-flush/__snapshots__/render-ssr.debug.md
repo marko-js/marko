@@ -7,5 +7,5 @@ acaught ERROR!
 ## Change
 ```
 INSERT: ::text("a")
-INSERT: ::text@0 + ::text("caught ERROR!")
+INSERT: ::text("caught ERROR!")
 ```

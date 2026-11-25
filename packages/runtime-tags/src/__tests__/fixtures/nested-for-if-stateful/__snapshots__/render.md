@@ -29,8 +29,8 @@ buttonIndex = (buttonIndex + 1) % 3;
 ```
 ## Change
 ```
-INSERT: button
-REMOVE: button:nth-of-type(1) + button
+REMOVE: button
+INSERT: button:nth-of-type(1)
 UPDATE: button:nth-of-type(1)::text@8 "" => "1"
 ```
 
@@ -52,8 +52,8 @@ buttonIndex = (buttonIndex + 1) % 3;
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(1) + button
-REMOVE: button:nth-of-type(2) + button
+REMOVE: button
+INSERT: button:nth-of-type(2)
 UPDATE: button:nth-of-type(2)::text@8 "" => "1"
 ```
 
@@ -75,8 +75,8 @@ buttonIndex = (buttonIndex + 1) % 3;
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(2) + button
-REMOVE: button:nth-of-type(3) + button
+REMOVE: button
+INSERT: button:nth-of-type(3)
 UPDATE: button:nth-of-type(3)::text@8 "" => "1"
 ```
 
@@ -98,8 +98,8 @@ buttonIndex = (buttonIndex + 1) % 3;
 ```
 ## Change
 ```
-INSERT: button
-REMOVE: button:nth-of-type(1) + button
+REMOVE: button
+INSERT: button:nth-of-type(1)
 UPDATE: button:nth-of-type(1)::text@10 "" => "1"
 ```
 
@@ -121,8 +121,8 @@ buttonIndex = (buttonIndex + 1) % 3;
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(1) + button
-REMOVE: button:nth-of-type(2) + button
+REMOVE: button
+INSERT: button:nth-of-type(2)
 UPDATE: button:nth-of-type(2)::text@10 "" => "1"
 ```
 
@@ -144,8 +144,8 @@ buttonIndex = (buttonIndex + 1) % 3;
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(2) + button
-REMOVE: button:nth-of-type(3) + button
+REMOVE: button
+INSERT: button:nth-of-type(3)
 UPDATE: button:nth-of-type(3)::text@10 "" => "1"
 ```
 
@@ -167,8 +167,8 @@ buttonIndex = (buttonIndex + 1) % 3;
 ```
 ## Change
 ```
-INSERT: button
-REMOVE: button:nth-of-type(1) + button
+REMOVE: button
+INSERT: button:nth-of-type(1)
 UPDATE: button:nth-of-type(1)::text@8 "" => "2"
 ```
 
@@ -190,8 +190,8 @@ buttonIndex = (buttonIndex + 1) % 3;
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(1) + button
-REMOVE: button:nth-of-type(2) + button
+REMOVE: button
+INSERT: button:nth-of-type(2)
 UPDATE: button:nth-of-type(2)::text@8 "" => "2"
 ```
 
@@ -213,7 +213,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(2) + button
-REMOVE: button:nth-of-type(3) + button
+REMOVE: button
+INSERT: button:nth-of-type(3)
 UPDATE: button:nth-of-type(3)::text@8 "" => "2"
 ```

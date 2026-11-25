@@ -27,9 +27,9 @@
 ```
 ## Change
 ```
-INSERT: main > p + .a
+INSERT: .a
 INSERT: .a::text("a")
-INSERT: .a + .lazy-a
+INSERT: .lazy-a
 INSERT: .lazy-a::text("0")
 ```
 
@@ -68,9 +68,9 @@ document.body.appendChild(document.createElement("script"));
 ```
 ## Change
 ```
-INSERT: .lazy-a + .b
+INSERT: .b
 INSERT: .b::text("b")
-INSERT: .b + .lazy-b
+INSERT: .lazy-b
 INSERT: .lazy-b::text("0")
 ```
 

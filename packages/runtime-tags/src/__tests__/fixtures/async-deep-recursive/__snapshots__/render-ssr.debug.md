@@ -21,9 +21,9 @@
 ```
 ## Change
 ```
-INSERT: div > div::text("LOADING...")
 REMOVE: div::text("LOADING...")
 INSERT: div > div
+INSERT: div > div::text("LOADING...")
 ```
 
 # Update
@@ -44,9 +44,9 @@ INSERT: div > div
 ```
 ## Change
 ```
-INSERT: div > div > div::text("LOADING...")
 REMOVE: div > div::text("LOADING...")
 INSERT: div > div > div
+INSERT: div > div > div::text("LOADING...")
 ```
 
 # Update
@@ -71,9 +71,9 @@ INSERT: div > div > div
 ```
 ## Change
 ```
-INSERT: div > div > div > div::text("LOADING...")
 REMOVE: div > div > div::text("LOADING...")
 INSERT: div > div > div > div
+INSERT: div > div > div > div::text("LOADING...")
 ```
 
 # Update

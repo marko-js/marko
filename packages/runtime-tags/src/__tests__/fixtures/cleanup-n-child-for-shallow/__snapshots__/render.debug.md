@@ -74,9 +74,9 @@ destroyed 3
 ```
 ## Change
 ```
-REMOVE: p:nth-of-type(2) + div
-REMOVE: p:nth-of-type(2) + span
-REMOVE: p:nth-of-type(2) + p
+REMOVE: div
+REMOVE: p
+REMOVE: span
 REMOVE: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3")
 INSERT: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3")
 ```
@@ -109,9 +109,9 @@ destroyed 2
 ```
 ## Change
 ```
-REMOVE: p + div
-REMOVE: p + span
-REMOVE: p + p
+REMOVE: div
+REMOVE: p
+REMOVE: span
 REMOVE: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3")
 INSERT: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3\ndestroyed 2")
 ```
@@ -136,9 +136,9 @@ destroyed 1
 ```
 ## Change
 ```
-REMOVE: div + div
-REMOVE: div + span
-REMOVE: div + p
+REMOVE: div
+REMOVE: p
+REMOVE: span
 REMOVE: div::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3\ndestroyed 2")
 INSERT: div::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3\ndestroyed 2\ndestroyed 1")
 ```
@@ -193,13 +193,13 @@ mounted 3
 ```
 ## Change
 ```
-INSERT: div:nth-of-type(1) + :is(div, span, p)
-INSERT: p:nth-of-type(1) + :is(div, span, p)
-INSERT: p:nth-of-type(2) + :is(div, span, p)
-REMOVE: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3\ndestroyed 2\ndestroyed 1")
 INSERT: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3\ndestroyed 2\ndestroyed 1\nmounted 1")
-REMOVE: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3\ndestroyed 2\ndestroyed 1\nmounted 1")
 INSERT: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3\ndestroyed 2\ndestroyed 1\nmounted 1\nmounted 2")
+REMOVE: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3\ndestroyed 2\ndestroyed 1")
+REMOVE: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3\ndestroyed 2\ndestroyed 1\nmounted 1")
 REMOVE: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3\ndestroyed 2\ndestroyed 1\nmounted 1\nmounted 2")
 INSERT: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3\ndestroyed 2\ndestroyed 1\nmounted 1\nmounted 2\nmounted 3")
+INSERT: div:nth-of-type(2), span:nth-of-type(1), p:nth-of-type(1)
+INSERT: div:nth-of-type(3), span:nth-of-type(2), p:nth-of-type(2)
+INSERT: div:nth-of-type(4), span:nth-of-type(3), p:nth-of-type(3)
 ```

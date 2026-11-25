@@ -26,7 +26,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: button + span
+INSERT: span
 ```
 ## Console
 ```

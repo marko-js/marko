@@ -34,9 +34,9 @@
 ```
 ## Change
 ```
-INSERT: span::text("0")
-INSERT: .hide + span
 INSERT: #log::text("[0]")
+INSERT: span
+INSERT: span::text("0")
 ```
 
 # Update
@@ -63,10 +63,10 @@ document.querySelector(".inc").click();
 ```
 ## Change
 ```
-UPDATE: .inc::text "0" => "1"
-UPDATE: span::text "0" => "1"
 REMOVE: #log::text("[0]")
 INSERT: #log::text("[0][1]")
+UPDATE: .inc::text "0" => "1"
+UPDATE: span::text "0" => "1"
 ```
 
 # Update
@@ -90,7 +90,7 @@ document.querySelector(".hide").click();
 ```
 ## Change
 ```
-REMOVE: .hide + span
+REMOVE: span
 ```
 
 # Update

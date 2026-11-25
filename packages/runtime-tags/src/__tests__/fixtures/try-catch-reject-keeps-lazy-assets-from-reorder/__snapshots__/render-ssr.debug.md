@@ -12,9 +12,9 @@ caught ERROR!
 ```
 ## Change
 ```
-INSERT: span::text("catch")
 REMOVE: ::text("loading")
 INSERT: span, ::text(" caught ERROR!")
+INSERT: span::text("catch")
 ```
 ## Console
 ```

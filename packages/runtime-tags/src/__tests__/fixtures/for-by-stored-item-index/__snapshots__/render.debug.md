@@ -79,10 +79,10 @@ document.querySelector(selector).click();
 ```
 ## Change
 ```
+REMOVE: ul > li
+INSERT: ul > li:nth-of-type(1)
 UPDATE: ul > li:nth-of-type(1) > button::text "1" => "0"
 UPDATE: ul > li:nth-of-type(2) > button::text "0" => "1"
-REMOVE: ul > li:nth-of-type(2) + li
-INSERT: ul > li
 ```
 
 # Update

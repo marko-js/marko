@@ -43,16 +43,16 @@
 ```
 ## Change
 ```
-INSERT: p:nth-of-type(1)::text@5 + ::text("2")
+INSERT: p:nth-of-type(1)::text("2")
 UPDATE: p:nth-of-type(1)::text@8 " " => "2"
-INSERT: p:nth-of-type(5)::text@5 + ::text("10")
-UPDATE: p:nth-of-type(5)::text@8 " " => "10"
-INSERT: p:nth-of-type(2)::text@5 + ::text("4")
+INSERT: p:nth-of-type(2)::text("4")
 UPDATE: p:nth-of-type(2)::text@8 " " => "4"
-INSERT: p:nth-of-type(4)::text@5 + ::text("8")
-UPDATE: p:nth-of-type(4)::text@8 " " => "8"
-INSERT: p:nth-of-type(3)::text@5 + ::text("6")
+INSERT: p:nth-of-type(3)::text("6")
 UPDATE: p:nth-of-type(3)::text@8 " " => "6"
+INSERT: p:nth-of-type(4)::text("8")
+UPDATE: p:nth-of-type(4)::text@8 " " => "8"
+INSERT: p:nth-of-type(5)::text("10")
+UPDATE: p:nth-of-type(5)::text@8 " " => "10"
 ```
 
 # Update
@@ -111,11 +111,11 @@ UPDATE: p:nth-of-type(5)::text@4 "2" => "3"
 ```
 ## Change
 ```
-REMOVE: p:nth-of-type(1)::text@5 + ::text("2")
-REMOVE: p:nth-of-type(2)::text@5 + ::text("4")
-REMOVE: p:nth-of-type(3)::text@5 + ::text("6")
-REMOVE: p:nth-of-type(4)::text@5 + ::text("8")
-REMOVE: p:nth-of-type(5)::text@5 + ::text("10")
+REMOVE: p:nth-of-type(1)::text("2")
+REMOVE: p:nth-of-type(2)::text("4")
+REMOVE: p:nth-of-type(3)::text("6")
+REMOVE: p:nth-of-type(4)::text("8")
+REMOVE: p:nth-of-type(5)::text("10")
 ```
 
 # Update
@@ -141,9 +141,9 @@ REMOVE: p:nth-of-type(5)::text@5 + ::text("10")
 ```
 ## Change
 ```
-INSERT: p:nth-of-type(1)::text@5 + ::text("3")
-INSERT: p:nth-of-type(2)::text@5 + ::text("6")
-INSERT: p:nth-of-type(3)::text@5 + ::text("9")
-INSERT: p:nth-of-type(4)::text@5 + ::text("12")
-INSERT: p:nth-of-type(5)::text@5 + ::text("15")
+INSERT: p:nth-of-type(1)::text("3")
+INSERT: p:nth-of-type(2)::text("6")
+INSERT: p:nth-of-type(3)::text("9")
+INSERT: p:nth-of-type(4)::text("12")
+INSERT: p:nth-of-type(5)::text("15")
 ```

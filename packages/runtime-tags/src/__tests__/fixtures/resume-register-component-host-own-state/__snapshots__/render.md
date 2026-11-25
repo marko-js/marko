@@ -21,7 +21,7 @@ component host: registered
 ```
 ## Change
 ```
-INSERT: #toggle + ::text("component host: registered")
+INSERT: ::text("component host: registered")
 ```
 
 # Update
@@ -37,5 +37,5 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-REMOVE: #toggle + ::text("component host: registered")
+REMOVE: ::text("component host: registered")
 ```

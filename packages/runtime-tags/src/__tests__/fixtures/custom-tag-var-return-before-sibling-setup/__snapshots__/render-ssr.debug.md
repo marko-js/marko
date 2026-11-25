@@ -31,7 +31,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: button + :is(.cM_0, .box, .cM_1, div, span)
+INSERT: .cM_0, .box, .cM_1, div:nth-of-type(3), span
 ```
 
 # Update
@@ -67,5 +67,5 @@ document.querySelector("button").after(pre);
 ```
 ## Change
 ```
-INSERT: button + pre
+INSERT: pre
 ```

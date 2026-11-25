@@ -15,7 +15,7 @@ loadingmid
 ```
 ## Change
 ```
-INSERT: ::text@0 + ::text("mid")
+INSERT: ::text("mid")
 ```
 
 # Update
@@ -29,10 +29,10 @@ ERROR!
 ```
 ## Change
 ```
-INSERT: #log + ::text("ERROR!")
 REMOVE: ::text("loading")
 REMOVE: ::text("mid")
 INSERT: #log::text("[before]")
 REMOVE: #log::text("[before]")
 INSERT: #log::text("[before][after]")
+INSERT: ::text("ERROR!")
 ```

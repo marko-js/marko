@@ -44,7 +44,7 @@ document.getElementById(id).click();
 ```
 ## Change
 ```
-REMOVE: #c::text@0 + b
+REMOVE: #c > b
 ```
 
 # Update
@@ -84,5 +84,5 @@ document.getElementById(id).click();
 ```
 ## Change
 ```
-INSERT: #c::text@0 + b
+INSERT: #c > b
 ```

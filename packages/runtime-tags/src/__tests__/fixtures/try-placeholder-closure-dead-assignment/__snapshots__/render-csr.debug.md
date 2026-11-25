@@ -14,7 +14,7 @@ loading...
 ```
 ## Change
 ```
-INSERT: div + ::text("loading...")
+INSERT: ::text("loading...")
 ```
 
 # Update
@@ -28,6 +28,6 @@ INSERT: div + ::text("loading...")
 ```
 ## Change
 ```
-INSERT: div:nth-of-type(1) + div
-REMOVE: div:nth-of-type(2) + ::text("loading...")
+REMOVE: ::text("loading...")
+INSERT: div:nth-of-type(2)
 ```

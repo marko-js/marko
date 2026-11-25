@@ -35,7 +35,7 @@ document.body.dispatchEvent(
 ```
 ## Change
 ```
-INSERT: button + span
+INSERT: span
 ```
 
 # Update

@@ -45,7 +45,7 @@ document.querySelector("button.toggle").click();
 ```
 ## Change
 ```
-REMOVE: .toggle + span
+REMOVE: span
 ```
 
 # Update
@@ -70,7 +70,7 @@ document.querySelector("button.toggle").click();
 ```
 ## Change
 ```
-INSERT: .toggle + span
+INSERT: span
 UPDATE: span::text " " => "2"
 ```
 

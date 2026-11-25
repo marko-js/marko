@@ -47,6 +47,6 @@ LOG "catch effect"
 ```
 ## Change
 ```
-INSERT: #class + #slow
+INSERT: #slow
 UPDATE: #slow::text " " => "slow"
 ```

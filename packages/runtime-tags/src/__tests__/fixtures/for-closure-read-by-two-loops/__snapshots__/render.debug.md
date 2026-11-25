@@ -51,7 +51,7 @@ document.querySelector("button").click();
 UPDATE: ul > li:nth-of-type(1)::text@0 "a" => "b"
 UPDATE: ul > li:nth-of-type(2)::text@0 "a" => "b"
 UPDATE: ol > li:nth-of-type(1)::text@0 "a" => "b"
-UPDATE: ol > li:nth-of-type(2)::text@0 "a" => "b"
 UPDATE: ol > li:nth-of-type(1)::text@2 "!" => "?"
+UPDATE: ol > li:nth-of-type(2)::text@0 "a" => "b"
 UPDATE: ol > li:nth-of-type(2)::text@2 "!" => "?"
 ```

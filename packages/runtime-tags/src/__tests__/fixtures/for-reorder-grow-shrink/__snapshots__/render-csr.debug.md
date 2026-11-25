@@ -15,7 +15,7 @@
 ```
 ## Change
 ```
-INSERT: div > #1
+INSERT: #1
 ```
 
 # Update `{"children":[{"id":1,"text":"a"},{"id":2,"text":"b"},{"id":3,"text":"c"}]}`
@@ -40,8 +40,8 @@ INSERT: div > #1
 ```
 ## Change
 ```
-INSERT: #1 + #2
-INSERT: #2 + #3
+INSERT: #2
+INSERT: #3
 ```
 
 # Update `{"children":[{"id":2,"text":"b"}]}`
@@ -57,7 +57,7 @@ INSERT: #2 + #3
 ## Change
 ```
 REMOVE: div > #1
-REMOVE: #2 + #3
+REMOVE: div > #3
 ```
 
 # Update `{"children":[{"id":4,"text":"d"},{"id":2,"text":"b"},{"id":5,"text":"e"}]}`
@@ -82,8 +82,8 @@ REMOVE: #2 + #3
 ```
 ## Change
 ```
-INSERT: #2 + #5
-INSERT: div > #4
+INSERT: #4
+INSERT: #5
 ```
 
 # Update `{"children":[]}`
@@ -112,6 +112,6 @@ REMOVE: div > :is(#4, #2, #5)
 ```
 ## Change
 ```
-INSERT: div > #6
-INSERT: #6 + #7
+INSERT: #6
+INSERT: #7
 ```

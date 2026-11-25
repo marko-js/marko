@@ -83,5 +83,5 @@ UPDATE: div::text "1" => "2"
 ```
 ## Change
 ```
-REMOVE: #toggle + div
+REMOVE: div
 ```

@@ -66,8 +66,8 @@ UPDATE: #a::text@4 "0" => "1"
 ```
 ## Change
 ```
-UPDATE: #a::text@2 "0" => "1"
 UPDATE: #increment::text "0" => "1"
+UPDATE: #a::text@2 "0" => "1"
 ```
 
 # Update
@@ -93,8 +93,8 @@ UPDATE: #increment::text "0" => "1"
 ```
 ## Change
 ```
-INSERT: #increment + #b
-REMOVE: #b + #a
+REMOVE: #a
+INSERT: #b
 UPDATE: #b::text@2 "" => "1"
 ```
 
@@ -121,7 +121,7 @@ UPDATE: #b::text@2 "" => "1"
 ```
 ## Change
 ```
-INSERT: #increment + #a
-REMOVE: #a + #b
+REMOVE: #b
+INSERT: #a
 UPDATE: #a::text@2 "" => "1"
 ```

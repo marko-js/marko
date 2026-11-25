@@ -29,6 +29,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: div > #comment
 UPDATE: div > #comment "a" => "b"
-REMOVE: div > #comment + #comment
 ```

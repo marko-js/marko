@@ -30,8 +30,8 @@
 ```
 ## Change
 ```
-INSERT: #class + #b
-REMOVE: #b + #a
+REMOVE: #a
+INSERT: #b
 ```
 
 # Update
@@ -52,6 +52,6 @@ REMOVE: #b + #a
 ```
 ## Change
 ```
-INSERT: #class + #a
-REMOVE: #a + #b
+REMOVE: #b
+INSERT: #a
 ```

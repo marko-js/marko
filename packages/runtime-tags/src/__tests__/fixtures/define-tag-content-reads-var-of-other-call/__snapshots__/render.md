@@ -25,7 +25,7 @@ document.querySelectorAll("button")[index].click();
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(2) + em
+INSERT: em
 UPDATE: em::text " " => "off"
 ```
 
@@ -43,5 +43,5 @@ document.querySelectorAll("button")[index].click();
 ```
 ## Change
 ```
-REMOVE: button:nth-of-type(2) + em
+REMOVE: em
 ```

@@ -52,7 +52,7 @@ INSERT: #inside::text("0")
 ## Change
 ```
 REMOVE: ::text("loading...")
-INSERT: #outside + #inside
+INSERT: #inside
 ```
 ## Console
 ```

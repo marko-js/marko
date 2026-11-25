@@ -21,10 +21,10 @@ INSERT: ::text("loading inner...")
 ```
 ## Change
 ```
-INSERT: div::text("changes: ")
-INSERT: div::text@0 + ::text("0")
 REMOVE: ::text("loading inner...")
 INSERT: div
+INSERT: div::text("changes: ")
+INSERT: div::text("0")
 ```
 
 # Update

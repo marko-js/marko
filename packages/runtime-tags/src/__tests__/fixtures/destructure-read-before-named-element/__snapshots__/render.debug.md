@@ -34,7 +34,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: div:nth-of-type(2)::text@2 "1" => "2"
 UPDATE: div:nth-of-type(1)::text "2" => "5"
 UPDATE: div:nth-of-type(2)::text@0 "2" => "5"
+UPDATE: div:nth-of-type(2)::text@2 "1" => "2"
 ```

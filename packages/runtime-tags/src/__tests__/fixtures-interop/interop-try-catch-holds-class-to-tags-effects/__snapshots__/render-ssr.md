@@ -16,9 +16,9 @@ caught ERROR!
 ```
 ## Change
 ```
-INSERT: ::text("caught ERROR!")
-REMOVE: #class + div
 REMOVE: #class
+REMOVE: div
+INSERT: ::text("caught ERROR!")
 ```
 
 # Update
@@ -27,5 +27,5 @@ caught ERROR!done
 ```
 ## Change
 ```
-INSERT: ::text@0 + ::text("done")
+INSERT: ::text("done")
 ```

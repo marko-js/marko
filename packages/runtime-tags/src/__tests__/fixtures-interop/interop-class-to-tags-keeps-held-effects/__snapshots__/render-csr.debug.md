@@ -15,7 +15,7 @@ valuevalue
 ```
 INSERT: ::text("value")
 UPDATE: ::text@0 " " => "value"
-INSERT: ::text@0 + ::text("value")
+INSERT: ::text("value")
 UPDATE: ::text@5 " " => "value"
 ```
 ## Console

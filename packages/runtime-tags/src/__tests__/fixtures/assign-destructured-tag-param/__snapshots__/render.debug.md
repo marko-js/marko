@@ -91,8 +91,8 @@ document.querySelector(selector).click();
 ```
 ## Change
 ```
-UPDATE: div::text@2 "10" => "15"
 UPDATE: .amount::text "10" => "15"
+UPDATE: div::text@2 "10" => "15"
 ```
 
 # Update

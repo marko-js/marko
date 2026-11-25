@@ -94,8 +94,8 @@
 ```
 ## Change
 ```
-INSERT: div > math + svg
-REMOVE: div > svg:nth-of-type(2) + div
+REMOVE: div > div
+INSERT: div > svg:nth-of-type(2)
 INSERT: div > svg:nth-of-type(2) > a
 UPDATE: div > svg:nth-of-type(2) > a[ns] null => "http://www.w3.org/2000/svg"
 ```
@@ -150,8 +150,8 @@ UPDATE: div > svg:nth-of-type(2) > a[ns] null => "http://www.w3.org/2000/svg"
 ```
 ## Change
 ```
-INSERT: div > math + div
-REMOVE: div > div + svg
+REMOVE: div > svg
+INSERT: div > div
 INSERT: div > div > a
 UPDATE: div > div > a[ns] null => "http://www.w3.org/1999/xhtml"
 ```
@@ -206,8 +206,8 @@ UPDATE: div > div > a[ns] null => "http://www.w3.org/1999/xhtml"
 ```
 ## Change
 ```
-INSERT: div > math + svg
-REMOVE: div > svg:nth-of-type(2) + div
+REMOVE: div > div
+INSERT: div > svg:nth-of-type(2)
 INSERT: div > svg:nth-of-type(2) > a
 UPDATE: div > svg:nth-of-type(2) > a[ns] null => "http://www.w3.org/2000/svg"
 ```
@@ -252,10 +252,10 @@ UPDATE: div > svg:nth-of-type(2) > a[ns] null => "http://www.w3.org/2000/svg"
 ```
 ## Change
 ```
-INSERT: div > svg:nth-of-type(1) > a + ::text("Hi")
-REMOVE: div > svg:nth-of-type(1)::text + a
-INSERT: div > math > a + ::text("Hi")
-REMOVE: div > math::text + a
+REMOVE: div > svg:nth-of-type(1) > a
+INSERT: div > svg:nth-of-type(1)::text("Hi")
+REMOVE: div > math > a
+INSERT: div > math::text("Hi")
 ```
 
 # Update
@@ -308,13 +308,13 @@ REMOVE: div > math::text + a
 ```
 ## Change
 ```
-INSERT: div > svg:nth-of-type(1) > a:nth-of-type(1) + a
-REMOVE: div > svg:nth-of-type(1) > a:nth-of-type(2) + ::text("Hi")
+REMOVE: div > svg:nth-of-type(1)::text("Hi")
+INSERT: div > svg:nth-of-type(1) > a:nth-of-type(2)
 UPDATE: div > svg:nth-of-type(1) > a:nth-of-type(2)[href] null => "#bar"
-INSERT: div > math > a:nth-of-type(1) + a
-REMOVE: div > math > a:nth-of-type(2) + ::text("Hi")
-UPDATE: div > math > a:nth-of-type(2)[href] null => "#bar"
 UPDATE: div > svg:nth-of-type(1) > a:nth-of-type(2)[ns] null => "http://www.w3.org/2000/svg"
+REMOVE: div > math::text("Hi")
+INSERT: div > math > a:nth-of-type(2)
+UPDATE: div > math > a:nth-of-type(2)[href] null => "#bar"
 UPDATE: div > math > a:nth-of-type(2)[ns] null => "http://www.w3.org/1998/Math/MathML"
 ```
 
@@ -358,8 +358,8 @@ UPDATE: div > math > a:nth-of-type(2)[ns] null => "http://www.w3.org/1998/Math/M
 ```
 ## Change
 ```
-INSERT: div > svg:nth-of-type(1) > a + ::text("Hi")
-REMOVE: div > svg:nth-of-type(1)::text + a
-INSERT: div > math > a + ::text("Hi")
-REMOVE: div > math::text + a
+REMOVE: div > svg:nth-of-type(1) > a
+INSERT: div > svg:nth-of-type(1)::text("Hi")
+REMOVE: div > math > a
+INSERT: div > math::text("Hi")
 ```

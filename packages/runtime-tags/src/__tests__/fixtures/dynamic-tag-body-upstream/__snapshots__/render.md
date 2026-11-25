@@ -36,7 +36,7 @@ container.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: div + section
-REMOVE: section + div
+REMOVE: div
+INSERT: section
 UPDATE: section > em::text " " => "a"
 ```

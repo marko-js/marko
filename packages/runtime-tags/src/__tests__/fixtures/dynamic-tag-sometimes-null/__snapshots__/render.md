@@ -16,8 +16,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: ::text("Body Content")
 INSERT: div
-REMOVE: div + ::text("Body Content")
 ```
 
 # Update
@@ -30,6 +30,6 @@ Body Content
 ```
 ## Change
 ```
+REMOVE: div
 INSERT: ::text("Body Content")
-REMOVE: ::text + div
 ```

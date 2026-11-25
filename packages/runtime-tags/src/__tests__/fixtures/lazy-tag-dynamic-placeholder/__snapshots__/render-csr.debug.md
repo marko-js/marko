@@ -28,7 +28,7 @@ loading...
 ```
 ## Change
 ```
-INSERT: .inc + ::text("loading...")
+INSERT: ::text("loading...")
 ```
 
 # Update
@@ -49,8 +49,8 @@ INSERT: .inc + ::text("loading...")
 ```
 ## Change
 ```
-INSERT: .inc + div
-REMOVE: div + ::text("loading...")
+REMOVE: ::text("loading...")
+INSERT: div
 ```
 
 # Update
@@ -95,7 +95,7 @@ UPDATE: div::text@3 "1" => "2"
 ```
 ## Change
 ```
-REMOVE: .inc + div
+REMOVE: div
 ```
 
 # Update
@@ -119,7 +119,7 @@ REMOVE: .inc + div
 ```
 ## Change
 ```
-INSERT: .inc + div
+INSERT: div
 UPDATE: div::text@0 "" => "x"
 UPDATE: div::text@3 "" => "2"
 ```

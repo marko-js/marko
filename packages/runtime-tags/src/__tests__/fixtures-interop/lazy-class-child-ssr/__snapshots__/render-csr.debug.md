@@ -22,7 +22,7 @@
 ```
 ## Change
 ```
-INSERT: #inc + #child
+INSERT: #child
 INSERT: #child::text("0")
 ```
 

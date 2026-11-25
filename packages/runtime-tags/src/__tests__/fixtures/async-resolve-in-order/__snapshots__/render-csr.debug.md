@@ -9,7 +9,7 @@ abce
 ```
 ## Change
 ```
-INSERT: ::text@0 + ::text("b")
+INSERT: ::text("b")
 UPDATE: ::text@1 " " => "b"
 ```
 
@@ -19,6 +19,6 @@ abcde
 ```
 ## Change
 ```
-INSERT: ::text@2 + ::text("d")
+INSERT: ::text("d")
 UPDATE: ::text@3 " " => "d"
 ```

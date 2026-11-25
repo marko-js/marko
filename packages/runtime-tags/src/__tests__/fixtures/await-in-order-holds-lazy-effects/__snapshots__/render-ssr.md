@@ -21,7 +21,7 @@ document.querySelector("button")?.click();
 ```
 ## Change
 ```
-INSERT: button + div
+INSERT: div
 INSERT: div::text("0")
 ```
 ## Console
@@ -43,6 +43,6 @@ document.querySelector("button")?.click();
 ```
 ## Change
 ```
-UPDATE: div::text "0" => "1"
 UPDATE: button::text "0" => "1"
+UPDATE: div::text "0" => "1"
 ```

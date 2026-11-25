@@ -63,5 +63,5 @@
 ```
 ## Change
 ```
-INSERT: script:nth-of-type(3) + script
+INSERT: script:nth-of-type(4)
 ```

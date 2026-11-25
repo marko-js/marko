@@ -33,6 +33,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: span::text "a" => "z"
 UPDATE: input[checked] null => ""
+UPDATE: span::text "a" => "z"
 ```

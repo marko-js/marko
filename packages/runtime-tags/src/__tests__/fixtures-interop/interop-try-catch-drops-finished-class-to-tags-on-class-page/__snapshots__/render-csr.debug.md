@@ -27,7 +27,7 @@ LOG "child effect"
 ```
 ## Change
 ```
-INSERT: #page > :is(::text("caught "), ::text("ERROR!"))
-REMOVE: #page::text@7 + #class
+REMOVE: #page > #class
+INSERT: #page::text("caught "), #page::text("ERROR!")
 UPDATE: #page::text@7 "" => "ERROR!"
 ```

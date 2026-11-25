@@ -18,8 +18,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: button + #dynamic
-REMOVE: #dynamic + div
+REMOVE: div
+INSERT: #dynamic
 UPDATE: #dynamic[id] null => "dynamic"
 ```
 
@@ -35,7 +35,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: button + div
-REMOVE: div + #dynamic
+REMOVE: #dynamic
+INSERT: div
 UPDATE: div::text@6 "" => "dynamic"
 ```

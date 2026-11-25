@@ -15,5 +15,5 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: button + span
+REMOVE: span
 ```

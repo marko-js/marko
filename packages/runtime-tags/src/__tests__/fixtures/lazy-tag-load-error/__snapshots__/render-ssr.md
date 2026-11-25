@@ -25,6 +25,6 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-INSERT: #toggle + #error
+INSERT: #error
 UPDATE: #error::text " " => "Export '$input_value' is not defined in module"
 ```

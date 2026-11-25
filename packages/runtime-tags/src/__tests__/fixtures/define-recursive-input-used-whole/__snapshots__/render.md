@@ -31,7 +31,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: span
-UPDATE: span:nth-of-type(1)::text@2 "" => "depth,label"
+INSERT: span:nth-of-type(1)
 UPDATE: span:nth-of-type(1)::text@0 "" => "x"
+UPDATE: span:nth-of-type(1)::text@2 "" => "depth,label"
 ```

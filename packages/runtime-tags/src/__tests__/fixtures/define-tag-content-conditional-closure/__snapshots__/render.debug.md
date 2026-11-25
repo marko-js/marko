@@ -17,7 +17,7 @@ label: hi
 ```
 ## Change
 ```
-INSERT: button + :is(::text("label: "), ::text("hi"))
+INSERT: ::text("label: "), ::text("hi")
 UPDATE: ::text@7 "" => "hi"
 ```
 
@@ -32,6 +32,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: button + ::text("label: ")
-REMOVE: button + ::text("hi")
+REMOVE: ::text("hi")
+REMOVE: ::text("label: ")
 ```

@@ -17,9 +17,9 @@ loading...
 ```
 ## Change
 ```
-INSERT: span::text("1")
 REMOVE: ::text("loading...")
-INSERT: button + span
+INSERT: span
+INSERT: span::text("1")
 ```
 
 # Update

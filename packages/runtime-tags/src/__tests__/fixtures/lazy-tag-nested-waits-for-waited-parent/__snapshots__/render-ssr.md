@@ -73,7 +73,7 @@ document.querySelector("#go").click();
 ```
 ## Change
 ```
-INSERT: span:nth-of-type(3) + button
+INSERT: button:nth-of-type(3)
 ```
 
 # Update

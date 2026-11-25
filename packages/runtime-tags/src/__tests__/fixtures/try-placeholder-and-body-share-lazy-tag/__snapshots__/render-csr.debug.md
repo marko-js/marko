@@ -18,7 +18,7 @@
 ```
 ## Change
 ```
-INSERT: #log + .child
+INSERT: .child
 ```
 
 # Update
@@ -36,7 +36,7 @@ INSERT: #log + .child
 ```
 ## Change
 ```
-INSERT: #log + .child
-REMOVE: .child + .child
+REMOVE: .child
 INSERT: #log::text("b")
+INSERT: .child
 ```

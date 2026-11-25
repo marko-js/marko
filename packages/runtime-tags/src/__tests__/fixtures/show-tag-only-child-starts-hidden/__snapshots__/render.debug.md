@@ -43,7 +43,7 @@ document.getElementById("t").click();
 ```
 ## Change
 ```
-INSERT: #c > :is(li, li)
+INSERT: #c > li:nth-of-type(1), #c > li:nth-of-type(2)
 ```
 
 # Update
@@ -71,8 +71,8 @@ document.getElementById("i").click();
 ```
 ## Change
 ```
+REMOVE: #c > li
 UPDATE: #c > li::text "a" => "c"
-REMOVE: #c > li + li
 ```
 
 # Update
@@ -132,5 +132,5 @@ document.getElementById("t").click();
 ```
 ## Change
 ```
-INSERT: #c > :is(li, li)
+INSERT: #c > li:nth-of-type(1), #c > li:nth-of-type(2)
 ```

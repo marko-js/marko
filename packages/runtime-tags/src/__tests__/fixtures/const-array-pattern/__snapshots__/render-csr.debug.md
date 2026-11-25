@@ -19,6 +19,6 @@
 ```
 ## Change
 ```
-UPDATE: div::text@4 "" => "c"
 UPDATE: div::text@2 "dflt" => "b"
+UPDATE: div::text@4 "" => "c"
 ```

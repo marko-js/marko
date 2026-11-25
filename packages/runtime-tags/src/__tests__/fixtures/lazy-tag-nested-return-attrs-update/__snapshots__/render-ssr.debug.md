@@ -46,7 +46,7 @@ document.querySelector(".inc").click();
 ```
 ## Change
 ```
-INSERT: .inc + :is(p, span, .focus)
+INSERT: p, span, .focus
 ```
 
 # Update

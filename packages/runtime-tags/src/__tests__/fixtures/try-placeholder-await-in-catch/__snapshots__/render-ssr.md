@@ -17,6 +17,6 @@ REMOVE: ::text("loading...")
 ```
 ## Change
 ```
-INSERT: p::text("caught ERROR!, retried")
 INSERT: p
+INSERT: p::text("caught ERROR!, retried")
 ```

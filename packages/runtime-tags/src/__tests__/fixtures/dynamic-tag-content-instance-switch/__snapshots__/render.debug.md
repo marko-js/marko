@@ -46,8 +46,8 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-INSERT: #toggle + div
-REMOVE: div + div
+REMOVE: div
+INSERT: div
 UPDATE: div::text@6 "" => "2"
 ```
 
@@ -106,7 +106,7 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-INSERT: #toggle + div
-REMOVE: div + div
+REMOVE: div
+INSERT: div
 UPDATE: div::text@6 "" => "1"
 ```

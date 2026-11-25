@@ -34,7 +34,7 @@
 ```
 ## Change
 ```
-INSERT: span:nth-of-type(1) + .inc
+INSERT: .inc
 ```
 
 # Update
@@ -63,7 +63,7 @@ INSERT: span:nth-of-type(1) + .inc
 ```
 ## Change
 ```
-INSERT: button
+INSERT: button:nth-of-type(1)
 ```
 
 # Update
@@ -89,8 +89,8 @@ document.querySelector(".hide").click();
 ```
 ## Change
 ```
-REMOVE: button:nth-of-type(1) + span
-REMOVE: button:nth-of-type(2) + span
+REMOVE: span
+REMOVE: span
 ```
 
 # Update
@@ -118,6 +118,6 @@ for (const button of document.querySelectorAll(".inc")) {
 ```
 ## Change
 ```
-UPDATE: button:nth-of-type(2)::text "0" => "1"
 UPDATE: button:nth-of-type(1)::text "0" => "1"
+UPDATE: button:nth-of-type(2)::text "0" => "1"
 ```

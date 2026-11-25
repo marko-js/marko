@@ -42,5 +42,5 @@ INSERT: section > span
 ```
 ## Change
 ```
-INSERT: section + span
+INSERT: span
 ```

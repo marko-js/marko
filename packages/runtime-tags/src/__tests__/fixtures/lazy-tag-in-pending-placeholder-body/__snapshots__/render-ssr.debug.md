@@ -14,9 +14,9 @@ loading
 ```
 ## Change
 ```
-INSERT: p::text("done")
 REMOVE: ::text("loading")
 INSERT: button, p
+INSERT: p::text("done")
 ```
 
 # Update

@@ -31,7 +31,7 @@ document.querySelector(".show").click();
 ```
 ## Change
 ```
-INSERT: .show + .set
+INSERT: .set
 ```
 
 # Update

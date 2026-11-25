@@ -66,5 +66,5 @@ done
 ## Change
 ```
 REMOVE: button
-INSERT: .child + ::text("done")
+INSERT: ::text("done")
 ```

@@ -21,9 +21,9 @@
 ```
 ## Change
 ```
-INSERT: button + span
+INSERT: span
 INSERT: span::text("a")
-INSERT: span + #ref
+INSERT: #ref
 INSERT: #ref::text("0")
 ```
 
@@ -46,10 +46,10 @@ INSERT: #ref::text("0")
 ```
 ## Change
 ```
-INSERT: #ref + p
-INSERT: p::text("b")
 REMOVE: #ref::text("0")
 INSERT: #ref::text("hello")
+INSERT: p
+INSERT: p::text("b")
 ```
 
 # Update

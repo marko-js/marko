@@ -20,7 +20,7 @@
 ## Change
 ```
 INSERT: svg > rect
-INSERT: svg + link
-INSERT: svg + .child
+INSERT: link
+INSERT: .child
 INSERT: .child::text("x")
 ```

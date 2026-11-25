@@ -24,8 +24,8 @@ LOG "placeholder mounted"
 ```
 ## Change
 ```
+REMOVE: button
 INSERT: button
-REMOVE: button + button
 ```
 ## Console
 ```

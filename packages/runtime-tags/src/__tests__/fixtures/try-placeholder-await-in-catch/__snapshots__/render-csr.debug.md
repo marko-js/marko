@@ -17,6 +17,6 @@ INSERT: ::text("loading...")
 ```
 ## Change
 ```
+REMOVE: ::text("loading...")
 INSERT: p
-REMOVE: p + ::text("loading...")
 ```

@@ -61,10 +61,10 @@ REMOVE: div > p
 ```
 ## Change
 ```
-INSERT: div > p
-INSERT: div > p:nth-of-type(1) + p
-INSERT: div > p:nth-of-type(2) + p
-INSERT: div > p:nth-of-type(3) + p
-INSERT: div > p:nth-of-type(4) + p
-INSERT: div > p:nth-of-type(5) + p
+INSERT: div > p:nth-of-type(1)
+INSERT: div > p:nth-of-type(2)
+INSERT: div > p:nth-of-type(3)
+INSERT: div > p:nth-of-type(4)
+INSERT: div > p:nth-of-type(5)
+INSERT: div > p:nth-of-type(6)
 ```

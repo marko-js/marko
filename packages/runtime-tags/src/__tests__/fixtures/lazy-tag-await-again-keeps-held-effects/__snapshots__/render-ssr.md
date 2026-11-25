@@ -16,8 +16,8 @@
 ## Change
 ```
 INSERT: #log::text("[a]")
-REMOVE: #log::text("[a]")
 INSERT: #log::text("[a][b]")
+REMOVE: #log::text("[a]")
 REMOVE: #log::text("[a][b]")
 INSERT: #log::text("[a][b][c]")
 ```

@@ -25,10 +25,10 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: div
+REMOVE: div
+REMOVE: div
 UPDATE: button::text "collapse" => "expand"
-REMOVE: button + div
-REMOVE: button + div
-REMOVE: button + div
 ```
 
 # Update
@@ -52,7 +52,7 @@ document.querySelector("button").click();
 ## Change
 ```
 UPDATE: button::text "expand" => "collapse"
-INSERT: button + :is(div, div, div)
+INSERT: div:nth-of-type(1), div:nth-of-type(2), div:nth-of-type(3)
 ```
 
 # Update
@@ -66,8 +66,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: div
+REMOVE: div
+REMOVE: div
 UPDATE: button::text "collapse" => "expand"
-REMOVE: button + div
-REMOVE: button + div
-REMOVE: button + div
 ```

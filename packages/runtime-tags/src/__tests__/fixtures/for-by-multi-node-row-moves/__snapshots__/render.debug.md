@@ -92,15 +92,15 @@
 ```
 ## Change
 ```
-REMOVE: dl > dd:nth-of-type(4) + dt
-REMOVE: dl > dd:nth-of-type(4) + dd
-INSERT: dl > :is(dt, dd)
-REMOVE: dl > dd:nth-of-type(4) + dt
-REMOVE: dl > dd:nth-of-type(4) + dd
-INSERT: dl > :is(dt, dd)
-REMOVE: dl > dd:nth-of-type(4) + dt
-REMOVE: dl > dd:nth-of-type(4) + dd
-INSERT: dl > :is(dt, dd)
+REMOVE: dl > dd
+REMOVE: dl > dd
+REMOVE: dl > dd
+REMOVE: dl > dt
+REMOVE: dl > dt
+REMOVE: dl > dt
+INSERT: dl > dt:nth-of-type(1), dl > dd:nth-of-type(1)
+INSERT: dl > dt:nth-of-type(2), dl > dd:nth-of-type(2)
+INSERT: dl > dt:nth-of-type(3), dl > dd:nth-of-type(3)
 ```
 
 # Update
@@ -152,9 +152,9 @@ INSERT: dl > :is(dt, dd)
 ```
 ## Change
 ```
-REMOVE: dl > dd:nth-of-type(3) + dt
-REMOVE: dl > dd:nth-of-type(3) + dd
-INSERT: dl > dd:nth-of-type(1) + :is(dt, dd)
+REMOVE: dl > dd
+REMOVE: dl > dt
+INSERT: dl > dt:nth-of-type(2), dl > dd:nth-of-type(2)
 ```
 
 # Update
@@ -212,11 +212,11 @@ INSERT: dl > dd:nth-of-type(1) + :is(dt, dd)
 ```
 ## Change
 ```
-REMOVE: dl > dd:nth-of-type(2) + dt
-REMOVE: dl > dd:nth-of-type(2) + dd
-INSERT: dl > :is(dt, dd)
-REMOVE: dl > dd:nth-of-type(5) + dt
-REMOVE: dl > dd:nth-of-type(5) + dd
-INSERT: dl > :is(dt, dd)
-INSERT: dl > :is(dt, dd)
+REMOVE: dl > dd
+REMOVE: dl > dd
+REMOVE: dl > dt
+REMOVE: dl > dt
+INSERT: dl > dt:nth-of-type(1), dl > dd:nth-of-type(1)
+INSERT: dl > dt:nth-of-type(2), dl > dd:nth-of-type(2)
+INSERT: dl > dt:nth-of-type(3), dl > dd:nth-of-type(3)
 ```

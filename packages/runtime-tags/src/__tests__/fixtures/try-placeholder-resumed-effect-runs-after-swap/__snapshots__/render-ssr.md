@@ -21,7 +21,7 @@ loading
 ```
 ## Change
 ```
-INSERT: ::text + p
+INSERT: p
 INSERT: p::text("c")
 ```
 
@@ -39,9 +39,9 @@ INSERT: p::text("c")
 ```
 ## Change
 ```
-INSERT: div::text("b")
 REMOVE: ::text("loading")
 INSERT: span, div
+INSERT: div::text("b")
 ```
 ## Console
 ```

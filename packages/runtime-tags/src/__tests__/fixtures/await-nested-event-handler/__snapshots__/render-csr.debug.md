@@ -32,8 +32,8 @@ INSERT: ::text("loading inner...")
 ```
 ## Change
 ```
+REMOVE: ::text("loading inner...")
 INSERT: div
-REMOVE: div + ::text("loading inner...")
 ```
 
 # Update

@@ -27,8 +27,8 @@ b.click();
 ```
 ## Change
 ```
-REMOVE: .toggle + em
-REMOVE: .toggle + em
+REMOVE: em
+REMOVE: em
 ```
 
 # Update
@@ -51,7 +51,7 @@ b.click();
 ```
 ## Change
 ```
-INSERT: .toggle + :is(em, em)
+INSERT: em:nth-of-type(1), em:nth-of-type(2)
 UPDATE: em:nth-of-type(1)::text " " => "a"
 UPDATE: em:nth-of-type(2)::text " " => "a"
 ```

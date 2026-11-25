@@ -18,10 +18,10 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: ::text("a")
+REMOVE: ::text("b")
 INSERT: ::text("0")
-REMOVE: ::text@0 + ::text("a")
-INSERT: ::text@0 + ::text("1")
-REMOVE: ::text@1 + ::text("b")
 UPDATE: ::text@0 " " => "0"
+INSERT: ::text("1")
 UPDATE: ::text@1 " " => "1"
 ```

@@ -18,7 +18,7 @@ loading
 ```
 ## Change
 ```
-INSERT: ::text + p
+INSERT: p
 UPDATE: p::text " " => "c"
 ```
 
@@ -36,8 +36,8 @@ UPDATE: p::text " " => "c"
 ```
 ## Change
 ```
+REMOVE: ::text("loading")
 INSERT: span, div
-REMOVE: div + ::text("loading")
 ```
 ## Console
 ```

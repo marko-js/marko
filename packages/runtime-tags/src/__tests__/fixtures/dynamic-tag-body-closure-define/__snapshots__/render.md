@@ -21,6 +21,6 @@ count 1
 ```
 ## Change
 ```
-INSERT: #open + :is(::text("count "), ::text("1"))
+INSERT: ::text("count "), ::text("1")
 UPDATE: ::text@6 "" => "1"
 ```

@@ -14,7 +14,7 @@
 ```
 ## Change
 ```
-INSERT: svg + .child
+INSERT: .child
 ```
 
 # Update

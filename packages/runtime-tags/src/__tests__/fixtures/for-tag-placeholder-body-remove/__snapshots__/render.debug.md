@@ -32,6 +32,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: div:nth-of-type(2)::text("b")
 UPDATE: div:nth-of-type(2)::text@5 "a" => "b"
-REMOVE: div:nth-of-type(2)::text@5 + ::text("b")
 ```

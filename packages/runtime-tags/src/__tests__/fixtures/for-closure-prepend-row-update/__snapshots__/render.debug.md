@@ -66,7 +66,7 @@ document.querySelector("button.prepend").click();
 ```
 ## Change
 ```
-INSERT: .prepend + .row0
+INSERT: .row0
 UPDATE: .row0::text " " => "0:n1"
 ```
 
@@ -96,7 +96,7 @@ document.querySelector("button.row1").click();
 ```
 ## Change
 ```
+UPDATE: .row0::text "0:n1" => "0:n2"
 UPDATE: .row1::text "1:n1" => "2:n2"
 UPDATE: .row2::text "0:n1" => "0:n2"
-UPDATE: .row0::text "0:n1" => "0:n2"
 ```

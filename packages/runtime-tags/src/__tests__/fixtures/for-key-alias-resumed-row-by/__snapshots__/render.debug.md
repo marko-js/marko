@@ -34,5 +34,5 @@ xy
 ## Change
 ```
 INSERT: ::text("x")
-INSERT: ::text@0 + ::text("y")
+INSERT: ::text("y")
 ```

@@ -33,7 +33,7 @@ document.querySelector(".mount").click();
 ```
 ## Change
 ```
-INSERT: .mount + :is(p, span, .focus)
+INSERT: p, span, .focus
 ```
 
 # Update

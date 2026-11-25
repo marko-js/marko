@@ -28,7 +28,7 @@ INSERT: #sync
 ```
 ## Change
 ```
-INSERT: #sync + #async
+INSERT: #async
 ```
 
 # Update

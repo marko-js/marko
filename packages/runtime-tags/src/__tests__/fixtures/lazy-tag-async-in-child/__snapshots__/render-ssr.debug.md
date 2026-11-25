@@ -25,10 +25,10 @@
 ```
 ## Change
 ```
-INSERT: #before + button
+INSERT: button
 INSERT: button::text("1")
-INSERT: button::text@0 + ::text(":10")
-INSERT: button + #after
+INSERT: button::text(":10")
+INSERT: #after
 INSERT: #after::text("after")
 ```
 

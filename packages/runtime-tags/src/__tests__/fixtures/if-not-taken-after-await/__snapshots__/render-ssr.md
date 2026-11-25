@@ -22,7 +22,7 @@
 ```
 ## Change
 ```
-INSERT: b + i
+INSERT: i
 INSERT: i::text("A")
 ```
 
@@ -37,9 +37,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: b
+REMOVE: i
 UPDATE: button::text "0" => "1"
-REMOVE: button + b
-REMOVE: button + i
 ```
 
 # Update
@@ -60,7 +60,7 @@ document.querySelector("button").click();
 ## Change
 ```
 UPDATE: button::text "1" => "2"
-INSERT: button + b
-INSERT: b + i
+INSERT: b
+INSERT: i
 UPDATE: i::text " " => "A"
 ```

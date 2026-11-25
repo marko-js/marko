@@ -38,9 +38,9 @@
 ```
 ## Change
 ```
-UPDATE: section::text@13 "0" => "1"
 UPDATE: div::text@10 "0" => "1"
 UPDATE: span::text@11 "0" => "1"
+UPDATE: section::text@13 "0" => "1"
 ```
 
 # Update
@@ -65,7 +65,7 @@ UPDATE: span::text@11 "0" => "1"
 ```
 ## Change
 ```
-UPDATE: section::text@13 "1" => "2"
 UPDATE: div::text@10 "1" => "2"
 UPDATE: span::text@11 "1" => "2"
+UPDATE: section::text@13 "1" => "2"
 ```

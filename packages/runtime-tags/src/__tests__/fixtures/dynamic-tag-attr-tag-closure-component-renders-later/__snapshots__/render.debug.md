@@ -21,6 +21,6 @@ text Hello
 ```
 ## Change
 ```
-INSERT: #toggle + :is(::text("text "), ::text("Hello"))
+INSERT: ::text("text "), ::text("Hello")
 UPDATE: ::text@5 "" => "Hello"
 ```

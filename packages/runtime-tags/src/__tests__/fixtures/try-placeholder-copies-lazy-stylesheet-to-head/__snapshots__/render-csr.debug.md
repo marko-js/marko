@@ -19,6 +19,6 @@ try body
 ```
 ## Change
 ```
+REMOVE: span
 INSERT: ::text("try"), ::text(" "), ::text("body")
-REMOVE: ::text@4 + span
 ```

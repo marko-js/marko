@@ -74,7 +74,7 @@ document.querySelector(`#${id}`).click();
 ```
 ## Change
 ```
-INSERT: div > #inc
+INSERT: #inc
 ```
 
 # Update

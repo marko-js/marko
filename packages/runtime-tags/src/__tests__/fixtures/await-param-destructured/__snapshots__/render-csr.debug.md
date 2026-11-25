@@ -16,7 +16,7 @@
 ```
 ## Change
 ```
-INSERT: button + span
+INSERT: span
 UPDATE: span::text@0 "" => "a"
 UPDATE: span::text@2 "" => "x"
 UPDATE: span::text@4 "" => "0"

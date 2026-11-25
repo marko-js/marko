@@ -12,8 +12,8 @@
 ```
 ## Change
 ```
+REMOVE: #kept
 INSERT: div
-REMOVE: div + #kept
 ```
 
 # Update `{"show":false}`
@@ -25,8 +25,8 @@ REMOVE: div + #kept
 ```
 ## Change
 ```
+REMOVE: div
 INSERT: #kept
-REMOVE: #kept + div
 UPDATE: #kept[aria-label] null => "label"
 UPDATE: #kept[id] null => "kept"
 ```

@@ -14,9 +14,9 @@
 ```
 ## Change
 ```
-INSERT: button
-INSERT: button:nth-of-type(1) + button
-INSERT: button:nth-of-type(2) + button
+INSERT: button:nth-of-type(1)
+INSERT: button:nth-of-type(2)
+INSERT: button:nth-of-type(3)
 ```
 
 # Update

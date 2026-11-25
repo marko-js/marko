@@ -31,12 +31,12 @@ source=2
 ## Change
 ```
 UPDATE: button:nth-of-type(1)::text@0 "1" => "2"
-UPDATE: button:nth-of-type(2)::text@0 "1" => "2"
-UPDATE: button:nth-of-type(3)::text@0 "1" => "2"
-UPDATE: button:nth-of-type(2)::text@2 "1" => "2"
-UPDATE: ::text@7 "1" => "2"
 UPDATE: button:nth-of-type(1)::text@2 "1" => "2"
+UPDATE: button:nth-of-type(2)::text@0 "1" => "2"
+UPDATE: button:nth-of-type(2)::text@2 "1" => "2"
+UPDATE: button:nth-of-type(3)::text@0 "1" => "2"
 UPDATE: button:nth-of-type(3)::text@2 "1" => "2"
+UPDATE: ::text@7 "1" => "2"
 ```
 
 # Update
@@ -58,12 +58,12 @@ source=3
 ## Change
 ```
 UPDATE: button:nth-of-type(1)::text@0 "2" => "3"
-UPDATE: button:nth-of-type(2)::text@0 "2" => "3"
-UPDATE: button:nth-of-type(3)::text@0 "2" => "3"
-UPDATE: button:nth-of-type(2)::text@2 "2" => "3"
-UPDATE: ::text@7 "2" => "3"
 UPDATE: button:nth-of-type(1)::text@2 "2" => "3"
+UPDATE: button:nth-of-type(2)::text@0 "2" => "3"
+UPDATE: button:nth-of-type(2)::text@2 "2" => "3"
+UPDATE: button:nth-of-type(3)::text@0 "2" => "3"
 UPDATE: button:nth-of-type(3)::text@2 "2" => "3"
+UPDATE: ::text@7 "2" => "3"
 ```
 
 # Update
@@ -85,10 +85,10 @@ source=4
 ## Change
 ```
 UPDATE: button:nth-of-type(1)::text@0 "3" => "4"
-UPDATE: button:nth-of-type(2)::text@0 "3" => "4"
-UPDATE: button:nth-of-type(3)::text@0 "3" => "4"
-UPDATE: button:nth-of-type(2)::text@2 "3" => "4"
-UPDATE: ::text@7 "3" => "4"
 UPDATE: button:nth-of-type(1)::text@2 "3" => "4"
+UPDATE: button:nth-of-type(2)::text@0 "3" => "4"
+UPDATE: button:nth-of-type(2)::text@2 "3" => "4"
+UPDATE: button:nth-of-type(3)::text@0 "3" => "4"
 UPDATE: button:nth-of-type(3)::text@2 "3" => "4"
+UPDATE: ::text@7 "3" => "4"
 ```

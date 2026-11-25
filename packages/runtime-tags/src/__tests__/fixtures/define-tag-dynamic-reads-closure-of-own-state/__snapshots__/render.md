@@ -19,7 +19,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: button + em
+INSERT: em
 UPDATE: em::text " " => "on"
 ```
 
@@ -34,7 +34,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: button + em
+REMOVE: em
 ```
 
 # Update
@@ -51,6 +51,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: button + em
+INSERT: em
 UPDATE: em::text " " => "on"
 ```

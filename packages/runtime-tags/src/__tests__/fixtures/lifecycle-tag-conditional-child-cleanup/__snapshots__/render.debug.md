@@ -33,7 +33,7 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-REMOVE: #toggle + p
+REMOVE: p
 REMOVE: #ref::text("Mounted")
 INSERT: #ref::text("Destroyed")
 ```

@@ -20,7 +20,7 @@ document.querySelector("button").click();
 ## Change
 ```
 UPDATE: button::text "0" => "1"
-INSERT: button + em
+INSERT: em
 UPDATE: em::text " " => "2"
 ```
 

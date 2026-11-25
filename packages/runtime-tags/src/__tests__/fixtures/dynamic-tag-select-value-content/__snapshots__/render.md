@@ -76,8 +76,8 @@ document.querySelector(`#${id}`).click();
 ```
 ## Change
 ```
-INSERT: #bump + div
-REMOVE: div + select
+REMOVE: select
+INSERT: div
 UPDATE: div[value] null => "b"
 UPDATE: div > option::text@1 "" => "1"
 ```
@@ -138,8 +138,8 @@ document.querySelector(`#${id}`).click();
 ```
 ## Change
 ```
-INSERT: #bump + select
-REMOVE: select + div
+REMOVE: div
+INSERT: select
 UPDATE: select > option::text@1 "" => "2"
 ```
 

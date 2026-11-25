@@ -36,10 +36,10 @@
 ```
 ## Change
 ```
+REMOVE: div
 UPDATE: #tags::text "0" => "1"
-INSERT: #toggle + div
+INSERT: div
 INSERT: div::text("1")
-REMOVE: div + div
 ```
 
 # Update
@@ -85,5 +85,5 @@ UPDATE: div::text "1" => "2"
 ```
 ## Change
 ```
-REMOVE: #toggle + div
+REMOVE: div
 ```

@@ -25,7 +25,7 @@ document.querySelector("#show").click();
 ```
 ## Change
 ```
-INSERT: #show + .toggle
+INSERT: .toggle
 ```
 
 # Update
@@ -47,5 +47,5 @@ shown
 ```
 ## Change
 ```
-INSERT: .toggle + ::text("shown")
+INSERT: ::text("shown")
 ```

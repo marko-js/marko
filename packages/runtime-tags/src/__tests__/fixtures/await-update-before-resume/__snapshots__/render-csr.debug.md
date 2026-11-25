@@ -18,7 +18,7 @@ loading...
 ```
 ## Change
 ```
-INSERT: #outside + ::text("loading...")
+INSERT: ::text("loading...")
 ```
 
 # Update
@@ -50,8 +50,8 @@ UPDATE: #outside::text "0" => "1"
 ```
 ## Change
 ```
-INSERT: #outside + #inside
-REMOVE: #inside + ::text("loading...")
+REMOVE: ::text("loading...")
+INSERT: #inside
 ```
 ## Console
 ```

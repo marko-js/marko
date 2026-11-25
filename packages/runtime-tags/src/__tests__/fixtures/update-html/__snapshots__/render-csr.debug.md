@@ -18,9 +18,9 @@ Some content
 ```
 ## Change
 ```
-INSERT: ::text@0 + ::text("Some content")
-REMOVE: ::text@1 + ::text("Hello ")
-REMOVE: ::text@1 + strong
+REMOVE: ::text("Hello ")
+REMOVE: strong
+INSERT: ::text("Some content")
 ```
 
 # Update `{"value":"<div/>"}`
@@ -32,6 +32,6 @@ REMOVE: ::text@1 + strong
 ```
 ## Change
 ```
-INSERT: ::text + div
-REMOVE: div + ::text("Some content")
+REMOVE: ::text("Some content")
+INSERT: div
 ```

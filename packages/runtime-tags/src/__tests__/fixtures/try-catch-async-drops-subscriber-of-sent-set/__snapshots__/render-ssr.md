@@ -14,8 +14,8 @@ acaught ERROR!
 ```
 ## Change
 ```
-INSERT: span + ::text("a")
-INSERT: ::text@0 + ::text("caught ERROR!")
 REMOVE: span::text("x")
 INSERT: span::text("y")
+INSERT: ::text("a")
+INSERT: ::text("caught ERROR!")
 ```

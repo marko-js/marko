@@ -26,11 +26,11 @@ LOG "mounted" "outer placeholder"
 ```
 ## Change
 ```
-INSERT: p::text("outer ")
-INSERT: p::text@0 + ::text("0")
-INSERT: span::text("inner placeholder")
 REMOVE: span
-INSERT: button + :is(p, span)
+INSERT: p, span
+INSERT: p::text("outer ")
+INSERT: p::text("0")
+INSERT: span::text("inner placeholder")
 ```
 ## Console
 ```
@@ -73,9 +73,9 @@ UPDATE: p::text@6 "0" => "1"
 ```
 ## Change
 ```
-INSERT: span::text("inner 1")
 REMOVE: span
-INSERT: p + span
+INSERT: span
+INSERT: span::text("inner 1")
 UPDATE: span::text "inner 0" => "inner 1"
 ```
 ## Console

@@ -24,9 +24,9 @@ Rejected B
 ```
 ## Change
 ```
-INSERT: div
+INSERT: div:nth-of-type(1)
 UPDATE: div:nth-of-type(1)::text@12 "" => "A Value"
-INSERT: ::text + :is(div, button)
+INSERT: div:nth-of-type(2), button
 UPDATE: div:nth-of-type(2)::text@12 "" => "C Value"
 ```
 

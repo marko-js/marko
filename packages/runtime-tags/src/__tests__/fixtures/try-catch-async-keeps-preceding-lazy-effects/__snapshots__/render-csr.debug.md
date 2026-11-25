@@ -20,7 +20,7 @@ ERROR!
 ```
 ## Change
 ```
-INSERT: button + ::text("ERROR!")
+INSERT: ::text("ERROR!")
 UPDATE: ::text " " => "ERROR!"
 ```
 

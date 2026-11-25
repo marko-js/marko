@@ -37,10 +37,10 @@ INSERT: ::text("loading")
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(1)::text@1 + ::text("1")
-UPDATE: button:nth-of-type(1)::text@2 " " => "1"
+REMOVE: ::text("loading")
 INSERT: span
-REMOVE: span + ::text("loading")
+INSERT: button:nth-of-type(1)::text("1")
+UPDATE: button:nth-of-type(1)::text@2 " " => "1"
 ```
 
 # Update
@@ -57,7 +57,7 @@ REMOVE: span + ::text("loading")
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(2)::text@1 + ::text("2")
+INSERT: button:nth-of-type(2)::text("2")
 UPDATE: button:nth-of-type(2)::text@2 " " => "2"
 ```
 
@@ -75,5 +75,5 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: span + button
+REMOVE: button
 ```

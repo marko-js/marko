@@ -10,10 +10,10 @@
 ```
 ## Change
 ```
+INSERT: #document > html > head > link
 INSERT: link
 INSERT: .child
 INSERT: .child::text("loading")
-INSERT: #document > html > head > link
 ```
 
 # Update
@@ -22,7 +22,7 @@ try body
 ```
 ## Change
 ```
-REMOVE: span
 REMOVE: link
+REMOVE: span
 INSERT: ::text("try body")
 ```

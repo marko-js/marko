@@ -22,7 +22,7 @@
 ```
 ## Change
 ```
-INSERT: #a + #out
+INSERT: #out
 UPDATE: #out::text@5 "" => "0"
 ```
 

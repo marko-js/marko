@@ -23,5 +23,5 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: button + .child
+INSERT: .child
 ```

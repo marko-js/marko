@@ -21,9 +21,9 @@ new Promise((r) => setTimeout(r, 50));
 ```
 ## Change
 ```
-INSERT: button + ::text("loading")
-INSERT: button + :is(p, span, b)
-REMOVE: b + ::text("loading")
+INSERT: ::text("loading")
+REMOVE: ::text("loading")
+INSERT: p, span, b
 ```
 ## Console
 ```

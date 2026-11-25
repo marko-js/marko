@@ -34,6 +34,6 @@ caught
 ```
 ## Change
 ```
-INSERT: p + :is(::text("caught"), div)
-REMOVE: div + ::text("outer loading")
+REMOVE: ::text("outer loading")
+INSERT: ::text("caught"), div
 ```

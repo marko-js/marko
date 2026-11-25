@@ -27,6 +27,6 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-INSERT: #toggle + #error
+INSERT: #error
 INSERT: #error::text("load failed")
 ```

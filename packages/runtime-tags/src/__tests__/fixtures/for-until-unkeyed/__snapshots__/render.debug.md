@@ -58,8 +58,8 @@ document.querySelector(".more").click();
 ```
 ## Change
 ```
-INSERT: ul > li:nth-of-type(2) + li
-INSERT: span:nth-of-type(1) + span
+INSERT: ul > li:nth-of-type(3)
+INSERT: span:nth-of-type(2)
 ```
 
 # Update
@@ -81,9 +81,9 @@ document.querySelector(".none").click();
 ```
 ## Change
 ```
+REMOVE: span
+REMOVE: span
 REMOVE: ul > :is(li, li, li)
-REMOVE: ul + span
-REMOVE: ul + span
 ```
 
 # Update

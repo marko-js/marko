@@ -19,8 +19,8 @@ INSERT: ::text("loading")
 ```
 ## Change
 ```
+REMOVE: ::text("loading")
 INSERT: .reordered
-REMOVE: .reordered + ::text("loading")
 ```
 
 # Update
@@ -38,7 +38,7 @@ REMOVE: .reordered + ::text("loading")
 ```
 ## Change
 ```
-INSERT: .reordered + .streamed
+INSERT: .streamed
 ```
 
 # Update

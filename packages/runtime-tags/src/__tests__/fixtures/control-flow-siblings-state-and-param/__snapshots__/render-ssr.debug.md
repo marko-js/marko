@@ -57,8 +57,8 @@ document.querySelector("button").click();
 ## Change
 ```
 INSERT: div:nth-of-type(2) > span
-INSERT: p:nth-of-type(2) + p
-INSERT: span:nth-of-type(1) + span
+INSERT: p:nth-of-type(3)
+INSERT: span:nth-of-type(2)
 ```
 
 # Update
@@ -87,7 +87,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: p
+REMOVE: span
 REMOVE: div:nth-of-type(2) > span
-REMOVE: p:nth-of-type(2) + p
-REMOVE: span + span
 ```

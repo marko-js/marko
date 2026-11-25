@@ -100,6 +100,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: select:nth-of-type(4) > option:nth-of-type(2)[selected] null => ""
 UPDATE: select:nth-of-type(3) > option:nth-of-type(2)[selected] null => ""
+UPDATE: select:nth-of-type(4) > option:nth-of-type(2)[selected] null => ""
 ```

@@ -22,5 +22,5 @@ document.querySelector("button").click();
 ## Change
 ```
 UPDATE: span:nth-of-type(1)::text "a" => "b"
-INSERT: span:nth-of-type(1) + span
+INSERT: span:nth-of-type(2)
 ```

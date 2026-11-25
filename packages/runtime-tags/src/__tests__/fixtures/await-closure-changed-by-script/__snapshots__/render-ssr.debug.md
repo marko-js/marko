@@ -24,16 +24,16 @@ new Promise((r) => setTimeout(r, 50));
 ```
 ## Change
 ```
+REMOVE: ::text("loading")
+INSERT: p, span, b
 INSERT: p::text("7")
+UPDATE: p::text "3" => "7"
 INSERT: span::text("1")
 INSERT: b::text("5")
-INSERT: b::text@0 + ::text(" ")
-INSERT: b::text@1 + ::text("5")
-REMOVE: ::text("loading")
-INSERT: button + :is(p, span, b)
-UPDATE: b::text@2 "0" => "5"
 UPDATE: b::text@0 "0" => "5"
-UPDATE: p::text "3" => "7"
+INSERT: b::text(" ")
+INSERT: b::text("5")
+UPDATE: b::text@2 "0" => "5"
 ```
 ## Console
 ```

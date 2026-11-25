@@ -9,8 +9,8 @@ loading outer...
 ```
 ## Change
 ```
+INSERT: t > div::text("0")
 INSERT: t > div::text("changes: ")
-INSERT: t > div::text@0 + ::text("0")
 ```
 
 # Update
@@ -23,8 +23,8 @@ caught: ERROR!
 ## Change
 ```
 REMOVE: ::text("loading outer...")
-INSERT: div
 INSERT: ::text("caught: ERROR!")
+INSERT: div
 ```
 
 # Update

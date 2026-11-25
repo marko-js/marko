@@ -28,7 +28,7 @@ loading
 ```
 ## Change
 ```
-INSERT: button + ::text("loading")
+INSERT: ::text("loading")
 ```
 
 # Update
@@ -42,8 +42,8 @@ INSERT: button + ::text("loading")
 ```
 ## Change
 ```
-INSERT: button + div
-REMOVE: div + ::text("loading")
+REMOVE: ::text("loading")
+INSERT: div
 ```
 
 # Update

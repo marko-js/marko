@@ -237,7 +237,7 @@ document.querySelector(".add").click();
 ```
 ## Change
 ```
-INSERT: form > select > option
+INSERT: form > select > option:nth-of-type(1)
 ```
 
 # Update
@@ -286,5 +286,5 @@ document.querySelector(".add").click();
 ```
 ## Change
 ```
-INSERT: form > select > option
+INSERT: form > select > option:nth-of-type(1)
 ```

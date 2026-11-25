@@ -67,7 +67,7 @@
 ## Change
 ```
 REMOVE: .list > p
-INSERT: .list > p:nth-of-type(1) + p
+INSERT: .list > p:nth-of-type(2)
 ```
 
 # Update
@@ -106,12 +106,12 @@ INSERT: .list > p:nth-of-type(1) + p
 ```
 ## Change
 ```
+REMOVE: .list > p
+REMOVE: .list > p
+REMOVE: .list > pre
 INSERT: .list > p
-REMOVE: .list > p + pre
-INSERT: .list > p + pre
-REMOVE: .list > pre:nth-of-type(1) + p
-INSERT: .list > pre:nth-of-type(1) + pre
-REMOVE: .list > pre:nth-of-type(2) + p
+INSERT: .list > pre:nth-of-type(1)
+INSERT: .list > pre:nth-of-type(2)
 ```
 
 # Update
@@ -151,7 +151,7 @@ REMOVE: .list > pre:nth-of-type(2) + p
 ## Change
 ```
 REMOVE: .list > p
-INSERT: .list > pre:nth-of-type(2) + p
+INSERT: .list > p
 ```
 
 # Update
@@ -223,8 +223,8 @@ REMOVE: .list > pre
 ```
 ## Change
 ```
+REMOVE: .list > p
+REMOVE: .list > pre
 INSERT: .list > p
-REMOVE: .list > p + pre
-INSERT: .list > p + pre
-REMOVE: .list > pre + p
+INSERT: .list > pre
 ```

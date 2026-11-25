@@ -20,9 +20,9 @@
 ```
 INSERT: .inc
 INSERT: .inc::text("0")
-INSERT: .inc + span
+INSERT: span
 INSERT: span::text("shown")
-INSERT: span + .hide
+INSERT: .hide
 INSERT: .hide::text("hide")
 ```
 
@@ -44,7 +44,7 @@ document.querySelector(".hide").click();
 ```
 ## Change
 ```
-REMOVE: .inc + span
+REMOVE: span
 ```
 
 # Update

@@ -23,9 +23,9 @@
 ```
 ## Change
 ```
-INSERT: #open + #pick
+INSERT: #pick
 INSERT: #pick::text("pick")
-INSERT: #pick + div
+INSERT: div
 ```
 
 # Update

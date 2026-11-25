@@ -21,6 +21,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: div > div::text("hello")
 REMOVE: div > button
+INSERT: div > div::text("hello")
 ```

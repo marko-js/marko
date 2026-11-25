@@ -14,7 +14,7 @@ loading
 ```
 ## Change
 ```
-INSERT: button + ::text("loading")
+INSERT: ::text("loading")
 ```
 
 # Update
@@ -26,8 +26,8 @@ caught ERROR!
 ```
 ## Change
 ```
-INSERT: button + :is(::text("caught "), ::text("ERROR!"))
-REMOVE: ::text@7 + ::text("loading")
+REMOVE: ::text("loading")
+INSERT: ::text("caught "), ::text("ERROR!")
 ```
 
 # Update
@@ -39,7 +39,7 @@ caught ERROR!done
 ```
 ## Change
 ```
-INSERT: ::text@7 + ::text("done")
+INSERT: ::text("done")
 UPDATE: ::text@13 " " => "done"
 ```
 

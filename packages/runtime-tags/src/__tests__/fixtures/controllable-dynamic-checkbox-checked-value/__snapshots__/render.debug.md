@@ -75,7 +75,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: input:nth-of-type(1) + input
+REMOVE: input
 ```
 
 # Update
@@ -106,9 +106,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: input:nth-of-type(1) + input
-UPDATE: input:nth-of-type(2)[value] null => "b"
+INSERT: input:nth-of-type(2)
 UPDATE: input:nth-of-type(2)[checked] null => ""
+UPDATE: input:nth-of-type(2)[value] null => "b"
 ```
 
 # Update

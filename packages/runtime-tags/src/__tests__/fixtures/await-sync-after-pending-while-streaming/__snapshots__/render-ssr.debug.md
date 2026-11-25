@@ -43,8 +43,8 @@ UPDATE: button::text "b" => ""
 ```
 ## Change
 ```
-INSERT: div::text("no query")
 REMOVE: ::text("loading")
-INSERT: button + div
+INSERT: div
+INSERT: div::text("no query")
 UPDATE: div::text "found a" => "no query"
 ```

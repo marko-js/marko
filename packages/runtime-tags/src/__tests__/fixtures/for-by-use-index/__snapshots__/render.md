@@ -20,6 +20,6 @@
 ## Change
 ```
 REMOVE: div:nth-of-type(1) > button
-INSERT: div:nth-of-type(1) + div
+INSERT: div:nth-of-type(2)
 UPDATE: div:nth-of-type(2)::text " " => "0"
 ```

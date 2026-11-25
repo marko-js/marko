@@ -56,11 +56,11 @@
 ```
 ## Change
 ```
-REMOVE: #1 + #2
-REMOVE: #3 + #4
-INSERT: div > #6
-REMOVE: #3 + #5
-INSERT: div > #5
+REMOVE: div > #2
+REMOVE: div > #4
+REMOVE: div > #5
+INSERT: #5
+INSERT: #6
 ```
 
 # Update `{"children":[{"id":7,"text":"p"},{"id":5,"text":"e"},{"id":8,"text":"q"},{"id":3,"text":"c"},{"id":9,"text":"r"},{"id":1,"text":"a"}]}`
@@ -100,10 +100,10 @@ INSERT: div > #5
 ```
 ## Change
 ```
-REMOVE: #5 + #6
-INSERT: #5 + #9
-REMOVE: #1 + #3
-INSERT: #5 + #3
-INSERT: #5 + #8
-INSERT: div > #7
+REMOVE: div > #3
+REMOVE: div > #6
+INSERT: #7
+INSERT: #8
+INSERT: #3
+INSERT: #9
 ```

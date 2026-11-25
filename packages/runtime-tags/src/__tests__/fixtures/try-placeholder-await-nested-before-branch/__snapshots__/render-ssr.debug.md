@@ -26,9 +26,9 @@ loading
 ```
 ## Change
 ```
-INSERT: .counter::text("0")
 REMOVE: ::text("loading")
-INSERT: .toggle + :is(.counter, span)
+INSERT: .counter, span
+INSERT: .counter::text("0")
 ```
 
 # Update
@@ -73,7 +73,7 @@ document.querySelector(".toggle").click();
 ```
 ## Change
 ```
-REMOVE: .counter + span
+REMOVE: span
 ```
 
 # Update
@@ -97,5 +97,5 @@ document.querySelector(".toggle").click();
 ```
 ## Change
 ```
-INSERT: .counter + span
+INSERT: span
 ```

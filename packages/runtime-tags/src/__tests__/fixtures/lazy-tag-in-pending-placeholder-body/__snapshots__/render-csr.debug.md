@@ -17,8 +17,8 @@ loading
 ```
 ## Change
 ```
+REMOVE: button
 INSERT: ::text("loading")
-REMOVE: ::text + button
 ```
 
 # Update
@@ -32,8 +32,8 @@ REMOVE: ::text + button
 ```
 ## Change
 ```
+REMOVE: ::text("loading")
 INSERT: button, p
-REMOVE: p + ::text("loading")
 ```
 
 # Update

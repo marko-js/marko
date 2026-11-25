@@ -22,7 +22,7 @@
 ```
 ## Change
 ```
-INSERT: .parent + .child
+INSERT: .child
 ```
 
 # Update
@@ -38,7 +38,7 @@ document.querySelector(".parent").click();
 ```
 ## Change
 ```
-REMOVE: .parent + button
+REMOVE: button
 ```
 
 # Update
@@ -59,7 +59,7 @@ document.querySelector(".parent").click();
 ```
 ## Change
 ```
-INSERT: .parent + .child
+INSERT: .child
 ```
 
 # Update

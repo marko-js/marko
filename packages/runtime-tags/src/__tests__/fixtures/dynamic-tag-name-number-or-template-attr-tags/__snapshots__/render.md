@@ -30,9 +30,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: em
+REMOVE: ul
 INSERT: em
-REMOVE: em + ul
-REMOVE: em + em
 ```
 
 # Update
@@ -57,9 +57,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: em
 INSERT: ul
-REMOVE: em + em
-INSERT: ul > li
-INSERT: ul > li:nth-of-type(1) + li
-INSERT: ul + em
+INSERT: ul > li:nth-of-type(1)
+INSERT: ul > li:nth-of-type(2)
+INSERT: em
 ```

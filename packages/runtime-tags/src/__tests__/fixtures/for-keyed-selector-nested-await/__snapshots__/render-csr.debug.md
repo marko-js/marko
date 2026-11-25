@@ -31,10 +31,10 @@
 ## Change
 ```
 INSERT: ul
-INSERT: ul > .danger
-INSERT: .danger + li
-INSERT: ul > li:nth-of-type(2) + li
+INSERT: .danger
 UPDATE: .danger[class] null => "danger"
+INSERT: ul > li:nth-of-type(2)
+INSERT: ul > li:nth-of-type(3)
 ```
 
 # Update

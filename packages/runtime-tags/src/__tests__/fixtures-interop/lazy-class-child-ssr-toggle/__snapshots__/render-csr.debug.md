@@ -30,6 +30,6 @@
 ```
 ## Change
 ```
-INSERT: #toggle + #child
+INSERT: #child
 INSERT: #child::text("42")
 ```

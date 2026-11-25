@@ -51,8 +51,8 @@
 ```
 ## Change
 ```
-INSERT: #2 + #5
-INSERT: #1 + #4
+INSERT: #4
+INSERT: #5
 ```
 
 # Update `{"children":[{"id":6,"text":"!"},{"id":1,"text":"a"},{"id":4,"text":"x"},{"id":2,"text":"b"},{"id":5,"text":"y"},{"id":3,"text":"c"},{"id":7,"text":"?"}]}`
@@ -97,6 +97,6 @@ INSERT: #1 + #4
 ```
 ## Change
 ```
-INSERT: #3 + #7
-INSERT: div > #6
+INSERT: #6
+INSERT: #7
 ```

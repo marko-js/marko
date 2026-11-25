@@ -42,9 +42,9 @@
 ## Change
 ```
 REMOVE: div > :is(#1, #2, #3)
-INSERT: div > #10
-INSERT: #10 + #11
-INSERT: #11 + #12
+INSERT: #10
+INSERT: #11
+INSERT: #12
 ```
 
 # Update `{"children":[{"id":1,"text":"a"},{"id":2,"text":"b"},{"id":3,"text":"c"}]}`
@@ -70,9 +70,9 @@ INSERT: #11 + #12
 ## Change
 ```
 REMOVE: div > :is(#10, #11, #12)
-INSERT: div > #1
-INSERT: #1 + #2
-INSERT: #2 + #3
+INSERT: #1
+INSERT: #2
+INSERT: #3
 ```
 
 # Update `{"children":[{"id":20,"text":"only"}]}`
@@ -88,7 +88,7 @@ INSERT: #2 + #3
 ## Change
 ```
 REMOVE: div > :is(#1, #2, #3)
-INSERT: div > #20
+INSERT: #20
 ```
 
 # Update `{"children":[{"id":30,"text":"p"},{"id":31,"text":"q"},{"id":32,"text":"r"},{"id":33,"text":"s"},{"id":34,"text":"t"}]}`
@@ -124,9 +124,9 @@ INSERT: div > #20
 ## Change
 ```
 REMOVE: div > #20
-INSERT: div > #30
-INSERT: #30 + #31
-INSERT: #31 + #32
-INSERT: #32 + #33
-INSERT: #33 + #34
+INSERT: #30
+INSERT: #31
+INSERT: #32
+INSERT: #33
+INSERT: #34
 ```

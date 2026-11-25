@@ -17,22 +17,22 @@ caught if bodycaught try bodyouter caught catchouter caught catch of try body
 ```
 ## Change
 ```
-INSERT: button + :is(::text("caught "), ::text("if body"))
-INSERT: ::text@7 + ::text(" ")
 INSERT: ::text(" ")
 INSERT: ::text(" ")
+INSERT: ::text(" ")
+INSERT: ::text(" ")
+INSERT: ::text(" ")
+REMOVE: ::text(" ")
+REMOVE: ::text(" ")
+REMOVE: ::text(" ")
+REMOVE: ::text(" ")
+REMOVE: ::text(" ")
+INSERT: ::text("caught "), ::text("if body")
 UPDATE: ::text@7 "" => "if body"
-INSERT: ::text@7 + :is(::text("caught "), ::text("try body"))
-REMOVE: ::text@21 + ::text(" ")
-INSERT: ::text(" ")
-REMOVE: ::text + ::text(" ")
-INSERT: ::text(" ")
-REMOVE: ::text + ::text(" ")
+INSERT: ::text("caught "), ::text("try body")
 UPDATE: ::text@21 "" => "try body"
-INSERT: ::text@21 + :is(::text("outer caught "), ::text("catch"))
-REMOVE: ::text@42 + ::text(" ")
-INSERT: ::text@42 + :is(::text("outer caught "), ::text("catch of try body"))
-REMOVE: ::text@60 + ::text(" ")
+INSERT: ::text("outer caught "), ::text("catch")
 UPDATE: ::text@42 "" => "catch"
+INSERT: ::text("outer caught "), ::text("catch of try body")
 UPDATE: ::text@60 "" => "catch of try body"
 ```

@@ -19,10 +19,10 @@ caught
 ```
 ## Change
 ```
-REMOVE: ::text("loading")
 INSERT: #child
 REMOVE: #child
-INSERT: #other + ::text("caught")
+REMOVE: ::text("loading")
+INSERT: ::text("caught")
 ```
 
 # Update
@@ -39,7 +39,7 @@ caught
 ```
 ## Change
 ```
-INSERT: ::text + p
+INSERT: p
 INSERT: p::text("done")
 ```
 

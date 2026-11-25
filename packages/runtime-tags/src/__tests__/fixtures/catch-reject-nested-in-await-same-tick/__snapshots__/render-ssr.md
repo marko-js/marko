@@ -12,8 +12,8 @@ caught: ERROR!
 ```
 ## Change
 ```
-INSERT: div::text("changes: ")
-INSERT: div::text@0 + ::text("0")
 REMOVE: ::text("loading outer...")
 INSERT: ::text("caught: ERROR!"), div
+INSERT: div::text("changes: ")
+INSERT: div::text("0")
 ```

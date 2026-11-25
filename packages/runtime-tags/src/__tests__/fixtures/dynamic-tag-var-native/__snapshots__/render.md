@@ -61,8 +61,8 @@ UPDATE: output::text "" => "DIV"
 ```
 ## Change
 ```
+REMOVE: div
 INSERT: span
-REMOVE: span + div
 ```
 
 # Update

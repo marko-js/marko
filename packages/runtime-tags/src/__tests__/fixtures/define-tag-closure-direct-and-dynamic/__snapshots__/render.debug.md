@@ -22,8 +22,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: button + div
-REMOVE: button + div
+REMOVE: div
+REMOVE: div
 ```
 
 # Update
@@ -43,8 +43,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: button + div
-INSERT: div:nth-of-type(1) + div
+INSERT: div:nth-of-type(1)
 UPDATE: div:nth-of-type(1)[class] null => "a"
+INSERT: div:nth-of-type(2)
 UPDATE: div:nth-of-type(2)[class] null => "a"
 ```

@@ -52,6 +52,6 @@ document.querySelector(".toggle").click();
 ```
 ## Change
 ```
-REMOVE: button:nth-of-type(1) + ::text("0")
-REMOVE: button:nth-of-type(2) + ::text("1")
+REMOVE: ::text("0")
+REMOVE: ::text("1")
 ```

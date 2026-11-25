@@ -43,7 +43,7 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-REMOVE: #toggle + span
+REMOVE: span
 ```
 
 # Update
@@ -84,7 +84,7 @@ document.querySelector("#load").click();
 ```
 ## Change
 ```
-INSERT: #toggle + span
+INSERT: span
 ```
 ## Console
 ```

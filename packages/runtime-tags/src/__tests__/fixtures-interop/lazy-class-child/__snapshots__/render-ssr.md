@@ -25,7 +25,7 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-INSERT: #toggle + #child
+INSERT: #child
 INSERT: #child::text("42")
 ```
 ## Console
@@ -46,7 +46,7 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-REMOVE: #toggle + #child
+REMOVE: #child
 ```
 
 # Update
@@ -67,7 +67,7 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-INSERT: #toggle + #child
+INSERT: #child
 INSERT: #child::text("42")
 ```
 ## Console

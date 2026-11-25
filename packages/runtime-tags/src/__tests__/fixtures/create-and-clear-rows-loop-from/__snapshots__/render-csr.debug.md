@@ -14,9 +14,9 @@
 ## Change
 ```
 REMOVE: div > :is(::text("0"), ::text(", "), ::text("1"), ::text(", "), ::text("2"), ::text(", "), ::text("3"), ::text(", "))
-INSERT: div > :is(::text("4"), ::text(", "))
-INSERT: div::text@1 + :is(::text("5"), ::text(", "))
-INSERT: div::text@4 + :is(::text("6"), ::text(", "))
+INSERT: div::text("4"), div::text(", ")
+INSERT: div::text("5"), div::text(", ")
+INSERT: div::text("6"), div::text(", ")
 ```
 
 # Update `{"from":7,"to":16,"step":3}`
@@ -28,10 +28,10 @@ INSERT: div::text@4 + :is(::text("6"), ::text(", "))
 ## Change
 ```
 REMOVE: div > :is(::text("4"), ::text(", "), ::text("5"), ::text(", "), ::text("6"), ::text(", "))
-INSERT: div > :is(::text("7"), ::text(", "))
-INSERT: div::text@1 + :is(::text("10"), ::text(", "))
-INSERT: div::text@5 + :is(::text("13"), ::text(", "))
-INSERT: div::text@9 + :is(::text("16"), ::text(", "))
+INSERT: div::text("7"), div::text(", ")
+INSERT: div::text("10"), div::text(", ")
+INSERT: div::text("13"), div::text(", ")
+INSERT: div::text("16"), div::text(", ")
 ```
 
 # Update `{"from":0,"to":-1,"step":-0.3}`
@@ -43,10 +43,10 @@ INSERT: div::text@9 + :is(::text("16"), ::text(", "))
 ## Change
 ```
 REMOVE: div > :is(::text("7"), ::text(", "), ::text("10"), ::text(", "), ::text("13"), ::text(", "), ::text("16"), ::text(", "))
-INSERT: div > :is(::text("0"), ::text(", "))
-INSERT: div::text@1 + :is(::text("-0.3"), ::text(", "))
-INSERT: div::text@7 + :is(::text("-0.6"), ::text(", "))
-INSERT: div::text@13 + :is(::text("-0.8999999999999999"), ::text(", "))
+INSERT: div::text("0"), div::text(", ")
+INSERT: div::text("-0.3"), div::text(", ")
+INSERT: div::text("-0.6"), div::text(", ")
+INSERT: div::text("-0.8999999999999999"), div::text(", ")
 ```
 
 # Update `{"from":0,"to":3,"step":0.5}`
@@ -57,16 +57,16 @@ INSERT: div::text@13 + :is(::text("-0.8999999999999999"), ::text(", "))
 ```
 ## Change
 ```
-REMOVE: div::text@1 + ::text("-0.3")
-REMOVE: div::text@1 + ::text(", ")
-REMOVE: div::text@1 + ::text("-0.6")
-REMOVE: div::text@1 + ::text(", ")
-REMOVE: div::text@1 + ::text("-0.8999999999999999")
-REMOVE: div::text@1 + ::text(", ")
-INSERT: div::text@1 + :is(::text("3"), ::text(", "))
-INSERT: div::text@1 + :is(::text("2.5"), ::text(", "))
-INSERT: div::text@1 + :is(::text("2"), ::text(", "))
-INSERT: div::text@1 + :is(::text("1.5"), ::text(", "))
-INSERT: div::text@1 + :is(::text("1"), ::text(", "))
-INSERT: div::text@1 + :is(::text("0.5"), ::text(", "))
+REMOVE: div::text(", ")
+REMOVE: div::text(", ")
+REMOVE: div::text(", ")
+REMOVE: div::text("-0.3")
+REMOVE: div::text("-0.6")
+REMOVE: div::text("-0.8999999999999999")
+INSERT: div::text("0.5"), div::text(", ")
+INSERT: div::text("1"), div::text(", ")
+INSERT: div::text("1.5"), div::text(", ")
+INSERT: div::text("2"), div::text(", ")
+INSERT: div::text("2.5"), div::text(", ")
+INSERT: div::text("3"), div::text(", ")
 ```

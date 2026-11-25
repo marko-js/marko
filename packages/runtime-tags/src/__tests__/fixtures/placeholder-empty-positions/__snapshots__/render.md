@@ -30,7 +30,7 @@ filled
 ## Change
 ```
 UPDATE: ::text@0 "" => "filled"
-UPDATE: ::text@23 "" => "filled"
-UPDATE: ::text@12 "" => "filled"
 UPDATE: ::text@6 "" => "filled"
+UPDATE: ::text@12 "" => "filled"
+UPDATE: ::text@23 "" => "filled"
 ```

@@ -228,7 +228,7 @@ UPDATE: .danger[class] null => "danger"
 ## Change
 ```
 REMOVE: table > tbody > tr
-INSERT: .danger + tr
+INSERT: table > tbody > tr:nth-of-type(3)
 ```
 
 # Update

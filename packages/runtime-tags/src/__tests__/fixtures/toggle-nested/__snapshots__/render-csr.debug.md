@@ -16,9 +16,9 @@
 ```
 ## Change
 ```
-INSERT: div > span
-INSERT: div > span:nth-of-type(1) + span
+INSERT: div > span:nth-of-type(1)
 UPDATE: div > span:nth-of-type(1)::text " " => "Hello"
+INSERT: div > span:nth-of-type(2)
 UPDATE: div > span:nth-of-type(2)::text " " => "World"
 ```
 
@@ -48,7 +48,7 @@ REMOVE: div > span
 ```
 ## Change
 ```
-INSERT: div > span
+INSERT: div > span:nth-of-type(1)
 UPDATE: div > span:nth-of-type(1)::text " " => "Goodbye"
 ```
 

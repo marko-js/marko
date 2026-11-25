@@ -33,6 +33,6 @@
 ## Change
 ```
 UPDATE: #class::text "0" => "1"
-UPDATE: div:nth-of-type(2)::text@10 "0" => "1"
 UPDATE: div:nth-of-type(1)::text@7 "0" => "1"
+UPDATE: div:nth-of-type(2)::text@10 "0" => "1"
 ```

@@ -31,6 +31,6 @@ item 0
 ```
 ## Change
 ```
-INSERT: #toggle + :is(::text("item "), ::text("0"))
+INSERT: ::text("item "), ::text("0")
 UPDATE: ::text@5 "" => "0"
 ```

@@ -18,11 +18,11 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: button::text "0" => "1"
 UPDATE: ::text@2 "0" => "1"
 UPDATE: ::text@5 "0" => "1"
 UPDATE: ::text@8 "0" => "1"
 UPDATE: ::text@11 "0" => "1"
+UPDATE: button::text "0" => "1"
 ```
 
 # Update
@@ -37,11 +37,11 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: button::text "1" => "2"
 UPDATE: ::text@2 "1" => "2"
 UPDATE: ::text@5 "1" => "2"
 UPDATE: ::text@8 "1" => "2"
 UPDATE: ::text@11 "1" => "2"
+UPDATE: button::text "1" => "2"
 ```
 
 # Update
@@ -56,9 +56,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: button::text "2" => "3"
 UPDATE: ::text@2 "2" => "3"
 UPDATE: ::text@5 "2" => "3"
 UPDATE: ::text@8 "2" => "3"
 UPDATE: ::text@11 "2" => "3"
+UPDATE: button::text "2" => "3"
 ```

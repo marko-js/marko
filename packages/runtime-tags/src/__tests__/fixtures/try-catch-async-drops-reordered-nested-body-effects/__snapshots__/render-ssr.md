@@ -16,7 +16,7 @@ caught ERROR!
 ## Change
 ```
 REMOVE: ::text("loading")
-INSERT: #log + ::text("caught ERROR!")
+INSERT: ::text("caught ERROR!")
 ```
 
 # Update
@@ -30,6 +30,6 @@ caught ERROR!done
 ```
 ## Change
 ```
-INSERT: ::text@0 + ::text("done")
 INSERT: #log::text("[reordered]")
+INSERT: ::text("done")
 ```

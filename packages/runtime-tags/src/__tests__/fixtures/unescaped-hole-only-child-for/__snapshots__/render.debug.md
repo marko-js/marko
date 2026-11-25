@@ -52,7 +52,7 @@ document.querySelector("button.add").click();
 ```
 ## Change
 ```
-INSERT: div > span:nth-of-type(1) + :is(b, i)
+INSERT: div > b, div > i
 ```
 
 # Update
@@ -93,10 +93,10 @@ document.querySelector("button.add").click();
 ```
 ## Change
 ```
-INSERT: div > span:nth-of-type(1) + :is(b, i)
-REMOVE: div > i:nth-of-type(1) + b
-REMOVE: div > i:nth-of-type(1) + i
-INSERT: div > i:nth-of-type(1) + :is(b, i)
+REMOVE: div > b
+REMOVE: div > i
+INSERT: div > b:nth-of-type(1), div > i:nth-of-type(1)
+INSERT: div > b:nth-of-type(2), div > i:nth-of-type(2)
 ```
 
 # Update
@@ -125,8 +125,8 @@ document.querySelector("button.clear").click();
 ```
 ## Change
 ```
-REMOVE: div > span:nth-of-type(1) + b
-REMOVE: div > span:nth-of-type(1) + i
-REMOVE: div > span:nth-of-type(1) + b
-REMOVE: div > span:nth-of-type(1) + i
+REMOVE: div > b
+REMOVE: div > b
+REMOVE: div > i
+REMOVE: div > i
 ```

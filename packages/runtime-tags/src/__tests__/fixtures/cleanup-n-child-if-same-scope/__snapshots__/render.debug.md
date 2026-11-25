@@ -34,9 +34,9 @@ destroyed
 ```
 ## Change
 ```
-REMOVE: pre + div
-REMOVE: pre + span
-REMOVE: pre + p
+REMOVE: div
+REMOVE: p
+REMOVE: span
 REMOVE: pre::text("\nmounted")
 INSERT: pre::text("\nmounted\ndestroyed")
 ```
@@ -67,9 +67,9 @@ mounted
 ```
 ## Change
 ```
-INSERT: pre + :is(div, span, p)
 REMOVE: pre::text("\nmounted\ndestroyed")
 INSERT: pre::text("\nmounted\ndestroyed\nmounted")
+INSERT: div, span, p
 ```
 
 # Update
@@ -90,9 +90,9 @@ destroyed
 ```
 ## Change
 ```
-REMOVE: pre + div
-REMOVE: pre + span
-REMOVE: pre + p
+REMOVE: div
+REMOVE: p
+REMOVE: span
 REMOVE: pre::text("\nmounted\ndestroyed\nmounted")
 INSERT: pre::text("\nmounted\ndestroyed\nmounted\ndestroyed")
 ```

@@ -11,7 +11,7 @@ outer loading
 ```
 INSERT: p
 INSERT: p::text("a")
-INSERT: p + ::text("outer loading")
+INSERT: ::text("outer loading")
 ```
 
 # Update
@@ -26,7 +26,7 @@ caught
 ```
 ## Change
 ```
-INSERT: div::text("outer")
 REMOVE: ::text("outer loading")
-INSERT: p + :is(::text("caught"), div)
+INSERT: ::text("caught"), div
+INSERT: div::text("outer")
 ```

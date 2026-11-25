@@ -37,8 +37,8 @@ b.click();
 ```
 ## Change
 ```
-REMOVE: button:nth-of-type(1) + em
-REMOVE: button:nth-of-type(2) + em
+REMOVE: em
+REMOVE: em
 ```
 
 # Update
@@ -66,10 +66,10 @@ b.click();
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(1) + em
-INSERT: button:nth-of-type(2) + em
+INSERT: em:nth-of-type(1)
 UPDATE: em:nth-of-type(1)::text@0 "" => "x"
 UPDATE: em:nth-of-type(1)::text@2 "" => "a"
-UPDATE: em:nth-of-type(2)::text@2 "" => "a"
+INSERT: em:nth-of-type(2)
 UPDATE: em:nth-of-type(2)::text@0 "" => "y"
+UPDATE: em:nth-of-type(2)::text@2 "" => "a"
 ```

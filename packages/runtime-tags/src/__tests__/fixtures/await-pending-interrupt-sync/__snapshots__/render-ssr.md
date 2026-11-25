@@ -10,8 +10,8 @@ Got: ASYNC
 ## Change
 ```
 INSERT: ::text("Got: ")
-INSERT: ::text@0 + ::text("ASYNC")
-INSERT: ::text@5 + button
+INSERT: ::text("ASYNC")
+INSERT: button
 INSERT: button::text("toggle")
 ```
 

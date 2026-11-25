@@ -68,9 +68,9 @@ document.querySelector(`#${id}`).click();
 ```
 ## Change
 ```
-INSERT: #open + span
-INSERT: span:nth-of-type(1) + span
+INSERT: span:nth-of-type(1)
 UPDATE: span:nth-of-type(1)::text@2 "" => "true"
+INSERT: span:nth-of-type(2)
 ```
 
 # Update
@@ -110,7 +110,7 @@ document.querySelector(`#${id}`).click();
 ```
 ## Change
 ```
-REMOVE: #toggle-0 + em
+REMOVE: em
 ```
 
 # Update
@@ -153,7 +153,7 @@ document.querySelector(`#${id}`).click();
 ```
 ## Change
 ```
-INSERT: #toggle-0 + em
+INSERT: em:nth-of-type(1)
 ```
 
 # Update
@@ -200,6 +200,6 @@ L1
 ```
 ## Change
 ```
-INSERT: #save-last + ::text("L")
-INSERT: ::text@0 + :is(::text("1"), b)
+INSERT: ::text("L")
+INSERT: ::text("1"), b
 ```

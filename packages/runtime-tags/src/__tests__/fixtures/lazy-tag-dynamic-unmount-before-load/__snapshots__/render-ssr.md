@@ -19,8 +19,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: span::text("1")
+INSERT: span
 REMOVE: ::text("Loading...")
-INSERT: button + span
-REMOVE: button + span
+REMOVE: span
+INSERT: span::text("1")
 ```

@@ -95,8 +95,8 @@ click(document, 2);
 ```
 ## Change
 ```
-UPDATE: button:nth-of-type(2)[data-selected] null => ""
 UPDATE: button:nth-of-type(2)[data-multiple] null => ""
+UPDATE: button:nth-of-type(2)[data-selected] null => ""
 UPDATE: button:nth-of-type(4)[data-multiple] null => ""
 UPDATE: button:nth-of-type(6)[data-multiple] null => ""
 UPDATE: button:nth-of-type(8)[data-multiple] null => ""
@@ -157,10 +157,10 @@ click(document, 3);
 ```
 ## Change
 ```
-UPDATE: button:nth-of-type(2)[data-selected] "" => null
 UPDATE: button:nth-of-type(2)[data-multiple] "" => null
-UPDATE: button:nth-of-type(3)[data-selected] null => ""
+UPDATE: button:nth-of-type(2)[data-selected] "" => null
 UPDATE: button:nth-of-type(3)[data-multiple] null => ""
+UPDATE: button:nth-of-type(3)[data-selected] null => ""
 UPDATE: button:nth-of-type(4)[data-multiple] "" => null
 UPDATE: button:nth-of-type(8)[data-multiple] "" => null
 UPDATE: button:nth-of-type(9)[data-multiple] null => ""
@@ -216,10 +216,10 @@ click(document, 5);
 ```
 ## Change
 ```
-UPDATE: button:nth-of-type(3)[data-selected] "" => null
 UPDATE: button:nth-of-type(3)[data-multiple] "" => null
-UPDATE: button:nth-of-type(5)[data-selected] null => ""
+UPDATE: button:nth-of-type(3)[data-selected] "" => null
 UPDATE: button:nth-of-type(5)[data-multiple] null => ""
+UPDATE: button:nth-of-type(5)[data-selected] null => ""
 UPDATE: button:nth-of-type(6)[data-multiple] "" => null
 UPDATE: button:nth-of-type(9)[data-multiple] "" => null
 UPDATE: button:nth-of-type(10)[data-multiple] null => ""

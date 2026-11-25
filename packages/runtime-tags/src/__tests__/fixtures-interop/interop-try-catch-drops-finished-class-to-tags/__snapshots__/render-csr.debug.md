@@ -19,8 +19,8 @@ caught ERROR!
 ```
 ## Change
 ```
+REMOVE: #class
 INSERT: ::text("caught "), ::text("ERROR!")
-REMOVE: ::text@7 + #class
 UPDATE: ::text@7 "" => "ERROR!"
 ```
 
@@ -30,6 +30,6 @@ caught ERROR!done
 ```
 ## Change
 ```
-INSERT: ::text@7 + ::text("done")
+INSERT: ::text("done")
 UPDATE: ::text@13 " " => "done"
 ```

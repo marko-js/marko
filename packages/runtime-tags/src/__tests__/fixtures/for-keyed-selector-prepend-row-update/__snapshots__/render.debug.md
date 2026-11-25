@@ -65,7 +65,7 @@ document.querySelector("button.prepend").click();
 ```
 ## Change
 ```
-INSERT: .prepend + .row0
+INSERT: .row0
 UPDATE: .row0::text " " => "0:false"
 ```
 

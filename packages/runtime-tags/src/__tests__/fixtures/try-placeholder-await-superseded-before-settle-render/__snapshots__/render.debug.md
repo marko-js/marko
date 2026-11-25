@@ -34,8 +34,8 @@ LOADING
 ```
 ## Change
 ```
-INSERT: #third + ::text("LOADING")
-REMOVE: ::text + ::text("idle")
+REMOVE: ::text("idle")
+INSERT: ::text("LOADING")
 ```
 
 # Update
@@ -54,8 +54,8 @@ second
 ```
 ## Change
 ```
-INSERT: #third + ::text("second")
-REMOVE: ::text + ::text("LOADING")
+REMOVE: ::text("LOADING")
+INSERT: ::text("second")
 ```
 
 # Update
@@ -79,8 +79,8 @@ LOADING
 ```
 ## Change
 ```
-INSERT: #third + ::text("LOADING")
-REMOVE: ::text + ::text("second")
+REMOVE: ::text("second")
+INSERT: ::text("LOADING")
 ```
 
 # Update
@@ -99,6 +99,6 @@ fourth
 ```
 ## Change
 ```
-INSERT: #third + ::text("fourth")
-REMOVE: ::text + ::text("LOADING")
+REMOVE: ::text("LOADING")
+INSERT: ::text("fourth")
 ```

@@ -150,7 +150,7 @@ LOG "row 3"
 ```
 ## Change
 ```
-INSERT: ul > li:nth-of-type(3) + li
+INSERT: ul > li:nth-of-type(4)
 ```
 ## Console
 ```
@@ -334,7 +334,7 @@ REMOVE: ul
 ## Change
 ```
 INSERT: ul
-INSERT: ul > .danger
+INSERT: .danger
 UPDATE: .danger[class] null => "danger"
 ```
 ## Console
@@ -378,7 +378,7 @@ LOG "row 1"
 ```
 ## Change
 ```
-INSERT: .danger + li
+INSERT: ul > li:nth-of-type(2)
 ```
 ## Console
 ```

@@ -18,8 +18,8 @@
 ```
 ## Change
 ```
-INSERT: #log + span
 INSERT: #log::text("[lazy effect ran]")
+INSERT: span
 ```
 
 # Update
@@ -33,7 +33,7 @@ ERROR!
 ```
 ## Change
 ```
-INSERT: #log + ::text("ERROR!")
-REMOVE: ::text + span
+REMOVE: span
+INSERT: ::text("ERROR!")
 UPDATE: ::text " " => "ERROR!"
 ```

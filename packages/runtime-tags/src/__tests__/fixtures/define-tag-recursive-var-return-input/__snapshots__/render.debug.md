@@ -28,6 +28,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: button::text "a" => "aa"
 UPDATE: span:nth-of-type(2)::text "a" => "aa"
+UPDATE: button::text "a" => "aa"
 ```

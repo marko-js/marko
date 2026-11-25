@@ -32,6 +32,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: ::text "1" => "2"
 REMOVE: ::text("2")
+UPDATE: ::text "1" => "2"
 ```

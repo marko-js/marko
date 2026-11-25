@@ -28,8 +28,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+UPDATE: div:nth-of-type(1)::text@0 "1" => "4"
+UPDATE: div:nth-of-type(1)::text@2 "{\"c\":2}" => "{\"c\":5}"
 UPDATE: div:nth-of-type(1)::text@10 "{\"d\":3}" => "{\"d\":6}"
 UPDATE: div:nth-of-type(2)::text@0 "3" => "6"
-UPDATE: div:nth-of-type(1)::text@2 "{\"c\":2}" => "{\"c\":5}"
-UPDATE: div:nth-of-type(1)::text@0 "1" => "4"
 ```

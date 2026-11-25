@@ -16,8 +16,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: button::text@2 "0" => "1"
 UPDATE: button::text@0 "0" => "1"
+UPDATE: button::text@2 "0" => "1"
 ```
 
 # Update
@@ -31,8 +31,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: button::text@2 "1" => "2"
 UPDATE: button::text@0 "1" => "2"
+UPDATE: button::text@2 "1" => "2"
 ```
 
 # Update
@@ -46,6 +46,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: button::text@2 "2" => "3"
 UPDATE: button::text@0 "2" => "3"
+UPDATE: button::text@2 "2" => "3"
 ```

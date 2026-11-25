@@ -9,7 +9,7 @@ abdfgh
 ```
 ## Change
 ```
-INSERT: ::text@3 + ::text("g")
+INSERT: ::text("g")
 UPDATE: ::text@4 " " => "g"
 ```
 
@@ -19,6 +19,6 @@ abcdfgh
 ```
 ## Change
 ```
-INSERT: ::text@1 + ::text("c")
+INSERT: ::text("c")
 UPDATE: ::text@2 " " => "c"
 ```

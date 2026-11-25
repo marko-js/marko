@@ -28,12 +28,12 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: main > :is(::text(" "), hr)
-INSERT: main > hr:nth-of-type(1) + :is(hr, ::text(" "))
-INSERT: main > b
-REMOVE: main > b:nth-of-type(1) + ::text(" ")
-INSERT: main > hr:nth-of-type(2) + b
-REMOVE: main > b:nth-of-type(2) + ::text(" ")
+REMOVE: main::text(" ")
+REMOVE: main::text(" ")
+INSERT: main > b:nth-of-type(1)
+INSERT: main::text(" "), main > hr:nth-of-type(1)
+INSERT: main > hr:nth-of-type(2), main::text(" ")
+INSERT: main > b:nth-of-type(2)
 ```
 
 # Update
@@ -50,9 +50,9 @@ document.querySelector("button").click();
 ## Change
 ```
 REMOVE: main > b
-REMOVE: main > hr
-REMOVE: main > hr
 REMOVE: main > b
+REMOVE: main > hr
+REMOVE: main > hr
 ```
 
 # Update
@@ -76,10 +76,10 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: main > :is(::text(" "), hr)
-INSERT: main > hr:nth-of-type(1) + :is(hr, ::text(" "))
-INSERT: main > b
-REMOVE: main > b:nth-of-type(1) + ::text(" ")
-INSERT: main > hr:nth-of-type(2) + b
-REMOVE: main > b:nth-of-type(2) + ::text(" ")
+REMOVE: main::text(" ")
+REMOVE: main::text(" ")
+INSERT: main > b:nth-of-type(1)
+INSERT: main::text(" "), main > hr:nth-of-type(1)
+INSERT: main > hr:nth-of-type(2), main::text(" ")
+INSERT: main > b:nth-of-type(2)
 ```

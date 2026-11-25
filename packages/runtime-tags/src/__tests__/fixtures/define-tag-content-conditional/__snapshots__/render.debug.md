@@ -23,5 +23,5 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-INSERT: #toggle + section
+INSERT: section
 ```

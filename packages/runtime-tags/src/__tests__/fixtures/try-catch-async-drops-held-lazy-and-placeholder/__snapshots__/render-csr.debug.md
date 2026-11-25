@@ -20,9 +20,9 @@
 ```
 ## Change
 ```
-INSERT: #log + span
 REMOVE: #log::text("[before][after]")
 INSERT: #log::text("[before][after][lazy]")
+INSERT: span
 ```
 
 # Update
@@ -53,7 +53,7 @@ ERROR!
 ```
 ## Change
 ```
-INSERT: #log + ::text("ERROR!")
-REMOVE: ::text + span
+REMOVE: span
+INSERT: ::text("ERROR!")
 UPDATE: ::text " " => "ERROR!"
 ```

@@ -20,8 +20,8 @@ document.querySelector(".A").click();
 ```
 ## Change
 ```
+REMOVE: .A
 INSERT: .A
-REMOVE: .A + .A
 UPDATE: .A[class] null => "A"
 ```
 
@@ -38,7 +38,7 @@ document.querySelector(".A").click();
 ```
 ## Change
 ```
+REMOVE: .A
 INSERT: .A
-REMOVE: .A + .A
 UPDATE: .A[class] null => "A"
 ```

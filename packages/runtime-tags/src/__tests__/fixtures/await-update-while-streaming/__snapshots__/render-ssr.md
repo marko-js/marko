@@ -32,9 +32,9 @@ UPDATE: button::text "0" => "1"
 ```
 ## Change
 ```
-INSERT: div::text("1")
 REMOVE: ::text("loading")
-INSERT: button + div
+INSERT: div
+INSERT: div::text("1")
 UPDATE: div::text "0" => "1"
 ```
 

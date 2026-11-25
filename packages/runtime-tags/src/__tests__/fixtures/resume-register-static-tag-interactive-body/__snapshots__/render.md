@@ -79,8 +79,8 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-REMOVE: #inc + span
-REMOVE: #inc + span
+REMOVE: section > span
+REMOVE: section > span
 ```
 
 # Update
@@ -136,7 +136,7 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-INSERT: #inc + :is(span, span)
+INSERT: section > span:nth-of-type(1), section > span:nth-of-type(2)
 UPDATE: section > span:nth-of-type(1)::text " " => "2"
 UPDATE: section > span:nth-of-type(2)::text " " => "4"
 ```

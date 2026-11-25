@@ -30,7 +30,7 @@
 ```
 ## Change
 ```
-INSERT: section + span
+INSERT: span
 INSERT: span::text("x")
 REMOVE: span::text("x")
 INSERT: span::text("y")

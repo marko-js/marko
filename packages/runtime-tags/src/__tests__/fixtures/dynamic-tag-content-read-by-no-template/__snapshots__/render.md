@@ -18,8 +18,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: div
 INSERT: span
-REMOVE: span + div
 UPDATE: span::text@2 "" => "1"
 ```
 
@@ -35,7 +35,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: span
 INSERT: div
-REMOVE: div + span
 UPDATE: div::text@2 "" => "1"
 ```

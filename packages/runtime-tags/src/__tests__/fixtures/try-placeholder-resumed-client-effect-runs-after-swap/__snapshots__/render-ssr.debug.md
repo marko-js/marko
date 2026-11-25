@@ -31,9 +31,9 @@ document.querySelector("#show").click();
 ```
 ## Change
 ```
-INSERT: div::text("server")
 REMOVE: ::text("loading")
-INSERT: #show + :is(#inner, div)
+INSERT: #inner, div
+INSERT: div::text("server")
 ```
 
 # Update

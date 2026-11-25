@@ -28,7 +28,7 @@ destroyed
 ```
 ## Change
 ```
-REMOVE: pre + div
+REMOVE: div
 REMOVE: pre::text("\nmounted")
 INSERT: pre::text("\nmounted\ndestroyed")
 ```
@@ -53,9 +53,9 @@ mounted
 ```
 ## Change
 ```
-INSERT: pre + div
 REMOVE: pre::text("\nmounted\ndestroyed")
 INSERT: pre::text("\nmounted\ndestroyed\nmounted")
+INSERT: div
 ```
 
 # Update
@@ -76,7 +76,7 @@ destroyed
 ```
 ## Change
 ```
-REMOVE: pre + div
+REMOVE: div
 REMOVE: pre::text("\nmounted\ndestroyed\nmounted")
 INSERT: pre::text("\nmounted\ndestroyed\nmounted\ndestroyed")
 ```

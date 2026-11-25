@@ -62,9 +62,9 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(2) + button
-REMOVE: button:nth-of-type(3) + div
-INSERT: button:nth-of-type(3)::text@1 + ::text("dynamic")
+REMOVE: div
+INSERT: button:nth-of-type(3)
+INSERT: button:nth-of-type(3)::text("dynamic")
 ```
 
 # Update
@@ -141,6 +141,6 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-INSERT: .box + div
-REMOVE: div + .box
+REMOVE: .box
+INSERT: div
 ```

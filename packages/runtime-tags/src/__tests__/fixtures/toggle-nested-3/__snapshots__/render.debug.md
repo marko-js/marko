@@ -83,7 +83,7 @@ document.querySelector("#inner").click();
 ```
 ## Change
 ```
-REMOVE: #inner + #count
+REMOVE: div > #count
 ```
 
 # Update
@@ -108,7 +108,7 @@ document.querySelector("#inner").click();
 ```
 ## Change
 ```
-INSERT: #inner + #count
+INSERT: #count
 UPDATE: #count::text " " => "2"
 ```
 
@@ -151,8 +151,8 @@ document.querySelector("#outer").click();
 ```
 ## Change
 ```
-REMOVE: #outer + #inner
-REMOVE: #outer + #count
+REMOVE: div > #count
+REMOVE: div > #inner
 ```
 
 # Update
@@ -177,8 +177,8 @@ document.querySelector("#outer").click();
 ```
 ## Change
 ```
-INSERT: #outer + #inner
-INSERT: #inner + #count
+INSERT: #inner
+INSERT: #count
 UPDATE: #count::text " " => "3"
 ```
 

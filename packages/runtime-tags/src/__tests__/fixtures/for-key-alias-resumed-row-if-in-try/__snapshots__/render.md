@@ -34,5 +34,5 @@ document.querySelector("button").click();
 ## Change
 ```
 INSERT: ::text("0")
-INSERT: ::text@0 + ::text("1")
+INSERT: ::text("1")
 ```

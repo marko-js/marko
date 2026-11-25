@@ -81,7 +81,7 @@ document.querySelector(".hide").click();
 ```
 ## Change
 ```
-REMOVE: .hide + span
+REMOVE: span
 ```
 
 # Update

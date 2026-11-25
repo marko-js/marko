@@ -22,5 +22,5 @@
 ```
 ## Change
 ```
-INSERT: #class + #caught
+INSERT: #caught
 ```

@@ -59,7 +59,7 @@ INSERT: div::text("1")
 ```
 ## Change
 ```
-INSERT: div::text@0 + ::text("2")
+INSERT: div::text("2")
 ```
 
 # Update
@@ -83,7 +83,7 @@ INSERT: div::text@0 + ::text("2")
 ```
 ## Change
 ```
-REMOVE: div::text + ::text("2")
+REMOVE: div::text("2")
 ```
 
 # Update
@@ -107,5 +107,5 @@ REMOVE: div::text + ::text("2")
 ```
 ## Change
 ```
-INSERT: div::text@0 + ::text("3")
+INSERT: div::text("3")
 ```

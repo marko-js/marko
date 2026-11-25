@@ -22,6 +22,6 @@
 ```
 ## Change
 ```
-INSERT: #class + #tags
+INSERT: #tags
 INSERT: #tags::text("hi")
 ```

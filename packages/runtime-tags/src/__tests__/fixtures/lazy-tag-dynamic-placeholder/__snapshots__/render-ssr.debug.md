@@ -59,7 +59,7 @@ UPDATE: div::text@3 "1" => "2"
 ```
 ## Change
 ```
-REMOVE: .inc + div
+REMOVE: div
 ```
 
 # Update
@@ -85,5 +85,5 @@ REMOVE: .inc + div
 ```
 ## Change
 ```
-INSERT: .inc + div
+INSERT: div
 ```

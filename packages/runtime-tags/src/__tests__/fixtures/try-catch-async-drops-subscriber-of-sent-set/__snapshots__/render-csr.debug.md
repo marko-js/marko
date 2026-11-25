@@ -16,7 +16,7 @@
 ```
 ## Change
 ```
-INSERT: span:nth-of-type(1) + span
+INSERT: span:nth-of-type(2)
 ```
 
 # Update
@@ -28,8 +28,8 @@ caught ERROR!
 ```
 ## Change
 ```
-INSERT: span + :is(::text("caught "), ::text("ERROR!"))
-REMOVE: ::text@7 + span
+REMOVE: span
+INSERT: ::text("caught "), ::text("ERROR!")
 UPDATE: ::text@7 "" => "ERROR!"
 ```
 
@@ -42,6 +42,6 @@ acaught ERROR!
 ```
 ## Change
 ```
-INSERT: span + ::text("a")
+INSERT: ::text("a")
 UPDATE: ::text@0 " " => "a"
 ```

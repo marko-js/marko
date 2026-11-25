@@ -38,7 +38,7 @@
 ```
 ## Change
 ```
-INSERT: .y + ::text("loading")
+INSERT: div::text("loading")
 ```
 
 # Update
@@ -67,8 +67,8 @@ INSERT: .y + ::text("loading")
 ```
 ## Change
 ```
-INSERT: .y + :is(i, b)
-REMOVE: div > b + ::text("loading")
+REMOVE: div::text("loading")
+INSERT: div > i, div > b
 ```
 
 # Update

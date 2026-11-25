@@ -33,7 +33,7 @@ loading
 ```
 ## Change
 ```
-INSERT: #load + ::text("loading")
+INSERT: ::text("loading")
 ```
 
 # Update
@@ -52,8 +52,8 @@ caught: rejected
 ```
 ## Change
 ```
-INSERT: #load + :is(::text("caught: "), ::text("rejected"))
-REMOVE: ::text@8 + ::text("loading")
+REMOVE: ::text("loading")
+INSERT: ::text("caught: "), ::text("rejected")
 UPDATE: ::text@8 "" => "rejected"
 ```
 

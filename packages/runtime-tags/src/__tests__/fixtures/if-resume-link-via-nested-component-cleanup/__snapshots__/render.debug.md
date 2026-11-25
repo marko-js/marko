@@ -43,7 +43,7 @@ document.querySelector("#s").click();
 ```
 ## Change
 ```
-INSERT: #s + p
+INSERT: p
 ```
 
 # Update
@@ -69,7 +69,7 @@ document.querySelector("#o").click();
 ```
 ## Change
 ```
-REMOVE: #s + p
+REMOVE: p
 REMOVE: #ref::text("init")
 INSERT: #ref::text("leaf destroyed")
 ```

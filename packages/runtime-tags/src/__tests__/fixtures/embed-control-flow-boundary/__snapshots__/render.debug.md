@@ -33,7 +33,7 @@ document.querySelector("button#toggle").click();
 ```
 ## Change
 ```
-REMOVE: #cleanup + div
+REMOVE: div
 ```
 
 # Update
@@ -57,7 +57,7 @@ document.querySelector("button#toggle").click();
 ```
 ## Change
 ```
-INSERT: #cleanup + div
+INSERT: div
 ```
 
 # Update
@@ -78,7 +78,7 @@ document.querySelector("button#toggle").click();
 ```
 ## Change
 ```
-REMOVE: #cleanup + div
+REMOVE: div
 ```
 
 # Update

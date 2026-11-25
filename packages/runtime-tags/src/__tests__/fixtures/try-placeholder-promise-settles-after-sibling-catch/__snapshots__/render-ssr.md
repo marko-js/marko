@@ -18,7 +18,7 @@ caught
 ```
 ## Change
 ```
-INSERT: #ref + ::text("caught")
+INSERT: ::text("caught")
 ```
 
 # Update
@@ -45,7 +45,7 @@ caught
 ```
 ## Change
 ```
-INSERT: span::text("done")
 REMOVE: #ref
 INSERT: span
+INSERT: span::text("done")
 ```

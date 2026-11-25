@@ -24,7 +24,7 @@ b.click();
 ```
 ## Change
 ```
-REMOVE: .toggle + em
+REMOVE: em
 ```
 
 # Update
@@ -44,6 +44,6 @@ b.click();
 ```
 ## Change
 ```
-INSERT: .toggle + em
+INSERT: em
 UPDATE: em::text " " => "a"
 ```

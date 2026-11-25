@@ -34,8 +34,8 @@ INSERT: #first::text("first")
 ```
 ## Change
 ```
-INSERT: #first + #slow
+INSERT: #slow
 INSERT: #slow::text("slow")
+INSERT: #caught
 INSERT: #caught::text("CAUGHT")
-INSERT: #slow + #caught
 ```

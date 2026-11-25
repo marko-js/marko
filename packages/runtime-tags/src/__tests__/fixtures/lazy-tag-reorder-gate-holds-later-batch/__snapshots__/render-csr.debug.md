@@ -16,7 +16,7 @@
 ## Change
 ```
 INSERT: .first
-INSERT: .first + .held
+INSERT: .held
 ```
 
 # Update
@@ -30,8 +30,8 @@ loading
 ```
 ## Change
 ```
-INSERT: .first + ::text("loading")
-REMOVE: ::text + button
+REMOVE: button
+INSERT: ::text("loading")
 ```
 
 # Update
@@ -50,7 +50,7 @@ loading
 ```
 ## Change
 ```
-INSERT: ::text + .streamed
+INSERT: .streamed
 ```
 
 # Update
@@ -74,8 +74,8 @@ done
 ```
 ## Change
 ```
-INSERT: .first + :is(.held, ::text("done"))
-REMOVE: ::text + ::text("loading")
+REMOVE: ::text("loading")
+INSERT: .held, ::text("done")
 ```
 
 # Update

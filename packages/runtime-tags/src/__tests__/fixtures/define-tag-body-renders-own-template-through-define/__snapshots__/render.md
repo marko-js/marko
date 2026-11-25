@@ -34,10 +34,10 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: button + button
-REMOVE: button + button
-REMOVE: button + b
-REMOVE: button + b
+REMOVE: b
+REMOVE: b
+REMOVE: button
+REMOVE: button
 ```
 
 # Update
@@ -66,10 +66,10 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(1) + :is(button, b)
+INSERT: button:nth-of-type(2), b:nth-of-type(2)
 UPDATE: button:nth-of-type(2)::text " " => "1"
-UPDATE: b:nth-of-type(2)::text " " => "1"
-INSERT: button:nth-of-type(2) + :is(button, b)
+INSERT: button:nth-of-type(3), b:nth-of-type(1)
 UPDATE: button:nth-of-type(3)::text " " => "0"
 UPDATE: b:nth-of-type(1)::text " " => "0"
+UPDATE: b:nth-of-type(2)::text " " => "1"
 ```

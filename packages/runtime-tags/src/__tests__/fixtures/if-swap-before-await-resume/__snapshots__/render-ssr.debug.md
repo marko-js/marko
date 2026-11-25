@@ -39,16 +39,16 @@
 ## Change
 ```
 INSERT: header > div > a
+REMOVE: header > div > a
+INSERT: header > div > a:nth-of-type(1)
 INSERT: header > div > a:nth-of-type(1)::text("1")
-INSERT: header > div > a:nth-of-type(1) + a
+INSERT: header > div > a:nth-of-type(2)
 INSERT: header > div > a:nth-of-type(2)::text("2")
-INSERT: header > div > a:nth-of-type(2) + a
+INSERT: header > div > a:nth-of-type(3)
 INSERT: header > div > a:nth-of-type(3)::text("3")
-INSERT: header > div > a:nth-of-type(3) + a
+INSERT: header > div > a:nth-of-type(4)
 INSERT: header > div > a:nth-of-type(4)::text("Something")
-INSERT: header > div > a:nth-of-type(4) + ::text(" Test ")
-INSERT: header > div::text + a
+INSERT: header > div::text(" Test ")
+INSERT: header > div > button
 INSERT: a::text("Go")
-INSERT: header > div::text + button
-REMOVE: header > div > button + a
 ```

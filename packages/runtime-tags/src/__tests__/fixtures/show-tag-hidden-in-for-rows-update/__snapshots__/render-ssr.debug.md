@@ -43,7 +43,7 @@ document.querySelector("#add").click();
 ```
 ## Change
 ```
-INSERT: ul > li:nth-of-type(1) + li
+INSERT: ul > li:nth-of-type(2)
 ```
 
 # Update
@@ -78,10 +78,10 @@ document.querySelector("#grow").click();
 ```
 ## Change
 ```
+INSERT: ul > li:nth-of-type(1)
 UPDATE: ul > li:nth-of-type(1)::text "a" => "aa"
-INSERT: ul > li
 UPDATE: ul > li:nth-of-type(2)::text "bb" => "bbbb"
+INSERT: ul > li:nth-of-type(3)
 UPDATE: ul > li:nth-of-type(3)::text "c" => "cc"
-INSERT: ul > li:nth-of-type(2) + li
 UPDATE: ul > li:nth-of-type(4)::text "dd" => "dddd"
 ```

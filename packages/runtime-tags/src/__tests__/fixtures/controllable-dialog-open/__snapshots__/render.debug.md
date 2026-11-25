@@ -22,8 +22,8 @@ dialog.open = !dialog.open;
 ## Change
 ```
 UPDATE: dialog[open] "" => null
-UPDATE: dialog[open] null => null
 UPDATE: dialog[open] "" => null
+UPDATE: dialog[open] null => null
 UPDATE: span::text "true" => "false"
 ```
 
@@ -42,8 +42,8 @@ dialog.open = !dialog.open;
 ```
 ## Change
 ```
-UPDATE: dialog[open] null => ""
 UPDATE: dialog[open] "" => ""
+UPDATE: dialog[open] null => ""
 UPDATE: dialog[open] null => ""
 UPDATE: span::text "false" => "true"
 ```
@@ -62,7 +62,7 @@ dialog.open = !dialog.open;
 ## Change
 ```
 UPDATE: dialog[open] "" => null
-UPDATE: dialog[open] null => null
 UPDATE: dialog[open] "" => null
+UPDATE: dialog[open] null => null
 UPDATE: span::text "true" => "false"
 ```

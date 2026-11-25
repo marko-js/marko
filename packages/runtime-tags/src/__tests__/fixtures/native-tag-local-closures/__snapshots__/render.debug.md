@@ -25,7 +25,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: div:nth-of-type(1) + div
+INSERT: div:nth-of-type(2)
 ```
 
 # Update
@@ -48,7 +48,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: div:nth-of-type(2) + div
+INSERT: div:nth-of-type(3)
 ```
 
 # Update
@@ -74,5 +74,5 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: div:nth-of-type(3) + div
+INSERT: div:nth-of-type(4)
 ```

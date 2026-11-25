@@ -19,8 +19,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: b
 UPDATE: button::text "0" => "1"
-REMOVE: button + b
 ```
 
 # Update
@@ -38,5 +38,5 @@ document.querySelector("button").click();
 ## Change
 ```
 UPDATE: button::text "1" => "2"
-INSERT: button + b
+INSERT: b
 ```

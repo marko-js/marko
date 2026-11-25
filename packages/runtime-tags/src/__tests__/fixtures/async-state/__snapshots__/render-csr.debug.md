@@ -14,7 +14,7 @@ LOADING...
 ```
 ## Change
 ```
-INSERT: button + ::text("LOADING...")
+INSERT: ::text("LOADING...")
 ```
 
 # Update
@@ -26,8 +26,8 @@ INSERT: button + ::text("LOADING...")
 ```
 ## Change
 ```
-INSERT: button + ::text("0")
-REMOVE: ::text + ::text("LOADING...")
+REMOVE: ::text("LOADING...")
+INSERT: ::text("0")
 ```
 
 # Update
@@ -44,8 +44,8 @@ LOADING...
 ```
 ## Change
 ```
-INSERT: button + ::text("LOADING...")
-REMOVE: ::text + ::text("0")
+REMOVE: ::text("0")
+INSERT: ::text("LOADING...")
 ```
 
 # Update
@@ -57,8 +57,8 @@ REMOVE: ::text + ::text("0")
 ```
 ## Change
 ```
-INSERT: button + ::text("1")
-REMOVE: ::text + ::text("LOADING...")
+REMOVE: ::text("LOADING...")
+INSERT: ::text("1")
 ```
 
 # Update
@@ -75,8 +75,8 @@ LOADING...
 ```
 ## Change
 ```
-INSERT: button + ::text("LOADING...")
-REMOVE: ::text + ::text("1")
+REMOVE: ::text("1")
+INSERT: ::text("LOADING...")
 ```
 
 # Update
@@ -88,6 +88,6 @@ REMOVE: ::text + ::text("1")
 ```
 ## Change
 ```
-INSERT: button + ::text("2")
-REMOVE: ::text + ::text("LOADING...")
+REMOVE: ::text("LOADING...")
+INSERT: ::text("2")
 ```

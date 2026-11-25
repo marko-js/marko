@@ -23,8 +23,8 @@
 ```
 ## Change
 ```
-INSERT: button
-REMOVE: button:nth-of-type(1) + span
+REMOVE: span
+INSERT: button:nth-of-type(1)
 UPDATE: button:nth-of-type(1)::text " " => "nope"
 ```
 
@@ -44,7 +44,7 @@ document.querySelector("button:not(.toggle)").click();
 ```
 ## Change
 ```
+REMOVE: button
 INSERT: p
-REMOVE: p + button
 UPDATE: p::text@13 "" => "from catch"
 ```

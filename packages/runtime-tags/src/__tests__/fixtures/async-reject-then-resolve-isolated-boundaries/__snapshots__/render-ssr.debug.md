@@ -11,5 +11,5 @@ Rejected B
 ```
 INSERT: div
 INSERT: div::text("Resolved A: A Value")
-INSERT: div + ::text("Rejected B")
+INSERT: ::text("Rejected B")
 ```

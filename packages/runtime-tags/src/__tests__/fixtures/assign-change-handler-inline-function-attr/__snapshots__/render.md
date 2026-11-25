@@ -36,8 +36,8 @@ document.querySelector(selector).click();
 ```
 ## Change
 ```
-INSERT: .show + :is(.first, span)
-INSERT: span:nth-of-type(1) + :is(.last, span)
+INSERT: .first, span:nth-of-type(1)
+INSERT: .last, span:nth-of-type(2)
 ```
 
 # Update

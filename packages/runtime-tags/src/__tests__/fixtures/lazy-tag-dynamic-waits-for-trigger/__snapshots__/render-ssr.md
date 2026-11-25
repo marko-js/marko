@@ -42,5 +42,5 @@ document.querySelector("#go").click();
 ```
 ## Change
 ```
-INSERT: #go + .counter
+INSERT: .counter
 ```

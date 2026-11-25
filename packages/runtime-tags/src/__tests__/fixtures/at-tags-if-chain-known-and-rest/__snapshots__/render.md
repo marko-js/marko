@@ -27,7 +27,7 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-REMOVE: #toggle + ::text("A")
+REMOVE: ::text("A")
 ```
 
 # Update
@@ -47,5 +47,5 @@ A
 ```
 ## Change
 ```
-INSERT: #toggle + ::text("A")
+INSERT: ::text("A")
 ```

@@ -25,5 +25,5 @@
 ```
 ## Change
 ```
-REMOVE: #toggle + #child
+REMOVE: #child
 ```

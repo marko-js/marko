@@ -25,8 +25,8 @@ document.querySelector(`.${id}`)?.click();
 ```
 ## Change
 ```
-INSERT: #log + .a
 INSERT: #log::text("[a]")
+INSERT: .a
 ```
 
 # Update
@@ -45,7 +45,7 @@ loading
 ```
 ## Change
 ```
-INSERT: .a + ::text("loading")
+INSERT: ::text("loading")
 ```
 
 # Update
@@ -69,9 +69,9 @@ loading
 ```
 ## Change
 ```
-INSERT: .a + .b
 REMOVE: #log::text("[a]")
 INSERT: #log::text("[a][b]")
+INSERT: .b
 ```
 
 # Update
@@ -99,10 +99,10 @@ INSERT: #log::text("[a][b]")
 ```
 ## Change
 ```
-INSERT: .b + .c
-REMOVE: .c + ::text("loading")
+REMOVE: ::text("loading")
 REMOVE: #log::text("[a][b]")
 INSERT: #log::text("[a][b][c]")
+INSERT: .c
 ```
 
 # Update
@@ -135,9 +135,9 @@ INSERT: #log::text("[a][b][c]")
 ```
 ## Change
 ```
-INSERT: .c + .d
 REMOVE: #log::text("[a][b][c]")
 INSERT: #log::text("[a][b][c][d]")
+INSERT: .d
 ```
 
 # Update

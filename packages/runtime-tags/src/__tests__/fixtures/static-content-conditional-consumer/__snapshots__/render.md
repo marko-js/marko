@@ -23,7 +23,7 @@ document.querySelector("button#toggle").click();
 ```
 ## Change
 ```
-INSERT: #toggle + div
+INSERT: div
 ```
 
 # Update
@@ -39,5 +39,5 @@ document.querySelector("button#toggle").click();
 ```
 ## Change
 ```
-REMOVE: #toggle + div
+REMOVE: div
 ```

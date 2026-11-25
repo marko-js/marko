@@ -40,8 +40,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: span:nth-of-type(1)::text@8 "" => "2"
 UPDATE: span:nth-of-type(1)::text@6 "1" => "2"
+UPDATE: span:nth-of-type(1)::text@8 "" => "2"
 UPDATE: span:nth-of-type(2)::text@6 "{\"n\":1}" => "{\"n\":2}"
 UPDATE: span:nth-of-type(3)::text@6 "" => "2"
 UPDATE: span:nth-of-type(4)::text@7 "" => "2"
@@ -70,8 +70,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: span:nth-of-type(1)::text@8 "2" => "3"
 UPDATE: span:nth-of-type(1)::text@6 "2" => "3"
+UPDATE: span:nth-of-type(1)::text@8 "2" => "3"
 UPDATE: span:nth-of-type(2)::text@6 "{\"n\":2}" => "{\"n\":3}"
 UPDATE: span:nth-of-type(3)::text@6 "2" => "3"
 UPDATE: span:nth-of-type(4)::text@7 "2" => "3"

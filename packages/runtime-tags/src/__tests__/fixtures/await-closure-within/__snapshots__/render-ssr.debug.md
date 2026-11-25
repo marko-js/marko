@@ -14,10 +14,10 @@ loading...
 ```
 ## Change
 ```
-INSERT: button::text("1")
-INSERT: span::text("1")
 REMOVE: ::text("loading...")
 INSERT: button, span
+INSERT: button::text("1")
+INSERT: span::text("1")
 ```
 
 # Update

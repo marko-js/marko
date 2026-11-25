@@ -27,9 +27,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: button + span
-REMOVE: button + #a
-REMOVE: button + #b
+REMOVE: #a
+REMOVE: #b
+REMOVE: span
 ```
 
 # Update
@@ -54,12 +54,12 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: #b + .z
-INSERT: button + #a
-INSERT: #a + #b
-UPDATE: .z[class] null => "z"
-UPDATE: #a[id] null => "a"
+INSERT: #a
 UPDATE: #a[class] null => "x"
+UPDATE: #a[id] null => "a"
+INSERT: #b
 UPDATE: #b[id] null => "b"
 UPDATE: #b[title] null => "y"
+INSERT: .z
+UPDATE: .z[class] null => "z"
 ```

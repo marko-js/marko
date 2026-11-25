@@ -61,8 +61,8 @@ document.querySelector(selector).click();
 ```
 ## Change
 ```
-REMOVE: ul > li:nth-of-type(1) + li
-REMOVE: ul > li:nth-of-type(1) + li
-REMOVE: ul > li:nth-of-type(1) + li
-INSERT: ul > li:nth-of-type(1) + li
+REMOVE: ul > li
+REMOVE: ul > li
+REMOVE: ul > li
+INSERT: ul > li:nth-of-type(2)
 ```

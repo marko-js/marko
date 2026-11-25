@@ -20,10 +20,10 @@ leaf x
 ```
 ## Change
 ```
-INSERT: ::text@5 + button
-INSERT: button:nth-of-type(1) + :is(::text("leaf "), ::text("x"))
-UPDATE: button:nth-of-type(2)::text " " => "1"
+INSERT: ::text("leaf "), ::text("x")
 UPDATE: ::text@5 "" => "x"
+INSERT: button:nth-of-type(2)
+UPDATE: button:nth-of-type(2)::text " " => "1"
 ```
 
 # Update
@@ -45,12 +45,12 @@ leaf x
 ```
 ## Change
 ```
-INSERT: ::text@14 + button
-INSERT: button:nth-of-type(2) + :is(::text("2"), ::text(": "))
-UPDATE: button:nth-of-type(3)::text " " => "0"
-INSERT: ::text@7 + :is(::text("leaf "), ::text("x"))
+INSERT: ::text("2"), ::text(": ")
 UPDATE: ::text@6 "" => "2"
+INSERT: ::text("leaf "), ::text("x")
 UPDATE: ::text@14 "" => "x"
+INSERT: button:nth-of-type(3)
+UPDATE: button:nth-of-type(3)::text " " => "0"
 ```
 
 # Update
@@ -73,10 +73,10 @@ leaf x
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(3) + :is(::text("1"), ::text(": "))
+INSERT: ::text("1"), ::text(": ")
 UPDATE: ::text@15 "" => "1"
-INSERT: ::text@16 + :is(::text("2"), ::text(": "))
+INSERT: ::text("2"), ::text(": ")
 UPDATE: ::text@18 "" => "2"
-INSERT: ::text@19 + :is(::text("leaf "), ::text("x"))
+INSERT: ::text("leaf "), ::text("x")
 UPDATE: ::text@26 "" => "x"
 ```

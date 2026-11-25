@@ -28,8 +28,8 @@ REMOVE: ::text("loading")
 ## Change
 ```
 INSERT: #log::text("[a]")
-REMOVE: #log::text("[a]")
 INSERT: #log::text("[a][r]")
+REMOVE: #log::text("[a]")
 REMOVE: #log::text("[a][r]")
 INSERT: #log::text("[a][r][q]")
 ```

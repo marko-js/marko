@@ -17,10 +17,10 @@
 ```
 INSERT: .parent
 INSERT: .parent::text("parent:")
-INSERT: .parent::text@0 + ::text("0")
-INSERT: .parent + .nested
+INSERT: .parent::text("0")
+INSERT: .nested
 INSERT: .nested::text("nested:")
-INSERT: .nested::text@0 + ::text("0")
+INSERT: .nested::text("0")
 ```
 
 # Update

@@ -45,7 +45,7 @@ WARN "A lazy load trigger could not find an element matching \"#other\". The mod
 ```
 ## Change
 ```
-INSERT: #other + span
+INSERT: span:nth-of-type(3)
 ```
 
 # Update
@@ -76,7 +76,7 @@ INSERT: #other + span
 ```
 ## Change
 ```
-INSERT: #other + .press
+INSERT: .press
 ```
 
 # Update
@@ -115,7 +115,7 @@ document.querySelector(".toggle").click();
 ```
 ## Change
 ```
-INSERT: span:nth-of-type(3) + button
+INSERT: button:nth-of-type(3)
 ```
 
 # Update

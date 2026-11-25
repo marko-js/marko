@@ -34,8 +34,8 @@
 ```
 ## Change
 ```
-UPDATE: #tags::text "0" => "1"
 UPDATE: #class::text "0" => "1"
+UPDATE: #tags::text "0" => "1"
 ```
 
 # Update
@@ -58,6 +58,6 @@ UPDATE: #class::text "0" => "1"
 ```
 ## Change
 ```
-UPDATE: #tags::text "1" => "2"
 UPDATE: #class::text "1" => "2"
+UPDATE: #tags::text "1" => "2"
 ```

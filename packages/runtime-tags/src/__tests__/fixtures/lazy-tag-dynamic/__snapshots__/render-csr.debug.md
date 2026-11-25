@@ -30,7 +30,7 @@
 ```
 ## Change
 ```
-INSERT: .inc + div
+INSERT: div
 ```
 
 # Update
@@ -75,7 +75,7 @@ document.querySelector(".toggle").click();
 ```
 ## Change
 ```
-REMOVE: .inc + div
+REMOVE: div
 ```
 
 # Update
@@ -99,7 +99,7 @@ document.querySelector(".toggle").click();
 ```
 ## Change
 ```
-INSERT: .inc + div
+INSERT: div
 UPDATE: div::text@0 "" => "x"
 UPDATE: div::text@3 "" => "2"
 ```

@@ -41,8 +41,8 @@ document.querySelector("button.toggle").click();
 ```
 ## Change
 ```
-REMOVE: .toggle + ::text("The count is ")
-REMOVE: .toggle + ::text("1")
+REMOVE: ::text("1")
+REMOVE: ::text("The count is ")
 ```
 
 # Update
@@ -65,7 +65,7 @@ The count is 2
 ```
 ## Change
 ```
-INSERT: .toggle + :is(::text("The count is "), ::text("2"))
+INSERT: ::text("The count is "), ::text("2")
 UPDATE: ::text@13 "" => "2"
 ```
 

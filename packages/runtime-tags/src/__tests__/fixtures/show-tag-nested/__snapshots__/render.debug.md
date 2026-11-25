@@ -36,7 +36,7 @@ after
 ```
 ## Change
 ```
-INSERT: ::text@0 + em
+INSERT: em
 ```
 
 # Update
@@ -57,9 +57,9 @@ document.querySelector(`#${id}`).click();
 ```
 ## Change
 ```
-REMOVE: #i + ::text("before ")
-REMOVE: #i + em
-REMOVE: #i + ::text(" after")
+REMOVE: ::text(" after")
+REMOVE: ::text("before ")
+REMOVE: em
 ```
 
 # Update
@@ -86,7 +86,7 @@ before  after
 ```
 ## Change
 ```
-INSERT: #i + :is(::text("before "), ::text(" after"))
+INSERT: ::text("before "), ::text(" after")
 ```
 
 # Update
@@ -112,5 +112,5 @@ after
 ```
 ## Change
 ```
-INSERT: ::text@0 + em
+INSERT: em
 ```

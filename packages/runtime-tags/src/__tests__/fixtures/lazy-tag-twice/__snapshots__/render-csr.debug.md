@@ -16,7 +16,7 @@
 ## Change
 ```
 INSERT: #a
-INSERT: #a + #b
+INSERT: #b
 ```
 
 # Update

@@ -20,6 +20,6 @@
 ## Change
 ```
 INSERT: #page-caught
-INSERT: #page-caught + #class
-INSERT: #class > #tags
+INSERT: #class
+INSERT: #tags
 ```

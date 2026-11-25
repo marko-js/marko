@@ -14,8 +14,8 @@ loading...
 ```
 ## Change
 ```
+REMOVE: ::text("loading...")
+INSERT: p:nth-of-type(1), p:nth-of-type(2)
 INSERT: p:nth-of-type(1)::text("outer")
 INSERT: p:nth-of-type(2)::text("inner")
-REMOVE: ::text("loading...")
-INSERT: p, p
 ```

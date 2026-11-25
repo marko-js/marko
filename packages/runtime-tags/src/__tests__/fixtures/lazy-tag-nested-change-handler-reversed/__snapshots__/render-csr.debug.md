@@ -20,7 +20,7 @@
 ```
 ## Change
 ```
-INSERT: .page + span
+INSERT: span
 ```
 
 # Update
@@ -41,7 +41,7 @@ INSERT: .page + span
 ```
 ## Change
 ```
-INSERT: span + .grand-child
+INSERT: .grand-child
 ```
 
 # Update

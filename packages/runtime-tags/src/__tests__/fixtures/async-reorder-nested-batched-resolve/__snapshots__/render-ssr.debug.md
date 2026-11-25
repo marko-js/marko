@@ -19,10 +19,10 @@ LOADING A1
 ```
 ## Change
 ```
-INSERT: div > div
-INSERT: div > div::text("LOADING B1")
 REMOVE: ::text("LOADING A1")
 INSERT: div
+INSERT: div > div
+INSERT: div > div::text("LOADING B1")
 ```
 
 # Update
@@ -49,7 +49,7 @@ INSERT: div
 ```
 ## Change
 ```
-INSERT: div > div > div > div
 REMOVE: div > div::text("LOADING B1")
 INSERT: div > div > div
+INSERT: div > div > div > div
 ```

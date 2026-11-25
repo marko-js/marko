@@ -11,7 +11,7 @@ caught x
 ```
 INSERT: span
 INSERT: span::text("catch")
-INSERT: span + ::text(" caught x")
+INSERT: ::text(" caught x")
 ```
 ## Console
 ```

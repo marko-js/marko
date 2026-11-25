@@ -16,11 +16,11 @@
 ```
 ## Change
 ```
-INSERT: div::text@7 + ::text("Got: b ")
-INSERT: div::text@8 + ::text("0")
-INSERT: div::text@15 + ::text("Got: c ")
-INSERT: div::text@16 + ::text("0")
-INSERT: div::text@23 + button
+INSERT: div::text("Got: b ")
+INSERT: div::text("0")
+INSERT: div::text("Got: c ")
+INSERT: div::text("0")
+INSERT: div > button
 INSERT: div > button::text("Inc")
 ```
 
@@ -39,8 +39,8 @@ document.querySelector("button").click();
 ## Change
 ```
 UPDATE: div::text@7 "0" => "1"
-UPDATE: div::text@23 "0" => "1"
 UPDATE: div::text@15 "0" => "1"
+UPDATE: div::text@23 "0" => "1"
 ```
 
 # Update
@@ -58,8 +58,8 @@ document.querySelector("button").click();
 ## Change
 ```
 UPDATE: div::text@7 "1" => "2"
-UPDATE: div::text@23 "1" => "2"
 UPDATE: div::text@15 "1" => "2"
+UPDATE: div::text@23 "1" => "2"
 ```
 
 # Update
@@ -77,6 +77,6 @@ document.querySelector("button").click();
 ## Change
 ```
 UPDATE: div::text@7 "2" => "3"
-UPDATE: div::text@23 "2" => "3"
 UPDATE: div::text@15 "2" => "3"
+UPDATE: div::text@23 "2" => "3"
 ```

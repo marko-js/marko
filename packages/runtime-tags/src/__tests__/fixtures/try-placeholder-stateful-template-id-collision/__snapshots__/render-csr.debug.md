@@ -47,7 +47,7 @@ UPDATE: button:nth-of-type(1)::text@7 "0" => "1"
 ```
 ## Change
 ```
-INSERT: .swap + .n1
+INSERT: .n1
 UPDATE: .n1::text@0 "" => "placeholder 1"
 ```
 
@@ -69,8 +69,8 @@ UPDATE: .n1::text@0 "" => "placeholder 1"
 ```
 ## Change
 ```
-INSERT: .swap + .n5
-REMOVE: .n5 + button
+REMOVE: button
+INSERT: .n5
 ```
 
 # Update
@@ -119,7 +119,7 @@ document.querySelector(selector).click();
 ```
 ## Change
 ```
-INSERT: .swap + .n2
-REMOVE: .n2 + button
+REMOVE: button
+INSERT: .n2
 UPDATE: .n2::text " " => "body 2"
 ```

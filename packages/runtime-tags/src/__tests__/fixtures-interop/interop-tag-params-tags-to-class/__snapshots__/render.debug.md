@@ -66,9 +66,9 @@ UPDATE: #tags::text@0 "1" => "2"
 ```
 ## Change
 ```
+UPDATE: #class::text "0" => "1"
 UPDATE: #tags::text@4 "0" => "1"
 UPDATE: #tags::text@8 "0" => "2"
-UPDATE: #class::text "0" => "1"
 ```
 
 # Update
@@ -121,9 +121,9 @@ UPDATE: #tags::text@8 "2" => "3"
 ```
 ## Change
 ```
+UPDATE: #class::text "1" => "2"
 UPDATE: #tags::text@4 "1" => "2"
 UPDATE: #tags::text@8 "3" => "6"
-UPDATE: #class::text "1" => "2"
 ```
 
 # Update

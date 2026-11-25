@@ -7,14 +7,14 @@
 ## Change
 ```
 INSERT: ::text("6")
-INSERT: ::text@0 + ::text("6")
-INSERT: ::text@1 + ::text("6")
-INSERT: ::text@2 + ::text("6")
-INSERT: ::text@3 + ::text("6")
 UPDATE: ::text@0 " " => "6"
+INSERT: ::text("6")
 UPDATE: ::text@1 " " => "6"
+INSERT: ::text("6")
 UPDATE: ::text@2 " " => "6"
+INSERT: ::text("6")
 UPDATE: ::text@3 " " => "6"
+INSERT: ::text("6")
 UPDATE: ::text@4 " " => "6"
 ```
 

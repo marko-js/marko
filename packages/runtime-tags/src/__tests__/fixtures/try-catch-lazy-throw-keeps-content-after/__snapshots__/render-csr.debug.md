@@ -27,6 +27,6 @@ caught ERROR!d
 ```
 ## Change
 ```
-INSERT: ::text@7 + ::text("d")
+INSERT: ::text("d")
 UPDATE: ::text@13 " " => "d"
 ```

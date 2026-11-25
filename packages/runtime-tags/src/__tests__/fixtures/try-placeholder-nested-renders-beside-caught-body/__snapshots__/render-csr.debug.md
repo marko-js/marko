@@ -15,10 +15,10 @@ outercaught ERROR!
 ```
 ## Change
 ```
-INSERT: ::text@0 + :is(::text("caught "), ::text("ERROR!"))
-UPDATE: ::text@12 "" => "ERROR!"
+REMOVE: ::text("loading outer")
 INSERT: ::text("outer")
-REMOVE: ::text@0 + ::text("loading outer")
+INSERT: ::text("caught "), ::text("ERROR!")
+UPDATE: ::text@12 "" => "ERROR!"
 ```
 
 # Update
@@ -27,7 +27,7 @@ outerloading innercaught ERROR!
 ```
 ## Change
 ```
-INSERT: ::text@0 + ::text("loading inner")
+INSERT: ::text("loading inner")
 ```
 
 # Update
@@ -36,6 +36,6 @@ outerinnercaught ERROR!
 ```
 ## Change
 ```
-INSERT: ::text@0 + ::text("inner")
-REMOVE: ::text@5 + ::text("loading inner")
+REMOVE: ::text("loading inner")
+INSERT: ::text("inner")
 ```

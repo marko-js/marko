@@ -33,5 +33,5 @@
 ## Change
 ```
 REMOVE: div > p
-INSERT: div > p:nth-of-type(1) + p
+INSERT: div > p:nth-of-type(2)
 ```
