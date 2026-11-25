@@ -16,6 +16,5 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: title::text("back\\slash world")
-INSERT: title::text("back\\slash earth")
+UPDATE: title::text "back\\slash world" => "back\\slash earth"
 ```

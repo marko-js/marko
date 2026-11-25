@@ -19,10 +19,8 @@ document.querySelector("button").click();
 ## Change
 ```
 UPDATE: button::text@4 "1" => "2"
-REMOVE: title::text("& & & < &amp; - 1")
-INSERT: title::text("& & & < &amp; - 2")
-REMOVE: title::text("& & & < &amp; - 1")
-INSERT: title::text("& & & < &amp; - 2")
+UPDATE: title::text "& & & < &amp; - 1" => "& & & < &amp; - 2"
+UPDATE: title::text "& & & < &amp; - 1" => "& & & < &amp; - 2"
 ```
 
 # Update incremented

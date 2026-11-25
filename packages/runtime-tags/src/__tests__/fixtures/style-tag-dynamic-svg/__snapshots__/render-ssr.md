@@ -40,6 +40,5 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: .sM_1::text(".sM_1~*{--M_a0:red;}")
-INSERT: .sM_1::text(".sM_1~*{--M_a0:blue;}")
+UPDATE: .sM_1::text ".sM_1~*{--M_a0:red;}" => ".sM_1~*{--M_a0:blue;}"
 ```
