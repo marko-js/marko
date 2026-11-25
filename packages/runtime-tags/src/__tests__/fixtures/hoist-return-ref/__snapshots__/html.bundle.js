@@ -8,10 +8,14 @@ var child_default = _template("b", (input) => {
 });
 
 // tags/source.marko
+function $_return() {
+	return 1;
+}
+_resume("c0", $_return);
 var source_default = _template("c", (input) => {
 	_scope_reason();
 	_scope_id();
-	return _resume(() => 1, "c0");
+	return $_return;
 });
 
 // template.marko

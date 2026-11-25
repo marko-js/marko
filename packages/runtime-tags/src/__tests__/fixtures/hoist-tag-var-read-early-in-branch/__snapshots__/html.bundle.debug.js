@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, 0, 0, 0, 1);
-	const read = _resume(() => input.x, "__tests__/template.marko_0/read", $scope0_id);
+	const read = _resume_scoped(() => input.x, "__tests__/template.marko_0/read", $scope0_id);
 	_html(`<div>${_text_mark($scope0_id, "#text/1", read(), $wg__input_x)}</div>`);
 	_scope($scope0_id, {
 		input_x: input.x,

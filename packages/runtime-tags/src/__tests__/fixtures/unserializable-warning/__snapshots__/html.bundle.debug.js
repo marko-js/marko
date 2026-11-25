@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		const unserializable = { nested: { thing: Buffer.from("") } };
-		const test = _resume(function() {
+		const test = _resume_scoped(function() {
 			return unserializable;
 		}, "__tests__/template.marko_1/test", $scope1_id);
 		_script($scope1_id, "__tests__/template.marko_1_test#1", 0);

@@ -8,10 +8,14 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 });
 
 // tags/source.marko
+function $_return() {
+	return 1;
+}
+_resume("__tests__/tags/source.marko_0/_return", $_return);
 var source_default = _template("__tests__/tags/source.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $return = _resume(() => 1, "__tests__/tags/source.marko_0/_return");
+	const $return = $_return;
 	return $return;
 });
 

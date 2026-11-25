@@ -3,7 +3,7 @@ var inner_default = _template("__tests__/tags/inner.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let focused = 0;
-	const focus = _resume(() => {
+	const focus = _resume_scoped(() => {
 		focused++;
 	}, "__tests__/tags/inner.marko_0/focus", $scope0_id);
 	_html(`<p>focused ${_text_mark($scope0_id, "#text/0", focused, 2)}</p>`);

@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	const tag = "select";
 	_dynamic_tag($scope0_id, "a", tag, {
 		value,
-		valueChange: _resume(function(v) {
+		valueChange: _resume_scoped(function(v) {
 			value = v;
 		}, "a0", $scope0_id)
 	}, _content("a1", () => {

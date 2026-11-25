@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		"c"
 	];
 	let selected = ["b", "a"];
-	_attr_select_value($scope0_id, "#select/0", selected, _resume(function(v) {
+	_attr_select_value($scope0_id, "#select/0", selected, _resume_scoped(function(v) {
 		selected = v;
 	}, "__tests__/template.marko_0/valueChange", $scope0_id), () => {
 		_html("<select multiple>");

@@ -23,11 +23,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	Counter.content({
 		value: count,
-		valueChange: _resume((_new_count) => count = _new_count, "__tests__/template.marko_0/valueChange2", $scope0_id)
+		valueChange: _resume_scoped((_new_count) => count = _new_count, "__tests__/template.marko_0/valueChange2", $scope0_id)
 	});
 	_for_of([{
 		amount: total,
-		amountChange: _resume(function(next) {
+		amountChange: _resume_scoped(function(next) {
 			total = next;
 		}, "__tests__/template.marko_0/of", $scope0_id)
 	}], ({ amountChange: $amountChange, amount }) => {
@@ -59,7 +59,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope2 = _peek_scope_id();
 	Pair.content({ pair: {
 		side: left,
-		sideChange: _resume(function(next) {
+		sideChange: _resume_scoped(function(next) {
 			left = next;
 		}, "__tests__/template.marko_0/pair2", $scope0_id)
 	} });
@@ -80,7 +80,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope3 = _peek_scope_id();
 	Label.content({
 		text: label,
-		textChange: _resume((_new_label) => label = _new_label, "__tests__/template.marko_0/textChange", $scope0_id)
+		textChange: _resume_scoped((_new_label) => label = _new_label, "__tests__/template.marko_0/textChange", $scope0_id)
 	});
 	_html(`<div>${_text_mark($scope0_id, "#text/4", count)} ${_text_mark($scope0_id, "#text/5", total, 2)} ${_text_mark($scope0_id, "#text/6", left, 2)} ${_text_mark($scope0_id, "#text/7", label, 2)}</div>`);
 	_scope($scope0_id, {

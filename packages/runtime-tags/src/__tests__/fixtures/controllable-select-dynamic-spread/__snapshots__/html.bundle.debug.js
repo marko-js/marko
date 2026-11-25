@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const tag = "select";
 	_dynamic_tag($scope0_id, "#text/0", tag ? "select" : {}, {
 		value,
-		valueChange: _resume(function(v) {
+		valueChange: _resume_scoped(function(v) {
 			value = v;
 		}, "__tests__/template.marko_0/valueChange", $scope0_id)
 	}, _content_resume("__tests__/template.marko_1*content", () => {

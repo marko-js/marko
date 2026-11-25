@@ -5,13 +5,13 @@ var template_default = _template("a", (input) => {
 	let phase = 0;
 	let log = "";
 	const attrs = phase === 0 ? {
-		onClick: _resume(function() {
+		onClick: _resume_scoped(function() {
 			phase = 1;
 		}, "a0", $scope0_id),
-		onMouseOver: _resume(function() {
+		onMouseOver: _resume_scoped(function() {
 			log = `${log}M`;
 		}, "a1", $scope0_id)
-	} : { onClick: _resume(function() {
+	} : { onClick: _resume_scoped(function() {
 		phase = 0;
 	}, "a2", $scope0_id) };
 	_html(`<div${_attrs(attrs, "a", $scope0_id, "div")}>${_text_mark($scope0_id, "b", phase)}:${_text_mark($scope0_id, "c", log, 2)}</div>${_el_mark($scope0_id, "a")}`);

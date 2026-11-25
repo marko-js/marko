@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $count__closures = new Set();
 	let count = 0;
 	spread_attr_tag_default({ button: attrTag({
-		onClick: _resume(function() {
+		onClick: _resume_scoped(function() {
 			count++;
 		}, "__tests__/template.marko_0/onClick", $scope0_id),
 		content: _content("__tests__/template.marko_1*content", () => {
@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope0_id)
 	}) });
 	spread_input_default({
-		onClick: _resume(function() {
+		onClick: _resume_scoped(function() {
 			count--;
 		}, "__tests__/template.marko_0/onClick2", $scope0_id),
 		content: _content("__tests__/template.marko_2*content", () => {
@@ -60,7 +60,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "7:2"), "__tests__/template.marko_2_count#0:3/subscribe");
 		}, $scope0_id)
 	});
-	run_menu_default({ menu: attrTag({ item: attrTag({ run: _resume(function() {
+	run_menu_default({ menu: attrTag({ item: attrTag({ run: _resume_scoped(function() {
 		count += 10;
 	}, "__tests__/template.marko_0/run", $scope0_id) }) }) });
 	_scope($scope0_id, {

@@ -5,15 +5,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let foo = undefined;
 	const a = {
 		foo,
-		bar: _resume(() => foo?.bar, "__tests__/template.marko_0/a", $scope0_id)
+		bar: _resume_scoped(() => foo?.bar, "__tests__/template.marko_0/a", $scope0_id)
 	};
 	const b = {
 		foo,
-		baz: _resume(() => foo?.bar.baz, "__tests__/template.marko_0/b", $scope0_id)
+		baz: _resume_scoped(() => foo?.bar.baz, "__tests__/template.marko_0/b", $scope0_id)
 	};
 	const c = {
 		foo: foo?.bar,
-		baz: _resume(() => foo?.bar.baz, "__tests__/template.marko_0/c", $scope0_id)
+		baz: _resume_scoped(() => foo?.bar.baz, "__tests__/template.marko_0/c", $scope0_id)
 	};
 	_html(`<div></div>${_el_mark($scope0_id, "#div/0")}<div></div>${_el_mark($scope0_id, "#div/1")}<div></div>${_el_mark($scope0_id, "#div/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0_c#7");

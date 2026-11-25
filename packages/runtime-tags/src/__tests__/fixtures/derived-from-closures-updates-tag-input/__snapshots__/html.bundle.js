@@ -8,12 +8,16 @@ var child_default = _template("b", (input) => {
 });
 
 // tags/parent.marko
+function $hrefFor(key) {
+	return `#${key}`;
+}
+_resume("c0", $hrefFor);
 var parent_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const prefix = "a";
 	let shut = false;
-	const hrefFor = _resume((key) => `#${key}`, "c0");
+	const hrefFor = $hrefFor;
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
@@ -24,7 +28,7 @@ var parent_default = _template("c", (input) => {
 				label,
 				count: input.count,
 				hrefFor,
-				onToggle: _resume(function() {
+				onToggle: _resume_scoped(function() {
 					shut = !shut;
 					input.onToggle();
 				}, "c1", $scope1_id)
@@ -56,7 +60,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	parent_default({
 		count,
-		onToggle: _resume(function() {
+		onToggle: _resume_scoped(function() {
 			count++;
 		}, "a0", $scope0_id)
 	});

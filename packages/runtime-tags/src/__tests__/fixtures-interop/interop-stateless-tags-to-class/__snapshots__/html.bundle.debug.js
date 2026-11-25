@@ -19,12 +19,14 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 
 // template.marko
 s("__tests__/components/my-button/index.marko", _marko_template, "preserve");
+function $onClick() {
+	document.getElementById("display").innerHTML = "Hi!";
+}
+_resume("__tests__/template.marko_0/onClick", $onClick);
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "#text/0", _marko_template, { onClick: _resume(function() {
-		document.getElementById("display").innerHTML = "Hi!";
-	}, "__tests__/template.marko_0/onClick") }, _content_resume("__tests__/template.marko_1*content", () => {
+	_dynamic_tag($scope0_id, "#text/0", _marko_template, { onClick: $onClick }, _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("Say Hi");

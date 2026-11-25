@@ -11,7 +11,7 @@ var child_default = _template("b", (input) => {
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_step = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
-	const log = _resume(() => {
+	const log = _resume_scoped(() => {
 		console.log(input.step);
 	}, "a0", $scope0_id);
 	_if(() => {

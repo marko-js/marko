@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	let value = "init";
 	let attrs = {
 		value,
-		valueChange: _resume(function(next) {
+		valueChange: _resume_scoped(function(next) {
 			value = next;
 		}, "a0", $scope0_id)
 	};

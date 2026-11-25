@@ -2,7 +2,7 @@
 var setter_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const setter = _resume(function() {
+	const setter = _resume_scoped(function() {
 		input.valueChange(1);
 	}, "b0", $scope0_id);
 	const $return = (input.value, setter);
@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	let setCount = setter_default({
 		value: count,
-		valueChange: _resume((_new_count) => count = _new_count, "a0", $scope0_id)
+		valueChange: _resume_scoped((_new_count) => count = _new_count, "a0", $scope0_id)
 	});
 	_var($scope0_id, "b", $childScope, "a1");
 	_html(`<div>${_text_mark($scope0_id, "c", count)}</div>`);

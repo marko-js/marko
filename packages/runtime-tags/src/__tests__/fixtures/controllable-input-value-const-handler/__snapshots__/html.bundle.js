@@ -3,7 +3,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let out = "-";
-	const onChange = _resume((next) => {
+	const onChange = _resume_scoped((next) => {
 		out = next;
 	}, "a0", $scope0_id);
 	_html(`<input${_attr_input_value($scope0_id, "a", "a", onChange)}>${_el_mark($scope0_id, "a")}<p id=out>${_text_mark($scope0_id, "b", out)}</p>`);

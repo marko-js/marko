@@ -1,4 +1,8 @@
 // template.marko
+function $getX() {
+	return 1;
+}
+_resume("a0", $getX);
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 2), $wg__input_a = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
@@ -6,8 +10,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.a) {
 			const $scope2_id = _scope_id();
-			const getX = _resume(() => 1, "a0");
-			_scope($scope2_id, { a: getX });
+			_scope($scope2_id, { a: $getX });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_a);

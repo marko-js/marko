@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let tag = "input";
 	_html("<div>");
 	_dynamic_tag($scope0_id, "#text/0", tag, {});
-	_attr_select_value($scope0_id, "#select/1", void 0, _resume(function(next) {
+	_attr_select_value($scope0_id, "#select/1", void 0, _resume_scoped(function(next) {
 		tag = next;
 	}, "__tests__/template.marko_0/valueChange", $scope0_id), () => {
 		_html(`<select><option${_attr_option_value("a")}>a</option></select>`);

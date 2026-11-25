@@ -10,7 +10,7 @@ var label_text_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 2), $wi__input_label__OR__input_show = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $childScope = _peek_scope_id();
-	let getLabel = child_default({ value: _resume(() => input.label, "c0", $scope0_id) });
+	let getLabel = child_default({ value: _resume_scoped(() => input.label, "c0", $scope0_id) });
 	$wi__input_label && _var($scope0_id, "b", $childScope, "c1");
 	_if(() => {
 		if (input.show) {

@@ -5,10 +5,10 @@ var store_default = _template("__tests__/tags/store.marko", (input) => {
 	let list = input.value;
 	const $return = {
 		list,
-		listChange: _resume(function(v) {
+		listChange: _resume_scoped(function(v) {
 			list = v;
 		}, "__tests__/tags/store.marko_0/_return", $scope0_id),
-		clear: _resume(function() {
+		clear: _resume_scoped(function() {
 			list = [];
 		}, "__tests__/tags/store.marko_0/_return2", $scope0_id)
 	};

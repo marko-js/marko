@@ -10,7 +10,7 @@ var handlers_default = _template("__tests__/tags/handlers.marko", (input) => {
 });
 
 // template.marko
-_resume(shout, "__tests__/tags/handlers.marko_0/export/shout");
+_resume("__tests__/tags/handlers.marko_0/export/shout", shout);
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

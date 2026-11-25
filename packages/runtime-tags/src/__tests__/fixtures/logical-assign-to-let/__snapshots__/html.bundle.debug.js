@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		changes,
 		value,
 		x,
-		"TagVariableChange:x": _resume(function(v) {
+		"TagVariableChange:x": _resume_scoped(function(v) {
 			value = v;
 			changes++;
 		}, "__tests__/template.marko_0/valueChange", $scope0_id) || void 0

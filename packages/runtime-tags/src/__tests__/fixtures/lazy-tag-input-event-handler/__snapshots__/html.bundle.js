@@ -21,7 +21,7 @@ var template_default = _template("b", (input) => {
 	_html(`<button class=main>main:${_text_mark($scope0_id, "b", count, 2)}</button>${_el_mark($scope0_id, "a")}`);
 	$Child_withLoadAssets({
 		data: shared,
-		report: _resume(function(o) {
+		report: _resume_scoped(function(o) {
 			return o === shared;
 		}, "b0", $scope0_id)
 	});

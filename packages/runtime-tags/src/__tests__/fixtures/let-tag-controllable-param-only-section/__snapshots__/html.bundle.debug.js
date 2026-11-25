@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let total = 0;
 	ctl_default({
 		show: true,
-		countChange: _resume(function(v) {
+		countChange: _resume_scoped(function(v) {
 			total = v * 10;
 		}, "__tests__/template.marko_0/countChange", $scope0_id)
 	});

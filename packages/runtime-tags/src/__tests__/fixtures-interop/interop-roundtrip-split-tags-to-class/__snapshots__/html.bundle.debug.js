@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	_dynamic_tag($scope0_id, "#text/0", _marko_template, {
 		value: count,
-		onIncrement: _resume(function() {
+		onIncrement: _resume_scoped(function() {
 			count++;
 		}, "__tests__/template.marko_0/onIncrement", $scope0_id)
 	});

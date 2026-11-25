@@ -9,12 +9,14 @@ var grand_child_default = _template("__tests__/grand-child.marko", (input) => {
 
 // child.marko
 const $GrandChild_withLoadAssets = withLoadAssets(() => grand_child_default, "__tests__/grand-child.marko", flush, "ready:__tests__/grand-child.marko");
+function $onPress() {
+	console.log("pressed");
+}
+_resume("__tests__/child.marko_0/onPress", $onPress);
 var child_default = _template("__tests__/child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	$GrandChild_withLoadAssets({ onPress: _resume(function() {
-		console.log("pressed");
-	}, "__tests__/child.marko_0/onPress") });
+	$GrandChild_withLoadAssets({ onPress: $onPress });
 });
 
 // other.marko

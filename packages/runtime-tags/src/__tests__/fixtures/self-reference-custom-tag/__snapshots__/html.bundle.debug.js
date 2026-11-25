@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope($scope1_id, { input_onClick: input.onClick }, "__tests__/template.marko", "1:2", { input_onClick: ["input.onClick", "1:15"] });
 		return $return;
 	}, $scope0_id) };
-	let foo = Child.content({ onClick: _resume(function() {
+	let foo = Child.content({ onClick: _resume_scoped(function() {
 		foo().innerHTML = "clicked";
 	}, "__tests__/template.marko_0/onClick", $scope0_id) });
 	_scope($scope0_id, { foo }, "__tests__/template.marko", 0, { foo: "6:8" });

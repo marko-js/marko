@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 		_script($scope1_id, "a3");
 		_scope($scope1_id, { d: input.onClick });
 		return $return;
-	}, $scope0_id) }.content({ onClick: _resume(function() {
+	}, $scope0_id) }.content({ onClick: _resume_scoped(function() {
 		foo().innerHTML = "clicked";
 	}, "a0", $scope0_id) });
 	_scope($scope0_id, { c: foo });

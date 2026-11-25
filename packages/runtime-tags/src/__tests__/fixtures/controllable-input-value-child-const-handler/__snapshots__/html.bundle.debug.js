@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let out = "-";
-	const onChange = _resume((next) => {
+	const onChange = _resume_scoped((next) => {
 		out = next;
 	}, "__tests__/template.marko_0/onChange", $scope0_id);
 	child_default({

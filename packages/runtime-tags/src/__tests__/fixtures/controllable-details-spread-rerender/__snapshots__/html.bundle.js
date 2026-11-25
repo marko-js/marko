@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	let n = 0;
 	const attrs = {
 		open,
-		openChange: _resume(function(next) {
+		openChange: _resume_scoped(function(next) {
 			open = next;
 		}, "a0", $scope0_id),
 		"data-n": n

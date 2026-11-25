@@ -30,7 +30,7 @@ var grand_child_default = _template("b", (input) => {
 	const $count__closures = /* @__PURE__ */ new Set();
 	let count = 0;
 	press_button_default({
-		onPress: _resume(function() {
+		onPress: _resume_scoped(function() {
 			count++;
 		}, "b0", $scope0_id),
 		content: _content("b3", () => {

@@ -34,7 +34,7 @@ Rolldown can remove an unused signal/renderer, then its helpers, imports, module
 and chunk-mates.
 
 Executable values named by SSR must instead be registered under stable ids via
-`_resume`. Explicit resume-capable helpers include `_var_resume`, `_el_resume`
+`_resume`, or `_resume_scoped` for a value bound to a render's scope. Explicit resume-capable helpers include `_var_resume`, `_el_resume`
 and `_hoist_resume`; `_template`, `_content`, `_script`, and some closure
 helpers register internally. Direct registration is a retention root, and a
 `_content` emitted without the pure annotation is one too.

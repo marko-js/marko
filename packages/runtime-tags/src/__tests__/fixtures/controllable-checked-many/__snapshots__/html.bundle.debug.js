@@ -10,11 +10,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(states, (state, i) => {
 		const $scope1_id = _scope_id();
 		let checked = state;
-		_html(`<input${_attr_input_checked($scope1_id, "#input/0", checked, _resume((_new_checked) => checked = _new_checked, "__tests__/template.marko_1/checkedChange", $scope1_id))} type=checkbox>${_el_mark($scope1_id, "#input/0")}`);
+		_html(`<input${_attr_input_checked($scope1_id, "#input/0", checked, _resume_scoped((_new_checked) => checked = _new_checked, "__tests__/template.marko_1/checkedChange", $scope1_id))} type=checkbox>${_el_mark($scope1_id, "#input/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_scope($scope1_id, {
 			"#LoopKey": i,
-			"TagVariableChange:checked": _resume(function(value) {
+			"TagVariableChange:checked": _resume_scoped(function(value) {
 				if (i === undefined) {
 					throw new Error("LoopKey is undefined");
 				}

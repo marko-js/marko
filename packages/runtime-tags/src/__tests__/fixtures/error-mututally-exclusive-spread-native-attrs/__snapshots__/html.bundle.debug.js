@@ -1,10 +1,12 @@
 // template.marko
+function $attrs() {}
+_resume("__tests__/template.marko_0/attrs", $attrs);
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const attrs = {
 		checkedValue: 1,
-		checkedChange: _resume(function() {}, "__tests__/template.marko_0/attrs")
+		checkedChange: $attrs
 	};
 	_html(`<input${_attrs({
 		type: "checkbox",

@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let x = 1;
-	let handler = _resume(function(newValue) {
+	let handler = _resume_scoped(function(newValue) {
 		x = newValue + 1;
 	}, "__tests__/template.marko_0/handler", $scope0_id);
 	let y = x;

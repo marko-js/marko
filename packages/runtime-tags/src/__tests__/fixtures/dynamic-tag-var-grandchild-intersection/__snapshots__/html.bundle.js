@@ -5,7 +5,7 @@ var grandchild_default = _template("c", (input) => {
 	let n = 0;
 	const $return = {
 		n,
-		set: _resume(function(value) {
+		set: _resume_scoped(function(value) {
 			n = value;
 		}, "c0", $scope0_id)
 	};

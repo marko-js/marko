@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 		"c"
 	];
 	let selected = ["b", "a"];
-	_attr_select_value($scope0_id, "a", selected, _resume(function(v) {
+	_attr_select_value($scope0_id, "a", selected, _resume_scoped(function(v) {
 		selected = v;
 	}, "a0", $scope0_id), () => {
 		_html("<select multiple>");

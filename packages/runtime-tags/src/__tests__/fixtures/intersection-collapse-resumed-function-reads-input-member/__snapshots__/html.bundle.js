@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const on = input.items.filter((item) => item.on).length;
 	const $childScope = _peek_scope_id();
-	log_count_default({ count: _resume(() => `${on} of ${input.items.length}`, "a0", $scope0_id) });
+	log_count_default({ count: _resume_scoped(() => `${on} of ${input.items.length}`, "a0", $scope0_id) });
 	_scope($scope0_id, {
 		e: input.items?.length,
 		f: on,

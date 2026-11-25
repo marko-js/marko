@@ -3,7 +3,7 @@ var inner_default = _template("c", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let focused = 0;
-	const focus = _resume(() => {
+	const focus = _resume_scoped(() => {
 		focused++;
 	}, "c0", $scope0_id);
 	_html(`<p>focused ${_text_mark($scope0_id, "a", focused, 2)}</p>`);

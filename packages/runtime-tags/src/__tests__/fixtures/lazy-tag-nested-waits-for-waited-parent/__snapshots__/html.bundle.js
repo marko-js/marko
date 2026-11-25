@@ -9,12 +9,14 @@ var grand_child_default = _template("b", (input) => {
 
 // child.marko
 const $GrandChild_withLoadAssets = withLoadAssets(() => grand_child_default, "b", flush, "_b");
+function $onPress() {
+	console.log("pressed");
+}
+_resume("a0", $onPress);
 var child_default = _template("a", (input) => {
 	_scope_reason();
 	_scope_id();
-	$GrandChild_withLoadAssets({ onPress: _resume(function() {
-		console.log("pressed");
-	}, "a0") });
+	$GrandChild_withLoadAssets({ onPress: $onPress });
 });
 
 // other.marko

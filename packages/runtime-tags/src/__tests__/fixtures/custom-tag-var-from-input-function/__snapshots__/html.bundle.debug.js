@@ -11,7 +11,7 @@ var label_text_default = _template("__tests__/tags/label-text.marko", (input) =>
 	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 2), $wi__input_label__OR__input_show = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $childScope = _peek_scope_id();
-	let getLabel = child_default({ value: _resume(() => input.label, "__tests__/tags/label-text.marko_0/value", $scope0_id) });
+	let getLabel = child_default({ value: _resume_scoped(() => input.label, "__tests__/tags/label-text.marko_0/value", $scope0_id) });
 	$wi__input_label && _var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/tags/label-text.marko_0_getLabel#7/var");
 	_if(() => {
 		if (input.show) {

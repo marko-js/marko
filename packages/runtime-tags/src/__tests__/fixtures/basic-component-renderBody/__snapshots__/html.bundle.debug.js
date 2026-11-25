@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $clickCount__closures = new Set();
 	let clickCount = 0;
 	my_button_default({
-		onClick: _resume(function() {
+		onClick: _resume_scoped(function() {
 			clickCount++;
 		}, "__tests__/template.marko_0/onClick", $scope0_id),
 		content: _content("__tests__/template.marko_1*content", () => {

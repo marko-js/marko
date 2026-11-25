@@ -7,13 +7,15 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 });
 
 // template.marko
+function $picker() {
+	return child_default;
+}
+_resume("__tests__/template.marko_0/picker", $picker);
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 1;
-	const picker = { get: _resume(function() {
-		return child_default;
-	}, "__tests__/template.marko_0/picker") };
+	const picker = { get: $picker };
 	_if(() => {
 		if (count > 1) {
 			const $scope1_id = _scope_id();

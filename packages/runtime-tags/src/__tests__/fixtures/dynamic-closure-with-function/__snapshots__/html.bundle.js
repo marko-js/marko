@@ -3,7 +3,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_c = _write_guard($scope0_reason, 3), $wg__input_b = _write_guard($scope0_reason, 5), $wi__input_c__OR__input_a__OR__input_b = _write_if($scope0_reason, 2), $wi__input_a__OR__input_b = _write_if($scope0_reason, 1), $wi__input_c = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $bar2__closures = /* @__PURE__ */ new Set();
-	const bar = _resume(function(test) {
+	const bar = _resume_scoped(function(test) {
 		return input.c + test;
 	}, "a0", $scope0_id);
 	_if(() => {

@@ -1,4 +1,8 @@
 // template.marko
+function $getLabel() {
+	return "b";
+}
+_resume("a0", $getLabel);
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
@@ -7,8 +11,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		{
 			const $scope2_id = _scope_id();
-			const getLabel = _resume(() => "b", "a0");
-			_scope($scope2_id, { a: getLabel });
+			_scope($scope2_id, { a: $getLabel });
 			return 1;
 		}
 	}, $scope0_id, "b");

@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let tagName = "span";
 	_dynamic_tag($scope0_id, "#text/0", tagName, {
 		class: "A",
-		onClick: _resume(function() {
+		onClick: _resume_scoped(function() {
 			tagName = tagName === "span" ? "div" : "span";
 		}, "__tests__/template.marko_0/onClick", $scope0_id)
 	}, _content_resume("__tests__/template.marko_1*content", () => {

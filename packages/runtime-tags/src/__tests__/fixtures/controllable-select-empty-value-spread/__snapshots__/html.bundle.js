@@ -4,7 +4,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let value = "";
 	const placeholder = { value: "" };
-	_attr_select_value($scope0_id, "a", value, _resume(function(v) {
+	_attr_select_value($scope0_id, "a", value, _resume_scoped(function(v) {
 		value = v;
 	}, "a0", $scope0_id), () => {
 		_html(`<select><option${_attrs(placeholder, "b", $scope0_id, "option")}>-- choose --</option>${_el_mark($scope0_id, "b")}<option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option></select>`);

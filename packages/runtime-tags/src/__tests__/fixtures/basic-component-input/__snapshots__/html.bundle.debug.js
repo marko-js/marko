@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	my_button_default({
 		text: clickCount,
-		onClick: _resume(function() {
+		onClick: _resume_scoped(function() {
 			clickCount++;
 		}, "__tests__/template.marko_0/onClick", $scope0_id)
 	});

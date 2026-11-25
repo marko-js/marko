@@ -9,7 +9,7 @@ var let_global_default = _template("__tests__/tags/let-global.marko", (input) =>
 	_script($scope0_id, "__tests__/tags/let-global.marko_0_input_value#2", 0);
 	_scope($scope0_id, {
 		input_value: input.value,
-		"#TagVariableChange": _resume(function(next) {
+		"#TagVariableChange": _resume_scoped(function(next) {
 			$global$1[input.value] = next;
 			subsByKey[input.value]?.forEach((cb) => cb());
 		}, "__tests__/tags/let-global.marko_0/valueChange", $scope0_id) || void 0

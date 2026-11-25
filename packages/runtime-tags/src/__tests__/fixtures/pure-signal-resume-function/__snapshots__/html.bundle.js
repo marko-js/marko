@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const test = "foo";
 	my_button_default({
-		onClick: _resume(function() {
+		onClick: _resume_scoped(function() {
 			console.log(test);
 		}, "a0", $scope0_id),
 		content: _content("a1", () => {

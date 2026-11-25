@@ -15,7 +15,7 @@ s("b", _marko_template$1);
 var tags_child_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "a", _marko_template$1, { "on-change": _resume(function() {
+	_dynamic_tag($scope0_id, "a", _marko_template$1, { "on-change": _resume_scoped(function() {
 		input.onChange?.();
 	}, "c0", $scope0_id) }, 0, 0, _write_guard($scope0_reason, 0));
 	_scope($scope0_id, { d: input.onChange });

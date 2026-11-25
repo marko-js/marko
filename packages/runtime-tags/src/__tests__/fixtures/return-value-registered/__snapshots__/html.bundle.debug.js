@@ -1,10 +1,12 @@
 // tags/getter.marko
+function $getter() {
+	return "hello";
+}
+_resume("__tests__/tags/getter.marko_0/getter", $getter);
 var getter_default = _template("__tests__/tags/getter.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const getter = _resume(() => {
-		return "hello";
-	}, "__tests__/tags/getter.marko_0/getter");
+	const getter = $getter;
 	const $return = getter;
 	return $return;
 });

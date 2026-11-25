@@ -15,7 +15,6 @@ type IntlWithDurationFormat = { DurationFormat?: new () => object } | undefined;
 
 export interface Registered {
   id: string;
-  access: string;
   scope: unknown;
   locals: Locals | undefined;
 }
@@ -68,6 +67,8 @@ type TypedArray =
   | BigInt64Array
   | BigUint64Array;
 
+// Registrations every render reads: values bound to no scope (templates) and
+// class interop's. Each render keeps its scoped ones in its own `registered`.
 export const REGISTRY = /* @__PURE__ */ new WeakMap<WeakKey, Registered>();
 const KNOWN_SYMBOLS = /* @__PURE__ */ (() => {
   const KNOWN_SYMBOLS = new Map<symbol, string>();
@@ -320,6 +321,8 @@ class State {
   buf = [] as string[];
   strs = new Map<string, Reference>();
   refs = new WeakMap<WeakKey, Reference>();
+  // Registrations bound to this render's scopes, created with the first.
+  registered: Map<WeakKey, Registered> | undefined = undefined;
   deferredRefs = new Set<Reference>();
   boundary!: Boundary;
   channel: SerializeChannel | undefined = undefined;
@@ -381,7 +384,7 @@ class State {
     const locals = registered.locals?.(this.boundary.state.scope);
     if (locals) {
       // Calls the registered factory itself to also pass render-only locals.
-      this.buf.push(registered.access + "(_(" + scopeId + ")");
+      this.buf.push(toRegistryAccess(registered.id) + "(_(" + scopeId + ")");
       writeLocalArgs(this, ref, locals);
     } else {
       this.buf.push("_(" + scopeId + "," + quoteRegistryId(registered.id));
@@ -539,16 +542,35 @@ export function dropQueuedCall(
   return false;
 }
 
-// `access` is the text every occurrence of the value serializes as.
 export function register<T extends WeakKey>(
   id: string,
   val: T,
   scope?: unknown,
   locals?: Locals,
-  access = "_._" + toAccess(toObjectKey(id)),
 ) {
-  REGISTRY.set(val, { id, scope, locals, access });
+  REGISTRY.set(val, { id, scope, locals });
   return val;
+}
+
+// Registers a value bound to one of a render's scopes for that render alone.
+export function registerScoped<T extends WeakKey>(
+  state: State,
+  id: string,
+  val: T,
+  scope: unknown,
+  locals?: Locals,
+) {
+  (state.registered ||= new Map()).set(val, { id, scope, locals });
+  return val;
+}
+
+export function getRegistered(state: State, val: WeakKey) {
+  return state.registered?.get(val) || REGISTRY.get(val);
+}
+
+// How a value registered with no scope, or a registered factory, is written.
+function toRegistryAccess(id: string) {
+  return "_._" + toAccess(toObjectKey(id));
 }
 
 // A payload with only scope data returns its scopes array directly
@@ -817,7 +839,7 @@ function writeReferenceOr(
     return true;
   }
 
-  const registered = REGISTRY.get(val);
+  const registered = getRegistered(state, val);
   if (registered)
     return writeRegistered(state, val, parent, accessor, registered);
 
@@ -876,7 +898,7 @@ function writeRegistered(
   if (scope) {
     state.writeScopedRegistration(val, parent, accessor, registered);
   } else {
-    state.buf.push(registered.access);
+    state.buf.push(toRegistryAccess(registered.id));
   }
   return true;
 }

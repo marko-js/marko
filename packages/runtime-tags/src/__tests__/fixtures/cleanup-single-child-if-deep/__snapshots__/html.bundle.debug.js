@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let showOuter = true;
 	let showMiddle = true;
 	let showInner = true;
-	const write = _resume(function(msg) {
+	const write = _resume_scoped(function(msg) {
 		((el) => el())(_el_read_error).innerHTML += "\n" + msg;
 	}, "__tests__/template.marko_0/write", $scope0_id);
 	_html(`<button id=outer>Toggle Outer</button>${_el_mark($scope0_id, "#button/0")}<button id=middle>Toggle Middle</button>${_el_mark($scope0_id, "#button/1")}<button id=inner>Toggle Inner</button>${_el_mark($scope0_id, "#button/2")}<pre></pre>${_el_mark($scope0_id, "#pre/3")}`);

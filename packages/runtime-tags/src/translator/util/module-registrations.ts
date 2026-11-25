@@ -500,9 +500,7 @@ function addExportRegistrations(
     return;
   }
 
-  // The html output registers exported function expressions where they are
-  // written, by replacing them with the `_resume` call that returns them.
-  if (isOutputHTML() || declaration.type !== "VariableDeclaration") return;
+  if (declaration.type !== "VariableDeclaration") return;
 
   for (const declarator of declaration.declarations) {
     const extra = declarator.init?.extra;
@@ -512,10 +510,10 @@ function addExportRegistrations(
   }
 }
 
-function buildRegistration(local: string, registryId: string) {
+export function buildRegistration(local: string, registryId: string) {
   return t.expressionStatement(
     isOutputHTML()
-      ? callRuntime("_resume", t.identifier(local), t.stringLiteral(registryId))
+      ? callRuntime("_resume", t.stringLiteral(registryId), t.identifier(local))
       : registerRuntimeValue(registryId, t.identifier(local)),
   );
 }

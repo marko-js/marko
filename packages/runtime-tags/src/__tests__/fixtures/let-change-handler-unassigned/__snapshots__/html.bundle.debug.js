@@ -14,6 +14,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 });
 
 // template.marko
+function $onValue() {}
+_resume("__tests__/template.marko_0/onValue", $onValue);
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
@@ -22,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	child_default({
 		initial,
-		onValue: _resume(() => {}, "__tests__/template.marko_0/onValue")
+		onValue: $onValue
 	});
 	_html(`<button>inc</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");

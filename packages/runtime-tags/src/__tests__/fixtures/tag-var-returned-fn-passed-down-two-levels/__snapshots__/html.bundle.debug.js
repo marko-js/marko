@@ -2,7 +2,7 @@
 var make_default = _template("__tests__/tags/make.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $return = _resume(() => input.v, "__tests__/tags/make.marko_0/_return", $scope0_id);
+	const $return = _resume_scoped(() => input.v, "__tests__/tags/make.marko_0/_return", $scope0_id);
 	_scope($scope0_id, { input_v: input.v }, "__tests__/tags/make.marko", 0, { input_v: ["input.v"] });
 	return $return;
 });

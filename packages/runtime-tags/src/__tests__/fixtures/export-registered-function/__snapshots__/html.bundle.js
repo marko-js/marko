@@ -2,8 +2,9 @@
 function shout(message) {
 	return message.toUpperCase() + "!";
 }
-const whisper = _resume((message) => message.toLowerCase(), "a1");
-_resume(shout, "a0");
+const whisper = (message) => message.toLowerCase();
+_resume("a0", shout);
+_resume("a1", whisper);
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<input");
 	_attrs_content({
 		value,
-		valueChange: _resume(function(v) {
+		valueChange: _resume_scoped(function(v) {
 			value = v;
 		}, "__tests__/template.marko_0/valueChange", $scope0_id)
 	}, "#input/0", $scope0_id, "input");

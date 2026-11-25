@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	const attrs = { onClick: _resume(function() {
+	const attrs = { onClick: _resume_scoped(function() {
 		n++;
 	}, "__tests__/template.marko_0/attrs", $scope0_id) };
 	_dynamic_tag($scope0_id, "#text/0", input.tag, {
@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("spread");
 	}, $scope0_id));
 	_dynamic_tag($scope0_id, "#text/1", input.tag, {
-		onClick: _resume(function() {
+		onClick: _resume_scoped(function() {
 			n += 10;
 		}, "__tests__/template.marko_0/onClick", $scope0_id),
 		id: "inline"

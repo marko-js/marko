@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	my_select_default({
 		value,
-		valueChange: _resume(function(v) {
+		valueChange: _resume_scoped(function(v) {
 			value = v;
 		}, "a0", $scope0_id),
 		content: _content("a1", () => {

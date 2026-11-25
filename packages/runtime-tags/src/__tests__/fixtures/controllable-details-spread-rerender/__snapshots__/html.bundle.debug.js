@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let n = 0;
 	const attrs = {
 		open,
-		openChange: _resume(function(next) {
+		openChange: _resume_scoped(function(next) {
 			open = next;
 		}, "__tests__/template.marko_0/attrs", $scope0_id),
 		"data-n": n

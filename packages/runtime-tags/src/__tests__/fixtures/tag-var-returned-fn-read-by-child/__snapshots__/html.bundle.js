@@ -2,7 +2,7 @@
 var make_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const get = _resume(() => input.v, "b0", $scope0_id);
+	const get = _resume_scoped(() => input.v, "b0", $scope0_id);
 	_html(`<p></p>${_el_mark($scope0_id, "a")}`);
 	const $return = get;
 	_script($scope0_id, "b1");

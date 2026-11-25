@@ -2,7 +2,7 @@
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $return = _resume(() => input.value, "__tests__/tags/child.marko_0/_return", $scope0_id);
+	const $return = _resume_scoped(() => input.value, "__tests__/tags/child.marko_0/_return", $scope0_id);
 	_scope($scope0_id, { input_value: input.value }, "__tests__/tags/child.marko", 0, { input_value: ["input.value"] });
 	return $return;
 });

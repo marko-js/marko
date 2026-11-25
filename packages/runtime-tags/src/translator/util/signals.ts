@@ -30,6 +30,7 @@ import {
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputHTML } from "./marko-config";
+import { buildRegistration } from "./module-registrations";
 import { every, forEach, type Opt, push, reduce, some } from "./optional";
 import { getReadReplacement } from "./read-replacement";
 import {
@@ -58,7 +59,6 @@ import {
   callDebugRuntime,
   callRuntime,
   importRuntime,
-  registerRuntimeValue,
   trimFalsyArgs,
 } from "./runtime";
 import {
@@ -1354,11 +1354,7 @@ export function writeRegisteredFns() {
   }
 
   for (const { extra } of registeredFns) {
-    statements.push(
-      t.expressionStatement(
-        registerRuntimeValue(extra.registryId, t.identifier(extra.name)),
-      ),
-    );
+    statements.push(buildRegistration(extra.name, extra.registryId));
   }
 
   getProgram().node.body.push(...statements);
@@ -1923,8 +1919,30 @@ function registerFnExpression(node: t.Function) {
     const id = extra.name;
     const referencesScope = extra.referencesScope;
     const referencedLocals = extra.referencedLocalBindingsInFunction;
-    getRegisteredFns().push({ node, extra });
+    if (isOutputHTML() && (referencesScope || referencedLocals)) {
+      // Reading this render's scope or locals, it registers where it is created.
+      const fn = simplifyFunction(node) as
+        | t.FunctionExpression
+        | t.ArrowFunctionExpression;
+      const registryId = t.stringLiteral(extra.registryId);
+      const scopeId = referencesScope && getScopeIdIdentifier(extra.section);
+      if (!referencedLocals) {
+        return callRuntime("_resume_scoped", fn, registryId, scopeId);
+      }
+      // Locals only exist while this render runs, so they're written into a
+      // dedicated scope the client reads them back out of on resume.
+      const properties: t.ObjectExpression["properties"] = [];
+      forEach(referencedLocals, pushLocalProperty, properties);
+      return callRuntime(
+        "_resume_locals",
+        fn,
+        registryId,
+        t.objectExpression(properties),
+        scopeId,
+      );
+    }
 
+    getRegisteredFns().push({ node, extra });
     if (referencedLocals) {
       // The argument mirrors the locals scope `_resume_locals` serializes.
       const properties: t.ObjectExpression["properties"] = [];

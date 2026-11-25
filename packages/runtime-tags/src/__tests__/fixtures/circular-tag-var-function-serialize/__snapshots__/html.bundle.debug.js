@@ -11,12 +11,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let value = 0;
-	const setter = _resume(function() {
+	const setter = _resume_scoped(function() {
 		value = 1;
 	}, "__tests__/template.marko_0/setter", $scope0_id);
 	if (true) {
 		const $scope1_id = _scope_id();
-		child_default({ valueChange: _resume(function() {
+		child_default({ valueChange: _resume_scoped(function() {
 			setter();
 		}, "__tests__/template.marko_1/valueChange", $scope1_id) });
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");

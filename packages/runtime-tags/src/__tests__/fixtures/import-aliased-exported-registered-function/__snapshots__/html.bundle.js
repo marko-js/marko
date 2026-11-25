@@ -11,8 +11,8 @@ var greeting_default = _template("b", (input) => {
 });
 
 // template.marko
-_resume(shout, "b1");
-_resume(whisper, "b0");
+_resume("b1", shout);
+_resume("b0", whisper);
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

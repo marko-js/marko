@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	const attrs = { onClick: _resume(function() {
+	const attrs = { onClick: _resume_scoped(function() {
 		n = 1;
 	}, "__tests__/template.marko_0/attrs", $scope0_id) };
 	_html("<svg width=20 height=20>");

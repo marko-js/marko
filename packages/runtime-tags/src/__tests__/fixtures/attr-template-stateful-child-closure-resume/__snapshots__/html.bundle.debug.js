@@ -24,12 +24,14 @@ var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 });
 
 // template.marko
+function $getChild() {
+	return child_default;
+}
+_resume("__tests__/template.marko_0/getChild", $getChild);
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const getChild = _resume(function() {
-		return child_default;
-	}, "__tests__/template.marko_0/getChild");
+	const getChild = $getChild;
 	wrapper_default({ type: child_default });
 	_if(() => {
 		if (input.show) {

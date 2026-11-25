@@ -21,7 +21,7 @@ var press_default = _template("c", (input) => {
 });
 
 // template.marko
-_resume(shout, "b0");
+_resume("b0", shout);
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	_scope_id();

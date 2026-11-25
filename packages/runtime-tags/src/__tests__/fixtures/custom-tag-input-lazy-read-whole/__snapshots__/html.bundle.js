@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 	const $count__closures = /* @__PURE__ */ new Set();
 	let count = 0;
 	spread_attr_tag_default({ button: attrTag({
-		onClick: _resume(function() {
+		onClick: _resume_scoped(function() {
 			count++;
 		}, "a0", $scope0_id),
 		content: _content("a4", () => {
@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 		}, $scope0_id)
 	}) });
 	spread_input_default({
-		onClick: _resume(function() {
+		onClick: _resume_scoped(function() {
 			count--;
 		}, "a1", $scope0_id),
 		content: _content("a6", () => {
@@ -60,7 +60,7 @@ var template_default = _template("a", (input) => {
 			}), "a5");
 		}, $scope0_id)
 	});
-	run_menu_default({ menu: attrTag({ item: attrTag({ run: _resume(function() {
+	run_menu_default({ menu: attrTag({ item: attrTag({ run: _resume_scoped(function() {
 		count += 10;
 	}, "a2", $scope0_id) }) }) });
 	_scope($scope0_id, {

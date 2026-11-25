@@ -12,7 +12,6 @@ import { getMarkoOpts } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { first, forEach } from "../../util/optional";
 import { getReadReplacement } from "../../util/read-replacement";
-import { isRegisteredFnExtra } from "../../util/references";
 import { callRuntime, importRuntime } from "../../util/runtime";
 import {
   forEachSection,
@@ -26,11 +25,11 @@ import {
   getBindingGetterIdentifier,
   getHTMLSectionStatements,
   getResumeRegistryId,
-  pushLocalProperty,
+  replaceRegisteredFunctionNode,
   writeHTMLResumeStatements,
+  writeRegisteredFns,
   writeSlot,
 } from "../../util/signals";
-import { replaceMethodNode, simplifyFunction } from "../../util/simplify-fn";
 import { findSectionSlot, SlotKind } from "../../util/slots";
 import { traverseReplace } from "../../util/traverse";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -126,7 +125,6 @@ export default {
       }
 
       writeHTMLResumeStatements(program);
-      traverseReplace(program.node, "body", replaceNode);
       const statics: t.Statement[] = [];
       const renderContent: t.Statement[] = [
         getScopeReasonStatement(getSection(program)),
@@ -150,6 +148,8 @@ export default {
         [t.identifier("input")],
         t.blockStatement(renderContent),
       );
+      traverseReplace(contentFn.body, "body", replaceNode);
+      writeRegisteredFns();
       const exportDefault = t.exportDefaultDeclaration(
         callRuntime(
           "_template",
@@ -211,75 +211,5 @@ function replaceBindingReadNode(node: t.Node) {
       }
       break;
     }
-  }
-}
-
-function replaceRegisteredFunctionNode(node: t.Node) {
-  switch (node.type) {
-    case "ClassMethod":
-    case "ClassPrivateMethod":
-    case "ObjectMethod": {
-      const replacement = buildResumeCall(node);
-      return replacement && replaceMethodNode(node, replacement);
-    }
-    case "ArrowFunctionExpression":
-    case "FunctionExpression":
-      return buildResumeCall(node);
-    case "BlockStatement":
-    case "MarkoScriptlet":
-      registerFunctionDeclarations(node.body);
-      break;
-  }
-}
-
-function registerFunctionDeclarations(body: t.Statement[]) {
-  const len = body.length;
-  for (let i = 0; i < len; i++) {
-    const child = body[i];
-    if (
-      child.type === "FunctionDeclaration" &&
-      isRegisteredFnExtra(child.extra)
-    ) {
-      body.push(
-        t.expressionStatement(
-          callRuntime(
-            "_resume",
-            t.identifier(child.id!.name!),
-            t.stringLiteral(child.extra!.registryId),
-          ),
-        ),
-      );
-    }
-  }
-}
-
-function buildResumeCall(node: Exclude<t.Function, t.FunctionDeclaration>) {
-  const { extra } = node;
-  if (isRegisteredFnExtra(extra)) {
-    const referencedLocals = extra.referencedLocalBindingsInFunction;
-    if (referencedLocals) {
-      // Locals only exist while this render runs, so they're written into a
-      // dedicated scope the client reads them back out of on resume.
-      const localProperties: t.ObjectExpression["properties"] = [];
-      forEach(referencedLocals, pushLocalProperty, localProperties);
-      return callRuntime(
-        "_resume_locals",
-        simplifyFunction(node) as
-          | t.FunctionExpression
-          | t.ArrowFunctionExpression,
-        t.stringLiteral(extra.registryId),
-        t.objectExpression(localProperties),
-        extra.referencesScope && getScopeIdIdentifier(extra.section),
-      );
-    }
-
-    return callRuntime(
-      "_resume",
-      simplifyFunction(node) as
-        | t.FunctionExpression
-        | t.ArrowFunctionExpression,
-      t.stringLiteral(extra.registryId),
-      extra.referencesScope && getScopeIdIdentifier(extra.section),
-    );
   }
 }

@@ -19,8 +19,8 @@ var chain_a_default = _template("__tests__/tags/chain-a.marko", (input) => {
 });
 
 // template.marko
-_resume(bFn, "__tests__/tags/chain-b.marko_0/export/bFn");
-_resume(aFn, "__tests__/tags/chain-a.marko_0/export/aFn");
+_resume("__tests__/tags/chain-b.marko_0/export/bFn", bFn);
+_resume("__tests__/tags/chain-a.marko_0/export/aFn", aFn);
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

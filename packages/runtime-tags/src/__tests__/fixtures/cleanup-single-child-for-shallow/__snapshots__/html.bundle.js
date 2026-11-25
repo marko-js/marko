@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 		2,
 		3
 	];
-	const write = _resume(function(msg) {
+	const write = _resume_scoped(function(msg) {
 		((el) => el())(_el_read_error).innerHTML += "\n" + msg;
 	}, "a0", $scope0_id);
 	_html(`<button>Toggle</button>${_el_mark($scope0_id, "a")}<div></div>${_el_mark($scope0_id, "b")}`);

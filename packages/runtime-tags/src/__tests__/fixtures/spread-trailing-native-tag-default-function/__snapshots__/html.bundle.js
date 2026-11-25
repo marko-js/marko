@@ -1,13 +1,15 @@
 // template.marko
+function $onClick(_, el) {
+	el.textContent = "clicked";
+}
+_resume("a0", $onClick);
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const { onClick, ...rest } = input;
 	_html("<button");
 	_attrs_content({
-		onClick: _resume(function(_, el) {
-			el.textContent = "clicked";
-		}, "a0"),
+		onClick: $onClick,
 		...rest
 	}, "a", $scope0_id, "button");
 	_html(`</button>${_el_mark($scope0_id, "a")}`);

@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let value = "";
 	const placeholder = { value: "" };
-	_attr_select_value($scope0_id, "#select/0", value, _resume(function(v) {
+	_attr_select_value($scope0_id, "#select/0", value, _resume_scoped(function(v) {
 		value = v;
 	}, "__tests__/template.marko_0/valueChange", $scope0_id), () => {
 		_html(`<select><option${_attrs(placeholder, "#option/1", $scope0_id, "option")}>-- choose --</option>${_el_mark($scope0_id, "#option/1")}<option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option></select>`);

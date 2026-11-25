@@ -5,7 +5,7 @@ var g_default = _template("__tests__/tags/g.marko", (input) => {
 	const $global$1 = $global();
 	let value = 0;
 	const $return = value;
-	_scope($scope0_id, { "#TagVariableChange": _resume(function(next) {
+	_scope($scope0_id, { "#TagVariableChange": _resume_scoped(function(next) {
 		$global$1.store = next;
 	}, "__tests__/tags/g.marko_0/valueChange", $scope0_id) || void 0 }, "__tests__/tags/g.marko", 0);
 	return $return;

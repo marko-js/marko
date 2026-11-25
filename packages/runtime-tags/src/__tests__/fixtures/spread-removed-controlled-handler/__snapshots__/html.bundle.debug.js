@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let value = "init";
 	let attrs = {
 		value,
-		valueChange: _resume(function(next) {
+		valueChange: _resume_scoped(function(next) {
 			value = next;
 		}, "__tests__/template.marko_0/attrs", $scope0_id)
 	};

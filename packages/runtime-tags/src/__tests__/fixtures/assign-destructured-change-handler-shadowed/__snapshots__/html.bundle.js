@@ -5,7 +5,7 @@ var child_default = _template("b", (input) => {
 	let value = "v";
 	return {
 		value,
-		valueChange: _resume(function(next) {
+		valueChange: _resume_scoped(function(next) {
 			value = next;
 		}, "b0", $scope0_id)
 	};

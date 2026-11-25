@@ -7,10 +7,10 @@ var template_default = _template("a", (input) => {
 	const key = "v";
 	const state = {
 		v,
-		vChange: _resume(function(x) {
+		vChange: _resume_scoped(function(x) {
 			v = x;
 		}, "a0", $scope0_id),
-		keyChange: _resume(function(x) {
+		keyChange: _resume_scoped(function(x) {
 			wrong = x;
 		}, "a1", $scope0_id)
 	};

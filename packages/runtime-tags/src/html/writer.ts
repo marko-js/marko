@@ -28,7 +28,7 @@ import {
   K_SCOPE_ID,
   type Locals,
   queueCall,
-  register as serializerRegister,
+  registerScoped,
   dropQueuedCall,
   hasMatchingCalls,
   pendingReadyChannel,
@@ -253,16 +253,20 @@ export function _trailers(html: string) {
   $chunk.boundary.state.trailerHTML += html;
 }
 
-export function _resume<T extends WeakKey>(
+// A value bound to a scope registers for this render alone; one bound to no scope
+// (a template, even one first loaded mid-render) for every render, via `register`.
+export function _resume_scoped<T extends WeakKey>(
   val: T,
   id: string,
-  scopeId?: number,
+  scopeId: number,
   locals?: Locals,
 ): T {
-  return serializerRegister(
+  const { state } = $chunk.boundary;
+  return registerScoped(
+    state.serializer,
     id,
     val,
-    scopeId === undefined ? undefined : _scope_with_id(scopeId),
+    scopeWithId(state, scopeId),
     locals,
   );
 }
@@ -278,17 +282,22 @@ export function _resume_locals<T extends WeakKey>(
   if (ownerScopeId !== undefined) {
     locals[AccessorProp.Owner] = _scope_with_id(ownerScopeId);
   }
-  return serializerRegister(id, val, writeScope(_scope_id(), locals));
+  return registerScoped(
+    $chunk.boundary.state.serializer,
+    id,
+    val,
+    writeScope(_scope_id(), locals),
+  );
 }
 
 export function _el(scopeId: number, id: string) {
-  return _resume(() => _el_read_error(), id, scopeId);
+  return _resume_scoped(() => _el_read_error(), id, scopeId);
 }
 
 export function _hoist(scopeId: number, id: string) {
   const getter = () => _hoist_read_error();
   getter[Symbol.iterator] = _hoist_read_error;
-  return _resume(getter, id, scopeId);
+  return _resume_scoped(getter, id, scopeId);
 }
 
 export function _el_mark(
@@ -420,7 +429,7 @@ export function _var(
   writeScopePassive(parentScopeId, { [scopeOffsetAccessor]: _scope_id() });
   // TODO: if the return value is already registered, use that.
   const childScope = writeScopePassive(childScopeId, {
-    [AccessorProp.TagVariable]: _resume({}, registryId, parentScopeId),
+    [AccessorProp.TagVariable]: _resume_scoped({}, registryId, parentScopeId),
   });
   if (nodeAccessor !== undefined) {
     writeScope(parentScopeId, {

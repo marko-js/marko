@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
-			child_default({ write: _resume(function(state) {
+			child_default({ write: _resume_scoped(function(state) {
 				((el) => el())(_el_read_error).innerHTML = state;
 			}, "__tests__/template.marko_1/write", $scope1_id) });
 			_scope($scope1_id, {}, "__tests__/template.marko", "6:2");

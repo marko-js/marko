@@ -11,12 +11,12 @@ import {
 } from "../common/types";
 import * as Mark from "./constants/mark";
 import { forInBy, forOfBy, forStepBy } from "./for";
+import { register } from "./serializer";
 import type { ServerRenderer } from "./template";
 import {
   $chunk,
   _el_mark,
   _peek_scope_id,
-  _resume,
   _scope as writeScope,
   _scope_id,
   _scope_with_id,
@@ -567,8 +567,8 @@ export function _try(
   const renderers = (): void =>
     writeTryRenderers(
       branchId,
-      catchContent && _resume(catchContent, catchId!),
-      placeholderContent && _resume(placeholderContent, placeholderId!),
+      catchContent && register(catchId!, catchContent),
+      placeholderContent && register(placeholderId!, placeholderContent),
     );
   // Whether `tryBoundary` writes the renderers itself once the body settles,
   // or not at all once its `@catch` rendered.

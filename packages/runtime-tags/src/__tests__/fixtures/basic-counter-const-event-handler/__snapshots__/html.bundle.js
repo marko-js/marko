@@ -3,7 +3,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let clickCount = 0;
-	const increment = _resume(function() {
+	const increment = _resume_scoped(function() {
 		clickCount++;
 	}, "a0", $scope0_id);
 	_html(`<button>${_text_mark($scope0_id, "b", clickCount)}</button>${_el_mark($scope0_id, "a")}`);

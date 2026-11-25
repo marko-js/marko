@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $childScope = _peek_scope_id();
 		dismiss_button_default({
 			label: item,
-			onDismiss: _resume(function() {
+			onDismiss: _resume_scoped(function() {
 				document.getElementById("log").textContent = i;
 			}, "__tests__/template.marko_1/onDismiss", $scope1_id)
 		});

@@ -2,7 +2,7 @@
 var child_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $return = _resume(() => input.value, "b0", $scope0_id);
+	const $return = _resume_scoped(() => input.value, "b0", $scope0_id);
 	_scope($scope0_id, { c: input.value });
 	return $return;
 });

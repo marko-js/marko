@@ -5,7 +5,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 	let count = 1;
 	const $return = {
 		count,
-		inc: _resume(function() {
+		inc: _resume_scoped(function() {
 			count++;
 		}, "__tests__/tags/child/index.marko_0/_return", $scope0_id)
 	};

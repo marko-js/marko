@@ -10,10 +10,10 @@ var child_default = _template("b", (input) => {
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const setter = _resume(function() {}, "a0", $scope0_id);
+	const setter = _resume_scoped(function() {}, "a0", $scope0_id);
 	{
 		const $scope1_id = _scope_id();
-		child_default({ valueChange: _resume(function() {
+		child_default({ valueChange: _resume_scoped(function() {
 			setter();
 		}, "a1", $scope1_id) });
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });

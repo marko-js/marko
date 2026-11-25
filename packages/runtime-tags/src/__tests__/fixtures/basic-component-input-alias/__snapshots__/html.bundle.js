@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	my_button_default({
 		text: clickCount,
-		onClick: _resume(function() {
+		onClick: _resume_scoped(function() {
 			clickCount++;
 		}, "a0", $scope0_id)
 	});

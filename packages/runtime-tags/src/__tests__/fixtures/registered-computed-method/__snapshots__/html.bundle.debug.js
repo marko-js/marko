@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	const handlers = { [key]: _resume(function() {
+	const handlers = { [key]: _resume_scoped(function() {
 		n++;
 	}, "__tests__/template.marko_0/handlers", $scope0_id) };
 	_html(`<button>b</button>${_el_mark($scope0_id, "#button/0")}<div>${_text_mark($scope0_id, "#text/1", n)}</div>`);

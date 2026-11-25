@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_dynamic_tag($scope0_id, "a", _marko_template, { onCount: _resume(function(newCount) {
+	_dynamic_tag($scope0_id, "a", _marko_template, { onCount: _resume_scoped(function(newCount) {
 		count = newCount;
 	}, "a0", $scope0_id) }, 0, 0, 0);
 	_html(`<div id=tags-api>${_text_mark($scope0_id, "b", count)}</div>`);

@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let msg = "hello";
-	_dynamic_tag($scope0_id, "#text/0", _marko_template, { onClick: _resume(function() {
+	_dynamic_tag($scope0_id, "#text/0", _marko_template, { onClick: _resume_scoped(function() {
 		msg = "";
 	}, "__tests__/template.marko_0/onClick", $scope0_id) }, _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();

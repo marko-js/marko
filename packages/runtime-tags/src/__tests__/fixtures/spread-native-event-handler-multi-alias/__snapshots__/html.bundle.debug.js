@@ -1,4 +1,12 @@
 // template.marko
+function $onClick() {
+	document.getElementById("el").textContent += "[onClick(parent)]";
+}
+function $onclick() {
+	throw new Error("Should never be called.");
+}
+_resume("__tests__/template.marko_0/onClick", $onClick);
+_resume("__tests__/template.marko_0/onclick", $onclick);
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
@@ -17,12 +25,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 	}, $scope0_id) };
 	MyButton.content({
-		"on-click": _resume(function() {
-			throw new Error("Should never be called.");
-		}, "__tests__/template.marko_0/onclick"),
-		onClick: _resume(function() {
-			document.getElementById("el").textContent += "[onClick(parent)]";
-		}, "__tests__/template.marko_0/onClick"),
+		"on-click": $onclick,
+		onClick: $onClick,
 		content: _content("__tests__/template.marko_2*content", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();

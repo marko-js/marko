@@ -5,7 +5,7 @@ var a_default = _template("__tests__/tags/a.marko", (input) => {
 	let value = 1;
 	const $return = {
 		value,
-		valueChange: _resume(function(v) {
+		valueChange: _resume_scoped(function(v) {
 			value = v;
 		}, "__tests__/tags/a.marko_0/_return", $scope0_id)
 	};
@@ -21,7 +21,7 @@ var b_default = _template("__tests__/tags/b.marko", (input) => {
 	let value = 10;
 	const $return = {
 		value,
-		valueChange: _resume(function(v) {
+		valueChange: _resume_scoped(function(v) {
 			value = v;
 		}, "__tests__/tags/b.marko_0/_return", $scope0_id)
 	};

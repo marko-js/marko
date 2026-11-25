@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	Wrap.content({
 		as: "div",
-		onClick: _resume(function() {
+		onClick: _resume_scoped(function() {
 			console.log(x++);
 		}, "__tests__/template.marko_0/onClick", $scope0_id),
 		content: _content_resume("__tests__/template.marko_3*content", () => {

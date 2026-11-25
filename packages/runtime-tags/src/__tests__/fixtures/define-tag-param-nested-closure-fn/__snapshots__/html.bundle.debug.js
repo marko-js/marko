@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $f2__closures = new Set();
 	const $input_a__closures = new Set();
-	const f = _resume(function() {
+	const f = _resume_scoped(function() {
 		return input.a;
 	}, "__tests__/template.marko_0/f", $scope0_id);
 	const E = { content: _content("__tests__/template.marko_2*content", ({ show }) => {

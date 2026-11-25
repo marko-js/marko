@@ -6,11 +6,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let b = "b1";
 	const state = {
 		a,
-		aChange: _resume(function(v) {
+		aChange: _resume_scoped(function(v) {
 			a = v;
 		}, "__tests__/template.marko_0/state", $scope0_id),
 		b,
-		bChange: _resume(function(v) {
+		bChange: _resume_scoped(function(v) {
 			b = v;
 		}, "__tests__/template.marko_0/state2", $scope0_id)
 	};

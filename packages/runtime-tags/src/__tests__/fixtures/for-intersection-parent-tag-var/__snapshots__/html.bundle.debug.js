@@ -5,7 +5,7 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 	let n = 0;
 	const $return = {
 		n,
-		inc: _resume(function() {
+		inc: _resume_scoped(function() {
 			n++;
 		}, "__tests__/tags/counter.marko_0/_return", $scope0_id)
 	};

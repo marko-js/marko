@@ -5,15 +5,15 @@ var template_default = _template("a", (input) => {
 	let foo = void 0;
 	const a = {
 		foo,
-		bar: _resume(() => void 0, "a0", $scope0_id)
+		bar: _resume_scoped(() => void 0, "a0", $scope0_id)
 	};
 	const b = {
 		foo,
-		baz: _resume(() => void 0, "a1", $scope0_id)
+		baz: _resume_scoped(() => void 0, "a1", $scope0_id)
 	};
 	const c = {
 		foo: void 0,
-		baz: _resume(() => void 0, "a2", $scope0_id)
+		baz: _resume_scoped(() => void 0, "a2", $scope0_id)
 	};
 	_html(`<div></div>${_el_mark($scope0_id, "a")}<div></div>${_el_mark($scope0_id, "b")}<div></div>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a3");

@@ -5,7 +5,8 @@ import {
   type Template,
   type TemplateInput,
 } from "../common/types";
-import { _content_resume } from "./dynamic-tag";
+import { _content } from "./dynamic-tag";
+import { register } from "./serializer";
 import {
   Boundary,
   Chunk,
@@ -45,7 +46,10 @@ export const _template = (
     };
   }
 
-  return _content_resume(templateId, renderer) as unknown as Template;
+  return register(
+    templateId,
+    _content(templateId, renderer),
+  ) as unknown as Template;
 };
 
 function render(this: Template & ServerRenderer, input: TemplateInput = {}) {

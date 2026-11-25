@@ -11,7 +11,7 @@ var source_default = _template("__tests__/tags/source.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<div></div>${_el_mark($scope0_id, "#div/0")}`);
-	const $return = _resume(() => ({
+	const $return = _resume_scoped(() => ({
 		setHtml(value) {
 			((el) => el())(_el_read_error).innerHTML = value;
 		},
@@ -27,7 +27,7 @@ var source_default = _template("__tests__/tags/source.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	child_default({ action: _resume(function() {
+	child_default({ action: _resume_scoped(function() {
 		((api) => api())(_hoist_read_error).addClass("child");
 	}, "__tests__/template.marko_0/action", $scope0_id) });
 	let api = source_default({});
