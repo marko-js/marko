@@ -26,8 +26,8 @@ var barrel_default = _template("__tests__/tags/barrel.marko", (input) => {
 });
 
 // template.marko
-_resume(beta, "__tests__/tags/handlers.marko_0/export/beta");
-_resume(gamma, "__tests__/tags/extras.marko_0/export/gamma");
+_resume("__tests__/tags/handlers.marko_0/export/beta", beta);
+_resume("__tests__/tags/extras.marko_0/export/gamma", gamma);
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

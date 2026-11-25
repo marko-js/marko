@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	my_select_default({
 		value,
-		valueChange: _resume(function(v) {
+		valueChange: _resume_scoped(function(v) {
 			value = v;
 		}, "__tests__/template.marko_0/valueChange", $scope0_id),
 		content: _content("__tests__/template.marko_1*content", () => {

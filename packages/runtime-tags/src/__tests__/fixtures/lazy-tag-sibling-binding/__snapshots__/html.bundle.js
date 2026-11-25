@@ -37,13 +37,13 @@ var template_default = _template("c", (input) => {
 	_html(`<button class=main>main:${_text_mark($scope0_id, "b", count, 2)}</button>${_el_mark($scope0_id, "a")}`);
 	$ChildS_withLoadAssets({
 		holder: shared,
-		isShared: _resume(function(o) {
+		isShared: _resume_scoped(function(o) {
 			return o === shared;
 		}, "c0", $scope0_id)
 	});
 	$ChildB_withLoadAssets({
 		inner: shared.inner,
-		isInner: _resume(function(o) {
+		isInner: _resume_scoped(function(o) {
 			return o === Object.values(shared)[0];
 		}, "c1", $scope0_id)
 	});

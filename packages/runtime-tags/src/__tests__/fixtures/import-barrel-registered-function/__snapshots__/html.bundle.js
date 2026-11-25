@@ -23,8 +23,8 @@ var barrel_default = _template("b", (input) => {
 });
 
 // template.marko
-_resume(beta, "d1");
-_resume(gamma, "c0");
+_resume("d1", beta);
+_resume("c0", gamma);
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

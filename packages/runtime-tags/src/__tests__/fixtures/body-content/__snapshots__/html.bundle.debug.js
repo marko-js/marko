@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let clickCount = 0;
 	const $childScope = _peek_scope_id();
 	FancyButton_default({
-		onClick: _resume(function() {
+		onClick: _resume_scoped(function() {
 			clickCount++;
 		}, "__tests__/template.marko_0/onClick", $scope0_id),
 		content: _content("__tests__/template.marko_1*content", () => {

@@ -49,7 +49,7 @@ export default {
               ),
             ]
           : [];
-      } else if (!isHTML) {
+      } else {
         traverseReplace(node, "body", replaceRegisteredFunctionNode);
       }
 

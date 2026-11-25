@@ -17,12 +17,14 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 
 // template.marko
 s("b", _marko_template, "preserve");
+function $onClick() {
+	document.getElementById("display").innerHTML = "Hi!";
+}
+_resume("a0", $onClick);
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "a", _marko_template, { onClick: _resume(function() {
-		document.getElementById("display").innerHTML = "Hi!";
-	}, "a0") }, _content_resume("a1", () => {
+	_dynamic_tag($scope0_id, "a", _marko_template, { onClick: $onClick }, _content_resume("a1", () => {
 		_scope_id();
 		_scope_reason();
 		_html("Say Hi");

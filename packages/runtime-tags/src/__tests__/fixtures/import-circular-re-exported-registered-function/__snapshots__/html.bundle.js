@@ -19,8 +19,8 @@ var chain_a_default = _template("b", (input) => {
 });
 
 // template.marko
-_resume(bFn, "c0");
-_resume(aFn, "b0");
+_resume("c0", bFn);
+_resume("b0", aFn);
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

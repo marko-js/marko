@@ -5,7 +5,7 @@ var a_default = _template("b", (input) => {
 	let value = 1;
 	const $return = {
 		value,
-		valueChange: _resume(function(v) {
+		valueChange: _resume_scoped(function(v) {
 			value = v;
 		}, "b0", $scope0_id)
 	};
@@ -21,7 +21,7 @@ var b_default = _template("c", (input) => {
 	let value = 10;
 	const $return = {
 		value,
-		valueChange: _resume(function(v) {
+		valueChange: _resume_scoped(function(v) {
 			value = v;
 		}, "c0", $scope0_id)
 	};

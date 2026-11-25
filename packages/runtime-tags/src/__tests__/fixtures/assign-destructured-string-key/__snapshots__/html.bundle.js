@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	let bar = 0;
 	const { "my-keyChange": $mykeyChange, "my-key": value } = {
 		"my-key": 1,
-		"my-keyChange": _resume(function(v) {
+		"my-keyChange": _resume_scoped(function(v) {
 			bar = v;
 		}, "a0", $scope0_id)
 	};

@@ -2,8 +2,9 @@
 function shout(message) {
 	return message.toUpperCase() + "!";
 }
-const whisper = _resume((message) => message.toLowerCase(), "__tests__/template.marko_0/export/whisper");
-_resume(shout, "__tests__/template.marko_0/export/shout");
+const whisper = (message) => message.toLowerCase();
+_resume("__tests__/template.marko_0/export/shout", shout);
+_resume("__tests__/template.marko_0/export/whisper", whisper);
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

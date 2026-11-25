@@ -6,11 +6,11 @@ var template_default = _template("a", (input) => {
 	let b = "b1";
 	const state = {
 		a,
-		aChange: _resume(function(v) {
+		aChange: _resume_scoped(function(v) {
 			a = v;
 		}, "a0", $scope0_id),
 		b,
-		bChange: _resume(function(v) {
+		bChange: _resume_scoped(function(v) {
 			b = v;
 		}, "a1", $scope0_id)
 	};

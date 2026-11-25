@@ -1,4 +1,6 @@
 // template.marko
+function $Fn() {}
+_resume("a0", $Fn);
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
@@ -10,7 +12,7 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "c", $Fn_getter, {}, 0, 0, 0);
 	const Param = input.show && input.renderer;
 	const Unknown = void 0;
-	const Fn = _resume(() => {}, "a0");
+	const Fn = $Fn;
 	_scope($scope0_id, {
 		f: _write_if($scope0_reason, 1) && input.show,
 		g: _write_if($scope0_reason, 0) && input.renderer,

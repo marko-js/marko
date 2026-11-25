@@ -5,7 +5,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	let value = "v";
 	const $return = {
 		value,
-		valueChange: _resume(function(next) {
+		valueChange: _resume_scoped(function(next) {
 			value = next;
 		}, "__tests__/tags/child.marko_0/_return", $scope0_id)
 	};

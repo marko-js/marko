@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const test = "foo";
 	my_button_default({
-		onClick: _resume(function() {
+		onClick: _resume_scoped(function() {
 			console.log(test);
 		}, "__tests__/template.marko_0/onClick", $scope0_id),
 		content: _content("__tests__/template.marko_1*content", () => {

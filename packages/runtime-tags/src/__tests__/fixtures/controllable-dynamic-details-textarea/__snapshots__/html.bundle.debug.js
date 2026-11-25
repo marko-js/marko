@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const textareaTag = "textarea";
 	_dynamic_tag($scope0_id, "#text/0", detailsTag, {
 		open,
-		openChange: _resume(function(next) {
+		openChange: _resume_scoped(function(next) {
 			open = next;
 		}, "__tests__/template.marko_0/openChange", $scope0_id)
 	}, _content("__tests__/template.marko_1*content", () => {
@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("<summary>toggle</summary>");
 		_dynamic_tag($scope1_id, "#text/0", textareaTag, {
 			value: text,
-			valueChange: _resume(function(next) {
+			valueChange: _resume_scoped(function(next) {
 				text = next;
 			}, "__tests__/template.marko_1/valueChange", $scope1_id)
 		});

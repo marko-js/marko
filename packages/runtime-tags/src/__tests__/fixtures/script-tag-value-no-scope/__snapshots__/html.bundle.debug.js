@@ -2,7 +2,7 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const setText = _resume(function(arg) {
+	const setText = _resume_scoped(function(arg) {
 		if (arg) {
 			throw new Error(`Expected no argument to be passed, but received "${typeof arg}".`);
 		}

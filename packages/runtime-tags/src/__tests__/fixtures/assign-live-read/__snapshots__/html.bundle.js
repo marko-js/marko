@@ -3,7 +3,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	const resetCount = _resume(function() {
+	const resetCount = _resume_scoped(function() {
 		if (count > 0) count = 0;
 	}, "a0", $scope0_id);
 	_html(`<button>${_text_mark($scope0_id, "b", count)}</button>${_el_mark($scope0_id, "a")}<button></button>${_el_mark($scope0_id, "c")}`);

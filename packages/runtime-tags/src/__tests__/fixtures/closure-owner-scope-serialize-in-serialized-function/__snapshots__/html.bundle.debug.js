@@ -1,13 +1,15 @@
 // template.marko
+function $text() {
+	return "HI";
+}
+_resume("__tests__/template.marko_0/text", $text);
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const text = _resume(function() {
-		return "HI";
-	}, "__tests__/template.marko_0/text");
+	const text = $text;
 	if (1) {
 		const $scope1_id = _scope_id();
-		const run = _resume(function() {
+		const run = _resume_scoped(function() {
 			((el) => el())(_el_read_error).innerHTML = text();
 		}, "__tests__/template.marko_1/run", $scope1_id);
 		_html(`<div></div>${_el_mark($scope1_id, "#div/0")}`);

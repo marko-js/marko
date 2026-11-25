@@ -2,7 +2,7 @@
 var make_default = _template("__tests__/tags/make.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const get = _resume(() => input.v, "__tests__/tags/make.marko_0/get", $scope0_id);
+	const get = _resume_scoped(() => input.v, "__tests__/tags/make.marko_0/get", $scope0_id);
 	_html(`<p></p>${_el_mark($scope0_id, "#p/0")}`);
 	const $return = get;
 	_script($scope0_id, "__tests__/tags/make.marko_0_get#4");

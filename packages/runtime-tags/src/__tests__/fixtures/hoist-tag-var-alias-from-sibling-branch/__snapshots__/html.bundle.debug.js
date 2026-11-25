@@ -1,4 +1,8 @@
 // template.marko
+function $getX() {
+	return 1;
+}
+_resume("__tests__/template.marko_2/getX", $getX);
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 2), $wg__input_a = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
@@ -6,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.a) {
 			const $scope2_id = _scope_id();
-			const getX = _resume(() => 1, "__tests__/template.marko_2/getX");
+			const getX = $getX;
 			_scope($scope2_id, { getX }, "__tests__/template.marko", "1:2", { getX: "2:10" });
 			_assert_hoist(getX);
 			return 0;

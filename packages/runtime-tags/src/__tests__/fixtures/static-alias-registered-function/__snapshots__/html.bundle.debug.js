@@ -1,9 +1,10 @@
 // template.marko
-function base(message) {
+const base = $base;
+const alias = base;
+function $base(message) {
 	return message.toUpperCase() + "!";
 }
-_resume(base, "__tests__/template.marko_0/base");
-const alias = base;
+_resume("__tests__/template.marko_0/base", $base);
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

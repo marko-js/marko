@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();
 	child_default({ item: attrTags(attrTag({
-		onClick: _resume(function() {
+		onClick: _resume_scoped(function() {
 			count++;
 		}, "a0", $scope0_id),
 		content: _content("a2", () => {

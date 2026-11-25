@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	let log = "";
 	_html(`<button class=inc>inc</button>${_el_mark($scope0_id, "a")}`);
-	press_button_default({ onPress: _resume(function() {
+	press_button_default({ onPress: _resume_scoped(function() {
 		log = `${log}[${count}]`;
 	}, "a0", $scope0_id) });
 	_html(`<div class=log>${_text_mark($scope0_id, "c", log)}</div>`);

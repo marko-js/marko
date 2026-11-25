@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	child_default({
 		tag: "button",
 		button: attrTag({
-			onClick: _resume(function() {
+			onClick: _resume_scoped(function() {
 				count++;
 			}, "__tests__/template.marko_0/onClick", $scope0_id),
 			content: _content("__tests__/template.marko_1*content", () => {

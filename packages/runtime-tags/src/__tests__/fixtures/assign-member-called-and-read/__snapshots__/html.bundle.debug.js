@@ -1,12 +1,13 @@
 // template.marko
-function initial(_n) {}
-_resume(initial, "__tests__/template.marko_0/initial");
+const initial = $initial;
+function $initial(_n) {}
+_resume("__tests__/template.marko_0/initial", $initial);
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const box = { reveal: initial };
 	let out = "none";
-	const show = _resume((n) => {
+	const show = _resume_scoped((n) => {
 		box.reveal(n);
 	}, "__tests__/template.marko_0/show", $scope0_id);
 	_html(`<button class=go>go</button>${_el_mark($scope0_id, "#button/0")}<button class=check>check</button>${_el_mark($scope0_id, "#button/1")}<span>${_text_mark($scope0_id, "#text/2", out)}</span>`);

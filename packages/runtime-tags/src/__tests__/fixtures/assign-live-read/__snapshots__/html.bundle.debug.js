@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	const resetCount = _resume(function() {
+	const resetCount = _resume_scoped(function() {
 		if (count > 0) {
 			count = 0;
 		}

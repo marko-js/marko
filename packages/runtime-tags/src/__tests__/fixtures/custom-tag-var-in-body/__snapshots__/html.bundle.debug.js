@@ -4,7 +4,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, _write_guard($scope0_reason, 0));
 	_html(`<div></div>${_el_mark($scope0_id, "#div/1")}`);
-	const $return = _resume(() => (html) => ((el) => el())(_el_read_error).innerHTML = html, "__tests__/tags/child.marko_0/_return", $scope0_id);
+	const $return = _resume_scoped(() => (html) => ((el) => el())(_el_read_error).innerHTML = html, "__tests__/tags/child.marko_0/_return", $scope0_id);
 	_scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 	return $return;
 });

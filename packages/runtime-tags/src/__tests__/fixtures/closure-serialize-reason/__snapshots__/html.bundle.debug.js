@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let x = 0;
-	const getMessage = _resume(() => input.message, "__tests__/template.marko_0/getMessage", $scope0_id);
+	const getMessage = _resume_scoped(() => input.message, "__tests__/template.marko_0/getMessage", $scope0_id);
 	_html("<div>");
 	_if(() => {
 		if (x) {

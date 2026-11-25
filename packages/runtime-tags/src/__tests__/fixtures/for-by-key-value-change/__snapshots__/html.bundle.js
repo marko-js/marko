@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 		_scope($scope1_id, {
 			M: item?.id,
 			d: count,
-			e: _resume(function(next) {
+			e: _resume_scoped(function(next) {
 				document.getElementById("log").textContent = item.id + next;
 			}, "a0", $scope1_id) || void 0
 		});

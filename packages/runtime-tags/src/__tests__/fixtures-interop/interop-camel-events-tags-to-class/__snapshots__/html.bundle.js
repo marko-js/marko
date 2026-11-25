@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 	let received = "none";
 	_dynamic_tag($scope0_id, "a", _marko_template, {
 		onLabel: "the-label",
-		onValueChanged: _resume(function(value) {
+		onValueChanged: _resume_scoped(function(value) {
 			received = value;
 		}, "a0", $scope0_id)
 	}, 0, 0, 0);

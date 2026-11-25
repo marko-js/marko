@@ -5,7 +5,7 @@ var grandchild_default = _template("__tests__/tags/grandchild.marko", (input) =>
 	let n = 0;
 	const $return = {
 		n,
-		set: _resume(function(value) {
+		set: _resume_scoped(function(value) {
 			n = value;
 		}, "__tests__/tags/grandchild.marko_0/_return", $scope0_id)
 	};

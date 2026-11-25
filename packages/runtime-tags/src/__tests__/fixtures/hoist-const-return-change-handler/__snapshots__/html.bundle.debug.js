@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		let count = 0;
 		const $return = count;
-		const setCount = _resume((value) => {
+		const setCount = _resume_scoped((value) => {
 			count = value;
 		}, "__tests__/template.marko_1/setCount", $scope1_id);
 		_scope($scope1_id, {

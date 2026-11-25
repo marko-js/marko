@@ -51,6 +51,7 @@ export {
   _try,
 } from "./html/control-flow";
 export { _content, _content_resume, _dynamic_tag } from "./html/dynamic-tag";
+export { register as _resume } from "./html/serializer";
 export { forIn, forOf, forTo, forUntil } from "./common/for";
 export { _template } from "./html/template";
 export {
@@ -62,9 +63,9 @@ export {
   _html,
   _id,
   _peek_scope_id,
-  _resume,
   _resume_branch,
   _resume_locals,
+  _resume_scoped,
   _scope,
   _scope_id,
   _scope_reason,

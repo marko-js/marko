@@ -6,11 +6,11 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	let b = "b";
 	const $return = {
 		a,
-		aChange: _resume(function(next) {
+		aChange: _resume_scoped(function(next) {
 			a = next;
 		}, "__tests__/tags/child.marko_0/_return", $scope0_id),
 		b,
-		bChange: _resume(function(next) {
+		bChange: _resume_scoped(function(next) {
 			b = next;
 		}, "__tests__/tags/child.marko_0/_return2", $scope0_id)
 	};
@@ -107,25 +107,25 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope6 = _peek_scope_id();
 	First.content({
 		value: w,
-		valueChange: _resume((_new_w) => w = _new_w, "__tests__/template.marko_0/valueChange3", $scope0_id)
+		valueChange: _resume_scoped((_new_w) => w = _new_w, "__tests__/template.marko_0/valueChange3", $scope0_id)
 	});
 	_set_scope_reason(8);
 	const $childScope7 = _peek_scope_id();
 	Last.content({
 		value: x,
-		valueChange: _resume((_new_x) => x = _new_x, "__tests__/template.marko_0/valueChange4", $scope0_id)
+		valueChange: _resume_scoped((_new_x) => x = _new_x, "__tests__/template.marko_0/valueChange4", $scope0_id)
 	});
 	_set_scope_reason(2);
 	const $childScope8 = _peek_scope_id();
 	FirstRenamed.content({
 		value: y,
-		valueChange: _resume((_new_y) => y = _new_y, "__tests__/template.marko_0/valueChange5", $scope0_id)
+		valueChange: _resume_scoped((_new_y) => y = _new_y, "__tests__/template.marko_0/valueChange5", $scope0_id)
 	});
 	_set_scope_reason(8);
 	const $childScope9 = _peek_scope_id();
 	LastRenamed.content({
 		value: z,
-		valueChange: _resume((_new_z) => z = _new_z, "__tests__/template.marko_0/valueChange6", $scope0_id)
+		valueChange: _resume_scoped((_new_z) => z = _new_z, "__tests__/template.marko_0/valueChange6", $scope0_id)
 	});
 	_html(`<div>${_text_mark($scope0_id, "#text/30", w)} ${_text_mark($scope0_id, "#text/31", x, 2)} ${_text_mark($scope0_id, "#text/32", y, 2)} ${_text_mark($scope0_id, "#text/33", z, 2)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0_obj_aChange#47");

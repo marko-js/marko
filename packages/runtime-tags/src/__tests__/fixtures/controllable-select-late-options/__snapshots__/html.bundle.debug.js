@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let v = "b";
 	let calls = 0;
-	_attr_select_value($scope0_id, "#select/0", v, _resume(function(nv) {
+	_attr_select_value($scope0_id, "#select/0", v, _resume_scoped(function(nv) {
 		calls++;
 		v = nv;
 	}, "__tests__/template.marko_0/valueChange", $scope0_id), () => {

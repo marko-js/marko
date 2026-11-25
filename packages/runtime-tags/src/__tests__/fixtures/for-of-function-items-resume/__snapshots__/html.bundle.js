@@ -1,9 +1,17 @@
 // template.marko
+function $of2() {
+	return "b";
+}
+function $of() {
+	return "a";
+}
+_resume("a1", $of2);
+_resume("a0", $of);
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let last = "none";
-	forOf([_resume(() => "a", "a0"), _resume(() => "b", "a1")], (fn) => {
+	forOf([$of, $of2], (fn) => {
 		const $scope1_id = _scope_id();
 		_html(`<button>x</button>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "a2");

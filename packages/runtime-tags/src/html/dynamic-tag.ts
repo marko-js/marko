@@ -21,7 +21,7 @@ import {
   _existing_scope,
   _html,
   _peek_scope_id,
-  _resume,
+  _resume_scoped,
   _scope,
   _scope_id,
   _script,
@@ -224,8 +224,8 @@ export function _content(id: string, fn: ServerRenderer, scopeId?: number) {
 export function _content_resume(
   id: string,
   fn: ServerRenderer,
-  scopeId?: number,
+  scopeId: number,
   locals?: Locals,
 ) {
-  return _resume(_content(id, fn, scopeId), id, scopeId, locals);
+  return _resume_scoped(_content(id, fn, scopeId), id, scopeId, locals);
 }

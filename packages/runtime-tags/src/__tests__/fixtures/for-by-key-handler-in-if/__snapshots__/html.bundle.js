@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			dismiss_button_default({
 				label: item.id,
-				onDismiss: _resume(function() {
+				onDismiss: _resume_scoped(function() {
 					document.getElementById("log").textContent = item.id;
 				}, "a0", $scope2_id)
 			});

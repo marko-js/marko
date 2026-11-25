@@ -4,7 +4,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let v = "b";
 	let calls = 0;
-	_attr_select_value($scope0_id, "a", v, _resume(function(nv) {
+	_attr_select_value($scope0_id, "a", v, _resume_scoped(function(nv) {
 		calls++;
 		v = nv;
 	}, "a0", $scope0_id), () => {

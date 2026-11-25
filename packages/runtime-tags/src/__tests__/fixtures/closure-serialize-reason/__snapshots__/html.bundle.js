@@ -3,7 +3,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let x = 0;
-	const getMessage = _resume(() => input.message, "a0", $scope0_id);
+	const getMessage = _resume_scoped(() => input.message, "a0", $scope0_id);
 	_html("<div>");
 	_if(() => {}, $scope0_id, "a", 1, 1, 1, "</div>", 1);
 	_html(`<button>${_text_mark($scope0_id, "c", x)}</button>${_el_mark($scope0_id, "b")}`);

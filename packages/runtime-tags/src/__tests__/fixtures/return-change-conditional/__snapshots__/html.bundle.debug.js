@@ -6,7 +6,7 @@ var editable_default = _template("__tests__/tags/editable.marko", (input) => {
 	const $return = x;
 	_scope($scope0_id, {
 		input_canEdit: input.canEdit,
-		"#TagVariableChange": input.canEdit && _resume((v) => {
+		"#TagVariableChange": input.canEdit && _resume_scoped((v) => {
 			x = v;
 		}, "__tests__/tags/editable.marko_0/valueChange", $scope0_id) || void 0
 	}, "__tests__/tags/editable.marko", 0, { input_canEdit: ["input.canEdit"] });

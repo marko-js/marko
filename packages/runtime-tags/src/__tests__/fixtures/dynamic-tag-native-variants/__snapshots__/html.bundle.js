@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	let tag = "input";
 	_html("<div>");
 	_dynamic_tag($scope0_id, "a", tag, {});
-	_attr_select_value($scope0_id, "b", void 0, _resume(function(next) {
+	_attr_select_value($scope0_id, "b", void 0, _resume_scoped(function(next) {
 		tag = next;
 	}, "a0", $scope0_id), () => {
 		_html(`<select><option${_attr_option_value("a")}>a</option></select>`);

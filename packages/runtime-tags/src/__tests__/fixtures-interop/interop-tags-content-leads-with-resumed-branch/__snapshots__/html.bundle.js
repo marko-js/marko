@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 	const $show__closures = /* @__PURE__ */ new Set();
 	let count = 0;
 	let show = true;
-	_dynamic_tag($scope0_id, "a", _marko_template, { onClick: _resume(function() {
+	_dynamic_tag($scope0_id, "a", _marko_template, { onClick: _resume_scoped(function() {
 		count++;
 		show = !show;
 	}, "a0", $scope0_id) }, _content_resume("a2", () => {

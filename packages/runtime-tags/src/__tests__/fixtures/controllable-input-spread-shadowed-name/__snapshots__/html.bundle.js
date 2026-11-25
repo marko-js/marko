@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	_html("<input");
 	_attrs_content({
 		value,
-		valueChange: _resume(function(v) {
+		valueChange: _resume_scoped(function(v) {
 			value = v;
 		}, "a0", $scope0_id)
 	}, "a", $scope0_id, "input");

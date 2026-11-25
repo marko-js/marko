@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			press_button_default({ onPress: _resume(function() {
+			press_button_default({ onPress: _resume_scoped(function() {
 				log = `${log}[${count}]`;
 			}, "__tests__/template.marko_1/onPress", $scope1_id) });
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2");

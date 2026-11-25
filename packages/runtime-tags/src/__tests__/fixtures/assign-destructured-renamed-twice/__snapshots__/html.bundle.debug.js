@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let bar = 0;
 	const obj = {
 		foo: 1,
-		fooChange: _resume(function(v) {
+		fooChange: _resume_scoped(function(v) {
 			bar = v;
 		}, "__tests__/template.marko_0/obj", $scope0_id)
 	};

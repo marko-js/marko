@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 	child_default({
 		tag: "button",
 		button: attrTag({
-			onClick: _resume(function() {
+			onClick: _resume_scoped(function() {
 				count++;
 			}, "a0", $scope0_id),
 			content: _content("a2", () => {

@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope($scope1_id, {
 			"#LoopKey": item?.id,
 			count,
-			"TagVariableChange:count": _resume(function(next) {
+			"TagVariableChange:count": _resume_scoped(function(next) {
 				document.getElementById("log").textContent = item.id + next;
 			}, "__tests__/template.marko_1/valueChange", $scope1_id) || void 0
 		}, "__tests__/template.marko", "2:2", {

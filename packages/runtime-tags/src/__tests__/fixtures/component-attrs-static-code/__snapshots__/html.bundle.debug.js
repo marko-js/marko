@@ -15,13 +15,16 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 });
 
 // template.marko
-const formatNumber = _resume((n) => {
-	return "$" + n.toFixed(2);
-}, "__tests__/template.marko_0/formatNumber");
-function formatNumber2(n) {
+const formatNumber = $formatNumber;
+const formatNumber2 = $formatNumber2;
+function $formatNumber(n) {
 	return "$" + n.toFixed(2);
 }
-_resume(formatNumber2, "__tests__/template.marko_0/formatNumber2");
+function $formatNumber2(n) {
+	return "$" + n.toFixed(2);
+}
+_resume("__tests__/template.marko_0/formatNumber", $formatNumber);
+_resume("__tests__/template.marko_0/formatNumber2", $formatNumber2);
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

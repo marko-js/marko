@@ -5,10 +5,10 @@ var store_default = _template("b", (input) => {
 	let list = input.value;
 	return {
 		list,
-		listChange: _resume(function(v) {
+		listChange: _resume_scoped(function(v) {
 			list = v;
 		}, "b0", $scope0_id),
-		clear: _resume(function() {
+		clear: _resume_scoped(function() {
 			list = [];
 		}, "b1", $scope0_id)
 	};

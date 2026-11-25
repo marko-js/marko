@@ -7,10 +7,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const key = "v";
 	const state = {
 		v,
-		vChange: _resume(function(x) {
+		vChange: _resume_scoped(function(x) {
 			v = x;
 		}, "__tests__/template.marko_0/state", $scope0_id),
-		keyChange: _resume(function(x) {
+		keyChange: _resume_scoped(function(x) {
 			wrong = x;
 		}, "__tests__/template.marko_0/state2", $scope0_id)
 	};

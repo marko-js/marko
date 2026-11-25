@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	let foo = { bar: "bar" };
 	const baz = {
 		foo,
-		bar: _resume(() => foo.bar, "a0", $scope0_id)
+		bar: _resume_scoped(() => foo.bar, "a0", $scope0_id)
 	};
 	_html(`<div></div>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "a1");

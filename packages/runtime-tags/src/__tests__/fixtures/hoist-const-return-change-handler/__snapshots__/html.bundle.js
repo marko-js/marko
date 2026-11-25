@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		let count = 0;
 		const $return = count;
-		const setCount = _resume((value) => {
+		const setCount = _resume_scoped((value) => {
 			count = value;
 		}, "a0", $scope1_id);
 		_scope($scope1_id, {

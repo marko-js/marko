@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	let tagName = "span";
 	_dynamic_tag($scope0_id, "a", tagName, {
 		class: "A",
-		onClick: _resume(function() {
+		onClick: _resume_scoped(function() {
 			tagName = tagName === "span" ? "div" : "span";
 		}, "a0", $scope0_id)
 	}, _content_resume("a1", () => {

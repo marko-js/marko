@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let checked = false;
-	_html(`<input${_attr_input_checked($scope0_id, "#input/0", checked, _resume(function(v) {
+	_html(`<input${_attr_input_checked($scope0_id, "#input/0", checked, _resume_scoped(function(v) {
 		checked = v;
 	}, "__tests__/template.marko_0/checkedChange", $scope0_id))}${_attrs_partial(input.attrs, {
 		checked: 1,

@@ -1,4 +1,8 @@
 // template.marko
+function $valueChange(next) {
+	return console.log(next);
+}
+_resume("a0", $valueChange);
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
@@ -10,6 +14,6 @@ var template_default = _template("a", (input) => {
 		g: a,
 		i: b,
 		h: (input.on ? "log" : "") || void 0,
-		j: (input.on ? "log" : _resume((next) => console.log(next), "a0")) || void 0
+		j: (input.on ? "log" : $valueChange) || void 0
 	});
 }, 1);

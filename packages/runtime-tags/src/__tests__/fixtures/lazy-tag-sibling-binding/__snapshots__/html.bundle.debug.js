@@ -45,13 +45,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button class=main>main:${_text_mark($scope0_id, "#text/1", count, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	$ChildS_withLoadAssets({
 		holder: shared,
-		isShared: _resume(function(o) {
+		isShared: _resume_scoped(function(o) {
 			return o === shared;
 		}, "__tests__/template.marko_0/isShared", $scope0_id)
 	});
 	$ChildB_withLoadAssets({
 		inner: shared.inner,
-		isInner: _resume(function(o) {
+		isInner: _resume_scoped(function(o) {
 			return o === Object.values(shared)[0];
 		}, "__tests__/template.marko_0/isInner", $scope0_id)
 	});

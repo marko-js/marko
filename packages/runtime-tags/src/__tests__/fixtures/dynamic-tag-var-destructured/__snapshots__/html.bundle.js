@@ -5,7 +5,7 @@ var child_default = _template("b", (input) => {
 	let count = 1;
 	const $return = {
 		count,
-		inc: _resume(function() {
+		inc: _resume_scoped(function() {
 			count++;
 		}, "b0", $scope0_id)
 	};

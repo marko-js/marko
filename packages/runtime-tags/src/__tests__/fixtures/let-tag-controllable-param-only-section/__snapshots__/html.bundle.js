@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 	let total = 0;
 	ctl_default({
 		show: true,
-		countChange: _resume(function(v) {
+		countChange: _resume_scoped(function(v) {
 			total = v * 10;
 		}, "a0", $scope0_id)
 	});

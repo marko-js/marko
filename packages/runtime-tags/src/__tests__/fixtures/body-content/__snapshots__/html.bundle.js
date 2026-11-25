@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 	let clickCount = 0;
 	const $childScope = _peek_scope_id();
 	FancyButton_default({
-		onClick: _resume(function() {
+		onClick: _resume_scoped(function() {
 			clickCount++;
 		}, "a0", $scope0_id),
 		content: _content("a2", () => {

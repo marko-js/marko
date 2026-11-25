@@ -3,7 +3,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 1;
-	const getCount = _resume(() => count, "a0", $scope0_id);
+	const getCount = _resume_scoped(() => count, "a0", $scope0_id);
 	const promise = Promise.resolve(getCount);
 	_html(`<button>inc:${_text_mark($scope0_id, "b", count, 2)}</button>${_el_mark($scope0_id, "a")}<div id=ref>0</div>`);
 	_script($scope0_id, "a1");

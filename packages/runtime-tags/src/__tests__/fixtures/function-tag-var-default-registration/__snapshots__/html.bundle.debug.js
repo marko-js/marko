@@ -1,8 +1,9 @@
 // template.marko
-function updateText(ev) {
+const updateText = $updateText;
+function $updateText(ev) {
 	ev.target.textContent = "after";
 }
-_resume(updateText, "__tests__/template.marko_0/updateText");
+_resume("__tests__/template.marko_0/updateText", $updateText);
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

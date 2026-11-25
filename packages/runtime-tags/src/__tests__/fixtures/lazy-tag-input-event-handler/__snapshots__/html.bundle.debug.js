@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button class=main>main:${_text_mark($scope0_id, "#text/1", count, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	$Child_withLoadAssets({
 		data: shared,
-		report: _resume(function(o) {
+		report: _resume_scoped(function(o) {
 			return o === shared;
 		}, "__tests__/template.marko_0/report", $scope0_id)
 	});

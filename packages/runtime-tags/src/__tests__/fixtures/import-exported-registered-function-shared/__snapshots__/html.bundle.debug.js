@@ -10,7 +10,7 @@ var greeting_default = _template("__tests__/tags/greeting.marko", (input) => {
 });
 
 // tags/panel.marko
-_resume(shout, "__tests__/tags/greeting.marko_0/export/shout");
+_resume("__tests__/tags/greeting.marko_0/export/shout", shout);
 var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
@@ -32,7 +32,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 });
 
 // template.marko
-_resume(shout, "__tests__/tags/greeting.marko_0/export/shout");
+_resume("__tests__/tags/greeting.marko_0/export/shout", shout);
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

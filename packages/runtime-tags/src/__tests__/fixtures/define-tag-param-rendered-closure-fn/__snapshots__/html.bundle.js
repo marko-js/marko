@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $wi__input_a = _write_if($scope0_reason, 1), $wi__input_x = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $f2__closures = /* @__PURE__ */ new Set();
-	const f = _resume(function() {
+	const f = _resume_scoped(function() {
 		return input.a;
 	}, "a0", $scope0_id);
 	const D = { content: _content("a2", ({ on }) => {

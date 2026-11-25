@@ -4,7 +4,7 @@ var g_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	const $return = 0;
-	_scope($scope0_id, { U: _resume(function(next) {
+	_scope($scope0_id, { U: _resume_scoped(function(next) {
 		$global$1.store = next;
 	}, "b0", $scope0_id) || void 0 });
 	return $return;

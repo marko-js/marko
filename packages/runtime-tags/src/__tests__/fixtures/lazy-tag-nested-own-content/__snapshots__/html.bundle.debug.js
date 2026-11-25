@@ -30,7 +30,7 @@ var grand_child_default = _template("__tests__/grand-child.marko", (input) => {
 	const $count__closures = new Set();
 	let count = 0;
 	press_button_default({
-		onPress: _resume(function() {
+		onPress: _resume_scoped(function() {
 			count++;
 		}, "__tests__/grand-child.marko_0/onPress", $scope0_id),
 		content: _content("__tests__/grand-child.marko_1*content", () => {

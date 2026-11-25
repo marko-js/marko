@@ -3,7 +3,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let selected = 1;
-	_attr_select_value($scope0_id, "a", selected, _resume(function(v) {
+	_attr_select_value($scope0_id, "a", selected, _resume_scoped(function(v) {
 		selected = +v;
 	}, "a0", $scope0_id), () => {
 		_html(`<select><option${_attr_option_value(0)}></option><option${_attr_option_value("1")}></option><option${_attr_option_value(2)}></option></select>`);

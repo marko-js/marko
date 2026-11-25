@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let show = true;
-	const onCount = _resume(function(count) {
+	const onCount = _resume_scoped(function(count) {
 		show = count < 1;
 	}, "__tests__/template.marko_0/onCount", $scope0_id);
 	_html("<div>");

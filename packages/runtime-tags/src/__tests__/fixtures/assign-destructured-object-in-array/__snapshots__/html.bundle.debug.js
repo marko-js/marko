@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	const [{ valueChange: $valueChange, value }] = [{
 		value: count,
-		valueChange: _resume(function(v) {
+		valueChange: _resume_scoped(function(v) {
 			count = v;
 		}, "__tests__/template.marko_0/value", $scope0_id)
 	}];

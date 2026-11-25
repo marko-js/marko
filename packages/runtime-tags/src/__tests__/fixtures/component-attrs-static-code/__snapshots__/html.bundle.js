@@ -12,13 +12,16 @@ var counter_default = _template("b", (input) => {
 });
 
 // template.marko
-const formatNumber = _resume((n) => {
-	return "$" + n.toFixed(2);
-}, "a0");
-function formatNumber2(n) {
+const formatNumber = $formatNumber;
+const formatNumber2 = $formatNumber2;
+function $formatNumber(n) {
 	return "$" + n.toFixed(2);
 }
-_resume(formatNumber2, "a1");
+function $formatNumber2(n) {
+	return "$" + n.toFixed(2);
+}
+_resume("a0", $formatNumber);
+_resume("a1", $formatNumber2);
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	_scope_id();

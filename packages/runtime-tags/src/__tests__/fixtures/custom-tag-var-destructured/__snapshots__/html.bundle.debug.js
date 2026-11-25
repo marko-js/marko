@@ -5,10 +5,10 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	let count = 1;
 	const $return = {
 		count,
-		inc: _resume(function() {
+		inc: _resume_scoped(function() {
 			count++;
 		}, "__tests__/tags/child.marko_0/_return", $scope0_id),
-		countChange: _resume(function(value) {
+		countChange: _resume_scoped(function(value) {
 			count = value;
 		}, "__tests__/tags/child.marko_0/_return2", $scope0_id)
 	};

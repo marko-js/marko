@@ -8,7 +8,7 @@ var let_global_default = _template("c", (input) => {
 	_script($scope0_id, "c1", 0);
 	_scope($scope0_id, {
 		c: input.value,
-		U: _resume(function(next) {
+		U: _resume_scoped(function(next) {
 			$global$1[input.value] = next;
 			subsByKey[input.value]?.forEach((cb) => cb());
 		}, "c0", $scope0_id) || void 0

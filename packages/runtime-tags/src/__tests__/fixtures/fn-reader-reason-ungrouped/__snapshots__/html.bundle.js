@@ -1,4 +1,8 @@
 // template.marko
+function $f(v) {
+	return v + "!";
+}
+_resume("a0", $f);
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_w = _write_if($scope0_reason, 6), $wg__input_w = _write_guard($scope0_reason, 6), $wi__input_show__OR__input_inner__OR__input_v__OR__input_w = _write_if($scope0_reason, 2), $wg__input_inner = _write_guard($scope0_reason, 4), $wi__input_show__OR__input_inner = _write_if($scope0_reason, 0), $wi__input_v = _write_if($scope0_reason, 5);
 	const $scope0_id = _scope_id();
@@ -7,7 +11,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			const f = _resume((v) => v + "!", "a0");
+			const f = $f;
 			_if(() => {
 				if (input.inner) {
 					const $scope2_id = _scope_id();

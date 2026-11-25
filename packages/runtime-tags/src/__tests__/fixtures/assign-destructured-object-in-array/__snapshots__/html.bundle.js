@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	const [{ valueChange: $valueChange, value }] = [{
 		value: count,
-		valueChange: _resume(function(v) {
+		valueChange: _resume_scoped(function(v) {
 			count = v;
 		}, "a0", $scope0_id)
 	}];

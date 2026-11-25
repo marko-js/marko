@@ -1,11 +1,15 @@
 // template.marko
+function $getLabel() {
+	return "a";
+}
+_resume("__tests__/template.marko_1/getLabel", $getLabel);
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.a) {
 			const $scope1_id = _scope_id();
-			const getLabel = _resume(() => "a", "__tests__/template.marko_1/getLabel");
+			const getLabel = $getLabel;
 			_scope($scope1_id, { getLabel }, "__tests__/template.marko", "1:2", { getLabel: "2:10" });
 			_assert_hoist(getLabel);
 			return 0;

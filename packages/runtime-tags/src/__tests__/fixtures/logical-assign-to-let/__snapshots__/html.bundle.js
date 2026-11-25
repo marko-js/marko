@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 		f: changes,
 		g: value,
 		i: x,
-		j: _resume(function(v) {
+		j: _resume_scoped(function(v) {
 			value = v;
 			changes++;
 		}, "a0", $scope0_id) || void 0

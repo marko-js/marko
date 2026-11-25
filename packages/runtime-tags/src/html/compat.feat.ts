@@ -4,7 +4,7 @@ import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
 import { RendererProp } from "../common/types";
 import { writeLoadAsset } from "./assets";
 import { _await } from "./control-flow";
-import { register, REGISTRY } from "./serializer";
+import { getRegistered, register, REGISTRY } from "./serializer";
 import type { ServerRenderer } from "./template";
 import {
   $chunk,
@@ -99,7 +99,11 @@ export const compat = {
     return function toJSON(this: WeakKey) {
       let compatRegistered = COMPAT_REGISTRY.get(this);
       if (!compatRegistered) {
-        const registered = REGISTRY.get(this);
+        // The class API serializes within a render, so a chunk is current.
+        const registered = getRegistered(
+          $chunk.boundary.state.serializer,
+          this,
+        );
         if (registered) {
           const scopeId = registered.scope
             ? getScopeId(registered.scope)

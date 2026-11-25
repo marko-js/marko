@@ -29,7 +29,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	$GrandChild_withLoadAssets({
 		value,
-		valueChange: _resume((_new_value) => value = _new_value, "__tests__/child.marko_0/valueChange", $scope0_id)
+		valueChange: _resume_scoped((_new_value) => value = _new_value, "__tests__/child.marko_0/valueChange", $scope0_id)
 	});
 	_scope($scope0_id, { "#childScope/3": _existing_scope($childScope) }, "__tests__/child.marko", 0);
 });

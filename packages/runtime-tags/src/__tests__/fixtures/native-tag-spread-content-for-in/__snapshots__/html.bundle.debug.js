@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	child_default({
 		a: attrTag({
-			onClick: _resume(function() {
+			onClick: _resume_scoped(function() {
 				count++;
 			}, "__tests__/template.marko_0/onClick", $scope0_id),
 			content: _content("__tests__/template.marko_1*content", () => {

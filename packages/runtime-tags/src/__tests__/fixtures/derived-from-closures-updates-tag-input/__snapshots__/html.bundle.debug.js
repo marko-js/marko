@@ -8,12 +8,16 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 });
 
 // tags/parent.marko
+function $hrefFor(key) {
+	return `#${key}`;
+}
+_resume("__tests__/tags/parent.marko_0/hrefFor", $hrefFor);
 var parent_default = _template("__tests__/tags/parent.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const prefix = "a";
 	let shut = false;
-	const hrefFor = _resume((key) => `#${key}`, "__tests__/tags/parent.marko_0/hrefFor");
+	const hrefFor = $hrefFor;
 	_if(() => {
 		if (true) {
 			const $scope1_id = _scope_id();
@@ -24,7 +28,7 @@ var parent_default = _template("__tests__/tags/parent.marko", (input) => {
 				label,
 				count: input.count,
 				hrefFor,
-				onToggle: _resume(function() {
+				onToggle: _resume_scoped(function() {
 					shut = !shut;
 					input.onToggle();
 				}, "__tests__/tags/parent.marko_1/onToggle", $scope1_id)
@@ -62,7 +66,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	parent_default({
 		count,
-		onToggle: _resume(function() {
+		onToggle: _resume_scoped(function() {
 			count++;
 		}, "__tests__/template.marko_0/onToggle", $scope0_id)
 	});

@@ -1,10 +1,12 @@
 // tags/getter.marko
+function $getter() {
+	return "hello";
+}
+_resume("b0", $getter);
 var getter_default = _template("b", (input) => {
 	_scope_reason();
 	_scope_id();
-	return _resume(() => {
-		return "hello";
-	}, "b0");
+	return $getter;
 });
 
 // template.marko

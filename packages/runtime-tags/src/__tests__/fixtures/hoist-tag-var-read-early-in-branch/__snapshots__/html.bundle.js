@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, 0, 0, 0, 1);
-	const read = _resume(() => input.x, "a0", $scope0_id);
+	const read = _resume_scoped(() => input.x, "a0", $scope0_id);
 	_html(`<div>${_text_mark($scope0_id, "b", read(), $wg__input_x)}</div>`);
 	_scope($scope0_id, {
 		e: input.x,

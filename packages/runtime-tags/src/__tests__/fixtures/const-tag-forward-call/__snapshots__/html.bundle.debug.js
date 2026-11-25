@@ -1,25 +1,41 @@
 // template.marko
+function $defaulted(a, b = "def") {
+	return a + ":" + b;
+}
+function $nullary() {
+	return "none";
+}
+function $third(...nums) {
+	return nums.join("-");
+}
+function $second(name, num) {
+	return `${name}:${num}`;
+}
+_resume("__tests__/template.marko_0/defaulted", $defaulted);
+_resume("__tests__/template.marko_0/nullary", $nullary);
+_resume("__tests__/template.marko_0/third", $third);
+_resume("__tests__/template.marko_0/second", $second);
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let result = "pending";
-	const first = _resume(() => {
+	const first = _resume_scoped(() => {
 		result = ((second) => second("A", 42))(_hoist_read_error);
 	}, "__tests__/template.marko_0/first", $scope0_id);
-	const second = _resume((name, num) => `${name}:${num}`, "__tests__/template.marko_0/second");
-	const viaAlias = _resume(() => {
+	const second = $second;
+	const viaAlias = _resume_scoped(() => {
 		const alias = _hoist_read_error;
 		result = alias(1, 2, 3);
 	}, "__tests__/template.marko_0/viaAlias", $scope0_id);
-	const third = _resume((...nums) => nums.join("-"), "__tests__/template.marko_0/third");
-	const callNullary = _resume(() => {
+	const third = $third;
+	const callNullary = _resume_scoped(() => {
 		result = ((nullary) => nullary())(_hoist_read_error);
 	}, "__tests__/template.marko_0/callNullary", $scope0_id);
-	const nullary = _resume(() => "none", "__tests__/template.marko_0/nullary");
-	const callDefaulted = _resume(() => {
+	const nullary = $nullary;
+	const callDefaulted = _resume_scoped(() => {
 		result = ((defaulted) => defaulted("x"))(_hoist_read_error);
 	}, "__tests__/template.marko_0/callDefaulted", $scope0_id);
-	const defaulted = _resume((a, b = "def") => a + ":" + b, "__tests__/template.marko_0/defaulted");
+	const defaulted = $defaulted;
 	_html(`<button id=direct>direct</button>${_el_mark($scope0_id, "#button/0")}<button id=alias>alias</button>${_el_mark($scope0_id, "#button/1")}<button id=nullary>nullary</button>${_el_mark($scope0_id, "#button/2")}<button id=defaulted>defaulted</button>${_el_mark($scope0_id, "#button/3")}<div>${_text_mark($scope0_id, "#text/4", result)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

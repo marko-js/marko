@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	Wrap.content({
 		as: "div",
-		onClick: _resume(function() {
+		onClick: _resume_scoped(function() {
 			console.log(x++);
 		}, "a0", $scope0_id),
 		content: _content_resume("a3", () => {

@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	let log = "";
 	_html(`<button class=inc>inc</button>${_el_mark($scope0_id, "#button/0")}`);
-	press_button_default({ onPress: _resume(function() {
+	press_button_default({ onPress: _resume_scoped(function() {
 		log = `${log}[${count}]`;
 	}, "__tests__/template.marko_0/onPress", $scope0_id) });
 	_html(`<div class=log>${_text_mark($scope0_id, "#text/2", log)}</div>`);

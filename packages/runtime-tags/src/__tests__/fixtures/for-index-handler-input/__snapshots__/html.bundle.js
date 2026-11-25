@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 		const $childScope = _peek_scope_id();
 		dismiss_button_default({
 			label: item,
-			onDismiss: _resume(function() {
+			onDismiss: _resume_scoped(function() {
 				document.getElementById("log").textContent = i;
 			}, "a0", $scope1_id)
 		});

@@ -5,13 +5,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let phase = 0;
 	let log = "";
 	const attrs = phase === 0 ? {
-		onClick: _resume(function() {
+		onClick: _resume_scoped(function() {
 			phase = 1;
 		}, "__tests__/template.marko_0/attrs", $scope0_id),
-		onMouseOver: _resume(function() {
+		onMouseOver: _resume_scoped(function() {
 			log = `${log}M`;
 		}, "__tests__/template.marko_0/attrs2", $scope0_id)
-	} : { onClick: _resume(function() {
+	} : { onClick: _resume_scoped(function() {
 		phase = 0;
 	}, "__tests__/template.marko_0/attrs3", $scope0_id) };
 	_html(`<div${_attrs(attrs, "#div/0", $scope0_id, "div")}>${_text_mark($scope0_id, "#text/1", phase)}:${_text_mark($scope0_id, "#text/2", log, 2)}</div>${_el_mark($scope0_id, "#div/0")}`);

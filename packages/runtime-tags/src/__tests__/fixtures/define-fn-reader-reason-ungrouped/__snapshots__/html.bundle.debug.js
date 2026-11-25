@@ -1,4 +1,8 @@
 // template.marko
+function $f(x) {
+	return x + "!";
+}
+_resume("__tests__/template.marko_2/f", $f);
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
@@ -10,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (show) {
 				const $scope2_id = _scope_id();
-				const f = _resume((x) => x + "!", "__tests__/template.marko_2/f");
+				const f = $f;
 				_if(() => {
 					if (inner) {
 						const $scope3_id = _scope_id();

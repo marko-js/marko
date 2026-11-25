@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		let call = 1;
-		const $return = _resume(function() {
+		const $return = _resume_scoped(function() {
 			if (call) {
 				call--;
 				value();
@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) };
 	let clickOnceCount = 0;
 	const $childScope = _peek_scope_id();
-	let onClickOnce = Once.content({ value: _resume(function() {
+	let onClickOnce = Once.content({ value: _resume_scoped(function() {
 		clickOnceCount++;
 	}, "a1", $scope0_id) });
 	_var($scope0_id, "b", $childScope, "a5");
@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
 		let call = 2;
-		const $return2 = _resume(function() {
+		const $return2 = _resume_scoped(function() {
 			if (call) {
 				call--;
 				value();
@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) };
 	let clickTwiceCount = 0;
 	const $childScope2 = _peek_scope_id();
-	let onClickTwice = Twice.content({ value: _resume(function() {
+	let onClickTwice = Twice.content({ value: _resume_scoped(function() {
 		clickTwiceCount++;
 	}, "a3", $scope0_id) });
 	_var($scope0_id, "f", $childScope2, "a7");

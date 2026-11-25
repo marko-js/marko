@@ -2,7 +2,7 @@
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const mark = _resume(() => {
+	const mark = _resume_scoped(() => {
 		const get = _el_read_error;
 		get().textContent = "clicked";
 	}, "a0", $scope0_id);

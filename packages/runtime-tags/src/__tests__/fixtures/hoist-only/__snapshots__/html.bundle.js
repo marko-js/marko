@@ -5,15 +5,15 @@ var template_default = _template("a", (input) => {
 	const $hoist1_getter = _hoist($scope0_id, "a3");
 	const $input_value__closures = /* @__PURE__ */ new Set();
 	const x = $hoist1_getter;
-	const later = _resume(() => $hoist1_getter, "a0", $scope0_id);
-	const hoist1 = _resume(() => input.value, "a1", $scope0_id);
+	const later = _resume_scoped(() => $hoist1_getter, "a0", $scope0_id);
+	const hoist1 = _resume_scoped(() => input.value, "a1", $scope0_id);
 	{
 		const $scope1_id = _scope_id();
 		_if(() => {
 			{
 				const $scope2_id = _scope_id();
 				const z = _hoist($scope2_id, "a4");
-				const hoist3 = _resume(() => input.value, "a2", $scope2_id);
+				const hoist3 = _resume_scoped(() => input.value, "a2", $scope2_id);
 				_script($scope2_id, "a5", 0);
 				_subscribe($wi__input_value && $input_value__closures, _scope($scope2_id, {
 					a: z,

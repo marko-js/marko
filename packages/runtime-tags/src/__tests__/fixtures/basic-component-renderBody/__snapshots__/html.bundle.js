@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 	const $clickCount__closures = /* @__PURE__ */ new Set();
 	let clickCount = 0;
 	my_button_default({
-		onClick: _resume(function() {
+		onClick: _resume_scoped(function() {
 			clickCount++;
 		}, "a0", $scope0_id),
 		content: _content("a2", () => {

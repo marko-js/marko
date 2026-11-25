@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let foo = { bar: "bar" };
 	const baz = {
 		foo,
-		bar: _resume(() => foo.bar, "__tests__/template.marko_0/baz", $scope0_id)
+		bar: _resume_scoped(() => foo.bar, "__tests__/template.marko_0/baz", $scope0_id)
 	};
 	_html(`<div></div>${_el_mark($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0_baz#2");

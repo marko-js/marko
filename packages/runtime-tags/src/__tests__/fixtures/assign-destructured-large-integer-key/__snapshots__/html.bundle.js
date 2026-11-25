@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	let bar = 0;
 	const { "12345678901234567890Change": $2345678901234567890Change, "12345678901234567890": value } = {
 		"12345678901234567890": 1,
-		"12345678901234567890Change": _resume(function(v) {
+		"12345678901234567890Change": _resume_scoped(function(v) {
 			bar = v;
 		}, "a0", $scope0_id)
 	};

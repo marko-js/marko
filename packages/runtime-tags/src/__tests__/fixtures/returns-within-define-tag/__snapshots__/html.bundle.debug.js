@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		let call = 1;
-		const $return = _resume(function() {
+		const $return = _resume_scoped(function() {
 			if (call) {
 				call--;
 				value();
@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	let clickOnceCount = 0;
 	const $childScope = _peek_scope_id();
-	let onClickOnce = Once.content({ value: _resume(function() {
+	let onClickOnce = Once.content({ value: _resume_scoped(function() {
 		clickOnceCount++;
 	}, "__tests__/template.marko_0/onClickOnce", $scope0_id) });
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_onClickOnce#9/var");
@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
 		let call = 2;
-		const $return2 = _resume(function() {
+		const $return2 = _resume_scoped(function() {
 			if (call) {
 				call--;
 				value();
@@ -51,7 +51,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	let clickTwiceCount = 0;
 	const $childScope2 = _peek_scope_id();
-	let onClickTwice = Twice.content({ value: _resume(function() {
+	let onClickTwice = Twice.content({ value: _resume_scoped(function() {
 		clickTwiceCount++;
 	}, "__tests__/template.marko_0/onClickTwice", $scope0_id) });
 	_var($scope0_id, "#scopeOffset/5", $childScope2, "__tests__/template.marko_0_onClickTwice#11/var");

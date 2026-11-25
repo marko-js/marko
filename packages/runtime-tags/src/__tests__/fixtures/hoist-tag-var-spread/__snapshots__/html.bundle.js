@@ -7,6 +7,14 @@ var child_default = _template("b", (input) => {
 });
 
 // template.marko
+function $y() {
+	return 2;
+}
+function $x() {
+	return 1;
+}
+_resume("a1", $y);
+_resume("a0", $x);
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 2), $wg__input_a = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
@@ -15,8 +23,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.a) {
 			const $scope2_id = _scope_id();
-			const x = _resume(() => 1, "a0");
-			_scope($scope2_id, { a: x });
+			_scope($scope2_id, { a: $x });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_a);
@@ -36,7 +43,7 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "b", _write_guard($scope0_reason, 0), $wg__input_a);
 	child_default($y_getter);
-	const y = _resume(() => 2, "a1");
+	const y = $y;
 	_scope($scope0_id, {
 		g: _write_if($scope0_reason, 1) && input.b,
 		h: y

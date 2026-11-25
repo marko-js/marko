@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		y,
-		"TagVariableChange:y": _resume(function(newValue) {
+		"TagVariableChange:y": _resume_scoped(function(newValue) {
 			x = newValue + 1;
 		}, "__tests__/template.marko_0/valueChange", $scope0_id) || void 0
 	}, "__tests__/template.marko", 0, {

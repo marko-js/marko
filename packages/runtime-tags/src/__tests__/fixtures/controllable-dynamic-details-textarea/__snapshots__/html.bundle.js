@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 	const textareaTag = "textarea";
 	_dynamic_tag($scope0_id, "a", detailsTag, {
 		open,
-		openChange: _resume(function(next) {
+		openChange: _resume_scoped(function(next) {
 			open = next;
 		}, "a0", $scope0_id)
 	}, _content("a2", () => {
@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 		_html("<summary>toggle</summary>");
 		_dynamic_tag($scope1_id, "a", textareaTag, {
 			value: text,
-			valueChange: _resume(function(next) {
+			valueChange: _resume_scoped(function(next) {
 				text = next;
 			}, "a1", $scope1_id)
 		});

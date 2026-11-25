@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
-			child_default({ write: _resume(function(state) {
+			child_default({ write: _resume_scoped(function(state) {
 				((el) => el())(_el_read_error).innerHTML = state;
 			}, "a0", $scope1_id) });
 			_scope($scope1_id, {});

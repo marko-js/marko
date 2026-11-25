@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let items = [{ id: "a" }, { id: "b" }];
 	forOf(items, (item) => {
 		const $scope1_id = _scope_id();
-		const select = _resume(function() {
+		const select = _resume_scoped(function() {
 			document.getElementById("log").textContent = item.id;
 		}, "__tests__/template.marko_1/select", $scope1_id);
 		_html(`<button>${_escape(item.id)}</button>${_el_mark($scope1_id, "#button/0")}`);

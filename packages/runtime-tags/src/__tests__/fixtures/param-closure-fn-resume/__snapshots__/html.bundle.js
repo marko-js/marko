@@ -2,7 +2,7 @@
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const bar = _resume(function(test) {
+	const bar = _resume_scoped(function(test) {
 		return input.c + test;
 	}, "b0", $scope0_id);
 	_if(() => {
