@@ -7,7 +7,6 @@ import type { codeFrameColumns as baseCodeFrameColumns } from "@babel/code-frame
 // packages, with `import type`.
 import type {
   BabelFileResult,
-  ConfigAPI,
   TransformOptions as BabelTransformOptions,
 } from "@babel/core";
 import type { GeneratorOptions, GeneratorResult } from "@babel/generator";
@@ -66,14 +65,6 @@ export declare const generator: (
   opts?: GeneratorOptions,
   code?: string,
 ) => GeneratorResult;
-
-/** A Babel plugin's module: called with Babel's API and the plugin's options. */
-type Plugin = (
-  api: ConfigAPI,
-  options: object,
-) => { visitor: MarkoTypes.Visitor };
-export declare const pluginTransformModulesCommonjs: Plugin;
-export declare const pluginTransformTypeScript: Plugin;
 
 declare module "@babel/core" {
   /** What Marko's plugin adds to a compile's metadata. */

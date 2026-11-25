@@ -1,38 +1,41 @@
 "use strict";
 
 exports.__esModule = true;
-exports.default = void 0;
-var _index = require("marko/src/runtime/html/index.js");
-var _index2 = _interopRequireDefault(require("./components/hello/index.marko"));
-var _renderTag = _interopRequireDefault(require("marko/src/runtime/helpers/render-tag.js"));
-var _preserveTag = _interopRequireDefault(require("marko/src/core-tags/components/preserve-tag.js"));
-var _dataMarko = _interopRequireDefault(require("marko/src/runtime/html/helpers/data-marko.js"));
-var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
-function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+var $index = require("marko/src/runtime/html/index.js");
+var $index2 = $interopDefault(require("./components/hello/index.marko"));
+var $rendertag = $interopDefault(require("marko/src/runtime/helpers/render-tag.js"));
+var $preservetag = $interopDefault(require("marko/src/core-tags/components/preserve-tag.js"));
+var $datamarko = $interopDefault(require("marko/src/runtime/html/helpers/data-marko.js"));
+var $renderer = $interopDefault(require("marko/src/runtime/components/renderer.js"));
+function $interopDefault(m) {
+  return m && m.__esModule ? m : {
+    default: m
+  };
+}
 const _marko_componentType = "__tests__/template.marko",
-  _marko_template = (0, _index.t)(_marko_componentType);
-var _default = exports.default = _marko_template;
+  _marko_template = (0, $index.t)(_marko_componentType);
+exports.default = _marko_template;
 const _marko_component = {};
-_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state, $global) {
-  (0, _renderTag.default)(_preserveTag.default, {
+_marko_template._ = (0, $renderer.default)(function (input, out, _componentDef, _component, state, $global) {
+  (0, $rendertag.default)($preservetag.default, {
     "renderBody": out => {
-      (0, _renderTag.default)(_index2.default, {
+      (0, $rendertag.default)($index2.default, {
         "renderBody": out => {
-          (0, _renderTag.default)(_index2.default, {}, out, _componentDef, "1");
+          (0, $rendertag.default)($index2.default, {}, out, _componentDef, "1");
           out.w("<div></div>");
         }
       }, out, _componentDef, "0");
     }
   }, out, _componentDef, "p_0");
-  (0, _renderTag.default)(_preserveTag.default, {
+  (0, $rendertag.default)($preservetag.default, {
     "i": x,
     "renderBody": out => {
-      (0, _renderTag.default)(_index2.default, {
+      (0, $rendertag.default)($index2.default, {
         "renderBody": out => {
-          (0, _renderTag.default)(_preserveTag.default, {
+          (0, $rendertag.default)($preservetag.default, {
             "i": (a, b),
             "renderBody": out => {
-              (0, _renderTag.default)(_index2.default, {}, out, _componentDef, "4");
+              (0, $rendertag.default)($index2.default, {}, out, _componentDef, "4");
             }
           }, out, _componentDef, "p_4");
           out.w("<div></div>");
@@ -40,24 +43,24 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
       }, out, _componentDef, "3");
     }
   }, out, _componentDef, "p_3");
-  (0, _renderTag.default)(_index2.default, {
+  (0, $rendertag.default)($index2.default, {
     "renderBody": out => {
-      (0, _renderTag.default)(_preserveTag.default, {
+      (0, $rendertag.default)($preservetag.default, {
         "renderBody": out => {
-          (0, _renderTag.default)(_index2.default, {}, out, _componentDef, "7");
+          (0, $rendertag.default)($index2.default, {}, out, _componentDef, "7");
           out.w("<div></div>");
         }
       }, out, _componentDef, "p_6");
     }
   }, out, _componentDef, "6");
-  (0, _renderTag.default)(_index2.default, {
+  (0, $rendertag.default)($index2.default, {
     "renderBody": out => {
-      (0, _renderTag.default)(_preserveTag.default, {
+      (0, $rendertag.default)($preservetag.default, {
         "i": x,
         "renderBody": out => {
-          (0, _renderTag.default)(_index2.default, {
+          (0, $rendertag.default)($index2.default, {
             "renderBody": out => {
-              (0, _renderTag.default)(_preserveTag.default, {
+              (0, $rendertag.default)($preservetag.default, {
                 "i": (a, b),
                 "renderBody": out => {
                   out.w("Again");
@@ -70,25 +73,25 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
       }, out, _componentDef, "p_9");
     }
   }, out, _componentDef, "9");
-  (0, _renderTag.default)(_preserveTag.default, {
+  (0, $rendertag.default)($preservetag.default, {
     "renderBody": out => {
-      (0, _renderTag.default)(_index2.default, {
+      (0, $rendertag.default)($index2.default, {
         "renderBody": out => {
-          (0, _renderTag.default)(_index2.default, {}, out, _componentDef, "12");
+          (0, $rendertag.default)($index2.default, {}, out, _componentDef, "12");
           out.w("<div></div>");
         }
       }, out, _componentDef, "@a");
     }
   }, out, _componentDef, "p_@a");
-  (0, _renderTag.default)(_preserveTag.default, {
+  (0, $rendertag.default)($preservetag.default, {
     "i": x,
     "renderBody": out => {
-      (0, _renderTag.default)(_index2.default, {
+      (0, $rendertag.default)($index2.default, {
         "renderBody": out => {
-          (0, _renderTag.default)(_preserveTag.default, {
+          (0, $rendertag.default)($preservetag.default, {
             "i": (a, b),
             "renderBody": out => {
-              (0, _renderTag.default)(_index2.default, {}, out, _componentDef, "@c");
+              (0, $rendertag.default)($index2.default, {}, out, _componentDef, "@c");
             }
           }, out, _componentDef, "p_@c");
           out.w("<div></div>");
@@ -96,24 +99,24 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
       }, out, _componentDef, "@b");
     }
   }, out, _componentDef, "p_@b");
-  (0, _renderTag.default)(_index2.default, {
+  (0, $rendertag.default)($index2.default, {
     "renderBody": out => {
-      (0, _renderTag.default)(_preserveTag.default, {
+      (0, $rendertag.default)($preservetag.default, {
         "renderBody": out => {
-          (0, _renderTag.default)(_index2.default, {}, out, _componentDef, "15");
+          (0, $rendertag.default)($index2.default, {}, out, _componentDef, "15");
           out.w("<div></div>");
         }
       }, out, _componentDef, "p_@d");
     }
   }, out, _componentDef, "@d");
-  (0, _renderTag.default)(_index2.default, {
+  (0, $rendertag.default)($index2.default, {
     "renderBody": out => {
-      (0, _renderTag.default)(_preserveTag.default, {
+      (0, $rendertag.default)($preservetag.default, {
         "i": x,
         "renderBody": out => {
-          (0, _renderTag.default)(_index2.default, {
+          (0, $rendertag.default)($index2.default, {
             "renderBody": out => {
-              (0, _renderTag.default)(_preserveTag.default, {
+              (0, $rendertag.default)($preservetag.default, {
                 "i": (a, b),
                 "renderBody": out => {
                   out.w("Again");
@@ -126,10 +129,10 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
       }, out, _componentDef, "p_@e");
     }
   }, out, _componentDef, "@e");
-  (0, _renderTag.default)(_preserveTag.default, {
+  (0, $rendertag.default)($preservetag.default, {
     "n": true,
     "renderBody": out => {
-      out.w(`<div${(0, _dataMarko.default)(out, _componentDef, 0, "18")} class=test></div>`);
+      out.w(`<div${(0, $datamarko.default)(out, _componentDef, 0, "18")} class=test></div>`);
     }
   }, out, _componentDef, "18");
 }, {

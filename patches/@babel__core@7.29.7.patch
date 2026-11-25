@@ -1,0 +1,10 @@
+diff --git a/lib/transformation/file/babel-7-helpers.cjs b/lib/transformation/file/babel-7-helpers.cjs
+index a532ff129ccb1b7ddae008fb4fc680da80dc118a..ec88e54baa56e3a04da4d12c024177d393d62ad0 100644
+--- a/lib/transformation/file/babel-7-helpers.cjs
++++ b/lib/transformation/file/babel-7-helpers.cjs
+@@ -1,4 +1,4 @@
+-exports.getModuleName = () => require("@babel/helper-module-transforms").getModuleName;
++exports.getModuleName = () => () => null;
+ 0 && 0;
+ 
+ //# sourceMappingURL=babel-7-helpers.cjs.map

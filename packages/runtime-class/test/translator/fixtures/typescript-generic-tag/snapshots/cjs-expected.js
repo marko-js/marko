@@ -1,30 +1,33 @@
 "use strict";
 
 exports.__esModule = true;
-exports.default = void 0;
-var _index = require("marko/src/runtime/html/index.js");
-var _typeArg2 = _interopRequireDefault(require("./components/type-arg.marko"));
-var _renderTag = _interopRequireDefault(require("marko/src/runtime/helpers/render-tag.js"));
-var _escapeXml = require("marko/src/runtime/html/helpers/escape-xml.js");
-var _typeParam2 = _interopRequireDefault(require("./components/type-param.marko"));
-var _typeArgAndParam2 = _interopRequireDefault(require("./components/type-arg-and-param.marko"));
-var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
-function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+var $index = require("marko/src/runtime/html/index.js");
+var $typearg = $interopDefault(require("./components/type-arg.marko"));
+var $rendertag = $interopDefault(require("marko/src/runtime/helpers/render-tag.js"));
+var $escapexml = require("marko/src/runtime/html/helpers/escape-xml.js");
+var $typeparam = $interopDefault(require("./components/type-param.marko"));
+var $typeargandparam = $interopDefault(require("./components/type-arg-and-param.marko"));
+var $renderer = $interopDefault(require("marko/src/runtime/components/renderer.js"));
+function $interopDefault(m) {
+  return m && m.__esModule ? m : {
+    default: m
+  };
+}
 const _marko_componentType = "__tests__/template.marko",
-  _marko_template = (0, _index.t)(_marko_componentType);
-var _default = exports.default = _marko_template;
+  _marko_template = (0, $index.t)(_marko_componentType);
+exports.default = _marko_template;
 const _marko_component = {};
-_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state, $global) {
-  (0, _renderTag.default)(_typeArg2.default, {}, out, _componentDef, "0");
-  (0, _renderTag.default)(_typeParam2.default, {
+_marko_template._ = (0, $renderer.default)(function (input, out, _componentDef, _component, state, $global) {
+  (0, $rendertag.default)($typearg.default, {}, out, _componentDef, "0");
+  (0, $rendertag.default)($typeparam.default, {
     "renderBody": (out, x) => {
-      out.w((0, _escapeXml.x)(x));
+      out.w((0, $escapexml.x)(x));
     }
   }, out, _componentDef, "1");
-  (0, _renderTag.default)(_typeArgAndParam2.default, {
+  (0, $rendertag.default)($typeargandparam.default, {
     "arg": "hello",
     "renderBody": (out, x) => {
-      out.w((0, _escapeXml.x)(x));
+      out.w((0, $escapexml.x)(x));
     }
   }, out, _componentDef, "2");
 }, {

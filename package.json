@@ -30,8 +30,6 @@
     "@babel/core": "^7.29.0",
     "@babel/generator": "^7.29.12",
     "@babel/parser": "^7.29.12",
-    "@babel/plugin-transform-modules-commonjs": "^7.28.6",
-    "@babel/plugin-transform-typescript": "^7.29.9",
     "@babel/preset-env": "^7.29.5",
     "@babel/traverse": "^7.29.12",
     "@babel/types": "^7.29.11",

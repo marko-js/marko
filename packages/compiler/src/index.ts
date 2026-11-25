@@ -6,7 +6,6 @@ import type { CompileResult, Config, MarkoMeta } from "@marko/compiler";
 import { DiagnosticType } from "@marko/compiler/babel-utils";
 import {
   createConfigItem,
-  pluginTransformModulesCommonjs,
   transformAsync,
   transformSync,
   types,
@@ -133,10 +132,9 @@ const outputValues = new Set(["html", "dom", "source", "migrate", "hydrate"]);
 
 // Babel sets a plugin up once per config item and caches the descriptors of a
 // plugins array by its identity, so compiles share one array per user plugins.
-const pluginsByUserPlugins = new WeakMap<PluginItem[], PluginItem[][]>();
+const pluginsByUserPlugins = new WeakMap<PluginItem[], PluginItem[]>();
 const noUserPlugins: PluginItem[] = [];
 let corePluginItem: ConfigItem | undefined;
-let commonjsPluginItem: ConfigItem | undefined;
 
 function loadDefaults(config?: Config): Defaults {
   const markoConfig: Defaults = { ...globalConfig, ...config };
@@ -149,6 +147,14 @@ function loadDefaults(config?: Config): Defaults {
 
   if (markoConfig.stripTypes === undefined) {
     markoConfig.stripTypes = isTranslatedOutput(markoConfig.output);
+  } else if (
+    !markoConfig.stripTypes &&
+    markoConfig.modules === "cjs" &&
+    isTranslatedOutput(markoConfig.output)
+  ) {
+    throw new Error(
+      `Invalid Marko compiler options: CommonJS output ("modules": "cjs") can't keep TypeScript, so "stripTypes" can't be false.`,
+    );
   }
 
   return markoConfig;
@@ -219,30 +225,19 @@ function loadTranslator(markoConfig: Defaults) {
   }
 }
 
-function getPlugins({ babelConfig, modules, output }: Defaults) {
+function getPlugins({ babelConfig }: Defaults) {
   const userPlugins =
     (babelConfig?.plugins as PluginItem[] | undefined) || noUserPlugins;
-  const cjs = modules === "cjs" && isTranslatedOutput(output);
-  let lists = pluginsByUserPlugins.get(userPlugins);
-  if (!lists) pluginsByUserPlugins.set(userPlugins, (lists = []));
-  return (lists[+cjs] ||= createPlugins(userPlugins, cjs));
-}
-
-function createPlugins(userPlugins: PluginItem[], cjs: boolean) {
-  const plugins: PluginItem[] = [
-    (corePluginItem ||= createConfigItem(corePlugin, { type: "plugin" })),
-    ...userPlugins,
-  ];
-
-  if (cjs) {
-    plugins.push(
-      (commonjsPluginItem ||= createConfigItem(
-        [pluginTransformModulesCommonjs, { loose: true }],
-        { type: "plugin" },
-      )),
+  let plugins = pluginsByUserPlugins.get(userPlugins);
+  if (!plugins) {
+    pluginsByUserPlugins.set(
+      userPlugins,
+      (plugins = [
+        (corePluginItem ||= createConfigItem(corePlugin, { type: "plugin" })),
+        ...userPlugins,
+      ]),
     );
   }
-
   return plugins;
 }
 
