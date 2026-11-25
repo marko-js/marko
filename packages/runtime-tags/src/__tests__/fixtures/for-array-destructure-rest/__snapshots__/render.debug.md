@@ -29,9 +29,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: ul > li::text@31 "2" => "3"
+REMOVE: ul > li
 UPDATE: ul > li::text@9 "1" => "7"
 UPDATE: ul > li::text@17 "2" => "8"
 UPDATE: ul > li::text@25 "3" => "9"
-REMOVE: ul > li + li
+UPDATE: ul > li::text@31 "2" => "3"
 ```

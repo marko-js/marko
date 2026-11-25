@@ -51,8 +51,8 @@ document.querySelector("#changeTag").click();
 ```
 ## Change
 ```
+REMOVE: div
 INSERT: span
-REMOVE: span + div
 ```
 
 # Update

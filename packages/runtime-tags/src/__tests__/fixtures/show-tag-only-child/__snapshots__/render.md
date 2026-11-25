@@ -42,7 +42,7 @@ document.querySelector("button").click();
 ```
 REMOVE: #a > span
 REMOVE: #a > span
-INSERT: #b > :is(::text("fallback "), b)
+INSERT: #b::text("fallback "), #b > b
 ```
 
 # Update
@@ -69,7 +69,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: #a > :is(span, span)
-REMOVE: #b::text("fallback ")
+INSERT: #a > span:nth-of-type(1), #a > span:nth-of-type(2)
 REMOVE: #b > b
+REMOVE: #b::text("fallback ")
 ```

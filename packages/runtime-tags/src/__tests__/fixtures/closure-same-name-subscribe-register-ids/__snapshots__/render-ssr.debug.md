@@ -71,9 +71,9 @@ UPDATE: .x::text "1" => "2"
 ```
 ## Change
 ```
-INSERT: div > i::text("2")
-INSERT: div > b::text("10")
 REMOVE: div::text("loading")
-INSERT: .y + :is(i, b)
+INSERT: div > i, div > b
+INSERT: div > i::text("2")
 UPDATE: div > i::text "1" => "2"
+INSERT: div > b::text("10")
 ```

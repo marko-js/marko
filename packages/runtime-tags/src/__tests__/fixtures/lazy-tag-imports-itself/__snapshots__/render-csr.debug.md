@@ -16,7 +16,7 @@
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(1) + button
+INSERT: button:nth-of-type(2)
 ```
 
 # Update
@@ -33,7 +33,7 @@ INSERT: button:nth-of-type(1) + button
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(2) + button
+INSERT: button:nth-of-type(3)
 ```
 
 # Update

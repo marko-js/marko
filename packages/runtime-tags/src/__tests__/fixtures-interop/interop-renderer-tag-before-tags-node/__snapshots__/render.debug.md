@@ -25,7 +25,7 @@
 ```
 ## Change
 ```
-INSERT: #toggle + #inc
+INSERT: #inc
 UPDATE: #inc::text " " => "0"
 ```
 

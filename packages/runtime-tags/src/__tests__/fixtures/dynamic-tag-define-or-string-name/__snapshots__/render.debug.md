@@ -21,5 +21,5 @@ body
 ```
 ## Change
 ```
-INSERT: #open + ::text("body")
+INSERT: ::text("body")
 ```

@@ -38,7 +38,7 @@ INSERT: .child
 ```
 ## Change
 ```
-INSERT: .child + .placeholder
+INSERT: .placeholder
 ```
 
 # Update
@@ -52,6 +52,6 @@ done
 ```
 ## Change
 ```
-INSERT: .child + ::text("done")
-REMOVE: ::text + button
+REMOVE: button
+INSERT: ::text("done")
 ```

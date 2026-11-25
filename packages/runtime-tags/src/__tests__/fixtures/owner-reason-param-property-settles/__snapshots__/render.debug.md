@@ -25,6 +25,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: span + span
 UPDATE: body[data-seen] "[{\"list\":[\"a\",\"b\"],\"show\":true,\"name\":\"first\"},1,\"b\"]" => "[{\"list\":[\"a\"],\"show\":true,\"name\":\"second\"},2,\"a\"]"
+REMOVE: span
 ```

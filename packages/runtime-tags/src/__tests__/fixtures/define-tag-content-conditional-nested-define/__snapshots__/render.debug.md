@@ -17,9 +17,9 @@ outer hi: label: hi
 ```
 ## Change
 ```
-INSERT: button + :is(::text("outer "), ::text("hi"), ::text(": "))
+INSERT: ::text("outer "), ::text("hi"), ::text(": ")
 UPDATE: ::text@6 "" => "hi"
-INSERT: ::text@8 + :is(::text("label: "), ::text("hi"))
+INSERT: ::text("label: "), ::text("hi")
 UPDATE: ::text@17 "" => "hi"
 ```
 
@@ -34,9 +34,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: button + ::text("outer ")
-REMOVE: button + ::text("hi")
-REMOVE: button + ::text(": ")
-REMOVE: button + ::text("label: ")
-REMOVE: button + ::text("hi")
+REMOVE: ::text(": ")
+REMOVE: ::text("hi")
+REMOVE: ::text("hi")
+REMOVE: ::text("label: ")
+REMOVE: ::text("outer ")
 ```

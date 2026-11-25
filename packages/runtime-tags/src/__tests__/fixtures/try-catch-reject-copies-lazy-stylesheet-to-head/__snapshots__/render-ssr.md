@@ -10,10 +10,10 @@
 ```
 ## Change
 ```
+INSERT: #document > html > head > link
 INSERT: link
 INSERT: .child
 INSERT: .child::text("body")
-INSERT: #document > html > head > link
 ```
 
 # Update
@@ -22,7 +22,7 @@ caught ERROR!
 ```
 ## Change
 ```
-INSERT: ::text("caught ERROR!")
-REMOVE: span
 REMOVE: link
+REMOVE: span
+INSERT: ::text("caught ERROR!")
 ```

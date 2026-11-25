@@ -31,9 +31,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: div + div
-REMOVE: div + span
-REMOVE: div + p
+REMOVE: div
+REMOVE: p
+REMOVE: span
 REMOVE: div::text("mounted")
 INSERT: div::text("destroyed")
 ```
@@ -61,9 +61,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: div:nth-of-type(1) + :is(div, span, p)
 REMOVE: div:nth-of-type(1)::text("destroyed")
 INSERT: div:nth-of-type(1)::text("mounted")
+INSERT: div:nth-of-type(2), span, p
 ```
 
 # Update
@@ -80,9 +80,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: div + div
-REMOVE: div + span
-REMOVE: div + p
+REMOVE: div
+REMOVE: p
+REMOVE: span
 REMOVE: div::text("mounted")
 INSERT: div::text("destroyed")
 ```

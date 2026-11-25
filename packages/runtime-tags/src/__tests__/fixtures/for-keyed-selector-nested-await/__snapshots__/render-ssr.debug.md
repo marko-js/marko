@@ -31,13 +31,13 @@
 ## Change
 ```
 INSERT: ul
-INSERT: ul > .danger
+INSERT: .danger
 INSERT: .danger > button
 INSERT: .danger > button::text("a")
-INSERT: .danger + li
+INSERT: ul > li:nth-of-type(2)
 INSERT: ul > li:nth-of-type(2) > button
 INSERT: ul > li:nth-of-type(2) > button::text("b")
-INSERT: ul > li:nth-of-type(2) + li
+INSERT: ul > li:nth-of-type(3)
 INSERT: ul > li:nth-of-type(3) > button
 INSERT: ul > li:nth-of-type(3) > button::text("c")
 ```

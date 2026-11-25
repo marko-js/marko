@@ -30,8 +30,8 @@ INSERT: div::text("LOADING...")
 ```
 ## Change
 ```
+REMOVE: div::text("LOADING...")
 INSERT: div > div
-REMOVE: div > div + ::text("LOADING...")
 ```
 
 # Update
@@ -67,8 +67,8 @@ INSERT: div > div::text("LOADING...")
 ```
 ## Change
 ```
+REMOVE: div > div::text("LOADING...")
 INSERT: div > div > div
-REMOVE: div > div > div + ::text("LOADING...")
 ```
 
 # Update
@@ -112,8 +112,8 @@ INSERT: div > div > div::text("LOADING...")
 ```
 ## Change
 ```
+REMOVE: div > div > div::text("LOADING...")
 INSERT: div > div > div > div
-REMOVE: div > div > div > div + ::text("LOADING...")
 ```
 
 # Update

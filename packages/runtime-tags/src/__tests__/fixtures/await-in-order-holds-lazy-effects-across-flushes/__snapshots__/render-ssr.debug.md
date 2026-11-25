@@ -29,10 +29,10 @@ loading
 ```
 ## Change
 ```
-INSERT: .a + .b
+INSERT: .b
 INSERT: .b::text("b:")
-INSERT: .b::text@0 + ::text("0")
-INSERT: .b + ::text("loading")
+INSERT: .b::text("0")
+INSERT: ::text("loading")
 ```
 
 # Update
@@ -63,10 +63,10 @@ document.querySelector(`.${id}`)?.click();
 ```
 ## Change
 ```
-INSERT: .c::text("c:")
-INSERT: .c::text@0 + ::text("0")
 REMOVE: ::text("loading")
-INSERT: .b + .c
+INSERT: .c
+INSERT: .c::text("c:")
+INSERT: .c::text("0")
 ```
 
 # Update
@@ -99,16 +99,16 @@ INSERT: .b + .c
 ```
 ## Change
 ```
-INSERT: .c + .d
-INSERT: .d::text("d:")
-INSERT: .d::text@0 + ::text("0")
 INSERT: #log::text("[a]")
-REMOVE: #log::text("[a]")
 INSERT: #log::text("[a][b]")
-REMOVE: #log::text("[a][b]")
 INSERT: #log::text("[a][b][d]")
+REMOVE: #log::text("[a]")
+REMOVE: #log::text("[a][b]")
 REMOVE: #log::text("[a][b][d]")
 INSERT: #log::text("[a][b][d][c]")
+INSERT: .d
+INSERT: .d::text("d:")
+INSERT: .d::text("0")
 ```
 
 # Update

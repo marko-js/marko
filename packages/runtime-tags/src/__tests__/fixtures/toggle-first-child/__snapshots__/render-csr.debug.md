@@ -33,7 +33,7 @@ REMOVE: div > span
 ```
 ## Change
 ```
-INSERT: div > span
+INSERT: div > span:nth-of-type(1)
 UPDATE: div > span:nth-of-type(1)::text " " => "World"
 ```
 

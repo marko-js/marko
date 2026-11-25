@@ -17,5 +17,5 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: button + ::text("hi")
+REMOVE: ::text("hi")
 ```

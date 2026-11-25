@@ -29,6 +29,6 @@
 ```
 INSERT: #child
 INSERT: #child::text("1")
-INSERT: #child + #child
+INSERT: #child
 INSERT: #child::text("2")
 ```

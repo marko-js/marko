@@ -18,6 +18,6 @@ caught ERROR!
 ```
 ## Change
 ```
-INSERT: ::text + p
+INSERT: p
 INSERT: p::text("d")
 ```

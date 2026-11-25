@@ -30,8 +30,8 @@
 ```
 ## Change
 ```
-UPDATE: #tags-api::text "0" => "1"
 UPDATE: #class-api::text "0" => "1"
+UPDATE: #tags-api::text "0" => "1"
 ```
 
 # Update
@@ -52,6 +52,6 @@ UPDATE: #class-api::text "0" => "1"
 ```
 ## Change
 ```
-UPDATE: #tags-api::text "1" => "2"
 UPDATE: #class-api::text "1" => "2"
+UPDATE: #tags-api::text "1" => "2"
 ```

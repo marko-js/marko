@@ -19,7 +19,7 @@
 ```
 ## Change
 ```
-INSERT: #class > #caught
+INSERT: #caught
 ```
 
 # Update

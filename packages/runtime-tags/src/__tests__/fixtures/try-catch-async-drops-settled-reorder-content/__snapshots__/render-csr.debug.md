@@ -17,8 +17,8 @@ INSERT: ::text("loading")
 ```
 ## Change
 ```
+REMOVE: ::text("loading")
 INSERT: p
-REMOVE: p + ::text("loading")
 ```
 ## Console
 ```
@@ -31,8 +31,8 @@ caught ERROR!
 ```
 ## Change
 ```
+REMOVE: p
 INSERT: ::text("caught "), ::text("ERROR!")
-REMOVE: ::text@7 + p
 UPDATE: ::text@7 "" => "ERROR!"
 ```
 
@@ -42,6 +42,6 @@ caught ERROR!done
 ```
 ## Change
 ```
-INSERT: ::text@7 + ::text("done")
+INSERT: ::text("done")
 UPDATE: ::text@13 " " => "done"
 ```

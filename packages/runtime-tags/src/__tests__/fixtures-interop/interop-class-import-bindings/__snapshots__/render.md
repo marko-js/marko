@@ -129,9 +129,9 @@ Namespace: namespace
 ```
 ## Change
 ```
+UPDATE: #class::text "0" => "1"
 UPDATE: #direct[data-parent] "0" => "1"
 UPDATE: #named-tags[data-parent] "0" => "1"
-UPDATE: #class::text "0" => "1"
 ```
 
 # Update
@@ -272,7 +272,7 @@ Namespace: namespace
 ```
 ## Change
 ```
+UPDATE: #class::text "1" => "2"
 UPDATE: #direct[data-parent] "1" => "2"
 UPDATE: #named-tags[data-parent] "1" => "2"
-UPDATE: #class::text "1" => "2"
 ```

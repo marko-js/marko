@@ -32,10 +32,10 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-REMOVE: #toggle + i
-REMOVE: #toggle + i
-REMOVE: #toggle + u
-REMOVE: #toggle + u
+REMOVE: i
+REMOVE: i
+REMOVE: u
+REMOVE: u
 ```
 
 # Update
@@ -63,12 +63,12 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-INSERT: #toggle + i
-INSERT: i:nth-of-type(1) + i
-INSERT: i:nth-of-type(2) + u
-INSERT: u:nth-of-type(1) + u
+INSERT: i:nth-of-type(1)
 UPDATE: i:nth-of-type(1)::text " " => "{\"id\":1,\"extra\":\"x\"}"
+INSERT: i:nth-of-type(2)
 UPDATE: i:nth-of-type(2)::text " " => "{\"id\":2,\"extra\":\"y\"}"
+INSERT: u:nth-of-type(1)
 UPDATE: u:nth-of-type(1)::text " " => "a+b"
+INSERT: u:nth-of-type(2)
 UPDATE: u:nth-of-type(2)::text " " => "c+d"
 ```

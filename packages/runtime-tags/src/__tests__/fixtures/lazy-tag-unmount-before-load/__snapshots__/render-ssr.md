@@ -17,7 +17,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: button + ::text("loading")
+REMOVE: ::text("loading")
 ```
 
 # Update
@@ -47,7 +47,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: button + span
+INSERT: span
 ```
 ## Console
 ```

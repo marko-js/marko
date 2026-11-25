@@ -36,9 +36,9 @@
 ## Change
 ```
 REMOVE: div > span
-INSERT: div > span:nth-of-type(1) + span
-REMOVE: div > span:nth-of-type(3) + span
-INSERT: div > span
+REMOVE: div > span
+INSERT: div > span:nth-of-type(1)
+INSERT: div > span:nth-of-type(4)
 ```
 
 # Update `{"children":[{"id":4,"text":"d"},{"id":3,"text":"c"},{"id":2,"text":"b"},{"id":1,"text":"a"}]}`
@@ -60,6 +60,6 @@ INSERT: div > span
 ```
 ## Change
 ```
-REMOVE: div > span:nth-of-type(3) + span
-INSERT: div > span:nth-of-type(1) + span
+REMOVE: div > span
+INSERT: div > span:nth-of-type(2)
 ```

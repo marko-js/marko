@@ -21,6 +21,6 @@ depth 0
 ```
 ## Change
 ```
-INSERT: #toggle + :is(::text("depth "), ::text("0"))
+INSERT: ::text("depth "), ::text("0")
 UPDATE: ::text@6 "" => "0"
 ```

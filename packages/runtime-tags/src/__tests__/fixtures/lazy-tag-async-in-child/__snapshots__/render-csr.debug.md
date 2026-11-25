@@ -30,9 +30,9 @@
 ```
 ## Change
 ```
-INSERT: #before + button
-UPDATE: button::text@2 "" => "10"
+INSERT: button
 UPDATE: button::text@0 "" => "1"
+UPDATE: button::text@2 "" => "10"
 ```
 
 # Update

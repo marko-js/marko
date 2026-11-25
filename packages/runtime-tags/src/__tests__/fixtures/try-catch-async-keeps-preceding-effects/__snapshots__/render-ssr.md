@@ -17,9 +17,9 @@ loading
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(2)::text("0")
 REMOVE: ::text("loading")
-INSERT: button:nth-of-type(1) + button
+INSERT: button:nth-of-type(2)
+INSERT: button:nth-of-type(2)::text("0")
 ```
 
 # Update
@@ -34,7 +34,7 @@ ERROR!
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(2) + ::text("ERROR!")
+INSERT: ::text("ERROR!")
 ```
 
 # Update

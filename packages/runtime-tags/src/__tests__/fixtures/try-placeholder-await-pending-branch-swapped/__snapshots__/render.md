@@ -20,8 +20,8 @@ LOADING
 ```
 ## Change
 ```
-INSERT: button + ::text("LOADING")
-REMOVE: ::text + ::text("ready")
+REMOVE: ::text("ready")
+INSERT: ::text("LOADING")
 ```
 
 # Update
@@ -38,6 +38,6 @@ tab 2
 ```
 ## Change
 ```
-INSERT: button + ::text("tab 2")
-REMOVE: ::text + ::text("LOADING")
+REMOVE: ::text("LOADING")
+INSERT: ::text("tab 2")
 ```

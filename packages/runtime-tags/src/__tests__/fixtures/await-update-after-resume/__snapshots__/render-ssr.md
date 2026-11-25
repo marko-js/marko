@@ -23,9 +23,9 @@ loading...
 ```
 ## Change
 ```
-INSERT: #inside::text("0")
 REMOVE: ::text("loading...")
-INSERT: #outside + #inside
+INSERT: #inside
+INSERT: #inside::text("0")
 ```
 ## Console
 ```
@@ -62,8 +62,8 @@ loading...
 ```
 ## Change
 ```
-INSERT: #outside + ::text("loading...")
-REMOVE: ::text + #inside
+REMOVE: #inside
+INSERT: ::text("loading...")
 ```
 
 # Update
@@ -81,8 +81,8 @@ REMOVE: ::text + #inside
 ```
 ## Change
 ```
-INSERT: #outside + #inside
-REMOVE: #inside + ::text("loading...")
+REMOVE: ::text("loading...")
+INSERT: #inside
 ```
 ## Console
 ```

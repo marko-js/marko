@@ -28,5 +28,5 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(1) + button
+INSERT: button:nth-of-type(2)
 ```

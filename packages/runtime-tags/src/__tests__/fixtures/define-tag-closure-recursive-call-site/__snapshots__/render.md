@@ -25,9 +25,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: span:nth-of-type(1) + span
-UPDATE: span:nth-of-type(2)::text@4 "" => "2"
+INSERT: span:nth-of-type(2)
 UPDATE: span:nth-of-type(2)::text@0 "" => "node"
+UPDATE: span:nth-of-type(2)::text@4 "" => "2"
 ```
 
 # Update
@@ -50,7 +50,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: span:nth-of-type(2) + span
-UPDATE: span:nth-of-type(3)::text@4 "" => "3"
+INSERT: span:nth-of-type(3)
 UPDATE: span:nth-of-type(3)::text@0 "" => "node"
+UPDATE: span:nth-of-type(3)::text@4 "" => "3"
 ```

@@ -17,10 +17,10 @@ INSERT: ::text("loading")
 ```
 ## Change
 ```
-INSERT: button::text("inner ")
-INSERT: button::text@0 + ::text("0")
 REMOVE: ::text("loading")
 INSERT: button
+INSERT: button::text("inner ")
+INSERT: button::text("0")
 ```
 
 # Update

@@ -25,9 +25,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: div::text("client")
 REMOVE: ::text("loading")
-INSERT: button + :is(span, div)
+INSERT: span, div
+INSERT: div::text("client")
 UPDATE: div::text "server" => "client"
 ```
 ## Console

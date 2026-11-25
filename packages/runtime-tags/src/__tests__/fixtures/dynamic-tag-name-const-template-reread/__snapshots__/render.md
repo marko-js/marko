@@ -28,8 +28,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: div:nth-of-type(1) + div
-REMOVE: div:nth-of-type(2) + div
+REMOVE: div
+INSERT: div:nth-of-type(2)
 UPDATE: div:nth-of-type(2)::text@2 "" => "second"
-INSERT: div:nth-of-type(2)::text@8 + ::text("Hello")
+INSERT: div:nth-of-type(2)::text("Hello")
 ```

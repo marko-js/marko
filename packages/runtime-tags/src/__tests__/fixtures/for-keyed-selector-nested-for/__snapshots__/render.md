@@ -209,7 +209,7 @@ UPDATE: ul:nth-of-type(2) > li:nth-of-type(1)[class] "danger" => ""
 ```
 ## Change
 ```
-INSERT: ul:nth-of-type(2) + ul
+INSERT: ul:nth-of-type(3)
 ```
 
 # Update

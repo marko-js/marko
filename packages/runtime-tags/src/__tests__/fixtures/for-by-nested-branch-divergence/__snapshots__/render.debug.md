@@ -38,8 +38,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: div > b + span
-INSERT: div > span
+REMOVE: div > span
+INSERT: div > span:nth-of-type(1)
 ```
 
 # Update
@@ -64,6 +64,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: div > span:nth-of-type(2) + b
+REMOVE: div > b
 INSERT: div > b
 ```

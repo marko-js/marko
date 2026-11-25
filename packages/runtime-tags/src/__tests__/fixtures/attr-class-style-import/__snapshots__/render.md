@@ -66,12 +66,12 @@ document.querySelector("button").click();
 ## Change
 ```
 UPDATE: div:nth-of-type(4)[class] "item" => "item on"
-UPDATE: div:nth-of-type(5)[class] "item lit" => "item on"
 UPDATE: div:nth-of-type(5)[class] "item lit on" => "item on"
+UPDATE: div:nth-of-type(5)[class] "item lit" => "item on"
 UPDATE: div:nth-of-type(6)[class] null => "on"
 UPDATE: div:nth-of-type(7)[class] "box" => "on"
 UPDATE: div:nth-of-type(8)[class] "item" => "item on"
-INSERT: div:nth-of-type(8) + span
+INSERT: span
 ```
 
 # Update
@@ -109,11 +109,11 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: span
 UPDATE: div:nth-of-type(4)[class] "item on" => "item"
 UPDATE: div:nth-of-type(5)[class] "item on" => "item lit"
 UPDATE: div:nth-of-type(5)[class] "item" => "item lit"
 UPDATE: div:nth-of-type(6)[class] "on" => ""
 UPDATE: div:nth-of-type(7)[class] "on" => "box"
 UPDATE: div:nth-of-type(8)[class] "item on" => "item"
-REMOVE: div:nth-of-type(8) + span
 ```

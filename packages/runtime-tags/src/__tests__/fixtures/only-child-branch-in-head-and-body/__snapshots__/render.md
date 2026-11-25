@@ -17,7 +17,7 @@ document.body.append(document.createElement("aside"));
 ```
 ## Change
 ```
-INSERT: button + aside
+INSERT: aside
 ```
 
 # Update

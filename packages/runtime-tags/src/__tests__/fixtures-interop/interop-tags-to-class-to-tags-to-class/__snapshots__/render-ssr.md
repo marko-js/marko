@@ -62,8 +62,8 @@ document.querySelector("#tags").click();
 ```
 ## Change
 ```
-UPDATE: span::text@0 "0 0 0" => "1 0 0"
 UPDATE: div::text@8 "0" => "1"
+UPDATE: span::text@0 "0 0 0" => "1 0 0"
 ```
 
 # Update
@@ -100,8 +100,8 @@ document.querySelector("#class").click();
 ```
 ## Change
 ```
-UPDATE: span::text@0 "1 0 0" => "1 1 0"
 UPDATE: div::text@10 "0" => "1"
+UPDATE: span::text@0 "1 0 0" => "1 1 0"
 ```
 
 # Update
@@ -212,6 +212,6 @@ document.querySelector("#tags").click();
 ```
 ## Change
 ```
-UPDATE: span::text@0 "1 1 1" => "2 1 1"
 UPDATE: div::text@8 "1" => "2"
+UPDATE: span::text@0 "1 1 1" => "2 1 1"
 ```

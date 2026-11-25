@@ -35,7 +35,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: .attached > li:nth-of-type(2) + li
+INSERT: .attached > li:nth-of-type(3)
 ```
 
 # Update
@@ -63,7 +63,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: .attached > li:nth-of-type(3) + li
+INSERT: .attached > li:nth-of-type(4)
 ```
 
 # Update
@@ -94,5 +94,5 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: .attached > li:nth-of-type(4) + li
+INSERT: .attached > li:nth-of-type(5)
 ```

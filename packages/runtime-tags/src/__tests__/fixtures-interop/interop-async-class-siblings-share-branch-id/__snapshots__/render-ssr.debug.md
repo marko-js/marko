@@ -30,6 +30,6 @@
 ```
 ## Change
 ```
-REMOVE: #toggle + #a
-REMOVE: #toggle + #b
+REMOVE: #a
+REMOVE: #b
 ```

@@ -44,7 +44,7 @@ destroyed 3
 ```
 ## Change
 ```
-REMOVE: div:nth-of-type(3) + div
+REMOVE: div
 REMOVE: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3")
 INSERT: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3")
 ```
@@ -71,7 +71,7 @@ destroyed 2
 ```
 ## Change
 ```
-REMOVE: div:nth-of-type(2) + div
+REMOVE: div
 REMOVE: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3")
 INSERT: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3\ndestroyed 2")
 ```
@@ -96,7 +96,7 @@ destroyed 1
 ```
 ## Change
 ```
-REMOVE: div + div
+REMOVE: div
 REMOVE: div::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3\ndestroyed 2")
 INSERT: div::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3\ndestroyed 2\ndestroyed 1")
 ```
@@ -133,13 +133,13 @@ mounted 3
 ```
 ## Change
 ```
-INSERT: div:nth-of-type(1) + div
-INSERT: div:nth-of-type(2) + div
-INSERT: div:nth-of-type(3) + div
-REMOVE: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3\ndestroyed 2\ndestroyed 1")
 INSERT: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3\ndestroyed 2\ndestroyed 1\nmounted 1")
-REMOVE: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3\ndestroyed 2\ndestroyed 1\nmounted 1")
 INSERT: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3\ndestroyed 2\ndestroyed 1\nmounted 1\nmounted 2")
+REMOVE: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3\ndestroyed 2\ndestroyed 1")
+REMOVE: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3\ndestroyed 2\ndestroyed 1\nmounted 1")
 REMOVE: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3\ndestroyed 2\ndestroyed 1\nmounted 1\nmounted 2")
 INSERT: div:nth-of-type(1)::text("\nmounted 1\nmounted 2\nmounted 3\ndestroyed 3\ndestroyed 2\ndestroyed 1\nmounted 1\nmounted 2\nmounted 3")
+INSERT: div:nth-of-type(2)
+INSERT: div:nth-of-type(3)
+INSERT: div:nth-of-type(4)
 ```

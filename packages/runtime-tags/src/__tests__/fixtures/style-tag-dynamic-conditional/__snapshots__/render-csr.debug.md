@@ -18,8 +18,8 @@
 ```
 ## Change
 ```
-REMOVE: style
 REMOVE: div
+REMOVE: style
 ```
 
 # Update `{"show":true,"color":"blue"}`

@@ -9,7 +9,7 @@ abcdef
 ```
 ## Change
 ```
-INSERT: ::text@3 + ::text("e")
+INSERT: ::text("e")
 UPDATE: ::text@4 " " => "e"
 ```
 
@@ -19,8 +19,8 @@ aERROR!def
 ```
 ## Change
 ```
-INSERT: ::text@0 + ::text("ERROR!")
-REMOVE: ::text@1 + ::text("b")
-REMOVE: ::text@1 + ::text("c")
+REMOVE: ::text("b")
+REMOVE: ::text("c")
+INSERT: ::text("ERROR!")
 UPDATE: ::text@1 " " => "ERROR!"
 ```

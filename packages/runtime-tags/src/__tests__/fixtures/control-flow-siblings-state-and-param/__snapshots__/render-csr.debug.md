@@ -57,8 +57,8 @@ document.querySelector("button").click();
 ## Change
 ```
 INSERT: div:nth-of-type(2) > span
-INSERT: p:nth-of-type(2) + p
-INSERT: span:nth-of-type(1) + span
+INSERT: p:nth-of-type(3)
+INSERT: span:nth-of-type(2)
 ```
 
 # Update
@@ -87,9 +87,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: p
+REMOVE: span
 REMOVE: div:nth-of-type(2) > span
-REMOVE: p:nth-of-type(2) + p
-REMOVE: span + span
 ```
 
 # Update `{"show":false,"items":["a","b"]}`
@@ -111,9 +111,9 @@ REMOVE: span + span
 ```
 ## Change
 ```
+REMOVE: span
 REMOVE: div:nth-of-type(1) > span
-REMOVE: p:nth-of-type(3) + span
-INSERT: p:nth-of-type(1) + p
+INSERT: p:nth-of-type(2)
 ```
 
 # Update
@@ -149,8 +149,8 @@ document.querySelector("button").click();
 ## Change
 ```
 INSERT: div:nth-of-type(2) > span
-INSERT: p:nth-of-type(3) + p
-INSERT: p:nth-of-type(4) + span
+INSERT: p:nth-of-type(4)
+INSERT: span
 ```
 
 # Update `{"show":true,"items":[]}`
@@ -183,8 +183,8 @@ INSERT: p:nth-of-type(4) + span
 ```
 ## Change
 ```
+REMOVE: p
+REMOVE: p
 INSERT: div:nth-of-type(1) > span
-INSERT: p:nth-of-type(2) + span
-REMOVE: div:nth-of-type(2) + p
-REMOVE: div:nth-of-type(2) + p
+INSERT: span:nth-of-type(1)
 ```

@@ -16,9 +16,9 @@
 ```
 ## Change
 ```
-INSERT: button + span
+INSERT: span
 INSERT: span::text("a:x:")
-INSERT: span::text@0 + ::text("0")
+INSERT: span::text("0")
 ```
 
 # Update

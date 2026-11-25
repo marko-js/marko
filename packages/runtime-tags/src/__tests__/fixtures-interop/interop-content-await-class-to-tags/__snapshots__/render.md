@@ -18,7 +18,7 @@
 INSERT: div
 INSERT: div > b
 INSERT: div > b::text("hi")
-INSERT: div + section
+INSERT: section
 INSERT: section > b
 INSERT: section > b::text("hi")
 ```

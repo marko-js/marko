@@ -30,7 +30,7 @@ UPDATE: button::text "0" => "1"
 ```
 ## Change
 ```
-INSERT: button + i
+INSERT: i
 UPDATE: i::text@8 "" => "1"
 ```
 
@@ -45,8 +45,8 @@ UPDATE: i::text@8 "" => "1"
 ```
 ## Change
 ```
-INSERT: button + b
-REMOVE: b + i
+REMOVE: i
+INSERT: b
 ```
 
 # Update

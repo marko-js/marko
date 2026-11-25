@@ -7,7 +7,7 @@ a loadingb loading
 ## Change
 ```
 INSERT: ::text("a loading")
-INSERT: ::text@0 + ::text("b loading")
+INSERT: ::text("b loading")
 ```
 
 # Update
@@ -19,8 +19,8 @@ a loadingb inner loading
 ```
 ## Change
 ```
-INSERT: ::text@0 + :is(::text("b inner loading"), div)
-REMOVE: div + ::text("b loading")
+REMOVE: ::text("b loading")
+INSERT: ::text("b inner loading"), div
 ```
 
 # Update
@@ -38,8 +38,8 @@ b inner loading
 ```
 ## Change
 ```
-INSERT: span, div
-REMOVE: div:nth-of-type(1) + ::text("a loading")
+REMOVE: ::text("a loading")
+INSERT: span, div:nth-of-type(1)
 ```
 
 # Update
@@ -59,6 +59,6 @@ REMOVE: div:nth-of-type(1) + ::text("a loading")
 ```
 ## Change
 ```
-INSERT: div:nth-of-type(1) + span
-REMOVE: span:nth-of-type(2) + ::text("b inner loading")
+REMOVE: ::text("b inner loading")
+INSERT: span:nth-of-type(2)
 ```

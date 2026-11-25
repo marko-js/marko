@@ -15,10 +15,10 @@ loading
 ```
 ## Change
 ```
+REMOVE: ::text("loading")
 INSERT: #class
 INSERT: #class > span
 INSERT: #class > span::text("child")
-REMOVE: ::text("loading")
 ```
 
 # Update
@@ -38,7 +38,7 @@ REMOVE: ::text("loading")
 ```
 ## Change
 ```
-INSERT: #class + #slow
+INSERT: #slow
 INSERT: #slow::text("slow")
 ```
 ## Console

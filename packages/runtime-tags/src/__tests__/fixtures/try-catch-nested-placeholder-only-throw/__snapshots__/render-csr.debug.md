@@ -17,8 +17,8 @@ INSERT: ::text("loading")
 ```
 ## Change
 ```
+REMOVE: ::text("loading")
 INSERT: button
-REMOVE: button + ::text("loading")
 ```
 
 # Update
@@ -30,8 +30,8 @@ caught bang
 ```
 ## Change
 ```
-UPDATE: button::text@6 "0" => "1"
+REMOVE: button
 INSERT: ::text("caught "), ::text("bang")
-REMOVE: ::text@7 + button
 UPDATE: ::text@7 "" => "bang"
+UPDATE: button::text@6 "0" => "1"
 ```

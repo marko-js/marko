@@ -29,9 +29,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: button + span
+INSERT: span:nth-of-type(1)
 INSERT: span:nth-of-type(1)::text("Hello")
-INSERT: span:nth-of-type(1) + span
+INSERT: span:nth-of-type(2)
 INSERT: span:nth-of-type(2)::text("1")
 ```
 

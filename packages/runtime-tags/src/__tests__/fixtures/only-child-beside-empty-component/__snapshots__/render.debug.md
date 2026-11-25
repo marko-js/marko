@@ -36,5 +36,5 @@ document.querySelector("button").click();
 ## Change
 ```
 INSERT: div > span
-INSERT: ul > li:nth-of-type(1) + li
+INSERT: ul > li:nth-of-type(2)
 ```

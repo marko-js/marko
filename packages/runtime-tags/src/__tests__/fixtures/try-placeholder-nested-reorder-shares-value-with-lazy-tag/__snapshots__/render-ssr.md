@@ -19,10 +19,10 @@ ab
 ```
 ## Change
 ```
-INSERT: .child::text("0")
-INSERT: .placeholder::text("0")
 REMOVE: ::text("outer")
 INSERT: ::text("a"), ::text("b"), .child, .placeholder
+INSERT: .child::text("0")
+INSERT: .placeholder::text("0")
 ```
 
 # Update
@@ -75,7 +75,7 @@ abc
 ```
 ## Change
 ```
-REMOVE: t > button:nth-of-type(1) + button
 REMOVE: button
-INSERT: ::text@1 + ::text("c")
+REMOVE: button
+INSERT: ::text("c")
 ```

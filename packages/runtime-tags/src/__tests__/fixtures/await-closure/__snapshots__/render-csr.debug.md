@@ -14,7 +14,7 @@ loading...
 ```
 ## Change
 ```
-INSERT: button + ::text("loading...")
+INSERT: ::text("loading...")
 ```
 
 # Update
@@ -58,8 +58,8 @@ UPDATE: button::text "2" => "3"
 ```
 ## Change
 ```
-INSERT: button + span
-REMOVE: span + ::text("loading...")
+REMOVE: ::text("loading...")
+INSERT: span
 ```
 
 # Update

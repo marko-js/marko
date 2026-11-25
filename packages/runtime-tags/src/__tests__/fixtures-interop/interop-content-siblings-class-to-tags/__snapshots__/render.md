@@ -59,8 +59,8 @@
 ## Change
 ```
 UPDATE: #class::text "0" => "1"
-UPDATE: #passthrough::text@12 "0" => "1"
 UPDATE: #spread::text@7 "0" => "1"
+UPDATE: #passthrough::text@12 "0" => "1"
 ```
 
 # Update
@@ -131,6 +131,6 @@ UPDATE: .thing::text@6 "0" => "1"
 ## Change
 ```
 UPDATE: #class::text "1" => "2"
-UPDATE: #passthrough::text@12 "1" => "2"
 UPDATE: #spread::text@7 "1" => "2"
+UPDATE: #passthrough::text@12 "1" => "2"
 ```

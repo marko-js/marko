@@ -9,7 +9,7 @@ a_A_efg
 ```
 ## Change
 ```
-INSERT: ::text@4 + ::text("fg")
+INSERT: ::text("fg")
 ```
 
 # Update
@@ -19,5 +19,5 @@ abcdefg
 ## Change
 ```
 REMOVE: ::text("_A_")
-INSERT: ::text@0 + :is(::text("b"), ::text("c"), ::text("d"))
+INSERT: ::text("b"), ::text("c"), ::text("d")
 ```

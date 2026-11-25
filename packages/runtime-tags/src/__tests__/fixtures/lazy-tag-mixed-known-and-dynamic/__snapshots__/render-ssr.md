@@ -67,5 +67,5 @@ document.querySelector(".toggle").click();
 ```
 ## Change
 ```
-REMOVE: span + span
+REMOVE: span
 ```

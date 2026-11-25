@@ -23,7 +23,7 @@ INSERT: t > span::text("inner")
 ```
 ## Change
 ```
-INSERT: div::text("outer")
 REMOVE: ::text("outer loading")
 INSERT: span, div
+INSERT: div::text("outer")
 ```

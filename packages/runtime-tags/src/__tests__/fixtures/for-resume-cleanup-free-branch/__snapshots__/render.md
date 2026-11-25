@@ -51,7 +51,7 @@ document.querySelector("#c").click();
 ```
 ## Change
 ```
-INSERT: li:nth-of-type(3) + li
+INSERT: li:nth-of-type(4)
 ```
 
 # Update
@@ -72,10 +72,10 @@ document.querySelector("#o").click();
 ```
 ## Change
 ```
-REMOVE: #c + li
-REMOVE: #c + li
-REMOVE: #c + li
-REMOVE: #c + li
+REMOVE: li
+REMOVE: li
+REMOVE: li
+REMOVE: li
 ```
 
 # Update

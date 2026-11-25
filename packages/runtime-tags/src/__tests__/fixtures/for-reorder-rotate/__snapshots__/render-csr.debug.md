@@ -61,8 +61,8 @@
 ```
 ## Change
 ```
-REMOVE: #4 + #5
-INSERT: div > #5
+REMOVE: div > #5
+INSERT: #5
 ```
 
 # Update `{"children":[{"id":1,"text":"a"},{"id":2,"text":"b"},{"id":3,"text":"c"},{"id":4,"text":"d"},{"id":5,"text":"e"}]}`
@@ -98,7 +98,7 @@ INSERT: div > #5
 ## Change
 ```
 REMOVE: div > #5
-INSERT: #4 + #5
+INSERT: #5
 ```
 
 # Update `{"children":[{"id":4,"text":"d"},{"id":5,"text":"e"},{"id":1,"text":"a"},{"id":2,"text":"b"},{"id":3,"text":"c"}]}`
@@ -133,8 +133,8 @@ INSERT: #4 + #5
 ```
 ## Change
 ```
-REMOVE: #4 + #5
-INSERT: div > #5
-REMOVE: #3 + #4
-INSERT: div > #4
+REMOVE: div > #4
+REMOVE: div > #5
+INSERT: #4
+INSERT: #5
 ```

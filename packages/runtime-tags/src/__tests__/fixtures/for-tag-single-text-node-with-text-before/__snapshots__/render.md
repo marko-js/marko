@@ -18,5 +18,5 @@
 ## Change
 ```
 UPDATE: div[data-children] "1" => "2"
-INSERT: div::text@7 + ::text("Child")
+INSERT: div::text("Child")
 ```

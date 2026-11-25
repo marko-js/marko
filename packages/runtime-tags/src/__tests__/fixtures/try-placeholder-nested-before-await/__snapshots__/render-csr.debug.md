@@ -20,6 +20,6 @@ INSERT: ::text("outer loading")
 ```
 ## Change
 ```
+REMOVE: ::text("outer loading")
 INSERT: span, div
-REMOVE: div + ::text("outer loading")
 ```

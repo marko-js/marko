@@ -21,6 +21,6 @@ a:0b:1
 ```
 INSERT: ::text("a"), ::text(":"), ::text("0")
 UPDATE: ::text@0 "" => "a"
-INSERT: ::text@2 + :is(::text("b"), ::text(":"), ::text("1"))
+INSERT: ::text("b"), ::text(":"), ::text("1")
 UPDATE: ::text@3 "" => "b"
 ```

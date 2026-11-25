@@ -15,7 +15,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: button + span
+INSERT: span
 UPDATE: span::text " " => "A"
 ```
 
@@ -28,5 +28,5 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: button + span
+REMOVE: span
 ```

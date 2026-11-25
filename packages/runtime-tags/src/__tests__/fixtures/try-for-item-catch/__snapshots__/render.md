@@ -40,9 +40,9 @@ Error: ERROR!
 ```
 ## Change
 ```
-INSERT: div + ::text("Error: ERROR!")
-REMOVE: ::text + button
-REMOVE: ::text + ::text("-- ")
-REMOVE: ::text + ::text("-- ")
+REMOVE: ::text("-- ")
+REMOVE: ::text("-- ")
+REMOVE: button
+INSERT: ::text("Error: ERROR!")
 UPDATE: ::text " " => "Error: ERROR!"
 ```

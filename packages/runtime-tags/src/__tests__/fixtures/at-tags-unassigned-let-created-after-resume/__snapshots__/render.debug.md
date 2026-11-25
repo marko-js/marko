@@ -35,5 +35,5 @@ document.querySelector(`#${id}`).click();
 ```
 ## Change
 ```
-INSERT: span:nth-of-type(2) + span
+INSERT: span:nth-of-type(3)
 ```

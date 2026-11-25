@@ -71,9 +71,9 @@
 ```
 ## Change
 ```
-REMOVE: ul > li:nth-of-type(3) + li
-REMOVE: ul > li:nth-of-type(4) + li
-INSERT: ul > li:nth-of-type(2) + li
+REMOVE: ul > li
+REMOVE: ul > li
+INSERT: ul > li:nth-of-type(3)
 ```
 
 # Update
@@ -107,10 +107,10 @@ INSERT: ul > li:nth-of-type(2) + li
 ```
 ## Change
 ```
-REMOVE: ul > li:nth-of-type(1) + li
-REMOVE: ul > li:nth-of-type(1) + li
-REMOVE: ul > li:nth-of-type(2) + li
-INSERT: ul > li
+REMOVE: ul > li
+REMOVE: ul > li
+REMOVE: ul > li
+INSERT: ul > li:nth-of-type(1)
 ```
 
 # Update
@@ -147,5 +147,5 @@ INSERT: ul > li
 ```
 ## Change
 ```
-INSERT: ul > li:nth-of-type(2) + li
+INSERT: ul > li:nth-of-type(3)
 ```

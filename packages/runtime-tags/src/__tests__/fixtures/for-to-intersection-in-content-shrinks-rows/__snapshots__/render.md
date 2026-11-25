@@ -32,7 +32,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: div > span + span
-REMOVE: div > span + span
+REMOVE: div > span
+REMOVE: div > span
 UPDATE: div > span::text "a" => "z"
 ```

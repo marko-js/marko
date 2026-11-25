@@ -18,11 +18,11 @@
 ```
 ## Change
 ```
-INSERT: button
-INSERT: button:nth-of-type(1)::text("nope")
-INSERT: button:nth-of-type(1) + .toggle
-INSERT: .toggle::text("true")
 REMOVE: span
+INSERT: button:nth-of-type(1)
+INSERT: button:nth-of-type(1)::text("nope")
+INSERT: .toggle
+INSERT: .toggle::text("true")
 ```
 
 # Update
@@ -41,7 +41,7 @@ document.querySelector("button:not(.toggle)").click();
 ```
 ## Change
 ```
+REMOVE: button
 INSERT: p
-REMOVE: p + button
 UPDATE: p::text@13 "" => "from catch"
 ```

@@ -31,5 +31,5 @@ document.querySelector(".toggle").click();
 ```
 ## Change
 ```
-INSERT: .toggle + span
+INSERT: span
 ```

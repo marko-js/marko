@@ -45,8 +45,8 @@ document.querySelector("button#show").click();
 ## Change
 ```
 INSERT: div:nth-of-type(2) > span
-INSERT: div:nth-of-type(3) > span
 UPDATE: div:nth-of-type(2) > span::text " " => "first"
+INSERT: div:nth-of-type(3) > span
 UPDATE: div:nth-of-type(3) > span::text " " => "second"
 ```
 
@@ -71,8 +71,8 @@ document.querySelector("button#clear").click();
 ```
 ## Change
 ```
-REMOVE: div + div
-REMOVE: div + div
+REMOVE: div
+REMOVE: div
 INSERT: div::text("destroyed first")
-INSERT: div::text@0 + ::text("destroyed second")
+INSERT: div::text("destroyed second")
 ```

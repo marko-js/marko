@@ -20,8 +20,8 @@ INSERT: ::text("loading...")
 ```
 ## Change
 ```
+REMOVE: ::text("loading...")
 INSERT: button, span
-REMOVE: span + ::text("loading...")
 ```
 
 # Update

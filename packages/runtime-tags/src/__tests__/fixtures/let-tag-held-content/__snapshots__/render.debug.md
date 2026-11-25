@@ -37,8 +37,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: .foo
 INSERT: .foo
-REMOVE: .foo + .foo
 UPDATE: .foo[class] null => "foo"
 INSERT: .foo::text("Div")
 ```

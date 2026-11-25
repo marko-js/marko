@@ -40,5 +40,5 @@
 ```
 ## Change
 ```
-REMOVE: div:nth-of-type(5) + div
+REMOVE: div
 ```

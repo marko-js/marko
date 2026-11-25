@@ -22,7 +22,7 @@
 ```
 ## Change
 ```
-INSERT: #sync + #async
+INSERT: #async
 INSERT: #async::text("2")
 ```
 

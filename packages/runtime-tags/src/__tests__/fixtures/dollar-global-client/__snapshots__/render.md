@@ -28,8 +28,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: div > span
 INSERT: div > span
-REMOVE: div > span + span
 ```
 
 # Update
@@ -51,7 +51,7 @@ document.querySelector("button").click();
 ## Change
 ```
 REMOVE: div > span
-INSERT: div > .hidden
+INSERT: .hidden
 ```
 
 # Update
@@ -70,6 +70,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: div > span
 INSERT: div > span
-REMOVE: div > span + span
 ```

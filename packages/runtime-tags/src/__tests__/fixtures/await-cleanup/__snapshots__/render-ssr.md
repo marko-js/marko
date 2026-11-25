@@ -32,7 +32,7 @@ loading...
 ## Change
 ```
 REMOVE: ::text("loading...")
-INSERT: #two + ::text("1")
+INSERT: ::text("1")
 ```
 
 # Update
@@ -54,7 +54,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: #two + ::text("1")
+REMOVE: ::text("1")
 REMOVE: #one::text("Fail")
 INSERT: #one::text("Pass")
 REMOVE: #two::text("Fail")

@@ -23,8 +23,8 @@
 ```
 ## Change
 ```
-INSERT: button + .a
-INSERT: .a + .b
+INSERT: .a
+INSERT: .b
 ```
 ## Console
 ```

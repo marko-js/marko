@@ -19,7 +19,7 @@ Loading...
 ```
 ## Change
 ```
-INSERT: button + ::text("Loading...")
+INSERT: ::text("Loading...")
 ```
 
 # Update
@@ -30,5 +30,5 @@ INSERT: button + ::text("Loading...")
 ```
 ## Change
 ```
-REMOVE: button + ::text("Loading...")
+REMOVE: ::text("Loading...")
 ```

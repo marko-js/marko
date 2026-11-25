@@ -26,6 +26,6 @@
 ```
 ## Change
 ```
-UPDATE: p::text "0" => "1"
 UPDATE: #class::text "0" => "1"
+UPDATE: p::text "0" => "1"
 ```

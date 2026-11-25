@@ -16,7 +16,7 @@ caught ERROR!
 ## Change
 ```
 REMOVE: ::text("loading")
-INSERT: button + ::text("caught ERROR!")
+INSERT: ::text("caught ERROR!")
 ```
 
 # Update
@@ -28,7 +28,7 @@ caught ERROR!done
 ```
 ## Change
 ```
-INSERT: ::text@0 + ::text("done")
+INSERT: ::text("done")
 ```
 
 # Update

@@ -22,7 +22,7 @@ INSERT: button
 ```
 ## Change
 ```
-INSERT: button
+INSERT: button:nth-of-type(1)
 ```
 
 # Update

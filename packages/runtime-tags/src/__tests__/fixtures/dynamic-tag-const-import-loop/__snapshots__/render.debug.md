@@ -35,7 +35,7 @@ document.querySelector("#add").click();
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(2) + button
+INSERT: button:nth-of-type(3)
 ```
 
 # Update
@@ -62,5 +62,5 @@ item 1
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(3) + :is(::text("item "), ::text("1"))
+INSERT: ::text("item "), ::text("1")
 ```

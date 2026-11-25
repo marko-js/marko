@@ -39,7 +39,7 @@ document.querySelector("#go").click();
 ```
 ## Change
 ```
-INSERT: #go + span
+INSERT: span:nth-of-type(2)
 ```
 
 # Update
@@ -66,5 +66,5 @@ document.querySelector(".toggle").click();
 ```
 ## Change
 ```
-INSERT: span:nth-of-type(2) + span
+INSERT: span:nth-of-type(3)
 ```

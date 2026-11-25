@@ -28,7 +28,7 @@
 ```
 ## Change
 ```
-INSERT: div:nth-of-type(1) + :is(.cM_1, div)
+INSERT: .cM_1, div:nth-of-type(2)
 ```
 
 # Update `{"colors":["red","green"]}`

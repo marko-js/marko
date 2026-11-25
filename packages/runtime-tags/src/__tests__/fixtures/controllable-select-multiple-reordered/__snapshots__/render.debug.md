@@ -69,5 +69,5 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: select > option:nth-of-type(3) + option
+INSERT: select > option:nth-of-type(4)
 ```

@@ -18,6 +18,6 @@ caught: ERROR!
 ```
 ## Change
 ```
+REMOVE: ::text("loading outer...")
 INSERT: ::text("caught: "), ::text("ERROR!"), div
-REMOVE: div + ::text("loading outer...")
 ```

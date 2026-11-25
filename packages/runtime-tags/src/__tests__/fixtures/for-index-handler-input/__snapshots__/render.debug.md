@@ -71,7 +71,7 @@ document.querySelector("button.add").click();
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(3) + button
+INSERT: button:nth-of-type(4)
 ```
 
 # Update

@@ -22,9 +22,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: button::text "0" => "1"
 INSERT: div > span
 UPDATE: div > span::text " " => "hello"
+UPDATE: button::text "0" => "1"
 ```
 
 # Update

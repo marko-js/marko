@@ -19,7 +19,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: section:nth-of-type(1) + section
+INSERT: section:nth-of-type(2)
 ```
 
 # Update
@@ -36,5 +36,5 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: section:nth-of-type(2) + section
+INSERT: section:nth-of-type(3)
 ```

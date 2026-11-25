@@ -49,7 +49,7 @@ document.querySelector("#a").click();
 ```
 ## Change
 ```
-INSERT: p:nth-of-type(1) + p
+INSERT: p:nth-of-type(2)
 ```
 
 # Update
@@ -75,10 +75,10 @@ document.querySelector("#o").click();
 ```
 ## Change
 ```
-REMOVE: #a + p
-REMOVE: #a + p
-REMOVE: #ref::text("init")
+REMOVE: p
+REMOVE: p
 INSERT: #ref::text("item destroyed")
+REMOVE: #ref::text("init")
 REMOVE: #ref::text("item destroyed")
 INSERT: #ref::text("item destroyed")
 ```

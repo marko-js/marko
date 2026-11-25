@@ -56,9 +56,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: .defaults::text@3 + ::text("4")
-INSERT: .from::text@2 + ::text("4")
-INSERT: .by::text@3 + ::text("4")
+INSERT: .defaults::text("4")
+INSERT: .from::text("4")
+INSERT: .by::text("4")
 ```
 
 # Update
@@ -92,8 +92,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: .defaults::text@4 + ::text("5")
-INSERT: .from::text@3 + ::text("5")
-INSERT: .step::text@1 + ::text("4")
-INSERT: .by::text@4 + ::text("5")
+INSERT: .defaults::text("5")
+INSERT: .from::text("5")
+INSERT: .step::text("4")
+INSERT: .by::text("5")
 ```

@@ -241,10 +241,15 @@ function getStatusString(
   hasRendered: boolean,
 ): string | null {
   const updateStr = getUpdateString(update);
-  const formattedMutations = mutationRecords
-    .map(formatMutationRecord)
-    .filter(Boolean)
-    .join("\n");
+  // In page order of where each change landed, so a step reads top to bottom
+  // rather than in the order its independent renders happened to run.
+  const changes: Change[] = [];
+  for (const record of mutationRecords) pushChanges(record, changes);
+  changes.sort(compareChanges);
+  let formattedMutations = "";
+  for (const { text } of changes) {
+    formattedMutations += formattedMutations ? `\n${text}` : text;
+  }
   const formattedConsole = consoleRecords
     .map(formatConsoleRecord)
     .filter(Boolean)
@@ -283,57 +288,104 @@ function getErrorStatusString(
   return `# ${hasRendered ? "Update" : "Render"}${getUpdateString(update)}\n## Error\n\`\`\`\n${errors.map((err) => err.message).join("\n\n")}\n\`\`\``;
 }
 
-function formatMutationRecord(record: MutationRecord) {
+interface Change {
+  text: string;
+  at: number[] | undefined;
+}
+
+function pushChanges(record: MutationRecord, changes: Change[]) {
   const { target, oldValue } = record;
 
   if (record.type === "characterData") {
-    if (target.parentNode && isIgnoredMutationNode(target.parentNode)) return;
-
-    return `UPDATE: ${nodeInfo.getNodePath(target)} ${JSON.stringify(
-      oldValue || "",
-    )} => ${JSON.stringify(target.nodeValue || "")}`;
-  }
-
-  if (isIgnoredMutationNode(target)) return;
-
-  switch (record.type) {
-    case "attributes": {
-      const { attributeName } = record;
-      const newValue = (target as HTMLElement).getAttribute(
-        attributeName as string,
-      );
-      return `UPDATE: ${nodeInfo.getNodePath(target)}[${attributeName}] ${JSON.stringify(
+    if (!target.parentNode || !isIgnoredMutationNode(target.parentNode)) {
+      changes.push({
+        text: `UPDATE: ${nodeInfo.getNodePath(target)} ${JSON.stringify(
+          oldValue || "",
+        )} => ${JSON.stringify(target.nodeValue || "")}`,
+        at: getPagePath(target),
+      });
+    }
+  } else if (isIgnoredMutationNode(target)) {
+    return;
+  } else if (record.type === "attributes") {
+    const { attributeName } = record;
+    const newValue = (target as HTMLElement).getAttribute(
+      attributeName as string,
+    );
+    changes.push({
+      text: `UPDATE: ${nodeInfo.getNodePath(target)}[${attributeName}] ${JSON.stringify(
         oldValue,
-      )} => ${JSON.stringify(newValue)}`;
+      )} => ${JSON.stringify(newValue)}`,
+      at: getPagePath(target),
+    });
+  } else {
+    // Nodes are named where they ended up or under their parent, never by a
+    // sibling, which depends on the order the step's changes ran in.
+    let removed: Node[] | undefined;
+    for (const node of record.removedNodes) {
+      if (!isIgnoredMutationNode(node)) (removed ||= []).push(node);
     }
-
-    case "childList": {
-      const { removedNodes, addedNodes, previousSibling } = record;
-      const removed = Array.from(removedNodes).filter(
-        (node) => !isIgnoredMutationNode(node),
-      );
-      const added = Array.from(addedNodes).filter(
-        (node) => !isIgnoredMutationNode(node),
-      );
-
-      if (!removed.length && !added.length) return;
-
-      const details: string[] = [];
-      if (removed.length) {
-        details.push(
-          `REMOVE: ${nodeInfo.getNodeSelector(removed, previousSibling, target)}`,
-        );
+    let inserted = "";
+    let at: number[] | undefined;
+    for (const node of record.addedNodes) {
+      if (isIgnoredMutationNode(node)) continue;
+      if (inserted) inserted += ", ";
+      if (node.isConnected) {
+        at ||= getPagePath(node);
+        inserted += nodeInfo.isElement(node)
+          ? nodeInfo.getNodePath(node)
+          : nodeInfo.getNodeSelector([node], node.parentNode!);
+      } else {
+        inserted += nodeInfo.getNodeSelector([node], target);
       }
-
-      if (added.length) {
-        details.push(
-          `INSERT: ${nodeInfo.getNodeSelector(added, previousSibling, target)}`,
-        );
-      }
-
-      return details.join("\n");
+    }
+    if (removed) {
+      changes.push({
+        text: `REMOVE: ${nodeInfo.getNodeSelector(removed, target)}`,
+        at: getPositionIn(target),
+      });
+    }
+    if (inserted) {
+      changes.push({
+        text: `INSERT: ${inserted}`,
+        at: at || getPositionIn(target),
+      });
     }
   }
+}
+
+// Under a node, ahead of its children.
+function getPositionIn(node: Node) {
+  const path = getPagePath(node);
+  path?.push(-0.5);
+  return path;
+}
+
+// Child indices from the document down, counting only nodes the log shows.
+function getPagePath(node: Node) {
+  if (!node.isConnected) return;
+  const path: number[] = [];
+  for (let cur = node; cur.parentNode; cur = cur.parentNode) {
+    let index = 0;
+    for (let sib = cur.previousSibling; sib; sib = sib.previousSibling) {
+      if (!isIgnoredMutationNode(sib)) index++;
+    }
+    path.push(index);
+  }
+  return path.reverse();
+}
+
+// Ancestors before their descendants, changes out of the page last.
+function compareChanges(a: Change, b: Change) {
+  if (a.at && b.at) {
+    for (let i = 0; i < a.at.length && i < b.at.length; i++) {
+      if (a.at[i] !== b.at[i]) return a.at[i] - b.at[i];
+    }
+    if (a.at.length !== b.at.length) return a.at.length - b.at.length;
+  } else if (a.at || b.at) {
+    return a.at ? -1 : 1;
+  }
+  return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
 }
 
 function isIgnoredMutationNode(node: Node) {

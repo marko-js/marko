@@ -28,8 +28,8 @@ inner loading
 ## Change
 ```
 REMOVE: ::text("loading")
-INSERT: #log + ::text("inner loading")
 INSERT: #log::text("[true]")
+INSERT: ::text("inner loading")
 ```
 
 # Update
@@ -49,7 +49,7 @@ caught nope
 ## Change
 ```
 REMOVE: ::text("inner loading")
-INSERT: #log + ::text("caught nope")
+INSERT: ::text("caught nope")
 ```
 
 # Update

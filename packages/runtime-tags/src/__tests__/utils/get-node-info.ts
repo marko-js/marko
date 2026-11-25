@@ -101,23 +101,11 @@ function getUniqueName(el: HTMLElement) {
   }
 }
 
-export function getNodeSelector(
-  nodes: Node[],
-  prev: Node | null,
-  parent: Node,
-): string {
-  // An anchor a later mutation removed has no position: describe the inserted
-  // nodes by where they now sit.
-  let after: Node | null =
-    prev && prev.parentNode !== parent && nodes[0].parentNode === parent
-      ? nodes[0].previousSibling
-      : prev;
-  while (after && isIgnoredNode(after)) after = after.previousSibling;
+// Nodes under their parent, without their position among its children.
+export function getNodeSelector(nodes: Node[], parent: Node): string {
   const names = nodes.map(getNodeName);
-  const body = parent.ownerDocument?.body;
-  if (!after && parent === body) return names.join(", ");
+  if (parent === parent.ownerDocument?.body) return names.join(", ");
   const rhs = names.length === 1 ? names[0] : `:is(${names.join(", ")})`;
-  if (after) return `${getNodePath(after)} + ${rhs}`;
   const parentPath = getNodePath(parent);
   return nodes.length === 1 && isText(nodes[0])
     ? parentPath + rhs

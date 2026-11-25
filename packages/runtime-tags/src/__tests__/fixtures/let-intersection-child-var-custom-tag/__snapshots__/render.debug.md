@@ -28,8 +28,8 @@
 ```
 ## Change
 ```
-UPDATE: div:nth-of-type(2)::text "1" => "2"
 UPDATE: div:nth-of-type(1)::text "0" => "2"
+UPDATE: div:nth-of-type(2)::text "1" => "2"
 UPDATE: button::text "0,1" => "2,2"
 ```
 

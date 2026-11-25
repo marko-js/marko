@@ -34,7 +34,7 @@ document.getElementById("t").click();
 ```
 ## Change
 ```
-REMOVE: #c::text@0 + b
+REMOVE: #c > b
 ```
 
 # Update
@@ -59,5 +59,5 @@ document.getElementById("t").click();
 ```
 ## Change
 ```
-INSERT: #c::text@0 + b
+INSERT: #c > b
 ```

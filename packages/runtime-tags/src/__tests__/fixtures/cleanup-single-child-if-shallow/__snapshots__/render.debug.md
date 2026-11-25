@@ -25,7 +25,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: div + div
+REMOVE: div
 REMOVE: div::text("mounted")
 INSERT: div::text("destroyed")
 ```
@@ -47,9 +47,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: div:nth-of-type(1) + div
 REMOVE: div:nth-of-type(1)::text("destroyed")
 INSERT: div:nth-of-type(1)::text("mounted")
+INSERT: div:nth-of-type(2)
 ```
 
 # Update
@@ -66,7 +66,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: div + div
+REMOVE: div
 REMOVE: div::text("mounted")
 INSERT: div::text("destroyed")
 ```

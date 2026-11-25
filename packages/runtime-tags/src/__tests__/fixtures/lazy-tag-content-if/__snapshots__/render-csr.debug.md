@@ -16,7 +16,7 @@
 ```
 ## Change
 ```
-INSERT: button + section
+INSERT: section
 INSERT: section::text("shown")
 ```
 

@@ -30,7 +30,7 @@ loading...
 ```
 ## Change
 ```
-INSERT: #two + ::text("loading...")
+INSERT: ::text("loading...")
 ```
 
 # Update
@@ -50,8 +50,8 @@ INSERT: #two + ::text("loading...")
 ```
 ## Change
 ```
-INSERT: #two + ::text("1")
-REMOVE: ::text + ::text("loading...")
+REMOVE: ::text("loading...")
+INSERT: ::text("1")
 ```
 
 # Update
@@ -73,7 +73,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: #two + ::text("1")
+REMOVE: ::text("1")
 REMOVE: #one::text("Fail")
 INSERT: #one::text("Pass")
 REMOVE: #two::text("Fail")

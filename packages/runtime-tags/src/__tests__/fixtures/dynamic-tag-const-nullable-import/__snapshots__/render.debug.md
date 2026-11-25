@@ -22,8 +22,8 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
+REMOVE: ::text("Fallback Body")
 INSERT: .custom
-REMOVE: .custom + ::text("Fallback Body")
 UPDATE: .custom::text@7 "" => "with"
 ```
 
@@ -39,6 +39,6 @@ Fallback Body
 ```
 ## Change
 ```
+REMOVE: div
 INSERT: ::text("Fallback Body")
-REMOVE: ::text + div
 ```

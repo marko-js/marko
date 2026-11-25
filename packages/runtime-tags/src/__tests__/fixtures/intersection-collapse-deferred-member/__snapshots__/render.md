@@ -50,8 +50,8 @@ document.querySelector("button").click();
 ## Change
 ```
 UPDATE: .flag.resolved.is-resolved[class] "flag open is-open" => "flag resolved is-resolved"
-UPDATE: .badge::text "open!" => "resolved!"
 UPDATE: .row.resolved[class] "row open" => "row resolved"
-REMOVE: .state.RESOLVED + form
+REMOVE: .row.resolved > form
+UPDATE: .badge::text "open!" => "resolved!"
 UPDATE: .state.RESOLVED[class] "state OPEN" => "state RESOLVED"
 ```

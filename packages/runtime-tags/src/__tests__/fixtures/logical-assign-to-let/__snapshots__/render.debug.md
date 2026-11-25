@@ -51,8 +51,8 @@
 ```
 ## Change
 ```
-UPDATE: div::text@16 "0" => "1"
 UPDATE: div::text@6 "1" => "6"
+UPDATE: div::text@16 "0" => "1"
 ```
 
 # Update

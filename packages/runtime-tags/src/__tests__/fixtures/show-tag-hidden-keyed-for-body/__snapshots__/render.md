@@ -47,7 +47,7 @@ document.getElementById("t").click();
 ```
 ## Change
 ```
-INSERT: #c::text@0 + :is(b, i)
+INSERT: #c > b, #c > i
 ```
 
 # Update
@@ -83,7 +83,7 @@ document.getElementById("i").click();
 ```
 ## Change
 ```
-INSERT: #c::text@0 + b
+INSERT: #c > b:nth-of-type(1)
 ```
 
 # Update
@@ -109,9 +109,9 @@ document.getElementById("t").click();
 ```
 ## Change
 ```
-REMOVE: #c::text@0 + b
-REMOVE: #c::text@0 + b
-REMOVE: #c::text@0 + i
+REMOVE: #c > b
+REMOVE: #c > b
+REMOVE: #c > i
 ```
 
 # Update
@@ -147,5 +147,5 @@ document.getElementById("t").click();
 ```
 ## Change
 ```
-INSERT: #c::text@0 + :is(b, b, i)
+INSERT: #c > b:nth-of-type(1), #c > b:nth-of-type(2), #c > i
 ```

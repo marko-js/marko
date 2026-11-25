@@ -25,9 +25,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: b::text("2")
 REMOVE: ::text("loading...")
-INSERT: button + :is(span, b)
+INSERT: span, b
+INSERT: b::text("2")
 UPDATE: b::text "1" => "2"
 ```
 

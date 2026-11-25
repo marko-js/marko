@@ -28,7 +28,7 @@
 ## Change
 ```
 INSERT: #cM_0 > div
-INSERT: #cM_1 > div
 UPDATE: #cM_0 > div::text " " => "cM_0"
+INSERT: #cM_1 > div
 UPDATE: #cM_1 > div::text " " => "cM_1"
 ```

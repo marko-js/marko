@@ -21,7 +21,7 @@ Hello
 ```
 ## Change
 ```
-INSERT: #toggle + ::text("Hello")
+INSERT: ::text("Hello")
 ```
 
 # Update
@@ -37,5 +37,5 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-REMOVE: #toggle + ::text("Hello")
+REMOVE: ::text("Hello")
 ```

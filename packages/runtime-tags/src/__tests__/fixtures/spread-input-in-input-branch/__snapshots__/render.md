@@ -41,11 +41,11 @@ document.querySelector(".link").click();
 ```
 ## Change
 ```
-INSERT: .inc + .btn
-REMOVE: .btn + .btn
-UPDATE: .btn[href] null => "/x"
+REMOVE: .btn
+INSERT: .btn
 UPDATE: .btn[class] null => "btn"
-INSERT: .btn > :is(::text("Label "), ::text("0"))
+UPDATE: .btn[href] null => "/x"
+INSERT: .btn::text("Label "), .btn::text("0")
 UPDATE: .btn::text@6 "" => "0"
 ```
 
@@ -99,10 +99,10 @@ document.querySelector(".link").click();
 ```
 ## Change
 ```
-INSERT: .inc + .btn
-REMOVE: .btn + .btn
+REMOVE: .btn
+INSERT: .btn
 UPDATE: .btn[class] null => "btn"
-INSERT: .btn > :is(::text("Label "), ::text("1"))
+INSERT: .btn::text("Label "), .btn::text("1")
 UPDATE: .btn::text@6 "" => "1"
 ```
 

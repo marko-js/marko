@@ -24,11 +24,11 @@ INSERT: t > p::text("a")
 ```
 ## Change
 ```
-INSERT: b::text("nope")
-REMOVE: span
 INSERT: p
 REMOVE: p
+REMOVE: span
 INSERT: b
+INSERT: b::text("nope")
 ```
 
 # Update
@@ -42,7 +42,7 @@ INSERT: b
 ```
 ## Change
 ```
-INSERT: b + p
+INSERT: p
 INSERT: p::text("after")
 ```
 ## Console

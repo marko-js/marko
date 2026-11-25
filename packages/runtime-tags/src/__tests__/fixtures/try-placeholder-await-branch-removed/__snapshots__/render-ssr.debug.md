@@ -23,5 +23,5 @@ document.querySelector("button").click();
 ## Change
 ```
 REMOVE: ::text("LOADING...")
-INSERT: button + div
+INSERT: div
 ```

@@ -22,8 +22,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: button::text "1" => "2"
 UPDATE: span::text@2 "1" => "2"
+UPDATE: button::text "1" => "2"
 ```
 
 # Update
@@ -40,6 +40,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: button::text "2" => "3"
 UPDATE: span::text@2 "2" => "3"
+UPDATE: button::text "2" => "3"
 ```

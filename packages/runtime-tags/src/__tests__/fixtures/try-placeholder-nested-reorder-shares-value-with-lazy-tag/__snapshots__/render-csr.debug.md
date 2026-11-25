@@ -15,8 +15,8 @@ a
 ```
 ## Change
 ```
+REMOVE: ::text("outer")
 INSERT: ::text("a")
-REMOVE: ::text + ::text("outer")
 ```
 
 # Update
@@ -25,7 +25,7 @@ ab
 ```
 ## Change
 ```
-INSERT: ::text@0 + ::text("b")
+INSERT: ::text("b")
 UPDATE: ::text@1 "" => "b"
 ```
 
@@ -50,7 +50,7 @@ ab
 ```
 ## Change
 ```
-INSERT: ::text@1 + .placeholder
+INSERT: .placeholder
 ```
 
 # Update
@@ -69,7 +69,7 @@ ab
 ```
 ## Change
 ```
-INSERT: ::text@1 + .child
+INSERT: .child
 ```
 
 # Update
@@ -78,7 +78,7 @@ abc
 ```
 ## Change
 ```
-INSERT: ::text@1 + ::text("c")
-REMOVE: ::text@2 + button
-REMOVE: ::text@2 + button
+REMOVE: button
+REMOVE: button
+INSERT: ::text("c")
 ```

@@ -28,10 +28,10 @@ REMOVE: ::text("loading")
 ## Change
 ```
 INSERT: #log::text("[a]")
-REMOVE: #log::text("[a]")
 INSERT: #log::text("[a][p]")
-REMOVE: #log::text("[a][p]")
 INSERT: #log::text("[a][p][r]")
+REMOVE: #log::text("[a]")
+REMOVE: #log::text("[a][p]")
 REMOVE: #log::text("[a][p][r]")
 INSERT: #log::text("[a][p][r][q]")
 ```

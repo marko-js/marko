@@ -33,7 +33,7 @@ document.querySelector("#n").click();
 ```
 ## Change
 ```
-INSERT: #n + div
+INSERT: div
 UPDATE: div::text@5 "" => "1"
 ```
 
@@ -55,7 +55,7 @@ document.querySelector("#o").click();
 ```
 ## Change
 ```
-REMOVE: #n + div
+REMOVE: div
 ```
 
 # Update

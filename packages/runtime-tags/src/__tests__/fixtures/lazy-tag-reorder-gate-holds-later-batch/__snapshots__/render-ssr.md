@@ -24,9 +24,9 @@ loading
 ```
 ## Change
 ```
-INSERT: ::text + .streamed
+INSERT: .streamed
 INSERT: .streamed::text("streamed:")
-INSERT: .streamed::text@0 + ::text("0")
+INSERT: .streamed::text("0")
 ```
 
 # Update
@@ -51,7 +51,7 @@ done
 ## Change
 ```
 REMOVE: ::text("loading")
-INSERT: .first + :is(.held, ::text("done"))
+INSERT: .held, ::text("done")
 ```
 
 # Update

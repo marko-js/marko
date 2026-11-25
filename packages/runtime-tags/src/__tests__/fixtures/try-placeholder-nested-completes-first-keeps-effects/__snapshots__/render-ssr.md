@@ -12,7 +12,7 @@ outer
 ```
 ## Change
 ```
-INSERT: ::text + button
+INSERT: button
 INSERT: button::text("0")
 ```
 
@@ -45,9 +45,9 @@ INSERT: t > button:nth-of-type(1)::text("0")
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(1)::text("0")
 REMOVE: ::text("outer")
-INSERT: button, button, button
+INSERT: button:nth-of-type(1), button:nth-of-type(2), button:nth-of-type(3)
+INSERT: button:nth-of-type(1)::text("0")
 ```
 
 # Update
@@ -70,10 +70,10 @@ document.querySelectorAll("button")[0].click();
 ```
 ## Change
 ```
+UPDATE: button:nth-of-type(1)::text "0" => "1"
+UPDATE: button:nth-of-type(2)::text "0" => "1"
 UPDATE: button:nth-of-type(3)::text "0" => "1"
 UPDATE: button:nth-of-type(4)::text "0" => "1"
-UPDATE: button:nth-of-type(2)::text "0" => "1"
-UPDATE: button:nth-of-type(1)::text "0" => "1"
 ```
 
 # Update
@@ -96,10 +96,10 @@ document.querySelectorAll("button")[1].click();
 ```
 ## Change
 ```
+UPDATE: button:nth-of-type(1)::text "1" => "2"
+UPDATE: button:nth-of-type(2)::text "1" => "2"
 UPDATE: button:nth-of-type(3)::text "1" => "2"
 UPDATE: button:nth-of-type(4)::text "1" => "2"
-UPDATE: button:nth-of-type(2)::text "1" => "2"
-UPDATE: button:nth-of-type(1)::text "1" => "2"
 ```
 
 # Update
@@ -122,10 +122,10 @@ document.querySelectorAll("button")[2].click();
 ```
 ## Change
 ```
+UPDATE: button:nth-of-type(1)::text "2" => "3"
+UPDATE: button:nth-of-type(2)::text "2" => "3"
 UPDATE: button:nth-of-type(3)::text "2" => "3"
 UPDATE: button:nth-of-type(4)::text "2" => "3"
-UPDATE: button:nth-of-type(2)::text "2" => "3"
-UPDATE: button:nth-of-type(1)::text "2" => "3"
 ```
 
 # Update
@@ -148,8 +148,8 @@ document.querySelectorAll("button")[3].click();
 ```
 ## Change
 ```
+UPDATE: button:nth-of-type(1)::text "3" => "4"
+UPDATE: button:nth-of-type(2)::text "3" => "4"
 UPDATE: button:nth-of-type(3)::text "3" => "4"
 UPDATE: button:nth-of-type(4)::text "3" => "4"
-UPDATE: button:nth-of-type(2)::text "3" => "4"
-UPDATE: button:nth-of-type(1)::text "3" => "4"
 ```

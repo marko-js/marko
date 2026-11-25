@@ -20,6 +20,6 @@ INSERT: ::text("loading...")
 ```
 ## Change
 ```
-INSERT: p, p
-REMOVE: p:nth-of-type(2) + ::text("loading...")
+REMOVE: ::text("loading...")
+INSERT: p:nth-of-type(1), p:nth-of-type(2)
 ```

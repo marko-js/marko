@@ -47,7 +47,7 @@ done
 ```
 ## Change
 ```
+REMOVE: button
+REMOVE: button
 INSERT: ::text("done")
-REMOVE: ::text + button
-REMOVE: ::text + button
 ```

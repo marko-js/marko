@@ -19,7 +19,7 @@ caught ERROR!
 ```
 ## Change
 ```
+REMOVE: span
 INSERT: ::text("caught "), ::text("ERROR!")
-REMOVE: ::text@7 + span
 UPDATE: ::text@7 "" => "ERROR!"
 ```

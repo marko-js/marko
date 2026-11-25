@@ -43,8 +43,8 @@ document.getElementById("t").click();
 ```
 ## Change
 ```
-REMOVE: span::text@0 + b
-REMOVE: span::text@0 + em
+REMOVE: span > b
+REMOVE: span > em
 ```
 
 # Update
@@ -77,7 +77,7 @@ document.getElementById("t").click();
 ```
 ## Change
 ```
-INSERT: span::text@0 + em
+INSERT: span > em
 ```
 
 # Update
@@ -108,7 +108,7 @@ document.getElementById("i").click();
 ```
 ## Change
 ```
-INSERT: span::text@0 + b
+INSERT: span > b
 ```
 
 # Update
@@ -132,6 +132,6 @@ document.getElementById("t").click();
 ```
 ## Change
 ```
-REMOVE: span::text@0 + b
-REMOVE: span::text@0 + em
+REMOVE: span > b
+REMOVE: span > em
 ```

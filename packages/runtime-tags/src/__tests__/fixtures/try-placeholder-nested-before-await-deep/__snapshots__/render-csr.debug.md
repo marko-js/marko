@@ -18,8 +18,8 @@ INSERT: ::text("1 loading")
 ```
 ## Change
 ```
+REMOVE: ::text("1 loading")
 INSERT: ::text("2 loading"), div
-REMOVE: div + ::text("1 loading")
 ```
 
 # Update
@@ -36,6 +36,6 @@ REMOVE: div + ::text("1 loading")
 ```
 ## Change
 ```
+REMOVE: ::text("2 loading")
 INSERT: span, b
-REMOVE: b + ::text("2 loading")
 ```

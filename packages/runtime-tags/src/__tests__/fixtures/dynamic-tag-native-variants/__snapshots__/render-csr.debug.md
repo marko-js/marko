@@ -38,6 +38,6 @@
 ```
 ## Change
 ```
+REMOVE: div > input
 INSERT: div > br
-REMOVE: div > br + input
 ```

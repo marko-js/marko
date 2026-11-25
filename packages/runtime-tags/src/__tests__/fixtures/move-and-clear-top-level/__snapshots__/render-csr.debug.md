@@ -18,6 +18,6 @@ abc
 ## Change
 ```
 INSERT: ::text("a")
-INSERT: ::text@0 + ::text("b")
-INSERT: ::text@1 + ::text("c")
+INSERT: ::text("b")
+INSERT: ::text("c")
 ```

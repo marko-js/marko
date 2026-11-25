@@ -28,10 +28,10 @@ document.querySelectorAll("button").forEach((item) => item.click());
 ```
 ## Change
 ```
-UPDATE: div::text@0 "0" => "1"
-UPDATE: div::text@2 "0" => "1"
 UPDATE: button:nth-of-type(1)::text "0" => "1"
 UPDATE: button:nth-of-type(2)::text "0" => "1"
+UPDATE: div::text@0 "0" => "1"
+UPDATE: div::text@2 "0" => "1"
 ```
 
 # Update
@@ -51,10 +51,10 @@ document.querySelectorAll("button").forEach((item) => item.click());
 ```
 ## Change
 ```
-UPDATE: div::text@0 "1" => "2"
-UPDATE: div::text@2 "1" => "2"
 UPDATE: button:nth-of-type(1)::text "1" => "2"
 UPDATE: button:nth-of-type(2)::text "1" => "2"
+UPDATE: div::text@0 "1" => "2"
+UPDATE: div::text@2 "1" => "2"
 ```
 
 # Update
@@ -74,8 +74,8 @@ document.querySelectorAll("button").forEach((item) => item.click());
 ```
 ## Change
 ```
-UPDATE: div::text@0 "2" => "3"
-UPDATE: div::text@2 "2" => "3"
 UPDATE: button:nth-of-type(1)::text "2" => "3"
 UPDATE: button:nth-of-type(2)::text "2" => "3"
+UPDATE: div::text@0 "2" => "3"
+UPDATE: div::text@2 "2" => "3"
 ```

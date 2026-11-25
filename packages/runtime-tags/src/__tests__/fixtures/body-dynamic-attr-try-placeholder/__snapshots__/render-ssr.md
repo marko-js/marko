@@ -11,9 +11,9 @@ loading
 ```
 ## Change
 ```
-INSERT: button::text("done ")
 REMOVE: ::text("loading")
 INSERT: button
+INSERT: button::text("done ")
 ```
 
 # Update

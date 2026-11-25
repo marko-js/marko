@@ -64,10 +64,10 @@
 ```
 ## Change
 ```
-UPDATE: ol > li:nth-of-type(1)::text@3 "1" => "2"
-UPDATE: ol > li:nth-of-type(2)::text@3 "1" => "2"
 UPDATE: ul > li:nth-of-type(1)[class] "danger" => ""
 UPDATE: .danger[class] null => "danger"
+UPDATE: ol > li:nth-of-type(1)::text@3 "1" => "2"
+UPDATE: ol > li:nth-of-type(2)::text@3 "1" => "2"
 ```
 
 # Update
@@ -106,8 +106,8 @@ UPDATE: .danger[class] null => "danger"
 ```
 ## Change
 ```
-UPDATE: ol > li:nth-of-type(1)::text@3 "2" => "1"
-UPDATE: ol > li:nth-of-type(2)::text@3 "2" => "1"
 UPDATE: .danger[class] "" => "danger"
 UPDATE: ul > li:nth-of-type(2)[class] "danger" => ""
+UPDATE: ol > li:nth-of-type(1)::text@3 "2" => "1"
+UPDATE: ol > li:nth-of-type(2)::text@3 "2" => "1"
 ```

@@ -19,5 +19,5 @@ caught ERROR!done
 ```
 ## Change
 ```
-INSERT: ::text@0 + ::text("done")
+INSERT: ::text("done")
 ```

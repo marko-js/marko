@@ -22,6 +22,6 @@
 ```
 ## Change
 ```
-INSERT: #class + #caught
+INSERT: #caught
 INSERT: #caught::text("caught")
 ```

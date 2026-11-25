@@ -26,7 +26,7 @@ more
 ```
 ## Change
 ```
+REMOVE: ::text("none")
 UPDATE: span::text "0" => "1"
-INSERT: span + ::text("more")
-REMOVE: ::text@2 + ::text("none")
+INSERT: ::text("more")
 ```

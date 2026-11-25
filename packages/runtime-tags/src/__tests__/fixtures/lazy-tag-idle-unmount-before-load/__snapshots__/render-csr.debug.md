@@ -38,7 +38,7 @@
 ```
 ## Change
 ```
-INSERT: #toggle + span
+INSERT: span
 ```
 ## Console
 ```

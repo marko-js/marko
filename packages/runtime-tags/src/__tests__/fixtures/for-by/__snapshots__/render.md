@@ -71,13 +71,13 @@
 ## Change
 ```
 REMOVE: .by-string::text("first")
-INSERT: .by-string::text@6 + ::text("first")
+INSERT: .by-string::text("first")
 REMOVE: .by-function::text("first")
-INSERT: .by-function::text@6 + ::text("first")
+INSERT: .by-function::text("first")
 REMOVE: .by-unknown-string::text("first")
-INSERT: .by-unknown-string::text@6 + ::text("first")
+INSERT: .by-unknown-string::text("first")
 REMOVE: .by-unknown-function::text("first")
-INSERT: .by-unknown-function::text@6 + ::text("first")
+INSERT: .by-unknown-function::text("first")
 UPDATE: .by-unknown-missing::text@0 "first" => "second"
 UPDATE: .by-unknown-missing::text@6 "second" => "third"
 UPDATE: .by-unknown-missing::text@11 "third" => "first"
@@ -122,13 +122,13 @@ UPDATE: .by-unknown-missing::text@11 "third" => "first"
 ## Change
 ```
 REMOVE: .by-string::text("second")
-INSERT: .by-string::text@5 + ::text("second")
+INSERT: .by-string::text("second")
 REMOVE: .by-function::text("second")
-INSERT: .by-function::text@5 + ::text("second")
+INSERT: .by-function::text("second")
 REMOVE: .by-unknown-string::text("second")
-INSERT: .by-unknown-string::text@5 + ::text("second")
+INSERT: .by-unknown-string::text("second")
 REMOVE: .by-unknown-function::text("second")
-INSERT: .by-unknown-function::text@5 + ::text("second")
+INSERT: .by-unknown-function::text("second")
 UPDATE: .by-unknown-missing::text@0 "second" => "third"
 UPDATE: .by-unknown-missing::text@5 "third" => "first"
 UPDATE: .by-unknown-missing::text@10 "first" => "second"
@@ -173,13 +173,13 @@ UPDATE: .by-unknown-missing::text@10 "first" => "second"
 ## Change
 ```
 REMOVE: .by-string::text("third")
-INSERT: .by-string::text@5 + ::text("third")
+INSERT: .by-string::text("third")
 REMOVE: .by-function::text("third")
-INSERT: .by-function::text@5 + ::text("third")
+INSERT: .by-function::text("third")
 REMOVE: .by-unknown-string::text("third")
-INSERT: .by-unknown-string::text@5 + ::text("third")
+INSERT: .by-unknown-string::text("third")
 REMOVE: .by-unknown-function::text("third")
-INSERT: .by-unknown-function::text@5 + ::text("third")
+INSERT: .by-unknown-function::text("third")
 UPDATE: .by-unknown-missing::text@0 "third" => "first"
 UPDATE: .by-unknown-missing::text@5 "first" => "second"
 UPDATE: .by-unknown-missing::text@11 "second" => "third"

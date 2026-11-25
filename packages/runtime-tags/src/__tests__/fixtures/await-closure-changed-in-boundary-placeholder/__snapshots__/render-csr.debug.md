@@ -34,8 +34,8 @@ loading...
 ```
 ## Change
 ```
-INSERT: button + ::text("loading...")
-REMOVE: ::text + span
+REMOVE: span
+INSERT: ::text("loading...")
 ```
 
 # Update
@@ -52,8 +52,8 @@ REMOVE: ::text + span
 ```
 ## Change
 ```
-INSERT: button + :is(span, b)
-REMOVE: b + ::text("loading...")
+REMOVE: ::text("loading...")
+INSERT: span, b
 ```
 
 # Update

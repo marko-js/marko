@@ -46,7 +46,7 @@ UPDATE: #tags::text "0" => "1"
 ```
 ## Change
 ```
-REMOVE: #class + #tags
+REMOVE: #tags
 ```
 
 # Update
@@ -67,5 +67,5 @@ REMOVE: #class + #tags
 ```
 ## Change
 ```
-INSERT: #class + #tags
+INSERT: #tags
 ```

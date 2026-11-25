@@ -14,8 +14,8 @@
 ```
 ## Change
 ```
-INSERT: input
-INSERT: input:nth-of-type(1) + input
-INSERT: input:nth-of-type(2) + span
+INSERT: input:nth-of-type(1)
+INSERT: input:nth-of-type(2)
+INSERT: span
 INSERT: span::text("got: X")
 ```

@@ -24,7 +24,7 @@ loading...
 ```
 ## Change
 ```
-INSERT: div + ::text("loading...")
+INSERT: ::text("loading...")
 ```
 
 # Update
@@ -40,6 +40,6 @@ INSERT: div + ::text("loading...")
 ```
 ## Change
 ```
-INSERT: div + #footer
-REMOVE: #footer + ::text("loading...")
+REMOVE: ::text("loading...")
+INSERT: #footer
 ```

@@ -41,7 +41,7 @@ document.querySelector(".toggle").click();
 ```
 ## Change
 ```
-INSERT: .toggle + :is(p, span, .focus)
+INSERT: p, span, .focus
 ```
 
 # Update
@@ -84,9 +84,9 @@ document.querySelector(".toggle").click();
 ```
 ## Change
 ```
-REMOVE: .toggle + p
-REMOVE: .toggle + span
-REMOVE: .toggle + button
+REMOVE: button
+REMOVE: p
+REMOVE: span
 ```
 
 # Update
@@ -113,7 +113,7 @@ document.querySelector(".toggle").click();
 ```
 ## Change
 ```
-INSERT: .toggle + :is(p, span, .focus)
+INSERT: p, span, .focus
 ```
 
 # Update

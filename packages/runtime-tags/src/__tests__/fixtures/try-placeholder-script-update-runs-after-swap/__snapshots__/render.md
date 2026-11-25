@@ -41,10 +41,10 @@ LOADING
 ```
 ## Change
 ```
-INSERT: #inc + ::text("LOADING")
-REMOVE: ::text + div
-REMOVE: ::text + ::text("value ")
-REMOVE: ::text + ::text("0")
+REMOVE: ::text("0")
+REMOVE: ::text("value ")
+REMOVE: div
+INSERT: ::text("LOADING")
 ```
 
 # Update
@@ -71,8 +71,8 @@ value 1
 ```
 ## Change
 ```
-INSERT: #inc + :is(div, ::text("value "), ::text("1"))
-REMOVE: ::text@6 + ::text("LOADING")
+REMOVE: ::text("LOADING")
+INSERT: div, ::text("value "), ::text("1")
 ```
 ## Console
 ```

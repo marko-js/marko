@@ -33,7 +33,7 @@
 ```
 ## Change
 ```
-REMOVE: #toggle + span
+REMOVE: span
 ```
 
 # Update
@@ -59,7 +59,7 @@ REMOVE: #toggle + span
 ```
 ## Change
 ```
-INSERT: #toggle + span
+INSERT: span
 ```
 ## Console
 ```

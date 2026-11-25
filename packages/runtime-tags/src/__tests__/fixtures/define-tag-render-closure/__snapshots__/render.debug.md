@@ -28,9 +28,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: button::text "1" => "2"
 UPDATE: div:nth-of-type(1)::text "1" => "2"
 UPDATE: div:nth-of-type(2)::text "1" => "2"
+UPDATE: button::text "1" => "2"
 ```
 
 # Update
@@ -50,9 +50,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: button::text "2" => "3"
 UPDATE: div:nth-of-type(1)::text "2" => "3"
 UPDATE: div:nth-of-type(2)::text "2" => "3"
+UPDATE: button::text "2" => "3"
 ```
 
 # Update
@@ -72,7 +72,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: button::text "3" => "4"
 UPDATE: div:nth-of-type(1)::text "3" => "4"
 UPDATE: div:nth-of-type(2)::text "3" => "4"
+UPDATE: button::text "3" => "4"
 ```

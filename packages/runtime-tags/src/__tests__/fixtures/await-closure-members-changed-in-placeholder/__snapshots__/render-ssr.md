@@ -22,9 +22,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: span::text("3")
 REMOVE: ::text("loading...")
-INSERT: button + span
+INSERT: span
+INSERT: span::text("3")
 UPDATE: span::text "2" => "3"
 ```
 

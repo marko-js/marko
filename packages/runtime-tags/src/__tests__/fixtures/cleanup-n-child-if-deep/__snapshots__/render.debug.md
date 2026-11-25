@@ -106,11 +106,11 @@ Inner destroyed
 ```
 ## Change
 ```
-REMOVE: div > div:nth-of-type(2) > p + div
-REMOVE: div > div:nth-of-type(2) > p + span
-REMOVE: div > div:nth-of-type(2) > p + p
 REMOVE: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted")
 INSERT: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed")
+REMOVE: div > div:nth-of-type(2) > div
+REMOVE: div > div:nth-of-type(2) > p
+REMOVE: div > div:nth-of-type(2) > span
 ```
 
 # Update
@@ -155,9 +155,9 @@ Middle destroyed
 ```
 ## Change
 ```
-REMOVE: div > p + div
 REMOVE: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed")
 INSERT: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed")
+REMOVE: div > div
 ```
 
 # Update
@@ -192,7 +192,7 @@ Outer destroyed
 ```
 ## Change
 ```
-REMOVE: pre + div
+REMOVE: div
 REMOVE: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed")
 INSERT: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed")
 ```
@@ -273,15 +273,15 @@ Inner mounted
 ```
 ## Change
 ```
-INSERT: pre + div
-INSERT: div > p + div
-INSERT: div > div:nth-of-type(2) > p:nth-of-type(1) + :is(div, span, p)
-REMOVE: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed")
 INSERT: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed\nOuter mounted")
-REMOVE: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed\nOuter mounted")
 INSERT: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed\nOuter mounted\nMiddle mounted")
+REMOVE: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed")
+REMOVE: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed\nOuter mounted")
 REMOVE: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed\nOuter mounted\nMiddle mounted")
 INSERT: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed\nOuter mounted\nMiddle mounted\nInner mounted")
+INSERT: div
+INSERT: div > div:nth-of-type(2)
+INSERT: div > div:nth-of-type(2) > div:nth-of-type(2), div > div:nth-of-type(2) > span:nth-of-type(2), div > div:nth-of-type(2) > p:nth-of-type(2)
 ```
 
 # Update
@@ -322,11 +322,11 @@ Outer destroyed
 ```
 ## Change
 ```
-REMOVE: pre + div
-REMOVE: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed\nOuter mounted\nMiddle mounted\nInner mounted")
+REMOVE: div
 INSERT: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed")
-REMOVE: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed")
 INSERT: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed")
+REMOVE: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed\nOuter mounted\nMiddle mounted\nInner mounted")
+REMOVE: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed")
 REMOVE: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed")
 INSERT: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed")
 ```

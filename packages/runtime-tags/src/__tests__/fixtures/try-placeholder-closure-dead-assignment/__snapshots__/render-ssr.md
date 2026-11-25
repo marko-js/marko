@@ -17,7 +17,7 @@ loading...
 ```
 ## Change
 ```
-INSERT: div:nth-of-type(2)::text("1 1")
 REMOVE: ::text("loading...")
-INSERT: div:nth-of-type(1) + div
+INSERT: div:nth-of-type(2)
+INSERT: div:nth-of-type(2)::text("1 1")
 ```

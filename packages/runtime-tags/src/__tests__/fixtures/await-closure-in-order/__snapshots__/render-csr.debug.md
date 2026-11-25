@@ -58,7 +58,7 @@ UPDATE: span::text "2" => "3"
 ```
 ## Change
 ```
-INSERT: button + span
+INSERT: span:nth-of-type(1)
 ```
 
 # Update

@@ -25,8 +25,8 @@
 ```
 ## Change
 ```
-INSERT: .child::text("b")
 REMOVE: .child
-INSERT: #log + .child
 INSERT: #log::text("b")
+INSERT: .child
+INSERT: .child::text("b")
 ```

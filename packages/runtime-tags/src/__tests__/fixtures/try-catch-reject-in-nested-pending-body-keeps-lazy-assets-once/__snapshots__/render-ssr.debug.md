@@ -18,10 +18,10 @@ caught outer
 ```
 ## Change
 ```
+REMOVE: ::text("caught inner")
 INSERT: span
 INSERT: span::text("catch")
-INSERT: span + ::text(" caught outer")
-REMOVE: ::text("caught inner")
+INSERT: ::text(" caught outer")
 ```
 ## Console
 ```

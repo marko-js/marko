@@ -11,9 +11,9 @@ loading button
 ```
 ## Change
 ```
-INSERT: button::text("0")
 REMOVE: ::text("loading button")
 INSERT: button
+INSERT: button::text("0")
 ```
 
 # Update
@@ -27,7 +27,7 @@ INSERT: button
 ```
 ## Change
 ```
-INSERT: button + div
+INSERT: div
 INSERT: div::text("0")
 ```
 
@@ -45,6 +45,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: div::text "0" => "1"
 UPDATE: button::text "0" => "1"
+UPDATE: div::text "0" => "1"
 ```

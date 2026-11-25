@@ -27,8 +27,8 @@
 ```
 ## Change
 ```
-INSERT: #class + #tags
+INSERT: #tags
 INSERT: #tags::text("hi")
-INSERT: #tags + #class-await
+INSERT: #class-await
 INSERT: #class-await::text("hi")
 ```

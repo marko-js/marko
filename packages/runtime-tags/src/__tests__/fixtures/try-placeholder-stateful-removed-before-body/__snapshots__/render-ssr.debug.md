@@ -21,7 +21,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: button + ::text(" loading")
+REMOVE: ::text(" loading")
 ```
 ## Console
 ```

@@ -53,7 +53,7 @@
 ## Change
 ```
 UPDATE: #class::text "0" => "1"
-UPDATE: #passthrough::text@5 "0" => "1"
 UPDATE: #spread::text@5 "0" => "1"
+UPDATE: #passthrough::text@5 "0" => "1"
 UPDATE: #inner::text@6 "0" => "1"
 ```

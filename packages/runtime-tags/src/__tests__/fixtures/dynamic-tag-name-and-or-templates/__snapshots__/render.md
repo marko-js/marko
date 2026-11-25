@@ -22,8 +22,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: button + div
-REMOVE: div + div
+REMOVE: div
+INSERT: div
 UPDATE: div::text@5 "" => "row"
 ```
 
@@ -41,8 +41,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: button + div
-REMOVE: div + div
+REMOVE: div
+INSERT: div
 UPDATE: div::text@8 "" => "row"
-INSERT: div::text@11 + ::text("Hello")
+INSERT: div::text("Hello")
 ```

@@ -26,6 +26,6 @@ ERROR!
 ```
 ## Change
 ```
+REMOVE: ::text("loading...")
 INSERT: p
-REMOVE: p + ::text("loading...")
 ```

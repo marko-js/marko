@@ -18,7 +18,7 @@ caught ERROR!d
 ```
 ## Change
 ```
-INSERT: ::text@0 + ::text("d")
-INSERT: ::text@13 + p
+INSERT: ::text("d")
+INSERT: p
 INSERT: p::text("after")
 ```

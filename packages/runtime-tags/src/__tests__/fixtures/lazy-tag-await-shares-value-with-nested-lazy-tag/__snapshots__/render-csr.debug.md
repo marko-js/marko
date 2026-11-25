@@ -29,7 +29,7 @@ UPDATE: .parent::text@0 "" => "parent"
 ```
 ## Change
 ```
-INSERT: .parent + .nested
+INSERT: .nested
 ```
 
 # Update

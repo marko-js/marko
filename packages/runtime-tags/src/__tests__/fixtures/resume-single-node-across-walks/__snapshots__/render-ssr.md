@@ -20,12 +20,12 @@ loading
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(1)::text@0 + ::text("1")
-INSERT: button:nth-of-type(1) + button
-INSERT: button:nth-of-type(2)::text("2:")
-INSERT: span::text("done")
 REMOVE: ::text("loading")
 INSERT: span
+INSERT: span::text("done")
+INSERT: button:nth-of-type(1)::text("1")
+INSERT: button:nth-of-type(2)
+INSERT: button:nth-of-type(2)::text("2:")
 ```
 
 # Update
@@ -42,7 +42,7 @@ INSERT: span
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(2)::text@0 + ::text("2")
+INSERT: button:nth-of-type(2)::text("2")
 ```
 
 # Update
@@ -59,5 +59,5 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: span + button
+REMOVE: button
 ```

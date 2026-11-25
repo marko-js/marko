@@ -49,7 +49,7 @@ document.querySelector("#shrink").click();
 ```
 ## Change
 ```
-REMOVE: span:nth-of-type(2) + span
+REMOVE: span
 UPDATE: span:nth-of-type(1)[class] "on" => ""
 ```
 
@@ -84,6 +84,6 @@ document.querySelector("#grow").click();
 ```
 ## Change
 ```
-INSERT: span:nth-of-type(2) + .on
+INSERT: .on
 UPDATE: .on[class] null => "on"
 ```

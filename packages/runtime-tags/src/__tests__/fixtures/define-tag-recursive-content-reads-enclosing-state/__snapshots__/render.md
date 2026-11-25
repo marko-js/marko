@@ -19,7 +19,7 @@ document.querySelectorAll("button")[index].click();
 ```
 ## Change
 ```
-INSERT: button + em
+INSERT: em
 UPDATE: em::text@5 "" => "on"
 ```
 
@@ -34,5 +34,5 @@ document.querySelectorAll("button")[index].click();
 ```
 ## Change
 ```
-REMOVE: button + em
+REMOVE: em
 ```

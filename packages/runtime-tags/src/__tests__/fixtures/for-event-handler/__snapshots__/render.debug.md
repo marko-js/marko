@@ -19,7 +19,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(1) + button
+INSERT: button:nth-of-type(2)
 ```
 
 # Update
@@ -39,7 +39,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(2) + button
+INSERT: button:nth-of-type(3)
 ```
 
 # Update
@@ -62,7 +62,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(3) + button
+INSERT: button:nth-of-type(4)
 ```
 
 # Update
@@ -88,7 +88,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(4) + button
+INSERT: button:nth-of-type(5)
 ```
 
 # Update
@@ -117,5 +117,5 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(5) + button
+INSERT: button:nth-of-type(6)
 ```

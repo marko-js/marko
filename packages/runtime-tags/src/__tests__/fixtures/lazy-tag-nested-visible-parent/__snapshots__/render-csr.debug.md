@@ -33,7 +33,7 @@ INSERT: .child
 ```
 ## Change
 ```
-INSERT: .child + .grand
+INSERT: .grand
 ```
 
 # Update

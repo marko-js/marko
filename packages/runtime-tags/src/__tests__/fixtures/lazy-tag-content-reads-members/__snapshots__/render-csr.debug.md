@@ -16,7 +16,7 @@
 ```
 ## Change
 ```
-INSERT: button + section
+INSERT: section
 UPDATE: section::text " " => "2"
 ```
 

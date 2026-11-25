@@ -30,7 +30,7 @@
 ```
 ## Change
 ```
-INSERT: .inc + span
+INSERT: span
 ```
 
 # Update
@@ -54,7 +54,7 @@ INSERT: .inc + span
 ```
 ## Change
 ```
-INSERT: .inc + span
+INSERT: span:nth-of-type(1)
 ```
 
 # Update
@@ -106,5 +106,5 @@ document.querySelector(".toggle").click();
 ```
 ## Change
 ```
-REMOVE: span + span
+REMOVE: span
 ```

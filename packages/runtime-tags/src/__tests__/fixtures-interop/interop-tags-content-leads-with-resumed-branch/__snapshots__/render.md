@@ -15,8 +15,8 @@
 ```
 ## Change
 ```
-REMOVE: button::text("0")
 REMOVE: button > i
+REMOVE: button::text("0")
 ```
 
 # Update
@@ -31,7 +31,7 @@ REMOVE: button > i
 ```
 ## Change
 ```
-INSERT: button > :is(::text("2"), i)
+INSERT: button::text("2"), button > i
 UPDATE: button::text " " => "2"
 ```
 
@@ -44,6 +44,6 @@ UPDATE: button::text " " => "2"
 ```
 ## Change
 ```
-REMOVE: button::text("2")
 REMOVE: button > i
+REMOVE: button::text("2")
 ```

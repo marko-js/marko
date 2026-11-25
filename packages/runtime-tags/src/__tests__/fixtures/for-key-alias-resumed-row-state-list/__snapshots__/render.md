@@ -55,7 +55,7 @@ document.querySelector(".toggle").click();
 ## Change
 ```
 INSERT: ::text("0")
-INSERT: ::text@0 + ::text("1")
+INSERT: ::text("1")
 ```
 
 # Update
@@ -77,5 +77,5 @@ document.querySelector(".add").click();
 ```
 ## Change
 ```
-INSERT: ::text@1 + ::text("2")
+INSERT: ::text("2")
 ```

@@ -26,6 +26,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: span::text "1" => "3"
 UPDATE: span[a] "2" => "4"
+UPDATE: span::text "1" => "3"
 ```

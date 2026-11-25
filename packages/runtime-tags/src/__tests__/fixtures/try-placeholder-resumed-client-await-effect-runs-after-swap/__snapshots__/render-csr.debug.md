@@ -19,7 +19,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: button + span
+INSERT: span
 ```
 
 # Update
@@ -31,8 +31,8 @@ loading
 ```
 ## Change
 ```
-INSERT: button + ::text("loading")
-REMOVE: ::text + span
+REMOVE: span
+INSERT: ::text("loading")
 ```
 
 # Update
@@ -49,8 +49,8 @@ REMOVE: ::text + span
 ```
 ## Change
 ```
-INSERT: button + :is(span, div)
-REMOVE: div + ::text("loading")
+REMOVE: ::text("loading")
+INSERT: span, div
 ```
 ## Console
 ```

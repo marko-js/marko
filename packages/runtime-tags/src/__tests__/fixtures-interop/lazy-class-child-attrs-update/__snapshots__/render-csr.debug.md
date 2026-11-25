@@ -27,7 +27,7 @@
 ```
 ## Change
 ```
-INSERT: #inc + #child
+INSERT: #child
 INSERT: #child::text("1")
 ```
 ## Console

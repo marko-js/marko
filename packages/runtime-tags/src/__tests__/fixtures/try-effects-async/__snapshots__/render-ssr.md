@@ -20,8 +20,8 @@ Async: 0
 ## Change
 ```
 REMOVE: ::text("LOADING...")
-INSERT: div + :is(::text("Async: "), ::text("0"))
 INSERT: div::text("0")
+INSERT: ::text("Async: "), ::text("0")
 ```
 
 # Update
@@ -41,9 +41,9 @@ LOADING...
 ```
 ## Change
 ```
-INSERT: div + ::text("LOADING...")
-REMOVE: ::text + ::text("Async: ")
-REMOVE: ::text + ::text("0")
+REMOVE: ::text("0")
+REMOVE: ::text("Async: ")
+INSERT: ::text("LOADING...")
 ```
 
 # Update
@@ -58,10 +58,10 @@ Async: 1
 ```
 ## Change
 ```
-INSERT: div + :is(::text("Async: "), ::text("1"))
-REMOVE: ::text@7 + ::text("LOADING...")
+REMOVE: ::text("LOADING...")
 REMOVE: div::text("0")
 INSERT: div::text("1")
+INSERT: ::text("Async: "), ::text("1")
 ```
 
 # Update
@@ -81,9 +81,9 @@ LOADING...
 ```
 ## Change
 ```
-INSERT: div + ::text("LOADING...")
-REMOVE: ::text + ::text("Async: ")
-REMOVE: ::text + ::text("1")
+REMOVE: ::text("1")
+REMOVE: ::text("Async: ")
+INSERT: ::text("LOADING...")
 ```
 
 # Update
@@ -98,7 +98,7 @@ Error: ERROR!
 ```
 ## Change
 ```
-INSERT: div + ::text("Error: ERROR!")
-REMOVE: ::text + ::text("LOADING...")
+REMOVE: ::text("LOADING...")
+INSERT: ::text("Error: ERROR!")
 UPDATE: ::text " " => "Error: ERROR!"
 ```

@@ -31,5 +31,5 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(3) + button
+INSERT: button:nth-of-type(4)
 ```

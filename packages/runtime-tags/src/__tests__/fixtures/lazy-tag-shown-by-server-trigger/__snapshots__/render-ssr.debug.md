@@ -31,7 +31,7 @@ document.querySelector("#go").click();
 ```
 ## Change
 ```
-INSERT: span:nth-of-type(1) + span
+INSERT: span:nth-of-type(2)
 ```
 
 # Update
@@ -53,5 +53,5 @@ INSERT: span:nth-of-type(1) + span
 ```
 ## Change
 ```
-INSERT: span:nth-of-type(1) + span
+INSERT: span:nth-of-type(2)
 ```

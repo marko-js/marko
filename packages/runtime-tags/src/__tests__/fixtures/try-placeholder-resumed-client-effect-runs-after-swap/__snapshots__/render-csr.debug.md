@@ -25,7 +25,7 @@ document.querySelector("#show").click();
 ```
 ## Change
 ```
-INSERT: #show + #inner
+INSERT: #inner
 ```
 
 # Update
@@ -39,8 +39,8 @@ loading
 ```
 ## Change
 ```
-INSERT: #show + ::text("loading")
-REMOVE: ::text + #inner
+REMOVE: #inner
+INSERT: ::text("loading")
 ```
 
 # Update
@@ -61,8 +61,8 @@ REMOVE: ::text + #inner
 ```
 ## Change
 ```
-INSERT: #show + :is(#inner, div)
-REMOVE: div + ::text("loading")
+REMOVE: ::text("loading")
+INSERT: #inner, div
 ```
 
 # Update

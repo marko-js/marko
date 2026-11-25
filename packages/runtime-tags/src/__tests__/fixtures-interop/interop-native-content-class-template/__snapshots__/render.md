@@ -136,8 +136,8 @@ UPDATE: div[data-n] "0" => "1"
 ```
 ## Change
 ```
-INSERT: div + section
+INSERT: section
 INSERT: section > button
 INSERT: section > button::text("thing ")
-INSERT: section > button::text@0 + ::text("0")
+INSERT: section > button::text("0")
 ```

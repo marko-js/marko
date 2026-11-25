@@ -31,10 +31,10 @@ UPDATE: button::text@8 "0" => "1"
 ```
 ## Change
 ```
-INSERT: button::text("loaded ")
-INSERT: button::text@0 + ::text("1")
 REMOVE: button
 INSERT: button
+INSERT: button::text("loaded ")
+INSERT: button::text("1")
 UPDATE: button::text@7 "0" => "1"
 ```
 ## Console

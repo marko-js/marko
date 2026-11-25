@@ -52,7 +52,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: span:nth-of-type(1) + span
-REMOVE: span:nth-of-type(1) + span
+REMOVE: span
+REMOVE: span
 UPDATE: span:nth-of-type(1)::text "a" => "z"
 ```

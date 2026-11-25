@@ -17,8 +17,8 @@ INSERT: ::text("loading button")
 ```
 ## Change
 ```
+REMOVE: ::text("loading button")
 INSERT: button
-REMOVE: button + ::text("loading button")
 ```
 ## Console
 ```
@@ -36,7 +36,7 @@ LOG "button effect"
 ```
 ## Change
 ```
-INSERT: button + div
+INSERT: div
 UPDATE: div::text " " => "0"
 ```
 ## Console
@@ -58,8 +58,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: div::text "0" => "1"
 UPDATE: button::text "0" => "1"
+UPDATE: div::text "0" => "1"
 ```
 ## Console
 ```
@@ -80,8 +80,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: div::text "1" => "2"
 UPDATE: button::text "1" => "2"
+UPDATE: div::text "1" => "2"
 ```
 ## Console
 ```

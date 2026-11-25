@@ -38,6 +38,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: div > span:nth-of-type(1) + b
-REMOVE: div > span:nth-of-type(1) + i
+REMOVE: div > b
+REMOVE: div > i
 ```

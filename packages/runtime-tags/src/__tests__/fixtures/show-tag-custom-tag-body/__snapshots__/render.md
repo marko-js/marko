@@ -30,7 +30,7 @@ document.getElementById("t").click();
 ```
 ## Change
 ```
-REMOVE: span::text@0 + em
+REMOVE: span > em
 ```
 
 # Update
@@ -53,5 +53,5 @@ document.getElementById("t").click();
 ```
 ## Change
 ```
-INSERT: span::text@0 + em
+INSERT: span > em
 ```

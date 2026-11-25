@@ -26,6 +26,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: em::text "1" => "2"
 UPDATE: .c::text "1" => "2"
+UPDATE: em::text "1" => "2"
 ```

@@ -24,7 +24,7 @@
 ```
 ## Change
 ```
-INSERT: #open + #pick
+INSERT: #pick
 ```
 
 # Update

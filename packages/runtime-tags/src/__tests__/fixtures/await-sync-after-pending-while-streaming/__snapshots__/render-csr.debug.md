@@ -32,6 +32,6 @@ document.querySelector("button").click();
 ## Change
 ```
 UPDATE: button::text "b" => ""
-INSERT: button + div
+INSERT: div
 UPDATE: div::text " " => "no query"
 ```

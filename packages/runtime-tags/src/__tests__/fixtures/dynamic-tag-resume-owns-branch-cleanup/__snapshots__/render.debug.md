@@ -41,9 +41,9 @@ document.querySelector("#s").click();
 ```
 ## Change
 ```
-INSERT: #s + div
 REMOVE: #ref::text("init")
 INSERT: #ref::text("dyn destroyed")
+INSERT: div:nth-of-type(2)
 ```
 
 # Update
@@ -69,7 +69,7 @@ document.querySelector("#o").click();
 ```
 ## Change
 ```
-REMOVE: #s + div
+REMOVE: div
 REMOVE: #ref::text("dyn destroyed")
 INSERT: #ref::text("dyn destroyed")
 ```

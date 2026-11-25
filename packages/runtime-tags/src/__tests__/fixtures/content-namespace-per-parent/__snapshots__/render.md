@@ -35,7 +35,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: div > :is(svg, div)
+INSERT: div > svg, div > div
 UPDATE: div > svg > a[ns] null => "http://www.w3.org/2000/svg"
 UPDATE: div > div > a[ns] null => "http://www.w3.org/1999/xhtml"
 ```
@@ -84,7 +84,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: div > :is(svg, div)
+INSERT: div > svg, div > div
 UPDATE: div > svg > a[ns] null => "http://www.w3.org/2000/svg"
 UPDATE: div > div > a[ns] null => "http://www.w3.org/1999/xhtml"
 ```

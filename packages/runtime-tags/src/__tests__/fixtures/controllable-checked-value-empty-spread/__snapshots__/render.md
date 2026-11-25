@@ -34,6 +34,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: output::text "value=" => "value=x"
 UPDATE: input[checked] "" => null
+UPDATE: output::text "value=" => "value=x"
 ```

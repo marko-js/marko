@@ -54,7 +54,7 @@ UPDATE: .thing::text@6 "0" => "1"
 ```
 ## Change
 ```
-INSERT: #class + div
+INSERT: div
 INSERT: div::text("Content")
 ```
 

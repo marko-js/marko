@@ -19,6 +19,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: em
 UPDATE: button::text "f:a" => "x"
-REMOVE: button + em
 ```

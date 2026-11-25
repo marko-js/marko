@@ -16,9 +16,9 @@
 ```
 ## Change
 ```
-INSERT: div + button
-UPDATE: button::text@2 "" => "10"
+INSERT: button
 UPDATE: button::text@0 "" => "0"
+UPDATE: button::text@2 "" => "10"
 ```
 
 # Update

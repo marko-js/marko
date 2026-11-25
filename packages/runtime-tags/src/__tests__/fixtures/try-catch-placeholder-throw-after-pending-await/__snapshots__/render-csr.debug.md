@@ -15,6 +15,6 @@ caught ERROR!
 ```
 ## Change
 ```
+REMOVE: ::text("loading")
 INSERT: ::text("caught "), ::text("ERROR!")
-REMOVE: ::text@7 + ::text("loading")
 ```

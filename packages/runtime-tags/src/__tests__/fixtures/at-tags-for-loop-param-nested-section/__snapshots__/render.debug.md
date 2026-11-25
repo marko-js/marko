@@ -112,13 +112,13 @@ document.querySelector(`#${id}`).click();
 ```
 ## Change
 ```
-INSERT: span:nth-of-type(4) + :is(span, span)
-INSERT: span:nth-of-type(4) + em
-INSERT: em:nth-of-type(3) + b
+INSERT: em:nth-of-type(3)
+UPDATE: em:nth-of-type(3)::text@3 "" => "2"
+INSERT: b:nth-of-type(3)
+UPDATE: b:nth-of-type(3)::text@4 "" => "2"
+INSERT: span:nth-of-type(5), span:nth-of-type(6)
 UPDATE: span:nth-of-type(5)::text@0 "" => "2"
 UPDATE: span:nth-of-type(6)::text@0 "" => "2"
-UPDATE: em:nth-of-type(3)::text@3 "" => "2"
-UPDATE: b:nth-of-type(3)::text@4 "" => "2"
 ```
 
 # Update
@@ -171,19 +171,19 @@ document.querySelector(`#${id}`).click();
 ```
 ## Change
 ```
-REMOVE: #rename + em
-INSERT: #rename + i
-REMOVE: i:nth-of-type(1) + b
-REMOVE: span:nth-of-type(2) + em
-INSERT: span:nth-of-type(2) + i
-REMOVE: i:nth-of-type(2) + b
-REMOVE: span:nth-of-type(6) + strong
-REMOVE: span:nth-of-type(6) + strong
-REMOVE: span:nth-of-type(4) + em
-INSERT: span:nth-of-type(4) + i
-REMOVE: i:nth-of-type(3) + b
+REMOVE: b
+REMOVE: b
+REMOVE: b
+REMOVE: em
+REMOVE: em
+REMOVE: em
+REMOVE: strong
+REMOVE: strong
+INSERT: i:nth-of-type(1)
 UPDATE: i:nth-of-type(1)::text@4 "" => "0"
+INSERT: i:nth-of-type(2)
 UPDATE: i:nth-of-type(2)::text@4 "" => "1"
+INSERT: i:nth-of-type(3)
 UPDATE: i:nth-of-type(3)::text@4 "" => "2"
 ```
 
@@ -252,25 +252,25 @@ document.querySelector(`#${id}`).click();
 ```
 ## Change
 ```
-INSERT: #rename + em
-INSERT: em:nth-of-type(1) + b
-REMOVE: b:nth-of-type(1) + i
-INSERT: span:nth-of-type(2) + em
-INSERT: em:nth-of-type(2) + b
-REMOVE: b:nth-of-type(2) + i
-INSERT: span:nth-of-type(6) + strong
-INSERT: strong:nth-of-type(1) + strong
-INSERT: span:nth-of-type(4) + em
-INSERT: em:nth-of-type(3) + b
-REMOVE: b:nth-of-type(3) + i
+REMOVE: i
+REMOVE: i
+REMOVE: i
+INSERT: em:nth-of-type(1)
 UPDATE: em:nth-of-type(1)::text@3 "" => "0"
+INSERT: b:nth-of-type(1)
 UPDATE: b:nth-of-type(1)::text@4 "" => "0"
+INSERT: em:nth-of-type(2)
 UPDATE: em:nth-of-type(2)::text@3 "" => "1"
+INSERT: b:nth-of-type(2)
 UPDATE: b:nth-of-type(2)::text@4 "" => "1"
-UPDATE: strong:nth-of-type(1)::text " " => "a"
-UPDATE: strong:nth-of-type(2)::text " " => "b"
+INSERT: em:nth-of-type(3)
 UPDATE: em:nth-of-type(3)::text@3 "" => "2"
+INSERT: b:nth-of-type(3)
 UPDATE: b:nth-of-type(3)::text@4 "" => "2"
+INSERT: strong:nth-of-type(1)
+UPDATE: strong:nth-of-type(1)::text " " => "a"
+INSERT: strong:nth-of-type(2)
+UPDATE: strong:nth-of-type(2)::text " " => "b"
 ```
 
 # Update

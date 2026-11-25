@@ -32,10 +32,10 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-REMOVE: #toggle + span
-REMOVE: #toggle + span
-REMOVE: #toggle + b
-REMOVE: #toggle + b
+REMOVE: b
+REMOVE: b
+REMOVE: span
+REMOVE: span
 ```
 
 # Update
@@ -63,16 +63,16 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-INSERT: #toggle + span
-INSERT: span:nth-of-type(1) + span
-INSERT: span:nth-of-type(2) + b
-INSERT: b:nth-of-type(1) + b
+INSERT: span:nth-of-type(1)
 UPDATE: span:nth-of-type(1)::text@0 "" => "1"
 UPDATE: span:nth-of-type(1)::text@2 "" => "x"
-UPDATE: span:nth-of-type(2)::text@2 "" => "y"
+INSERT: span:nth-of-type(2)
 UPDATE: span:nth-of-type(2)::text@0 "" => "2"
+UPDATE: span:nth-of-type(2)::text@2 "" => "y"
+INSERT: b:nth-of-type(1)
 UPDATE: b:nth-of-type(1)::text@0 "" => "a"
 UPDATE: b:nth-of-type(1)::text@1 "" => "b"
+INSERT: b:nth-of-type(2)
 UPDATE: b:nth-of-type(2)::text@0 "" => "c"
 UPDATE: b:nth-of-type(2)::text@1 "" => "d"
 ```

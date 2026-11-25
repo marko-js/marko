@@ -16,8 +16,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: ::text("Hello")
 INSERT: div
-REMOVE: div + ::text("Hello")
 UPDATE: div::text@2 "" => "1"
 ```
 
@@ -31,6 +31,6 @@ Hello
 ```
 ## Change
 ```
+REMOVE: div
 INSERT: ::text("Hello")
-REMOVE: ::text + div
 ```

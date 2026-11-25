@@ -18,5 +18,5 @@ loading...
 ```
 ## Change
 ```
-REMOVE: #outside + ::text("loading...")
+REMOVE: ::text("loading...")
 ```

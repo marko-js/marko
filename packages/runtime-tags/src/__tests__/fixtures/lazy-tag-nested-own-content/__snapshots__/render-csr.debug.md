@@ -11,7 +11,7 @@
 ```
 ## Change
 ```
-INSERT: button, button
+INSERT: button:nth-of-type(1), button:nth-of-type(2)
 UPDATE: button:nth-of-type(1)::text@6 "" => "0"
 ```
 

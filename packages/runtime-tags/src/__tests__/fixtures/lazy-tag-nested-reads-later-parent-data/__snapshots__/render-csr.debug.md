@@ -28,7 +28,7 @@ INSERT: .parent
 ```
 ## Change
 ```
-INSERT: .parent + .child
+INSERT: .child
 ```
 
 # Update
@@ -51,7 +51,7 @@ INSERT: .parent + .child
 ```
 ## Change
 ```
-INSERT: .child + .later
+INSERT: .later
 ```
 
 # Update
@@ -79,7 +79,7 @@ INSERT: .child + .later
 ```
 ## Change
 ```
-INSERT: .later + button
+INSERT: button:nth-of-type(4)
 ```
 
 # Update
@@ -108,7 +108,7 @@ loading
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(4) + ::text("loading")
+INSERT: ::text("loading")
 ```
 
 # Update
@@ -141,8 +141,8 @@ INSERT: button:nth-of-type(4) + ::text("loading")
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(4) + button
-REMOVE: button:nth-of-type(5) + ::text("loading")
+REMOVE: ::text("loading")
+INSERT: button:nth-of-type(5)
 ```
 
 # Update

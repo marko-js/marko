@@ -16,7 +16,7 @@
 ```
 ## Change
 ```
-INSERT: button + span
+INSERT: span
 INSERT: span::text("done")
 ```
 

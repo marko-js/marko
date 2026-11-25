@@ -18,8 +18,8 @@ INSERT: ::text("LOADING A1")
 ```
 ## Change
 ```
+REMOVE: ::text("LOADING A1")
 INSERT: .a
-REMOVE: .a + ::text("LOADING A1")
 ```
 
 # Update
@@ -78,8 +78,8 @@ INSERT: div > div::text("LOADING B1")
 ```
 ## Change
 ```
-INSERT: div > div > .b
-REMOVE: .b + ::text("LOADING B1")
+REMOVE: div > div::text("LOADING B1")
+INSERT: .b
 ```
 
 # Update

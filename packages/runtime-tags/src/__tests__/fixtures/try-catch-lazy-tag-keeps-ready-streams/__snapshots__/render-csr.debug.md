@@ -16,7 +16,7 @@
 ## Change
 ```
 INSERT: #other
-INSERT: #other + #child
+INSERT: #child
 ```
 
 # Update
@@ -30,8 +30,8 @@ loading
 ```
 ## Change
 ```
-INSERT: #other + ::text("loading")
-REMOVE: ::text + #child
+REMOVE: #child
+INSERT: ::text("loading")
 ```
 
 # Update
@@ -45,8 +45,8 @@ caught
 ```
 ## Change
 ```
-INSERT: #other + ::text("caught")
-REMOVE: ::text + ::text("loading")
+REMOVE: ::text("loading")
+INSERT: ::text("caught")
 UPDATE: ::text " " => "caught"
 ```
 
@@ -64,7 +64,7 @@ caught
 ```
 ## Change
 ```
-INSERT: ::text + p
+INSERT: p
 UPDATE: p::text " " => "done"
 ```
 

@@ -49,7 +49,7 @@ document.querySelector(".hide").click();
 ```
 ## Change
 ```
-REMOVE: .inc + span
+REMOVE: span
 ```
 
 # Update

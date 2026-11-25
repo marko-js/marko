@@ -17,8 +17,8 @@
 ```
 ## Change
 ```
-REMOVE: #log::text("[page][page-after]")
 INSERT: #log::text("[page][page-after][child]")
+REMOVE: #log::text("[page][page-after]")
 REMOVE: #log::text("[page][page-after][child]")
 INSERT: #log::text("[page][page-after][child][child-after]")
 ```
@@ -33,8 +33,8 @@ INSERT: #log::text("[page][page-after][child][child-after]")
 ```
 ## Change
 ```
-REMOVE: #log::text("[page][page-after][child][child-after]")
 INSERT: #log::text("[page][page-after][child][child-after][before-await]")
+REMOVE: #log::text("[page][page-after][child][child-after]")
 REMOVE: #log::text("[page][page-after][child][child-after][before-await]")
 INSERT: #log::text("[page][page-after][child][child-after][before-await][after-await]")
 ```

@@ -58,12 +58,12 @@ UPDATE: .n1::text@0 "placeholder 0" => "placeholder 1"
 ```
 ## Change
 ```
-INSERT: .n5::text("body 1")
-INSERT: .n5::text@0 + ::text(" ")
-INSERT: .n5::text@6 + ::text("0")
 REMOVE: button
-INSERT: .swap + .n5
+INSERT: .n5
+INSERT: .n5::text("body 1")
 UPDATE: .n5::text@0 "body 0" => "body 1"
+INSERT: .n5::text(" ")
+INSERT: .n5::text("0")
 ```
 
 # Update
@@ -112,7 +112,7 @@ document.querySelector(selector).click();
 ```
 ## Change
 ```
-INSERT: .swap + .n2
-REMOVE: .n2 + button
+REMOVE: button
+INSERT: .n2
 UPDATE: .n2::text " " => "body 2"
 ```

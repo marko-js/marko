@@ -25,5 +25,5 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: div + div
+REMOVE: div
 ```

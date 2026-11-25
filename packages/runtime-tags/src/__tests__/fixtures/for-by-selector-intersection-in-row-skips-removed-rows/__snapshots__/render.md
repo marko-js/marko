@@ -32,7 +32,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: span + span
-REMOVE: span + span
+REMOVE: span
+REMOVE: span
 UPDATE: span[class] "on" => ""
 ```

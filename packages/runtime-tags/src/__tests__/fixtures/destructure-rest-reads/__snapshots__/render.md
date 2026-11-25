@@ -34,12 +34,12 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: div:nth-of-type(1)::text@5 "2" => "1"
-UPDATE: div:nth-of-type(3)::text@2 "2" => "1"
 UPDATE: div:nth-of-type(1)::text@0 "1" => "4"
 UPDATE: div:nth-of-type(1)::text@2 "2" => "5"
-UPDATE: div:nth-of-type(3)::text@0 "2" => "5"
-UPDATE: div:nth-of-type(2)::text@0 "2" => "5"
 UPDATE: div:nth-of-type(1)::text "3" => ""
+UPDATE: div:nth-of-type(1)::text@5 "2" => "1"
+UPDATE: div:nth-of-type(2)::text@0 "2" => "5"
 UPDATE: div:nth-of-type(2)::text "3" => ""
+UPDATE: div:nth-of-type(3)::text@0 "2" => "5"
+UPDATE: div:nth-of-type(3)::text@2 "2" => "1"
 ```

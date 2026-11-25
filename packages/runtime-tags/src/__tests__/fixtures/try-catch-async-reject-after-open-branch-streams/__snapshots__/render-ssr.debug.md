@@ -18,12 +18,12 @@
 ```
 ## Change
 ```
-INSERT: button
-INSERT: button:nth-of-type(1)::text("nope ")
-INSERT: button:nth-of-type(1)::text@0 + ::text("0")
-INSERT: button:nth-of-type(1) + .toggle
-INSERT: .toggle::text("true")
 REMOVE: span
+INSERT: button:nth-of-type(1)
+INSERT: button:nth-of-type(1)::text("nope ")
+INSERT: button:nth-of-type(1)::text("0")
+INSERT: .toggle
+INSERT: .toggle::text("true")
 ```
 
 # Update

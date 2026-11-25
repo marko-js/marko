@@ -38,11 +38,11 @@ loading
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(2) + .later
+INSERT: .later
 INSERT: .later::text("later")
-INSERT: .later + button
+INSERT: button:nth-of-type(4)
 INSERT: button:nth-of-type(4)::text("second")
-INSERT: button:nth-of-type(4) + ::text("loading")
+INSERT: ::text("loading")
 ```
 
 # Update
@@ -75,9 +75,9 @@ INSERT: button:nth-of-type(4) + ::text("loading")
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(5)::text("first")
 REMOVE: ::text("loading")
-INSERT: button:nth-of-type(4) + button
+INSERT: button:nth-of-type(5)
+INSERT: button:nth-of-type(5)::text("first")
 ```
 
 # Update

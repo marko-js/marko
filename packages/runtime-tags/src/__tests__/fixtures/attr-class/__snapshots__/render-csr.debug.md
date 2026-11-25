@@ -67,14 +67,14 @@
 ```
 ## Change
 ```
-UPDATE: div:nth-of-type(4)[class] "active" => ""
 UPDATE: div:nth-of-type(1)[class] "a b d" => "a"
 UPDATE: div:nth-of-type(1)[class] "a d" => "a"
-UPDATE: div:nth-of-type(6)[class] "a b d" => "a"
-UPDATE: div:nth-of-type(8)[class] "a b d" => "a"
+UPDATE: div:nth-of-type(4)[class] "active" => ""
 UPDATE: .base[class] "base c d e g" => "base"
 UPDATE: .base[class] "base d e g" => "base"
 UPDATE: .base[class] "base e g" => "base"
 UPDATE: .base[class] "base g" => "base"
+UPDATE: div:nth-of-type(6)[class] "a b d" => "a"
+UPDATE: div:nth-of-type(8)[class] "a b d" => "a"
 UPDATE: #test[class] "a b d" => "a"
 ```

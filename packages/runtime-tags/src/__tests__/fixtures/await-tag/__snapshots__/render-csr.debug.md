@@ -18,7 +18,7 @@
 ```
 ## Change
 ```
-INSERT: div > :is(::text("Got: "), ::text("a"), ::text(" "), ::text("0"))
+INSERT: div::text("Got: "), div::text("a"), div::text(" "), div::text("0")
 UPDATE: div::text@5 "" => "a"
 UPDATE: div::text@7 "" => "0"
 ```
@@ -34,7 +34,7 @@ UPDATE: div::text@7 "" => "0"
 ```
 ## Change
 ```
-INSERT: div::text@7 + :is(::text("Got: "), ::text("c"), ::text(" "), ::text("0"))
+INSERT: div::text("Got: "), div::text("c"), div::text(" "), div::text("0")
 UPDATE: div::text@13 "" => "c"
 UPDATE: div::text@15 "" => "0"
 ```
@@ -50,7 +50,7 @@ UPDATE: div::text@15 "" => "0"
 ```
 ## Change
 ```
-INSERT: div::text@7 + :is(::text("Got: "), ::text("b"), ::text(" "), ::text("0"))
+INSERT: div::text("Got: "), div::text("b"), div::text(" "), div::text("0")
 UPDATE: div::text@13 "" => "b"
 UPDATE: div::text@15 "" => "0"
 ```

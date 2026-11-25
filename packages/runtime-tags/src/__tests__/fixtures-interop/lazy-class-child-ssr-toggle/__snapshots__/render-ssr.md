@@ -25,7 +25,7 @@
 ```
 ## Change
 ```
-REMOVE: #toggle + #child
+REMOVE: #child
 ```
 
 # Update
@@ -46,6 +46,6 @@ REMOVE: #toggle + #child
 ```
 ## Change
 ```
-INSERT: #toggle + #child
+INSERT: #child
 INSERT: #child::text("42")
 ```

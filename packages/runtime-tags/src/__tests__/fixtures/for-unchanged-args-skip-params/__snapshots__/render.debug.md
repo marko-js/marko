@@ -62,11 +62,11 @@
 ```
 ## Change
 ```
+REMOVE: ul > li
 UPDATE: ul > li:nth-of-type(1)::text@0 "1" => "0"
 UPDATE: ul > li:nth-of-type(2)::text@0 "2" => "1"
+INSERT: ul > li:nth-of-type(3)
 UPDATE: ul > li:nth-of-type(3)::text@0 "0" => "2"
-REMOVE: ul > li
-INSERT: ul > li:nth-of-type(2) + li
 ```
 
 # Update
@@ -145,9 +145,9 @@ UPDATE: ul > li:nth-of-type(1)::text@4 "2" => "12"
 ```
 ## Change
 ```
+REMOVE: ul > li
 UPDATE: ul > li:nth-of-type(1)::text@0 "1" => "0"
 UPDATE: ul > li:nth-of-type(2)::text@0 "2" => "1"
+INSERT: ul > li:nth-of-type(3)
 UPDATE: ul > li:nth-of-type(3)::text@0 "0" => "2"
-REMOVE: ul > li
-INSERT: ul > li:nth-of-type(2) + li
 ```

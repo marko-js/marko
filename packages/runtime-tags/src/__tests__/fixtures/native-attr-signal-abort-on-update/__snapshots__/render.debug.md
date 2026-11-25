@@ -34,11 +34,11 @@ document.getElementById("inc").click();
 ```
 ## Change
 ```
-UPDATE: #inc::text "0" => "1"
-INSERT: div, div, div
+INSERT: div:nth-of-type(1), div:nth-of-type(2), div:nth-of-type(3)
+UPDATE: div:nth-of-type(1)[data-spread] null => "1"
 UPDATE: div:nth-of-type(2)[data-first] null => "1"
 UPDATE: div:nth-of-type(2)[data-second] null => "1"
-UPDATE: div:nth-of-type(1)[data-spread] null => "1"
+UPDATE: #inc::text "0" => "1"
 ```
 ## Console
 ```
@@ -74,11 +74,11 @@ document.getElementById("inc").click();
 ```
 ## Change
 ```
-UPDATE: #inc::text "1" => "2"
+UPDATE: div:nth-of-type(1)[data-spread] "1" => "2"
 UPDATE: div:nth-of-type(2)[data-first] "1" => "2"
 UPDATE: div:nth-of-type(2)[data-second] "1" => "2"
 UPDATE: div:nth-of-type(3)[data-big] null => ""
-UPDATE: div:nth-of-type(1)[data-spread] "1" => "2"
+UPDATE: #inc::text "1" => "2"
 ```
 ## Console
 ```
@@ -118,10 +118,10 @@ document.getElementById("inc").click();
 ```
 ## Change
 ```
-UPDATE: #inc::text "2" => "3"
+UPDATE: div:nth-of-type(1)[data-spread] "2" => "3"
 UPDATE: div:nth-of-type(2)[data-first] "2" => "3"
 UPDATE: div:nth-of-type(2)[data-second] "2" => "3"
-UPDATE: div:nth-of-type(1)[data-spread] "2" => "3"
+UPDATE: #inc::text "2" => "3"
 ```
 ## Console
 ```
@@ -149,10 +149,10 @@ document.getElementById("hide").click();
 ```
 ## Change
 ```
+REMOVE: div
+REMOVE: div
+REMOVE: div
 UPDATE: #inc::text "3" => "0"
-REMOVE: div
-REMOVE: div
-REMOVE: div
 ```
 ## Console
 ```

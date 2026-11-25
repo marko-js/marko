@@ -18,7 +18,7 @@ loading
 ```
 ## Change
 ```
-INSERT: #log + ::text("loading")
+INSERT: ::text("loading")
 ```
 
 # Update
@@ -32,7 +32,7 @@ loadingmid
 ```
 ## Change
 ```
-INSERT: ::text@0 + ::text("mid")
+INSERT: ::text("mid")
 UPDATE: ::text@7 " " => "mid"
 ```
 
@@ -47,8 +47,8 @@ ERROR!
 ```
 ## Change
 ```
-INSERT: #log + ::text("ERROR!")
-REMOVE: ::text + ::text("loading")
-REMOVE: ::text + ::text("mid")
+REMOVE: ::text("loading")
+REMOVE: ::text("mid")
+INSERT: ::text("ERROR!")
 UPDATE: ::text " " => "ERROR!"
 ```

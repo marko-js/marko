@@ -19,7 +19,7 @@ loading...
 ```
 ## Change
 ```
-INSERT: #footer::text("late")
 REMOVE: ::text("loading...")
-INSERT: div + #footer
+INSERT: #footer
+INSERT: #footer::text("late")
 ```

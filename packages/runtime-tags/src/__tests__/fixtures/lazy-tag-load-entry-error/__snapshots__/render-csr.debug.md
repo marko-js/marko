@@ -20,5 +20,5 @@ setTimeout(() => document.body.click());
 ```
 ## Change
 ```
-INSERT: main > #error
+INSERT: #error
 ```

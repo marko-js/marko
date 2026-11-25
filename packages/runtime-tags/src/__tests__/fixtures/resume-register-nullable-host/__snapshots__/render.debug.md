@@ -55,9 +55,9 @@ document.querySelector(id).click();
 ```
 ## Change
 ```
-INSERT: #toggle + .card
-REMOVE: .card + #inc
-INSERT: .card > #inc
+REMOVE: #inc
+INSERT: .card
+INSERT: #inc
 UPDATE: #inc::text " " => "1"
 ```
 
@@ -104,8 +104,8 @@ document.querySelector(id).click();
 ```
 ## Change
 ```
-INSERT: #toggle + #inc
-REMOVE: #inc + div
+REMOVE: div
+INSERT: #inc
 UPDATE: #inc::text " " => "2"
 ```
 

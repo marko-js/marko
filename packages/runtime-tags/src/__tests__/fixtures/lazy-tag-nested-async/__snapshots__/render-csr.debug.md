@@ -32,7 +32,7 @@
 ```
 ## Change
 ```
-INSERT: #before + #child
+INSERT: #child
 ```
 
 # Update
@@ -60,7 +60,7 @@ INSERT: #before + #child
 ```
 ## Change
 ```
-INSERT: #child + #child-await
+INSERT: #child-await
 UPDATE: #child-await::text " " => "10"
 ```
 
@@ -94,7 +94,7 @@ UPDATE: #child-await::text " " => "10"
 ```
 ## Change
 ```
-INSERT: #child-await + #grand
+INSERT: #grand
 ```
 
 # Update
@@ -132,7 +132,7 @@ INSERT: #child-await + #grand
 ```
 ## Change
 ```
-INSERT: #grand + #grand-await
+INSERT: #grand-await
 UPDATE: #grand-await::text " " => "20"
 ```
 

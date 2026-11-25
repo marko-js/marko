@@ -23,7 +23,7 @@ WARN "A lazy load trigger could not find an element matching \"#footer\". The mo
 ```
 ## Change
 ```
-INSERT: #footer::text("late")
 REMOVE: ::text("loading...")
-INSERT: div + #footer
+INSERT: #footer
+INSERT: #footer::text("late")
 ```

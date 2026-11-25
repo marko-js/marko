@@ -37,13 +37,13 @@
 ```
 ## Change
 ```
-INSERT: #child + #child-await
+INSERT: #child-await
 INSERT: #child-await::text("10")
-INSERT: #child-await + #grand
+INSERT: #grand
 INSERT: #grand::text("grand:")
-INSERT: #grand::text@0 + ::text("1")
-INSERT: #grand::text@6 + ::text(":")
-INSERT: #grand::text@7 + ::text("1")
+INSERT: #grand::text("1")
+INSERT: #grand::text(":")
+INSERT: #grand::text("1")
 ```
 
 # Update
@@ -81,9 +81,9 @@ INSERT: #grand::text@7 + ::text("1")
 ```
 ## Change
 ```
-INSERT: #grand + #grand-await
+INSERT: #grand-await
 INSERT: #grand-await::text("20")
-INSERT: #grand-await + #after
+INSERT: #after
 INSERT: #after::text("after")
 ```
 

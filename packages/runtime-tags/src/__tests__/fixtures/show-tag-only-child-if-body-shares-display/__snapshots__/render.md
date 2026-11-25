@@ -50,8 +50,8 @@ document.getElementById("t").click();
 ## Change
 ```
 INSERT: #c > i
-REMOVE: #document-fragment > i + p
 REMOVE: #c > i
+REMOVE: #c > p
 ```
 
 # Update

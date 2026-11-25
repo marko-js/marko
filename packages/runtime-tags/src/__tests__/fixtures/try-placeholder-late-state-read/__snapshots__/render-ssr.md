@@ -21,9 +21,9 @@ document.querySelector("button")?.click();
 ```
 ## Change
 ```
-INSERT: button + i
+INSERT: i
 INSERT: i::text("loading ")
-INSERT: i::text@0 + ::text("0")
+INSERT: i::text("0")
 ```
 
 # Update
@@ -55,9 +55,9 @@ UPDATE: i::text@8 "0" => "1"
 ```
 ## Change
 ```
-INSERT: b::text("loaded ")
-INSERT: b::text@0 + ::text("1")
 REMOVE: i
-INSERT: button + b
+INSERT: b
+INSERT: b::text("loaded ")
+INSERT: b::text("1")
 UPDATE: b::text@7 "0" => "1"
 ```

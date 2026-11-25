@@ -29,14 +29,14 @@
 ```
 ## Change
 ```
-INSERT: select > option
+INSERT: select > option:nth-of-type(1)
 INSERT: select > option:nth-of-type(1)::text("a")
-INSERT: select > option:nth-of-type(1) + option
+INSERT: select > option:nth-of-type(2)
 INSERT: select > option:nth-of-type(2)::text("b")
-INSERT: select > option:nth-of-type(2) + option
+INSERT: select > option:nth-of-type(3)
 INSERT: select > option:nth-of-type(3)::text("c")
-INSERT: select + div
+INSERT: div
 INSERT: div::text("b")
-INSERT: div::text@0 + ::text(":")
-INSERT: div::text@1 + ::text("0")
+INSERT: div::text(":")
+INSERT: div::text("0")
 ```

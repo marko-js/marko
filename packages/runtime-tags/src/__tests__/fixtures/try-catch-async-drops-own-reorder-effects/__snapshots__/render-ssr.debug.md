@@ -28,8 +28,8 @@ ERROR!
 ```
 ## Change
 ```
-INSERT: #log + ::text("ERROR!")
 INSERT: #log::text("[a]")
 REMOVE: #log::text("[a]")
 INSERT: #log::text("[a][z]")
+INSERT: ::text("ERROR!")
 ```

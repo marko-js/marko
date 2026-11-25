@@ -7,9 +7,9 @@ caught ERROR!
 ## Change
 ```
 INSERT: ::text(" "), p
+REMOVE: ::text(" ")
+REMOVE: p
 INSERT: ::text("caught "), ::text("ERROR!")
-REMOVE: ::text@7 + ::text(" ")
-REMOVE: ::text@7 + p
 UPDATE: ::text@7 "" => "ERROR!"
 ```
 
@@ -22,6 +22,6 @@ caught ERROR!
 ```
 ## Change
 ```
-INSERT: ::text@7 + p
+INSERT: p
 UPDATE: p::text " " => "d"
 ```

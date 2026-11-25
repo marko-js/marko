@@ -40,8 +40,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: output::text@7 "0" => "1"
 UPDATE: details[data-n] "0" => "1"
+UPDATE: output::text@7 "0" => "1"
 ```
 
 # Update
@@ -66,8 +66,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: output::text@7 "1" => "2"
 UPDATE: details[data-n] "1" => "2"
+UPDATE: output::text@7 "1" => "2"
 ```
 
 # Update assertNoExtraObservers
@@ -97,10 +97,10 @@ details.dispatchEvent(new details.ownerDocument.defaultView.Event("toggle"));
 ```
 ## Change
 ```
-UPDATE: details[open] null => ""
 UPDATE: details[open] "" => ""
-UPDATE: output::text@0 "closed" => "open"
 UPDATE: details[open] null => ""
+UPDATE: details[open] null => ""
+UPDATE: output::text@0 "closed" => "open"
 ```
 
 # Update
@@ -128,7 +128,7 @@ details.dispatchEvent(new details.ownerDocument.defaultView.Event("toggle"));
 ## Change
 ```
 UPDATE: details[open] "" => null
+UPDATE: details[open] "" => null
 UPDATE: details[open] null => null
 UPDATE: output::text@0 "open" => "closed"
-UPDATE: details[open] "" => null
 ```

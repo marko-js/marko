@@ -16,7 +16,7 @@
 ```
 ## Change
 ```
-INSERT: button + span
+INSERT: span
 ```
 ## Console
 ```
@@ -34,8 +34,8 @@ LOG "mounted" "outer placeholder"
 ```
 ## Change
 ```
-INSERT: button + p
-REMOVE: p + span
+REMOVE: span
+INSERT: p
 ```
 ## Console
 ```
@@ -56,7 +56,7 @@ LOG "destroyed" "outer placeholder"
 ```
 ## Change
 ```
-INSERT: p + span
+INSERT: span
 ```
 ## Console
 ```
@@ -77,8 +77,8 @@ LOG "mounted" "inner placeholder"
 ```
 ## Change
 ```
-INSERT: p + span
-REMOVE: span + span
+REMOVE: span
+INSERT: span
 ```
 ## Console
 ```

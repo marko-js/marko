@@ -20,6 +20,6 @@
 ```
 ## Change
 ```
-REMOVE: span + span
+REMOVE: span
 UPDATE: span[class] "on" => ""
 ```

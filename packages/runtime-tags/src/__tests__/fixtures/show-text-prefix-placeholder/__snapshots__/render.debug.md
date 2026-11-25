@@ -42,9 +42,9 @@ document.querySelector("button").click();
 ```
 UPDATE: strong::text@2 "3" => "8"
 UPDATE: span::text@0 "3" => "8"
-UPDATE: #document-fragment::text "3" => "8"
+REMOVE: em::text("8")
 UPDATE: b::text@2 "3" => "8"
-REMOVE: em::text + ::text("8")
+UPDATE: #document-fragment::text "3" => "8"
 ```
 
 # Update
@@ -72,6 +72,6 @@ document.querySelector("button").click();
 ```
 UPDATE: strong::text@2 "8" => "13"
 UPDATE: span::text@0 "8" => "13"
+INSERT: em::text("13")
 UPDATE: b::text@2 "8" => "13"
-INSERT: em::text@0 + ::text("13")
 ```

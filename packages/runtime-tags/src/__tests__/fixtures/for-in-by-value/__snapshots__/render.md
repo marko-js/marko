@@ -35,8 +35,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: ul > li
+INSERT: ul > li:nth-of-type(1)
+INSERT: ul > li:nth-of-type(2)
 UPDATE: ul > li:nth-of-type(3)::text@0 "a" => "c"
-INSERT: ul > li
-REMOVE: ul > li:nth-of-type(3) + li
-INSERT: ul > li
 ```

@@ -35,7 +35,7 @@ document.querySelector(".toggle").click();
 ```
 ## Change
 ```
-REMOVE: .toggle + div
+REMOVE: div
 ```
 
 # Update
@@ -61,9 +61,9 @@ document.querySelector(".toggle").click();
 ```
 ## Change
 ```
-INSERT: .toggle + .a
+INSERT: .a
 UPDATE: .a[class] null => "a"
-INSERT: .a > :is(::text("One "), ::text("0"))
+INSERT: .a::text("One "), .a::text("0")
 UPDATE: .a::text@4 "" => "0"
 ```
 

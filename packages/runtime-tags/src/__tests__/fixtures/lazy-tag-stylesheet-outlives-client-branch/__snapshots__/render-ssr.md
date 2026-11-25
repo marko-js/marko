@@ -11,11 +11,11 @@
 ```
 ## Change
 ```
-INSERT: button
-INSERT: button + link
-INSERT: button + .child
-INSERT: .child::text("x")
 INSERT: #document > html > head > link
+INSERT: button
+INSERT: link
+INSERT: .child
+INSERT: .child::text("x")
 ```
 
 # Update
@@ -27,8 +27,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: button + link
-REMOVE: button + span
+REMOVE: link
+REMOVE: span
 ```
 
 # Update

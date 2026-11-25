@@ -9,6 +9,6 @@ ad
 ```
 ## Change
 ```
-REMOVE: ::text@0 + ::text("b")
-REMOVE: ::text@0 + ::text("c")
+REMOVE: ::text("b")
+REMOVE: ::text("c")
 ```

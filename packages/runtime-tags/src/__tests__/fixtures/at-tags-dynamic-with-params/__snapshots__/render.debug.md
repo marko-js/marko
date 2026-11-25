@@ -17,8 +17,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: ::text("y: ")
 REMOVE: ::text("1")
+REMOVE: ::text("y: ")
 ```
 
 # Update
@@ -48,6 +48,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: ::text("y: ")
 REMOVE: ::text("1")
+REMOVE: ::text("y: ")
 ```

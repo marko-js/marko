@@ -26,15 +26,15 @@
 ```
 ## Change
 ```
-INSERT: button
+INSERT: button:nth-of-type(1)
 INSERT: button:nth-of-type(1)::text("0")
-INSERT: button:nth-of-type(1) + span
+INSERT: span:nth-of-type(1)
 INSERT: span:nth-of-type(1)::text("shown")
-INSERT: span:nth-of-type(1) + button
+INSERT: button:nth-of-type(2)
 INSERT: button:nth-of-type(2)::text("0")
-INSERT: button:nth-of-type(2) + span
+INSERT: span:nth-of-type(2)
 INSERT: span:nth-of-type(2)::text("shown")
-INSERT: span:nth-of-type(2) + .hide
+INSERT: .hide
 INSERT: .hide::text("hide")
 ```
 
@@ -61,8 +61,8 @@ document.querySelector(".hide").click();
 ```
 ## Change
 ```
-REMOVE: button:nth-of-type(1) + span
-REMOVE: button:nth-of-type(2) + span
+REMOVE: span
+REMOVE: span
 ```
 
 # Update
@@ -90,6 +90,6 @@ for (const button of document.querySelectorAll(".inc")) {
 ```
 ## Change
 ```
-UPDATE: button:nth-of-type(2)::text "0" => "1"
 UPDATE: button:nth-of-type(1)::text "0" => "1"
+UPDATE: button:nth-of-type(2)::text "0" => "1"
 ```

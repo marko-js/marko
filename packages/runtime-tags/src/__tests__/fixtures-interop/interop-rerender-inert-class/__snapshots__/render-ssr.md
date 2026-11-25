@@ -30,9 +30,9 @@
 ```
 ## Change
 ```
-INSERT: #tags + #display
+REMOVE: #display
+INSERT: #display
 INSERT: #display::text("hi!")
-REMOVE: #display + #display
 ```
 
 # Update

@@ -55,14 +55,14 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: div:nth-of-type(2) + div
-INSERT: div:nth-of-type(5) + div
-INSERT: div:nth-of-type(6) + div
-INSERT: div:nth-of-type(7) + div
-INSERT: div:nth-of-type(8) + div
+INSERT: div:nth-of-type(3)
 UPDATE: div:nth-of-type(3)::text " " => "0.2"
+INSERT: div:nth-of-type(6)
 UPDATE: div:nth-of-type(6)::text " " => "1.2"
+INSERT: div:nth-of-type(7)
 UPDATE: div:nth-of-type(7)::text " " => "2.0"
+INSERT: div:nth-of-type(8)
 UPDATE: div:nth-of-type(8)::text " " => "2.1"
+INSERT: div:nth-of-type(9)
 UPDATE: div:nth-of-type(9)::text " " => "2.2"
 ```

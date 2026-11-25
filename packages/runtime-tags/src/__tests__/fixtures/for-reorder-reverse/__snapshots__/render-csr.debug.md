@@ -61,14 +61,14 @@
 ```
 ## Change
 ```
-REMOVE: #1 + #2
-INSERT: div > #2
-REMOVE: #1 + #3
-INSERT: div > #3
-REMOVE: #1 + #4
-INSERT: div > #4
-REMOVE: #1 + #5
-INSERT: div > #5
+REMOVE: div > #2
+REMOVE: div > #3
+REMOVE: div > #4
+REMOVE: div > #5
+INSERT: #5
+INSERT: #4
+INSERT: #3
+INSERT: #2
 ```
 
 # Update `{"children":[{"id":1,"text":"a"},{"id":2,"text":"b"},{"id":3,"text":"c"},{"id":4,"text":"d"},{"id":5,"text":"e"}]}`
@@ -103,12 +103,12 @@ INSERT: div > #5
 ```
 ## Change
 ```
-REMOVE: #5 + #4
-INSERT: div > #4
-REMOVE: #5 + #3
-INSERT: div > #3
-REMOVE: #5 + #2
-INSERT: div > #2
-REMOVE: #5 + #1
-INSERT: div > #1
+REMOVE: div > #1
+REMOVE: div > #2
+REMOVE: div > #3
+REMOVE: div > #4
+INSERT: #1
+INSERT: #2
+INSERT: #3
+INSERT: #4
 ```

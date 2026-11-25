@@ -13,6 +13,6 @@ different
 ```
 ## Change
 ```
+REMOVE: ::text("same")
 INSERT: ::text("different")
-REMOVE: ::text + ::text("same")
 ```

@@ -13,7 +13,7 @@ hi
 ```
 ## Change
 ```
-INSERT: button + ::text("hi")
+INSERT: ::text("hi")
 ```
 
 # Update
@@ -25,7 +25,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: button + ::text("hi")
+REMOVE: ::text("hi")
 ```
 
 # Update
@@ -38,5 +38,5 @@ hi
 ```
 ## Change
 ```
-INSERT: button + ::text("hi")
+INSERT: ::text("hi")
 ```

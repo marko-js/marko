@@ -28,8 +28,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: input[value] "init" => null
 UPDATE: input[type] null => "text"
+UPDATE: input[value] "init" => null
 ```
 
 # Update

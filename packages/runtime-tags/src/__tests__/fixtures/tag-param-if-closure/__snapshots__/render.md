@@ -17,6 +17,6 @@ abc
 ```
 ## Change
 ```
-INSERT: button + ::text("abc")
+INSERT: ::text("abc")
 UPDATE: ::text " " => "abc"
 ```

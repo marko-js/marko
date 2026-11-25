@@ -51,8 +51,8 @@ document.querySelector(".toggle").click();
 ```
 ## Change
 ```
+REMOVE: input
 INSERT: div
-REMOVE: div + input
 ```
 
 # Update
@@ -78,8 +78,8 @@ document.querySelector(".toggle").click();
 ```
 ## Change
 ```
+REMOVE: div
 INSERT: input
-REMOVE: input + div
 ```
 
 # Update

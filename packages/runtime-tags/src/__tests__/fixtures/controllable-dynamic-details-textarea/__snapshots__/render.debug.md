@@ -37,10 +37,10 @@ details.dispatchEvent(new window.Event("toggle", { bubbles: false }));
 ```
 ## Change
 ```
-UPDATE: details[open] null => ""
 UPDATE: details[open] "" => ""
-UPDATE: output::text@0 "closed" => "open"
 UPDATE: details[open] null => ""
+UPDATE: details[open] null => ""
+UPDATE: output::text@0 "closed" => "open"
 ```
 
 # Update

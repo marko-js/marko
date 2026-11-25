@@ -13,10 +13,10 @@ loading
 ```
 ## Change
 ```
-INSERT: .reordered::text("reordered:")
-INSERT: .reordered::text@0 + ::text("0")
 REMOVE: ::text("loading")
 INSERT: .reordered
+INSERT: .reordered::text("reordered:")
+INSERT: .reordered::text("0")
 ```
 
 # Update
@@ -34,9 +34,9 @@ INSERT: .reordered
 ```
 ## Change
 ```
-INSERT: .reordered + .streamed
+INSERT: .streamed
 INSERT: .streamed::text("streamed:")
-INSERT: .streamed::text@0 + ::text("0")
+INSERT: .streamed::text("0")
 ```
 
 # Update

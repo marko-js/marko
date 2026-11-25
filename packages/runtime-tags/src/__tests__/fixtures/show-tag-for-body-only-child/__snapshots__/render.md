@@ -60,5 +60,5 @@ document.getElementById("t").click();
 ```
 ## Change
 ```
-INSERT: #c > :is(b, b)
+INSERT: #c > b:nth-of-type(1), #c > b:nth-of-type(2)
 ```

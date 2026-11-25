@@ -32,9 +32,9 @@
 ```
 ## Change
 ```
+REMOVE: h1
 UPDATE: #tags::text "0" => "1"
-INSERT: section + h2
-REMOVE: h2 + h1
+INSERT: h2
 ```
 
 # Update
@@ -56,7 +56,7 @@ REMOVE: h2 + h1
 ```
 ## Change
 ```
+REMOVE: h2
 UPDATE: #tags::text "1" => "2"
-INSERT: section + h1
-REMOVE: h1 + h2
+INSERT: h1
 ```

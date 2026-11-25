@@ -28,8 +28,8 @@ document.querySelector(`button`).click();
 ```
 ## Change
 ```
+REMOVE: div > strong
+REMOVE: div::text(" c")
+REMOVE: div::text("a ")
 INSERT: div > em
-REMOVE: div > em + ::text("a ")
-REMOVE: div > em + strong
-REMOVE: div > em + ::text(" c")
 ```

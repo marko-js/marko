@@ -27,8 +27,8 @@
 ```
 ## Change
 ```
-INSERT: .main + .s
-INSERT: .s + .b
+INSERT: .s
+INSERT: .b
 ```
 
 # Update

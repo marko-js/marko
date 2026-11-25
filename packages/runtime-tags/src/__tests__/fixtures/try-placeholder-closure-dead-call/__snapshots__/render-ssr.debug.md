@@ -11,8 +11,8 @@ loading...
 ```
 ## Change
 ```
-INSERT: div::text("1 ")
-INSERT: div::text@0 + ::text("1")
 REMOVE: ::text("loading...")
 INSERT: div
+INSERT: div::text("1 ")
+INSERT: div::text("1")
 ```

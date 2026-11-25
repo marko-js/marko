@@ -19,7 +19,7 @@ x
 ## Change
 ```
 REMOVE: ::text("loading")
-INSERT: button + :is(p, ::text("x"))
+INSERT: p, ::text("x")
 ```
 
 # Update

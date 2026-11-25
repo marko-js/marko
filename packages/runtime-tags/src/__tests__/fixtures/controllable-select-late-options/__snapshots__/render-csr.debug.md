@@ -36,9 +36,9 @@ ERROR "A controlled `<select>`'s `value` has no matching `<option>`:" "b"
 ```
 ## Change
 ```
-INSERT: select > option
-INSERT: select > option:nth-of-type(1) + option
-INSERT: select > option:nth-of-type(2) + option
+INSERT: select > option:nth-of-type(1)
+INSERT: select > option:nth-of-type(2)
+INSERT: select > option:nth-of-type(3)
 ```
 
 # Update

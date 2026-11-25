@@ -60,7 +60,7 @@ done
 ```
 ## Change
 ```
-REMOVE: t > button:nth-of-type(1) + button
+REMOVE: button
 REMOVE: button
 INSERT: ::text("done")
 ```

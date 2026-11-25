@@ -21,5 +21,5 @@ shown content
 ```
 ## Change
 ```
-INSERT: #toggle + ::text("shown content")
+INSERT: ::text("shown content")
 ```

@@ -25,7 +25,7 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-INSERT: #toggle + #inc
+INSERT: #inc
 ```
 
 # Update
@@ -83,7 +83,7 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-REMOVE: #toggle + #inc
+REMOVE: #inc
 ```
 
 # Update
@@ -104,5 +104,5 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-INSERT: #toggle + #inc
+INSERT: #inc
 ```

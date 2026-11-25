@@ -15,9 +15,9 @@ Goodbye
 ```
 ## Change
 ```
-UPDATE: div::text "1" => "2"
+REMOVE: ::text("Hello")
 INSERT: ::text("Goodbye")
-REMOVE: ::text + ::text("Hello")
+UPDATE: div::text "1" => "2"
 ```
 
 # Update `{"x":true,"list":[]}`
@@ -29,7 +29,7 @@ Hello
 ```
 ## Change
 ```
-UPDATE: div::text "2" => "1"
+REMOVE: ::text("Goodbye")
 INSERT: ::text("Hello")
-REMOVE: ::text + ::text("Goodbye")
+UPDATE: div::text "2" => "1"
 ```

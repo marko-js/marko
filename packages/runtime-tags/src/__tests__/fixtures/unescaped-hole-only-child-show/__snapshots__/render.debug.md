@@ -26,7 +26,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: main > :is(b, i)
+INSERT: main > b, main > i
 ```
 
 # Update

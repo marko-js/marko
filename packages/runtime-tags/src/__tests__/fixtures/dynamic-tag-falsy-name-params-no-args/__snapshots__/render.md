@@ -16,8 +16,8 @@ falsy
 ```
 ## Change
 ```
+REMOVE: p
 INSERT: ::text("falsy")
-REMOVE: ::text + p
 ```
 
 # Update
@@ -32,6 +32,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: ::text("falsy")
 INSERT: p
-REMOVE: p + ::text("falsy")
 ```

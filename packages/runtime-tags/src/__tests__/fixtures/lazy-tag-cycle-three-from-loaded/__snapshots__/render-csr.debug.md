@@ -31,7 +31,7 @@
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(3) + :is(button, button)
+INSERT: button:nth-of-type(4), button:nth-of-type(5)
 UPDATE: button:nth-of-type(5)::text@2 "" => "0"
 ```
 

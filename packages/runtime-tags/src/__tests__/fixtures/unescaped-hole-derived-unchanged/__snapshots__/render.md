@@ -36,11 +36,11 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: p > i
-REMOVE: p > i + b
-UPDATE: button::text "0" => "1"
+REMOVE: div > b
 INSERT: div > i
-REMOVE: div > i + b
+REMOVE: p > b
+INSERT: p > i
+UPDATE: button::text "0" => "1"
 ```
 
 # Update

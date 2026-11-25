@@ -66,7 +66,7 @@
 ```
 ## Change
 ```
-INSERT: .wrap + .await
+INSERT: .await
 INSERT: .await::text("a")
 ```
 
@@ -112,7 +112,7 @@ INSERT: .await::text("a")
 ```
 ## Change
 ```
-INSERT: .await + .catch
+INSERT: .catch
 INSERT: .catch::text("e")
 ```
 
@@ -169,6 +169,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+INSERT: p:nth-of-type(5), p:nth-of-type(6)
 UPDATE: .define::text "2" => "3"
-INSERT: p:nth-of-type(4) + :is(p, p)
 ```

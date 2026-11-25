@@ -27,6 +27,6 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-INSERT: #toggle + #error
+INSERT: #error
 UPDATE: #error::text " " => "simulated chunk load failure: ./v:child.marko.input_value.mjs"
 ```

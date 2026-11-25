@@ -38,9 +38,9 @@ INSERT: .child
 ```
 ## Change
 ```
-INSERT: .child + button
-INSERT: button:nth-of-type(2) + button
-INSERT: button:nth-of-type(3) + button
+INSERT: button:nth-of-type(2)
+INSERT: button:nth-of-type(3)
+INSERT: button:nth-of-type(4)
 ```
 
 # Update

@@ -19,6 +19,6 @@ caught ERROR!
 ```
 ## Change
 ```
-INSERT: ::text@7 + p
+INSERT: p
 UPDATE: p::text " " => "d"
 ```
