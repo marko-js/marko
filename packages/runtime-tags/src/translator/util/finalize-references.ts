@@ -173,11 +173,7 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
         reads,
         intersectionsBySection,
       );
-      setResolvedReads(
-        expr,
-        exprBindings.referencedBindings,
-        exprBindings.lazyBindings,
-      );
+      setResolvedReads(expr, exprBindings.referencedBindings);
       if (exprBindings.globalBindings) {
         getProgram().node.extra.hasGlobalRead = true;
       }

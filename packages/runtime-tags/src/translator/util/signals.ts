@@ -9,7 +9,6 @@ import { toAccess } from "../../html/serializer";
 import {
   type Binding,
   BindingType,
-  getDebugName,
   getDebugNames,
   getDebugNamesAsIdentifier,
   getDebugAccess,
@@ -1800,7 +1799,7 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
 
           return (
             extra?.assignment &&
-            withLeadingComment(node.right, getDebugName(extra.assignment))
+            withLeadingComment(node.right, getDebugNames(extra.assignment))
           );
         }
         case "ArrayPattern":

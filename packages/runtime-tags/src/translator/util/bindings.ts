@@ -475,7 +475,15 @@ export function isTemplateParam(binding: Binding) {
   return binding.type === BindingType.param && !binding.section.parent;
 }
 
-export function getDebugName(binding: Binding) {
+export function getDebugNames(bindings: ReferencedBindings) {
+  return mapToString(bindings, ", ", toDebugName);
+}
+
+export function getDebugNamesAsIdentifier(bindings: ReferencedBindings) {
+  return mapToString(bindings, "__OR__", toDebugIdentifier);
+}
+
+function toDebugName(binding: Binding) {
   const { root, access } = getDebugAccess(
     binding,
     isTemplateParam(binding),
@@ -484,15 +492,7 @@ export function getDebugName(binding: Binding) {
   return root.name + access;
 }
 
-export function getDebugNames(bindings: ReferencedBindings) {
-  return mapToString(bindings, ", ", getDebugName);
-}
-
-export function getDebugNamesAsIdentifier(bindings: ReferencedBindings) {
-  return mapToString(bindings, "__OR__", getDebugNameAsIdentifier);
-}
-
-function getDebugNameAsIdentifier(binding: Binding) {
+function toDebugIdentifier(binding: Binding) {
   const { root, access } = getDebugAccess(
     binding,
     isTemplateParam(binding),

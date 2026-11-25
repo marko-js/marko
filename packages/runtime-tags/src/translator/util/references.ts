@@ -72,7 +72,6 @@ export interface ResolvedRead {
 // What finalize resolves an expression or function to read, set only then
 // and read through the accessors below.
 const kReferencedBindings = Symbol("referenced bindings");
-const kLazyBindings = Symbol("lazy bindings");
 const kReferencedBindingsInFunction = Symbol("referenced bindings in function");
 const kConstantBindingsInFunction = Symbol("constant bindings in function");
 
@@ -98,7 +97,6 @@ declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     section?: Section;
     [kReferencedBindings]?: ReferencedBindings;
-    [kLazyBindings]?: ReferencedBindings;
     /** The bindings it derives, in the order it derives them: call sites
      * derive a child template's, so no one template's order sorts them. */
     derives?: Opt<Binding>;
@@ -1236,8 +1234,8 @@ function addReadToExpression(
   }
 }
 
-// `collectAttrTag`, when given, collects each attribute tag (and what is nested
-// in it) in place of this walk.
+// The references in a tag and its child tags. `collectAttrTag`, when given,
+// collects each attribute tag (and what is nested in it) in place of this walk.
 export function getAllTagReferenceNodes(
   tag: t.MarkoTag,
   referenceNodes: t.Node[] = [],
@@ -1253,16 +1251,6 @@ export function getAllTagReferenceNodes(
     referenceNodes.push(attr.value);
   }
 
-  return getChildTagReferenceNodes(tag, referenceNodes, collectAttrTag);
-}
-
-// The references of a tag's child tags: attribute tags through `collectAttrTag`
-// when given, the rest (control flow, scriptlets) in place.
-export function getChildTagReferenceNodes(
-  tag: t.MarkoTag,
-  referenceNodes: t.Node[],
-  collectAttrTag?: (attrTag: t.MarkoTag) => void,
-) {
   for (const child of tag.body.attributeTags
     ? tag.body.body
     : tag.attributeTags) {
@@ -1390,10 +1378,6 @@ function addValueReferences(refs: ReferencedBindings, expr: t.NodeExtra) {
     : refs;
 }
 
-export function getLazyBindings(extra: t.NodeExtra | undefined) {
-  return extra && getCanonicalExpr(extra)[kLazyBindings];
-}
-
 // What a function's body reads when invoked, resolved with its expression.
 export function getReferencedBindingsInFunction(extra: t.FunctionExtra) {
   return extra[kReferencedBindingsInFunction];
@@ -1417,10 +1401,8 @@ export function setResolvedFunctionReads(
 export function setResolvedReads(
   extra: ReferencedExtra,
   referencedBindings: ReferencedBindings,
-  lazyBindings: ReferencedBindings,
 ) {
   extra[kReferencedBindings] = referencedBindings;
-  extra[kLazyBindings] = lazyBindings;
 }
 
 export function getCanonicalExpr<T extends t.NodeExtra>(extra: T): T {
