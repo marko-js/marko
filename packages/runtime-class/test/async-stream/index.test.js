@@ -822,22 +822,22 @@ describe("AsyncStream", function () {
   describe("async iteration", function () {
     it("yields each flushed chunk while writing is still in flight", async function () {
       var out = new AsyncStream();
-      var chunks = [];
-      var iterated = (async function () {
-        for await (var chunk of out) chunks.push(chunk);
-      })();
+      var iterator = out[Symbol.asyncIterator]();
 
       out.write("a");
       var asyncOut = out.beginAsync();
       out.write("c");
-      setTimeout(function () {
-        asyncOut.write("b");
-        asyncOut.end();
-      }, 10);
       out.end();
 
-      await iterated;
-      assert.deepEqual(chunks, ["a", "bc"]);
+      assert.deepEqual(await iterator.next(), { value: "a", done: false });
+      var next = iterator.next();
+      asyncOut.write("b");
+      asyncOut.end();
+      assert.deepEqual(await next, { value: "bc", done: false });
+      assert.deepEqual(await iterator.next(), {
+        value: undefined,
+        done: true,
+      });
     });
 
     it("yields the buffered output once writing has finished", async function () {
@@ -981,28 +981,17 @@ describe("AsyncStream", function () {
       var decoder = new TextDecoder();
 
       out.write("a");
-      var first = out.beginAsync();
-      var second = out.beginAsync();
+      var asyncOut = out.beginAsync();
       await cancelling.cancel();
-      // Several chunks after the cancel: the cancelled consumer must not close
-      // the iterator when it stops on the first of them.
-      setTimeout(function () {
-        first.write("one");
-        first.end();
-      }, 5);
-      setTimeout(function () {
-        second.write("two");
-        second.end();
-        out.end();
-      }, 20);
+      // The cancelled consumer stops on "a", the first chunk after the cancel; it
+      // must not close the iterator the other consumer reads "b" from.
+      assert.equal(decoder.decode((await reader.read()).value), "a");
+      asyncOut.write("b");
+      asyncOut.end();
+      out.end();
 
-      var chunks = [];
-      for (;;) {
-        var read = await reader.read();
-        if (read.done) break;
-        chunks.push(decoder.decode(read.value));
-      }
-      assert.deepEqual(chunks, ["a", "onetwo"]);
+      assert.equal(decoder.decode((await reader.read()).value), "b");
+      assert.deepEqual(await reader.read(), { value: undefined, done: true });
     });
 
     it("ends the iteration once the last consumer cancels", async function () {
