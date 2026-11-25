@@ -91,11 +91,32 @@ index 0000000..8efd0a9
 +  }
 +}
 diff --git a/lib/builders/generated/index.js b/lib/builders/generated/index.js
-index ce6a687..f17eede 100644
+index ce6a687..08a8d66 100644
 --- a/lib/builders/generated/index.js
 +++ b/lib/builders/generated/index.js
-@@ -26,4 +26,6 @@ Object.keys(_uppercase).forEach(function (key) {
-   });
+@@ -7,23 +7,15 @@ var _lowercase = require("./lowercase.js");
+ Object.keys(_lowercase).forEach(function (key) {
+   if (key === "default" || key === "__esModule") return;
+   if (key in exports && exports[key] === _lowercase[key]) return;
+-  Object.defineProperty(exports, key, {
+-    enumerable: true,
+-    get: function () {
+-      return _lowercase[key];
+-    }
+-  });
++  exports[key] = _lowercase[key];
+ });
+ var _uppercase = require("./uppercase.js");
+ Object.keys(_uppercase).forEach(function (key) {
+   if (key === "default" || key === "__esModule") return;
+   if (key in exports && exports[key] === _uppercase[key]) return;
+-  Object.defineProperty(exports, key, {
+-    enumerable: true,
+-    get: function () {
+-      return _uppercase[key];
+-    }
+-  });
++  exports[key] = _uppercase[key];
  });
  
 +Object.assign(exports, require("./marko.js"));
@@ -557,6 +578,120 @@ index 0000000..ec37b4e
 +    },
 +  },
 +});
+diff --git a/lib/index.js b/lib/index.js
+index 3d1c187..fc32ff0 100644
+--- a/lib/index.js
++++ b/lib/index.js
+@@ -422,12 +422,7 @@ Object.keys(_index).forEach(function (key) {
+   if (key === "default" || key === "__esModule") return;
+   if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
+   if (key in exports && exports[key] === _index[key]) return;
+-  Object.defineProperty(exports, key, {
+-    enumerable: true,
+-    get: function () {
+-      return _index[key];
+-    }
+-  });
++  exports[key] = _index[key];
+ });
+ var _createTypeAnnotationBasedOnTypeof = require("./builders/flow/createTypeAnnotationBasedOnTypeof.js");
+ var _createFlowUnionType = require("./builders/flow/createFlowUnionType.js");
+@@ -437,24 +432,14 @@ Object.keys(_productions).forEach(function (key) {
+   if (key === "default" || key === "__esModule") return;
+   if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
+   if (key in exports && exports[key] === _productions[key]) return;
+-  Object.defineProperty(exports, key, {
+-    enumerable: true,
+-    get: function () {
+-      return _productions[key];
+-    }
+-  });
++  exports[key] = _productions[key];
+ });
+ var _index2 = require("./builders/generated/index.js");
+ Object.keys(_index2).forEach(function (key) {
+   if (key === "default" || key === "__esModule") return;
+   if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
+   if (key in exports && exports[key] === _index2[key]) return;
+-  Object.defineProperty(exports, key, {
+-    enumerable: true,
+-    get: function () {
+-      return _index2[key];
+-    }
+-  });
++  exports[key] = _index2[key];
+ });
+ var _cloneNode = require("./clone/cloneNode.js");
+ var _clone = require("./clone/clone.js");
+@@ -473,24 +458,14 @@ Object.keys(_index3).forEach(function (key) {
+   if (key === "default" || key === "__esModule") return;
+   if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
+   if (key in exports && exports[key] === _index3[key]) return;
+-  Object.defineProperty(exports, key, {
+-    enumerable: true,
+-    get: function () {
+-      return _index3[key];
+-    }
+-  });
++  exports[key] = _index3[key];
+ });
+ var _index4 = require("./constants/index.js");
+ Object.keys(_index4).forEach(function (key) {
+   if (key === "default" || key === "__esModule") return;
+   if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
+   if (key in exports && exports[key] === _index4[key]) return;
+-  Object.defineProperty(exports, key, {
+-    enumerable: true,
+-    get: function () {
+-      return _index4[key];
+-    }
+-  });
++  exports[key] = _index4[key];
+ });
+ var _ensureBlock = require("./converters/ensureBlock.js");
+ var _toBindingIdentifierName = require("./converters/toBindingIdentifierName.js");
+@@ -506,12 +481,7 @@ Object.keys(_index5).forEach(function (key) {
+   if (key === "default" || key === "__esModule") return;
+   if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
+   if (key in exports && exports[key] === _index5[key]) return;
+-  Object.defineProperty(exports, key, {
+-    enumerable: true,
+-    get: function () {
+-      return _index5[key];
+-    }
+-  });
++  exports[key] = _index5[key];
+ });
+ var _appendToMemberExpression = require("./modifications/appendToMemberExpression.js");
+ var _inherits = require("./modifications/inherits.js");
+@@ -528,12 +498,7 @@ Object.keys(_traverse).forEach(function (key) {
+   if (key === "default" || key === "__esModule") return;
+   if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
+   if (key in exports && exports[key] === _traverse[key]) return;
+-  Object.defineProperty(exports, key, {
+-    enumerable: true,
+-    get: function () {
+-      return _traverse[key];
+-    }
+-  });
++  exports[key] = _traverse[key];
+ });
+ var _traverseFast = require("./traverse/traverseFast.js");
+ var _shallowEqual = require("./utils/shallowEqual.js");
+@@ -560,12 +525,7 @@ Object.keys(_index6).forEach(function (key) {
+   if (key === "default" || key === "__esModule") return;
+   if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
+   if (key in exports && exports[key] === _index6[key]) return;
+-  Object.defineProperty(exports, key, {
+-    enumerable: true,
+-    get: function () {
+-      return _index6[key];
+-    }
+-  });
++  exports[key] = _index6[key];
+ });
+ var _deprecationWarning = require("./utils/deprecationWarning.js");
+ var _toSequenceExpression = require("./converters/toSequenceExpression.js");
 diff --git a/lib/index.d.ts b/lib/index.d.ts
 index efa49cb..134bf78 100644
 --- a/lib/index.d.ts

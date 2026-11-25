@@ -13,7 +13,7 @@ patchedDependencies:
   '@babel/generator@7.29.12': 0117f680d0484ae478b8ce2109bde3a24a04ff2ce45ac064d34d839c5c4bca20
   '@babel/helper-compilation-targets@7.29.7': 325a2524d247ae4a35165ea6cc40745ff8193d801a8d72ff6f3fff7b5706a2e2
   '@babel/traverse@7.29.12': 831f9092cade155e5b2c5b6b6109643387b1b7a674245caa9073652b8eac637c
-  '@babel/types@7.29.11': 97b7eb84e5c56d52a50974fd3cfecd67579627900359aedacb5922d7163e9cb5
+  '@babel/types@7.29.11': bf60113bd2bd5360112bf2e08e6bf0ae95fb6249b7614f14d29be343b330c74f
   mocha-autotest@1.1.3: 6bfa3ef08c24b7e2a50130bf5f3fa66d0721e865d0d4a10ae17606e6fa0f8810
   mocha@12.0.3: 160029924eb045284bef055ffce96c98b2152d19f103bf32c6568d8c9f82c36b
   parse5@8.1.0: fecc73d0bc6a01ab372a52addb2f4d4541bd412c01d54892dbf9e39041e43186
@@ -51,7 +51,7 @@ importers:
         version: 7.29.12(patch_hash=831f9092cade155e5b2c5b6b6109643387b1b7a674245caa9073652b8eac637c)(supports-color@8.1.1)
       '@babel/types':
         specifier: ^7.29.11
-        version: 7.29.11(patch_hash=97b7eb84e5c56d52a50974fd3cfecd67579627900359aedacb5922d7163e9cb5)
+        version: 7.29.11(patch_hash=bf60113bd2bd5360112bf2e08e6bf0ae95fb6249b7614f14d29be343b330c74f)
       '@changesets/changelog-github':
         specifier: ^1.0.1
         version: 1.0.1
@@ -2294,7 +2294,7 @@ snapshots:
       '@babel/parser': 7.29.12
       '@babel/template': 7.29.7
       '@babel/traverse': 7.29.12(patch_hash=831f9092cade155e5b2c5b6b6109643387b1b7a674245caa9073652b8eac637c)(supports-color@8.1.1)
-      '@babel/types': 7.29.11(patch_hash=97b7eb84e5c56d52a50974fd3cfecd67579627900359aedacb5922d7163e9cb5)
+      '@babel/types': 7.29.11(patch_hash=bf60113bd2bd5360112bf2e08e6bf0ae95fb6249b7614f14d29be343b330c74f)
       '@jridgewell/remapping': 2.3.5
       convert-source-map: 2.0.0
       debug: 4.4.3(supports-color@8.1.1)
@@ -2307,7 +2307,7 @@ snapshots:
   '@babel/generator@7.29.12(patch_hash=0117f680d0484ae478b8ce2109bde3a24a04ff2ce45ac064d34d839c5c4bca20)':
     dependencies:
       '@babel/parser': 7.29.12
-      '@babel/types': 7.29.11(patch_hash=97b7eb84e5c56d52a50974fd3cfecd67579627900359aedacb5922d7163e9cb5)
+      '@babel/types': 7.29.11(patch_hash=bf60113bd2bd5360112bf2e08e6bf0ae95fb6249b7614f14d29be343b330c74f)
       '@jridgewell/gen-mapping': 0.3.13
       '@jridgewell/trace-mapping': 0.3.31
       htmljs-parser: 5.22.2
@@ -2315,7 +2315,7 @@ snapshots:
 
   '@babel/helper-annotate-as-pure@7.29.7':
     dependencies:
-      '@babel/types': 7.29.11(patch_hash=97b7eb84e5c56d52a50974fd3cfecd67579627900359aedacb5922d7163e9cb5)
+      '@babel/types': 7.29.11(patch_hash=bf60113bd2bd5360112bf2e08e6bf0ae95fb6249b7614f14d29be343b330c74f)
 
   '@babel/helper-compilation-targets@7.29.7(patch_hash=325a2524d247ae4a35165ea6cc40745ff8193d801a8d72ff6f3fff7b5706a2e2)':
     dependencies:
@@ -2361,14 +2361,14 @@ snapshots:
   '@babel/helper-member-expression-to-functions@7.29.7(supports-color@8.1.1)':
     dependencies:
       '@babel/traverse': 7.29.12(patch_hash=831f9092cade155e5b2c5b6b6109643387b1b7a674245caa9073652b8eac637c)(supports-color@8.1.1)
-      '@babel/types': 7.29.11(patch_hash=97b7eb84e5c56d52a50974fd3cfecd67579627900359aedacb5922d7163e9cb5)
+      '@babel/types': 7.29.11(patch_hash=bf60113bd2bd5360112bf2e08e6bf0ae95fb6249b7614f14d29be343b330c74f)
     transitivePeerDependencies:
       - supports-color
 
   '@babel/helper-module-imports@7.29.7(supports-color@8.1.1)':
     dependencies:
       '@babel/traverse': 7.29.12(patch_hash=831f9092cade155e5b2c5b6b6109643387b1b7a674245caa9073652b8eac637c)(supports-color@8.1.1)
-      '@babel/types': 7.29.11(patch_hash=97b7eb84e5c56d52a50974fd3cfecd67579627900359aedacb5922d7163e9cb5)
+      '@babel/types': 7.29.11(patch_hash=bf60113bd2bd5360112bf2e08e6bf0ae95fb6249b7614f14d29be343b330c74f)
     transitivePeerDependencies:
       - supports-color
 
@@ -2383,7 +2383,7 @@ snapshots:
 
   '@babel/helper-optimise-call-expression@7.29.7':
     dependencies:
-      '@babel/types': 7.29.11(patch_hash=97b7eb84e5c56d52a50974fd3cfecd67579627900359aedacb5922d7163e9cb5)
+      '@babel/types': 7.29.11(patch_hash=bf60113bd2bd5360112bf2e08e6bf0ae95fb6249b7614f14d29be343b330c74f)
 
   '@babel/helper-plugin-utils@7.29.7': {}
 
@@ -2408,7 +2408,7 @@ snapshots:
   '@babel/helper-skip-transparent-expression-wrappers@7.29.7(supports-color@8.1.1)':
     dependencies:
       '@babel/traverse': 7.29.12(patch_hash=831f9092cade155e5b2c5b6b6109643387b1b7a674245caa9073652b8eac637c)(supports-color@8.1.1)
-      '@babel/types': 7.29.11(patch_hash=97b7eb84e5c56d52a50974fd3cfecd67579627900359aedacb5922d7163e9cb5)
+      '@babel/types': 7.29.11(patch_hash=bf60113bd2bd5360112bf2e08e6bf0ae95fb6249b7614f14d29be343b330c74f)
     transitivePeerDependencies:
       - supports-color
 
@@ -2422,18 +2422,18 @@ snapshots:
     dependencies:
       '@babel/template': 7.29.7
       '@babel/traverse': 7.29.12(patch_hash=831f9092cade155e5b2c5b6b6109643387b1b7a674245caa9073652b8eac637c)(supports-color@8.1.1)
-      '@babel/types': 7.29.11(patch_hash=97b7eb84e5c56d52a50974fd3cfecd67579627900359aedacb5922d7163e9cb5)
+      '@babel/types': 7.29.11(patch_hash=bf60113bd2bd5360112bf2e08e6bf0ae95fb6249b7614f14d29be343b330c74f)
     transitivePeerDependencies:
       - supports-color
 
   '@babel/helpers@7.29.7':
     dependencies:
       '@babel/template': 7.29.7
-      '@babel/types': 7.29.11(patch_hash=97b7eb84e5c56d52a50974fd3cfecd67579627900359aedacb5922d7163e9cb5)
+      '@babel/types': 7.29.11(patch_hash=bf60113bd2bd5360112bf2e08e6bf0ae95fb6249b7614f14d29be343b330c74f)
 
   '@babel/parser@7.29.12':
     dependencies:
-      '@babel/types': 7.29.11(patch_hash=97b7eb84e5c56d52a50974fd3cfecd67579627900359aedacb5922d7163e9cb5)
+      '@babel/types': 7.29.11(patch_hash=bf60113bd2bd5360112bf2e08e6bf0ae95fb6249b7614f14d29be343b330c74f)
 
   '@babel/plugin-bugfix-firefox-class-in-computed-class-key@7.29.7(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)':
     dependencies:
@@ -2928,7 +2928,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
       '@babel/helper-plugin-utils': 7.29.7
-      '@babel/types': 7.29.11(patch_hash=97b7eb84e5c56d52a50974fd3cfecd67579627900359aedacb5922d7163e9cb5)
+      '@babel/types': 7.29.11(patch_hash=bf60113bd2bd5360112bf2e08e6bf0ae95fb6249b7614f14d29be343b330c74f)
       esutils: 2.0.3
 
   '@babel/runtime@7.29.7': {}
@@ -2937,7 +2937,7 @@ snapshots:
     dependencies:
       '@babel/code-frame': 7.29.7
       '@babel/parser': 7.29.12
-      '@babel/types': 7.29.11(patch_hash=97b7eb84e5c56d52a50974fd3cfecd67579627900359aedacb5922d7163e9cb5)
+      '@babel/types': 7.29.11(patch_hash=bf60113bd2bd5360112bf2e08e6bf0ae95fb6249b7614f14d29be343b330c74f)
 
   '@babel/traverse@7.29.12(patch_hash=831f9092cade155e5b2c5b6b6109643387b1b7a674245caa9073652b8eac637c)(supports-color@8.1.1)':
     dependencies:
@@ -2946,12 +2946,12 @@ snapshots:
       '@babel/helper-globals': 7.29.7
       '@babel/parser': 7.29.12
       '@babel/template': 7.29.7
-      '@babel/types': 7.29.11(patch_hash=97b7eb84e5c56d52a50974fd3cfecd67579627900359aedacb5922d7163e9cb5)
+      '@babel/types': 7.29.11(patch_hash=bf60113bd2bd5360112bf2e08e6bf0ae95fb6249b7614f14d29be343b330c74f)
       debug: 4.4.3(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
-  '@babel/types@7.29.11(patch_hash=97b7eb84e5c56d52a50974fd3cfecd67579627900359aedacb5922d7163e9cb5)':
+  '@babel/types@7.29.11(patch_hash=bf60113bd2bd5360112bf2e08e6bf0ae95fb6249b7614f14d29be343b330c74f)':
     dependencies:
       '@babel/helper-string-parser': 7.29.11
       '@babel/helper-validator-identifier': 7.29.7
@@ -3302,23 +3302,23 @@ snapshots:
   '@types/babel__core@7.20.5':
     dependencies:
       '@babel/parser': 7.29.12
-      '@babel/types': 7.29.11(patch_hash=97b7eb84e5c56d52a50974fd3cfecd67579627900359aedacb5922d7163e9cb5)
+      '@babel/types': 7.29.11(patch_hash=bf60113bd2bd5360112bf2e08e6bf0ae95fb6249b7614f14d29be343b330c74f)
       '@types/babel__generator': 7.27.0
       '@types/babel__template': 7.4.4
       '@types/babel__traverse': 7.28.0
 
   '@types/babel__generator@7.27.0':
     dependencies:
-      '@babel/types': 7.29.11(patch_hash=97b7eb84e5c56d52a50974fd3cfecd67579627900359aedacb5922d7163e9cb5)
+      '@babel/types': 7.29.11(patch_hash=bf60113bd2bd5360112bf2e08e6bf0ae95fb6249b7614f14d29be343b330c74f)
 
   '@types/babel__template@7.4.4':
     dependencies:
       '@babel/parser': 7.29.12
-      '@babel/types': 7.29.11(patch_hash=97b7eb84e5c56d52a50974fd3cfecd67579627900359aedacb5922d7163e9cb5)
+      '@babel/types': 7.29.11(patch_hash=bf60113bd2bd5360112bf2e08e6bf0ae95fb6249b7614f14d29be343b330c74f)
 
   '@types/babel__traverse@7.28.0':
     dependencies:
-      '@babel/types': 7.29.11(patch_hash=97b7eb84e5c56d52a50974fd3cfecd67579627900359aedacb5922d7163e9cb5)
+      '@babel/types': 7.29.11(patch_hash=bf60113bd2bd5360112bf2e08e6bf0ae95fb6249b7614f14d29be343b330c74f)
 
   '@types/js-beautify@1.14.3': {}
 
