@@ -1,5 +1,55 @@
 # @marko/runtime-tags
 
+## 6.5.3
+
+### Patch Changes
+
+- [#4761](https://github.com/marko-js/marko/pull/4761) [`7f75778`](https://github.com/marko-js/marko/commit/7f757786803d7f638175e69bac2782bd09adb877) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A `$signal` read in a native tag's attribute or spread now aborts when that attribute re-runs or its tag is removed, rather than right after every render.
+
+- [#4757](https://github.com/marko-js/marko/pull/4757) [`5607497`](https://github.com/marko-js/marko/commit/5607497d3324494064e89b903201685abf666544) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Generated names learn which names a template already uses from Babel's scope, which has recorded them, instead of walking the whole template again.
+
+- [#4769](https://github.com/marko-js/marko/pull/4769) [`1cc46df`](https://github.com/marko-js/marko/commit/1cc46df816b75e172fb6d4e7ee5cfed073139317) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - An element reference read as a value by a `<script>` above its tag and again as a value the server writes below it no longer fails the server render with an undefined getter.
+
+- [#4762](https://github.com/marko-js/marko/pull/4762) [`5631611`](https://github.com/marko-js/marko/commit/56316115e3f2ddf55e604627051efc77fe00268f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A hoisted tag variable read only by code the server never runs (an event handler or `<script>`, or a function only event handlers read) no longer registers its getter for resume or creates one on the server, which never writes it.
+
+- [#4756](https://github.com/marko-js/marko/pull/4756) [`fc26b52`](https://github.com/marko-js/marko/commit/fc26b52691be100fa6d02e9876e58a0ff6adb083) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Drop the stubs of debug-only helpers from the optimized runtime: only the debug runtime exports the helpers that debug output alone calls.
+
+- [#4772](https://github.com/marko-js/marko/pull/4772) [`c3af14e`](https://github.com/marko-js/marko/commit/c3af14e638bb68c482c111fc029e9b588a392b29) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - An array or object literal as a native tag's event or change handler, written in place (`onClick=[input.action]`) or named through a `<const>`, is now a compile error, instead of throwing when rendered in debug builds and when the event fires in optimized ones. A `<let>` `valueChange=` that names such a `<const>` is now a compile error too.
+
+- [#4770](https://github.com/marko-js/marko/pull/4770) [`7dec312`](https://github.com/marko-js/marko/commit/7dec312bbd4932c3de5910e4d6ca6828abb4671a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Assigning a destructured tag parameter (`<define/Tag|{ value }|>` given `value:=count`, or `<for|{ value }|>`) no longer makes the server render throw a `ReferenceError` for its change handler.
+
+- [#4774](https://github.com/marko-js/marko/pull/4774) [`025bbe3`](https://github.com/marko-js/marko/commit/025bbe3ce2d06e2496efeb278c244f1c6bb6c89a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A lazy tag or template the client renders after a resumed page's `load` trigger fired now loads without waiting for that trigger again, including while the module the trigger started is still loading.
+
+- [#4767](https://github.com/marko-js/marko/pull/4767) [`e8f1c9a`](https://github.com/marko-js/marko/commit/e8f1c9a37baa38990cb3c90a35389cf22382e636) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A tag imported with a `load` trigger and rendered through a dynamic tag (`<${show ? Child : null}/>`) now waits for its trigger on a client render, as the tag written directly does, instead of loading as soon as it renders.
+
+- [#4765](https://github.com/marko-js/marko/pull/4765) [`302a509`](https://github.com/marko-js/marko/commit/302a5093ccde687bbf09de15e4ce864a86850a76) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A `<let>` `valueChange=` that is certainly not a function, such as an array or object literal, a string built from input or a number, is now a compile error, as a literal constant already was. A value only known at run time that is not a function now throws a debug error naming `valueChange` when the `<let>` is assigned, instead of `scope[valueChangeAccessor] is not a function`.
+
+- [#4777](https://github.com/marko-js/marko/pull/4777) [`977ae4d`](https://github.com/marko-js/marko/commit/977ae4d5ef05a25c0836f645a0a90d3be55ea2aa) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Checking whether a lazy module has loaded no longer converts the load triggers still waiting on it to a string each time.
+
+- [#4783](https://github.com/marko-js/marko/pull/4783) [`f69bc0b`](https://github.com/marko-js/marko/commit/f69bc0b7193b01f3d51fc061dedcd427444efb5e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Update a dynamic `<title>`, `<style>`, or `<script>` body by changing its text node in place instead of replacing it.
+
+- [#4766](https://github.com/marko-js/marko/pull/4766) [`6fab332`](https://github.com/marko-js/marko/commit/6fab3321518cf34b4185d2350544354a826eb217) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Assigning a tag variable in a function invoked where it is written while rendering (`${(() => { count = 1 })()}`) is now the same compile error as assigning it outside a function, and a debug build throws when a `<let>` is assigned while its scope first renders in the browser.
+
+- [#4768](https://github.com/marko-js/marko/pull/4768) [`4d46a2a`](https://github.com/marko-js/marko/commit/4d46a2a2598e37d58724e925e58af2e950a63300) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A class name may now appear only once in a `class` value, and debug builds no longer write a `class` or `style` value's parts out again in a separate check on every render. The compiler rejects a repeated literal name, such as `class=["a", "b a"]`, and in development the server throws as it writes a class with a repeated name, which checks every combination of a few toggles as the template's module loads. The server also checks in development that a style property appears in only one part of a `style` value.
+
+- [#4764](https://github.com/marko-js/marko/pull/4764) [`4351da0`](https://github.com/marko-js/marko/commit/4351da0e9ccc570fe7ae3b290ed15c6b711d60ee) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A toggled class's names must be one space apart, as the client splits them: a literal key spaced otherwise (`{ "a  b": on }`) is a compile error, and debug builds throw for a style import read spaced otherwise. The debug class check no longer reports an empty class name for literal parts with extra whitespace, and the client adds or removes a toggled class's several names in one call.
+
+- [#4760](https://github.com/marko-js/marko/pull/4760) [`bb54d4b`](https://github.com/marko-js/marko/commit/bb54d4b3e939e8dd3247038d1b661fd69cc349e3) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A destructuring assignment to tag variables in a function nested in a render value (such as a handler an inline function returns) no longer writes them again with `undefined` on the client.
+
+- [#4771](https://github.com/marko-js/marko/pull/4771) [`d790870`](https://github.com/marko-js/marko/commit/d79087096d6f02e303f3e406f51823224b67700a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A native tag attribute whose whole value is `$signal` (as a `class` object's value, a controlled attribute, or beside a spread) no longer compiles to an unbound `$signal`, which threw a `ReferenceError`.
+
+- [#4776](https://github.com/marko-js/marko/pull/4776) [`6abd02f`](https://github.com/marko-js/marko/commit/6abd02f983657879e2fd20befd92561b4422f24e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Trim the client runtime: values that are never `null` are tested with `== null`, and a resume payload's scopes are applied by their truthiness rather than `Array.isArray`.
+
+- [#4778](https://github.com/marko-js/marko/pull/4778) [`fa6b530`](https://github.com/marko-js/marko/commit/fa6b530d4025440d910a33a9b30450e2954bec70) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop reporting a lazy tag's failed input chunk as an unhandled rejection when its setup chunk failed too and `<try>` already caught the failure.
+
+- [#4786](https://github.com/marko-js/marko/pull/4786) [`a0fd64e`](https://github.com/marko-js/marko/commit/a0fd64edcbe2edebd65e91d957c9215d5a6c9926) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A server render keeps the registrations bound to its scopes (functions, tag variables, element getters) in a map of its own instead of a global `WeakMap`, and a registered function that reads nothing from the render is created and registered once when its template loads. This reduces garbage collection on pages with many such registrations.
+
+- [#4775](https://github.com/marko-js/marko/pull/4775) [`90fc0cf`](https://github.com/marko-js/marko/commit/90fc0cffe33e35ed05531d6cf8050880612ec95b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Assigning a destructured value whose change handler the same pattern names after it (`<child/{ value, valueChange }/>`, `|{ value, valueChange }|`) now calls that handler by the author's name instead of a second, generated one. A renamed handler (`{ valueChange: onValue, value }`) no longer makes the server output declare it twice, which failed to compile. An assignment in a function a render-time value creates (`[1].map((valueChange) => () => { value = 1 })`) now calls the handler even where an inner name shadows it, instead of throwing that it is not a function.
+
+- [#4773](https://github.com/marko-js/marko/pull/4773) [`a582c89`](https://github.com/marko-js/marko/commit/a582c899aac86018e09efa3a6637f270d407f98d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - An element reference read as a value only by code the server never runs (an event handler or `<script>`, or a function only event handlers read) no longer registers its getter for resume or creates one on the server.
+- Updated dependencies [[`f019ff6`](https://github.com/marko-js/marko/commit/f019ff6fa1de68b624bc3240722dcbc2603412cc), [`f019ff6`](https://github.com/marko-js/marko/commit/f019ff6fa1de68b624bc3240722dcbc2603412cc), [`19d3136`](https://github.com/marko-js/marko/commit/19d31365957b1786d755f7e8017c187cd7143f3b)]:
+  - @marko/compiler@5.44.0
+
 ## 6.5.2
 
 ### Patch Changes
