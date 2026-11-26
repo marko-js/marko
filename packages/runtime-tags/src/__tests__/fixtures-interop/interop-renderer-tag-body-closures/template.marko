@@ -1,0 +1,13 @@
+<let/show = false/>
+<button id="toggle" onClick() { show = !show }>toggle</button>
+<if=show>
+  <legacy-greeting>
+    <let/inner = 0/>
+    <if=inner>
+      <button id="inc" onClick() { inner++ }>${inner}</button>
+    </if>
+    <for of=[1, 2]>
+      <span>${inner}</span>
+    </for>
+  </legacy-greeting>
+</if>

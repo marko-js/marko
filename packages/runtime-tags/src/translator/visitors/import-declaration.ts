@@ -18,7 +18,6 @@ import { getMarkoOpts, getReadyId, isOutputHTML } from "../util/marko-config";
 import {
   resolveRegisteredExport,
   trackImport,
-  trackImportedTemplate,
 } from "../util/module-registrations";
 import {
   callRuntime,
@@ -298,7 +297,18 @@ function trackRegisteredImports(importDecl: t.NodePath<t.ImportDeclaration>) {
 
     const local = specifier.node.local.name;
     if (importedName === "default") {
-      trackImportedTemplate(importDecl, local, childFile);
+      // The server writes a template only as a binding's value, so the importing
+      // template registers it when one may.
+      trackImport(
+        importDecl,
+        local,
+        {
+          registryId: childFile.metadata.marko.id,
+          exportName: "default",
+          filename: childFile.opts.filename,
+        },
+        new Set(),
+      );
     } else {
       trackImport(
         importDecl,

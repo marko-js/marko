@@ -23,7 +23,12 @@ import runtimeInfo from "../util/runtime-info";
 import { ensureSection, getSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
-import { skip, traverseContains, traverseFindAwait } from "../util/traverse";
+import {
+  isFunctionNode,
+  skip,
+  traverseContains,
+  traverseFindAwait,
+} from "../util/traverse";
 
 const htmlScriptTagAlternateMsg =
   " For a native html `<script>` tag use the [`html-script` core tag](https://markojs.com/docs/reference/core-tag#html-script--html-style) instead.";
@@ -190,36 +195,13 @@ function isEmptyFunction(node: t.Node) {
 }
 
 function isReturnedFunction(node: t.Node) {
-  switch (node.type) {
-    case "FunctionDeclaration":
-    case "FunctionExpression":
-    case "ArrowFunctionExpression":
-    case "ClassMethod":
-    case "ObjectMethod":
-    case "ClassPrivateMethod":
-      return skip;
-    case "ReturnStatement":
-      return (
-        t.isFunctionExpression(node.argument) ||
-        t.isArrowFunctionExpression(node.argument)
-      );
-    default:
-      return false;
-  }
+  return isFunctionNode(node)
+    ? skip
+    : node.type === "ReturnStatement" &&
+        (t.isFunctionExpression(node.argument) ||
+          t.isArrowFunctionExpression(node.argument));
 }
 
 function isReturnStatement(node: t.Node) {
-  switch (node.type) {
-    case "FunctionDeclaration":
-    case "FunctionExpression":
-    case "ArrowFunctionExpression":
-    case "ClassMethod":
-    case "ObjectMethod":
-    case "ClassPrivateMethod":
-      return skip;
-    case "ReturnStatement":
-      return true;
-    default:
-      return false;
-  }
+  return isFunctionNode(node) ? skip : node.type === "ReturnStatement";
 }

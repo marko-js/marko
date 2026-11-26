@@ -25,11 +25,15 @@ import {
   isRegisteredFnExtra,
   type RegisteredFnExtra,
 } from "./references";
-import { callRuntime, getRuntimePath, registerRuntimeValue } from "./runtime";
+import { callRuntime, getRuntimePath, importRuntime } from "./runtime";
 import { getReasonForExpr, landsRetained } from "./solve-reasons";
 import { ALWAYS, mergeSources } from "./sources";
 import { createAnalysisState } from "./state";
-import { getLiteralName, isValidPropertyIdentifier } from "./to-property-name";
+import {
+  getLiteralName,
+  isValidPropertyIdentifier,
+  toMemberExpression,
+} from "./to-property-name";
 import { isEverWritten } from "./write-guard";
 
 const kRegisteredExports = Symbol("registered exports");
@@ -140,27 +144,6 @@ export function finalizeRegistrations() {
       programExtra.isInteractive ||= !isGuardedReason(reason);
     }
   }
-}
-
-/**
- * Tracks a template imported as a default export. The server writes a template
- * only as a binding's value, so the importing template registers it when one may.
- */
-export function trackImportedTemplate(
-  importDecl: t.NodePath<t.ImportDeclaration>,
-  local: string,
-  templateFile: t.BabelFile,
-) {
-  trackImport(
-    importDecl,
-    local,
-    {
-      registryId: templateFile.metadata.marko.id,
-      exportName: "default",
-      filename: templateFile.opts.filename,
-    },
-    new Set(),
-  );
 }
 
 /**
@@ -510,11 +493,16 @@ function addExportRegistrations(
   }
 }
 
+// The dom output's registration is an assignment into the registry: no call.
 export function buildRegistration(local: string, registryId: string) {
   return t.expressionStatement(
     isOutputHTML()
       ? callRuntime("_resume", t.stringLiteral(registryId), t.identifier(local))
-      : registerRuntimeValue(registryId, t.identifier(local)),
+      : t.assignmentExpression(
+          "=",
+          toMemberExpression(importRuntime("_resumed"), registryId),
+          t.identifier(local),
+        ),
   );
 }
 

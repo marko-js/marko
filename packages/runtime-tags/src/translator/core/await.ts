@@ -35,7 +35,6 @@ import {
   addStatement,
   addValue,
   getSignal,
-  setSectionOwnerResumedByMarker,
   trimEmptyArgs,
   writeHTMLResumeStatements,
 } from "../util/signals";
@@ -112,9 +111,6 @@ export default {
         const tagBody = tag.get("body");
         const section = getSection(tag);
         const bodySection = getSectionForBody(tagBody)!;
-        // `_await` writes the branch marker whenever the body is written, and
-        // resume takes the body's owner from it.
-        setSectionOwnerResumedByMarker(bodySection);
         writeHTMLResumeStatements(tag);
 
         replaceWithStatements(tag, [

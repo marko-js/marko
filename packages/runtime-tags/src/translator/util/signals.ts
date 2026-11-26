@@ -14,14 +14,14 @@ import {
   getDebugAccess,
   type Getter,
   hasNonConstantPropertyAlias,
-  type Intersection,
-  type IntersectionMeta,
   isDirectAlias,
   isRest,
   type ReferencedBindings,
 } from "./bindings";
+import { isOwnerResumedByMarker } from "./branch-tag";
 import { getLastOwnSourceReturn } from "./finalize-references";
 import { forEachIdentifier } from "./for-each-identifier";
+import { isForSelectorClosure } from "./for-selector";
 import {
   generateUid,
   generateUidIdentifier,
@@ -149,70 +149,9 @@ export interface Signal {
     | undefined;
 }
 
-type closureSignalBuilder = (
-  closure: Binding,
-  render: t.Expression,
-) => t.Expression;
 export const [getSignals] = createOutputSectionState<Map<unknown, Signal>>(
   () => new Map(),
 );
-const [getClosureSignalBuilder, _setClosureSignalBuilder] =
-  createOutputSectionState<closureSignalBuilder | undefined>();
-export function setClosureSignalBuilder(
-  tag: t.NodePath<t.MarkoTag>,
-  build?: closureSignalBuilder,
-) {
-  const section = getSectionForBody(tag.get("body"))!;
-  _setClosureSignalBuilder(
-    section,
-    build || ((closure, render) => buildClosureHop(section, closure, render)),
-  );
-}
-
-// The hop from a branch of an `<if>` or `<for>` to the scope its closure is in.
-export function buildClosureHop(
-  section: Section,
-  closure: Binding,
-  render: t.Expression,
-) {
-  const branch = section.branch!;
-  const accessor = getScopeAccessorLiteral(branch.tag.nodeBinding, true);
-  return branch.kind === "if"
-    ? callRuntime(
-        "_if_closure",
-        accessor,
-        t.numericLiteral(branch.index),
-        render,
-      )
-    : callRuntime(
-        "_for_closure",
-        accessor,
-        render,
-        t.numericLiteral(
-          closure.closureId! + getForClosureIndex(closure, section),
-        ),
-        getLoopRenderOrder(section),
-      );
-}
-
-// A loop settles its rows in its value's render, which waits for the scope offset
-// of the last child whose returned value that value reads.
-export function getLoopRenderOrder(bodySection: Section) {
-  const returnedBy = getLastOwnSourceReturn(
-    getReferencedBindings(bodySection.branch!.tag),
-    bodySection.parent!,
-  );
-  return returnedBy && getScopeOffsetAccessorLiteral(returnedBy, true);
-}
-
-// A branch section whose scope ids ride a resume marker carrying the parent scope
-// id when its scopes serialize, so the client links the owner and `_` is not serialized.
-const [getOwnerResumedByMarker, setOwnerResumedByMarker] =
-  createOutputSectionState<true | undefined>();
-export function setSectionOwnerResumedByMarker(section: Section) {
-  setOwnerResumedByMarker(section, true);
-}
-
 // Registered content's closures its owners' scope flushes may lack, by section:
 // one values object per owner down to the content's own.
 export function getContentClosureValues(bodySection: Section) {
@@ -434,8 +373,21 @@ export function getSignal(
           }
         });
       }
-      signal.build = () =>
-        buildIntersection(meta, referencedBindings, buildSignalFn(signal));
+      signal.build = () => {
+        const fn = buildSignalFn(signal);
+        // A source intersection runs in its source's pass, so it needs no `_or`.
+        if (meta.source) return fn;
+        const { returnedBy } = meta;
+        return callRuntime(
+          "_or",
+          t.numericLiteral(meta.id),
+          fn,
+          returnedBy || referencedBindings.length > 2
+            ? t.numericLiteral(referencedBindings.length - 1)
+            : undefined,
+          returnedBy && getScopeOffsetAccessorLiteral(returnedBy, true),
+        );
+      };
     } else if (
       referencedBindings.section !== section &&
       sectionUtil.has(referencedBindings.closureSections, section)
@@ -443,25 +395,67 @@ export function getSignal(
       signal.build = () => {
         const closure = referencedBindings;
         const render = buildSignalFn(signal);
-        const closureSignalBuilder = getClosureSignalBuilder(section);
-
-        if (closureSignalBuilder && isDirectClosure(section, closure)) {
-          return closureSignalBuilder(closure, render);
+        // A branch in a section the output never renders is never translated,
+        // so it has no hop out of it.
+        if (!section.structure || !isDirectClosure(section, closure)) {
+          return callRuntime(
+            "_closure_get",
+            getClosureAccessorLiteral(closure),
+            render,
+            isInParentSection(closure, section)
+              ? undefined
+              : t.arrowFunctionExpression(
+                  [scopeIdentifier],
+                  getScopeExpression(section, closure.section),
+                ),
+            // Keyed on this subscriber section, as the HTML registration is: a
+            // sibling closure section's id is one nothing looks up.
+            getClosureSubscribeId(section, closure),
+          );
         }
 
-        return callRuntime(
-          "_closure_get",
-          getClosureAccessorLiteral(closure),
-          render,
-          isInParentSection(closure, section)
-            ? undefined
-            : t.arrowFunctionExpression(
+        // The hop from a branch of an `<if>` or `<for>` to the scope its closure
+        // is in, or to the loop's selector reading it there.
+        const branch = section.branch!;
+        const owner = section.parent!;
+        const accessor = getScopeAccessorLiteral(branch.tag.nodeBinding, true);
+        if (branch.kind === "if") {
+          return callRuntime(
+            "_if_closure",
+            accessor,
+            t.numericLiteral(branch.index),
+            render,
+          );
+        }
+
+        if (isForSelectorClosure(section, closure)) {
+          return callRuntime(
+            "_for_selector",
+            accessor,
+            getScopeAccessorLiteral(closure, true),
+            render,
+            closure.section !== owner &&
+              t.arrowFunctionExpression(
                 [scopeIdentifier],
-                getScopeExpression(section, closure.section),
+                getScopeExpression(owner, closure.section),
               ),
-          // Keyed on this subscriber section, as the HTML registration is: a
-          // sibling closure section's id is one nothing looks up.
-          getClosureSubscribeId(section, closure),
+          );
+        }
+
+        // A loop settles its rows in its value's render, which waits for the scope
+        // offset of the last child whose returned value that value reads.
+        const returnedBy = getLastOwnSourceReturn(
+          getReferencedBindings(branch.tag),
+          owner,
+        );
+        return callRuntime(
+          "_for_closure",
+          accessor,
+          render,
+          t.numericLiteral(
+            closure.closureId! + getForClosureIndex(closure, section),
+          ),
+          returnedBy && getScopeOffsetAccessorLiteral(returnedBy, true),
         );
       };
     }
@@ -702,24 +696,6 @@ function isInlinedValue(signal: Signal) {
   // take in what it computes.
   const from = getBindingsDerivedFrom(binding);
   return Array.isArray(from) || !from?.localOf;
-}
-
-// A source intersection runs in its source's pass, so it needs no `_or`.
-function buildIntersection(
-  { source, id, returnedBy }: IntersectionMeta,
-  intersection: Intersection,
-  fn: t.Expression,
-) {
-  if (source) return fn;
-  return callRuntime(
-    "_or",
-    t.numericLiteral(id),
-    fn,
-    returnedBy || intersection.length > 2
-      ? t.numericLiteral(intersection.length - 1)
-      : undefined,
-    returnedBy && getScopeOffsetAccessorLiteral(returnedBy, true),
-  );
 }
 
 export function buildSignalFn(signal: Signal): t.Expression {
@@ -1084,11 +1060,15 @@ export function addValue(
   );
 }
 
-function buildResumeRegisterKey(
+export function getResumeRegistryId(
   section: Section,
   referencedBindings: string | ReferencedBindings,
   type?: string,
 ) {
+  const {
+    markoOpts,
+    opts: { filename },
+  } = getFile();
   // Every segment is self-delimiting (`#id` per binding, `*` for string kinds),
   // and a binding another section owns names that section, since ids restart.
   let name = "";
@@ -1099,25 +1079,17 @@ function buildResumeRegisterKey(
       name = reduce(referencedBindings, appendBindingKey, name, section);
     }
   }
-  return `${section.id}${name}${type ? "/" + type : ""}`;
-}
-
-export function getResumeRegistryId(
-  section: Section,
-  referencedBindings: string | ReferencedBindings,
-  type?: string,
-) {
-  const {
+  return getTemplateId(
     markoOpts,
-    opts: { filename },
-  } = getFile();
-  const key = buildResumeRegisterKey(section, referencedBindings, type);
-  return getTemplateId(markoOpts, filename as string, key);
+    filename as string,
+    `${section.id}${name}${type ? "/" + type : ""}`,
+  );
 }
 
+// Writes the section's signals, returning its setup's identifier once written.
 export function writeSignals(section: Section) {
   const seen = new Set<Signal>();
-  const written = new Set<Signal>();
+  let setup: t.Identifier | undefined;
   forEach(section.bindings, writeBindingGetters);
 
   for (const signal of getSignals(section).values()) {
@@ -1223,10 +1195,10 @@ export function writeSignals(section: Section) {
     }
     getProgram().node.body.push(...signalStatements);
 
-    written.add(signal);
+    if (!signal.referencedBindings) setup = signal.identifier;
   }
 
-  return written;
+  return setup;
 }
 
 function writeBindingGetters(binding: Binding) {
@@ -1542,7 +1514,7 @@ export function writeHTMLResumeStatements(
     if (ownerReason) {
       pendingProperties.delete(ownerAccessor);
       const owner =
-        !getOwnerResumedByMarker(section) &&
+        !isOwnerResumedByMarker(section) &&
         ifWritten(
           ownerReason,
           callRuntime("_scope_with_id", getScopeIdIdentifier(section.parent)),
@@ -1660,10 +1632,6 @@ function pushAssertHoist(binding: Binding, body: t.Statement[]) {
     binding.type !== BindingType.dom &&
     callDebugRuntime("_assert_hoist", t.identifier(binding.name));
   if (assertHoist) body.push(t.expressionStatement(assertHoist));
-}
-
-export function getSetup(section: Section) {
-  return getSignals(section).get(undefined);
 }
 
 function replaceRenderNode(node: t.Node, signal?: Signal) {

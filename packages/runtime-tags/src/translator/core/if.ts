@@ -19,7 +19,6 @@ import {
   getBranchResumeArgs,
   initBranchSection,
   isSingleNodeContent,
-  resumeOwnerByMarkerWhenUnconditional,
 } from "../util/branch-tag";
 import { getTagName } from "../util/get-tag-name";
 import { isConditionTag, isCoreTagName } from "../util/is-core-tag";
@@ -41,7 +40,6 @@ import {
 import {
   addValue,
   getSignal,
-  setClosureSignalBuilder,
   trimEmptyArgs,
   writeHTMLResumeStatements,
 } from "../util/signals";
@@ -117,7 +115,6 @@ export const IfTag = {
         const bodySection = getSectionForBody(tag.get("body"));
 
         if (bodySection) {
-          resumeOwnerByMarkerWhenUnconditional(bodySection);
           writeHTMLResumeStatements(tag);
         }
 
@@ -193,9 +190,6 @@ export const IfTag = {
             const [branchTag, branchBodySection] = branches[i];
             const [testAttr] = branchTag.node.attributes;
             const consequent = t.numericLiteral(branchBodySection ? i : -1);
-            if (branchBodySection) {
-              setClosureSignalBuilder(branchTag);
-            }
 
             replaceWithStatements(branchTag);
             expr = testAttr

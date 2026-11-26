@@ -4,13 +4,12 @@ import { getFile, importDefault } from "@marko/compiler/babel-utils";
 import type { Binding } from "../../util/bindings";
 import { getUnusedParamIdentifier } from "../../util/generate-uid";
 import { addTagVarBindings } from "../../util/known-tag";
-import { writeModuleRegistrations } from "../../util/module-registrations";
-import { forEach } from "../../util/optional";
 import {
-  callDebugRuntime,
-  callRuntime,
-  registerRuntimeValue,
-} from "../../util/runtime";
+  buildRegistration,
+  writeModuleRegistrations,
+} from "../../util/module-registrations";
+import { forEach } from "../../util/optional";
+import { callDebugRuntime, callRuntime } from "../../util/runtime";
 import {
   getScopeAccessor,
   getSectionScopesAccessorLiteral,
@@ -30,7 +29,6 @@ import {
   addStatement,
   buildSignalFn,
   getResumeRegistryId,
-  getSetup,
   getSignal,
   initValue,
   signalHasWork,
@@ -104,10 +102,7 @@ export default {
           // Reaches the runtime through `_content`, which strips these.
           const walks = trimTrailingExits(meta.walks);
           addTagVarBindings(childSection);
-          const written = writeSignals(childSection);
-          const setup = getSetup(childSection);
-          const setupIdentifier =
-            setup && written.has(setup) ? setup.identifier : undefined;
+          const setupIdentifier = writeSignals(childSection);
 
           if (!isSectionRendererElided(childSection)) {
             if (childSection.branch) {
@@ -198,12 +193,7 @@ export default {
                 );
               } else if (registerWrapper) {
                 program.node.body.push(
-                  t.expressionStatement(
-                    registerRuntimeValue(
-                      registryId,
-                      t.identifier(childSection.name),
-                    ),
-                  ),
+                  buildRegistration(childSection.name, registryId),
                 );
               }
             }
@@ -212,11 +202,9 @@ export default {
       });
 
       addTagVarBindings(section);
-      const written = writeSignals(section);
+      const setupWritten = !!writeSignals(section);
       writeRegisteredFns();
 
-      const setup = getSetup(section);
-      const setupWritten = !!setup && written.has(setup);
       // Parents skip calling this setup export when analysis found no setup work.
       if (setupWritten && !section.hasSetupWork) {
         throw program.buildCodeFrameError(

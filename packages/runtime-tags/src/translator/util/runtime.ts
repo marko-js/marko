@@ -11,7 +11,6 @@ import {
 } from "./marko-config";
 import runtimeInfo from "./runtime-info";
 import { createOutputState } from "./state";
-import { toMemberExpression } from "./to-property-name";
 
 export type DOMRuntimeHelpers = keyof typeof import("../../dom");
 export type HTMLRuntimeHelpers = keyof typeof import("../../html");
@@ -20,7 +19,7 @@ export type HTMLRuntimeHelpers = keyof typeof import("../../html");
 export type DebugRuntimeHelpers =
   | Exclude<keyof typeof import("../../debug/dom"), DOMRuntimeHelpers>
   | Exclude<keyof typeof import("../../debug/html"), HTMLRuntimeHelpers>;
-type RuntimeHelpers = DOMRuntimeHelpers | HTMLRuntimeHelpers;
+export type RuntimeHelpers = DOMRuntimeHelpers | HTMLRuntimeHelpers;
 type RuntimeArgs = Array<
   Parameters<typeof t.callExpression>[1][number] | Falsy
 >;
@@ -69,15 +68,6 @@ const pureDOMFunctions = new Set<string>([
 
 export function importRuntime(name: RuntimeHelpers) {
   return importHelper(name);
-}
-
-// A bare registration is an assignment into the registry: no call.
-export function registerRuntimeValue(id: string, value: t.Expression) {
-  return t.assignmentExpression(
-    "=",
-    toMemberExpression(importRuntime("_resumed"), id),
-    value,
-  );
 }
 
 export function callRuntime(name: RuntimeHelpers, ...args: RuntimeArgs) {
