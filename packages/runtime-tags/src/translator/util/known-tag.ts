@@ -18,6 +18,7 @@ import {
 } from "./bindings";
 import { setTagContentDerives } from "./content-derives";
 import { generateUidIdentifier } from "./generate-uid";
+import { getAccessorProp } from "./get-accessor-enums";
 import { getTagName, getTagNameHint } from "./get-tag-name";
 import {
   analyzeAttributeTags,
@@ -63,7 +64,11 @@ import {
   getScopeAccessorLiteral,
   getScopeOffsetAccessorLiteral,
 } from "./scope-accessor";
-import { createScopeReadExpression, scopeIdentifier } from "./scope-read";
+import {
+  createScopeReadExpression,
+  getScopeExpression,
+  scopeIdentifier,
+} from "./scope-read";
 import { getSectionRendererIdentifier } from "./section-renderer";
 import {
   ensureSection,
@@ -73,7 +78,6 @@ import {
   getSectionForBody,
   isSameOrAncestorSection,
   mayMergeWithText,
-  type ParamReasonGroups,
   type Section,
 } from "./sections";
 import { addSetupExpr, addSetupWork } from "./setup-work";
@@ -349,13 +353,11 @@ export function knownTagTranslateHTML(
   const section = getSection(tag);
 
   const attrsTree = paramsTree?.properties?.[tag.node.arguments?.length || 0];
-  const { properties, statements } =
+  const translatedAttrs =
     (paramsTree && !paramsTree.properties) || attrsTree
       ? translateAttrs(tag, attrsTree)
-      : {
-          properties: [],
-          statements: [],
-        };
+      : { properties: [], statements: [], contentProp: undefined };
+  const { properties, statements } = translatedAttrs;
 
   const childScopeBinding = tagExtra.childScopeBinding!;
 
@@ -395,10 +397,26 @@ export function knownTagTranslateHTML(
   }
 
   if (childSection.paramReasonGroups) {
-    const childGroupMask = buildChildGroupMask(
-      section,
-      childScopeBinding,
-      childSection.paramReasonGroups,
+    // Each group's serialize guard is its bit; groups sharing a guard still shift
+    // it once each, since folding them into one term would only save server bytes.
+    const childGroupMask = buildGroupMask(
+      childSection.paramReasonGroups.map((group) => {
+        const reason = findSlot(
+          childScopeBinding,
+          SlotKind.ParamGroup,
+          section,
+          group,
+        )?.reason;
+        const guard = reason && getWriteGuard(section, reason, false)!;
+        return {
+          value: !guard
+            ? undefined
+            : guard.type === "NumericLiteral"
+              ? guard.value
+              : guard,
+          names: getDebugNames(group),
+        };
+      }),
     );
 
     if (childGroupMask) {
@@ -427,13 +445,14 @@ export function knownTagTranslateHTML(
 export function knownTagTranslateDOM(
   tag: t.NodePath<t.MarkoTag>,
   getBindingIdentifier: TranslateDOMInfo["getBindingIdentifier"],
-  callSetup: ((section: Section, childBinding: Binding) => void) | undefined,
+  getSetup: () => t.Expression,
 ) {
   const tagSection = getSection(tag);
   const { node } = tag;
   const extra = node.extra!;
   const paramsTree = getSettledParamsTree(extra[kParamsTree]);
   const childScopeBinding = extra.childScopeBinding!;
+  const childSection = extra.childSection!;
 
   if (node.var) {
     const varBinding = node.var.extra!.binding!;
@@ -458,7 +477,41 @@ export function knownTagTranslateDOM(
       ),
     );
   }
-  callSetup?.(tagSection, childScopeBinding);
+  // A `<define>` body reading its owner's scope is linked to it first.
+  if (childSection.readsOwner) {
+    addStatement(
+      "render",
+      tagSection,
+      undefined,
+      t.assignmentExpression(
+        "=",
+        toMemberExpression(
+          createScopeReadExpression(childScopeBinding, tagSection),
+          getAccessorProp().Owner,
+        ),
+        getScopeExpression(tagSection, childSection.parent!),
+      ),
+    );
+  }
+
+  // A load tag always calls the setup it loads, with the scopes it renders in.
+  if (extra.tagNameLoad || childSection.hasSetupWork) {
+    addStatement(
+      "render",
+      tagSection,
+      undefined,
+      t.callExpression(
+        getSetup(),
+        extra.tagNameLoad
+          ? [
+              scopeIdentifier,
+              createScopeReadExpression(childScopeBinding, tagSection),
+              createScopeReadExpression(extra.nodeBinding!, tagSection),
+            ]
+          : [createScopeReadExpression(childScopeBinding, tagSection)],
+      ),
+    );
+  }
 
   if (paramsTree) {
     writeParamsToSignals(tag, paramsTree, getTagName(tag) || "tag", {
@@ -524,34 +577,6 @@ export function callsOtherTemplateSetup(section: Section) {
     }
   }
   return false;
-}
-
-// Each group's serialize guard is its bit; groups sharing a guard still shift it
-// once each, since folding them into one term would only save server bytes.
-function buildChildGroupMask(
-  section: Section,
-  childScopeBinding: Binding,
-  reasonGroups: ParamReasonGroups,
-) {
-  return buildGroupMask(
-    reasonGroups.map((group) => {
-      const reason = findSlot(
-        childScopeBinding,
-        SlotKind.ParamGroup,
-        section,
-        group,
-      )?.reason;
-      const guard = reason && getWriteGuard(section, reason, false)!;
-      return {
-        value: !guard
-          ? undefined
-          : guard.type === "NumericLiteral"
-            ? guard.value
-            : guard,
-        names: getDebugNames(group),
-      };
-    }),
-  );
 }
 
 function analyzeParams(

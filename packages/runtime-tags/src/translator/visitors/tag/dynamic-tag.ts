@@ -18,10 +18,7 @@ import {
   generateUidIdentifier,
   getUnusedParamIdentifier,
 } from "../../util/generate-uid";
-import {
-  getAccessorPrefix,
-  getAccessorProp,
-} from "../../util/get-accessor-enums";
+import { getAccessorPrefix } from "../../util/get-accessor-enums";
 import { getTagNameHint } from "../../util/get-tag-name";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import {
@@ -30,6 +27,7 @@ import {
   knownTagTranslateHTML,
 } from "../../util/known-tag";
 import { isOptimize, isOutputHTML } from "../../util/marko-config";
+import { buildRegistration } from "../../util/module-registrations";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import { concat, type Opt } from "../../util/optional";
 import { addAlwaysReason, addReasonExprs } from "../../util/reasons";
@@ -47,17 +45,13 @@ import {
   callRuntime,
   getCompatRuntimeFile,
   importRuntimeFeature,
-  registerRuntimeValue,
 } from "../../util/runtime";
 import {
   getPrefixedScopeAccessor,
   getScopeAccessorLiteral,
   getScopeOffsetAccessorLiteral,
 } from "../../util/scope-accessor";
-import {
-  createScopeReadExpression,
-  getScopeExpression,
-} from "../../util/scope-read";
+import { getScopeExpression } from "../../util/scope-read";
 import { getSectionRendererIdentifier } from "../../util/section-renderer";
 import {
   ensureSection,
@@ -71,7 +65,6 @@ import {
   StructureKind,
 } from "../../util/sections";
 import {
-  addStatement,
   addValue,
   getResumeRegistryId,
   getSignal,
@@ -88,12 +81,7 @@ import {
   TagNameType,
   tagNotFoundError,
 } from "../../util/tag-name-type";
-import { toMemberExpression } from "../../util/to-property-name";
-import {
-  getTranslatedBodyContentProperty,
-  propsToExpression,
-  translateAttrs,
-} from "../../util/translate-attrs";
+import { propsToExpression, translateAttrs } from "../../util/translate-attrs";
 import translateVar, {
   buildVarChange,
   isTagVarAssigned,
@@ -285,34 +273,7 @@ export default {
                 : getSignal(definedBodySection, binding, preferredName)
                     .identifier;
             },
-            (section, childBinding) => {
-              if (definedBodySection.readsOwner) {
-                addStatement(
-                  "render",
-                  section,
-                  undefined,
-                  t.assignmentExpression(
-                    "=",
-                    toMemberExpression(
-                      createScopeReadExpression(childBinding, section),
-                      getAccessorProp().Owner,
-                    ),
-                    getScopeExpression(section, definedBodySection.parent!),
-                  ),
-                );
-              }
-              if (definedBodySection.hasSetupWork) {
-                addStatement(
-                  "render",
-                  section,
-                  undefined,
-                  t.callExpression(
-                    getSignal(definedBodySection, undefined).identifier,
-                    [createScopeReadExpression(childBinding, section)],
-                  ),
-                );
-              }
-            },
+            () => getSignal(definedBodySection, undefined).identifier,
           );
 
           replaceWithStatements(tag);
@@ -382,11 +343,9 @@ export default {
               classId,
               registration
                 ? t.markoScriptlet([t.expressionStatement(registration)], true)
-                : t.expressionStatement(
-                    registerRuntimeValue(
-                      classId,
-                      t.identifier((tagExpression as t.Identifier).name),
-                    ),
+                : buildRegistration(
+                    (tagExpression as t.Identifier).name,
+                    classId,
                   ),
             );
             if (pushed && registration) {
@@ -429,14 +388,13 @@ export default {
         );
       }
 
-      const { properties, statements } = translateAttrs(
+      const { properties, statements, contentProp } = translateAttrs(
         tag,
         undefined,
         undefined,
         isClassAPI ? "renderBody" : "content",
       );
       const args: (t.Expression | t.SpreadElement)[] = [];
-      const contentProp = getTranslatedBodyContentProperty(properties);
 
       if (node.arguments) {
         args.push(...node.arguments);

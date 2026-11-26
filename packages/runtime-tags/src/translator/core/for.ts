@@ -10,18 +10,15 @@ import { assertNoSpreadAttrs, coreTagLink } from "../util/assert";
 import { type Binding, BindingType, getPropertyAlias } from "../util/bindings";
 import {
   type ForType,
-  forTypeToBranchRuntime,
-  forTypeToRuntime,
-  forTypeToUnkeyedBranchRuntime,
+  forRuntimes,
   getBaseArgsInForTag,
   getBranchResumeArgs,
   getForType,
   initBranchSection,
   isSingleNodeContent,
-  resumeOwnerByMarkerWhenUnconditional,
 } from "../util/branch-tag";
 import evaluate, { isConfident } from "../util/evaluate";
-import { detectForSelector, isForSelectorClosure } from "../util/for-selector";
+import { detectForSelector } from "../util/for-selector";
 import { getAccessorProp } from "../util/get-accessor-enums";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { fromIter } from "../util/optional";
@@ -37,7 +34,6 @@ import {
 import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
-import { getScopeExpression, scopeIdentifier } from "../util/scope-read";
 import {
   getBranchRendererArgs,
   ensureSection,
@@ -49,9 +45,7 @@ import {
 } from "../util/sections";
 import {
   addValue,
-  buildClosureHop,
   getSignal,
-  setClosureSignalBuilder,
   trimEmptyArgs,
   writeHTMLResumeStatements,
 } from "../util/signals";
@@ -184,8 +178,6 @@ export default {
         const bodyStatements = node.body.body;
         const branchReason = getBranchWriteReason(bodySection);
 
-        resumeOwnerByMarkerWhenUnconditional(bodySection);
-
         writeHTMLResumeStatements(tag);
 
         const forTagArgs = getBaseArgsInForTag(forType, forAttrs) as (
@@ -193,8 +185,8 @@ export default {
           | undefined
         )[];
         const forTagHTMLRuntime = branchReason
-          ? forTypeToBranchRuntime(forType)
-          : forTypeToRuntime(forType);
+          ? forRuntimes[forType].branch
+          : forRuntimes[forType].loop;
         forTagArgs.push(
           t.arrowFunctionExpression(params, t.blockStatement(bodyStatements)),
         );
@@ -235,31 +227,14 @@ export default {
         const { node } = tag;
         const tagExtra = node.extra!;
         const nodeBinding = tagExtra.nodeBinding!;
-        setClosureSignalBuilder(tag, (closure, render) => {
-          if (!isForSelectorClosure(bodySection, closure)) {
-            return buildClosureHop(bodySection, closure, render);
-          }
-          return callRuntime(
-            "_for_selector",
-            getScopeAccessorLiteral(nodeBinding, true),
-            getScopeAccessorLiteral(closure, true),
-            render,
-            closure.section !== tagSection &&
-              t.arrowFunctionExpression(
-                [scopeIdentifier],
-                getScopeExpression(tagSection, closure.section),
-              ),
-          );
-        });
-
         const forType = getForType(node)!;
         const forAttrs = getKnownAttrValues(node);
         const signal = getSignal(tagSection, nodeBinding, "for");
         signal.build = () => {
           return callRuntime(
             isUnkeyed(forType, forAttrs)
-              ? forTypeToUnkeyedBranchRuntime(forType)
-              : forTypeToBranchRuntime(forType),
+              ? forRuntimes[forType].unkeyed!
+              : forRuntimes[forType].branch,
             getScopeAccessorLiteral(nodeBinding, true),
             ...trimEmptyArgs(getBranchRendererArgs(bodySection)),
           );

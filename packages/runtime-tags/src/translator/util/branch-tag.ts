@@ -5,15 +5,15 @@ import { getOnlyChildParentTagName } from "./is-only-child-in-parent";
 import { push, some } from "./optional";
 import { isGuardedReason, isStateReason, type Reasons } from "./reasons";
 import { hasResumableWriter } from "./references";
-import { callRuntime } from "./runtime";
+import { callRuntime, type RuntimeHelpers } from "./runtime";
 import { getScopeAccessorLiteral } from "./scope-accessor";
 import {
   ContentType,
   getScopeIdIdentifier,
   getSection,
+  isOptionalBranch,
   type Section,
 } from "./sections";
-import { setSectionOwnerResumedByMarker } from "./signals";
 import { findSlot, SlotKind } from "./slots";
 import { createOutputState } from "./state";
 import { toOnlyExpressionOrBlock } from "./to-only-or-block";
@@ -37,24 +37,26 @@ export function initBranchSection(
   nodeBinding.branchBodies = push(nodeBinding.branchBodies, bodySection);
 }
 
-// The branch id rides the always-rendered resume marker, which resume decodes
-// in a bundle with branches: a branch whose state has a resumable writer keeps
-// its runtime there.
-export function resumeOwnerByMarkerWhenUnconditional(bodySection: Section) {
-  const { nodeBinding } = bodySection.branch!.tag;
+// A branch section whose scope ids ride a resume marker carrying its owner's scope
+// id when its scopes serialize, so the client links the owner and `_` is not serialized.
+export function isOwnerResumedByMarker(section: Section) {
+  // `_await` writes the branch marker whenever the body is written.
+  if (section.branch?.kind === "await") return true;
+  if (!isOptionalBranch(section)) return false;
+  // Else the branch id rides the always-rendered marker, decoded in a bundle with
+  // branches: a branch whose state has a resumable writer keeps that runtime.
+  const { nodeBinding } = section.branch.tag;
   const branchExprReason = findSlot(nodeBinding, SlotKind.BranchExpr)?.reason;
-  if (!isStateReason(branchExprReason)) return;
-  const branchReason = getBranchWriteReason(bodySection);
+  if (!isStateReason(branchExprReason)) return false;
+  const branchReason = getBranchWriteReason(section);
   const nodeReason = getWriteReason(nodeBinding);
-  if (
-    branchReason &&
+  return (
+    !!branchReason &&
     !isGuardedReason(branchReason) &&
-    nodeReason &&
+    !!nodeReason &&
     !isGuardedReason(nodeReason) &&
     some(branchExprReason.state, hasResumableWriter)
-  ) {
-    setSectionOwnerResumedByMarker(bodySection);
-  }
+  );
 }
 
 export function getBranchResumeArgs(
@@ -131,6 +133,22 @@ export function isSingleNodeContent(content: Section["content"]) {
 
 export type ForType = "in" | "of" | "to" | "until";
 
+// The runtime loops by `<for>` type: the plain loop, the loop rendering branches,
+// and that loop's unkeyed form, which `<for in>` has none of.
+export const forRuntimes: Record<
+  ForType,
+  { loop: RuntimeHelpers; branch: RuntimeHelpers; unkeyed?: RuntimeHelpers }
+> = {
+  of: { loop: "forOf", branch: "_for_of", unkeyed: "_for_of_unkeyed" },
+  in: { loop: "forIn", branch: "_for_in" },
+  to: { loop: "forTo", branch: "_for_to", unkeyed: "_for_to_unkeyed" },
+  until: {
+    loop: "forUntil",
+    branch: "_for_until",
+    unkeyed: "_for_until_unkeyed",
+  },
+};
+
 export function buildForRuntimeCall(
   type: ForType,
   attrs: Record<string, t.Expression>,
@@ -139,7 +157,7 @@ export function buildForRuntimeCall(
 ) {
   return t.expressionStatement(
     callRuntime(
-      forTypeToRuntime(type),
+      forRuntimes[type].loop,
       ...getBaseArgsInForTag(type, attrs),
       t.arrowFunctionExpression(params, toOnlyExpressionOrBlock(statements)),
     ),
@@ -157,43 +175,6 @@ export function getForType(tag: t.MarkoTag): ForType | undefined {
           return attr.name;
       }
     }
-  }
-}
-
-export function forTypeToRuntime(type: ForType) {
-  switch (type) {
-    case "of":
-      return "forOf";
-    case "in":
-      return "forIn";
-    case "to":
-      return "forTo";
-    case "until":
-      return "forUntil";
-  }
-}
-
-export function forTypeToBranchRuntime(type: ForType) {
-  switch (type) {
-    case "of":
-      return "_for_of";
-    case "in":
-      return "_for_in";
-    case "to":
-      return "_for_to";
-    case "until":
-      return "_for_until";
-  }
-}
-
-export function forTypeToUnkeyedBranchRuntime(type: ForType) {
-  switch (type) {
-    case "to":
-      return "_for_to_unkeyed";
-    case "until":
-      return "_for_until_unkeyed";
-    default:
-      return "_for_of_unkeyed";
   }
 }
 

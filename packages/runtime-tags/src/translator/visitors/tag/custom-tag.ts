@@ -34,15 +34,11 @@ import {
   importRuntimeFeature,
 } from "../../util/runtime";
 import {
-  createScopeReadExpression,
-  scopeIdentifier,
-} from "../../util/scope-read";
-import {
   ensureSection,
   removeDroppedContent,
   StructureKind,
 } from "../../util/sections";
-import { addStatement, getSignal } from "../../util/signals";
+import { getSignal } from "../../util/signals";
 import { createOutputState } from "../../util/state";
 import * as structure from "../../util/structure";
 import { getTagRelativePath, tagNotFoundError } from "../../util/tag-name-type";
@@ -212,7 +208,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           )
         );
       },
-      (section, childBinding) => {
+      () => {
         const setupKey = `${triggerIdent ? triggerIdent.name : ""}\0${childFileName}`;
         let setupIdent = setups.get(setupKey);
         if (!setupIdent) {
@@ -226,16 +222,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
             triggerIdent,
           );
         }
-        addStatement(
-          "render",
-          section,
-          undefined,
-          t.callExpression(setupIdent, [
-            scopeIdentifier,
-            createScopeReadExpression(childBinding, section),
-            createScopeReadExpression(tagExtra.nodeBinding!, section),
-          ]),
-        );
+        return setupIdent;
       },
     );
   } else if (programSection === childSection) {
@@ -243,18 +230,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       tag,
       (binding, preferredName) =>
         getSignal(programSection, binding, preferredName).identifier,
-      childSection.hasSetupWork
-        ? (section, childBinding) => {
-            addStatement(
-              "render",
-              section,
-              undefined,
-              t.callExpression(t.identifier(childExports.setup), [
-                createScopeReadExpression(childBinding, section),
-              ]),
-            );
-          }
-        : undefined,
+      () => t.identifier(childExports.setup),
     );
   } else {
     const relativePath = getTagRelativePath(tag);
@@ -268,19 +244,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
             childExports.params.get(binding)!,
           preferredName,
         ),
-      childSection.hasSetupWork
-        ? (section, childBinding) => {
-            addStatement(
-              "render",
-              section,
-              undefined,
-              t.callExpression(
-                importNamed(file, relativePath, childExports.setup, tagName),
-                [createScopeReadExpression(childBinding, section)],
-              ),
-            );
-          }
-        : undefined,
+      () => importNamed(file, relativePath, childExports.setup, tagName),
     );
 
     // Registered here only so imports land in document order; structure

@@ -31,7 +31,6 @@ import { getContentClosureValues, getResumeRegistryId } from "./signals";
 import { getLiteralName, toObjectProperty } from "./to-property-name";
 import { getScopeReasonStatement } from "./write-guard";
 
-const contentProps = new WeakSet<t.Node>();
 type ContentKey = "renderBody" | "content";
 
 export function translateAttrs(
@@ -41,6 +40,7 @@ export function translateAttrs(
   contentKey: ContentKey = "content",
 ) {
   const contentProperties: t.ObjectExpression["properties"] = [];
+  let contentProp: (t.ObjectProperty & { value: t.Expression }) | undefined;
   const attrTagLookup = tag.node.extra?.attrTagLookup;
   const seen = new Set<string>();
   if (attrTagLookup) {
@@ -100,12 +100,11 @@ export function translateAttrs(
   if (!seen.has(contentKey) && getParamsTreeAt(paramsTree, contentKey)) {
     const contentExpression = buildContent(tag.get("body"));
     if (contentExpression) {
-      const contentProp = t.objectProperty(
+      contentProp = t.objectProperty(
         t.identifier(contentKey),
         contentExpression,
-      );
+      ) as t.ObjectProperty & { value: t.Expression };
       seen.add(contentKey);
-      contentProps.add(contentProp);
       contentProperties.push(contentProp);
     }
   }
@@ -140,17 +139,8 @@ export function translateAttrs(
   return {
     properties: attrProperties.reverse().concat(contentProperties),
     statements,
+    contentProp,
   };
-}
-
-export function getTranslatedBodyContentProperty(
-  props: t.ObjectExpression["properties"],
-) {
-  for (const prop of props) {
-    if (contentProps.has(prop)) {
-      return prop as t.ObjectProperty & { value: t.Expression };
-    }
-  }
 }
 
 export function addDynamicAttrTagStatements(

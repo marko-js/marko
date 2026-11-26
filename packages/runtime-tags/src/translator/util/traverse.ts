@@ -90,17 +90,23 @@ export function traverseFindAwait(node: undefined | null | t.Node | t.Node[]) {
 }
 
 function isAwait(child: t.Node) {
-  switch (child.type) {
-    case "ForOfStatement":
-      return child.await;
+  return isFunctionNode(child)
+    ? skip
+    : child.type === "AwaitExpression" ||
+        (child.type === "ForOfStatement" && child.await);
+}
+
+// What a search within one function's body skips.
+export function isFunctionNode(node: t.Node) {
+  switch (node.type) {
     case "FunctionDeclaration":
     case "FunctionExpression":
     case "ArrowFunctionExpression":
     case "ClassMethod":
     case "ObjectMethod":
     case "ClassPrivateMethod":
-      return skip;
-    case "AwaitExpression":
       return true;
+    default:
+      return false;
   }
 }
