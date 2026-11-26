@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.43.2
+
+### Patch Changes
+
+- Updated dependencies [[`7f75778`](https://github.com/marko-js/marko/commit/7f757786803d7f638175e69bac2782bd09adb877), [`5607497`](https://github.com/marko-js/marko/commit/5607497d3324494064e89b903201685abf666544), [`1cc46df`](https://github.com/marko-js/marko/commit/1cc46df816b75e172fb6d4e7ee5cfed073139317), [`5631611`](https://github.com/marko-js/marko/commit/56316115e3f2ddf55e604627051efc77fe00268f), [`fc26b52`](https://github.com/marko-js/marko/commit/fc26b52691be100fa6d02e9876e58a0ff6adb083), [`c3af14e`](https://github.com/marko-js/marko/commit/c3af14e638bb68c482c111fc029e9b588a392b29), [`7dec312`](https://github.com/marko-js/marko/commit/7dec312bbd4932c3de5910e4d6ca6828abb4671a), [`025bbe3`](https://github.com/marko-js/marko/commit/025bbe3ce2d06e2496efeb278c244f1c6bb6c89a), [`e8f1c9a`](https://github.com/marko-js/marko/commit/e8f1c9a37baa38990cb3c90a35389cf22382e636), [`302a509`](https://github.com/marko-js/marko/commit/302a5093ccde687bbf09de15e4ce864a86850a76), [`977ae4d`](https://github.com/marko-js/marko/commit/977ae4d5ef05a25c0836f645a0a90d3be55ea2aa), [`f69bc0b`](https://github.com/marko-js/marko/commit/f69bc0b7193b01f3d51fc061dedcd427444efb5e), [`6fab332`](https://github.com/marko-js/marko/commit/6fab3321518cf34b4185d2350544354a826eb217), [`f019ff6`](https://github.com/marko-js/marko/commit/f019ff6fa1de68b624bc3240722dcbc2603412cc), [`4d46a2a`](https://github.com/marko-js/marko/commit/4d46a2a2598e37d58724e925e58af2e950a63300), [`4351da0`](https://github.com/marko-js/marko/commit/4351da0e9ccc570fe7ae3b290ed15c6b711d60ee), [`f019ff6`](https://github.com/marko-js/marko/commit/f019ff6fa1de68b624bc3240722dcbc2603412cc), [`bb54d4b`](https://github.com/marko-js/marko/commit/bb54d4b3e939e8dd3247038d1b661fd69cc349e3), [`d790870`](https://github.com/marko-js/marko/commit/d79087096d6f02e303f3e406f51823224b67700a), [`6abd02f`](https://github.com/marko-js/marko/commit/6abd02f983657879e2fd20befd92561b4422f24e), [`fa6b530`](https://github.com/marko-js/marko/commit/fa6b530d4025440d910a33a9b30450e2954bec70), [`a0fd64e`](https://github.com/marko-js/marko/commit/a0fd64edcbe2edebd65e91d957c9215d5a6c9926), [`90fc0cf`](https://github.com/marko-js/marko/commit/90fc0cffe33e35ed05531d6cf8050880612ec95b), [`19d3136`](https://github.com/marko-js/marko/commit/19d31365957b1786d755f7e8017c187cd7143f3b), [`a582c89`](https://github.com/marko-js/marko/commit/a582c899aac86018e09efa3a6637f270d407f98d)]:
+  - @marko/runtime-tags@6.5.3
+  - @marko/compiler@5.44.0
+
 ## 5.43.1
 
 ### Patch Changes

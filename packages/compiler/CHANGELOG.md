@@ -1,5 +1,19 @@
 # Change Log
 
+## 5.44.0
+
+### Minor Changes
+
+- [#4782](https://github.com/marko-js/marko/pull/4782) [`f019ff6`](https://github.com/marko-js/marko/commit/f019ff6fa1de68b624bc3240722dcbc2603412cc) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Types are stripped in one pass over the template rather than by Babel's TypeScript plugin, which is no longer bundled. Enums, namespaces and parameter properties compile natively. Enums now compile in `static`, `server`, `client` and `$` statements too, as namespaces did. Reads of an enum's constant members are inlined, a regular enum's as a `const enum`'s, and template content reads a `server` or `client` statement's enum as each output does; a regular enum keeps its object for other uses, and a `const enum` is removed once every member folds and every read is inlined, else is a plain object, as an exported one is. An exported namespace is initialized when the module loads rather than on its first render, and an enum or namespace a namespace exports adds to the one an earlier declaration of that namespace exported.
+  
+  A statement's import of types alone is kept for its module's effects, as an import at the template's root already was (`verbatimModuleSyntax`). A local `export` of a type a statement declares is removed, a statement left empty by stripping is removed rather than printed as `static {}`, and comments on removed type declarations are dropped. `import … =` and `export =` are compile errors (`import type … =` is stripped), as is an enum or namespace a taglib migrator adds to a template whose source declares none.
+
+- [#4782](https://github.com/marko-js/marko/pull/4782) [`f019ff6`](https://github.com/marko-js/marko/commit/f019ff6fa1de68b624bc3240722dcbc2603412cc) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - `modules: "cjs"` output is converted by the compiler itself instead of Babel's CommonJS module transform, which is no longer bundled. As Babel's loose mode did, each export is a plain property assigned where it is declared (functions before anything is required, re-exports when their module is required) and again after each write to its binding. Imports read through their module, with interop for CommonJS modules without `__esModule`. A CommonJS compile skips Babel's extra traversals and, without project Babel plugins, the scope crawl after translating; project Babel plugins' visitors still run on the ES module first, and their `post` hooks after the conversion, as with Babel's transform. A binding named `exports` or `require` anywhere, or `module`, `__filename` or `__dirname` at the top level, a write to an import, an export named `__esModule`, and `stripTypes: false`, are compile errors with CommonJS output.
+
+### Patch Changes
+
+- [#4780](https://github.com/marko-js/marko/pull/4780) [`19d3136`](https://github.com/marko-js/marko/commit/19d31365957b1786d755f7e8017c187cd7143f3b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - The builders, validators and definitions `types` exports are plain properties rather than getters, two deep for builders such as `identifier`, so reading one calls nothing and the compiler loads faster.
+
 ## 5.43.6
 
 ### Patch Changes
